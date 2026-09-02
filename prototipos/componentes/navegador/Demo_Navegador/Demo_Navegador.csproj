@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.Odbc" Version="9.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Capa_Controlador_Navegador\Capa_Controlador_Navegador.csproj" />
+    <ProjectReference Include="..\Capa_Modelo_Navegador\Capa_Modelo_Navegador.csproj" />
+    <ProjectReference Include="..\Capa_Vista_Navegador\Capa_Vista_Navegador.csproj" />
+  </ItemGroup>
+
+</Project>
