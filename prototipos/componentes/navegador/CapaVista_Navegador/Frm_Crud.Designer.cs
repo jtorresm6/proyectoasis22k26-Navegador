@@ -1,4 +1,4 @@
-﻿namespace Capa_Vista_Navegador
+﻿namespace CapaVista_Navegador
 {
     partial class Frm_Crud
     {

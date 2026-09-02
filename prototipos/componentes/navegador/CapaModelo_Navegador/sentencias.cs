@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Capa_Modelo_Navegador
+namespace CapaModelo_Navegador
 {
     public class Sentencias
     {

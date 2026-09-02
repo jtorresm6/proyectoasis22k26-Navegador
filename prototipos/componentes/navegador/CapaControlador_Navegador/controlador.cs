@@ -5,9 +5,9 @@ using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Capa_Modelo_Navegador;
+using CapaModelo_Navegador;
 
-namespace Capa_Controlador_Navegador
+namespace CapaControlador_Navegador
 {
     public class Controlador
     {

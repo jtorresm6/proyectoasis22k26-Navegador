@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Capa_Controlador_Navegador">
-      <HintPath>..\Capa_Controlador_Navegador\bin\Debug\Capa_Controlador_Navegador.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -69,6 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ingresar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CapaControlador_Navegador\CapaControlador_Navegador.csproj">
+      <Project>{2058e9cd-3040-4ca1-a1c8-6d3b5ad299b5}</Project>
+      <Name>CapaControlador_Navegador</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

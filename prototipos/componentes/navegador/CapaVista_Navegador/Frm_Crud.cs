@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Capa_Controlador_Navegador;
+using CapaControlador_Navegador;
 
-namespace Capa_Vista_Navegador
+namespace CapaVista_Navegador
 {
     public partial class Frm_Crud : Form
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using Capa_Vista_Navegador; // Conecta tu biblioteca con la prueba
+using CapaVista_Navegador; // Conecta tu biblioteca con la prueba
 
 namespace Demo_Navegador
 {

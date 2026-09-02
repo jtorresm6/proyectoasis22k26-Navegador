@@ -9,13 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.Odbc" Version="9.0.6" />
+    <PackageReference Include="System.Data.Odbc" Version="9.0.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Capa_Controlador_Navegador\Capa_Controlador_Navegador.csproj" />
-    <ProjectReference Include="..\Capa_Modelo_Navegador\Capa_Modelo_Navegador.csproj" />
-    <ProjectReference Include="..\Capa_Vista_Navegador\Capa_Vista_Navegador.csproj" />
+    <ProjectReference Include="..\CapaControlador_Navegador\CapaControlador_Navegador.csproj" />
+    <ProjectReference Include="..\CapaModelo_Navegador\CapaModelo_Navegador.csproj" />
+    <ProjectReference Include="..\CapaVista_Navegador\CapaVista_Navegador.csproj" />
   </ItemGroup>
 
 </Project>

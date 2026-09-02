@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Capa_Modelo_Navegador">
-      <HintPath>..\Capa_Modelo_Navegador\bin\Debug\Capa_Modelo_Navegador.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +43,12 @@
   <ItemGroup>
     <Compile Include="controlador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CapaModelo_Navegador\CapaModelo_Navegador.csproj">
+      <Project>{1ff3723c-592d-4f22-a4fb-0eb6bbbf95b6}</Project>
+      <Name>CapaModelo_Navegador</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
