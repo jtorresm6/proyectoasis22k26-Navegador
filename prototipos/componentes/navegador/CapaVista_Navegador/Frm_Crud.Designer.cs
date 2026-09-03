@@ -53,7 +53,7 @@
             // 
             this.Btn_ingresar.ImageIndex = 0;
             this.Btn_ingresar.ImageList = this.Imgn_list1;
-            this.Btn_ingresar.Location = new System.Drawing.Point(27, 24);
+            this.Btn_ingresar.Location = new System.Drawing.Point(12, 24);
             this.Btn_ingresar.Name = "Btn_ingresar";
             this.Btn_ingresar.Size = new System.Drawing.Size(101, 81);
             this.Btn_ingresar.TabIndex = 0;
@@ -83,7 +83,7 @@
             // 
             this.Btn_cancelar.ImageIndex = 1;
             this.Btn_cancelar.ImageList = this.Imgn_list1;
-            this.Btn_cancelar.Location = new System.Drawing.Point(134, 24);
+            this.Btn_cancelar.Location = new System.Drawing.Point(119, 24);
             this.Btn_cancelar.Name = "Btn_cancelar";
             this.Btn_cancelar.Size = new System.Drawing.Size(101, 81);
             this.Btn_cancelar.TabIndex = 1;
@@ -91,9 +91,9 @@
             // 
             // Btn_refrescar
             // 
-            this.Btn_refrescar.ImageIndex = 11;
+            this.Btn_refrescar.ImageIndex = 9;
             this.Btn_refrescar.ImageList = this.Imgn_list1;
-            this.Btn_refrescar.Location = new System.Drawing.Point(241, 128);
+            this.Btn_refrescar.Location = new System.Drawing.Point(547, 24);
             this.Btn_refrescar.Name = "Btn_refrescar";
             this.Btn_refrescar.Size = new System.Drawing.Size(101, 81);
             this.Btn_refrescar.TabIndex = 2;
@@ -103,7 +103,7 @@
             // 
             this.Btn_imprimir.ImageIndex = 7;
             this.Btn_imprimir.ImageList = this.Imgn_list1;
-            this.Btn_imprimir.Location = new System.Drawing.Point(125, 128);
+            this.Btn_imprimir.Location = new System.Drawing.Point(333, 111);
             this.Btn_imprimir.Name = "Btn_imprimir";
             this.Btn_imprimir.Size = new System.Drawing.Size(101, 81);
             this.Btn_imprimir.TabIndex = 3;
@@ -113,7 +113,7 @@
             // 
             this.Btn_guardar.ImageIndex = 5;
             this.Btn_guardar.ImageList = this.Imgn_list1;
-            this.Btn_guardar.Location = new System.Drawing.Point(348, 128);
+            this.Btn_guardar.Location = new System.Drawing.Point(440, 111);
             this.Btn_guardar.Name = "Btn_guardar";
             this.Btn_guardar.Size = new System.Drawing.Size(101, 81);
             this.Btn_guardar.TabIndex = 4;
@@ -123,7 +123,7 @@
             // 
             this.Btn_siguiente.ImageIndex = 13;
             this.Btn_siguiente.ImageList = this.Imgn_list1;
-            this.Btn_siguiente.Location = new System.Drawing.Point(834, 24);
+            this.Btn_siguiente.Location = new System.Drawing.Point(868, 24);
             this.Btn_siguiente.Name = "Btn_siguiente";
             this.Btn_siguiente.Size = new System.Drawing.Size(101, 81);
             this.Btn_siguiente.TabIndex = 5;
@@ -131,9 +131,9 @@
             // 
             // Btn_anterior
             // 
-            this.Btn_anterior.ImageIndex = 6;
+            this.Btn_anterior.ImageIndex = 8;
             this.Btn_anterior.ImageList = this.Imgn_list1;
-            this.Btn_anterior.Location = new System.Drawing.Point(727, 24);
+            this.Btn_anterior.Location = new System.Drawing.Point(761, 24);
             this.Btn_anterior.Name = "Btn_anterior";
             this.Btn_anterior.Size = new System.Drawing.Size(101, 81);
             this.Btn_anterior.TabIndex = 6;
@@ -141,9 +141,9 @@
             // 
             // Btn_inicio
             // 
-            this.Btn_inicio.ImageIndex = 9;
+            this.Btn_inicio.ImageIndex = 6;
             this.Btn_inicio.ImageList = this.Imgn_list1;
-            this.Btn_inicio.Location = new System.Drawing.Point(620, 24);
+            this.Btn_inicio.Location = new System.Drawing.Point(654, 24);
             this.Btn_inicio.Name = "Btn_inicio";
             this.Btn_inicio.Size = new System.Drawing.Size(101, 81);
             this.Btn_inicio.TabIndex = 7;
@@ -153,7 +153,7 @@
             // 
             this.Btn_eliminar.ImageIndex = 3;
             this.Btn_eliminar.ImageList = this.Imgn_list1;
-            this.Btn_eliminar.Location = new System.Drawing.Point(348, 24);
+            this.Btn_eliminar.Location = new System.Drawing.Point(333, 24);
             this.Btn_eliminar.Name = "Btn_eliminar";
             this.Btn_eliminar.Size = new System.Drawing.Size(101, 81);
             this.Btn_eliminar.TabIndex = 8;
@@ -163,7 +163,7 @@
             // 
             this.Btn_Consultar.ImageIndex = 2;
             this.Btn_Consultar.ImageList = this.Imgn_list1;
-            this.Btn_Consultar.Location = new System.Drawing.Point(241, 24);
+            this.Btn_Consultar.Location = new System.Drawing.Point(226, 24);
             this.Btn_Consultar.Name = "Btn_Consultar";
             this.Btn_Consultar.Size = new System.Drawing.Size(101, 81);
             this.Btn_Consultar.TabIndex = 9;
@@ -172,9 +172,9 @@
             // 
             // Btn_salir
             // 
-            this.Btn_salir.ImageIndex = 12;
+            this.Btn_salir.ImageIndex = 11;
             this.Btn_salir.ImageList = this.Imgn_list1;
-            this.Btn_salir.Location = new System.Drawing.Point(727, 128);
+            this.Btn_salir.Location = new System.Drawing.Point(761, 111);
             this.Btn_salir.Name = "Btn_salir";
             this.Btn_salir.Size = new System.Drawing.Size(101, 81);
             this.Btn_salir.TabIndex = 10;
@@ -182,9 +182,9 @@
             // 
             // Btn_fin
             // 
-            this.Btn_fin.ImageIndex = 14;
+            this.Btn_fin.ImageIndex = 12;
             this.Btn_fin.ImageList = this.Imgn_list1;
-            this.Btn_fin.Location = new System.Drawing.Point(936, 24);
+            this.Btn_fin.Location = new System.Drawing.Point(975, 24);
             this.Btn_fin.Name = "Btn_fin";
             this.Btn_fin.Size = new System.Drawing.Size(101, 81);
             this.Btn_fin.TabIndex = 11;
@@ -205,7 +205,7 @@
             // 
             this.Btn_modificar.ImageIndex = 10;
             this.Btn_modificar.ImageList = this.Imgn_list1;
-            this.Btn_modificar.Location = new System.Drawing.Point(455, 24);
+            this.Btn_modificar.Location = new System.Drawing.Point(440, 24);
             this.Btn_modificar.Name = "Btn_modificar";
             this.Btn_modificar.Size = new System.Drawing.Size(101, 81);
             this.Btn_modificar.TabIndex = 13;
@@ -215,7 +215,7 @@
             // 
             this.Btn_ayuda.ImageIndex = 14;
             this.Btn_ayuda.ImageList = this.Imgn_list1;
-            this.Btn_ayuda.Location = new System.Drawing.Point(620, 128);
+            this.Btn_ayuda.Location = new System.Drawing.Point(654, 111);
             this.Btn_ayuda.Name = "Btn_ayuda";
             this.Btn_ayuda.Size = new System.Drawing.Size(101, 81);
             this.Btn_ayuda.TabIndex = 14;
