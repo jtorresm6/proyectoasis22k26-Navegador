@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_Navegador",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_Navegador", "CapaModelo_Navegador\CapaModelo_Navegador.csproj", "{1FF3723C-592D-4F22-A4FB-0EB6BBBF95B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo_Navegador", "Demo_Navegador\Demo_Navegador.csproj", "{383036C3-9087-405A-9570-B2F5ED859831}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{1FF3723C-592D-4F22-A4FB-0EB6BBBF95B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FF3723C-592D-4F22-A4FB-0EB6BBBF95B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FF3723C-592D-4F22-A4FB-0EB6BBBF95B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{383036C3-9087-405A-9570-B2F5ED859831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{383036C3-9087-405A-9570-B2F5ED859831}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{383036C3-9087-405A-9570-B2F5ED859831}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{383036C3-9087-405A-9570-B2F5ED859831}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

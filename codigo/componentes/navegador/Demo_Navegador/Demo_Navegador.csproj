@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CapaControlador_Navegador\CapaControlador_Navegador.csproj" />
-    <ProjectReference Include="..\CapaModelo_Navegador\CapaModelo_Navegador.csproj" />
-    <ProjectReference Include="..\CapaVista_Navegador\CapaVista_Navegador.csproj" />
+	  <ProjectReference Include="..\Capas_MVC_Navegador\CapaControlador_Navegador\CapaControlador_Navegador.csproj" />
+	  <ProjectReference Include="..\Capas_MVC_Navegador\CapaModelo_Navegador\CapaModelo_Navegador.csproj" />
+	  <ProjectReference Include="..\Capas_MVC_Navegador\CapaVista_Navegador\CapaVista_Navegador.csproj" />
   </ItemGroup>
 
 </Project>
