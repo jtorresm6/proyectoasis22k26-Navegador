@@ -11,22 +11,28 @@ namespace CapaModelo_Navegador
     {
         public OdbcConnection conexion()
         {
-            OdbcConnection conn = new OdbcConnection("Dsn=BD_ProyectoNominas");
+            OdbcConnection conn = new OdbcConnection("Dsn=Umg_taller");
+
             try
             {
-                conn.Open();       
+                conn.Open();
             }
             catch (OdbcException)
             {
-                    Console.WriteLine("Error al conectar a la base de datos");
-            } 
+                Console.WriteLine("Error al conectar a la base de datos");
+            }
+
             return conn;
         }
+
         public void desconexion(OdbcConnection conn)
         {
             try
             {
-                conn.Close();
+                if (conn != null && conn.State != System.Data.ConnectionState.Closed)
+                {
+                    conn.Close();
+                }
             }
             catch (OdbcException)
             {
@@ -34,4 +40,5 @@ namespace CapaModelo_Navegador
             }
         }
     }
+
 }
