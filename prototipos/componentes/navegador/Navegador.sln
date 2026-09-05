@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_Navegador",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_Navegador", "CapaModelo_Navegador\CapaModelo_Navegador.csproj", "{1FF3723C-592D-4F22-A4FB-0EB6BBBF95B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo_Navegador", "Demo_Navegador\Demo_Navegador.csproj", "{383036C3-9087-405A-9570-B2F5ED859831}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Navegador.App", "Navegador\Navegador.App\Navegador.App.csproj", "{383036C3-9087-405A-9570-B2F5ED859831}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,7 +35,6 @@ Global
 		{383036C3-9087-405A-9570-B2F5ED859831}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FCCCFEF5-34A8-4A30-BBDC-BA89034C2CAF}

@@ -16,5 +16,21 @@ namespace CapaModelo_Navegador
             OdbcDataAdapter daSentencias = new OdbcDataAdapter(sSQL, conn.conexion());
             return daSentencias;
         }
+
+        public void ejecutarQuery(string sSQL)
+        {
+            try
+            {
+                OdbcConnection connection = conn.conexion();
+                OdbcCommand cmd = new OdbcCommand(sSQL, connection);
+                cmd.ExecuteNonQuery();
+                conn.desconexion(connection);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error en Sentencias.ejecutarQuery: " + ex.Message);
+                throw;
+            }
+        }
     }
 }

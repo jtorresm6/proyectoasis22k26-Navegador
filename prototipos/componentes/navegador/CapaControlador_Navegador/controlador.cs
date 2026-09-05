@@ -20,5 +20,10 @@ namespace CapaControlador_Navegador
             daControlador.Fill(dtControlador);
             return dtControlador;
         }
+
+        public void guardarDatos(string query)
+        {
+            sentencias.ejecutarQuery(query);
+        }
     }
 }

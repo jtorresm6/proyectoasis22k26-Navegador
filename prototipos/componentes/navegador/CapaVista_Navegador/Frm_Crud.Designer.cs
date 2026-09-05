@@ -118,6 +118,7 @@
             this.Btn_guardar.Size = new System.Drawing.Size(101, 81);
             this.Btn_guardar.TabIndex = 4;
             this.Btn_guardar.UseVisualStyleBackColor = true;
+            this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
             // 
             // Btn_siguiente
             // 
