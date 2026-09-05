@@ -1,36 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Odbc;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CapaModelo_Navegador
 {
-    class conexionBD
+    public class cls_ConexionBD
     {
-        public OdbcConnection conexion()
+        private const string Cns_DSN = "Dsn=BD_ProyectoNominas";
+
+        public OdbcConnection met_ObtenerConexion()
         {
-            OdbcConnection conn = new OdbcConnection("Dsn=BD_ProyectoNominas");
             try
             {
-                conn.Open();       
+                OdbcConnection conn = new OdbcConnection(Cns_DSN);
+                conn.Open();
+                return conn;
             }
-            catch (OdbcException)
+            catch (OdbcException ex)
             {
-                    Console.WriteLine("Error al conectar a la base de datos");
-            } 
-            return conn;
+                throw new Exception("Error al conectar con la base de datos. Verifique el DSN.", ex);
+            }
         }
-        public void desconexion(OdbcConnection conn)
+
+        public void met_CerrarConexion(OdbcConnection conn)
         {
-            try
+            if (conn != null && conn.State == System.Data.ConnectionState.Open)
             {
-                conn.Close();
-            }
-            catch (OdbcException)
-            {
-                Console.WriteLine("Error al desconectar de la base de datos");
+                try
+                {
+                    conn.Close();
+                }
+                catch (OdbcException ex)
+                {
+                    throw new Exception("Error al cerrar la conexión con la base de datos.", ex);
+                }
             }
         }
     }
