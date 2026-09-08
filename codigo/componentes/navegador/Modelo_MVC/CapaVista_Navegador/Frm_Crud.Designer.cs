@@ -50,6 +50,12 @@ namespace CapaVista_Navegador
             Dgv_datos = new DataGridView();
             Btn_refrescar = new Button();
             Btn_ayuda = new Button();
+<<<<<<< HEAD
+=======
+            Pnl_campos = new FlowLayoutPanel();
+            Lbl_modo = new Label();
+            Lbl_estado = new Label();
+>>>>>>> ffb0f2c (correcion en uso de capa en campos dinamicos)
             ((System.ComponentModel.ISupportInitialize)Dgv_datos).BeginInit();
             SuspendLayout();
             // 
@@ -243,6 +249,33 @@ namespace CapaVista_Navegador
             Btn_ayuda.Size = new Size(101, 101);
             Btn_ayuda.TabIndex = 14;
             Btn_ayuda.UseVisualStyleBackColor = true;
+<<<<<<< HEAD
+=======
+            // 
+            // Pnl_campos
+            // 
+            Pnl_campos.AutoScroll = true;
+            Pnl_campos.BorderStyle = BorderStyle.FixedSingle;
+            Pnl_campos.Location = new Point(12, 248);
+            Pnl_campos.Name = "Pnl_campos";
+            Pnl_campos.Size = new Size(1064, 105);
+            Pnl_campos.TabIndex = 16;
+            // 
+            // Lbl_modo
+            // 
+            Lbl_modo.AutoSize = true;
+            Lbl_modo.Location = new Point(105, 700);
+            Lbl_modo.Name = "Lbl_modo";
+            Lbl_modo.TabIndex = 17;
+            Lbl_modo.Text = "Modo:";
+            // 
+            // Lbl_estado
+            // 
+            Lbl_estado.AutoSize = true;
+            Lbl_estado.Location = new Point(400, 700);
+            Lbl_estado.Name = "Lbl_estado";
+            Lbl_estado.TabIndex = 18;
+>>>>>>> ffb0f2c (correcion en uso de capa en campos dinamicos)
             // 
             // Frm_Crud
             // 
@@ -250,6 +283,12 @@ namespace CapaVista_Navegador
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Beige;
             ClientSize = new Size(1089, 816);
+<<<<<<< HEAD
+=======
+            Controls.Add(Lbl_estado);
+            Controls.Add(Lbl_modo);
+            Controls.Add(Pnl_campos);
+>>>>>>> ffb0f2c (correcion en uso de capa en campos dinamicos)
             Controls.Add(Btn_ayuda);
             Controls.Add(Btn_refrescar);
             Controls.Add(Dgv_datos);
@@ -270,6 +309,10 @@ namespace CapaVista_Navegador
             Text = "Frm_Crud";
             ((System.ComponentModel.ISupportInitialize)Dgv_datos).EndInit();
             ResumeLayout(false);
+<<<<<<< HEAD
+=======
+            PerformLayout();
+>>>>>>> ffb0f2c (correcion en uso de capa en campos dinamicos)
 
         }
 

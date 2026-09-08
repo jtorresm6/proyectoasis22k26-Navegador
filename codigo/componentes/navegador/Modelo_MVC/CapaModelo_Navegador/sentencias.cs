@@ -216,6 +216,122 @@ namespace CapaModelo_Navegador
             finally
             {
                 conn.desconexion(conexion);
+<<<<<<< HEAD
+=======
+            }
+        }
+
+        public DataTable ObtenerEsquemaCampos(string nombreTabla)
+        {
+            string sSQL = @"
+                SELECT 
+                    COLUMN_NAME, 
+                    DATA_TYPE, 
+                    COLUMN_TYPE, 
+                    COLUMN_KEY, 
+                    IS_NULLABLE 
+                FROM INFORMATION_SCHEMA.COLUMNS 
+                WHERE TABLE_NAME = ? AND TABLE_SCHEMA = DATABASE() 
+                ORDER BY ORDINAL_POSITION";
+
+            OdbcConnection conexion = conn.conexion();
+            DataTable dtEsquema = new DataTable();
+
+            try
+            {
+                using (OdbcCommand comando = new OdbcCommand(sSQL, conexion))
+                {
+                    comando.Parameters.AddWithValue("?", nombreTabla);
+                    using (OdbcDataAdapter da = new OdbcDataAdapter(comando))
+                    {
+                        da.Fill(dtEsquema);
+                    }
+                }
+            }
+            finally
+            {
+                conn.desconexion(conexion);
+            }
+
+            return dtEsquema;
+        }
+
+        public DataTable Consultar(string nombreTabla, IList<Filtro> filtros)
+        {
+            string sSQL = "SELECT * FROM " + nombreTabla;
+
+            OdbcConnection conexion = conn.conexion();
+            DataTable dt = new DataTable(nombreTabla);
+
+            try
+            {
+                using (OdbcCommand comando = new OdbcCommand())
+                {
+                    comando.Connection = conexion;
+
+                    if (filtros != null && filtros.Count > 0)
+                    {
+                        sSQL += " WHERE ";
+
+                        for (int i = 0; i < filtros.Count; i++)
+                        {
+                            if (i > 0) sSQL += " AND ";
+
+                            sSQL += filtros[i].Columna +
+                                (filtros[i].UsarLike ? " LIKE ?" : " = ?");
+
+                            comando.Parameters.AddWithValue("@p" + i, filtros[i].Valor);
+                        }
+                    }
+
+                    comando.CommandText = sSQL;
+
+                    using (OdbcDataAdapter da = new OdbcDataAdapter(comando))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            finally
+            {
+                conn.desconexion(conexion);
+            }
+
+            return dt;
+        }
+
+        public int EliminarRegistro(string nombreTabla, IList<Filtro> llave)
+        {
+            if (llave == null || llave.Count == 0) return 0;
+
+            string sSQL = "DELETE FROM " + nombreTabla + " WHERE ";
+
+            OdbcConnection conexion = conn.conexion();
+
+            try
+            {
+                using (OdbcCommand comando = new OdbcCommand())
+                {
+                    comando.Connection = conexion;
+
+                    for (int i = 0; i < llave.Count; i++)
+                    {
+                        if (i > 0) sSQL += " AND ";
+
+                        sSQL += llave[i].Columna + " = ?";
+
+                        comando.Parameters.AddWithValue("@k" + i, llave[i].Valor);
+                    }
+
+                    comando.CommandText = sSQL;
+
+                    return comando.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                conn.desconexion(conexion);
+>>>>>>> ffb0f2c (correcion en uso de capa en campos dinamicos)
             }
         }
     }
