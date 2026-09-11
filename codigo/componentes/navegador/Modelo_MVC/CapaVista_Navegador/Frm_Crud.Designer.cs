@@ -168,7 +168,7 @@
             this.Btn_Consultar.Size = new System.Drawing.Size(101, 81);
             this.Btn_Consultar.TabIndex = 9;
             this.Btn_Consultar.UseVisualStyleBackColor = true;
-            this.Btn_Consultar.Click += new System.EventHandler(this.Btn_Consultar_Click);
+
             // 
             // Btn_salir
             // 
