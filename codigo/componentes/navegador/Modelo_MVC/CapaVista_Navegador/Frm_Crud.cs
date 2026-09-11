@@ -2558,9 +2558,9 @@ namespace CapaVista_Navegador
         // =========================================================
         // OBTENER BOOLEANO DE ESQUEMA DE FORMA SEGURA
         // =========================================================
-        /// <summary>
-      //hola
+        /// <sum
 
+      //hola
         private bool ObtenerBooleanoEsquema(
             DataRow fila,
             string columna)
@@ -2596,7 +2596,7 @@ namespace CapaVista_Navegador
         }
 
         // =========================================================
-        // MENSAJES AMIGABLES
+        // MENSAJES AMIGABLES holaaaaaaaaaaa
         // =========================================================
 
         private string ObtenerMensajeAmigable(
