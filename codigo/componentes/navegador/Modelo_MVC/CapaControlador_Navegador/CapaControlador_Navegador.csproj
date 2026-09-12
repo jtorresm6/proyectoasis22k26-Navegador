@@ -33,6 +33,9 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaEntidades_Navegador">
+      <HintPath>..\CapaEntidades_Navegador\bin\Debug\CapaEntidades_Navegador.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,8 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClsPermisoControlador.cs" />
-    <Compile Include="controlador.cs" />
+    <Compile Include="esquema\ctrlEsquema.cs" />
+    <Compile Include="seguridad\ctrlPermiso.cs" />
+    <Compile Include="registros\ctrlRegistro.cs" />
+    <Compile Include="registros\ctrlTabla.cs" />
+    <Compile Include="seguridad\ctrlUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

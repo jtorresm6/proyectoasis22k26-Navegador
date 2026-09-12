@@ -39,7 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Odbc, Version=9.0.0.7, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.Odbc.9.0.7\lib\net462\System.Data.Odbc.dll</HintPath>
+      <HintPath>..\packages\System.Data.Odbc.8.0.0\lib\net462\System.Data.Odbc.dll</HintPath><Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,8 +62,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <None Include="packages.config" />
+    </Compile><None Include="packages.config" />
+    
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -77,5 +77,4 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-</Project>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" /></Project>
