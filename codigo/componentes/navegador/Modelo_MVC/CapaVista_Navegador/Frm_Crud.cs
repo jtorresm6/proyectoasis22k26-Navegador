@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Capa_Controlador_Navegador;
+using CapaControlador_Navegador;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using CapaControlador_Navegador;
 
 namespace CapaVista_Navegador
 {
@@ -1624,7 +1625,43 @@ namespace CapaVista_Navegador
 
                     return;
                 }
+                // ===============================================
+                // VALIDACIÓN DE FECHAS
+                // ===============================================
 
+                if (datos.ContainsKey("fecha_nacimiento") &&
+                    datos.ContainsKey("fecha_contratacion"))
+                {
+                    DateTime FechaNacimiento;
+                    DateTime FechaContratacion;
+
+                    if (DateTime.TryParse(
+                            datos["fecha_nacimiento"],
+                            out FechaNacimiento) &&
+                        DateTime.TryParse(
+                            datos["fecha_contratacion"],
+                            out FechaContratacion))
+                    {
+                        ClsValidadorFechas ValidadorFechas =
+                            new ClsValidadorFechas();
+
+                        string ErrorFecha =
+                            ValidadorFechas.NavegadorMetValidarFechas(
+                                FechaNacimiento,
+                                FechaContratacion);
+
+                        if (!string.IsNullOrEmpty(ErrorFecha))
+                        {
+                            MessageBox.Show(
+                                ErrorFecha,
+                                "Validación de fechas",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+
+                            return;
+                        }
+                    }
+                }
                 // =====================================================
                 // INSERTAR
                 // =====================================================

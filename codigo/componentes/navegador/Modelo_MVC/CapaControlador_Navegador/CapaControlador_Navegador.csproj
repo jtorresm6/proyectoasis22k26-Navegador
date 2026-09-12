@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClsPermisoControlador.cs" />
+    <Compile Include="ClsValidadorFechas.cs" />
     <Compile Include="controlador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
