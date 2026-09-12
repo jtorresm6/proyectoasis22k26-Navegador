@@ -232,6 +232,7 @@ namespace CapaVista_Navegador
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnIngresar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Frm_Crud";
             this.Text = "Frm_Crud";
             this.ResumeLayout(false);
