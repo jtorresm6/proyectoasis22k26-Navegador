@@ -33,8 +33,14 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaEntidades_Navegador">
+      <HintPath>..\CapaEntidades_Navegador\bin\Debug\CapaEntidades_Navegador.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Odbc, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.Odbc.8.0.0\lib\net462\System.Data.Odbc.dll</HintPath>
+    </Reference>
     <!-- MEJORA: se quitó la referencia NuGet a System.Data.Odbc.
          En .NET Framework 4.8, las clases OdbcConnection/OdbcCommand
          ya vienen incluidas dentro de System.Data.dll (referencia de
@@ -51,12 +57,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
 <<<<<<< HEAD:codigo/componentes/navegador/Modelo_MVC/CapaModelo_Navegador/CapaModelo_Navegador.csproj
     <Compile Include="ClsPermisoModelo.cs" />
     <Compile Include="conexionBD.cs" />
 =======
 >>>>>>> upstream/main:codigo/componentes/navegador/CapaModelo_Navegador/CapaModelo_Navegador.csproj
     <Compile Include="Properties\AssemblyInfo.cs" />
+=======
+    <Compile Include="conexion\conexionBD.cs" />
+    <Compile Include="esquema\esquema.cs" />
+    <Compile Include="seguridad\permisos.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="datos\registros.cs" />
+    <Compile Include="seguridad\usuarios.cs" />
+    <Compile Include="validaciones\validaciones.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+>>>>>>> refactor_navegador_0901-23-1091
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

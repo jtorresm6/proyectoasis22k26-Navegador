@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37502.11 d17.14
+VisualStudioVersion = 17.14.37502.11
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
 <<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ejecutable_Navegador", "Ejecutable_Navegador\Ejecutable_Navegador.csproj", "{F02792D3-D5D8-4EE7-BBAA-A31999F7C4D1}"
 =======
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ejecutable_Navegador", "Ejecutable_Navegador\Ejecutable_Navegador.csproj", "{F6ACF574-7735-4E94-9F43-A7C1DD7504C0}"
 >>>>>>> upstream/main
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ejecutable_Naveg", "Ejecutable_Naveg\Ejecutable_Naveg.csproj", "{FC97A513-F2C1-49DF-AD14-FD917950F055}"
+>>>>>>> refactor_navegador_0901-23-1091
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,7 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{F02792D3-D5D8-4EE7-BBAA-A31999F7C4D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F02792D3-D5D8-4EE7-BBAA-A31999F7C4D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -26,6 +31,12 @@ Global
 		{F6ACF574-7735-4E94-9F43-A7C1DD7504C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6ACF574-7735-4E94-9F43-A7C1DD7504C0}.Release|Any CPU.Build.0 = Release|Any CPU
 >>>>>>> upstream/main
+=======
+		{FC97A513-F2C1-49DF-AD14-FD917950F055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC97A513-F2C1-49DF-AD14-FD917950F055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC97A513-F2C1-49DF-AD14-FD917950F055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC97A513-F2C1-49DF-AD14-FD917950F055}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> refactor_navegador_0901-23-1091
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
