@@ -46,19 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-<<<<<<< HEAD:codigo/componentes/navegador/Modelo_MVC/CapaControlador_Navegador/CapaControlador_Navegador.csproj
-    <Compile Include="ClsPermisoControlador.cs" />
-    <Compile Include="controlador.cs" />
-=======
->>>>>>> upstream/main:codigo/componentes/navegador/CapaControlador_Navegador/CapaControlador_Navegador.csproj
-=======
     <Compile Include="esquema\ctrlEsquema.cs" />
     <Compile Include="seguridad\ctrlPermiso.cs" />
     <Compile Include="registros\ctrlRegistro.cs" />
     <Compile Include="registros\ctrlTabla.cs" />
     <Compile Include="seguridad\ctrlUsuario.cs" />
->>>>>>> refactor_navegador_0901-23-1091
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
