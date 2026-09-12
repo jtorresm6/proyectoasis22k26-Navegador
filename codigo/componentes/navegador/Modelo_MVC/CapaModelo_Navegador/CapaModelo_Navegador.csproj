@@ -51,10 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD:codigo/componentes/navegador/Modelo_MVC/CapaModelo_Navegador/CapaModelo_Navegador.csproj
     <Compile Include="ClsPermisoModelo.cs" />
     <Compile Include="conexionBD.cs" />
+=======
+>>>>>>> upstream/main:codigo/componentes/navegador/CapaModelo_Navegador/CapaModelo_Navegador.csproj
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sentencias.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

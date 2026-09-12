@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD:codigo/componentes/navegador/Modelo_MVC/CapaControlador_Navegador/CapaControlador_Navegador.csproj
     <Compile Include="ClsPermisoControlador.cs" />
     <Compile Include="controlador.cs" />
+=======
+>>>>>>> upstream/main:codigo/componentes/navegador/CapaControlador_Navegador/CapaControlador_Navegador.csproj
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

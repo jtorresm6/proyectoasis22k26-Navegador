@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{214838A8-BCC6-40FC-AA84-66C0A95E2640}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CapaVista_Consultas</RootNamespace>
+    <AssemblyName>CapaVista_Consultas</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CapaControlador_Consultas">
+      <HintPath>..\CapaControlador_Consultas\bin\Debug\CapaControlador_Consultas.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="UserControls\Agrupar&amp;Ordenar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Agrupar&amp;Ordenar.Designer.cs">
+      <DependentUpon>Agrupar&amp;Ordenar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BotonesConsulta.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\BotonesConsulta.Designer.cs">
+      <DependentUpon>BotonesConsulta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CondicionesComparacion.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\CondicionesComparacion.Designer.cs">
+      <DependentUpon>CondicionesComparacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CondicionesLogica.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\CondicionesLogica.Designer.cs">
+      <DependentUpon>CondicionesLogica.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConsultaCompleja 500 001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConsultaCompleja 500 001.Designer.cs">
+      <DependentUpon>ConsultaCompleja 500 001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConsultaSimple 400 001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConsultaSimple 400 001.Designer.cs">
+      <DependentUpon>ConsultaSimple 400 001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ConsultasReutilizables.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ConsultasReutilizables.Designer.cs">
+      <DependentUpon>ConsultasReutilizables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\TablaCompleja.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\TablaCompleja.Designer.cs">
+      <DependentUpon>TablaCompleja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TablaSimple.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\TablaSimple.Designer.cs">
+      <DependentUpon>TablaSimple.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UserControls\Agrupar&amp;Ordenar.resx">
+      <DependentUpon>Agrupar&amp;Ordenar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConsultaCompleja 500 001.resx">
+      <DependentUpon>ConsultaCompleja 500 001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConsultaSimple 400 001.resx">
+      <DependentUpon>ConsultaSimple 400 001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\BotonesConsulta.resx">
+      <DependentUpon>BotonesConsulta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\CondicionesComparacion.resx">
+      <DependentUpon>CondicionesComparacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\CondicionesLogica.resx">
+      <DependentUpon>CondicionesLogica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ConsultasReutilizables.resx">
+      <DependentUpon>ConsultasReutilizables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\TablaCompleja.resx">
+      <DependentUpon>TablaCompleja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\TablaSimple.resx">
+      <DependentUpon>TablaSimple.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

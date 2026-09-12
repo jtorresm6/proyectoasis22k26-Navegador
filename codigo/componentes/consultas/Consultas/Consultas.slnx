@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CapaControlador_Consultas/CapaControlador_Consultas.csproj" Id="8d20a558-400e-412b-a004-7c6e9947fc58" />
+  <Project Path="CapaModelo_Consultas/CapaModelo_Consultas.csproj" Id="b819cf10-a1fe-4e5f-9c6d-3dea99c8d7ff" />
+  <Project Path="CapaVista_Consultas/CapaVista_Consultas.csproj" Id="214838a8-bcc6-40fc-aa84-66c0a95e2640" />
+</Solution>

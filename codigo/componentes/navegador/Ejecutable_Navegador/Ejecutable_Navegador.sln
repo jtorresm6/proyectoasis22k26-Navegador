@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.37502.11 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ejecutable_Navegador", "Ejecutable_Navegador\Ejecutable_Navegador.csproj", "{F02792D3-D5D8-4EE7-BBAA-A31999F7C4D1}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ejecutable_Navegador", "Ejecutable_Navegador\Ejecutable_Navegador.csproj", "{F6ACF574-7735-4E94-9F43-A7C1DD7504C0}"
+>>>>>>> upstream/main
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +15,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
 		{F02792D3-D5D8-4EE7-BBAA-A31999F7C4D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F02792D3-D5D8-4EE7-BBAA-A31999F7C4D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F02792D3-D5D8-4EE7-BBAA-A31999F7C4D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F02792D3-D5D8-4EE7-BBAA-A31999F7C4D1}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{F6ACF574-7735-4E94-9F43-A7C1DD7504C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6ACF574-7735-4E94-9F43-A7C1DD7504C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6ACF574-7735-4E94-9F43-A7C1DD7504C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6ACF574-7735-4E94-9F43-A7C1DD7504C0}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> upstream/main
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+<<<<<<< HEAD
 		SolutionGuid = {A377B88A-C028-432B-AB69-B160AE93BEF2}
+=======
+		SolutionGuid = {5A70BF79-9C02-42DC-8DD9-AC7167281927}
+>>>>>>> upstream/main
 	EndGlobalSection
 EndGlobal
