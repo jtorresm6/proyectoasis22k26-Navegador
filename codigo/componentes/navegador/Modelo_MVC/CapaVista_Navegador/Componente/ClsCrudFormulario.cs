@@ -8,6 +8,10 @@ using CapaEntidades_Navegador;
 
 namespace CapaVista_Navegador
 {
+    // Decide si una Columna se dibuja como fecha, checkbox o campo numerico
+    // Diego Alejandro Cheng Peña 0901-22-8091 
+    // Fecha actual : 14/09/2026
+
     // Arma el panel dinamico de un registro: labels, textbox, combo, fecha, checkbox
     public class ClsCrudFormulario
     {
@@ -40,33 +44,39 @@ namespace CapaVista_Navegador
         {
             this._Formulario = Formulario;
         }
-
+        //
         public void NavegadorMetAbrir(string Tabla, List<ClsColumnaInfo> Esquema, bool Modificar, DataGridViewRow Fila, ClsCrudGrid GridControl, int PosicionY)
         {
+            //Cierra el panel si ya estaba abierto
             NavegadorMetCerrar();
-
+            //Recopila la informacion de la tabla
             this._Tabla = Tabla;
             this._Esquema = Esquema;
             this._ModoModificar = Modificar;
 
+            //Crea y configura el panel de registro
             NavegadorPnlRegistro = new Panel();
-            NavegadorPnlRegistro.Name = "NavegadorPnlRegistro";
+            NavegadorPnlRegistro.Name = "panelRegistro";
             NavegadorPnlRegistro.Location = new Point(10, PosicionY);
             NavegadorPnlRegistro.Width = _Formulario.ClientSize.Width - 20;
 
+            // Ajusta la altura del panel segun la cantidad de campos
             int Altura = 50 + _Esquema.Count * 42;
             if (Altura < 150) Altura = 150;
             if (Altura > 400) Altura = 400;
             NavegadorPnlRegistro.Height = Altura;
 
-            NavegadorPnlRegistro.BackColor = Color.FromArgb(242, 233, 217);
+            //El estilo que tiene el panel
+            NavegadorPnlRegistro.BackColor = Color.Beige;
             NavegadorPnlRegistro.BorderStyle = BorderStyle.FixedSingle;
             NavegadorPnlRegistro.AutoScroll = true;
 
+            //Agrega el panel al formulario
             _Formulario.Controls.Add(NavegadorPnlRegistro);
 
             _Controles = new Dictionary<string, Control>();
 
+            //Crea el titulo y la posiciones
             Label NavegadorLblTitulo = new Label();
             NavegadorLblTitulo.Text = (Modificar ? "Modificar registro - " : "Nuevo registro - ") + _Tabla;
             NavegadorLblTitulo.Font = new Font(_Formulario.Font.FontFamily, 10, FontStyle.Bold);
@@ -78,6 +88,7 @@ namespace CapaVista_Navegador
 
             foreach (ClsColumnaInfo Col in _Esquema)
             {
+                // Crea el control y la etiqueta del campo
                 Control ControlCampo = NavegadorMetCrearControlColumna(Col, Modificar, Fila, GridControl, PosicionYCampo);
 
                 Label NavegadorLblCampo = new Label();
@@ -85,6 +96,7 @@ namespace CapaVista_Navegador
                 NavegadorLblCampo.Location = new Point(15, PosicionYCampo + 4);
                 NavegadorLblCampo.AutoSize = true;
 
+                //Encapsula las llaves primarias y foraneas con un estilo visual diferente
                 if (Col.EsPK)
                 {
                     NavegadorLblCampo.Font = new Font(NavegadorLblCampo.Font, FontStyle.Bold);
@@ -95,14 +107,14 @@ namespace CapaVista_Navegador
                     NavegadorLblCampo.Font = new Font(NavegadorLblCampo.Font, FontStyle.Bold);
                     NavegadorLblCampo.ForeColor = Color.DarkBlue;
                 }
-
+                //Agrega y guarda el campo y su control al panel
                 NavegadorPnlRegistro.Controls.Add(NavegadorLblCampo);
                 NavegadorPnlRegistro.Controls.Add(ControlCampo);
 
                 _Controles[Col.Nombre] = ControlCampo;
                 PosicionYCampo += 42;
             }
-
+            //Hace que el panel sea visible y lo trae al frente del formulario
             NavegadorPnlRegistro.Visible = true;
             NavegadorPnlRegistro.BringToFront();
         }
@@ -110,6 +122,7 @@ namespace CapaVista_Navegador
         // Decide que ControlCampo dibujar segun el tipo de Columna
         private Control NavegadorMetCrearControlColumna(ClsColumnaInfo Col, bool Modificar, DataGridViewRow Fila, ClsCrudGrid GridControl, int PosicionY)
         {
+            // Si es llave foranea, crea un ComboBox con las opciones de la tabla relacionada
             if (Col.EsFK && !string.IsNullOrWhiteSpace(Col.TablaFK) && !string.IsNullOrWhiteSpace(Col.ColumnaFK))
             {
                 ComboBox NavegadorCboCampo = NavegadorMetCrearComboFk(Col, Fila, GridControl);
@@ -118,7 +131,7 @@ namespace CapaVista_Navegador
                 NavegadorCboCampo.Enabled = !(Col.EsPK && Modificar);
                 return NavegadorCboCampo;
             }
-
+            // si es fecha, crea el DateTimePicker
             if (ClsTipoColumna.NavegadorFuncEsFecha(Col))
             {
                 DateTimePicker NavegadorDtpFecha = new DateTimePicker();
@@ -129,7 +142,7 @@ namespace CapaVista_Navegador
                 NavegadorDtpFecha.Enabled = !(Col.EsPK && Modificar);
                 return NavegadorDtpFecha;
             }
-
+            // si es booleano, crea el CheckBox de las opciones
             if (ClsTipoColumna.NavegadorFuncEsBooleano(Col))
             {
                 CheckBox NavegadorChkCampo = new CheckBox();
@@ -140,7 +153,7 @@ namespace CapaVista_Navegador
                 NavegadorChkCampo.Enabled = !(Col.EsPK && Modificar);
                 return NavegadorChkCampo;
             }
-
+            // si es numerico o texto, crea el TextBox
             TextBox NavegadorTxtCampo = new TextBox();
             NavegadorTxtCampo.Location = new Point(190, PosicionY);
             NavegadorTxtCampo.Width = 250;
@@ -168,7 +181,7 @@ namespace CapaVista_Navegador
                     NavegadorTxtCampo.BackColor = Color.LightGray;
                 }
             }
-
+            // Si es llave primaria la bloquea si esta en modificar
             if (Col.EsPK && Modificar)
             {
                 NavegadorTxtCampo.ReadOnly = true;
@@ -177,7 +190,7 @@ namespace CapaVista_Navegador
 
             return NavegadorTxtCampo;
         }
-
+        // Crea un ComboBox con las opciones de la tabla relacionada para una llave foranea
         private ComboBox NavegadorMetCrearComboFk(ClsColumnaInfo Col, DataGridViewRow Fila, ClsCrudGrid GridControl)
         {
             ComboBox NavegadorCboCampo = new ComboBox();
@@ -221,10 +234,10 @@ namespace CapaVista_Navegador
 
                     for (int Indice = 0; Indice < NavegadorCboCampo.Items.Count; Indice++)
                     {
-                        DataRowView Item = NavegadorCboCampo.Items[Indice] as DataRowView;
-                        if (Item == null) continue;
+                        DataRowView item = NavegadorCboCampo.Items[Indice] as DataRowView;
+                        if (item == null) continue;
 
-                        if (string.Equals(Convert.ToString(Item.Row[Col.ColumnaFK]), Valor, StringComparison.OrdinalIgnoreCase))
+                        if (string.Equals(Convert.ToString(item.Row[Col.ColumnaFK]), Valor, StringComparison.OrdinalIgnoreCase))
                         {
                             NavegadorCboCampo.SelectedIndex = Indice;
                             break;
@@ -243,7 +256,7 @@ namespace CapaVista_Navegador
 
             return NavegadorCboCampo;
         }
-
+        //Obtiebe el valor inicial de un campo fecha, si no es posible obtenerlo devuelve la fecha actual
         private DateTime NavegadorFuncObtenerFechaInicial(DataGridViewRow Fila, string Campo, ClsCrudGrid GridControl)
         {
             if (Fila == null) return DateTime.Today;
@@ -251,7 +264,7 @@ namespace CapaVista_Navegador
             DateTime NavegadorDtpFecha;
             return DateTime.TryParse(GridControl.NavegadorFuncObtenerValor(Fila, Campo), out NavegadorDtpFecha) ? NavegadorDtpFecha : DateTime.Today;
         }
-
+        //Obtiene el valor inicial de un campo booleano, si no es posible obtenerlo devuelve false
         private bool NavegadorFuncObtenerBooleanoInicial(DataGridViewRow Fila, string Campo, ClsCrudGrid GridControl)
         {
             if (Fila == null) return false;
@@ -259,7 +272,7 @@ namespace CapaVista_Navegador
             string Valor = GridControl.NavegadorFuncObtenerValor(Fila, Campo).ToLowerInvariant();
             return Valor == "1" || Valor == "true" || Valor == "yes" || Valor == "si";
         }
-
+        //Recopila los valores de todos los controles del panel y los devuelve en un diccionario
         public Dictionary<string, string> NavegadorFuncObtenerDatos()
         {
             Dictionary<string, string> Datos = new Dictionary<string, string>();
@@ -272,7 +285,7 @@ namespace CapaVista_Navegador
 
             return Datos;
         }
-
+        //obtiene el valor de un control segun su tipo, para guardarlo en la base de datos
         private string NavegadorFuncObtenerValorControl(Control ControlCampo)
         {
             DateTimePicker NavegadorDtpFecha = ControlCampo as DateTimePicker;
@@ -286,7 +299,7 @@ namespace CapaVista_Navegador
 
             return ControlCampo.Text.Trim();
         }
-
+        //Cierra y elimina el panel de registro del formulario para seguir con la navegacion normal del formulario
         public void NavegadorMetCerrar()
         {
             if (NavegadorPnlRegistro != null)
@@ -300,3 +313,7 @@ namespace CapaVista_Navegador
         }
     }
 }
+
+// Decide si una Columna se dibuja como fecha, checkbox o campo numerico
+// Diego Alejandro Cheng Peña 0901-22-8091 
+// Fecha actual : 14/09/2026

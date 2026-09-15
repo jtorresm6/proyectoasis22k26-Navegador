@@ -3,9 +3,12 @@ using CapaEntidades_Navegador;
 
 namespace CapaVista_Navegador
 {
-    // Decide si una Columna se dibuja como fecha, checkbox o campo numerico
+    // Decide si una Columna y dibuja correspondiente si es fecha, checkbox o campo numerico
+    // Diego Alejandro Cheng Peña 0901-22-8091 
+    // Fecha actual : 14/09/2026
     public static class ClsTipoColumna
     {
+        //Ve si el dato es tipo fecha, dibujar un DateTimePicker
         public static bool NavegadorFuncEsFecha(ClsColumnaInfo Col)
         {
             string TipoNet = (Col.TipoNet ?? "").ToLowerInvariant();
@@ -17,7 +20,7 @@ namespace CapaVista_Navegador
             return TipoDato.Contains("date") || TipoDato.Contains("time") || TipoDato.Contains("timestamp");
         }
 
-        // MySQL guarda BOOLEAN como tinyint(1), por eso se revisa el texto real de la Columna
+        //Si ve que es booleano, dibujar un checkbox para solo seleccionar las opciones posibles
         public static bool NavegadorFuncEsBooleano(ClsColumnaInfo Col)
         {
             string TipoNet = (Col.TipoNet ?? "").ToLowerInvariant();
@@ -41,6 +44,7 @@ namespace CapaVista_Navegador
             return false;
         }
 
+        //Si ve que es numerico, dibujar un campo numerico y que no acepte letras
         public static bool NavegadorFuncEsNumerico(ClsColumnaInfo Col)
         {
             string TipoNet = (Col.TipoNet ?? "").ToLowerInvariant();
@@ -50,7 +54,7 @@ namespace CapaVista_Navegador
                 return true;
 
             string TipoDato = (Col.TipoDato ?? "").ToLowerInvariant();
-
+            //una vez ya verificado crea casos sobre el tipo de dato
             switch (TipoDato)
             {
                 case "int":
@@ -73,3 +77,6 @@ namespace CapaVista_Navegador
         }
     }
 }
+// Decide si una Columna se dibuja como fecha, checkbox o campo numerico
+// Diego Alejandro Cheng Peña 0901-22-8091 
+// Fecha actual : 14/09/2026
