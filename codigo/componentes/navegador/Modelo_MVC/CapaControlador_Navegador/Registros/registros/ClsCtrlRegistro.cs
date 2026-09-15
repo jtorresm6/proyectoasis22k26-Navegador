@@ -7,32 +7,26 @@ using CapaModelo_Navegador;
 namespace CapaControlador_Navegador
 {
     // Todo lo que modifica un registro: Insertar, Actualizar, Eliminar, y su validacion
-
-    /* 0901-16-9036 | Sofía Stella de la Rosa Juárez
-     * 
-     * Esta clase pertenece a la capa controlador y se encarga de gestionar las operaciones relacionadas con los registros,
-     * como insertar, actualizar, eliminar y información, además de validar los datos antes de enviarlos a la capa modelo.
-    */
     public class ClsCtrlRegistro
     {
         private ClsRegistros _Registros = new ClsRegistros();
         private ClsEsquema _Esquema = new ClsEsquema();
-        //Verifica si una llave primaria ya existe en la tabla, utilizando los campos y valores recibidos para realizar la consulta
+
         public bool NavegadorFuncExisteLlavePrimaria(string NombreTabla, string[] CamposPK, string[] ValoresPK)
         {
             return _Registros.NavegadorFuncExisteLlavePrimaria(NombreTabla, CamposPK, ValoresPK);
         }
-        //Comprueba si un valor específico ya se encuentra registrado dentro de un campo determinado de la tabla
+
         public bool NavegadorFuncExisteValorCampo(string NombreTabla, string NombreCampo, string Valor)
         {
             return _Registros.NavegadorFuncExisteValorCampo(NombreTabla, NombreCampo, Valor);
         }
-        //Envía a la capa modelo los datos necesarios para insertar un nuevo registro en la tabla indicada.
+
         public bool NavegadorFuncInsertarRegistro(string NombreTabla, Dictionary<string, string> Datos)
         {
             return _Registros.NavegadorFuncInsertarRegistro(NombreTabla, Datos);
         }
-        //Valida que existan la tabla, los datos o modificar y las llaves primarias necesarias antes de solicitar la actualización del registro en la capa modelo
+
         public bool NavegadorFuncActualizarRegistro(string NombreTabla, Dictionary<string, string> Valores, Dictionary<string, string> ClavesPrimarias)
         {
             if (string.IsNullOrWhiteSpace(NombreTabla))
@@ -46,7 +40,7 @@ namespace CapaControlador_Navegador
 
             return _Registros.NavegadorFuncActualizarRegistro(NombreTabla, Valores, ClavesPrimarias);
         }
-        //Verifica que exista el nombre de la tabla y la llave primaria necesaria antes de solicitar la eliminación del registro
+
         public bool NavegadorFuncEliminarRegistro(string NombreTabla, Dictionary<string, string> ClavesPrimarias)
         {
             if (string.IsNullOrWhiteSpace(NombreTabla))
@@ -59,8 +53,6 @@ namespace CapaControlador_Navegador
         }
 
         // Revisa que cada campo cumpla con su tipo de dato antes de guardar
-        // Obtiene el esquema de la tabla y recorre sus columnas para validar los datos ingresados.
-        // También comprueba los campos obligatorios y guarda en una lista los errores encontrados.
         public List<string> NavegadorFuncValidarRegistro(Dictionary<string, string> Datos, string NombreTabla)
         {
             List<string> Errores = new List<string>();
@@ -97,11 +89,6 @@ namespace CapaControlador_Navegador
         }
 
         // Devuelve el mensaje de error si el valor no cumple, o "" si esta bien
-        /* Valida cada campo según su tipo de dato.
-         * Para textos comprueba caracteres y longitud,
-         * para números verifica el formato numérico y
-         * para fechas confirma que el valor sea válido.
-        */
         private string NavegadorFuncValidarCampo(string Valor, ClsColumnaInfo Col)
         {
             if (string.IsNullOrEmpty(Valor))
@@ -157,11 +144,3 @@ namespace CapaControlador_Navegador
         }
     }
 }
-/* Resumen
- * ClasCtrlRegistro centraliza las operaciones principales sobre los registros y las validaciones que deben realizarse antes de enviar la información hacia la capa modelo.
- * La clase permite comprobar llaves y valores existentes, insertar, actualizar y eliminar registros, 
- * además de validar campos obligatorios, textos, números y fechas según el esquema de la tabla.
- * También utiliza manejo de excepciones para informar de forma más clara cuando ocurre un problema durante la validación. 
- * 
- * Sofía Stella de la Rosa Juárez | 0901-16-9036 
-*/
