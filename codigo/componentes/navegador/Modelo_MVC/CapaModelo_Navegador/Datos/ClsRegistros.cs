@@ -205,7 +205,11 @@ namespace CapaModelo_Navegador
                 _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
             }
         }
-
+        /*
+            Inicio de aporte de código
+            Mario Alberto Taracena Pérez
+            0901-23-9335
+         */
         public bool NavegadorFuncEliminarRegistro(string NombreTabla, Dictionary<string, string> ClavesPrimarias)
         {
             if (ClavesPrimarias == null || ClavesPrimarias.Count == 0) return false;
@@ -284,5 +288,10 @@ namespace CapaModelo_Navegador
                 throw new Exception("Error al ejecutar la sentencia en la base de datos: " + Excepcion.Message, Excepcion);
             }
         }
+        /*
+            Fin de aporte de código
+            Mario Alberto Taracena Pérez
+            0901-23-9335
+         */
     }
 }
