@@ -8,298 +8,408 @@ using CapaEntidades_Navegador;
 
 namespace CapaVista_Navegador
 {
-    // Decide si una Columna se dibuja como fecha, checkbox o campo numerico
-    // Diego Alejandro Cheng Peña 0901-22-8091 
-    // Fecha actual : 14/09/2026
-
-    // Arma el panel dinamico de un registro: labels, textbox, combo, fecha, checkbox
     public class ClsCrudFormulario
     {
-        private Form _Formulario;
+        private readonly Form _Formulario;
+        private readonly ClsCtrlTabla _CtrlTabla = new ClsCtrlTabla();
         private Panel NavegadorPnlRegistro;
         private Dictionary<string, Control> _Controles;
         private List<ClsColumnaInfo> _Esquema;
         private string _Tabla;
-        private bool _ModoModificar;
+        private bool _ModoModificar, _PkCompuesta;
 
-        private ClsCtrlTabla _CtrlTabla = new ClsCtrlTabla();
-        private ClsCtrlEsquema _CtrlEsquema = new ClsCtrlEsquema();
-
-        public bool Visible
+        private class ClsOpcionForanea
         {
-            get { return NavegadorPnlRegistro != null && NavegadorPnlRegistro.Visible; }
+            public string Valor, Descripcion;
+
+            public override string ToString() =>
+                string.IsNullOrWhiteSpace(Descripcion) ? Valor : Valor + " - " + Descripcion;
         }
 
-        public bool ModoModificar
-        {
-            get { return _ModoModificar; }
-        }
+        public bool Visible => NavegadorPnlRegistro?.Visible ?? false;
+        public bool ModoModificar => _ModoModificar;
+        public int Bottom => NavegadorPnlRegistro?.Bottom ?? 0;
 
-        public int Bottom
-        {
-            get { return NavegadorPnlRegistro != null ? NavegadorPnlRegistro.Bottom : 0; }
-        }
+        public ClsCrudFormulario(Form Formulario) => _Formulario = Formulario;
 
-        public ClsCrudFormulario(Form Formulario)
+        public void NavegadorMetAbrir(string Tabla, List<ClsColumnaInfo> Esquema,
+            bool Modificar, DataGridViewRow Fila, ClsCrudGrid Grid, int PosicionY)
         {
-            this._Formulario = Formulario;
-        }
-        //
-        public void NavegadorMetAbrir(string Tabla, List<ClsColumnaInfo> Esquema, bool Modificar, DataGridViewRow Fila, ClsCrudGrid GridControl, int PosicionY)
-        {
-            //Cierra el panel si ya estaba abierto
             NavegadorMetCerrar();
-            //Recopila la informacion de la tabla
-            this._Tabla = Tabla;
-            this._Esquema = Esquema;
-            this._ModoModificar = Modificar;
+            _Tabla = Tabla;
+            _Esquema = Esquema;
+            _ModoModificar = Modificar;
+            _PkCompuesta = Esquema.FindAll(Columna => Columna.EsPK).Count > 1;
 
-            //Crea y configura el panel de registro
-            NavegadorPnlRegistro = new Panel();
-            NavegadorPnlRegistro.Name = "panelRegistro";
-            NavegadorPnlRegistro.Location = new Point(10, PosicionY);
-            NavegadorPnlRegistro.Width = _Formulario.ClientSize.Width - 20;
+            NavegadorPnlRegistro = new Panel
+            {
+                Name = "NavegadorPnlRegistro",
+                Location = new Point(10, PosicionY),
+                Width = _Formulario.ClientSize.Width - 20,
+                Height = Math.Max(150, Math.Min(400, 50 + Esquema.Count * 42)),
+                BackColor = Color.FromArgb(242, 233, 217),
+                BorderStyle = BorderStyle.FixedSingle,
+                AutoScroll = true
+            };
 
-            // Ajusta la altura del panel segun la cantidad de campos
-            int Altura = 50 + _Esquema.Count * 42;
-            if (Altura < 150) Altura = 150;
-            if (Altura > 400) Altura = 400;
-            NavegadorPnlRegistro.Height = Altura;
-
-            //El estilo que tiene el panel
-            NavegadorPnlRegistro.BackColor = Color.Beige;
-            NavegadorPnlRegistro.BorderStyle = BorderStyle.FixedSingle;
-            NavegadorPnlRegistro.AutoScroll = true;
-
-            //Agrega el panel al formulario
             _Formulario.Controls.Add(NavegadorPnlRegistro);
-
             _Controles = new Dictionary<string, Control>();
 
-            //Crea el titulo y la posiciones
-            Label NavegadorLblTitulo = new Label();
-            NavegadorLblTitulo.Text = (Modificar ? "Modificar registro - " : "Nuevo registro - ") + _Tabla;
-            NavegadorLblTitulo.Font = new Font(_Formulario.Font.FontFamily, 10, FontStyle.Bold);
-            NavegadorLblTitulo.AutoSize = true;
-            NavegadorLblTitulo.Location = new Point(10, 8);
-            NavegadorPnlRegistro.Controls.Add(NavegadorLblTitulo);
-
-            int PosicionYCampo = 34;
-
-            foreach (ClsColumnaInfo Col in _Esquema)
+            NavegadorPnlRegistro.Controls.Add(new Label
             {
-                // Crea el control y la etiqueta del campo
-                Control ControlCampo = NavegadorMetCrearControlColumna(Col, Modificar, Fila, GridControl, PosicionYCampo);
+                Name = "NavegadorLblTitulo",
+                Text = (Modificar ? "Modificar registro - " : "Nuevo registro - ") + Tabla,
+                Font = new Font(_Formulario.Font.FontFamily, 10, FontStyle.Bold),
+                AutoSize = true,
+                Location = new Point(10, 8)
+            });
 
-                Label NavegadorLblCampo = new Label();
-                NavegadorLblCampo.Text = Col.Nombre + (Col.EsPK ? " [PK]" : "") + (Col.EsFK ? " [FK]" : "");
-                NavegadorLblCampo.Location = new Point(15, PosicionYCampo + 4);
-                NavegadorLblCampo.AutoSize = true;
+            int PosicionVertical = 34;
 
-                //Encapsula las llaves primarias y foraneas con un estilo visual diferente
-                if (Col.EsPK)
+            foreach (ClsColumnaInfo Columna in Esquema)
+            {
+                Label Etiqueta = new Label
                 {
-                    NavegadorLblCampo.Font = new Font(NavegadorLblCampo.Font, FontStyle.Bold);
-                    NavegadorLblCampo.ForeColor = Color.DarkRed;
-                }
-                else if (Col.EsFK)
-                {
-                    NavegadorLblCampo.Font = new Font(NavegadorLblCampo.Font, FontStyle.Bold);
-                    NavegadorLblCampo.ForeColor = Color.DarkBlue;
-                }
-                //Agrega y guarda el campo y su control al panel
-                NavegadorPnlRegistro.Controls.Add(NavegadorLblCampo);
-                NavegadorPnlRegistro.Controls.Add(ControlCampo);
+                    Name = "NavegadorLbl" + Columna.Nombre,
+                    Text = Columna.Nombre + (Columna.EsPK ? " [PK]" : "") +
+                           (Columna.EsFK ? " [FK]" : ""),
+                    Location = new Point(15, PosicionVertical + 4),
+                    AutoSize = true
+                };
 
-                _Controles[Col.Nombre] = ControlCampo;
-                PosicionYCampo += 42;
+                if (Columna.EsPK || Columna.EsFK)
+                {
+                    Etiqueta.Font = new Font(Etiqueta.Font, FontStyle.Bold);
+                    Etiqueta.ForeColor = Columna.EsPK ? Color.DarkRed : Color.DarkBlue;
+                }
+
+                Control Campo = NavegadorMetCrearControl(
+                    Columna, Modificar, Fila, Grid, PosicionVertical);
+
+                NavegadorPnlRegistro.Controls.Add(Etiqueta);
+                NavegadorPnlRegistro.Controls.Add(Campo);
+                _Controles[Columna.Nombre] = Campo;
+
+                PosicionVertical += 42;
             }
-            //Hace que el panel sea visible y lo trae al frente del formulario
+
             NavegadorPnlRegistro.Visible = true;
             NavegadorPnlRegistro.BringToFront();
         }
 
-        // Decide que ControlCampo dibujar segun el tipo de Columna
-        private Control NavegadorMetCrearControlColumna(ClsColumnaInfo Col, bool Modificar, DataGridViewRow Fila, ClsCrudGrid GridControl, int PosicionY)
+        private Control NavegadorMetCrearControl(ClsColumnaInfo Columna,
+            bool Modificar, DataGridViewRow Fila, ClsCrudGrid Grid, int PosicionVertical)
         {
-            // Si es llave foranea, crea un ComboBox con las opciones de la tabla relacionada
-            if (Col.EsFK && !string.IsNullOrWhiteSpace(Col.TablaFK) && !string.IsNullOrWhiteSpace(Col.ColumnaFK))
+            if (Columna.EsFK &&
+                !string.IsNullOrWhiteSpace(Columna.TablaFK) &&
+                !string.IsNullOrWhiteSpace(Columna.ColumnaFK) &&
+                !(Columna.EsPK && _PkCompuesta))
             {
-                ComboBox NavegadorCboCampo = NavegadorMetCrearComboFk(Col, Fila, GridControl);
-                NavegadorCboCampo.Location = new Point(190, PosicionY);
-                NavegadorCboCampo.Width = 250;
-                NavegadorCboCampo.Enabled = !(Col.EsPK && Modificar);
-                return NavegadorCboCampo;
+                return NavegadorMetCrearCombo(
+                    Columna, Modificar, Fila, Grid, PosicionVertical);
             }
-            // si es fecha, crea el DateTimePicker
-            if (ClsTipoColumna.NavegadorFuncEsFecha(Col))
-            {
-                DateTimePicker NavegadorDtpFecha = new DateTimePicker();
-                NavegadorDtpFecha.Location = new Point(190, PosicionY);
-                NavegadorDtpFecha.Width = 250;
-                NavegadorDtpFecha.Format = DateTimePickerFormat.Short;
-                NavegadorDtpFecha.Value = NavegadorFuncObtenerFechaInicial(Fila, Col.Nombre, GridControl);
-                NavegadorDtpFecha.Enabled = !(Col.EsPK && Modificar);
-                return NavegadorDtpFecha;
-            }
-            // si es booleano, crea el CheckBox de las opciones
-            if (ClsTipoColumna.NavegadorFuncEsBooleano(Col))
-            {
-                CheckBox NavegadorChkCampo = new CheckBox();
-                NavegadorChkCampo.Text = "Sí (marcado) / No (desmarcado)";
-                NavegadorChkCampo.AutoSize = true;
-                NavegadorChkCampo.Location = new Point(190, PosicionY + 3);
-                NavegadorChkCampo.Checked = NavegadorFuncObtenerBooleanoInicial(Fila, Col.Nombre, GridControl);
-                NavegadorChkCampo.Enabled = !(Col.EsPK && Modificar);
-                return NavegadorChkCampo;
-            }
-            // si es numerico o texto, crea el TextBox
-            TextBox NavegadorTxtCampo = new TextBox();
-            NavegadorTxtCampo.Location = new Point(190, PosicionY);
-            NavegadorTxtCampo.Width = 250;
-            NavegadorTxtCampo.Text = Fila != null ? GridControl.NavegadorFuncObtenerValor(Fila, Col.Nombre) : "";
 
-            // Autogeneracion de la llave primaria: MAX + 1, para no depender del motor de BD
-            if (!Modificar && Col.EsAutoincremento)
+            if (ClsTipoColumna.NavegadorFuncEsFecha(Columna))
             {
-                NavegadorTxtCampo.Text = "(automático)";
-                NavegadorTxtCampo.ReadOnly = true;
-                NavegadorTxtCampo.BackColor = Color.LightGray;
-            }
-            else if (!Modificar && Col.EsPK && ClsTipoColumna.NavegadorFuncEsNumerico(Col))
-            {
-                object Siguiente = null;
-
-                try { Siguiente = _CtrlEsquema.NavegadorFuncObtenerSiguienteValorLlave(_Tabla, Col.Nombre); }
-                catch { }
-
-                NavegadorTxtCampo.Text = Siguiente != null ? Convert.ToString(Siguiente) : "";
-
-                if (Siguiente != null)
+                return new DateTimePicker
                 {
-                    NavegadorTxtCampo.ReadOnly = true;
-                    NavegadorTxtCampo.BackColor = Color.LightGray;
-                }
-            }
-            // Si es llave primaria la bloquea si esta en modificar
-            if (Col.EsPK && Modificar)
-            {
-                NavegadorTxtCampo.ReadOnly = true;
-                NavegadorTxtCampo.BackColor = Color.LightGray;
+                    Name = "NavegadorDtp" + Columna.Nombre,
+                    Location = new Point(190, PosicionVertical),
+                    Width = 250,
+                    Format = DateTimePickerFormat.Short,
+                    Value = NavegadorFuncFecha(Fila, Columna.Nombre, Grid),
+                    Enabled = !(Columna.EsPK && Modificar)
+                };
             }
 
-            return NavegadorTxtCampo;
+            if (ClsTipoColumna.NavegadorFuncEsBooleano(Columna))
+            {
+                return new CheckBox
+                {
+                    Name = "NavegadorChk" + Columna.Nombre,
+                    Text = "Sí (marcado) / No (desmarcado)",
+                    Location = new Point(190, PosicionVertical + 3),
+                    AutoSize = true,
+                    Checked = Fila != null &&
+                        NavegadorFuncEsVerdadero(
+                            Grid.NavegadorFuncObtenerValor(Fila, Columna.Nombre)),
+                    Enabled = !(Columna.EsPK && Modificar)
+                };
+            }
+
+            TextBox CampoTexto = new TextBox
+            {
+                Name = "NavegadorTxt" + Columna.Nombre,
+                Location = new Point(190, PosicionVertical),
+                Width = 250,
+                Text = Fila == null
+                    ? ""
+                    : Grid.NavegadorFuncObtenerValor(Fila, Columna.Nombre)
+            };
+
+            if ((!Modificar && Columna.EsAutoincremento) ||
+                (Modificar && Columna.EsPK))
+            {
+                if (!Modificar && Columna.EsAutoincremento)
+                    CampoTexto.Text = "(automático)";
+
+                CampoTexto.ReadOnly = true;
+                CampoTexto.BackColor = Color.LightGray;
+            }
+
+            return CampoTexto;
         }
-        // Crea un ComboBox con las opciones de la tabla relacionada para una llave foranea
-        private ComboBox NavegadorMetCrearComboFk(ClsColumnaInfo Col, DataGridViewRow Fila, ClsCrudGrid GridControl)
+
+        private Control NavegadorMetCrearCombo(ClsColumnaInfo Columna,
+            bool Modificar, DataGridViewRow Fila, ClsCrudGrid Grid, int PosicionVertical)
         {
-            ComboBox NavegadorCboCampo = new ComboBox();
-            NavegadorCboCampo.DropDownStyle = ComboBoxStyle.DropDownList;
+            ComboBox Combo = new ComboBox
+            {
+                Name = "NavegadorCbo" + Columna.Nombre,
+                Location = new Point(190, PosicionVertical),
+                Width = 250,
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Enabled = !(Columna.EsPK && Modificar)
+            };
 
             try
             {
-                DataTable Opciones = _CtrlTabla.NavegadorMetLlenarDgv(Col.TablaFK);
-                List<ClsColumnaInfo> EsquemaFk = _CtrlEsquema.NavegadorFuncObtenerEsquemaTabla(Col.TablaFK);
+                DataTable TablaDatos =
+                    _CtrlTabla.NavegadorFuncLlenarDgv(Columna.TablaFK);
 
-                string ColumnaMostrar = Col.ColumnaFK;
+                if (TablaDatos == null ||
+                    !TablaDatos.Columns.Contains(Columna.ColumnaFK))
+                    return Combo;
 
-                foreach (ClsColumnaInfo ControlActual in EsquemaFk)
+                string ValorActual = Fila == null
+                    ? ""
+                    : Grid.NavegadorFuncObtenerValor(Fila, Columna.Nombre);
+
+                string ColumnaDescripcion =
+                    NavegadorFuncDescripcion(TablaDatos, Columna.ColumnaFK);
+
+                if (Columna.Nullable)
                 {
-                    if (string.Equals(ControlActual.Nombre, Col.ColumnaFK, StringComparison.OrdinalIgnoreCase))
-                        continue;
-
-                    string Tipo = (ControlActual.TipoDato ?? "").ToLowerInvariant();
-
-                    if (Tipo.Contains("char") || Tipo.Contains("text"))
+                    Combo.Items.Add(new ClsOpcionForanea
                     {
-                        ColumnaMostrar = ControlActual.Nombre;
-                        break;
-                    }
+                        Valor = "",
+                        Descripcion = "(ninguno)"
+                    });
                 }
 
-                if (!Opciones.Columns.Contains(Col.ColumnaFK))
-                    return NavegadorCboCampo;
-
-                if (!Opciones.Columns.Contains(ColumnaMostrar))
-                    ColumnaMostrar = Col.ColumnaFK;
-
-                NavegadorCboCampo.DataSource = Opciones;
-                NavegadorCboCampo.ValueMember = Col.ColumnaFK;
-                NavegadorCboCampo.DisplayMember = ColumnaMostrar;
-                NavegadorCboCampo.SelectedIndex = -1;
-
-                if (Fila != null)
+                foreach (DataRow FilaDatos in TablaDatos.Rows)
                 {
-                    string Valor = GridControl.NavegadorFuncObtenerValor(Fila, Col.Nombre);
-
-                    for (int Indice = 0; Indice < NavegadorCboCampo.Items.Count; Indice++)
+                    ClsOpcionForanea Opcion = new ClsOpcionForanea
                     {
-                        DataRowView item = NavegadorCboCampo.Items[Indice] as DataRowView;
-                        if (item == null) continue;
+                        Valor = Convert.ToString(
+                            FilaDatos[Columna.ColumnaFK]),
 
-                        if (string.Equals(Convert.ToString(item.Row[Col.ColumnaFK]), Valor, StringComparison.OrdinalIgnoreCase))
-                        {
-                            NavegadorCboCampo.SelectedIndex = Indice;
-                            break;
-                        }
+                        Descripcion = ColumnaDescripcion == null
+                            ? ""
+                            : Convert.ToString(
+                                FilaDatos[ColumnaDescripcion])
+                    };
+
+                    Combo.Items.Add(Opcion);
+
+                    if (string.Equals(
+                        Opcion.Valor,
+                        ValorActual,
+                        StringComparison.OrdinalIgnoreCase))
+                    {
+                        Combo.SelectedItem = Opcion;
                     }
                 }
             }
             catch (Exception Excepcion)
             {
                 MessageBox.Show(
-                    "No se pudieron cargar las opciones de '" + Col.Nombre + "'.\n\n" + Excepcion.Message,
-                    "Error al cargar opciones",
+                    "No se pudieron cargar los valores de '" +
+                    Columna.TablaFK + "' para '" +
+                    Columna.Nombre + "': " +
+                    Excepcion.Message,
+                    "Llave foránea",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
             }
 
-            return NavegadorCboCampo;
+            return Combo;
         }
-        //Obtiebe el valor inicial de un campo fecha, si no es posible obtenerlo devuelve la fecha actual
-        private DateTime NavegadorFuncObtenerFechaInicial(DataGridViewRow Fila, string Campo, ClsCrudGrid GridControl)
-        {
-            if (Fila == null) return DateTime.Today;
 
-            DateTime NavegadorDtpFecha;
-            return DateTime.TryParse(GridControl.NavegadorFuncObtenerValor(Fila, Campo), out NavegadorDtpFecha) ? NavegadorDtpFecha : DateTime.Today;
-        }
-        //Obtiene el valor inicial de un campo booleano, si no es posible obtenerlo devuelve false
-        private bool NavegadorFuncObtenerBooleanoInicial(DataGridViewRow Fila, string Campo, ClsCrudGrid GridControl)
+        private string NavegadorFuncDescripcion(
+            DataTable Tabla, string Llave)
         {
-            if (Fila == null) return false;
+            string[] Palabras =
+            {
+                "nombre", "descripcion", "titulo", "usuario", "codigo"
+            };
 
-            string Valor = GridControl.NavegadorFuncObtenerValor(Fila, Campo).ToLowerInvariant();
-            return Valor == "1" || Valor == "true" || Valor == "yes" || Valor == "si";
+            foreach (string Palabra in Palabras)
+            {
+                foreach (DataColumn Columna in Tabla.Columns)
+                {
+                    if (Columna.DataType == typeof(string) &&
+                        !Columna.ColumnName.Equals(
+                            Llave, StringComparison.OrdinalIgnoreCase) &&
+                        Columna.ColumnName.IndexOf(
+                            Palabra, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        return Columna.ColumnName;
+                    }
+                }
+            }
+
+            foreach (DataColumn Columna in Tabla.Columns)
+            {
+                if (Columna.DataType == typeof(string) &&
+                    !Columna.ColumnName.Equals(
+                        Llave, StringComparison.OrdinalIgnoreCase))
+                {
+                    return Columna.ColumnName;
+                }
+            }
+
+            return null;
         }
-        //Recopila los valores de todos los controles del panel y los devuelve en un diccionario
+
+        private DateTime NavegadorFuncFecha(
+            DataGridViewRow Fila, string Campo, ClsCrudGrid Grid)
+        {
+            DateTime Fecha;
+
+            return Fila != null &&
+                DateTime.TryParse(
+                    Grid.NavegadorFuncObtenerValor(Fila, Campo),
+                    out Fecha)
+                ? Fecha
+                : DateTime.Today;
+        }
+
+        private bool NavegadorFuncEsVerdadero(string Valor)
+        {
+            Valor = Valor.ToLowerInvariant();
+
+            return Valor == "1" ||
+                   Valor == "true" ||
+                   Valor == "yes" ||
+                   Valor == "si";
+        }
+
         public Dictionary<string, string> NavegadorFuncObtenerDatos()
         {
-            Dictionary<string, string> Datos = new Dictionary<string, string>();
+            Dictionary<string, string> Datos =
+                new Dictionary<string, string>();
 
             if (_Controles == null)
                 return Datos;
 
-            foreach (KeyValuePair<string, Control> Par in _Controles)
-                Datos[Par.Key] = NavegadorFuncObtenerValorControl(Par.Value);
+            foreach (KeyValuePair<string, Control> Control in _Controles)
+            {
+                if (Control.Value is DateTimePicker Fecha)
+                {
+                    Datos[Control.Key] =
+                        Fecha.Value.ToString("yyyy-MM-dd");
+                }
+                else if (Control.Value is CheckBox Casilla)
+                {
+                    Datos[Control.Key] =
+                        Casilla.Checked ? "1" : "0";
+                }
+                else if (Control.Value is ComboBox Combo)
+                {
+                    Datos[Control.Key] =
+                        (Combo.SelectedItem as ClsOpcionForanea)?.Valor ?? "";
+                }
+                else
+                {
+                    Datos[Control.Key] =
+                        Control.Value.Text.Trim();
+                }
+            }
 
             return Datos;
         }
-        //obtiene el valor de un control segun su tipo, para guardarlo en la base de datos
-        private string NavegadorFuncObtenerValorControl(Control ControlCampo)
+
+        public bool NavegadorFuncLlaveInvalida(
+            DataGridView Grid, ClsCrudGrid GridControl)
         {
-            DateTimePicker NavegadorDtpFecha = ControlCampo as DateTimePicker;
-            if (NavegadorDtpFecha != null) return NavegadorDtpFecha.Value.ToString("yyyy-MM-dd");
+            if (_ModoModificar || _Controles == null)
+                return false;
 
-            ComboBox NavegadorCboCampo = ControlCampo as ComboBox;
-            if (NavegadorCboCampo != null) return NavegadorCboCampo.SelectedValue == null ? "" : Convert.ToString(NavegadorCboCampo.SelectedValue);
+            List<ClsColumnaInfo> Llaves =
+                _Esquema.FindAll(Columna => Columna.EsPK);
 
-            CheckBox NavegadorChkCampo = ControlCampo as CheckBox;
-            if (NavegadorChkCampo != null) return NavegadorChkCampo.Checked ? "1" : "0";
+            Dictionary<string, string> Datos =
+                NavegadorFuncObtenerDatos();
 
-            return ControlCampo.Text.Trim();
+            foreach (ClsColumnaInfo Columna in Llaves)
+            {
+                if (!Columna.EsAutoincremento &&
+                    (!Datos.ContainsKey(Columna.Nombre) ||
+                     string.IsNullOrEmpty(Datos[Columna.Nombre])))
+                {
+                    MessageBox.Show(
+                        "Debe ingresar un valor para la llave primaria '" +
+                        Columna.Nombre + "'.",
+                        "Llave primaria",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    NavegadorMetEnfocar(Columna.Nombre);
+                    return true;
+                }
+            }
+
+            if (Grid == null || GridControl == null)
+                return false;
+
+            foreach (DataGridViewRow Fila in Grid.Rows)
+            {
+                if (Fila.IsNewRow)
+                    continue;
+
+                bool Coincide = true;
+
+                foreach (ClsColumnaInfo Columna in Llaves)
+                {
+                    if (!Columna.EsAutoincremento &&
+                        !string.Equals(
+                            GridControl.NavegadorFuncObtenerValor(
+                                Fila, Columna.Nombre).Trim(),
+                            Datos[Columna.Nombre],
+                            StringComparison.OrdinalIgnoreCase))
+                    {
+                        Coincide = false;
+                        break;
+                    }
+                }
+
+                if (Coincide &&
+                    Llaves.Exists(Columna => !Columna.EsAutoincremento))
+                {
+                    MessageBox.Show(
+                        "Ya existe un registro con esa llave primaria.",
+                        "Llave duplicada",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    NavegadorMetEnfocar(Llaves[0].Nombre);
+                    return true;
+                }
+            }
+
+            return false;
         }
-        //Cierra y elimina el panel de registro del formulario para seguir con la navegacion normal del formulario
+
+        private void NavegadorMetEnfocar(string Campo)
+        {
+            if (_Controles != null &&
+                _Controles.ContainsKey(Campo))
+            {
+                _Controles[Campo].Focus();
+            }
+        }
+
         public void NavegadorMetCerrar()
         {
             if (NavegadorPnlRegistro != null)
@@ -313,7 +423,3 @@ namespace CapaVista_Navegador
         }
     }
 }
-
-// Decide si una Columna se dibuja como fecha, checkbox o campo numerico
-// Diego Alejandro Cheng Peña 0901-22-8091 
-// Fecha actual : 14/09/2026

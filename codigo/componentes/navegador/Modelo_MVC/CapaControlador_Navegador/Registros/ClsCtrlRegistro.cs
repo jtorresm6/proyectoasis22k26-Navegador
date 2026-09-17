@@ -61,20 +61,20 @@ namespace CapaControlador_Navegador
             {
                 List<ClsColumnaInfo> Columnas = _Esquema.NavegadorFuncObtenerEsquemaTabla(NombreTabla);
 
-                foreach (ClsColumnaInfo Col in Columnas)
+                foreach (ClsColumnaInfo Columna in Columnas)
                 {
-                    if (!Datos.ContainsKey(Col.Nombre))
+                    if (!Datos.ContainsKey(Columna.Nombre))
                         continue;
 
-                    string Valor = Datos[Col.Nombre];
+                    string Valor = Datos[Columna.Nombre];
 
-                    if (Col.Nullable == false && string.IsNullOrWhiteSpace(Valor))
+                    if (Columna.Nullable == false && string.IsNullOrWhiteSpace(Valor))
                     {
-                        Errores.Add("El campo '" + Col.Nombre + "' es obligatorio.");
+                        Errores.Add("El campo '" + Columna.Nombre + "' es obligatorio.");
                         continue;
                     }
 
-                    string ErrorValidacion = NavegadorFuncValidarCampo(Valor, Col);
+                    string ErrorValidacion = NavegadorFuncValidarCampo(Valor, Columna);
 
                     if (!string.IsNullOrEmpty(ErrorValidacion))
                         Errores.Add(ErrorValidacion);
@@ -89,12 +89,12 @@ namespace CapaControlador_Navegador
         }
 
         // Devuelve el mensaje de error si el valor no cumple, o "" si esta bien
-        private string NavegadorFuncValidarCampo(string Valor, ClsColumnaInfo Col)
+        private string NavegadorFuncValidarCampo(string Valor, ClsColumnaInfo Columna)
         {
             if (string.IsNullOrEmpty(Valor))
                 return "";
 
-            string Tipo = Col.TipoDato.ToLower();
+            string Tipo = Columna.TipoDato.ToLower();
 
             switch (Tipo)
             {
@@ -106,10 +106,10 @@ namespace CapaControlador_Navegador
                 case "mediumtext":
 
                     if (!Regex.IsMatch(Valor, @"^[\p{L}\p{N}\s\-_\.]+$"))
-                        return "El campo '" + Col.Nombre + "' contiene caracteres no permitidos.";
+                        return "El campo '" + Columna.Nombre + "' contiene caracteres no permitidos.";
 
-                    if (Col.Longitud > 0 && Valor.Length > Col.Longitud)
-                        return "El campo '" + Col.Nombre + "' excede la longitud máxima permitida (" + Col.Longitud + " caracteres).";
+                    if (Columna.Longitud > 0 && Valor.Length > Columna.Longitud)
+                        return "El campo '" + Columna.Nombre + "' excede la longitud máxima permitida (" + Columna.Longitud + " caracteres).";
 
                     return "";
 
@@ -122,7 +122,7 @@ namespace CapaControlador_Navegador
                 case "real":
 
                     if (!Regex.IsMatch(Valor, @"^[0-9]+(\.[0-9]+)?$"))
-                        return "El campo '" + Col.Nombre + "' debe ser un valor numérico.";
+                        return "El campo '" + Columna.Nombre + "' debe ser un valor numérico.";
 
                     return "";
 
@@ -130,15 +130,14 @@ namespace CapaControlador_Navegador
                 case "date":
                 case "timestamp":
 
-                    DateTime NavegadorDtpFecha;
+                    DateTime Fecha;
 
-                    if (!DateTime.TryParse(Valor, out NavegadorDtpFecha))
-                        return "El campo '" + Col.Nombre + "' debe ser una fecha válida.";
+                    if (!DateTime.TryParse(Valor, out Fecha))
+                        return "El campo '" + Columna.Nombre + "' debe ser una fecha válida.";
 
                     return "";
 
                 default:
-
                     return "";
             }
         }

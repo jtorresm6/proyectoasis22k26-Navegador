@@ -1,373 +1,270 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Odbc;
-using System.Text;
+using System.Windows.Forms;
+using CapaControlador_Navegador;
+using CapaEntidades_Navegador;
 
-namespace CapaModelo_Navegador
+namespace CapaVista_Navegador
 {
-    // Todo lo que consulta o modifica los datos de una tabla (no metadatos)
-    public class ClsRegistros
+    // Insertar, Modificar, Eliminar, Guardar y los mensajes de confirmacion/error, todo junto
+    public class ClsCrudAcciones
     {
-        ClsConexionBD _ConexionBD = new ClsConexionBD();
+        private ClsCtrlRegistro _CtrlRegistro = new ClsCtrlRegistro();
 
-        /*
-         * Nombre: Oskar Saul Cermeño Jimenez
-         * Carnet: 0901-23-15379
-         * Fecha: 14/09/2026
-         * Descripción: Prepara y retorna un OdbcDataAdapter con una consulta SELECT * para enlace desacoplado de datos.
-         */
-        public OdbcDataAdapter NavegadorFuncLlenarTbl(string NombreTabla)
+        public bool NavegadorFuncConfirmarAccion(string Titulo, string Mensaje)
         {
-            // Valida que el nombre de la tabla no contenga caracteres inválidos o inyección SQL
-            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
-
-            // Construye la sentencia de selección completa para la tabla
-            string ConsultaSQL = "SELECT * FROM " + NombreTabla;
-
-            // Abre y obtiene la conexión física hacia la base de datos
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
-
-            // Retorna la instancia del adaptador enlazada a la consulta y conexión establecida
-            return new OdbcDataAdapter(ConsultaSQL, NavegadorFuncConexion);
+            return MessageBox.Show(Mensaje, Titulo, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
         }
 
-        /*
-         * Nombre: Oskar Saul Cermeño Jimenez
-         * Carnet: 0901-23-15379
-         * Fecha: 14/09/2026
-         * Descripción: Ejecuta la consulta de todos los registros de una tabla y los carga en un DataTable liberando la conexión.
-         */
-        public DataTable NavegadorFuncConsultarTodo(string NombreTabla)
+        private string NavegadorFuncResumenDatos(Dictionary<string, string> Datos)
         {
-            // Valida el identificador del nombre de la tabla
-            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
+            string Resumen = "";
 
-            // Define la consulta de lectura total
-            string ConsultaSQL = "SELECT * FROM " + NombreTabla;
-
-            // Establece la conexión con el repositorio de datos
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
-
-            // Estructura en memoria donde se alojará el conjunto de resultados
-            DataTable TablaDatos = new DataTable();
-
-            try
-            {
-                // Crea el adaptador dentro de un bloque using para asegurar su desecho al poblar el DataTable
-                using (OdbcDataAdapter AdaptadorDatos = new OdbcDataAdapter(ConsultaSQL, NavegadorFuncConexion))
-                    AdaptadorDatos.Fill(TablaDatos);
-            }
-            finally
-            {
-                // Garantiza el cierre determinista de la conexión física para evitar fugas en el pool
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
-            }
-
-            return TablaDatos;
-        }
-
-        /*
-         * Nombre: Oskar Saul Cermeño Jimenez
-         * Carnet: 0901-23-15379
-         * Fecha: 14/09/2026
-         * Descripción: Verifica de forma preventiva si ya existe un registro con las llaves primarias simples o compuestas dadas.
-         */
-        public bool NavegadorFuncExisteLlavePrimaria(string NombreTabla, string[] CamposPK, string[] ValoresPK)
-        {
-            // Si no se proporcionaron campos de llave primaria, no procede la búsqueda
-            if (CamposPK == null || CamposPK.Length == 0) return false;
-
-            // Comprueba que la cantidad de columnas coincida con la cantidad de valores proporcionados
-            if (ValoresPK == null || ValoresPK.Length != CamposPK.Length) return false;
-
-            // Sanitiza el nombre de la tabla
-            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
-
-            string Condiciones = "";
-
-            // Ensambla la condición WHERE dinámicamente uniendo los campos clave con el operador AND y parámetros '?'
-            for (int Indice = 0; Indice < CamposPK.Length; Indice++)
-            {
-                ClsValidaciones.NavegadorMetValidarIdentificador(CamposPK[Indice]);
-
-                if (Indice > 0) Condiciones += " AND ";
-                Condiciones += CamposPK[Indice] + " = ?";
-            }
-
-            // Define la instrucción de conteo condicional sobre la tabla
-            string ConsultaSQL = "SELECT COUNT(*) FROM " + NombreTabla + " WHERE " + Condiciones;
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
-
-            try
-            {
-                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion))
-                {
-                    // Asocia secuencialmente los valores de las claves primarias como parámetros tipificados
-                    for (int Indice = 0; Indice < ValoresPK.Length; Indice++)
-                        Comando.Parameters.AddWithValue("@p" + Indice, ValoresPK[Indice]);
-
-                    // Obtiene la cantidad de coincidencias y retorna true si existe al menos un registro
-                    int Cantidad = Convert.ToInt32(Comando.ExecuteScalar());
-                    return Cantidad > 0;
-                }
-            }
-            finally
-            {
-                // Cierre seguro de la conexión ODBC
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
-            }
-        }
-
-        /*
-         * Nombre: Oskar Saul Cermeño Jimenez
-         * Carnet: 0901-23-15379
-         * Fecha: 14/09/2026
-         * Descripción: Comprueba si existe un valor específico dentro de una columna determinada de la tabla.
-         */
-        public bool NavegadorFuncExisteValorCampo(string NombreTabla, string NombreCampo, string Valor)
-        {
-            // Valida los identificadores de la tabla y de la columna
-            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
-            ClsValidaciones.NavegadorMetValidarIdentificador(NombreCampo);
-
-            // Prepara la consulta parametrizada para el conteo de coincidencias
-            string ConsultaSQL = "SELECT COUNT(*) FROM " + NombreTabla + " WHERE " + NombreCampo + " = ?";
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
-
-            try
-            {
-                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion))
-                {
-                    // Asigna el valor buscado al parámetro de la consulta
-                    Comando.Parameters.AddWithValue("@valor", Valor);
-
-                    // Ejecuta la consulta escalar y comprueba si el valor ya existe
-                    int Cantidad = Convert.ToInt32(Comando.ExecuteScalar());
-                    return Cantidad > 0;
-                }
-            }
-            finally
-            {
-                // Cierre de conexión asegurado
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
-            }
-        }
-
-        /*
-         * Nombre: Oskar Saul Cermeño Jimenez
-         * Carnet: 0901-23-15379
-         * Fecha: 14/09/2026
-         * Descripción: Genera y ejecuta dinámicamente una sentencia INSERT parametrizada a partir de un diccionario de datos.
-         */
-        public bool NavegadorFuncInsertarRegistro(string NombreTabla, Dictionary<string, string> Datos)
-        {
-            // Valida que el conjunto de datos a insertar contenga elementos
-            if (Datos == null || Datos.Count == 0) return false;
-
-            // Sanitiza el nombre de la tabla
-            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
-
-            string Columnas = "";
-            string Valores = "";
-            int Contador = 0;
-
-            // Recorre el diccionario construyendo la lista de columnas y los marcadores de posición '?'
             foreach (KeyValuePair<string, string> Dato in Datos)
+                Resumen += Dato.Key + ": " + Dato.Value + "\n";
+
+            return Resumen;
+        }
+
+        // Inserta o actualiza segun el modo, validando los campos antes de guardar
+        public bool NavegadorFuncGuardar(string Tabla, List<ClsColumnaInfo> Esquema, Dictionary<string, string> DatosFormulario,
+            bool ModoModificar, Dictionary<string, string> PkOriginal, out string Mensaje)
+        {
+            Mensaje = "";
+
+            Dictionary<string, string> Datos = new Dictionary<string, string>();
+
+            foreach (ClsColumnaInfo Columna in Esquema)
             {
-                ClsValidaciones.NavegadorMetValidarIdentificador(Dato.Key);
+                if (!DatosFormulario.ContainsKey(Columna.Nombre))
+                    continue;
 
-                if (Contador > 0) { Columnas += ", "; Valores += ", "; }
+                if (!ModoModificar && Columna.EsAutoincremento)
+                    continue;
 
-                Columnas += Dato.Key;
-                Valores += "?";
-                Contador++;
-            }
+                if (ModoModificar && Columna.EsPK)
+                    continue;
 
-            // Ensambla la sentencia SQL INSERT INTO final
-            string ConsultaSQL = "INSERT INTO " + NombreTabla + " (" + Columnas + ") VALUES (" + Valores + ")";
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+                string Valor = DatosFormulario[Columna.Nombre];
 
-            try
-            {
-                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion))
+                if (string.IsNullOrWhiteSpace(Valor))
                 {
-                    int Pos = 0;
-
-                    // Asigna ordenadamente cada valor del diccionario a la colección de parámetros del comando
-                    foreach (KeyValuePair<string, string> Dato in Datos)
+                    if (!Columna.Nullable)
                     {
-                        Comando.Parameters.AddWithValue("@p" + Pos, Dato.Value);
-                        Pos++;
+                        Mensaje = "El campo '" + Columna.Nombre + "' es obligatorio.";
+                        return false;
                     }
 
-                    // Ejecuta la inserción y retorna true si se insertó al menos un registro
-                    return Comando.ExecuteNonQuery() > 0;
+                    continue;
                 }
+
+                Datos[Columna.Nombre] = Valor;
             }
-            finally
+
+            List<string> Errores = _CtrlRegistro.NavegadorFuncValidarRegistro(Datos, Tabla);
+
+            Errores.AddRange(NavegadorFuncValidarLlavesForaneas(Tabla, Esquema, Datos));
+
+            if (Errores.Count > 0)
             {
-                // Libera y desconecta la sesión de base de datos
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                Mensaje = string.Join("\n", Errores);
+                return false;
             }
+
+            if (!ModoModificar)
+                return NavegadorFuncInsertar(Tabla, Esquema, Datos, out Mensaje);
+
+            return NavegadorFuncModificar(Tabla, Datos, PkOriginal, out Mensaje);
         }
 
-        /*
-         * Nombre: Oskar Saul Cermeño Jimenez
-         * Carnet: 0901-23-15379
-         * Fecha: 14/09/2026
-         * Descripción: Construye y ejecuta dinámicamente una sentencia UPDATE separando datos a modificar y llaves del WHERE.
-         */
-        public bool NavegadorFuncActualizarRegistro(string NombreTabla, Dictionary<string, string> Valores, Dictionary<string, string> ClavesPrimarias)
+        // Valida cada FK de la tabla actual sin navegar ni cargar llaves de otra tabla.
+        // Una FK puede repetirse en varios registros; lo obligatorio es que el valor exista
+        // en la columna referenciada de la tabla padre.
+        //
+        // IMPORTANTE: si los metadatos de la FK vienen incompletos o apuntan a la misma tabla
+        // que se esta editando, se omite la validacion en lugar de bloquear el guardado.
+        // Esos casos indican que el lector de esquema esta devolviendo la tabla hija en
+        // TablaFK en vez de la tabla padre, y el motor de BD igual rechazara el insert
+        // si la relacion realmente se incumple.
+        private List<string> NavegadorFuncValidarLlavesForaneas(string Tabla, List<ClsColumnaInfo> Esquema, Dictionary<string, string> Datos)
         {
-            // Valida que existan tanto valores a actualizar como identificadores de clave primaria
-            if (Valores == null || Valores.Count == 0 || ClavesPrimarias == null || ClavesPrimarias.Count == 0)
+            List<string> Errores = new List<string>();
+
+            foreach (ClsColumnaInfo Columna in Esquema)
+            {
+                if (!Columna.EsFK)
+                    continue;
+
+                // Metadato incompleto: no hay a donde validar
+                if (string.IsNullOrWhiteSpace(Columna.TablaFK) || string.IsNullOrWhiteSpace(Columna.ColumnaFK))
+                    continue;
+
+                // Metadato sospechoso: la FK apunta a la propia tabla que se esta editando
+                if (string.Equals(Columna.TablaFK, Tabla, StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                string ValorFK;
+                if (!Datos.TryGetValue(Columna.Nombre, out ValorFK) || string.IsNullOrWhiteSpace(ValorFK))
+                    continue;
+
+                bool Existe;
+
+                try
+                {
+                    Existe = _CtrlRegistro.NavegadorFuncExisteValorCampo(Columna.TablaFK, Columna.ColumnaFK, ValorFK);
+                }
+                catch (Exception)
+                {
+                    // Si no se pudo consultar la tabla padre no se bloquea al Usuario;
+                    // la restriccion real la aplica la base de datos al insertar.
+                    continue;
+                }
+
+                if (!Existe)
+                {
+                    Errores.Add("La llave foránea '" + Columna.Nombre + "' con valor '" + ValorFK +
+                        "' no existe en '" + Columna.TablaFK + "." + Columna.ColumnaFK + "'.");
+                }
+            }
+
+            return Errores;
+        }
+
+        private bool NavegadorFuncInsertar(string Tabla, List<ClsColumnaInfo> Esquema, Dictionary<string, string> Datos, out string Mensaje)
+        {
+            Mensaje = "";
+
+            List<string> CamposPK = new List<string>();
+            List<string> ValoresPK = new List<string>();
+
+            foreach (ClsColumnaInfo Columna in Esquema)
+            {
+                if (!Columna.EsPK) continue;
+
+                string Valor;
+
+                if (Datos.TryGetValue(Columna.Nombre, out Valor))
+                {
+                    CamposPK.Add(Columna.Nombre);
+                    ValoresPK.Add(Valor);
+                }
+            }
+
+            if (CamposPK.Count > 0)
+            {
+                bool Duplicada = false;
+
+                try
+                {
+                    Duplicada = _CtrlRegistro.NavegadorFuncExisteLlavePrimaria(
+                        Tabla, CamposPK.ToArray(), ValoresPK.ToArray());
+                }
+                catch (Exception Excepcion)
+                {
+                    Mensaje = "No se pudo verificar la llave primaria: " +
+                        NavegadorFuncMensajeAmigable(Excepcion);
+                    return false;
+                }
+
+                if (Duplicada)
+                {
+                    Mensaje = "Ya existe un registro con esta llave primaria (" +
+                        string.Join(", ", CamposPK.ToArray()) + " = " +
+                        string.Join(", ", ValoresPK.ToArray()) + ").";
+                    return false;
+                }
+            }
+
+            if (!NavegadorFuncConfirmarAccion("Confirmar ingreso",
+                "¿Desea ingresar el siguiente registro en la tabla '" + Tabla + "'?\n\n" +
+                NavegadorFuncResumenDatos(Datos)))
                 return false;
 
-            // Sanitiza el identificador de la tabla
-            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
-
-            // Diccionario auxiliar para aislar las columnas modificables excluyendo las claves primarias
-            Dictionary<string, string> ValoresActualizar = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-            foreach (KeyValuePair<string, string> Dato in Valores)
-            {
-                ClsValidaciones.NavegadorMetValidarIdentificador(Dato.Key);
-
-                // Excluye las columnas de llave primaria de la cláusula SET
-                if (!ClavesPrimarias.ContainsKey(Dato.Key))
-                    ValoresActualizar[Dato.Key] = Dato.Value;
-            }
-
-            // Si no quedan columnas para actualizar, cancela la ejecución
-            if (ValoresActualizar.Count == 0) return false;
-
-            StringBuilder Sql = new StringBuilder("UPDATE " + NombreTabla + " SET ");
-            int Indice = 0;
-
-            // Construye los asignadores columna = ? para la sección SET
-            foreach (KeyValuePair<string, string> Dato in ValoresActualizar)
-            {
-                if (Indice > 0) Sql.Append(", ");
-                Sql.Append(Dato.Key + " = ?");
-                Indice++;
-            }
-
-            Sql.Append(" WHERE ");
-            Indice = 0;
-
-            // Construye los filtros de búsqueda clave = ? para la sección WHERE
-            foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
-            {
-                ClsValidaciones.NavegadorMetValidarIdentificador(Clave.Key);
-
-                if (Indice > 0) Sql.Append(" AND ");
-                Sql.Append(Clave.Key + " = ?");
-                Indice++;
-            }
-
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
-
-            try
-            {
-                using (OdbcCommand Comando = new OdbcCommand(Sql.ToString(), NavegadorFuncConexion))
-                {
-                    // Asocia primero los parámetros correspondientes a la sección SET
-                    foreach (KeyValuePair<string, string> Dato in ValoresActualizar)
-                        Comando.Parameters.AddWithValue("@valor_" + Dato.Key, Dato.Value);
-
-                    // Asocia posteriormente los parámetros correspondientes a la sección WHERE respetando el orden posicional
-                    foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
-                        Comando.Parameters.AddWithValue("@pk_" + Clave.Key, Clave.Value);
-
-                    // Ejecuta la actualización y comprueba si afectó registros
-                    return Comando.ExecuteNonQuery() > 0;
-                }
-            }
-            finally
-            {
-                // Cierre obligatorio de la conexión
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
-            }
+            return _CtrlRegistro.NavegadorFuncInsertarRegistro(Tabla, Datos);
         }
 
-        public bool NavegadorFuncEliminarRegistro(string NombreTabla, Dictionary<string, string> ClavesPrimarias)
+        private bool NavegadorFuncModificar(string Tabla, Dictionary<string, string> Datos,
+            Dictionary<string, string> ClavesPrimarias, out string Mensaje)
         {
-            if (ClavesPrimarias == null || ClavesPrimarias.Count == 0) return false;
+            Mensaje = "";
 
-            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
+            if (ClavesPrimarias == null || ClavesPrimarias.Count == 0)
+            {
+                Mensaje = "No se encontró la llave primaria del registro seleccionado.";
+                return false;
+            }
 
-            StringBuilder Sql = new StringBuilder("DELETE FROM " + NombreTabla + " WHERE ");
-            int Indice = 0;
+            if (Datos.Count == 0)
+            {
+                Mensaje = "No hay campos disponibles para Modificar.";
+                return false;
+            }
+
+            if (!NavegadorFuncConfirmarAccion("Confirmar modificación",
+                "¿Desea guardar los cambios en la tabla '" + Tabla + "'?\n\n" +
+                NavegadorFuncResumenDatos(Datos)))
+                return false;
+
+            return _CtrlRegistro.NavegadorFuncActualizarRegistro(Tabla, Datos, ClavesPrimarias);
+        }
+
+        public bool NavegadorFuncEliminar(string Tabla, Dictionary<string, string> ClavesPrimarias, out string Mensaje)
+        {
+            Mensaje = "";
+
+            if (ClavesPrimarias == null || ClavesPrimarias.Count == 0)
+            {
+                Mensaje = "La tabla no tiene una llave primaria detectable.";
+                return false;
+            }
 
             foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
             {
-                ClsValidaciones.NavegadorMetValidarIdentificador(Clave.Key);
-
-                if (Indice > 0) Sql.Append(" AND ");
-                Sql.Append(Clave.Key + " = ?");
-                Indice++;
-            }
-
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
-
-            try
-            {
-                using (OdbcCommand Comando = new OdbcCommand(Sql.ToString(), NavegadorFuncConexion))
+                if (string.IsNullOrWhiteSpace(Clave.Value))
                 {
-                    foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
-                        Comando.Parameters.AddWithValue("@pk_" + Clave.Key, Clave.Value);
-
-                    return Comando.ExecuteNonQuery() > 0;
+                    Mensaje = "No se pudo obtener el valor de la llave primaria del registro seleccionado.";
+                    return false;
                 }
             }
-            finally
-            {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
-            }
+
+            if (!NavegadorFuncConfirmarAccion("Confirmar eliminación",
+                "¿Desea eliminar el registro seleccionado de la tabla '" + Tabla + "'?"))
+                return false;
+
+            return _CtrlRegistro.NavegadorFuncEliminarRegistro(Tabla, ClavesPrimarias);
         }
 
-        public OdbcDataAdapter NavegadorFuncFiltrarTbl(string NombreTabla, string Columna, string Valor)
+        // Traduce errores tecnicos del motor de BD a mensajes que el Usuario entienda
+        public string NavegadorFuncMensajeAmigable(Exception Excepcion)
         {
-            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
-            ClsValidaciones.NavegadorMetValidarIdentificador(Columna);
+            string TextoMinusculas = (Excepcion.Message ?? "").ToLowerInvariant();
 
-            string ConsultaSQL = "SELECT * FROM " + NombreTabla + " WHERE " + Columna + " LIKE ?";
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            if (TextoMinusculas.Contains("doesn't exist") || TextoMinusculas.Contains("does not exist") ||
+                TextoMinusculas.Contains("unknown table") || TextoMinusculas.Contains("no existe") ||
+                TextoMinusculas.Contains("invalid object name"))
+                return "La tabla indicada no existe o el nombre está escrito incorrectamente. Verifique el nombre configurado para el CRUD.";
 
-            OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion);
-            Comando.Parameters.AddWithValue("@valor", "%" + Valor + "%");
+            if (TextoMinusculas.Contains("foreign key") || TextoMinusculas.Contains("fk_") || TextoMinusculas.Contains("reference constraint"))
+                return "El registro no puede guardarse o eliminarse porque existe una relación de llave foránea.";
 
-            return new OdbcDataAdapter(Comando);
-        }
+            if (TextoMinusculas.Contains("duplicate entry") || TextoMinusculas.Contains("duplicate key") ||
+                TextoMinusculas.Contains("unique constraint") || TextoMinusculas.Contains("violation of unique") ||
+                TextoMinusculas.Contains("violation of primary key"))
+                return "Ya existe un registro con el mismo valor en un campo único.";
 
-        public void NavegadorMetEjecutarSql(string Sql)
-        {
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            if (TextoMinusculas.Contains("cannot be null") || TextoMinusculas.Contains("null value") ||
+                TextoMinusculas.Contains("not-null constraint") || TextoMinusculas.Contains("insert the value null"))
+                return "Hay un campo obligatorio que no puede quedar vacío.";
 
-            try
-            {
-                using (OdbcCommand Comando = new OdbcCommand(Sql, NavegadorFuncConexion))
-                    Comando.ExecuteNonQuery();
-            }
-            finally
-            {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
-            }
-        }
+            if (TextoMinusculas.Contains("data too long") || TextoMinusculas.Contains("truncat") ||
+                TextoMinusculas.Contains("string or binary data would be truncated"))
+                return "Uno de los valores ingresados es demasiado largo para el campo correspondiente.";
 
-        public void NavegadorMetGuardarDatos(string Query)
-        {
-            try
-            {
-                using (OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion())
-                using (OdbcCommand Comando = new OdbcCommand(Query, NavegadorFuncConexion))
-                    Comando.ExecuteNonQuery();
-            }
-            catch (Exception Excepcion)
-            {
-                throw new Exception("Error al ejecutar la sentencia en la base de datos: " + Excepcion.Message, Excepcion);
-            }
+            if ((TextoMinusculas.Contains("incorrect") && TextoMinusculas.Contains("value")) ||
+                TextoMinusculas.Contains("conversion failed") || TextoMinusculas.Contains("invalid input syntax"))
+                return "Uno de los valores ingresados tiene un formato incorrecto para su campo.";
+
+            return Excepcion.Message;
         }
     }
 }

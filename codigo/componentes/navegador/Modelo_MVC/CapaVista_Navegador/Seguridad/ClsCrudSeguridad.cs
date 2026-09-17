@@ -16,7 +16,7 @@ namespace CapaVista_Navegador
 
         // IMPORTANTE: aqui va ctrlPermiso (Controlador), NUNCA "permisos" (Modelo).
         // La Vista no debe conocer clases de CapaModelo_Navegador.
-        private ClsCtrlPermiso _Permisos = new ClsCtrlPermiso();
+        private ClsCtrlPermiso _CtrlPermiso = new ClsCtrlPermiso();
 
         public ClsCrudSeguridad(string Usuario, string Modulo)
         {
@@ -34,7 +34,7 @@ namespace CapaVista_Navegador
             //validaciones por try y catch
             try
             {
-                return _Permisos.NavegadorFuncValidarAcceso(_Usuario, _Modulo);   //llama a la funcion de validar acceso
+                return _CtrlPermiso.NavegadorFuncValidarAcceso(_Usuario, _Modulo);   //llama a la funcion de validar acceso
             }
             catch (Exception Excepcion)
             {

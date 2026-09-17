@@ -10,7 +10,7 @@ namespace CapaVista_Navegador
     public partial class FrmCrud : Form
     {
         // CAMBIAR AQUÍ MANUALMENTE LA TABLA A LA QUE SE DESEA HACER CRUD
-        private string _NombreTabla = "tbl_empleados";
+        private string _NombreTabla = "tbl_empleado";
 
         private ClsCtrlTabla _CtrlTabla = new ClsCtrlTabla();
         private ClsCrudGrid _Grid;
@@ -30,7 +30,7 @@ namespace CapaVista_Navegador
                 if (!string.IsNullOrWhiteSpace(value))
                 {
                     _NombreTabla = value.Trim();
-                    NavegadorMetConsultarTabla();
+                    NavegadorFuncConsultarTabla();
                 }
             }
         }
@@ -74,21 +74,30 @@ namespace CapaVista_Navegador
             NavegadorBtnFin.Click += (Origen, Evento) => _Grid.NavegadorMetFin();
         }
 
-        private void NavegadorMetConsultarTabla()
+        private bool NavegadorFuncConsultarTabla()
         {
             try
             {
-                DataTable Datos = _CtrlTabla.NavegadorMetLlenarDgv(_NombreTabla);
+                DataTable Datos = _CtrlTabla.NavegadorFuncLlenarDgv(_NombreTabla);
                 _EsquemaActual = _SelectorLlave.NavegadorFuncObtenerEsquemaConLlaves(_NombreTabla);
 
                 _Grid.NavegadorMetMostrar(Datos);
                 NavegadorMetPosicionar();
 
-                Text = "1001 – Crud" + _NombreTabla;
+                Text = "1001 – Crud " + _NombreTabla;
+                return true;
             }
             catch (Exception Excepcion)
             {
-                MessageBox.Show(_Acciones.NavegadorFuncMensajeAmigable(Excepcion), "Error al consultar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _EsquemaActual = null;
+                _Formulario.NavegadorMetCerrar();
+                _Grid.NavegadorMetOcultar();
+                MessageBox.Show(
+                    _Acciones.NavegadorFuncMensajeAmigable(Excepcion),
+                    "Error al consultar",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return false;
             }
         }
 
@@ -118,10 +127,29 @@ namespace CapaVista_Navegador
         {
             if (!_Seguridad.NavegadorFuncTieneAcceso()) return;
 
-            NavegadorMetConsultarTabla();
+            if (!NavegadorFuncConsultarTabla())
+                return;
+
             _PkModificar = null;
 
-            _Formulario.NavegadorMetAbrir(_NombreTabla, _EsquemaActual, false, null, _Grid, NavegadorFuncObtenerInicioContenido());
+            if (_EsquemaActual == null || _EsquemaActual.Count == 0)
+            {
+                MessageBox.Show(
+                    "No se pudo obtener la estructura de la tabla indicada.",
+                    "Ingresar registro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            _Formulario.NavegadorMetAbrir(
+                _NombreTabla,
+                _EsquemaActual,
+                false,
+                null,
+                _Grid,
+                NavegadorFuncObtenerInicioContenido());
+
             NavegadorMetPosicionar();
         }
 
@@ -130,7 +158,7 @@ namespace CapaVista_Navegador
             if (!_Seguridad.NavegadorFuncTieneAcceso()) return;
 
             _Formulario.NavegadorMetCerrar();
-            NavegadorMetConsultarTabla();
+            NavegadorFuncConsultarTabla();
         }
 
         private void NavegadorMetRefrescarClick(object Sender, EventArgs Evento)
@@ -145,11 +173,17 @@ namespace CapaVista_Navegador
         {
             if (!_Seguridad.NavegadorFuncTieneAcceso()) return;
 
-            DataGridViewRow Fila = _Grid.NavegadorDgvDatos != null ? _Grid.NavegadorDgvDatos.CurrentRow : null;
+            DataGridViewRow Fila = _Grid.NavegadorDgvDatos != null
+                ? _Grid.NavegadorDgvDatos.CurrentRow
+                : null;
 
             if (Fila == null || Fila.IsNewRow)
             {
-                MessageBox.Show("Seleccione un registro en la tabla para Modificar.", "Modificar registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Seleccione un registro en la tabla para Modificar.",
+                    "Modificar registro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 return;
             }
 
@@ -158,11 +192,22 @@ namespace CapaVista_Navegador
 
             if (_PkModificar.Count == 0)
             {
-                MessageBox.Show("No se pudo obtener la llave primaria del registro seleccionado.", "Modificar registro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "No se pudo obtener la llave primaria del registro seleccionado.",
+                    "Modificar registro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
-            _Formulario.NavegadorMetAbrir(_NombreTabla, _EsquemaActual, true, Fila, _Grid, NavegadorFuncObtenerInicioContenido());
+            _Formulario.NavegadorMetAbrir(
+                _NombreTabla,
+                _EsquemaActual,
+                true,
+                Fila,
+                _Grid,
+                NavegadorFuncObtenerInicioContenido());
+
             NavegadorMetPosicionar();
         }
 
@@ -170,32 +215,56 @@ namespace CapaVista_Navegador
         {
             if (!_Seguridad.NavegadorFuncTieneAcceso()) return;
 
-            DataGridViewRow Fila = _Grid.NavegadorDgvDatos != null ? _Grid.NavegadorDgvDatos.CurrentRow : null;
+            DataGridViewRow Fila = _Grid.NavegadorDgvDatos != null
+                ? _Grid.NavegadorDgvDatos.CurrentRow
+                : null;
 
             if (Fila == null || Fila.IsNewRow)
             {
-                MessageBox.Show("Seleccione un registro en la tabla para eliminar.", "Eliminar registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Seleccione un registro en la tabla para eliminar.",
+                    "Eliminar registro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 return;
             }
 
-            Dictionary<string, string> ClavesPrimarias = _Grid.NavegadorFuncObtenerClavesPrimarias(_EsquemaActual, Fila);
+            Dictionary<string, string> ClavesPrimarias =
+                _Grid.NavegadorFuncObtenerClavesPrimarias(_EsquemaActual, Fila);
+
             string Mensaje;
 
             try
             {
-                if (_Acciones.NavegadorMetEliminar(_NombreTabla, ClavesPrimarias, out Mensaje))
+                if (_Acciones.NavegadorFuncEliminar(
+                    _NombreTabla,
+                    ClavesPrimarias,
+                    out Mensaje))
                 {
-                    MessageBox.Show("Registro eliminado correctamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    NavegadorMetConsultarTabla();
+                    MessageBox.Show(
+                        "Registro eliminado correctamente.",
+                        "Eliminación exitosa",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                    NavegadorFuncConsultarTabla();
                 }
                 else if (!string.IsNullOrEmpty(Mensaje))
                 {
-                    MessageBox.Show(Mensaje, "Eliminar registro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(
+                        Mensaje,
+                        "Eliminar registro",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
                 }
             }
             catch (Exception Excepcion)
             {
-                MessageBox.Show(_Acciones.NavegadorFuncMensajeAmigable(Excepcion), "Error al eliminar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    _Acciones.NavegadorFuncMensajeAmigable(Excepcion),
+                    "Error al eliminar",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -203,30 +272,55 @@ namespace CapaVista_Navegador
         {
             if (!_Formulario.Visible)
             {
-                MessageBox.Show("Abra un registro con Ingresar o Modificar antes de guardar.", "Guardar registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Abra un registro con Ingresar o Modificar antes de guardar.",
+                    "Guardar registro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 return;
             }
 
-            Dictionary<string, string> Datos = _Formulario.NavegadorFuncObtenerDatos();
+            Dictionary<string, string> Datos =
+                _Formulario.NavegadorFuncObtenerDatos();
+
             string Mensaje;
 
             try
             {
-                if (_Acciones.NavegadorMetGuardar(_NombreTabla, _EsquemaActual, Datos, _Formulario.ModoModificar, _PkModificar, out Mensaje))
+                if (_Acciones.NavegadorFuncGuardar(
+                    _NombreTabla,
+                    _EsquemaActual,
+                    Datos,
+                    _Formulario.ModoModificar,
+                    _PkModificar,
+                    out Mensaje))
                 {
-                    MessageBox.Show("Registro guardado correctamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(
+                        "Registro guardado correctamente.",
+                        "Guardado exitoso",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
                     _Formulario.NavegadorMetCerrar();
                     _PkModificar = null;
-                    NavegadorMetConsultarTabla();
+                    NavegadorFuncConsultarTabla();
                 }
                 else if (!string.IsNullOrEmpty(Mensaje))
                 {
-                    MessageBox.Show(Mensaje, "Guardar registro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(
+                        Mensaje,
+                        "Guardar registro",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
                 }
             }
             catch (Exception Excepcion)
             {
-                MessageBox.Show(_Acciones.NavegadorFuncMensajeAmigable(Excepcion), "Error al guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    _Acciones.NavegadorFuncMensajeAmigable(Excepcion),
+                    "Error al guardar",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 

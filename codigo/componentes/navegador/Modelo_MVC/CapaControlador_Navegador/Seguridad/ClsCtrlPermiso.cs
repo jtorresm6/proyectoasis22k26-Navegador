@@ -15,6 +15,7 @@ namespace CapaControlador_Navegador
     {
         //Se llama las funciones del modelo
         private ClsPermisos _Permisos = new ClsPermisos();
+
         //Este metodo recibe el usuario y devuelve si tiene acceso o no de manera booleana 
         public bool NavegadorFuncValidarAcceso(string Usuario, string Modulo)
         {

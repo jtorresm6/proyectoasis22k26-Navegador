@@ -9,51 +9,51 @@ namespace CapaVista_Navegador
     public static class ClsTipoColumna
     {
         //Ve si el dato es tipo fecha, dibujar un DateTimePicker
-        public static bool NavegadorFuncEsFecha(ClsColumnaInfo Col)
+        public static bool NavegadorFuncEsFecha(ClsColumnaInfo Columna)
         {
-            string TipoNet = (Col.TipoNet ?? "").ToLowerInvariant();
+            string TipoNet = (Columna.TipoNet ?? "").ToLowerInvariant();
 
             if (TipoNet == "datetime" || TipoNet == "date" || TipoNet == "timespan")
                 return true;
 
-            string TipoDato = (Col.TipoDato ?? "").ToLowerInvariant();
+            string TipoDato = (Columna.TipoDato ?? "").ToLowerInvariant();
             return TipoDato.Contains("date") || TipoDato.Contains("time") || TipoDato.Contains("timestamp");
         }
 
         //Si ve que es booleano, dibujar un checkbox para solo seleccionar las opciones posibles
-        public static bool NavegadorFuncEsBooleano(ClsColumnaInfo Col)
+        public static bool NavegadorFuncEsBooleano(ClsColumnaInfo Columna)
         {
-            string TipoNet = (Col.TipoNet ?? "").ToLowerInvariant();
+            string TipoNet = (Columna.TipoNet ?? "").ToLowerInvariant();
 
             if (TipoNet == "boolean")
                 return true;
 
-            string ColumnaTexto = (Col.TipoColumnaTexto ?? "").ToLowerInvariant().Replace(" ", "");
+            string ColumnaTexto = (Columna.TipoColumnaTexto ?? "").ToLowerInvariant().Replace(" ", "");
 
             if (ColumnaTexto.Contains("tinyint(1)") || ColumnaTexto == "bool" || ColumnaTexto == "boolean")
                 return true;
 
-            string TipoDato = (Col.TipoDato ?? "").ToLowerInvariant();
+            string TipoDato = (Columna.TipoDato ?? "").ToLowerInvariant();
 
             if (TipoDato == "bit" || TipoDato == "boolean" || TipoDato == "bool")
                 return true;
 
-            if ((TipoDato == "tinyint" || TipoDato.Contains("tinyint")) && Col.TamanoColumna == 1)
+            if ((TipoDato == "tinyint" || TipoDato.Contains("tinyint")) && Columna.TamanoColumna == 1)
                 return true;
 
             return false;
         }
 
         //Si ve que es numerico, dibujar un campo numerico y que no acepte letras
-        public static bool NavegadorFuncEsNumerico(ClsColumnaInfo Col)
+        public static bool NavegadorFuncEsNumerico(ClsColumnaInfo Columna)
         {
-            string TipoNet = (Col.TipoNet ?? "").ToLowerInvariant();
-            string[] netNumericos = { "int16", "int32", "int64", "byte", "sbyte", "decimal", "double", "single" };
+            string TipoNet = (Columna.TipoNet ?? "").ToLowerInvariant();
+            string[] NetNumericos = { "int16", "int32", "int64", "byte", "sbyte", "decimal", "double", "single" };
 
-            if (netNumericos.Contains(TipoNet))
+            if (NetNumericos.Contains(TipoNet))
                 return true;
 
-            string TipoDato = (Col.TipoDato ?? "").ToLowerInvariant();
+            string TipoDato = (Columna.TipoDato ?? "").ToLowerInvariant();
             //una vez ya verificado crea casos sobre el tipo de dato
             switch (TipoDato)
             {

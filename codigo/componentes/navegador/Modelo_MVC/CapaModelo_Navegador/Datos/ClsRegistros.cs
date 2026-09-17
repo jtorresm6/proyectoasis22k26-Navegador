@@ -9,31 +9,31 @@ namespace CapaModelo_Navegador
     // Todo lo que consulta o modifica los datos de una tabla (no metadatos)
     public class ClsRegistros
     {
-        ClsConexionBD _ConexionBD = new ClsConexionBD();
+        private ClsConexionBD _ConexionBD = new ClsConexionBD();
 
         public OdbcDataAdapter NavegadorFuncLlenarTbl(string NombreTabla)
         {
             ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
             string ConsultaSQL = "SELECT * FROM " + NombreTabla;
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
-            return new OdbcDataAdapter(ConsultaSQL, NavegadorFuncConexion);
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
+            return new OdbcDataAdapter(ConsultaSQL, Conexion);
         }
 
         public DataTable NavegadorFuncConsultarTodo(string NombreTabla)
         {
             ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
             string ConsultaSQL = "SELECT * FROM " + NombreTabla;
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
             DataTable TablaDatos = new DataTable();
 
             try
             {
-                using (OdbcDataAdapter AdaptadorDatos = new OdbcDataAdapter(ConsultaSQL, NavegadorFuncConexion))
+                using (OdbcDataAdapter AdaptadorDatos = new OdbcDataAdapter(ConsultaSQL, Conexion))
                     AdaptadorDatos.Fill(TablaDatos);
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
 
             return TablaDatos;
@@ -57,11 +57,11 @@ namespace CapaModelo_Navegador
             }
 
             string ConsultaSQL = "SELECT COUNT(*) FROM " + NombreTabla + " WHERE " + Condiciones;
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion))
                 {
                     for (int Indice = 0; Indice < ValoresPK.Length; Indice++)
                         Comando.Parameters.AddWithValue("@p" + Indice, ValoresPK[Indice]);
@@ -72,7 +72,7 @@ namespace CapaModelo_Navegador
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
         }
 
@@ -82,11 +82,11 @@ namespace CapaModelo_Navegador
             ClsValidaciones.NavegadorMetValidarIdentificador(NombreCampo);
 
             string ConsultaSQL = "SELECT COUNT(*) FROM " + NombreTabla + " WHERE " + NombreCampo + " = ?";
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion))
                 {
                     Comando.Parameters.AddWithValue("@valor", Valor);
                     int Cantidad = Convert.ToInt32(Comando.ExecuteScalar());
@@ -95,7 +95,7 @@ namespace CapaModelo_Navegador
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
         }
 
@@ -121,18 +121,18 @@ namespace CapaModelo_Navegador
             }
 
             string ConsultaSQL = "INSERT INTO " + NombreTabla + " (" + Columnas + ") VALUES (" + Valores + ")";
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion))
                 {
-                    int Pos = 0;
+                    int Posicion = 0;
 
                     foreach (KeyValuePair<string, string> Dato in Datos)
                     {
-                        Comando.Parameters.AddWithValue("@p" + Pos, Dato.Value);
-                        Pos++;
+                        Comando.Parameters.AddWithValue("@p" + Posicion, Dato.Value);
+                        Posicion++;
                     }
 
                     return Comando.ExecuteNonQuery() > 0;
@@ -140,7 +140,7 @@ namespace CapaModelo_Navegador
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
         }
 
@@ -163,33 +163,33 @@ namespace CapaModelo_Navegador
 
             if (ValoresActualizar.Count == 0) return false;
 
-            StringBuilder Sql = new StringBuilder("UPDATE " + NombreTabla + " SET ");
+            StringBuilder ConsultaSQL = new StringBuilder("UPDATE " + NombreTabla + " SET ");
             int Indice = 0;
 
             foreach (KeyValuePair<string, string> Dato in ValoresActualizar)
             {
-                if (Indice > 0) Sql.Append(", ");
-                Sql.Append(Dato.Key + " = ?");
+                if (Indice > 0) ConsultaSQL.Append(", ");
+                ConsultaSQL.Append(Dato.Key + " = ?");
                 Indice++;
             }
 
-            Sql.Append(" WHERE ");
+            ConsultaSQL.Append(" WHERE ");
             Indice = 0;
 
             foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
             {
                 ClsValidaciones.NavegadorMetValidarIdentificador(Clave.Key);
 
-                if (Indice > 0) Sql.Append(" AND ");
-                Sql.Append(Clave.Key + " = ?");
+                if (Indice > 0) ConsultaSQL.Append(" AND ");
+                ConsultaSQL.Append(Clave.Key + " = ?");
                 Indice++;
             }
 
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(Sql.ToString(), NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL.ToString(), Conexion))
                 {
                     foreach (KeyValuePair<string, string> Dato in ValoresActualizar)
                         Comando.Parameters.AddWithValue("@valor_" + Dato.Key, Dato.Value);
@@ -202,37 +202,33 @@ namespace CapaModelo_Navegador
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
         }
-        /*
-            Inicio de aporte de código
-            Mario Alberto Taracena Pérez
-            0901-23-9335
-         */
+
         public bool NavegadorFuncEliminarRegistro(string NombreTabla, Dictionary<string, string> ClavesPrimarias)
         {
             if (ClavesPrimarias == null || ClavesPrimarias.Count == 0) return false;
 
             ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
 
-            StringBuilder Sql = new StringBuilder("DELETE FROM " + NombreTabla + " WHERE ");
+            StringBuilder ConsultaSQL = new StringBuilder("DELETE FROM " + NombreTabla + " WHERE ");
             int Indice = 0;
 
             foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
             {
                 ClsValidaciones.NavegadorMetValidarIdentificador(Clave.Key);
 
-                if (Indice > 0) Sql.Append(" AND ");
-                Sql.Append(Clave.Key + " = ?");
+                if (Indice > 0) ConsultaSQL.Append(" AND ");
+                ConsultaSQL.Append(Clave.Key + " = ?");
                 Indice++;
             }
 
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(Sql.ToString(), NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL.ToString(), Conexion))
                 {
                     foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
                         Comando.Parameters.AddWithValue("@pk_" + Clave.Key, Clave.Value);
@@ -242,8 +238,34 @@ namespace CapaModelo_Navegador
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
+        }
+
+        public DataTable NavegadorFuncFiltrarDatos(string NombreTabla, string Columna, string Valor)
+        {
+            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
+            ClsValidaciones.NavegadorMetValidarIdentificador(Columna);
+
+            string ConsultaSQL = "SELECT * FROM " + NombreTabla + " WHERE " + Columna + " LIKE ?";
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
+            DataTable TablaDatos = new DataTable();
+
+            try
+            {
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion))
+                {
+                    Comando.Parameters.AddWithValue("@valor", "%" + Valor + "%");
+                    using (OdbcDataAdapter AdaptadorDatos = new OdbcDataAdapter(Comando))
+                        AdaptadorDatos.Fill(TablaDatos);
+                }
+            }
+            finally
+            {
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
+            }
+
+            return TablaDatos;
         }
 
         public OdbcDataAdapter NavegadorFuncFiltrarTbl(string NombreTabla, string Columna, string Valor)
@@ -252,35 +274,35 @@ namespace CapaModelo_Navegador
             ClsValidaciones.NavegadorMetValidarIdentificador(Columna);
 
             string ConsultaSQL = "SELECT * FROM " + NombreTabla + " WHERE " + Columna + " LIKE ?";
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
-            OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion);
+            OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion);
             Comando.Parameters.AddWithValue("@valor", "%" + Valor + "%");
 
             return new OdbcDataAdapter(Comando);
         }
 
-        public void NavegadorMetEjecutarSql(string Sql)
+        public void NavegadorMetEjecutarSql(string ConsultaSQL)
         {
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(Sql, NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion))
                     Comando.ExecuteNonQuery();
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
         }
 
-        public void NavegadorMetGuardarDatos(string Query)
+        public void NavegadorMetGuardarDatos(string ConsultaSQL)
         {
             try
             {
-                using (OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion())
-                using (OdbcCommand Comando = new OdbcCommand(Query, NavegadorFuncConexion))
+                using (OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion())
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion))
                     Comando.ExecuteNonQuery();
             }
             catch (Exception Excepcion)
@@ -288,10 +310,5 @@ namespace CapaModelo_Navegador
                 throw new Exception("Error al ejecutar la sentencia en la base de datos: " + Excepcion.Message, Excepcion);
             }
         }
-        /*
-            Fin de aporte de código
-            Mario Alberto Taracena Pérez
-            0901-23-9335
-         */
     }
 }

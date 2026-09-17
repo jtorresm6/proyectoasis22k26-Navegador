@@ -41,10 +41,10 @@ namespace CapaControlador_Navegador
         // Se deja igual que antes, pendiente de conectar con la tabla real de permisos
         public bool NavegadorFuncGuardarRelacionUsuarioPermiso(int IdUsuario, int IdAplicacion, int IdModulo, int IdPermiso)
         {
-            bool ExisteApp = _Usuarios.NavegadorFuncExisteAplicacion(IdAplicacion);
-            bool ExisteMod = _Usuarios.NavegadorFuncExisteModulo(IdModulo);
+            bool ExisteAplicacion = _Usuarios.NavegadorFuncExisteAplicacion(IdAplicacion);
+            bool ExisteModulo = _Usuarios.NavegadorFuncExisteModulo(IdModulo);
 
-            if (ExisteApp && ExisteMod)
+            if (ExisteAplicacion && ExisteModulo)
                 return _Usuarios.NavegadorFuncGuardarUsuarioPermisoBD(IdUsuario, IdAplicacion, IdModulo, IdPermiso);
 
             return false;
