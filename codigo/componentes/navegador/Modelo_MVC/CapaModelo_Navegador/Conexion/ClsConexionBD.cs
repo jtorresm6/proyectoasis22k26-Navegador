@@ -26,25 +26,28 @@ namespace CapaModelo_Navegador
         {
             //Se crea la conexión utilizando el DSN configurado para la base de datos.
             //El valor entre corchetes debe sustituirse por el nombre correspondiente de la base de datos.
-            
-            OdbcConnection Conexion = new OdbcConnection("Dsn=EmbutidosS.A");
+
+            OdbcConnection Conexion = new OdbcConnection("Dsn=umg_didactica");
 
             try
             {
                 //Intenta abrir la conexión con la base de datos.
                 Conexion.Open();
             }
-            catch (OdbcException)
+            catch (OdbcException Excepcion)
             {
                 // Si ocurre un error relacionado con la conexión ODBC,
                 // Se informa del problema medainte un mensaje de consola (cambiar por un mensaje en pantalla).
-                
-                Console.WriteLine("Error al conectar a la base de datos");
+
+                throw new Exception(
+                    "Error al conectar a la base de datos: " +
+                    Excepcion.Message,
+                    Excepcion);
             }
 
-           //Se devuleve la conexión creada para que pueda ser utilizada
-           //Por las clases que necesiten acceder a la base de datos.
-            
+            //Se devuleve la conexión creada para que pueda ser utilizada
+            //Por las clases que necesiten acceder a la base de datos.
+
             return Conexion;
         }
 
@@ -57,7 +60,7 @@ namespace CapaModelo_Navegador
             {
                 // Primero se verifica qque la conexión exista y que no
                 // Se encuentre cerrada antes de intentar cerrarla.
-                
+
                 if (Conexion != null && Conexion.State != System.Data.ConnectionState.Closed)
                 {
                     // Se cierra la conexión para liberar el recurso
@@ -65,12 +68,15 @@ namespace CapaModelo_Navegador
                     Conexion.Close();
                 }
             }
-            catch (OdbcException)
+            catch (OdbcException Excepcion)
             {
                 // Si ocurre un error durante el cierre de la conexión, 
                 // Se muestar un mensaje indicando el problema (Cambiar por un meensaje de error en pantalla).
-                
-                Console.WriteLine("Error al desconectar de la base de datos");
+
+                throw new Exception(
+                    "Error al desconectar de la base de datos: " +
+                    Excepcion.Message,
+                    Excepcion);
             }
         }
     }
