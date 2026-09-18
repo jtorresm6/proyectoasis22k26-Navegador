@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Windows.Forms;
 using CapaControlador_Navegador;
 using CapaEntidades_Navegador;
@@ -173,18 +174,49 @@ namespace CapaVista_Navegador
                     : Grid.NavegadorFuncObtenerValor(Fila, Columna.Nombre)
             };
 
-            //Bloquea las llaves autoincrementales y las llaves en modificacion
-            if ((!Modificar && Columna.EsAutoincremento) ||
-                (Modificar && Columna.EsPK))
+            //Bloquea y genera automaticamente la llave primaria
+            if (!Modificar && Columna.EsPK && !_PkCompuesta)
             {
-                if (!Modificar && Columna.EsAutoincremento)
-                    CampoTexto.Text = "(automático)";
-
+                CampoTexto.Text = NavegadorFuncSiguienteLlave(Columna);
                 CampoTexto.ReadOnly = true;
                 CampoTexto.BackColor = Color.LightGray;
             }
 
+            //Bloquea la llave primaria cuando se modifica
+            if (Modificar && Columna.EsPK)
+            {
+                CampoTexto.ReadOnly = true;
+                CampoTexto.BackColor = Color.LightGray;
+            }
             return CampoTexto;
+        }
+        //Detecta la ultima llave primaria y genera el siguiente valor
+        private string NavegadorFuncSiguienteLlave(ClsColumnaInfo Columna)
+        {
+            try
+            {
+                DataTable TablaDatos = _CtrlTabla.NavegadorFuncLlenarDgv(_Tabla);
+                long UltimaLlave = 0;
+
+                if (TablaDatos != null && TablaDatos.Columns.Contains(Columna.Nombre))
+                {
+                    foreach (DataRow Fila in TablaDatos.Rows)
+                    {
+                        if (Fila[Columna.Nombre] != DBNull.Value &&
+                            long.TryParse(Fila[Columna.Nombre].ToString(), out long Valor) &&
+                            Valor > UltimaLlave)
+                            UltimaLlave = Valor;
+                    }
+                }
+
+                return (UltimaLlave + 1).ToString();
+            }
+            catch (Exception Excepcion)
+            {
+                MessageBox.Show("No se pudo generar la llave automática: " + Excepcion.Message,
+                    "Llave primaria", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return "1";
+            }
         }
 
         //Crea el combo con los valores disponibles de una llave foranea
