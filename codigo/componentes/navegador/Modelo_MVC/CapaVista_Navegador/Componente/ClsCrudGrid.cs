@@ -1,6 +1,6 @@
 ﻿//Donald Estuardo Osorio Pérez 
 //Carnet: 0901-23-17982
-//14/09/2026
+//16/09/2026
 
 //aca comienza la creacion de mi codigo
 using System;
@@ -12,22 +12,24 @@ using CapaEntidades_Navegador;
 
 namespace CapaVista_Navegador
 {
-    // Clase encargada de la gestión integral del DataGridView en el navegador (creación, diseño y navegación)
+    // Se encarga del DataGridView: crearlo, mostrarlo, moverse entre filas
     public class ClsCrudGrid
     {
-        private Form Formulario;
+        // Guardamos el formulario donde se va a dibujar la tabla
+        private Form _Formulario;
 
+        // Propiedad para acceder a la tabla desde fuera si hace falta
         public DataGridView NavegadorDgvDatos { get; private set; }
 
-        // Constructor que recibe el formulario padre donde se alojará el control
-        public ClsCrudGrid(Form _Formulario)
+        public ClsCrudGrid(Form Formulario)
         {
-            this.Formulario = _Formulario;
+            this._Formulario = Formulario;
         }
 
-        // Carga la información desde un DataTable y asegura que la grilla sea solo de lectura
+        // Llena la tabla con los datos que vienen del DataTable y la hace visible
         public void NavegadorMetMostrar(DataTable Datos)
         {
+            // Si la tabla no existe en el form, la creamos
             if (NavegadorDgvDatos == null)
                 NavegadorMetCrearGrid();
 
@@ -35,18 +37,19 @@ namespace CapaVista_Navegador
             NavegadorDgvDatos.Visible = true;
             NavegadorDgvDatos.ReadOnly = true;
 
+            // Bloqueamos las columnas para que el usuario no edite nada directo
             foreach (DataGridViewColumn Columna in NavegadorDgvDatos.Columns)
                 Columna.ReadOnly = true;
         }
 
-        // Oculta el DataGridView si se encuentra instanciado
+        // Oculta la tabla si está creada
         public void NavegadorMetOcultar()
         {
             if (NavegadorDgvDatos != null)
                 NavegadorDgvDatos.Visible = false;
         }
 
-        // Instancia y configura las propiedades visuales y de comportamiento del DataGridView dinámicamente
+        // Instancia el DataGridView y le da las propiedades iniciales del diseño
         private void NavegadorMetCrearGrid()
         {
             NavegadorDgvDatos = new DataGridView();
@@ -60,10 +63,11 @@ namespace CapaVista_Navegador
             NavegadorDgvDatos.BackgroundColor = Color.White;
             NavegadorDgvDatos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 
-            Formulario.Controls.Add(NavegadorDgvDatos);
+            // Lo pegamos al formulario que recibimos en el constructor
+            _Formulario.Controls.Add(NavegadorDgvDatos);
         }
 
-        // Ajusta las dimensiones y la posición vertical del DataGridView según el tamaño del formulario
+        // Acomoda la posición y el tamaño de la tabla según el espacio disponible en pantalla
         public void NavegadorMetPosicionar(int PosicionY)
         {
             if (NavegadorDgvDatos == null || !NavegadorDgvDatos.Visible)
@@ -73,14 +77,15 @@ namespace CapaVista_Navegador
 
             NavegadorDgvDatos.Location = new Point(Margen, PosicionY);
 
+            // Ajustamos el ancho y alto dinámicamente según la ventana
             NavegadorDgvDatos.Size = new Size(
-                Math.Max(100, Formulario.ClientSize.Width - (Margen * 2)),
-                Math.Max(100, Formulario.ClientSize.Height - PosicionY - Margen));
+                Math.Max(100, _Formulario.ClientSize.Width - (Margen * 2)),
+                Math.Max(100, _Formulario.ClientSize.Height - PosicionY - Margen));
 
             NavegadorDgvDatos.BringToFront();
         }
 
-        // Busca la posición de una columna por su DataPropertyName o por su Name
+        // Busca en qué posición de la tabla está una columna por su nombre
         public int NavegadorFuncObtenerIndiceColumna(string NombreCampo)
         {
             if (NavegadorDgvDatos == null)
@@ -88,17 +93,19 @@ namespace CapaVista_Navegador
 
             foreach (DataGridViewColumn Columna in NavegadorDgvDatos.Columns)
             {
+                // Revisamos si coincide con el nombre del mapeo
                 if (string.Equals(Columna.DataPropertyName, NombreCampo, StringComparison.OrdinalIgnoreCase))
                     return Columna.Index;
 
+                // O si coincide con el nombre directo del control
                 if (string.Equals(Columna.Name, NombreCampo, StringComparison.OrdinalIgnoreCase))
                     return Columna.Index;
             }
 
-            return -1;
+            return -1; // Si no la encuentra devuelve -1
         }
 
-        // Retorna el valor string de una celda específica evaluando posibles valores nulos
+        // Saca el texto de una celda en específico recibiendo la fila y el nombre de la columna
         public string NavegadorFuncObtenerValor(DataGridViewRow Fila, string Campo)
         {
             int Indice = NavegadorFuncObtenerIndiceColumna(Campo);
@@ -107,78 +114,97 @@ namespace CapaVista_Navegador
                 return "";
 
             object Valor = Fila.Cells[Indice].Value;
+            // Validamos que no venga nulo ni con vacíos de BD
             return Valor == null || Valor == DBNull.Value ? "" : Convert.ToString(Valor);
         }
 
-        // Extrae las llaves primarias de la fila seleccionada guiándose por el esquema entregado
-        public Dictionary<string, string> NavegadorFuncObtenerClavesPrimarias(List<ClsColumnaInfo> ClsEsquema, DataGridViewRow Fila)
+        // Lee de la fila seleccionada solo las columnas marcadas como PK en el esquema
+        public Dictionary<string, string> NavegadorFuncObtenerClavesPrimarias(List<ClsColumnaInfo> Esquema, DataGridViewRow Fila)
         {
             Dictionary<string, string> Resultado = new Dictionary<string, string>();
 
-            if (ClsEsquema == null || Fila == null)
+            if (Esquema == null || Fila == null)
                 return Resultado;
 
-            foreach (ClsColumnaInfo Col in ClsEsquema)
+            // Recorremos las columnas del esquema y armamos un mapa con las que son Llave Primaria
+            foreach (ClsColumnaInfo Columna in Esquema)
             {
-                if (Col.EsPK)
-                    Resultado[Col.Nombre] = NavegadorFuncObtenerValor(Fila, Col.Nombre);
+                if (Columna.EsPK)
+                    Resultado[Columna.Nombre] = NavegadorFuncObtenerValor(Fila, Columna.Nombre);
             }
 
             return Resultado;
         }
 
-        // Mueve la selección al primer registro
+        // Selecciona la primera fila de la tabla
         public void NavegadorMetInicio()
         {
             NavegadorMetSeleccionar(0);
         }
 
-        // Mueve la selección al registro anterior
+        // Sube una fila en la selección si no estamos al principio
         public void NavegadorMetAnterior()
         {
-            if (NavegadorDgvDatos == null || NavegadorDgvDatos.Rows.Count == 0) return;
+            if (NavegadorDgvDatos == null || NavegadorDgvDatos.Rows.Count == 0)
+                return;
+
             NavegadorMetSeleccionar(Math.Max(0, NavegadorFuncIndiceActual() - 1));
         }
 
-        // Mueve la selección al siguiente registro
+        // Baja una fila en la selección si no llegamos al final
         public void NavegadorMetSiguiente()
         {
-            if (NavegadorDgvDatos == null || NavegadorDgvDatos.Rows.Count == 0) return;
-            NavegadorMetSeleccionar(Math.Min(NavegadorDgvDatos.Rows.Count - 1, NavegadorFuncIndiceActual() + 1));
+            if (NavegadorDgvDatos == null || NavegadorDgvDatos.Rows.Count == 0)
+                return;
+
+            NavegadorMetSeleccionar(
+                Math.Min(NavegadorDgvDatos.Rows.Count - 1, NavegadorFuncIndiceActual() + 1));
         }
 
-        // Mueve la selección al último registro
+        // Selecciona la última fila disponible
         public void NavegadorMetFin()
         {
-            if (NavegadorDgvDatos == null || NavegadorDgvDatos.Rows.Count == 0) return;
+            if (NavegadorDgvDatos == null || NavegadorDgvDatos.Rows.Count == 0)
+                return;
+
             NavegadorMetSeleccionar(NavegadorDgvDatos.Rows.Count - 1);
         }
 
-        // Retorna el índice de la fila actualmente seleccionada
+        // Devuelve el número de fila donde está parado el usuario actualmente
         private int NavegadorFuncIndiceActual()
         {
-            return NavegadorDgvDatos != null && NavegadorDgvDatos.CurrentRow != null ? NavegadorDgvDatos.CurrentRow.Index : 0;
+            return NavegadorDgvDatos != null && NavegadorDgvDatos.CurrentRow != null
+                ? NavegadorDgvDatos.CurrentRow.Index
+                : 0;
         }
 
-        // Selecciona la fila indicada y ajusta el scroll para mantenerla visible en pantalla
+        // Marca la fila seleccionada en pantalla y mueve el scroll para que se vea si está muy abajo
         private void NavegadorMetSeleccionar(int Indice)
         {
-            if (NavegadorDgvDatos == null || !NavegadorDgvDatos.Visible || NavegadorDgvDatos.Rows.Count == 0 || Indice < 0 || Indice >= NavegadorDgvDatos.Rows.Count)
+            if (NavegadorDgvDatos == null ||
+                !NavegadorDgvDatos.Visible ||
+                NavegadorDgvDatos.Rows.Count == 0 ||
+                Indice < 0 ||
+                Indice >= NavegadorDgvDatos.Rows.Count)
                 return;
 
+            // Limpiamos selección anterior y marcamos la nueva
             NavegadorDgvDatos.ClearSelection();
             NavegadorDgvDatos.Rows[Indice].Selected = true;
             NavegadorDgvDatos.CurrentCell = NavegadorDgvDatos.Rows[Indice].Cells[0];
 
+            // Si la fila quedó fuera de la vista actual, movemos el scroll automático
             if (NavegadorDgvDatos.FirstDisplayedScrollingRowIndex > Indice ||
-                NavegadorDgvDatos.FirstDisplayedScrollingRowIndex + NavegadorDgvDatos.DisplayedRowCount(false) <= Indice)
+                NavegadorDgvDatos.FirstDisplayedScrollingRowIndex +
+                NavegadorDgvDatos.DisplayedRowCount(false) <= Indice)
+            {
                 NavegadorDgvDatos.FirstDisplayedScrollingRowIndex = Indice;
+            }
         }
     }
 }
-
 //aca finaliza mi creacion de codigo
 
 //Donald Estuardo Osorio Pérez 
 //Carnet: 0901-23-17982
-//14/09/2026
+//16/09/2026

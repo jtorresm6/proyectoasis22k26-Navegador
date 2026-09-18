@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using CapaModelo_Navegador;
 
 
-//Roger Yankhel de Jesús Herrera Alcántara 0901-23-2429
+//Roger Yankhel de Jesús Herrera Alcántara 0901-23-2429 16/9/2026
 namespace CapaControlador_Navegador
 {
     //Recibe la solicitud de la capa Vista
@@ -15,6 +15,7 @@ namespace CapaControlador_Navegador
     {
         //Se llama las funciones del modelo
         private ClsPermisos _Permisos = new ClsPermisos();
+
         //Este metodo recibe el usuario y devuelve si tiene acceso o no de manera booleana 
         public bool NavegadorFuncValidarAcceso(string Usuario, string Modulo)
         {
@@ -38,4 +39,4 @@ namespace CapaControlador_Navegador
         }
     }
 }
-//Roger Yankhel de Jesús Herrera Alcántara 0901-23-2429
+//Roger Yankhel de Jesús Herrera Alcántara 0901-23-2429 16/9/2026

@@ -1,24 +1,27 @@
 ﻿using System.Data;
 using System.Data.Odbc;
 
+
+// Jose Javier Torres - 0901-23-1091 16/09/2026
+
 namespace CapaModelo_Navegador
 {
     // Todo lo relacionado a usuarios: login y permisos
     public class ClsUsuarios
     {
-        ClsConexionBD _ConexionBD = new ClsConexionBD();
+        private ClsConexionBD _ConexionBD = new ClsConexionBD();
 
         public DataTable NavegadorFuncValidarUsuario(string Usuario, string Clave)
         {
             string ConsultaSQL = "SELECT id_usuario, nombre_usuario, id_rol FROM tbl_usuarios " +
                           "WHERE nombre_usuario = ? AND contrasena = ? AND estado_usuario = 1";
 
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
             DataTable TablaDatos = new DataTable();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion))
                 {
                     Comando.Parameters.AddWithValue("@Usuario", Usuario);
                     Comando.Parameters.AddWithValue("@clave", Clave);
@@ -29,7 +32,7 @@ namespace CapaModelo_Navegador
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
 
             return TablaDatos;
@@ -52,3 +55,5 @@ namespace CapaModelo_Navegador
         }
     }
 }
+
+// Jose Javier Torres - 0901-23-1091 16/09/2026

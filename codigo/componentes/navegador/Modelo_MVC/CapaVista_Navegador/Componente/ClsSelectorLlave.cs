@@ -22,34 +22,34 @@ namespace CapaVista_Navegador
 
         public List<ClsColumnaInfo> NavegadorFuncObtenerEsquemaConLlaves(string Tabla)
         {
-            List<ClsColumnaInfo> ClsEsquema = _CtrlEsquema.NavegadorFuncObtenerEsquemaTabla(Tabla);
+            List<ClsColumnaInfo> Esquema = _CtrlEsquema.NavegadorFuncObtenerEsquemaTabla(Tabla);
 
-            if (ClsEsquema.Exists(ControlActual => ControlActual.EsPK))
-                return ClsEsquema;
+            if (Esquema.Exists(Columna => Columna.EsPK))
+                return Esquema;
 
             List<string> Elegidas;
 
             if (!_ClavesManualesPorTabla.TryGetValue(Tabla, out Elegidas))
             {
-                List<string> Nombres = ClsEsquema.ConvertAll(ControlActual => ControlActual.Nombre);
+                List<string> Nombres = Esquema.ConvertAll(Columna => Columna.Nombre);
 
-                Elegidas = NavegadorMetMostrarSelector(
+                Elegidas = NavegadorFuncMostrarSelector(
                     "No se pudo detectar automáticamente la llave primaria de '" + Tabla + "'.\nSeleccione la o las columnas:",
                     Nombres);
 
                 _ClavesManualesPorTabla[Tabla] = Elegidas;
             }
 
-            foreach (ClsColumnaInfo Col in ClsEsquema)
+            foreach (ClsColumnaInfo Columna in Esquema)
             {
-                if (Elegidas.Contains(Col.Nombre, StringComparer.OrdinalIgnoreCase))
-                    Col.EsPK = true;
+                if (Elegidas.Contains(Columna.Nombre, StringComparer.OrdinalIgnoreCase))
+                    Columna.EsPK = true;
             }
 
-            return ClsEsquema;
+            return Esquema;
         }
 
-        private List<string> NavegadorMetMostrarSelector(string Mensaje, List<string> Opciones)
+        private List<string> NavegadorFuncMostrarSelector(string Mensaje, List<string> Opciones)
         {
             List<string> Seleccion = new List<string>();
 
@@ -64,12 +64,14 @@ namespace CapaVista_Navegador
                 Dialogo.MaximizeBox = false;
 
                 Label NavegadorLblMensaje = new Label();
+                NavegadorLblMensaje.Name = "NavegadorLblMensaje";
                 NavegadorLblMensaje.Text = Mensaje;
                 NavegadorLblMensaje.Location = new Point(10, 10);
                 NavegadorLblMensaje.Size = new Size(340, 40);
                 Dialogo.Controls.Add(NavegadorLblMensaje);
 
                 CheckedListBox NavegadorClbOpciones = new CheckedListBox();
+                NavegadorClbOpciones.Name = "NavegadorClbOpciones";
                 NavegadorClbOpciones.Location = new Point(10, 55);
                 NavegadorClbOpciones.Size = new Size(340, 260);
 
@@ -79,6 +81,7 @@ namespace CapaVista_Navegador
                 Dialogo.Controls.Add(NavegadorClbOpciones);
 
                 Button NavegadorBtnAceptar = new Button();
+                NavegadorBtnAceptar.Name = "NavegadorBtnAceptar";
                 NavegadorBtnAceptar.Text = "Aceptar";
                 NavegadorBtnAceptar.Location = new Point(190, 325);
                 NavegadorBtnAceptar.DialogResult = DialogResult.OK;

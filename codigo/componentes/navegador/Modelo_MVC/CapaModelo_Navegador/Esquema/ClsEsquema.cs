@@ -1,4 +1,11 @@
-﻿using System;
+/*
+ * Nombre: Gabriel André Guillén Pocón
+ * Carnet: 0901-23-420 (placeholder)
+ * Fecha: 16/09/2026
+ * Descripción: Clase encargada de manejar el esquema de la base de datos (tablas, columnas, llaves).
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
@@ -12,6 +19,7 @@ namespace CapaModelo_Navegador
     {
         ClsConexionBD _ConexionBD = new ClsConexionBD();
 
+        // Este método nos devuelve una lista con todos los nombres de las tablas de la base de datos
         public List<string> NavegadorFuncObtenerTablas()
         {
             List<string> Tablas = new List<string>();
@@ -47,6 +55,7 @@ namespace CapaModelo_Navegador
             return Tablas;
         }
 
+        // Con este método, si le pasamos el nombre de una tabla, nos da todos los nombres de sus columnas
         public List<string> NavegadorFuncObtenerColumnas(string NombreTabla)
         {
             List<string> Columnas = new List<string>();
@@ -375,6 +384,7 @@ namespace CapaModelo_Navegador
             }
         }
 
+        // Función para evitar errores si la columna viene nula desde la base de datos
         private string NavegadorFuncValorSeguro(DataRow Fila, string Columna)
         {
             if (!Fila.Table.Columns.Contains(Columna) || Fila[Columna] == DBNull.Value)
@@ -384,3 +394,9 @@ namespace CapaModelo_Navegador
         }
     }
 }
+
+/*
+ * Fin de la clase ClsEsquema
+ * Nombre: Gabriel André Guillén Pocón
+ * Fecha: 16/09/2026
+ */

@@ -27,7 +27,7 @@ namespace CapaModelo_Navegador
             //Se crea la conexión utilizando el DSN configurado para la base de datos.
             //El valor entre corchetes debe sustituirse por el nombre correspondiente de la base de datos.
             
-            OdbcConnection Conexion = new OdbcConnection("Dsn=[Nombre_Base_De_Datos]");
+            OdbcConnection Conexion = new OdbcConnection("Dsn=EmbutidosS.A");
 
             try
             {

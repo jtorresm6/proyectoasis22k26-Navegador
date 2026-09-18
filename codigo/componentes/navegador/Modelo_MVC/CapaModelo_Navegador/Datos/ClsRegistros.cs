@@ -6,38 +6,76 @@ using System.Text;
 
 namespace CapaModelo_Navegador
 {
-    // Todo lo que consulta o modifica los datos de una tabla (no metadatos)
     public class ClsRegistros
     {
-        ClsConexionBD _ConexionBD = new ClsConexionBD();
+        private ClsConexionBD _ConexionBD = new ClsConexionBD();
+
+        // ====================================================================
+        // Nombre:        Mario Alberto Taracena Pérez
+        // Carnet:        0901-23-9335
+        // Fecha:         17/09/2026
+        // Función:       NavegadorFuncLlenarTbl
+        // Descripción:   Obtiene todos los registros de una tabla de la base
+        //                de datos mediante una consulta SELECT y devuelve un
+        //                adaptador para manejar los datos obtenidos.
+        // Parámetros:    - NombreTabla: Nombre de la tabla que se desea consultar.
+        // Retorna:       OdbcDataAdapter con los registros obtenidos de la tabla.
+        // ====================================================================
 
         public OdbcDataAdapter NavegadorFuncLlenarTbl(string NombreTabla)
         {
             ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
             string ConsultaSQL = "SELECT * FROM " + NombreTabla;
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
-            return new OdbcDataAdapter(ConsultaSQL, NavegadorFuncConexion);
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
+            return new OdbcDataAdapter(ConsultaSQL, Conexion);
         }
+
+        // ====================================================================
+        // Nombre:        Mario Alberto Taracena Pérez
+        // Carnet:        0901-23-9335
+        // Fecha:         17/09/2026
+        // Función:       NavegadorFuncConsultarTodo
+        // Descripción:   Consulta todos los registros de una tabla y almacena
+        //                los resultados en un DataTable para posteriormente
+        //                devolverlos al programa.
+        // Parámetros:    - NombreTabla: Nombre de la tabla que se desea consultar.
+        // Retorna:       DataTable que contiene todos los registros de la tabla.
+        // ====================================================================
 
         public DataTable NavegadorFuncConsultarTodo(string NombreTabla)
         {
             ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
             string ConsultaSQL = "SELECT * FROM " + NombreTabla;
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
             DataTable TablaDatos = new DataTable();
 
             try
             {
-                using (OdbcDataAdapter AdaptadorDatos = new OdbcDataAdapter(ConsultaSQL, NavegadorFuncConexion))
+                using (OdbcDataAdapter AdaptadorDatos = new OdbcDataAdapter(ConsultaSQL, Conexion))
                     AdaptadorDatos.Fill(TablaDatos);
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
 
             return TablaDatos;
         }
+
+        // ====================================================================
+        // Nombre:        Mario Alberto Taracena Pérez
+        // Carnet:        0901-23-9335
+        // Fecha:         17/09/2026
+        // Función:       NavegadorFuncExisteLlavePrimaria
+        // Descripción:   Verifica si existe un registro en la base de datos
+        //                utilizando los campos y valores correspondientes a
+        //                la llave primaria.
+        // Parámetros:    - NombreTabla: Nombre de la tabla donde se realizará la búsqueda.
+        //                - CamposPK: Arreglo con los nombres de los campos de la llave primaria.
+        //                - ValoresPK: Arreglo con los valores de la llave primaria.
+        // Retorna:       True si existe un registro con la llave primaria indicada,
+        //                False si no existe o los datos proporcionados no son válidos.
+        // ====================================================================
 
         public bool NavegadorFuncExisteLlavePrimaria(string NombreTabla, string[] CamposPK, string[] ValoresPK)
         {
@@ -57,11 +95,11 @@ namespace CapaModelo_Navegador
             }
 
             string ConsultaSQL = "SELECT COUNT(*) FROM " + NombreTabla + " WHERE " + Condiciones;
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion))
                 {
                     for (int Indice = 0; Indice < ValoresPK.Length; Indice++)
                         Comando.Parameters.AddWithValue("@p" + Indice, ValoresPK[Indice]);
@@ -72,9 +110,24 @@ namespace CapaModelo_Navegador
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
         }
+
+        // ====================================================================
+        // Nombre:        Mario Alberto Taracena Pérez
+        // Carnet:        0901-23-9335
+        // Fecha:         17/09/2026
+        // Función:       NavegadorFuncExisteValorCampo
+        // Descripción:   Verifica si existe al menos un registro que contenga
+        //                un valor específico dentro de un campo determinado
+        //                de una tabla.
+        // Parámetros:    - NombreTabla: Nombre de la tabla donde se realizará la búsqueda.
+        //                - NombreCampo: Nombre del campo donde se buscará el valor.
+        //                - Valor: Valor que se desea comprobar en el campo.
+        // Retorna:       True si existe un registro con el valor indicado,
+        //                False si no existe.
+        // ====================================================================
 
         public bool NavegadorFuncExisteValorCampo(string NombreTabla, string NombreCampo, string Valor)
         {
@@ -82,11 +135,11 @@ namespace CapaModelo_Navegador
             ClsValidaciones.NavegadorMetValidarIdentificador(NombreCampo);
 
             string ConsultaSQL = "SELECT COUNT(*) FROM " + NombreTabla + " WHERE " + NombreCampo + " = ?";
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion))
                 {
                     Comando.Parameters.AddWithValue("@valor", Valor);
                     int Cantidad = Convert.ToInt32(Comando.ExecuteScalar());
@@ -95,9 +148,24 @@ namespace CapaModelo_Navegador
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
         }
+
+        // ====================================================================
+        // Nombre:        Mario Alberto Taracena Pérez
+        // Carnet:        0901-23-9335
+        // Fecha:         17/09/2026
+        // Función:       NavegadorFuncInsertarRegistro
+        // Descripción:   Inserta un nuevo registro en una tabla de la base de
+        //                datos utilizando los campos y valores proporcionados
+        //                mediante un diccionario y una consulta parametrizada.
+        // Parámetros:    - NombreTabla: Nombre de la tabla donde se insertará el registro.
+        //                - Datos: Diccionario que contiene los nombres de los campos
+        //                  y los valores que serán insertados.
+        // Retorna:       True si se insertó correctamente el registro,
+        //                False si no se pudo realizar la inserción.
+        // ====================================================================
 
         public bool NavegadorFuncInsertarRegistro(string NombreTabla, Dictionary<string, string> Datos)
         {
@@ -121,18 +189,18 @@ namespace CapaModelo_Navegador
             }
 
             string ConsultaSQL = "INSERT INTO " + NombreTabla + " (" + Columnas + ") VALUES (" + Valores + ")";
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion))
                 {
-                    int Pos = 0;
+                    int Posicion = 0;
 
                     foreach (KeyValuePair<string, string> Dato in Datos)
                     {
-                        Comando.Parameters.AddWithValue("@p" + Pos, Dato.Value);
-                        Pos++;
+                        Comando.Parameters.AddWithValue("@p" + Posicion, Dato.Value);
+                        Posicion++;
                     }
 
                     return Comando.ExecuteNonQuery() > 0;
@@ -140,9 +208,25 @@ namespace CapaModelo_Navegador
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
         }
+
+        // ====================================================================
+        // Nombre:        Mario Alberto Taracena Pérez
+        // Carnet:        0901-23-9335
+        // Fecha:         17/09/2026
+        // Función:       NavegadorFuncActualizarRegistro
+        // Descripción:   Actualiza los valores de un registro existente en la
+        //                base de datos utilizando sus llaves primarias como
+        //                condición para identificar el registro a modificar.
+        // Parámetros:    - NombreTabla: Nombre de la tabla donde se actualizará el registro.
+        //                - Valores: Diccionario con los campos y valores que se desean actualizar.
+        //                - ClavesPrimarias: Diccionario con los campos y valores de las
+        //                  llaves primarias utilizadas para identificar el registro.
+        // Retorna:       True si se actualizó correctamente uno o más registros,
+        //                False si no se realizó ninguna actualización.
+        // ====================================================================
 
         public bool NavegadorFuncActualizarRegistro(string NombreTabla, Dictionary<string, string> Valores, Dictionary<string, string> ClavesPrimarias)
         {
@@ -163,33 +247,33 @@ namespace CapaModelo_Navegador
 
             if (ValoresActualizar.Count == 0) return false;
 
-            StringBuilder Sql = new StringBuilder("UPDATE " + NombreTabla + " SET ");
+            StringBuilder ConsultaSQL = new StringBuilder("UPDATE " + NombreTabla + " SET ");
             int Indice = 0;
 
             foreach (KeyValuePair<string, string> Dato in ValoresActualizar)
             {
-                if (Indice > 0) Sql.Append(", ");
-                Sql.Append(Dato.Key + " = ?");
+                if (Indice > 0) ConsultaSQL.Append(", ");
+                ConsultaSQL.Append(Dato.Key + " = ?");
                 Indice++;
             }
 
-            Sql.Append(" WHERE ");
+            ConsultaSQL.Append(" WHERE ");
             Indice = 0;
 
             foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
             {
                 ClsValidaciones.NavegadorMetValidarIdentificador(Clave.Key);
 
-                if (Indice > 0) Sql.Append(" AND ");
-                Sql.Append(Clave.Key + " = ?");
+                if (Indice > 0) ConsultaSQL.Append(" AND ");
+                ConsultaSQL.Append(Clave.Key + " = ?");
                 Indice++;
             }
 
-            OdbcConnection NavegadorFuncConexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
 
             try
             {
-                using (OdbcCommand Comando = new OdbcCommand(Sql.ToString(), NavegadorFuncConexion))
+                using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL.ToString(), Conexion))
                 {
                     foreach (KeyValuePair<string, string> Dato in ValoresActualizar)
                         Comando.Parameters.AddWithValue("@valor_" + Dato.Key, Dato.Value);
@@ -202,14 +286,22 @@ namespace CapaModelo_Navegador
             }
             finally
             {
-                _ConexionBD.NavegadorMetDesconexion(NavegadorFuncConexion);
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
         }
-        /*
-            Inicio de aporte de código
-            Mario Alberto Taracena Pérez
-            0901-23-9335
-         */
+
+        // ====================================================================
+        // Nombre:        Oskar Saul Cermeño Jimenez
+        // Carnet:        0901-23-15379
+        // Fecha:         16/09/2026
+        // Función:       NavegadorFuncEliminarRegistro
+        // Descripción:   Elimina físicamente un registro en la base de datos 
+        //                ejecutando una sentencia DELETE parametrizada, filtrando
+        //                únicamente por las llaves primarias pasadas en el diccionario.
+        // Parámetros:    - NombreTabla: Nombre de la tabla sobre la cual eliminar.
+        //                - ClavesPrimarias: Diccionario con los campos clave y sus valores.
+        // Retorna:       True si se eliminó una o más filas en la base de datos, False de lo contrario.
+        // ====================================================================
         public bool NavegadorFuncEliminarRegistro(string NombreTabla, Dictionary<string, string> ClavesPrimarias)
         {
             if (ClavesPrimarias == null || ClavesPrimarias.Count == 0) return false;
@@ -244,6 +336,8 @@ namespace CapaModelo_Navegador
             {
                 _ConexionBD.NavegadorMetDesconexion(Conexion);
             }
+
+            return TablaDatos;
         }
 
         public DataTable NavegadorFuncFiltrarDatos(string NombreTabla, string Columna, string Valor)
@@ -272,6 +366,19 @@ namespace CapaModelo_Navegador
             return TablaDatos;
         }
 
+        // ====================================================================
+        // Nombre:        Oskar Saul Cermeño Jimenez
+        // Carnet:        0901-23-15379
+        // Fecha:         16/09/2026
+        // Función:       NavegadorFuncFiltrarTbl
+        // Descripción:   Genera un OdbcDataAdapter configurado para realizar una 
+        //                búsqueda por coincidencia de texto mediante LIKE (%valor%)
+        //                sobre una columna específica, manteniendo la conexión abierta.
+        // Parámetros:    - NombreTabla: Tabla sobre la cual se aplicará el filtro.
+        //                - Columna: Columna utilizada como criterio de búsqueda.
+        //                - Valor: Cadena de búsqueda a comparar.
+        // Retorna:       Instancia de OdbcDataAdapter con la consulta parametrizada.
+        // ====================================================================
         public OdbcDataAdapter NavegadorFuncFiltrarTbl(string NombreTabla, string Columna, string Valor)
         {
             ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
@@ -286,6 +393,16 @@ namespace CapaModelo_Navegador
             return new OdbcDataAdapter(Comando);
         }
 
+        // ====================================================================
+        // Nombre:        Oskar Saul Cermeño Jimenez
+        // Carnet:        0901-23-15379
+        // Fecha:         16/09/2026
+        // Procedimiento: NavegadorMetEjecutarSql
+        // Descripción:   Ejecuta una instrucción SQL de forma directa sin esperar
+        //                un conjunto de resultados (ExecuteNonQuery), garantizando
+        //                el cierre y liberación de la conexión mediante un bloque finally.
+        // Parámetros:    - ConsultaSQL: Sentencia SQL a ejecutar.
+        // ====================================================================
         public void NavegadorMetEjecutarSql(string ConsultaSQL)
         {
             OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
@@ -301,6 +418,16 @@ namespace CapaModelo_Navegador
             }
         }
 
+        // ====================================================================
+        // Nombre:        Oskar Saul Cermeño Jimenez
+        // Carnet:        0901-23-15379
+        // Fecha:         16/09/2026
+        // Procedimiento: NavegadorMetGuardarDatos
+        // Descripción:   Ejecuta una sentencia SQL para persistencia de datos 
+        //                manejando la apertura y cierre de la conexión mediante bloques 
+        //                using, capturando fallos para relanzarlos como una excepción amigable.
+        // Parámetros:    - ConsultaSQL: Sentencia SQL de persistencia a ejecutar.
+        // ====================================================================
         public void NavegadorMetGuardarDatos(string ConsultaSQL)
         {
             try
@@ -314,10 +441,5 @@ namespace CapaModelo_Navegador
                 throw new Exception("Error al ejecutar la sentencia en la base de datos: " + Excepcion.Message, Excepcion);
             }
         }
-        /*
-            Fin de aporte de código
-            Mario Alberto Taracena Pérez
-            0901-23-9335
-         */
     }
 }
