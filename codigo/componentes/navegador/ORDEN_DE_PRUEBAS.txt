@@ -1,0 +1,252 @@
+============================================================================
+ COMPONENTE NAVEGADOR (integrado con Seguridad y Bitacora)
+ GUIA: ORDEN DE PRUEBAS Y COMO HACER QUE TODO FUNCIONE
+============================================================================
+Autores: Gabriel Andre Guillen Pocon (0901-23-1998)
+         Mario Alberto Taracena Perez (0901-23-9335)
+
+Ruta base de todo lo de esta guia:  codigo/componentes/navegador/
+
+
+----------------------------------------------------------------------------
+ 0. QUE HAY EN EL REPOSITORIO (mapa rapido)
+----------------------------------------------------------------------------
+Hay 4 soluciones (.sln). Cada una es una capa de la arquitectura y se
+compilan en este orden, porque unas usan las DLL que produce la anterior:
+
+  1) codigo/componentes/seguridad/Seguridad/Seguridad.sln
+     Componente Seguridad (NO se modifica). Aporta: permisos por rol,
+     sesion (ClsSesionSeguridad) y bitacora (ClsModeloBitacora).
+
+  2) navegador/Navegador/Navegador.sln            (el "control de usuario")
+     Contiene el control Navegador (la barra de 14 botones) y ADENTRO la
+     seguridad y la bitacora:
+       - CapaVista_Navegador/Navegador.cs ................ barra de botones
+       - CapaVista_Navegador/Seguridad/ClsCrudSeguridad.cs . aplica permisos
+       - CapaVista_Navegador/Seguridad/ClsNavegadorBitacora.cs . escribe bitacora
+     Genera CapaVista_Navegador_Controles.dll.
+
+  3) navegador/Modelo_MVC/Modelo_MVC.sln           (el CRUD, modelo MVC)
+       - CapaModelo_Navegador ...... acceso a datos (ODBC) y ClsColumnaInfo
+       - CapaControlador_Navegador . logica entre vista y modelo
+       - CapaVista_Navegador ....... formulario base NavegadorCrud (trae el
+                                     control Navegador insertado, la tabla,
+                                     el panel de ingreso, etc.)
+
+  4) navegador/Ejecutable_Navegador/Ejecutable_Navegador.sln  (consumidor)
+       - FrmCrud ........... formulario SIN codigo: hereda de NavegadorCrud y
+                             solo cambia propiedades (tabla, IdModulo, ...)
+       - ClsSesionPrueba ... simula el login (elige el usuario de prueba)
+       - Program.cs ........ inicia la sesion de prueba y abre FrmCrud
+
+Por que hay que compilar varias veces: las soluciones se referencian entre
+si por DLL (no por proyecto), asi que Visual Studio no conoce el orden entre
+ellas. Por eso se compila en el orden de arriba y, dentro de cada solucion,
+2 o 3 veces (ver seccion 3).
+
+
+----------------------------------------------------------------------------
+ 1. REQUISITOS PREVIOS (una sola vez por computadora)
+----------------------------------------------------------------------------
+  - Visual Studio 2022 con la carga de trabajo "Desarrollo de escritorio
+    con .NET" (.NET Framework 4.8).
+  - MySQL Server corriendo en esta misma maquina (127.0.0.1).
+  - MySQL Connector/ODBC 8.0 de 32 bits ("MySQL ODBC 8.0 Unicode Driver").
+    IMPORTANTE: 32 bits. El ejecutable esta configurado para correr a
+    32 bits (Prefer32Bit) precisamente para usar este driver.
+  - Restaurar los paquetes NuGet (Visual Studio lo hace solo al compilar).
+
+
+----------------------------------------------------------------------------
+ 2. BASE DE DATOS Y ODBC (una sola vez)
+----------------------------------------------------------------------------
+2.1 Crear la base de datos
+    Ejecutar en MySQL Workbench el script  dbSistemaEmbutidos_v1.7.sql
+    (viene del repositorio de Seguridad: scripts/componentes/seguridad/).
+    Es la version que siembra los datos de prueba que usa esta guia:
+
+      Usuarios              Rol             Id usuario / Id rol
+      imelendez             Administrador   1 / 1
+      cramirez              Supervisor      2 / 2
+      mlopez                Operativo       3 / 3
+      Modulo "Seguridad" = idModulo 4 ; Aplicacion "Empleados" = idAplicacion 4
+      Tabla de prueba del CRUD: tblEmpleado (5 registros de ejemplo)
+
+    El script en scripts/componentes/seguridad/ del repositorio puede ser una
+    version anterior (V1.5) SIN estos usuarios/permisos: en ese caso los
+    botones no se habilitaran como se describe abajo.
+
+    Comprobacion rapida (debe devolver 3 filas):
+      SELECT idUsuario, nombreUsuario FROM dbSistemaEmbutidos.tblUsuario;
+
+2.2 Crear el DSN de ODBC (de 32 bits)
+    a) Ejecutar:  C:\Windows\SysWOW64\odbcad32.exe
+       (es el administrador ODBC de 32 bits; el de "Inicio" es el de 64 y
+        NO sirve).
+    b) Pestana "DSN de usuario" -> Agregar -> "MySQL ODBC 8.0 Unicode Driver".
+    c) Data Source Name : EmbutidosS.A        (exactamente asi, con el punto)
+       TCP/IP Server    : 127.0.0.1
+       Port             : 3306
+       User / Password  : el usuario y clave de tu MySQL
+       Database         : dbSistemaEmbutidos
+    d) Boton "Test": debe decir "Connection successful".
+
+    Tanto el CRUD (CapaModelo_Navegador/Conexion/ClsConexionBD.cs) como
+    Seguridad usan ese mismo DSN: "Dsn=EmbutidosS.A".
+
+
+----------------------------------------------------------------------------
+ 3. COMPILAR (en este orden, siempre en configuracion Debug)
+----------------------------------------------------------------------------
+Para cada solucion: abrirla en Visual Studio y usar
+Compilar -> "Recompilar solucion" (o Ctrl+Shift+B). Repetir hasta que
+diga 0 errores.
+
+  Orden:  1) Seguridad.sln
+          2) Navegador.sln
+          3) Modelo_MVC.sln
+          4) Ejecutable_Navegador.sln
+
+Ejemplo de lo que pasa y NO es un problema real:
+  - Primera compilacion de Navegador.sln, Modelo_MVC.sln o del ejecutable:
+    error "no se encontro CapaControlador_Navegador" (o CapaModelo_...).
+    Causa: el proyecto que lo necesita compilo antes que el que lo genera y
+    dentro de la misma solucion no lo sabe. Solucion: volver a compilar la
+    misma solucion (2 o 3 veces). Al final debe quedar en 0 errores.
+  - No abrir dos instancias de Visual Studio sobre las mismas carpetas: las
+    DLL quedan bloqueadas y la compilacion falla.
+
+Comprobar al terminar que existe:
+  navegador/Ejecutable_Navegador/Ejecutable_Naveg/bin/Debug/Ejecutable_Naveg.exe
+  y junto a el las DLL: Seguridad (CapaControlador_Seguridad, etc.),
+  BCrypt-Net-Next.dll y CapaVista_Navegador_Controles.dll.
+
+
+----------------------------------------------------------------------------
+ 4. EJECUTAR
+----------------------------------------------------------------------------
+En Ejecutable_Navegador.sln dejar "Ejecutable_Naveg" como proyecto de inicio
+y presionar F5 (o abrir bin/Debug/Ejecutable_Naveg.exe).
+Se abre el formulario "1001 - Crud" con los 14 botones en UNA sola fila:
+
+  Ingresar, Consultar, Modificar, Eliminar, Guardar, Cancelar, Refrescar,
+  Imprimir, Ayuda, Inicio, Anterior, Siguiente, Fin, Salir
+
+Al abrir, el usuario de prueba por defecto es Supervisor.
+
+
+----------------------------------------------------------------------------
+ 5. ORDEN DE PRUEBAS
+----------------------------------------------------------------------------
+Como cambiar de usuario (para las pruebas B, C y D):
+  Abrir  Ejecutable_Naveg/ClsSesionPrueba.cs  y cambiar la constante
+      private const UsuarioDemo UsuarioPrueba = UsuarioDemo.Supervisor;
+  por  UsuarioDemo.Administrador  o  UsuarioDemo.Operativo.
+  Luego recompilar SOLO Ejecutable_Navegador.sln y ejecutar de nuevo.
+  (No hay que tocar las otras 3 soluciones.)
+
+--- PRUEBA A: Supervisor (usuario cramirez, rol 2) -----------------------
+  1. Ejecutar con UsuarioDemo.Supervisor.
+  2. Esperado: Eliminar e Imprimir aparecen en GRIS (deshabilitados).
+     Ingresar, Modificar y el resto de botones estan habilitados.
+  Que demuestra: Seguridad lee los permisos del rol desde
+  tblRolModuloAplicacion y el control los aplica en OnLoad.
+
+--- PRUEBA B: Consultar (con Supervisor) ---------------------------------
+  1. Clic en "Consultar".
+  2. Esperado: el titulo cambia a "1001 - Crud tblempleado" y aparece la
+     tabla con los 5 empleados de ejemplo.
+  Que demuestra: la conexion ODBC (DSN EmbutidosS.A) y la lectura del
+  esquema funcionan.
+
+--- PRUEBA C: Administrador (usuario imelendez, rol 1) -------------------
+  1. Cambiar la constante a Administrador, recompilar el ejecutable, F5.
+  2. Esperado: los 14 botones habilitados (incluye Eliminar e Imprimir).
+
+--- PRUEBA D: Operativo (usuario mlopez, rol 3) --------------------------
+  1. Cambiar la constante a Operativo, recompilar el ejecutable, F5.
+  2. Esperado: aparece el mensaje "No tienes acceso a este modulo" y todo
+     el formulario queda deshabilitado (este rol no tiene permisos en el
+     modulo).
+
+--- PRUEBA E: Bitacora (usar Administrador para poder probar Eliminar) ---
+  1. Con Administrador: Consultar -> Ingresar -> llenar los datos de un
+     empleado nuevo -> Guardar.            (accion INSERT)
+  2. Seleccionar ese registro -> Modificar -> cambiar un dato -> Guardar.
+                                           (accion UPDATE)
+  3. Seleccionar ese registro -> Eliminar -> confirmar.
+                                           (accion DELETE)
+     Consejo: eliminar solo el registro de prueba que se acaba de crear
+     (los empleados originales pueden tener relaciones con otras tablas).
+  4. En MySQL Workbench revisar las ultimas 5 filas:
+       SELECT * FROM dbSistemaEmbutidos.tblBitacora
+       ORDER BY idBitacora DESC LIMIT 5;
+  5. Esperado: 3 filas nuevas (INSERT, UPDATE, DELETE) con:
+       - idUsuario = 1 (el del rol/usuario que esta en sesion),
+       - la tabla tblEmpleado y el id del registro afectado,
+       - en el INSERT el idRegistro es 0 cuando la llave es autoincremental
+         (el id lo genera MySQL despues de insertar).
+  Repetir la prueba con Supervisor (solo puede Ingresar y Modificar): las
+  filas de bitacora deben salir con idUsuario = 2.
+  Que demuestra: ClsCrudAcciones -> ClsNavegadorBitacora ->
+  ClsModeloBitacora.SeguridadMetRegistrarBitacora (Seguridad) con el
+  IdUsuario tomado de ClsSesionSeguridad.
+
+--- PRUEBA F: Navegacion y salir -----------------------------------------
+  Con la tabla cargada: Inicio, Anterior, Siguiente y Fin mueven la
+  seleccion de la tabla; Refrescar recarga; Cancelar cierra el panel de
+  ingreso; Salir cierra el formulario.
+
+--- PRUEBA G: Disenador de Visual Studio ---------------------------------
+  En Ejecutable_Navegador.sln abrir FrmCrud.cs en modo Diseno (doble clic).
+  Esperado: se ve la barra de botones dentro del formulario y en la ventana
+  Propiedades aparecen (categoria "Navegador"): NombreTabla, Usuario,
+  Modulo, IdModulo, IdAplicacion. Sin errores de "tipo no encontrado".
+  Requisito: haber compilado antes las 4 soluciones (seccion 3).
+
+
+----------------------------------------------------------------------------
+ 6. USAR EL NAVEGADOR EN OTRO FORMULARIO / OTRA TABLA
+----------------------------------------------------------------------------
+  Opcion 1 (formulario completo del CRUD): crear un formulario que herede de
+  NavegadorCrud (igual que FrmCrud) y cambiar en Propiedades:
+      NombreTabla, IdModulo, IdAplicacion, Modulo, Usuario.
+  No se escribe codigo.
+
+  Opcion 2 (solo la barra de botones): arrastrar "Navegador" desde la caja
+  de herramientas a cualquier formulario (aparece tras compilar
+  Navegador.sln). Para que aplique permisos hay que llamar
+  NavegadorMetConfigurar(tabla, usuario, modulo, idModulo, idAplicacion).
+  Con idModulo = 0 e idAplicacion = 0 no se aplica seguridad.
+
+
+----------------------------------------------------------------------------
+ 7. PROBLEMAS FRECUENTES
+----------------------------------------------------------------------------
+  * "No se encontro CapaControlador_Navegador / CapaModelo_Navegador"
+    -> normal en la primera compilacion. Recompilar la misma solucion.
+
+  * El disenador dice que no encuentra el tipo NavegadorCrud o
+    "navegadorCrud1 no esta declarado" / no carga FrmCrud.
+    -> Compilar en orden las 4 soluciones y cerrar/abrir Visual Studio (el
+       disenador es de 64 bits: las DLL de Modelo_MVC ahora son AnyCPU para
+       que puedan cargarse; con DLL antiguas x86 fallaba).
+
+  * "ERROR [IM014] ... architecture mismatch" o "Data source name not found"
+    -> el DSN se creo en el administrador ODBC de 64 bits. Crearlo de nuevo
+       en C:\Windows\SysWOW64\odbcad32.exe (32 bits), pestana DSN de usuario,
+       nombre exacto EmbutidosS.A.
+
+  * "Access denied" o no conecta -> revisar usuario/clave del DSN y pulsar
+    "Test" en el administrador ODBC.
+
+  * Todos los botones habilitados aunque uses Supervisor (o ninguno se
+    deshabilita) -> la base no tiene los datos de v1.7 (seccion 2.1) o el
+    IdModulo/IdAplicacion del FrmCrud no son 4 y 4.
+
+  * El exe funciona pero los cambios de ClsSesionPrueba no se notan ->
+    recompilar Ejecutable_Navegador.sln (la constante se compila dentro).
+
+  * Error de compilacion "archivo en uso / bloqueado" -> cerrar otras
+    instancias de Visual Studio y el ejecutable que siga abierto.
+============================================================================
