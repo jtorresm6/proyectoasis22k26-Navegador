@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <RuntimeIdentifiers>win;win-x86;win-x64</RuntimeIdentifiers>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9C1C5FF3-A3E8-4615-95D3-E8356A565020}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CapaVista_Navegador</RootNamespace>
+    <AssemblyName>CapaVista_Navegador</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <!-- Componente Seguridad dentro de este mismo repo (codigo/componentes/seguridad). Ajustar solo si se mueve de lugar. -->
+    <SeguridadBin Condition="'$(SeguridadBin)' == ''">..\..\..\seguridad\Seguridad</SeguridadBin>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CapaControlador_Navegador, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CapaControlador_Navegador\bin\Debug\CapaControlador_Navegador.dll</HintPath>
+    </Reference>
+    <!-- Inicio cambio - Gabriel André Guillén Pocón - 0901-23-1998 -->
+    <!-- ClsColumnaInfo ahora vive en el modelo (antes estaba en CapaEntidades_Navegador). -->
+    <Reference Include="CapaModelo_Navegador">
+      <HintPath>..\CapaModelo_Navegador\bin\Debug\CapaModelo_Navegador.dll</HintPath>
+    </Reference>
+    <!-- Fin cambio - Gabriel André Guillén Pocón - 0901-23-1998 -->
+    <!-- Componente Seguridad: permisos (ClsSeguridadFormHelper), sesión y bitácora, encapsulados dentro del navegador.
+         El control Navegador y su bitácora ya no viven en una solución aparte: se unificaron aquí mismo
+         (una sola solución "Navegador", como pidió el catedrático) por lo que ahora se referencia
+         directamente el componente Seguridad en vez de la DLL de la extinta solución "Navegador". -->
+    <Reference Include="CapaVista_Seguridad">
+      <HintPath>$(SeguridadBin)\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapaControlador_Seguridad">
+      <HintPath>$(SeguridadBin)\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapaModelo_Seguridad">
+      <HintPath>$(SeguridadBin)\CapaModelo_Seguridad\bin\Debug\CapaModelo_Seguridad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="formularios\FrmNavegadorCrud.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formularios\FrmNavegadorCrud.Designer.cs">
+      <DependentUpon>FrmNavegadorCrud.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formularios\ClsCrudCoordinador.cs" />
+    <Compile Include="formularios\ClsCrudEventos.cs" />
+    <Compile Include="utilidades\ClsCrudAcciones.cs" />
+    <Compile Include="componente\ClsCrudFormulario.cs" />
+    <Compile Include="componente\ClsCrudGrid.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="componente\ClsSelectorLlave.cs" />
+    <Compile Include="utilidades\ClsTipoColumna.cs" />
+    <!-- Inicio cambio - fusion de la solucion "Navegador" dentro de esta unica solucion MVC -->
+    <Compile Include="Seguridad\ClsCrudSeguridad.cs" />
+    <Compile Include="Seguridad\ClsNavegadorBitacora.cs" />
+    <Compile Include="Navegador.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Navegador.Designer.cs">
+      <DependentUpon>Navegador.cs</DependentUpon>
+    </Compile>
+    <!-- Fin cambio -->
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="formularios\FrmNavegadorCrud.resx">
+      <DependentUpon>FrmNavegadorCrud.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Navegador.resx">
+      <DependentUpon>Navegador.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
