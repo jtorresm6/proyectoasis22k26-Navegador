@@ -9,7 +9,7 @@ namespace CapaModelo_Seguridad
 
         public ClsConexion()
         {
-            _ConnectionString = "Dsn=EmbutidosS.A";
+            _ConnectionString = "Dsn=dbsistemaembutidos";
         }
 
         protected OdbcConnection SeguridadMetObtenerConexion()

@@ -143,6 +143,50 @@ namespace CapaModelo_Navegador
             }
         }
 
+        // ====================================================================
+        // Nombre:        Matthew Juárez
+        // Carnet:        0901-23-4250
+        // Fecha:         22/09/2026
+        // Función:       NavegadorFuncInsertarRegistro (Sobrecarga Transaccional)
+        // Descripción:   Inserta un registro compartiendo la conexión y transacción activas.
+        // ====================================================================
+        public bool NavegadorFuncInsertarRegistro(string NombreTabla, Dictionary<string, string> Datos, OdbcConnection Conexion, OdbcTransaction Transaccion)
+        {
+            if (Datos == null || Datos.Count == 0) return false;
+
+            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
+
+            string Columnas = "";
+            string Valores = "";
+            int Contador = 0;
+
+            foreach (KeyValuePair<string, string> Dato in Datos)
+            {
+                ClsValidaciones.NavegadorMetValidarIdentificador(Dato.Key);
+
+                if (Contador > 0) { Columnas += ", "; Valores += ", "; }
+
+                Columnas += Dato.Key;
+                Valores += "?";
+                Contador++;
+            }
+
+            string ConsultaSQL = "INSERT INTO " + NombreTabla + " (" + Columnas + ") VALUES (" + Valores + ")";
+
+            using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion, Transaccion))
+            {
+                int Posicion = 0;
+
+                foreach (KeyValuePair<string, string> Dato in Datos)
+                {
+                    Comando.Parameters.AddWithValue("@p" + Posicion, Dato.Value);
+                    Posicion++;
+                }
+
+                return Comando.ExecuteNonQuery() > 0;
+            }
+        }
+
         public bool NavegadorFuncActualizarRegistro(string NombreTabla, Dictionary<string, string> Valores, Dictionary<string, string> ClavesPrimarias)
         {
             if (Valores == null || Valores.Count == 0 || ClavesPrimarias == null || ClavesPrimarias.Count == 0)
@@ -206,6 +250,66 @@ namespace CapaModelo_Navegador
         }
 
         // ====================================================================
+        // Nombre:        Matthew Juárez
+        // Carnet:        0901-23-4250
+        // Fecha:         22/09/2026
+        // Función:       NavegadorFuncActualizarRegistro (Sobrecarga Transaccional)
+        // Descripción:   Actualiza un registro dentro de la transacción activa.
+        // ====================================================================
+        public bool NavegadorFuncActualizarRegistro(string NombreTabla, Dictionary<string, string> Valores, Dictionary<string, string> ClavesPrimarias, OdbcConnection Conexion, OdbcTransaction Transaccion)
+        {
+            if (Valores == null || Valores.Count == 0 || ClavesPrimarias == null || ClavesPrimarias.Count == 0)
+                return false;
+
+            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
+
+            Dictionary<string, string> ValoresActualizar = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (KeyValuePair<string, string> Dato in Valores)
+            {
+                ClsValidaciones.NavegadorMetValidarIdentificador(Dato.Key);
+
+                if (!ClavesPrimarias.ContainsKey(Dato.Key))
+                    ValoresActualizar[Dato.Key] = Dato.Value;
+            }
+
+            if (ValoresActualizar.Count == 0) return false;
+
+            StringBuilder ConsultaSQL = new StringBuilder("UPDATE " + NombreTabla + " SET ");
+            int Indice = 0;
+
+            foreach (KeyValuePair<string, string> Dato in ValoresActualizar)
+            {
+                if (Indice > 0) ConsultaSQL.Append(", ");
+                ConsultaSQL.Append(Dato.Key + " = ?");
+                Indice++;
+            }
+
+            ConsultaSQL.Append(" WHERE ");
+            Indice = 0;
+
+            foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
+            {
+                ClsValidaciones.NavegadorMetValidarIdentificador(Clave.Key);
+
+                if (Indice > 0) ConsultaSQL.Append(" AND ");
+                ConsultaSQL.Append(Clave.Key + " = ?");
+                Indice++;
+            }
+
+            using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL.ToString(), Conexion, Transaccion))
+            {
+                foreach (KeyValuePair<string, string> Dato in ValoresActualizar)
+                    Comando.Parameters.AddWithValue("@valor_" + Dato.Key, Dato.Value);
+
+                foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
+                    Comando.Parameters.AddWithValue("@pk_" + Clave.Key, Clave.Value);
+
+                return Comando.ExecuteNonQuery() > 0;
+            }
+        }
+
+        // ====================================================================
         // Nombre:        Oskar Saul Cermeño Jimenez
         // Carnet:        0901-23-15379
         // Fecha:         16/09/2026
@@ -250,6 +354,40 @@ namespace CapaModelo_Navegador
             finally
             {
                 _ConexionBD.NavegadorMetDesconexion(Conexion);
+            }
+        }
+
+        // ====================================================================
+        // Nombre:        Matthew Juárez
+        // Carnet:        0901-23-4250
+        // Fecha:         22/09/2026
+        // Función:       NavegadorFuncEliminarRegistro (Sobrecarga Transaccional)
+        // Descripción:   Elimina un registro dentro de la transacción activa.
+        // ====================================================================
+        public bool NavegadorFuncEliminarRegistro(string NombreTabla, Dictionary<string, string> ClavesPrimarias, OdbcConnection Conexion, OdbcTransaction Transaccion)
+        {
+            if (ClavesPrimarias == null || ClavesPrimarias.Count == 0) return false;
+
+            ClsValidaciones.NavegadorMetValidarIdentificador(NombreTabla);
+
+            StringBuilder ConsultaSQL = new StringBuilder("DELETE FROM " + NombreTabla + " WHERE ");
+            int Indice = 0;
+
+            foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
+            {
+                ClsValidaciones.NavegadorMetValidarIdentificador(Clave.Key);
+
+                if (Indice > 0) ConsultaSQL.Append(" AND ");
+                ConsultaSQL.Append(Clave.Key + " = ?");
+                Indice++;
+            }
+
+            using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL.ToString(), Conexion, Transaccion))
+            {
+                foreach (KeyValuePair<string, string> Clave in ClavesPrimarias)
+                    Comando.Parameters.AddWithValue("@pk_" + Clave.Key, Clave.Value);
+
+                return Comando.ExecuteNonQuery() > 0;
             }
         }
 

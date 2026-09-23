@@ -30,7 +30,7 @@ namespace CapaModelo_Navegador
             // Inicio cambio - Gabriel André Guillén Pocón - 0901-23-1998
             // Se apunta al DSN "EmbutidosS.A", que es el mismo que usa el componente Seguridad
             // (base de datos dbSistemaEmbutidos), para poder leer los permisos reales de los usuarios.
-            OdbcConnection Conexion = new OdbcConnection("Dsn=EmbutidosS.A");
+            OdbcConnection Conexion = new OdbcConnection("Dsn=dbsistemaembutidos");
             // Fin cambio - Gabriel André Guillén Pocón - 0901-23-1998
 
             try

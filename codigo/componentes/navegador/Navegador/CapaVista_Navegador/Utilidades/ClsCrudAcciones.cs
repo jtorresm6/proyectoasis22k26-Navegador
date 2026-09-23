@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Windows.Forms;
 using CapaControlador_Navegador;
 using CapaModelo_Navegador;
@@ -19,12 +20,8 @@ namespace CapaVista_Navegador
     public class ClsCrudAcciones
     {
         private ClsCtrlRegistro _CtrlRegistro = new ClsCtrlRegistro();
-
-        // Inicio cambio - Mario Alberto Taracena Pérez - 0901-23-9335
-        // Bitácora: deja rastro de Insertar/Modificar/Eliminar. La fachada viene del componente
-        // Navegador y es la que sabe hablar con Seguridad (usuario de la sesión, IP, etc.).
         private ClsNavegadorBitacora _Bitacora = new ClsNavegadorBitacora();
-        // Fin cambio - Mario Alberto Taracena Pérez - 0901-23-9335
+        private ClsConexionBD _ConexionBD = new ClsConexionBD();
 
         // ====================================================================
         // Función:      NavegadorFuncConfirmarAccion
@@ -182,16 +179,8 @@ namespace CapaVista_Navegador
         }
 
         // ====================================================================
-        // Función:      NavegadorFuncInsertar
-        // Descripción:  Gestiona la inserción de un nuevo registro. Identifica
-        //               las claves primarias del esquema para comprobar que no
-        //               existan duplicados en la base de datos, solicita la
-        //               confirmación al usuario y envía los datos a la capa controladora.
-        // Parámetros:   - Tabla: Nombre de la tabla objetivo.
-        //               - Esquema: Metadatos de las columnas de la tabla.
-        //               - Datos: Diccionario con las columnas y valores validados.
-        //               - Mensaje: Parámetro de salida con detalles en caso de error.
-        // Retorna:      True si el registro se insertó con éxito, False en caso contrario.
+        // Inicio cambio - Matthew Juárez - 0901-23-4250
+        // Transacción de Base de Datos para Insertar y Bitácora (Commit / Rollback)
         // ====================================================================
         private bool NavegadorFuncInsertar(string Tabla, List<ClsColumnaInfo> Esquema, Dictionary<string, string> Datos, out string Mensaje)
         {
@@ -243,38 +232,54 @@ namespace CapaVista_Navegador
                 NavegadorFuncResumenDatos(Datos)))
                 return false;
 
-            // Inicio cambio - Mario Alberto Taracena Pérez - 0901-23-9335
-            // Primero se inserta el registro tal como ya funcionaba. Si se insertó bien, se calcula
-            // qué id usar para la bitácora (el de la llave primaria si ya se conoce, si no 0 porque
-            // es autoincremento) y se registra la acción "INSERT" con los datos que se guardaron.
-            bool Insertado = _CtrlRegistro.NavegadorFuncInsertarRegistro(Tabla, Datos);
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcTransaction Transaccion = null;
 
-            if (Insertado)
+            try
             {
-                int IdRegistro = 0;
-                if (ValoresPK.Count > 0)
-                    int.TryParse(ValoresPK[0], out IdRegistro);
+                Transaccion = Conexion.BeginTransaction();
 
-                _Bitacora.NavegadorMetRegistrarBitacora(
-                    "INSERT", Tabla, IdRegistro,
-                    "Se insertó un registro en " + Tabla + ": " + NavegadorFuncResumenDatos(Datos));
+                bool Insertado = _CtrlRegistro.NavegadorFuncInsertarRegistro(Tabla, Datos, Conexion, Transaccion);
+
+                if (Insertado)
+                {
+                    int IdRegistro = 0;
+                    if (ValoresPK.Count > 0)
+                        int.TryParse(ValoresPK[0], out IdRegistro);
+
+                    _Bitacora.NavegadorMetRegistrarBitacora(
+                        "INSERT", Tabla, IdRegistro,
+                        "Se insertó un registro en " + Tabla + ": " + NavegadorFuncResumenDatos(Datos),
+                        Conexion, Transaccion);
+
+                    Transaccion.Commit();
+                    return true;
+                }
+                else
+                {
+                    Transaccion.Rollback();
+                    Mensaje = "No se pudo insertar el registro.";
+                    return false;
+                }
             }
-
-            return Insertado;
-            // Fin cambio - Mario Alberto Taracena Pérez - 0901-23-9335
+            catch (Exception Excepcion)
+            {
+                if (Transaccion != null)
+                {
+                    try { Transaccion.Rollback(); } catch { }
+                }
+                Mensaje = "Error al ejecutar la transacción: " + NavegadorFuncMensajeAmigable(Excepcion);
+                return false;
+            }
+            finally
+            {
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
+            }
         }
 
         // ====================================================================
-        // Función:      NavegadorFuncModificar
-        // Descripción:  Ejecuta la actualización de un registro existente. Valida
-        //               que existan campos a modificar y llaves primarias válidas
-        //               para la cláusula WHERE, solicita confirmación visual al
-        //               usuario y envía la instrucción al controlador.
-        // Parámetros:   - Tabla: Nombre de la tabla a actualizar.
-        //               - Datos: Columnas con los nuevos valores a persistir.
-        //               - ClavesPrimarias: Diccionario con la clave primaria y su valor actual.
-        //               - Mensaje: Parámetro de salida con el motivo del fallo en caso de ocurrir.
-        // Retorna:      True si la actualización fue completada, False si fue cancelada o errónea.
+        // Inicio cambio - Matthew Juárez - 0901-23-4250
+        // Transacción de Base de Datos para Modificar y Bitácora (Commit / Rollback)
         // ====================================================================
         private bool NavegadorFuncModificar(string Tabla, Dictionary<string, string> Datos,
             Dictionary<string, string> ClavesPrimarias, out string Mensaje)
@@ -298,35 +303,53 @@ namespace CapaVista_Navegador
                 NavegadorFuncResumenDatos(Datos)))
                 return false;
 
-            // Inicio cambio - Mario Alberto Taracena Pérez - 0901-23-9335
-            // Igual que en Insertar: primero se actualiza el registro, y si salió bien, se registra
-            // la acción "UPDATE" en la bitácora. Aquí sí se conoce el id real porque ya existía.
-            bool Actualizado = _CtrlRegistro.NavegadorFuncActualizarRegistro(Tabla, Datos, ClavesPrimarias);
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcTransaction Transaccion = null;
 
-            if (Actualizado)
+            try
             {
-                int IdRegistro = 0;
-                foreach (string ValorPk in ClavesPrimarias.Values) { int.TryParse(ValorPk, out IdRegistro); break; }
+                Transaccion = Conexion.BeginTransaction();
 
-                _Bitacora.NavegadorMetRegistrarBitacora(
-                    "UPDATE", Tabla, IdRegistro,
-                    "Se actualizó un registro en " + Tabla + ": " + NavegadorFuncResumenDatos(Datos));
+                bool Actualizado = _CtrlRegistro.NavegadorFuncActualizarRegistro(Tabla, Datos, ClavesPrimarias, Conexion, Transaccion);
+
+                if (Actualizado)
+                {
+                    int IdRegistro = 0;
+                    foreach (string ValorPk in ClavesPrimarias.Values) { int.TryParse(ValorPk, out IdRegistro); break; }
+
+                    _Bitacora.NavegadorMetRegistrarBitacora(
+                        "UPDATE", Tabla, IdRegistro,
+                        "Se actualizó un registro en " + Tabla + ": " + NavegadorFuncResumenDatos(Datos),
+                        Conexion, Transaccion);
+
+                    Transaccion.Commit();
+                    return true;
+                }
+                else
+                {
+                    Transaccion.Rollback();
+                    Mensaje = "No se pudo actualizar el registro.";
+                    return false;
+                }
             }
-
-            return Actualizado;
-            // Fin cambio - Mario Alberto Taracena Pérez - 0901-23-9335
+            catch (Exception Excepcion)
+            {
+                if (Transaccion != null)
+                {
+                    try { Transaccion.Rollback(); } catch { }
+                }
+                Mensaje = "Error al ejecutar la transacción: " + NavegadorFuncMensajeAmigable(Excepcion);
+                return false;
+            }
+            finally
+            {
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
+            }
         }
 
         // ====================================================================
-        // Función:      NavegadorFuncEliminar
-        // Descripción:  Elimina un registro específico. Valida la integridad y
-        //               existencia de la llave primaria seleccionada, solicita
-        //               la confirmación al usuario y envía la petición de borrado
-        //               al controlador.
-        // Parámetros:   - Tabla: Nombre de la tabla objetivo.
-        //               - ClavesPrimarias: Diccionario con las llaves primarias que identifican la fila.
-        //               - Mensaje: Parámetro de salida con mensajes de error si falla la validación.
-        // Retorna:      True si se eliminó el registro correctamente, False en caso contrario.
+        // Inicio cambio - Matthew Juárez - 0901-23-4250
+        // Transacción de Base de Datos para Eliminar y Bitácora (Commit / Rollback)
         // ====================================================================
         public bool NavegadorFuncEliminar(string Tabla, Dictionary<string, string> ClavesPrimarias, out string Mensaje)
         {
@@ -351,35 +374,50 @@ namespace CapaVista_Navegador
                 "¿Desea eliminar el registro seleccionado de la tabla '" + Tabla + "'?"))
                 return false;
 
-            // Inicio cambio - Mario Alberto Taracena Pérez - 0901-23-9335
-            // Igual que arriba: se elimina el registro y, si se pudo eliminar, se registra la
-            // acción "DELETE" en la bitácora con el id del registro que se borró.
-            bool Eliminado = _CtrlRegistro.NavegadorFuncEliminarRegistro(Tabla, ClavesPrimarias);
+            OdbcConnection Conexion = _ConexionBD.NavegadorFuncConexion();
+            OdbcTransaction Transaccion = null;
 
-            if (Eliminado)
+            try
             {
-                int IdRegistro = 0;
-                foreach (string ValorPk in ClavesPrimarias.Values) { int.TryParse(ValorPk, out IdRegistro); break; }
+                Transaccion = Conexion.BeginTransaction();
 
-                _Bitacora.NavegadorMetRegistrarBitacora(
-                    "DELETE", Tabla, IdRegistro,
-                    "Se eliminó un registro de " + Tabla + ".");
+                bool Eliminado = _CtrlRegistro.NavegadorFuncEliminarRegistro(Tabla, ClavesPrimarias, Conexion, Transaccion);
+
+                if (Eliminado)
+                {
+                    int IdRegistro = 0;
+                    foreach (string ValorPk in ClavesPrimarias.Values) { int.TryParse(ValorPk, out IdRegistro); break; }
+
+                    _Bitacora.NavegadorMetRegistrarBitacora(
+                        "DELETE", Tabla, IdRegistro,
+                        "Se eliminó un registro de " + Tabla + ".",
+                        Conexion, Transaccion);
+
+                    Transaccion.Commit();
+                    return true;
+                }
+                else
+                {
+                    Transaccion.Rollback();
+                    Mensaje = "No se pudo eliminar el registro.";
+                    return false;
+                }
             }
-
-            return Eliminado;
-            // Fin cambio - Mario Alberto Taracena Pérez - 0901-23-9335
+            catch (Exception Excepcion)
+            {
+                if (Transaccion != null)
+                {
+                    try { Transaccion.Rollback(); } catch { }
+                }
+                Mensaje = "Error al ejecutar la transacción: " + NavegadorFuncMensajeAmigable(Excepcion);
+                return false;
+            }
+            finally
+            {
+                _ConexionBD.NavegadorMetDesconexion(Conexion);
+            }
         }
 
-        // ====================================================================
-        // Función:      NavegadorFuncMensajeAmigable
-        // Descripción:  Interpreta excepciones y mensajes nativos devueltos por
-        //               motores de bases de datos (MySQL, SQL Server, PostgreSQL, etc.)
-        //               y los traduce a explicaciones comprensibles para el usuario
-        //               final (errores de tabla, FK, llaves duplicadas, nulos o tipos).
-        // Parámetros:   - Excepcion: Objeto de excepción capturado durante la operación.
-        // Retorna:      Mensaje amigable en lenguaje común o el mensaje original
-        //               si no coincide con ningún patrón conocido.
-        // ====================================================================
         public string NavegadorFuncMensajeAmigable(Exception Excepcion)
         {
             string TextoMinusculas = (Excepcion.Message ?? "").ToLowerInvariant();

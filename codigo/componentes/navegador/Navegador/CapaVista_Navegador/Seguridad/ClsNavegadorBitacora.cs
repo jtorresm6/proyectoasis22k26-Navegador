@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Odbc;
 using System.Windows.Forms;
 using CapaControlador_Seguridad;
 using CapaControlador_Seguridad.Objetos_de_valor;
@@ -34,6 +35,33 @@ namespace CapaVista_Navegador
                     "Error de conexión",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+        }
+
+        // ====================================================================
+        // Nombre:        Matthew Juárez
+        // Carnet:        0901-23-4250
+        // Fecha:         22/09/2026
+        // Procedimiento: NavegadorMetRegistrarBitacora (Sobrecarga Transaccional)
+        // Descripción:   Registra la acción en la bitácora dentro de la transacción
+        //                activa para asegurar el principio de todo o nada (Atomicidad).
+        // ====================================================================
+        public void NavegadorMetRegistrarBitacora(string Accion, string Tabla, int IdRegistro, string Detalles, OdbcConnection Conexion, OdbcTransaction Transaccion)
+        {
+            // Consulta ajustada exactamente a los nombres de campos de tu tabla 'tblbitacora'
+            string ConsultaSQL = "INSERT INTO tblbitacora (idUsuario, accionBitacora, tablaBitacora, idRegistroBitacora, detallesBitacora, ipBitacora, fechaHoraBitacora) VALUES (?, ?, ?, ?, ?, ?, NOW())";
+
+            using (OdbcCommand Comando = new OdbcCommand(ConsultaSQL, Conexion, Transaccion))
+            {
+                // NOTA: ODBC asigna los parámetros estrictamente por POSICIÓN (orden de los ? en el SQL)
+                Comando.Parameters.AddWithValue("idUsuario", ClsSesionSeguridad.IdUsuario);
+                Comando.Parameters.AddWithValue("accionBitacora", Accion);
+                Comando.Parameters.AddWithValue("tablaBitacora", Tabla);
+                Comando.Parameters.AddWithValue("idRegistroBitacora", IdRegistro);
+                Comando.Parameters.AddWithValue("detallesBitacora", Detalles ?? "");
+                Comando.Parameters.AddWithValue("ipBitacora", "127.0.0.1"); // O la variable de la IP si la manejas en tu sesión
+
+                Comando.ExecuteNonQuery();
             }
         }
     }
