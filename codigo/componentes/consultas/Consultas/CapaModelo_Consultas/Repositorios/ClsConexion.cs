@@ -8,7 +8,7 @@ namespace CapaModelo_Consultas
     {
         public OdbcConnection ConsultasFuncConexion()
         {
-            OdbcConnection Conn = new OdbcConnection("Dsn=dbSistemaEmbutidos");
+            OdbcConnection Conn = new OdbcConnection("Dsn=EmbutidosS.A");
             try
             {
                 Conn.Open();

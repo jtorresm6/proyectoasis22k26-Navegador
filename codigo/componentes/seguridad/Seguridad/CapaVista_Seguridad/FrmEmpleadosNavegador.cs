@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using CapaVista_Navegador;
 using CapaControlador_Seguridad;
 
 namespace CapaVista_Seguridad
 {
     
-        public partial class Form1 : Form
+        public partial class FrmEmpleadosNavegador : Form
         {
-            public Form1()
+            public FrmEmpleadosNavegador()
             {
                 InitializeComponent();
          

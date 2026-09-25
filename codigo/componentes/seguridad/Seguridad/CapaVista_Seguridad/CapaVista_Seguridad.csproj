@@ -71,11 +71,11 @@
   <ItemGroup>
     <Compile Include="Ayudas\ClsSeguridadFormHelper.cs" />
     <Compile Include="Ayudas\ClsValidacionDatos.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="FrmEmpleadosNavegador.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FrmEmpleadosNavegador.Designer.cs">
+      <DependentUpon>FrmEmpleadosNavegador.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmAsignacionAplicacionUsuario.cs">
       <SubType>Form</SubType>
@@ -212,8 +212,8 @@
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FrmEmpleadosNavegador.resx">
+      <DependentUpon>FrmEmpleadosNavegador.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmAsignacionAplicacionUsuario.resx">
       <DependentUpon>FrmAsignacionAplicacionUsuario.cs</DependentUpon>

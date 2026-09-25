@@ -21,7 +21,6 @@ namespace CapaVista_Seguridad
         {
             InitializeComponent();
             this.Load += FrmMDISeguridad_Load;
-            navegador1.NavegadorMetConfigurar("tblempleado", 4, 4);
         }
 
         //---------------------------------------------------------------------**INICIO ANDRE Y EVELYN
@@ -209,7 +208,7 @@ namespace CapaVista_Seguridad
             //    return;
             //}
 
-               Form1 Empleados = new Form1();
+               FrmEmpleadosNavegador Empleados = new FrmEmpleadosNavegador();
             Empleados.ShowDialog();
         }
 

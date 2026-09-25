@@ -1,6 +1,6 @@
 ﻿namespace CapaVista_Seguridad
 {
-    partial class Form1
+    partial class FrmEmpleadosNavegador
     {
         /// <summary>
         /// Required designer variable.
@@ -38,14 +38,14 @@
             this.navegador2.Size = new System.Drawing.Size(1438, 111);
             this.navegador2.TabIndex = 1;
             // 
-            // Form1
+            // FrmEmpleadosNavegador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1163, 450);
             this.Controls.Add(this.navegador2);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "FrmEmpleadosNavegador";
+            this.Text = "2001 - Empleados Navegador";
             this.ResumeLayout(false);
 
         }
