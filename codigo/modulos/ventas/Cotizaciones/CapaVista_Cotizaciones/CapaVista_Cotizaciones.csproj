@@ -38,6 +38,9 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+<Compile Include="..\..\Utilidades\ClsDialogosVentas.cs">
+  <Link>Utilidades\ClsDialogosVentas.cs</Link>
+</Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Formularios\FrmCotizacionVentas.cs">
       <SubType>Form</SubType>

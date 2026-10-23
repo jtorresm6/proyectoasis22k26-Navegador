@@ -15,31 +15,31 @@ namespace CapaControlador_ListadoPrecios
 
         public ClsCtrlListadoPrecios() { _modelo = new ClsModeloListadoPrecios(); }
 
-        public List<ClsPrecioCliente> ConsultarListado()
+        public List<ClsPrecioCliente> ListadoPreciosMetConsultarListado()
         {
-            return _modelo.ObtenerListado().OrderBy(x => x.TipoCliente).ThenBy(x => x.TipoProducto).Select(x => new ClsPrecioCliente { TipoCliente = x.TipoCliente, TipoProducto = x.TipoProducto, PorcentajeDescuento = x.PorcentajeDescuento, PrecioBase = x.PrecioBase, PrecioFinal = x.PrecioFinal }).ToList();
+            return _modelo.ListadoPreciosMetObtenerListado().OrderBy(PrecioClienteActual => PrecioClienteActual.TipoCliente).ThenBy(PrecioClienteActual => PrecioClienteActual.TipoProducto).Select(PrecioClienteActual => new ClsPrecioCliente { TipoCliente = PrecioClienteActual.TipoCliente, TipoProducto = PrecioClienteActual.TipoProducto, PorcentajeDescuento = PrecioClienteActual.PorcentajeDescuento, PrecioBase = PrecioClienteActual.PrecioBase, PrecioFinal = PrecioClienteActual.PrecioFinal }).ToList();
         }
 
-        public decimal CalcularPrecioFinal(decimal precioBase, decimal descuento)
+        public decimal ListadoPreciosMetCalcularPrecioFinal(decimal PrecioBase, decimal PorcentajeDescuento)
         {
-            if (precioBase < 0) throw new ArgumentOutOfRangeException("precioBase", "El precio base no puede ser negativo.");
-            if (descuento < 0 || descuento > 100) throw new ArgumentOutOfRangeException("descuento", "El descuento debe estar entre 0 y 100 %.");
-            return ClsModeloListadoPrecios.CalcularPrecioFinal(precioBase, descuento);
+            if (PrecioBase < 0) throw new ArgumentOutOfRangeException("PrecioBase", "El precio base no puede ser negativo.");
+            if (PorcentajeDescuento < 0 || PorcentajeDescuento > 100) throw new ArgumentOutOfRangeException("PorcentajeDescuento", "El descuento debe estar entre 0 y 100 %.");
+            return ClsModeloListadoPrecios.ListadoPreciosMetCalcularPrecioFinal(PrecioBase, PorcentajeDescuento);
         }
 
-        public bool Guardar(string tipoCliente, string tipoProducto, decimal porcentaje, decimal precioBase, out string mensaje)
+        public bool ListadoPreciosMetGuardar(string TipoCliente, string TipoProducto, decimal PorcentajeDescuento, decimal PrecioBase, out string Mensaje)
         {
-            if (string.IsNullOrWhiteSpace(tipoCliente)) { mensaje = "Seleccione un tipo de cliente."; return false; }
-            if (string.IsNullOrWhiteSpace(tipoProducto)) { mensaje = "Seleccione un tipo de producto."; return false; }
-            if (precioBase < 0) { mensaje = "El precio base no puede ser negativo."; return false; }
-            if (porcentaje < 0 || porcentaje > 100) { mensaje = "El descuento debe estar entre 0 y 100 %."; return false; }
-            CapaModelo_ListadoPrecios.Entidades.ClsPrecioCliente registro = new CapaModelo_ListadoPrecios.Entidades.ClsPrecioCliente
+            if (string.IsNullOrWhiteSpace(TipoCliente)) { Mensaje = "Seleccione un tipo de cliente."; return false; }
+            if (string.IsNullOrWhiteSpace(TipoProducto)) { Mensaje = "Seleccione un tipo de producto."; return false; }
+            if (PrecioBase < 0) { Mensaje = "El precio base no puede ser negativo."; return false; }
+            if (PorcentajeDescuento < 0 || PorcentajeDescuento > 100) { Mensaje = "El descuento debe estar entre 0 y 100 %."; return false; }
+            CapaModelo_ListadoPrecios.Entidades.ClsPrecioCliente RegistroPrecio = new CapaModelo_ListadoPrecios.Entidades.ClsPrecioCliente
             {
-                TipoCliente = tipoCliente.Trim(), TipoProducto = tipoProducto.Trim(),
-                PorcentajeDescuento = porcentaje, PrecioBase = precioBase,
-                PrecioFinal = CalcularPrecioFinal(precioBase, porcentaje)
+                TipoCliente = TipoCliente.Trim(), TipoProducto = TipoProducto.Trim(),
+                PorcentajeDescuento = PorcentajeDescuento, PrecioBase = PrecioBase,
+                PrecioFinal = ListadoPreciosMetCalcularPrecioFinal(PrecioBase, PorcentajeDescuento)
             };
-            return _modelo.Guardar(registro, out mensaje);
+            return _modelo.ListadoPreciosMetGuardar(RegistroPrecio, out Mensaje);
         }
     }
 }

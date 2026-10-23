@@ -1,4 +1,5 @@
-﻿@page "/ventas-listado-precios"
+@page "/ventas-listado-precios"
+@using VentasListadoPrecios.Controladores
 
 <style>
     :root {
@@ -18,7 +19,7 @@
 
     .header-compacto { 
         background-color: var(--color-principal); 
-        color: white; 
+        color: var(--color-fondo); 
         padding: 0.8rem 1.5rem; 
         display: flex; 
         justify-content: space-between; 
@@ -39,7 +40,7 @@
 
     .badge-header {
         background-color: var(--color-etiquetas); 
-        color: white;
+        color: var(--color-fondo);
         padding: 2px 8px; 
         border-radius: 12px; 
         font-size: 0.75rem; 
@@ -64,11 +65,11 @@
     }
 
     .panel { 
-        background: white; 
+        background: var(--color-fondo); 
         border-radius: 8px; 
         border: 1px solid var(--color-botones); 
         padding: 1rem; 
-        box-shadow: 0 1px 4px rgba(59,29,74,0.05); 
+        box-shadow: 0 1px 4px var(--color-botones); 
     }
 
     .tabla-precios { 
@@ -102,7 +103,7 @@
 
     .btn-action:hover { 
         background-color: var(--color-acento); 
-        color: white;
+        color: var(--color-fondo);
     }
 
     .carrito-item { 
@@ -116,7 +117,7 @@
 
     .total-bar { 
         background-color: var(--color-principal); 
-        color: white; 
+        color: var(--color-fondo); 
         padding: 0.8rem; 
         border-radius: 6px; 
         margin-top: 1rem; 
@@ -132,7 +133,7 @@
     .btn-pagar { 
         width: 100%; 
         background-color: var(--color-etiquetas); 
-        color: white; 
+        color: var(--color-fondo); 
         border: none; 
         padding: 8px; 
         border-radius: 6px; 
@@ -173,14 +174,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var p in productos)
+                @foreach (var Producto in _Controlador.VentasFuncObtenerProductos())
                 {
                     <tr>
-                        <td><strong>@p.Codigo</strong></td>
-                        <td>@p.Nombre</td>
-                        <td>@p.UnidadMedida</td>
-                        <td>Q@(p.Precio.ToString("F2"))</td>
-                        <td><button class="btn-action" @onclick="() => Agregar(p)">+</button></td>
+                        <td><strong>@Producto.Codigo</strong></td>
+                        <td>@Producto.Nombre</td>
+                        <td>@Producto.UnidadMedida</td>
+                        <td>@VentasFuncFormatearMoneda(Producto.Precio)</td>
+                        <td><button class="btn-action" @onclick="() => _Controlador.VentasMetAgregarProducto(Producto)">+</button></td>
                     </tr>
                 }
             </tbody>
@@ -190,59 +191,38 @@
     <!-- Carrito -->
     <div class="panel">
         <h3 style="margin-top:0; color:var(--color-principal); font-size: 1.1rem; border-bottom: 2px solid var(--color-botones); padding-bottom: 5px;">🛒 Carrito</h3>
-        @if (carrito.Count == 0)
+        @if (_Controlador.VentasFuncObtenerCarrito().Count == 0)
         {
-            <p style="color: #777; font-size: 0.85rem; text-align: center; margin: 1.5rem 0;">Vacío</p>
+            <p style="color: var(--color-acento); font-size: 0.85rem; text-align: center; margin: 1.5rem 0;">Vacío</p>
         }
         else
         {
-            @foreach (var item in carrito)
+            @foreach (var Elemento in _Controlador.VentasFuncObtenerCarrito())
             {
                 <div class="carrito-item">
                     <div>
-                        <strong>@item.Producto.Nombre</strong><br/>
-                        <span style="color:var(--color-acento);">Q@(item.Producto.Precio) x @item.Cantidad</span>
+                        <strong>@Elemento.Producto.Nombre</strong><br/>
+                        <span style="color:var(--color-acento);">@VentasFuncFormatearMoneda(Elemento.Producto.Precio) x @Elemento.Cantidad</span>
                     </div>
                     <div>
-                        <button style="border:1px solid var(--color-acento); background:var(--color-botones); color:var(--color-principal); padding:1px 6px; border-radius:3px; cursor:pointer;" @onclick="() => CambiarCant(item, -1)">-</button>
-                        <span style="margin: 0 4px; font-weight:bold;">@item.Cantidad</span>
-                        <button style="border:1px solid var(--color-acento); background:var(--color-botones); color:var(--color-principal); padding:1px 6px; border-radius:3px; cursor:pointer;" @onclick="() => CambiarCant(item, 1)">+</button>
+                        <button style="border:1px solid var(--color-acento); background:var(--color-botones); color:var(--color-principal); padding:1px 6px; border-radius:3px; cursor:pointer;" @onclick="() => _Controlador.VentasMetCambiarCantidad(Elemento, -1)">-</button>
+                        <span style="margin: 0 4px; font-weight:bold;">@Elemento.Cantidad</span>
+                        <button style="border:1px solid var(--color-acento); background:var(--color-botones); color:var(--color-principal); padding:1px 6px; border-radius:3px; cursor:pointer;" @onclick="() => _Controlador.VentasMetCambiarCantidad(Elemento, 1)">+</button>
                     </div>
                 </div>
             }
             <div class="total-bar">
                 <span>Total:</span>
-                <span class="monto-total">Q@(Total.ToString("F2"))</span>
+                <span class="monto-total">@VentasFuncFormatearMoneda(_Controlador.VentasFuncCalcularTotal())</span>
             </div>
-            <button class="btn-pagar" @onclick="Confirmar">Generar Pedido</button>
+            <button class="btn-pagar" @onclick="_Controlador.VentasMetConfirmarPedido">Generar pedido</button>
         }
     </div>
 </div>
 
 @code {
-    public class Prod { public string Codigo { get; set; } = ""; public string Nombre { get; set; } = ""; public string UnidadMedida { get; set; } = ""; public decimal Precio { get; set; } }
-    public class ItemC { public Prod Producto { get; set; } = new(); public int Cantidad { get; set; } }
+    private readonly ClsListadoPreciosControlador _Controlador = new();
 
-    private List<Prod> productos = new() {
-        new Prod { Codigo = "EMB-001", Nombre = "Jamón Horneado Especial", UnidadMedida = "Lb", Precio = 45.00m },
-        new Prod { Codigo = "EMB-002", Nombre = "Salchicha Alemana", UnidadMedida = "Paq", Precio = 55.00m },
-        new Prod { Codigo = "EMB-003", Nombre = "Chorizo Riojano Tradicional", UnidadMedida = "Pieza", Precio = 85.00m },
-        new Prod { Codigo = "EMB-004", Nombre = "Salami Madurado", UnidadMedida = "Pieza", Precio = 42.00m }
-    };
-
-    private List<ItemC> carrito = new();
-    private decimal Total => carrito.Sum(i => i.Producto.Precio * i.Cantidad);
-
-    private void Agregar(Prod p) {
-        var item = carrito.FirstOrDefault(c => c.Producto.Codigo == p.Codigo);
-        if (item != null) item.Cantidad++;
-        else carrito.Add(new ItemC { Producto = p, Cantidad = 1 });
-    }
-
-    private void CambiarCant(ItemC item, int val) {
-        item.Cantidad += val;
-        if (item.Cantidad <= 0) carrito.Remove(item);
-    }
-
-    private void Confirmar() => carrito.Clear();
+    private static string VentasFuncFormatearMoneda(decimal Importe) =>
+        "Q " + Importe.ToString("N2", System.Globalization.CultureInfo.GetCultureInfo("es-GT"));
 }

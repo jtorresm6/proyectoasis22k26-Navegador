@@ -1,0 +1,25 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=VentasAyudas.chm
+Contents file=VentasAyudas.hhc
+Index file=VentasAyudas.hhk
+Default topic=FrmMdiVentas_Ventas.htm
+Language=0x40a Spanish (Traditional Sort)
+Title=Ayudas de Ventas y Cuentas por Cobrar
+
+[FILES]
+FrmMdiVentas_Ventas.htm
+FrmListadoPrecios_Ventas.htm
+FrmMovimientosClientesVentas_Ventas.htm
+FrmRecepcionPagosVentas_Ventas.htm
+FrmPedidoVentas_Ventas.htm
+FrmCotizacionVentas_Ventas.htm
+FrmFacturas_Ventas.htm
+FrmComisionesVendedoresVentas_Ventas.htm
+FrmMdiComisionVendedores_Ventas.htm
+FrmMantenimientosVentas_Ventas.htm
+FrmCierreMovimientosVentas_Ventas.htm
+FrmReporteAntiguedad_Ventas.htm
+FrmCotizacionesPedidosFacturasVentas_Ventas.htm
+imagenes\logoEmpresa.png
+imagenes\mascotaVentas.png

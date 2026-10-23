@@ -42,6 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj">
+      <Project>{F7AD1A78-73BD-4D8F-87D1-1C5B495D1160}</Project>
+      <Name>CapaVista_Seguridad</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\CapaVista_ComisionVendedores\CapaVista_ComisionVendedores.csproj">

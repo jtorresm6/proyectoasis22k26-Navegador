@@ -59,7 +59,7 @@ namespace CapaVista_ListadoPrecios
             this.VentasLblListadoClientes = new System.Windows.Forms.Label();
             this.VentasDgvListadoClientes = new System.Windows.Forms.DataGridView();
             this.VentasLblTipoProducto = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.VentasCboTipoProducto = new System.Windows.Forms.ComboBox();
             this.VentasClmTipoCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VentasClmTipoProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VentasClmPorcentaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -329,19 +329,19 @@ namespace CapaVista_ListadoPrecios
             this.VentasLblTipoProducto.TabIndex = 18;
             this.VentasLblTipoProducto.Text = "Tipo de producto";
             // 
-            // comboBox1
+            // VentasCboTipoProducto
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.VentasCboTipoProducto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VentasCboTipoProducto.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.VentasCboTipoProducto.FormattingEnabled = true;
+            this.VentasCboTipoProducto.Items.AddRange(new object[] {
             "Producto A",
             "Producto B",
             "Producto C"});
-            this.comboBox1.Location = new System.Drawing.Point(387, 114);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(292, 38);
-            this.comboBox1.TabIndex = 19;
+            this.VentasCboTipoProducto.Location = new System.Drawing.Point(387, 114);
+            this.VentasCboTipoProducto.Name = "VentasCboTipoProducto";
+            this.VentasCboTipoProducto.Size = new System.Drawing.Size(292, 38);
+            this.VentasCboTipoProducto.TabIndex = 19;
             // 
             // VentasClmTipoCliente
             // 
@@ -412,7 +412,7 @@ namespace CapaVista_ListadoPrecios
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(1112, 512);
             this.Controls.Add(this.VentasBtnConsultar);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.VentasCboTipoProducto);
             this.Controls.Add(this.VentasLblTipoProducto);
             this.Controls.Add(this.VentasBtnCancelar);
             this.Controls.Add(this.VentasBtnGuardar);
@@ -436,7 +436,7 @@ namespace CapaVista_ListadoPrecios
             this.Name = "FrmListadoPrecios";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "7002 – Listado de precios";
+            this.Text = "7002 – ListadoDePrecios";
             this.VentasPnlEncabezado.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.VentasPbMarca)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasNudPorcentajeDescuento)).EndInit();
@@ -467,7 +467,7 @@ namespace CapaVista_ListadoPrecios
         private System.Windows.Forms.Button VentasBtnCancelar;
         private System.Windows.Forms.ToolTip VentasTtpAccionesOriginales;
         private System.Windows.Forms.Label VentasLblTipoProducto;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox VentasCboTipoProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmTipoCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmTipoProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmPorcentaje;

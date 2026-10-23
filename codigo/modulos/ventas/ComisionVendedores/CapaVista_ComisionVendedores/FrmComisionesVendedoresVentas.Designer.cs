@@ -467,7 +467,7 @@ namespace ComisionVendedoresVista
             //
             this.VentasLblTarjetaVentasDetalle.AutoSize = true;
             this.VentasLblTarjetaVentasDetalle.Font = new System.Drawing.Font("Tahoma", 8.5F);
-            this.VentasLblTarjetaVentasDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(102)))), ((int)(((byte)(117)))));
+            this.VentasLblTarjetaVentasDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblTarjetaVentasDetalle.Location = new System.Drawing.Point(15, 54);
             this.VentasLblTarjetaVentasDetalle.Name = "VentasLblTarjetaVentasDetalle";
             this.VentasLblTarjetaVentasDetalle.Size = new System.Drawing.Size(201, 20);
@@ -511,7 +511,7 @@ namespace ComisionVendedoresVista
             //
             this.VentasLblTarjetaMontoDetalle.AutoSize = true;
             this.VentasLblTarjetaMontoDetalle.Font = new System.Drawing.Font("Tahoma", 8.5F);
-            this.VentasLblTarjetaMontoDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(102)))), ((int)(((byte)(117)))));
+            this.VentasLblTarjetaMontoDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblTarjetaMontoDetalle.Location = new System.Drawing.Point(15, 54);
             this.VentasLblTarjetaMontoDetalle.Name = "VentasLblTarjetaMontoDetalle";
             this.VentasLblTarjetaMontoDetalle.Size = new System.Drawing.Size(144, 20);
@@ -555,7 +555,7 @@ namespace ComisionVendedoresVista
             //
             this.VentasLblTarjetaEstadoDetalle.AutoSize = true;
             this.VentasLblTarjetaEstadoDetalle.Font = new System.Drawing.Font("Tahoma", 8.5F);
-            this.VentasLblTarjetaEstadoDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(102)))), ((int)(((byte)(117)))));
+            this.VentasLblTarjetaEstadoDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblTarjetaEstadoDetalle.Location = new System.Drawing.Point(15, 54);
             this.VentasLblTarjetaEstadoDetalle.Name = "VentasLblTarjetaEstadoDetalle";
             this.VentasLblTarjetaEstadoDetalle.Size = new System.Drawing.Size(231, 20);
@@ -577,7 +577,7 @@ namespace ComisionVendedoresVista
             //
             this.VentasLblAyudaElegibles.AutoSize = true;
             this.VentasLblAyudaElegibles.Font = new System.Drawing.Font("Tahoma", 9F);
-            this.VentasLblAyudaElegibles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(102)))), ((int)(((byte)(117)))));
+            this.VentasLblAyudaElegibles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblAyudaElegibles.Location = new System.Drawing.Point(24, 220);
             this.VentasLblAyudaElegibles.Name = "VentasLblAyudaElegibles";
             this.VentasLblAyudaElegibles.Size = new System.Drawing.Size(424, 20);
@@ -673,7 +673,7 @@ namespace ComisionVendedoresVista
             //
             this.VentasLblPaginacion.AutoSize = true;
             this.VentasLblPaginacion.Font = new System.Drawing.Font("Tahoma", 8.5F);
-            this.VentasLblPaginacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(102)))), ((int)(((byte)(117)))));
+            this.VentasLblPaginacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblPaginacion.Location = new System.Drawing.Point(24, 420);
             this.VentasLblPaginacion.Name = "VentasLblPaginacion";
             this.VentasLblPaginacion.Size = new System.Drawing.Size(244, 20);
@@ -753,7 +753,7 @@ namespace ComisionVendedoresVista
             //
             this.VentasLblAvisoAutorizacion.AutoSize = true;
             this.VentasLblAvisoAutorizacion.Font = new System.Drawing.Font("Tahoma", 9F);
-            this.VentasLblAvisoAutorizacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(102)))), ((int)(((byte)(117)))));
+            this.VentasLblAvisoAutorizacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblAvisoAutorizacion.Location = new System.Drawing.Point(20, 23);
             this.VentasLblAvisoAutorizacion.Name = "VentasLblAvisoAutorizacion";
             this.VentasLblAvisoAutorizacion.Size = new System.Drawing.Size(523, 20);
@@ -1111,7 +1111,7 @@ namespace ComisionVendedoresVista
             // VentasLblAyudaBandeja
             //
             this.VentasLblAyudaBandeja.AutoSize = true;
-            this.VentasLblAyudaBandeja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(102)))), ((int)(((byte)(117)))));
+            this.VentasLblAyudaBandeja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblAyudaBandeja.Location = new System.Drawing.Point(24, 48);
             this.VentasLblAyudaBandeja.Name = "VentasLblAyudaBandeja";
             this.VentasLblAyudaBandeja.Size = new System.Drawing.Size(462, 23);
@@ -1332,7 +1332,7 @@ namespace ComisionVendedoresVista
             // VentasLblAvisoEnvio
             //
             this.VentasLblAvisoEnvio.AutoSize = true;
-            this.VentasLblAvisoEnvio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(102)))), ((int)(((byte)(117)))));
+            this.VentasLblAvisoEnvio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblAvisoEnvio.Location = new System.Drawing.Point(20, 21);
             this.VentasLblAvisoEnvio.Name = "VentasLblAvisoEnvio";
             this.VentasLblAvisoEnvio.Size = new System.Drawing.Size(555, 23);

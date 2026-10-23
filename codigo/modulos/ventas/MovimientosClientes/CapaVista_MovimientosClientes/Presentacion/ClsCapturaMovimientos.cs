@@ -1,4 +1,4 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
 using CapaControlador_MovimientosClientes;
 using System.Data;
 using System.Linq;
@@ -301,7 +301,7 @@ namespace CapaVista_MovimientosClientes
                 VentasMetCargarDocumento(Id, Clase);
             }
 
-            ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, "Registro anulado. Se conservaron los movimientos originales y su reverso.");
+            Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, "Registro anulado. Se conservaron los movimientos originales y su reverso.");
         }
 
         internal bool VentasMetGuardarModificacion()
@@ -312,7 +312,7 @@ namespace CapaVista_MovimientosClientes
                 string Clase = Convert.ToString(_Estado.DocumentoActual["Clase"]);
                 _Estado.Controlador.VentasMetModificarDocumento(Id, Clase, _Estado.VentasIdUsuario, _Estado.Vista.VentasTxtDescripcionDocumento.Text, _Estado.Vista.VentasDtpVencimientoDocumento.Value);
                 VentasMetCargarDocumento(Id, Clase);
-                ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, "Documento actualizado.");
+                Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, "Documento actualizado.");
                 return true;
             }
 
@@ -321,7 +321,7 @@ namespace CapaVista_MovimientosClientes
                 int Id = Convert.ToInt32(_Estado.ReciboActual["idPago"]);
                 _Estado.Controlador.VentasMetModificarRecibo(Id, _Estado.VentasIdUsuario, _Estado.Vista.VentasTxtObservacionesPago.Text);
                 VentasMetCargarRecibo(Id);
-                ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, "Observaciones del recibo actualizadas.");
+                Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, "Observaciones del recibo actualizadas.");
                 return true;
             }
 
@@ -341,7 +341,7 @@ namespace CapaVista_MovimientosClientes
                 Numero = _Estado.Controlador.VentasMetRegistrarDocumento(_Estado.Cliente, _Estado.Moneda, _Estado.VentasIdUsuario, ClsHerramientasVentas.VentasFuncObtenerId(_Estado.Vista.VentasCboEstablecimientoDocumento), _Estado.Vista.VentasTxtNumeroDocumento.Text, _Estado.Vista.VentasCboTipoDocumento.SelectedIndex, _Estado.Vista.VentasDtpFechaDocumento.Value, _Estado.Vista.VentasDtpVencimientoDocumento.Value, _Estado.Vista.VentasNudImporteDocumento.Value, _Estado.Vista.VentasTxtFacturaReferencia.Text, _Estado.Vista.VentasTxtDescripcionDocumento.Text);
                 _Estado.Vista.VentasTxtNumeroDocumento.Text = Numero;
                 bool Abono = _Estado.Vista.VentasCboTipoDocumento.SelectedIndex == 1 || _Estado.Vista.VentasCboTipoDocumento.SelectedIndex == 4;
-                ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, (Abono ? "Abono registrado; disminuye la deuda: " : "Cargo registrado; aumenta la deuda: ") + Numero);
+                Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, (Abono ? "Abono registrado; disminuye la deuda: " : "Cargo registrado; aumenta la deuda: ") + Numero);
             }
             else if (Tab == 2)
             {
@@ -357,14 +357,14 @@ namespace CapaVista_MovimientosClientes
                 Numero = _Estado.Controlador.VentasMetRegistrarRecibo(_Estado.Cliente, _Estado.Moneda, _Estado.VentasIdUsuario, _Estado.Vista.VentasTxtRecibo.Text, _Estado.Vista.VentasDtpFechaPago.Value, _Estado.Vista.VentasNudMontoPago.Value, _Estado.Vista.VentasNudTipoCambioPago.Value, Formas[_Estado.Vista.VentasCboFormaPago.SelectedIndex], _Estado.Vista.VentasTxtReferenciaPago.Text, _Estado.Vista.VentasTxtObservacionesPago.Text, _Estado.VentasMetSeleccionados(_Estado.Vista.VentasDgvDocumentos, "idFactura", 6));
                 _Estado.Vista.VentasTxtRecibo.Text = Numero;
                 VentasMetPendientes();
-                ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, "Recibo generado y aplicado correctamente: " + Numero);
+                Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, "Recibo generado y aplicado correctamente: " + Numero);
             }
             else if (Tab == 3)
             {
                 Numero = _Estado.Controlador.VentasMetPrepararDeposito(ClsHerramientasVentas.VentasFuncObtenerId(_Estado.Vista.VentasCboMonedaDeposito), _Estado.VentasIdUsuario, _Estado.Vista.VentasDtpFechaDeposito.Value, _Estado.Vista.VentasTxtCodigoDeposito.Text, ClsCapturaMovimientos.VentasMetReferencia(_Estado.Vista.VentasCboEmpresaDeposito), ClsCapturaMovimientos.VentasMetReferencia(_Estado.Vista.VentasCboBancoDestino), ClsCapturaMovimientos.VentasMetReferencia(_Estado.Vista.VentasCboCuentaDestino), ClsCapturaMovimientos.VentasMetReferencia(_Estado.Vista.VentasCboConceptoBancario), _Estado.Vista.VentasTxtReferenciaDeposito.Text, _Estado.VentasMetSeleccionados(_Estado.Vista.VentasDgvRecibosDeposito, "idPago", 7));
                 _Estado.Vista.VentasTxtCodigoDeposito.Text = Numero;
                 VentasMetDisponibles();
-                ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, "Deposito preparado localmente: " + Numero + ". El registro en Bancos requiere su enlace.");
+                Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarAdvertencia(_Estado.Vista, "Deposito preparado localmente: " + Numero + ". El registro en Bancos requiere su enlace.", "Depósito pendiente");
             }
             else
             {

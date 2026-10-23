@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B751AA56-FD8B-49F0-9F68-B61BE16A56C8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Ejecutable_Ventas</RootNamespace>
-    <AssemblyName>Ejecutable_Ventas</AssemblyName>
+    <RootNamespace>Ejecucion_Ventas</RootNamespace>
+    <AssemblyName>Ejecucion_Ventas</AssemblyName>
     <ApplicationIcon>..\..\..\..\..\recursos\modulos\ventas\iconoVentas.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -83,6 +83,12 @@
     <ProjectReference Include="..\..\Ventas y CxC\CapaVista_Ventas\CapaVista_Ventas.csproj">
       <Project>{9496BD61-6249-436E-B168-BB5C8C6ABFB0}</Project>
       <Name>CapaVista_Ventas</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj">
+      <Project>{F7AD1A78-73BD-4D8F-87D1-1C5B495D1160}</Project>
+      <Name>CapaVista_Seguridad</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * INICIO DEL CÓDIGO — Jose Torres
  * Carné: 0901-23-1091 | Fecha: 12/10/2026
  * Área: Ventas y cuentas por cobrar
@@ -448,7 +448,7 @@ namespace CapaVista_Ventas
             this.Name = "FrmCotizacionesPedidosFacturasVentas";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "7007 – Cotizaciones, pedidos y facturas";
+            this.Text = "7013 – CotizacionesPedidosYFacturas";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

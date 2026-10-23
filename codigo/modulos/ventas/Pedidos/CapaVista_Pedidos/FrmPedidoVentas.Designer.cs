@@ -241,7 +241,7 @@ namespace CapaVista_Pedidos
             // VentasLblImpuesto
             //
             this.VentasLblImpuesto.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.VentasLblImpuesto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(93)))), ((int)(((byte)(103)))));
+            this.VentasLblImpuesto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblImpuesto.Location = new System.Drawing.Point(16, 43);
             this.VentasLblImpuesto.Name = "VentasLblImpuesto";
             this.VentasLblImpuesto.Size = new System.Drawing.Size(302, 18);
@@ -252,7 +252,7 @@ namespace CapaVista_Pedidos
             // VentasLblSubtotal
             //
             this.VentasLblSubtotal.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.VentasLblSubtotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(93)))), ((int)(((byte)(103)))));
+            this.VentasLblSubtotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblSubtotal.Location = new System.Drawing.Point(16, 25);
             this.VentasLblSubtotal.Name = "VentasLblSubtotal";
             this.VentasLblSubtotal.Size = new System.Drawing.Size(302, 18);
@@ -304,13 +304,13 @@ namespace CapaVista_Pedidos
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(51)))), ((int)(((byte)(63)))));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.VentasDgvDetalle.DefaultCellStyle = dataGridViewCellStyle3;
             this.VentasDgvDetalle.EnableHeadersVisualStyles = false;
-            this.VentasDgvDetalle.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(229)))), ((int)(((byte)(238)))));
+            this.VentasDgvDetalle.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
             this.VentasDgvDetalle.Location = new System.Drawing.Point(30, 354);
             this.VentasDgvDetalle.MultiSelect = false;
             this.VentasDgvDetalle.Name = "VentasDgvDetalle";
@@ -397,7 +397,7 @@ namespace CapaVista_Pedidos
             //
             this.VentasLblDetalleAyuda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.VentasLblDetalleAyuda.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.VentasLblDetalleAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(119)))), ((int)(((byte)(132)))));
+            this.VentasLblDetalleAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblDetalleAyuda.Location = new System.Drawing.Point(250, 18);
             this.VentasLblDetalleAyuda.Name = "VentasLblDetalleAyuda";
             this.VentasLblDetalleAyuda.Size = new System.Drawing.Size(630, 28);
@@ -710,7 +710,7 @@ namespace CapaVista_Pedidos
             this.VentasTxtNumeroPedido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.VentasTxtNumeroPedido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.VentasTxtNumeroPedido.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.VentasTxtNumeroPedido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(96)))), ((int)(((byte)(111)))));
+            this.VentasTxtNumeroPedido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasTxtNumeroPedido.Location = new System.Drawing.Point(26, 169);
             this.VentasTxtNumeroPedido.Name = "VentasTxtNumeroPedido";
             this.VentasTxtNumeroPedido.ReadOnly = true;

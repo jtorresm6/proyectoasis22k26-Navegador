@@ -1,8 +1,8 @@
-﻿namespace CapaVista_Mantenimientos
+namespace CapaVista_Mantenimientos
 {
     partial class FrmMantenimientosVentas
     {
-        private System.ComponentModel.IContainer components;
+        private System.ComponentModel.IContainer components = new System.ComponentModel.Container();
 
         protected override void Dispose(bool Disposing)
         {
@@ -25,7 +25,7 @@
             this.VentasPnlCabecera.Controls.Add(this.VentasLblSubtitulo);
             this.VentasPnlCabecera.Controls.Add(this.VentasLblCodigo);
             this.VentasPnlCabecera.Dock = System.Windows.Forms.DockStyle.Top;
-            this.VentasPnlCabecera.Size = new System.Drawing.Size(1480, 86);
+            this.VentasPnlCabecera.Size = new System.Drawing.Size(1280, 86);
             this.VentasPnlCabecera.Name = "VentasPnlCabecera";
 
             this.VentasLblTitulo.Font = new System.Drawing.Font("Lucida Fax", 18F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic);
@@ -44,7 +44,7 @@
             this.VentasLblCodigo.BackColor = System.Drawing.Color.FromArgb(201, 162, 74);
             this.VentasLblCodigo.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             this.VentasLblCodigo.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
-            this.VentasLblCodigo.SetBounds(1314, 27, 140, 28);
+            this.VentasLblCodigo.SetBounds(1114, 27, 140, 28);
             this.VentasLblCodigo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.VentasLblCodigo.Name = "VentasLblCodigo";
             this.VentasLblCodigo.Text = "7009";
@@ -57,7 +57,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.ClientSize = new System.Drawing.Size(1480, 620);
+            this.ClientSize = new System.Drawing.Size(1280, 620);
             this.Controls.Add(this.VentasUsrNavegador);
             this.Controls.Add(this.VentasPnlCabecera);
             this.Font = new System.Drawing.Font("Tahoma", 9F);
@@ -67,7 +67,7 @@
             this.Name = "FrmMantenimientosVentas";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "7009 - Mantenimientos";
+            this.Text = "7009 – Mantenimientos";
             this.VentasPnlCabecera.ResumeLayout(false);
             this.ResumeLayout(false);
         }

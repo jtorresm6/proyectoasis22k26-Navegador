@@ -35,6 +35,9 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+<Compile Include="..\..\Utilidades\ClsDialogosVentas.cs">
+  <Link>Utilidades\ClsDialogosVentas.cs</Link>
+</Compile>
     <Compile Include="FrmListadoPrecios.cs">
       <SubType>Form</SubType>
     </Compile>

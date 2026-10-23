@@ -1,4 +1,4 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
 using System.Data;
 using System.Drawing.Printing;
 using System.Drawing;
@@ -40,12 +40,12 @@ namespace VentasPresentacion
 
         internal static void VentasMetFormatearFechas(DataGridView Grid)
         {
-            Grid.CellFormatting += (s, e) =>
+            Grid.CellFormatting += (s, ArgumentosEvento) =>
             {
-                if (e.Value is DateTime)
+                if (ArgumentosEvento.Value is DateTime)
                 {
-                    e.Value = ((DateTime)e.Value).ToString("dd/MM/yyyy");
-                    e.FormattingApplied = true;
+                    ArgumentosEvento.Value = ((DateTime)ArgumentosEvento.Value).ToString("dd/MM/yyyy");
+                    ArgumentosEvento.FormattingApplied = true;
                 }
             };
         }
@@ -72,13 +72,7 @@ namespace VentasPresentacion
                 Ventana.UseWaitCursor = false;
             }
         }
-
-        internal static void VentasMetInformar(Form Ventana, string Mensaje)
-        {
-            MessageBox.Show(Ventana, Mensaje, "Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        // ImpresionVentas.
+// ImpresionVentas.
         internal static void VentasMetImprimir(Form Ventana, string Titulo, string Encabezado, DataTable Datos)
         {
             if (Datos == null || Datos.Rows.Count == 0)
@@ -114,22 +108,22 @@ namespace VentasPresentacion
             )
             {
                 Documento.DocumentName = Titulo;
-                Documento.BeginPrint += (s, e) => Posicion = 0;
-                Documento.PrintPage += (s, e) =>
+                Documento.BeginPrint += (s, ArgumentosEvento) => Posicion = 0;
+                Documento.PrintPage += (s, ArgumentosEvento) =>
                 {
-                    float Y = e.MarginBounds.Top;
+                    float Y = ArgumentosEvento.MarginBounds.Top;
                     while (Posicion < Lineas.Count)
                     {
                         string Texto = Lineas[Posicion];
-                        SizeF Medida = e.Graphics.MeasureString(Texto.Length == 0 ? " " : Texto, Fuente, e.MarginBounds.Width);
-                        if (Y + Medida.Height > e.MarginBounds.Bottom)
+                        SizeF Medida = ArgumentosEvento.Graphics.MeasureString(Texto.Length == 0 ? " " : Texto, Fuente, ArgumentosEvento.MarginBounds.Width);
+                        if (Y + Medida.Height > ArgumentosEvento.MarginBounds.Bottom)
                             break;
-                        e.Graphics.DrawString(Texto, Fuente, Brushes.Black, new RectangleF(e.MarginBounds.Left, Y, e.MarginBounds.Width, Medida.Height));
+                        ArgumentosEvento.Graphics.DrawString(Texto, Fuente, Brushes.Black, new RectangleF(ArgumentosEvento.MarginBounds.Left, Y, ArgumentosEvento.MarginBounds.Width, Medida.Height));
                         Y += Medida.Height + 3;
                         Posicion++;
                     }
 
-                    e.HasMorePages = Posicion < Lineas.Count;
+                    ArgumentosEvento.HasMorePages = Posicion < Lineas.Count;
                 };
                 Vista.ShowDialog(Ventana);
             }
@@ -215,7 +209,7 @@ namespace VentasPresentacion
                     if (C.Name == "Id" || C.Name.StartsWith("id"))
                         C.Visible = false;
                 DataRow Elegida = null;
-                Action Elegir = () =>
+                Action VentasMetElegir = () =>
                 {
                     var F = Grid.CurrentRow == null ? null : Grid.CurrentRow.DataBoundItem as DataRowView;
                     if (F != null)
@@ -224,13 +218,13 @@ namespace VentasPresentacion
                         Ventana.DialogResult = DialogResult.OK;
                     }
                 };
-                Aceptar.Click += (a, b) => Elegir();
-                Grid.CellDoubleClick += (a, b) =>
+                Aceptar.Click += (Remitente, ArgumentosEvento) => VentasMetElegir();
+                Grid.CellDoubleClick += (Remitente, ArgumentosEvento) =>
                 {
-                    if (b.RowIndex >= 0)
-                        Elegir();
+                    if (ArgumentosEvento.RowIndex >= 0)
+                        VentasMetElegir();
                 };
-                Buscar.TextChanged += (a, b) =>
+                Buscar.TextChanged += (Remitente, ArgumentosEvento) =>
                 {
                     var Filtro = Datos.Clone();
                     string Texto = Buscar.Text.Trim();

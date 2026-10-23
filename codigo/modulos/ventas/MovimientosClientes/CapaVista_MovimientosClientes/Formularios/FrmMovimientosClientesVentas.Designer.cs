@@ -1,4 +1,4 @@
-﻿/*
+/*
  * INICIO DEL CÓDIGO — Ventas y cuentas por cobrar
  * Jose Javier Torres Martínez | Carné: 0901-23-1091
  * Fecha de actualización: 17/10/2026
@@ -1532,7 +1532,7 @@ namespace CapaVista_MovimientosClientes
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Name = "FrmMovimientosClientesVentas";
-            this.Text = "7003 – Movimientos de clientes y pagos";
+            this.Text = "7003 – MovimientosDeClientesYPagos";
             ((System.ComponentModel.ISupportInitialize)(this.VentasDgvMovimientos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasNudImporteDocumento)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasNudMontoPago)).EndInit();

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * INICIO DEL CÓDIGO — Ventas y cuentas por cobrar
  * Asignación: Todos
  * Jose Javier Torres Martínez | Carné: 0901-23-1091
@@ -42,7 +42,7 @@ namespace CapaVista_CierreMovimientos
             _Presentador.VentasMetConfigurarEnlaceContable(Registrar);
         }
 
-        private void VentasPeriodoCierre_Changed(object sender, EventArgs e)
+        private void VentasPeriodoCierre_Changed(object Remitente, EventArgs ArgumentosEvento)
         {
             if (_Presentador != null)
                 _Presentador.VentasMetPeriodoCambio();

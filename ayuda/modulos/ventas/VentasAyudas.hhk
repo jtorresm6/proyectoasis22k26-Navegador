@@ -1,0 +1,15 @@
+<!doctype html><html><body><ul>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Inicio de Ventas"><param name="Local" value="FrmMdiVentas_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Listado de precios"><param name="Local" value="FrmListadoPrecios_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Movimientos de clientes"><param name="Local" value="FrmMovimientosClientesVentas_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Recepci&#243;n de pagos"><param name="Local" value="FrmRecepcionPagosVentas_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Pedidos de venta"><param name="Local" value="FrmPedidoVentas_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Cotizaciones"><param name="Local" value="FrmCotizacionVentas_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Facturas"><param name="Local" value="FrmFacturas_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Comisiones de vendedores"><param name="Local" value="FrmComisionesVendedoresVentas_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Panel de comisiones"><param name="Local" value="FrmMdiComisionVendedores_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Mantenimientos de Ventas"><param name="Local" value="FrmMantenimientosVentas_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Cierre de movimientos"><param name="Local" value="FrmCierreMovimientosVentas_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Antig&#252;edad de saldos"><param name="Local" value="FrmReporteAntiguedad_Ventas.htm"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Cotizaciones, pedidos y facturas"><param name="Local" value="FrmCotizacionesPedidosFacturasVentas_Ventas.htm"></OBJECT>
+</ul></body></html>

@@ -17,7 +17,7 @@ namespace Ejecutable_Ventas
             // El MDI es la ventana principal; al cerrarlo termina la aplicación.
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CapaVista_Ventas.FrmMdiVentas());
+            Application.Run(new CapaVista_Seguridad.FrmLogin());
         }
     }
 }

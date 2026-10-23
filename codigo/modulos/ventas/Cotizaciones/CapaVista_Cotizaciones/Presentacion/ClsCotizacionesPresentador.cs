@@ -1,4 +1,4 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
 using CapaControlador_Cotizaciones;
 using System.Data;
 using System.Linq;
@@ -49,31 +49,31 @@ namespace CapaVista_Cotizaciones
         // EventosCotizaciones.
         internal void VentasMetConectarEventos()
         {
-            this.Vista.Load += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetCargar);
-            this.Vista.VentasBtnCotIngresar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetNuevo);
-            this.Vista.VentasBtnCotModificar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetModificar);
-            this.Vista.VentasBtnCotAnular.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetAnular);
-            this.Vista.VentasBtnCotRefrescar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetRefrescar);
-            this.Vista.VentasDgvCotProductos.CellDoubleClick += (s, e) =>
+            this.Vista.Load += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetCargar);
+            this.Vista.VentasBtnCotIngresar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetNuevo);
+            this.Vista.VentasBtnCotModificar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetModificar);
+            this.Vista.VentasBtnCotAnular.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetAnular);
+            this.Vista.VentasBtnCotRefrescar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetRefrescar);
+            this.Vista.VentasDgvCotProductos.CellDoubleClick += (s, ArgumentosEvento) =>
             {
-                if (e.RowIndex >= 0)
+                if (ArgumentosEvento.RowIndex >= 0)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetEditarLinea);
             };
-            this.Vista.VentasBtnCotAgregar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetAgregar);
-            this.Vista.VentasBtnCotGuardar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetGuardar);
-            this.Vista.VentasBtnCotLimpiar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetNuevo);
-            this.Vista.VentasBtnCotConsultar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetBuscar);
-            this.Vista.VentasTxtCotNumero.KeyDown += (s, e) =>
+            this.Vista.VentasBtnCotAgregar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetAgregar);
+            this.Vista.VentasBtnCotGuardar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetGuardar);
+            this.Vista.VentasBtnCotLimpiar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetNuevo);
+            this.Vista.VentasBtnCotConsultar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetBuscar);
+            this.Vista.VentasTxtCotNumero.KeyDown += (s, ArgumentosEvento) =>
             {
-                if (e.KeyCode == Keys.Enter)
+                if (ArgumentosEvento.KeyCode == Keys.Enter)
                 {
-                    e.SuppressKeyPress = true;
+                    ArgumentosEvento.SuppressKeyPress = true;
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.RegistroVistaCotizaciones.VentasMetBuscar);
                 }
             };
-            this.Vista.VentasBtnCotPedido.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () => this.RegistroVistaCotizaciones.VentasMetConvertir(false));
-            this.Vista.VentasBtnCotFactura.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () => this.RegistroVistaCotizaciones.VentasMetConvertir(true));
-            this.Vista.VentasBtnCotEliminar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () =>
+            this.Vista.VentasBtnCotPedido.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () => this.RegistroVistaCotizaciones.VentasMetConvertir(false));
+            this.Vista.VentasBtnCotFactura.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () => this.RegistroVistaCotizaciones.VentasMetConvertir(true));
+            this.Vista.VentasBtnCotEliminar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () =>
             {
                 if (this.Vista.VentasDgvCotProductos.CurrentRow != null && this.RegistroVistaCotizaciones.VentasMetEditable())
                 {
@@ -82,28 +82,28 @@ namespace CapaVista_Cotizaciones
                     VentasMetMostrarLineas();
                 }
             });
-            this.Vista.VentasBtnCotCerrar.Click += (s, e) => this.Vista.Close();
-            this.Vista.VentasBtnCotImprimir.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () =>
+            this.Vista.VentasBtnCotCerrar.Click += (s, ArgumentosEvento) => this.Vista.Close();
+            this.Vista.VentasBtnCotImprimir.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () =>
             {
                 this.Controlador.VentasMetValidarCaptura(!(this.IdCotizacion <= 0), "Guarde la cotizacion antes de imprimir.");
                 ClsHerramientasVentas.VentasMetImprimir(this.Vista, "Cotizacion " + this.NumeroGuardado, this.Vista.VentasCboCotCliente.Text + " / " + this.Vista.VentasCboCotMoneda.Text + " / " + this.Vista.VentasCboCotEstado.Text + " / Vigencia " + this.Vista.VentasDtpCotVigencia.Value.ToString("dd/MM/yyyy"), this.Lineas);
             });
-            this.Vista.VentasCboCotCliente.SelectedIndexChanged += (s, e) =>
+            this.Vista.VentasCboCotCliente.SelectedIndexChanged += (s, ArgumentosEvento) =>
             {
                 if (!this.Cargando)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetCliente);
             };
-            this.Vista.VentasCboCotMoneda.SelectedIndexChanged += (s, e) =>
+            this.Vista.VentasCboCotMoneda.SelectedIndexChanged += (s, ArgumentosEvento) =>
             {
                 if (!this.Cargando)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetPrecios);
             };
-            this.Vista.VentasDtpCotFecha.ValueChanged += (s, e) =>
+            this.Vista.VentasDtpCotFecha.ValueChanged += (s, ArgumentosEvento) =>
             {
                 if (!this.Cargando)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetPrecios);
             };
-            this.Vista.VentasCboCotProducto.SelectedIndexChanged += (s, e) =>
+            this.Vista.VentasCboCotProducto.SelectedIndexChanged += (s, ArgumentosEvento) =>
             {
                 DataRow P = ClsHerramientasVentas.VentasFuncObtenerFila(this.Vista.VentasCboCotProducto);
                 this.Vista.VentasTxtCotPrecio.Text = P == null ? "" : Convert.ToDecimal(P["Precio"]).ToString("N4", ClsHerramientasVentas.Cultura);

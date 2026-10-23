@@ -1,4 +1,4 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
 using CapaControlador_CierreMovimientos;
 using System.Data;
 using System.Linq;
@@ -66,39 +66,39 @@ namespace CapaVista_CierreMovimientos
         // EventosCierre.
         internal void VentasMetConectarEventos()
         {
-            this.Vista.Load += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetCargar);
-            this.Vista.VentasBtnIngresar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetNuevo);
-            this.Vista.VentasBtnRevisar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.BorradorCierre.VentasMetConsultarCierre);
-            this.Vista.VentasBtnGuardarBorrador.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.BorradorCierre.VentasMetGuardarBorrador);
-            this.Vista.VentasBtnModificar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.BorradorCierre.VentasMetModificarBorrador);
-            this.Vista.VentasBtnEliminar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.BorradorCierre.VentasMetAnularBorrador);
-            this.Vista.VentasBtnRefrescar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetRevisar);
-            this.Vista.VentasCboClienteHistorial.SelectedIndexChanged += (s, e) =>
+            this.Vista.Load += (Remitente, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetCargar);
+            this.Vista.VentasBtnIngresar.Click += (Remitente, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetNuevo);
+            this.Vista.VentasBtnRevisar.Click += (Remitente, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.BorradorCierre.VentasMetConsultarCierre);
+            this.Vista.VentasBtnGuardarBorrador.Click += (Remitente, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.BorradorCierre.VentasMetGuardarBorrador);
+            this.Vista.VentasBtnModificar.Click += (Remitente, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.BorradorCierre.VentasMetModificarBorrador);
+            this.Vista.VentasBtnEliminar.Click += (Remitente, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.BorradorCierre.VentasMetAnularBorrador);
+            this.Vista.VentasBtnRefrescar.Click += (Remitente, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetRevisar);
+            this.Vista.VentasCboClienteHistorial.SelectedIndexChanged += (Remitente, ArgumentosEvento) =>
             {
                 if (!this.Cargando && this.Moneda > 0 && this.Vista.VentasTbcCierre.SelectedTab == this.Vista.VentasTbpHistorial)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetHistorial);
             };
-            this.Vista.VentasTxtPeriodoHistorial.KeyDown += (s, e) =>
+            this.Vista.VentasTxtPeriodoHistorial.KeyDown += (Remitente, ArgumentosEvento) =>
             {
-                if (e.KeyCode == Keys.Enter)
+                if (ArgumentosEvento.KeyCode == Keys.Enter)
                 {
-                    e.SuppressKeyPress = true;
+                    ArgumentosEvento.SuppressKeyPress = true;
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetHistorial);
                 }
             };
-            this.Vista.VentasBtnConfirmar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.BorradorCierre.VentasMetConfirmar);
-            this.Vista.VentasBtnCancelar.Click += (s, e) => VentasMetLimpiarRevision();
-            this.Vista.VentasBtnCerrar.Click += (s, e) => this.Vista.Close();
-            this.Vista.VentasBtnTrasladarContabilidad.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () =>
+            this.Vista.VentasBtnConfirmar.Click += (Remitente, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.BorradorCierre.VentasMetConfirmar);
+            this.Vista.VentasBtnCancelar.Click += (Remitente, ArgumentosEvento) => VentasMetLimpiarRevision();
+            this.Vista.VentasBtnCerrar.Click += (Remitente, ArgumentosEvento) => this.Vista.Close();
+            this.Vista.VentasBtnTrasladarContabilidad.Click += (Remitente, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () =>
             {
-                if (MessageBox.Show(this.Vista, "¿Desea registrar esta partida en Contabilidad?", "Traslado contable", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                if (Ventas.Estandarizacion.ClsDialogosVentas.VentasMetConfirmar(this.Vista, "¿Desea registrar esta partida en Contabilidad?", "Traslado contable") != DialogResult.Yes)
                     return;
                 string Referencia = this.Controlador.VentasMetTrasladar(this.IdCierre, this.VentasIdUsuario, this.EnlaceContable);
                 VentasMetMostrarPartida();
-                ClsHerramientasVentas.VentasMetInformar(this.Vista, "Contabilidad confirmo la partida: " + Referencia);
+                Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(this.Vista, "Contabilidad confirmo la partida: " + Referencia);
             });
-            this.Vista.VentasBtnImprimir.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetImprimirCierre);
-            this.Vista.VentasCboMonedaCierre.SelectedIndexChanged += (s, e) =>
+            this.Vista.VentasBtnImprimir.Click += (Remitente, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetImprimirCierre);
+            this.Vista.VentasCboMonedaCierre.SelectedIndexChanged += (Remitente, ArgumentosEvento) =>
             {
                 if (!this.Cargando)
                 {
@@ -108,13 +108,13 @@ namespace CapaVista_CierreMovimientos
                     this.BorradorCierre.VentasMetActualizarAccionesCierre();
                 }
             };
-            this.Vista.VentasChkRevisionDocumentos.CheckedChanged += (s, e) => VentasMetActualizarConfirmacion();
-            this.Vista.VentasTbcCierre.SelectedIndexChanged += (s, e) =>
+            this.Vista.VentasChkRevisionDocumentos.CheckedChanged += (Remitente, ArgumentosEvento) => VentasMetActualizarConfirmacion();
+            this.Vista.VentasTbcCierre.SelectedIndexChanged += (Remitente, ArgumentosEvento) =>
             {
                 if (!this.Cargando && this.Moneda > 0)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetRevisar);
             };
-            this.Vista.VentasDgvHistorialCierre.SelectionChanged += (s, e) =>
+            this.Vista.VentasDgvHistorialCierre.SelectionChanged += (Remitente, ArgumentosEvento) =>
             {
                 if (this.Cargando || this.Vista.VentasDgvHistorialCierre.CurrentRow == null)
                     return;

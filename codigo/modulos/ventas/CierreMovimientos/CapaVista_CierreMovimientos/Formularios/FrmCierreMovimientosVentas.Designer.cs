@@ -1,4 +1,4 @@
-﻿/*
+/*
  * INICIO DEL CÓDIGO — Ventas y cuentas por cobrar
  * Jose Javier Torres Martínez | Carné: 0901-23-1091
  * Asignación: Todos | Roger Herrera 0901-23-2429; Natali Montenegro 0901-23-10017; Matthew Juárez 0901-23-4250; Julio Rosales 0901-23-1426; Diego Cheng 0901-22-8091
@@ -1018,7 +1018,7 @@ namespace CapaVista_CierreMovimientos
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Name = "FrmCierreMovimientosVentas";
-            this.Text = "7010 – Cierre de movimientos";
+            this.Text = "7010 – CierreDeMovimientos";
             ((System.ComponentModel.ISupportInitialize)(this.VentasNudAnioCierre)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasDgvRevisionCierre)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasDgvHistorialCierre)).EndInit();

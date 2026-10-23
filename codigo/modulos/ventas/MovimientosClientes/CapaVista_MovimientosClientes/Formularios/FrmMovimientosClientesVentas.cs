@@ -1,4 +1,4 @@
-﻿/*
+/*
  * INICIO DEL CÓDIGO — Ventas y cuentas por cobrar
  * Jose Javier Torres Martínez | Carné: 0901-23-1091
  * Fecha de actualización: 17/10/2026
@@ -46,13 +46,13 @@ namespace CapaVista_MovimientosClientes
             _Presentador.VentasMetConfigurarCatalogosBancos(Empresas, Bancos, Cuentas, Conceptos, Modo);
         }
 
-        private void VentasTbcMovimientos_SelectedIndexChanged(object sender, EventArgs e)
+        private void VentasTbcMovimientos_SelectedIndexChanged(object Remitente, EventArgs ArgumentosEvento)
         {
             if (_Presentador != null)
                 _Presentador.VentasMetCambiarPestana();
         }
 
-        private void VentasCboTipoDocumento_SelectedIndexChanged(object sender, EventArgs e)
+        private void VentasCboTipoDocumento_SelectedIndexChanged(object Remitente, EventArgs ArgumentosEvento)
         {
             if (_Presentador != null)
                 _Presentador.VentasMetTipoDocumentoCambio();

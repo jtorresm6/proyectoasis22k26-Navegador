@@ -1,4 +1,4 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
 using CapaControlador_CierreMovimientos;
 using System.Data;
 using System.Linq;
@@ -70,7 +70,7 @@ namespace CapaVista_CierreMovimientos
         {
             VentasMetPersistirBorrador();
             _Estado.VentasMetRevisar();
-            ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, "Borrador guardado. Revise los saldos antes de confirmar el cierre.");
+            Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, "Borrador guardado. Revise los saldos antes de confirmar el cierre.");
         }
 
         internal void VentasMetPersistirBorrador()
@@ -92,7 +92,7 @@ namespace CapaVista_CierreMovimientos
             _Estado.Controlador.VentasMetEliminarBorrador(_Estado.IdBorrador, _Estado.VentasIdUsuario, Motivo);
             _Estado.IdBorrador = 0;
             _Estado.VentasMetNuevo();
-            ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, "Borrador anulado.");
+            Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, "Borrador anulado.");
         }
 
         internal void VentasMetActualizarAccionesCierre()
@@ -107,13 +107,13 @@ namespace CapaVista_CierreMovimientos
         internal void VentasMetConfirmar()
         {
             _Estado.Controlador.VentasMetValidarCaptura(!(_Estado.Revision == null), "Revise el periodo antes de confirmarlo.");
-            if (MessageBox.Show(_Estado.Vista, "El cierre conservara los saldos y bloqueara registros con fechas de este periodo. ¿Desea confirmarlo?", "Confirmar cierre", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (Ventas.Estandarizacion.ClsDialogosVentas.VentasMetConfirmar(_Estado.Vista, "El cierre conservara los saldos y bloqueara registros con fechas de este periodo. ¿Desea confirmarlo?", "Confirmar cierre") != DialogResult.Yes)
                 return;
             if (_Estado.IdBorrador == 0 || _Estado.EditandoBorrador)
                 VentasMetPersistirBorrador();
             string Numero = _Estado.Controlador.VentasMetConfirmar(_Estado.Moneda, _Estado.VentasIdUsuario, _Estado.Tipo, _Estado.Vista.VentasDtpDesdeCierre.Value, _Estado.Vista.VentasDtpHastaCierre.Value, _Estado.Vista.VentasChkRevisionDocumentos.Checked);
             _Estado.VentasMetRevisar();
-            ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, "Cierre confirmado: " + Numero + ". Se conservaron los saldos historicos por cliente y factura.");
+            Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, "Cierre confirmado: " + Numero + ". Se conservaron los saldos historicos por cliente y factura.");
         }
     }
 }

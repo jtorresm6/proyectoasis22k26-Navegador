@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data.Odbc;
 using System.Configuration;
 
@@ -18,19 +18,19 @@ namespace CapaModelo_Ventas
             }
         }
 
-        protected readonly string _ConnectionString;
+        protected readonly string _CadenaConexionLocal;
 
         public ClsConexion()
         {
-            _ConnectionString = CadenaConexion;
+            _CadenaConexionLocal = CadenaConexion;
         }
 
-        protected OdbcConnection SeguridadMetObtenerConexion()
+        protected OdbcConnection VentasMetObtenerConexion()
         {
-            return new OdbcConnection(_ConnectionString);
+            return new OdbcConnection(_CadenaConexionLocal);
         }
 
-        public void SeguridadMetDesconexion(OdbcConnection ConexionOdbc)
+        public void VentasMetDesconexion(OdbcConnection ConexionOdbc)
         {
             try
             {

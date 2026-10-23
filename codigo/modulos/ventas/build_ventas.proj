@@ -79,7 +79,7 @@
   <Import Project="build_componentes_ventas.proj" />
   <Target Name="Compilar" DependsOnTargets="ValidarConfiguracion;CompilarComponentesVentas">
     <Message Text="[7/7] Compilando soluciones MVC de Ventas en paralelo ($(Configuration))..." Importance="high" />
-    <MSBuild Projects="Ejecutable_Ventas\Ejecutable_Ventas\Ejecutable_Ventas.csproj;ComisionVendedores\Ejecucion_ComisionVendedores\ComisionVendedores.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="Ejecutable_Ventas\Ejecutable_Ventas\Ejecucion_Ventas.csproj;ComisionVendedores\Ejecucion_ComisionVendedores\ComisionVendedores.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
     <CallTarget Targets="ReunirBibliotecas" />
   </Target>
   <Target Name="CompilarFormulariosVentas">

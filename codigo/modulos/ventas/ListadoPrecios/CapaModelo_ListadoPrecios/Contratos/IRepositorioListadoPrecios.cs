@@ -6,7 +6,7 @@ namespace CapaModelo_ListadoPrecios.Contratos
     /// <summary>Define las operaciones de persistencia del Listado de Precios.</summary>
     public interface IRepositorioListadoPrecios
     {
-        List<ClsPrecioCliente> ObtenerListado();
-        bool Guardar(ClsPrecioCliente registro, out string mensaje);
+        List<ClsPrecioCliente> ListadoPreciosMetObtenerListado();
+        bool ListadoPreciosMetGuardar(ClsPrecioCliente RegistroPrecio, out string Mensaje);
     }
 }

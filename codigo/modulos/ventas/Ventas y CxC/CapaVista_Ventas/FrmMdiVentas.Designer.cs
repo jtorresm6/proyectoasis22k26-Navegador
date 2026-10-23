@@ -473,7 +473,7 @@ namespace CapaVista_Ventas
             this.VentasPnlPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VentasPnlPrincipal.Location = new System.Drawing.Point(0, 0);
             this.VentasPnlPrincipal.Name = "VentasPnlPrincipal";
-            this.VentasPnlPrincipal.Size = new System.Drawing.Size(1554, 1055);
+            this.VentasPnlPrincipal.Size = new System.Drawing.Size(1554, 1061);
             this.VentasPnlPrincipal.TabIndex = 0;
             // 
             // VentasPnlNavegador
@@ -488,7 +488,7 @@ namespace CapaVista_Ventas
             this.VentasPnlNavegador.Margin = new System.Windows.Forms.Padding(0);
             this.VentasPnlNavegador.Name = "VentasPnlNavegador";
             this.VentasPnlNavegador.Padding = new System.Windows.Forms.Padding(6, 8, 6, 37);
-            this.VentasPnlNavegador.Size = new System.Drawing.Size(270, 1027);
+            this.VentasPnlNavegador.Size = new System.Drawing.Size(270, 1014);
             this.VentasPnlNavegador.TabIndex = 0;
             // 
             // VentasTlpMenu
@@ -949,13 +949,13 @@ namespace CapaVista_Ventas
             this.VentasTlpContenido.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.VentasTlpContenido.Controls.Add(this.VentasTlpEncabezado, 0, 0);
             this.VentasTlpContenido.Controls.Add(this.VentasPnlDashboard, 0, 1);
-            this.VentasTlpContenido.Location = new System.Drawing.Point(300, 14);
+            this.VentasTlpContenido.Location = new System.Drawing.Point(280, 14);
             this.VentasTlpContenido.Margin = new System.Windows.Forms.Padding(0);
             this.VentasTlpContenido.Name = "VentasTlpContenido";
             this.VentasTlpContenido.RowCount = 2;
             this.VentasTlpContenido.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.VentasTlpContenido.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.VentasTlpContenido.Size = new System.Drawing.Size(1240, 1027);
+            this.VentasTlpContenido.Size = new System.Drawing.Size(1263, 1034);
             this.VentasTlpContenido.TabIndex = 1;
             // 
             // VentasTlpEncabezado
@@ -1022,16 +1022,14 @@ namespace CapaVista_Ventas
             // 
             // VentasPnlDashboard
             // 
-            this.VentasPnlDashboard.BackColor = System.Drawing.Color.Transparent;
-            this.VentasPnlDashboard.BackgroundImage = global::CapaVista_Ventas.Properties.Resources.FondoDashboardVentas;
-            this.VentasPnlDashboard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VentasPnlDashboard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.VentasPnlDashboard.Controls.Add(this.VentasTlpDashboard);
             this.VentasPnlDashboard.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VentasPnlDashboard.Location = new System.Drawing.Point(0, 51);
             this.VentasPnlDashboard.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.VentasPnlDashboard.Name = "VentasPnlDashboard";
             this.VentasPnlDashboard.Padding = new System.Windows.Forms.Padding(24, 18, 24, 26);
-            this.VentasPnlDashboard.Size = new System.Drawing.Size(1240, 976);
+            this.VentasPnlDashboard.Size = new System.Drawing.Size(1263, 983);
             this.VentasPnlDashboard.TabIndex = 1;
             // 
             // VentasTlpDashboard
@@ -1359,14 +1357,14 @@ namespace CapaVista_Ventas
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.ClientSize = new System.Drawing.Size(1554, 1055);
+            this.ClientSize = new System.Drawing.Size(1554, 1061);
             this.Controls.Add(this.VentasPnlPrincipal);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Icon = global::CapaVista_Ventas.Properties.Resources.IconoVentas;
             this.MinimumSize = new System.Drawing.Size(1100, 700);
             this.Name = "FrmMdiVentas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "7001 – Principal";
+            this.Text = "7000 – MDI";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.VentasPbKpi1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasPbKpi2)).EndInit();

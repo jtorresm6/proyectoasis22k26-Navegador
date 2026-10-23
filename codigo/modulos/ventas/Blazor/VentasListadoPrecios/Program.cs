@@ -1,25 +1,25 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+var ConstructorAplicacion = WebApplication.CreateBuilder(args);
+ConstructorAplicacion.Services.AddRazorPages();
+ConstructorAplicacion.Services.AddServerSideBlazor();
 
-var app = builder.Build();
+var Aplicacion = ConstructorAplicacion.Build();
 
-if (!app.Environment.IsDevelopment())
+if (!Aplicacion.Environment.IsDevelopment())
 {
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    Aplicacion.UseHsts();
 }
 
-app.UseHttpsRedirection();
+Aplicacion.UseHttpsRedirection();
 
-app.UseStaticFiles();
+Aplicacion.UseStaticFiles();
 
-app.UseRouting();
+Aplicacion.UseRouting();
 
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
+Aplicacion.MapBlazorHub();
+Aplicacion.MapFallbackToPage("/_Host");
 
-app.Run();
+Aplicacion.Run();

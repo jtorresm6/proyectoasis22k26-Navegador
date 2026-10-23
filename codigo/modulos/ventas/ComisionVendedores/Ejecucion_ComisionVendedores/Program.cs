@@ -15,7 +15,7 @@ namespace ComisionVendedores
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ComisionVendedoresVista.FrmMdiComisionVendedores());
+            Application.Run(new CapaVista_Seguridad.FrmLogin());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -16,7 +16,7 @@ namespace CapaVista_Reportes
                 Padre.UseWaitCursor = true;
                 DateTime Corte = DateTime.Today;
                 DataTable Datos = new ClsAntiguedadControlador().VentasMetConsultar(Corte, 0, "Todos");
-                using (var Visor = new FrmVistaAntiguedad(Datos, Corte, "Todos los clientes", "Todos"))
+                using (var Visor = new FrmReporteAntiguedad(Datos, Corte, "Todos los clientes", "Todos"))
                 {
                     Padre.UseWaitCursor = false;
                     Visor.ShowDialog(Padre);
@@ -34,7 +34,7 @@ namespace CapaVista_Reportes
 
         internal static void VentasMetConfigurar(LocalReport Reporte, DataTable Datos, DateTime Corte, string Cliente, string Estado)
         {
-            Reporte.ReportEmbeddedResource = "CapaVista_Reportes.Reportes.ReporteAntiguedad.rdlc";
+            Reporte.ReportEmbeddedResource = "CapaVista_Reportes.Reportes.RpReporteAntiguedad.rdlc";
             Reporte.DataSources.Clear();
             Reporte.DataSources.Add(new ReportDataSource("DsAntiguedad", Datos));
             Reporte.SetParameters(new[] { new ReportParameter("FechaCorte", Corte.ToString("dd/MM/yyyy")), new ReportParameter("Cliente", Cliente), new ReportParameter("Estado", Estado) });

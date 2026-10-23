@@ -37,20 +37,14 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmMdiComisionVendedores.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmMdiComisionVendedores.Designer.cs">
-      <DependentUpon>FrmMdiComisionVendedores.cs</DependentUpon>
-    </Compile>
+<Compile Include="..\..\Utilidades\ClsDialogosVentas.cs">
+  <Link>Utilidades\ClsDialogosVentas.cs</Link>
+</Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FrmMdiComisionVendedores.resx">
-      <DependentUpon>FrmMdiComisionVendedores.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Resources\iconoVentas.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -50,9 +50,7 @@ namespace CapaVista_Pedidos
                     Lineas = new List<ClsLineaPedido>(_Lineas)
                 };
                 int Id = _Controlador.VentasMetGuardar(Pedido);
-                MessageBox.Show(this, "Pedido " + Pedido.Numero + " guardado (ID " + Id +
-                    ") con vencimiento " + Pedido.Vencimiento.ToString("dd/MM/yyyy") + ".",
-                    "Pedido guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(this, "Pedido " + Pedido.Numero + " guardado (ID " + Id + ") con vencimiento " + Pedido.Vencimiento.ToString("dd/MM/yyyy") + ".", "Pedido guardado");
                 VentasMetLimpiar();
             }
             catch (Exception Error) { MessageBox.Show(this, "No se guardó el pedido: " +

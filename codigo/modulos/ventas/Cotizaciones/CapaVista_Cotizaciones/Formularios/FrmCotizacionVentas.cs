@@ -1,4 +1,4 @@
-﻿/*
+/*
  * INICIO DEL CÓDIGO — Ventas y cuentas por cobrar
 
  * Jose Javier Torres Martínez | Carné: 0901-23-1091
@@ -32,7 +32,7 @@ namespace CapaVista_Cotizaciones
             }
         }
 
-        private void VentasCotVigencia_Changed(object sender, EventArgs e)
+        private void VentasCotVigencia_Changed(object Remitente, EventArgs ArgumentosEvento)
         {
             if (_Presentador != null)
                 _Presentador.VentasMetMostrarVigencia();

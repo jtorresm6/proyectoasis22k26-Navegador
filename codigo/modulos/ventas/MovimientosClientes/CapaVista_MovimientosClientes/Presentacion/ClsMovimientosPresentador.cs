@@ -1,4 +1,4 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
 using CapaControlador_MovimientosClientes;
 using System.Data;
 using System.Linq;
@@ -97,8 +97,8 @@ namespace CapaVista_MovimientosClientes
             this.SeleccionarFactura.ForeColor = System.Drawing.Color.White;
             this.SeleccionarFactura.FlatStyle = FlatStyle.Flat;
             this.Vista.VentasTxtFacturaReferencia.Parent.Controls.Add(this.SeleccionarFactura);
-            this.SeleccionarFactura.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetSeleccionarFactura);
-            this.Vista.VentasDtpFechaDocumento.ValueChanged += (s, e) =>
+            this.SeleccionarFactura.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetSeleccionarFactura);
+            this.Vista.VentasDtpFechaDocumento.ValueChanged += (s, ArgumentosEvento) =>
             {
                 if (!this.Cargando && this.DocumentoActual == null && this.Vista.VentasCboTipoDocumento.SelectedIndex == 0)
                     this.CapturaMovimientos.VentasMetVencimientoCargo();
@@ -113,17 +113,17 @@ namespace CapaVista_MovimientosClientes
 
             )
                 ClsHerramientasVentas.VentasMetFormatearFechas(Grid);
-            this.Vista.Load += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetCargar);
-            this.Vista.VentasBtnConsultar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () =>
+            this.Vista.Load += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetCargar);
+            this.Vista.VentasBtnConsultar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () =>
             {
                 if (!this.Inicializado)
                     VentasMetCargar();
                 else
                     VentasMetConsultarCaptura();
             });
-            this.Vista.VentasBtnModificar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetModificar);
-            this.Vista.VentasBtnEliminar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetAnular);
-            this.Vista.VentasBtnRefrescar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () =>
+            this.Vista.VentasBtnModificar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetModificar);
+            this.Vista.VentasBtnEliminar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetAnular);
+            this.Vista.VentasBtnRefrescar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, () =>
             {
                 if (this.Vista.VentasTbcMovimientos.SelectedIndex == 1 && this.DocumentoActual != null)
                     this.CapturaMovimientos.VentasMetCargarDocumento(Convert.ToInt32(this.DocumentoActual["Id"]), Convert.ToString(this.DocumentoActual["Clase"]));
@@ -132,14 +132,14 @@ namespace CapaVista_MovimientosClientes
                 else
                     VentasMetConsultarActual();
             });
-            this.Vista.VentasDgvMovimientos.CellDoubleClick += (s, e) =>
+            this.Vista.VentasDgvMovimientos.CellDoubleClick += (s, ArgumentosEvento) =>
             {
-                if (e.RowIndex >= 0)
+                if (ArgumentosEvento.RowIndex >= 0)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetAbrirSeleccionActual);
             };
-            this.Vista.VentasDgvConsultaRecibos.CellDoubleClick += (s, e) =>
+            this.Vista.VentasDgvConsultaRecibos.CellDoubleClick += (s, ArgumentosEvento) =>
             {
-                if (e.RowIndex >= 0)
+                if (ArgumentosEvento.RowIndex >= 0)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetAbrirSeleccionActual);
             };
             foreach (var Combo in new[]
@@ -152,37 +152,37 @@ namespace CapaVista_MovimientosClientes
 
             )
                 Combo.DropDownStyle = ComboBoxStyle.DropDown;
-            this.Vista.VentasBtnGuardar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetGuardar);
-            this.Vista.VentasBtnIngresar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetNuevo);
-            this.Vista.VentasBtnCancelar.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetNuevo);
-            this.Vista.VentasBtnCerrar.Click += (s, e) => this.Vista.Close();
-            this.Vista.VentasBtnImprimir.Click += (s, e) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetImprimir);
-            this.Vista.VentasCboCliente.SelectedIndexChanged += (s, e) =>
+            this.Vista.VentasBtnGuardar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetGuardar);
+            this.Vista.VentasBtnIngresar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetNuevo);
+            this.Vista.VentasBtnCancelar.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetNuevo);
+            this.Vista.VentasBtnCerrar.Click += (s, ArgumentosEvento) => this.Vista.Close();
+            this.Vista.VentasBtnImprimir.Click += (s, ArgumentosEvento) => ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetImprimir);
+            this.Vista.VentasCboCliente.SelectedIndexChanged += (s, ArgumentosEvento) =>
             {
                 if (!this.Cargando)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetClienteCambio);
             };
-            this.Vista.VentasCboMoneda.SelectedIndexChanged += (s, e) =>
+            this.Vista.VentasCboMoneda.SelectedIndexChanged += (s, ArgumentosEvento) =>
             {
                 if (!this.Cargando)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, VentasMetConsultarActual);
             };
-            this.Vista.VentasCboMonedaDeposito.SelectedIndexChanged += (s, e) =>
+            this.Vista.VentasCboMonedaDeposito.SelectedIndexChanged += (s, ArgumentosEvento) =>
             {
                 if (!this.Cargando)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetDisponibles);
             };
-            this.Vista.VentasCboTipoConsulta.SelectedIndexChanged += (s, e) =>
+            this.Vista.VentasCboTipoConsulta.SelectedIndexChanged += (s, ArgumentosEvento) =>
             {
                 if (!this.Cargando && this.EstadoCuenta != null)
                     VentasMetMostrarEstado();
             };
-            this.Vista.VentasCboEstadoConsulta.SelectedIndexChanged += (s, e) =>
+            this.Vista.VentasCboEstadoConsulta.SelectedIndexChanged += (s, ArgumentosEvento) =>
             {
                 if (!this.Cargando && this.EstadoCuenta != null)
                     VentasMetMostrarEstado();
             };
-            this.Vista.VentasNudMontoPago.ValueChanged += (s, e) => this.CapturaMovimientos.VentasMetTotalesPago();
+            this.Vista.VentasNudMontoPago.ValueChanged += (s, ArgumentosEvento) => this.CapturaMovimientos.VentasMetTotalesPago();
             foreach (var Grid in new[]
             {
                 this.Vista.VentasDgvDocumentos,
@@ -191,21 +191,21 @@ namespace CapaVista_MovimientosClientes
 
             )
             {
-                Grid.CurrentCellDirtyStateChanged += (s, e) =>
+                Grid.CurrentCellDirtyStateChanged += (s, ArgumentosEvento) =>
                 {
                     if (Grid.IsCurrentCellDirty && Grid.CurrentCell is DataGridViewCheckBoxCell)
                         Grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 };
-                Grid.DataError += (s, e) =>
+                Grid.DataError += (s, ArgumentosEvento) =>
                 {
-                    e.ThrowException = false;
-                    ClsHerramientasVentas.VentasMetInformar(this.Vista, "Ingrese un importe numerico valido.");
+                    ArgumentosEvento.ThrowException = false;
+                    Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarAdvertencia(this.Vista, "Ingrese un importe numerico valido.", "Validación");
                 };
             }
 
             this.Vista.VentasDgvDocumentos.CellValueChanged += this.CapturaMovimientos.VentasMetAplicacionCambio;
             this.Vista.VentasDgvRecibosDeposito.CellValueChanged += this.CapturaMovimientos.VentasMetDepositoCambio;
-            this.Vista.VentasDgvConsultaRecibos.SelectionChanged += (s, e) =>
+            this.Vista.VentasDgvConsultaRecibos.SelectionChanged += (s, ArgumentosEvento) =>
             {
                 if (!this.Cargando)
                     ClsHerramientasVentas.VentasMetEjecutar(this.Vista, this.CapturaMovimientos.VentasMetAplicacionesConsulta);

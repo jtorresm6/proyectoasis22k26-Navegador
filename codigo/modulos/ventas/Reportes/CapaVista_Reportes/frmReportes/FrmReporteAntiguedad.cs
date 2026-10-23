@@ -1,4 +1,4 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
 using System;
 using System.Data;
 using System.Drawing;
@@ -7,15 +7,16 @@ using Microsoft.Reporting.WinForms;
 
 namespace CapaVista_Reportes
 {
-    public sealed class FrmVistaAntiguedad : Form
+    public sealed class FrmReporteAntiguedad : Form
     {
         private readonly ReportViewer _VentasRpvAntiguedad;
-        public FrmVistaAntiguedad(DataTable Datos, DateTime Corte, string Cliente, string Estado)
+        public FrmReporteAntiguedad(DataTable Datos, DateTime Corte, string Cliente, string Estado)
         {
-            Text = "7006 - Ventas | Antigüedad de saldos";
+            Text = "7006 – AntiguedadDeSaldos";
             Icon = Properties.Resources.IconoVentas;
-            Size = new Size(1200, 800);
+            Size = new Size(1200, 700);
             StartPosition = FormStartPosition.CenterParent;
+            MaximizeBox = false;
             _VentasRpvAntiguedad = new ReportViewer
             {
                 Dock = DockStyle.Fill,

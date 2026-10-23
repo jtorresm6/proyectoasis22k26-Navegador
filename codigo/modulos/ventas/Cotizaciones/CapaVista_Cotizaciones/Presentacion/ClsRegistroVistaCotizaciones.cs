@@ -1,4 +1,4 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
 using CapaControlador_Cotizaciones;
 using System.Data;
 using System.Linq;
@@ -22,7 +22,7 @@ namespace CapaVista_Cotizaciones
             string Estado = _Estado.Vista.VentasCboCotEstado.Text == "Borrador" ? "BORRADOR" : _Estado.Vista.VentasCboCotEstado.Text == "Vigente" ? "EMITIDA" : "";
             string Numero = _Estado.Controlador.VentasMetGuardar(_Estado.IdCotizacion, _Estado.Vista.VentasTxtCotNumero.Text, ClsHerramientasVentas.VentasFuncObtenerId(_Estado.Vista.VentasCboCotCliente), ClsHerramientasVentas.VentasFuncObtenerId(_Estado.Vista.VentasCboCotVendedor), ClsHerramientasVentas.VentasFuncObtenerId(_Estado.Vista.VentasCboCotMoneda), _Estado.VentasIdUsuario, _Estado.Vista.VentasDtpCotFecha.Value, _Estado.Vista.VentasDtpCotVigencia.Value, _Estado.Vista.VentasNudCotTipoCambio.Value, Estado, _Estado.Lineas.Copy());
             VentasMetConsultar(Numero);
-            ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, "Cotizacion guardada: " + Numero);
+            Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, "Cotizacion guardada: " + Numero);
         }
 
         internal void VentasMetConsultar(string Numero)
@@ -92,11 +92,11 @@ namespace CapaVista_Cotizaciones
             if (_Estado.IdCotizacion == 0)
                 VentasMetBuscar();
             _Estado.Controlador.VentasMetValidarCaptura(_Estado.IdCotizacion > 0, "Consulte la cotizacion a anular.");
-            if (MessageBox.Show(_Estado.Vista, "¿Desea anular la cotizacion " + _Estado.NumeroGuardado + "?", "Anular cotizacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (Ventas.Estandarizacion.ClsDialogosVentas.VentasMetConfirmar(_Estado.Vista, "¿Desea anular la cotizacion " + _Estado.NumeroGuardado + "?", "Anular cotizacion") != DialogResult.Yes)
                 return;
             _Estado.Controlador.VentasMetAnular(_Estado.IdCotizacion, _Estado.VentasIdUsuario);
             VentasMetConsultar(_Estado.NumeroGuardado);
-            ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, "Cotizacion anulada.");
+            Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, "Cotizacion anulada.");
         }
 
         internal bool VentasMetEditable()
@@ -138,7 +138,7 @@ namespace CapaVista_Cotizaciones
         {
             string Numero = _Estado.Controlador.VentasMetConvertir(_Estado.IdCotizacion, AFactura, ClsHerramientasVentas.VentasFuncObtenerId(_Estado.Vista.VentasCboCotEstablecimiento), _Estado.VentasIdUsuario);
             VentasMetConsultar(_Estado.NumeroGuardado);
-            ClsHerramientasVentas.VentasMetInformar(_Estado.Vista, AFactura ? "Factura borrador preparada con los precios originales: " + Numero + ". Su emision e inventarios corresponden a Facturas." : "Pedido creado con los precios originales: " + Numero);
+            Ventas.Estandarizacion.ClsDialogosVentas.VentasMetMostrarExito(_Estado.Vista, AFactura ? "Factura borrador preparada con los precios originales: " + Numero + ". Su emision e inventarios corresponden a Facturas." : "Pedido creado con los precios originales: " + Numero);
         }
     }
 }
