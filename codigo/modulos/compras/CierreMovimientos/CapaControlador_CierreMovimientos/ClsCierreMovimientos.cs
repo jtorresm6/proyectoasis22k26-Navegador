@@ -1,11 +1,22 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : José Pablo Cano Cóbar
+ * Carné : 0901-23-1727
+ * Fecha : 24/10/2026
+ * ==================================================================
+ * Propósito :
+ *  Prepara las validaciones y el resumen de saldos del prototipo de cierre de movimientos, con sus totales por período.
+ * ===================================================================
+*/
 
 namespace CapaControlador_CierreMovimientos
 {
  
-    // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "11/10/26"
-    // Lógica de negocio del 3.8 Cierre de Movimientos.
+    
+    
   
     public class ClsResumenCierre
     {
@@ -63,13 +74,6 @@ namespace CapaControlador_CierreMovimientos
             return Resumen;
         }
 
-        public string ComprasFuncEjecutarCierre(int IdPeriodo)
-        {
-            // Fase funcional: una sola transacción que bloquea movimientos,
-            // guarda saldos de cierre, abre el período siguiente y registra la bitácora.
-            return "Prototipo: el período " + IdPeriodo + " se marcaría como cerrado.";
-        }
-
         private DataTable ComprasFuncDatosValidaciones(int IdPeriodo)
         {
             DataTable Tabla = new DataTable();
@@ -102,5 +106,5 @@ namespace CapaControlador_CierreMovimientos
             return Tabla;
         }
     }
-    // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "11/10/26"
+    
 }

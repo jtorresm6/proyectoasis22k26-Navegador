@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.ReportingServices.ReportViewerControl.Winforms</id>
+    <version>150.1652.0</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://go.microsoft.com/fwlink/?LinkId=826162</licenseUrl>
+    <projectUrl>https://go.microsoft.com/fwlink/?linkid=2014377</projectUrl>
+    <description>Microsoft Report Viewer Control for .Net Windows Forms applications. Contains the assemblies required to use the Windows Forms Report Viewer Control.</description>
+    <releaseNotes>See Reporting Services Blog: https://docs.microsoft.com/en-us/sql/reporting-services/application-integration/release-notes-ssrs-application-integration?view=sql-server-ver15</releaseNotes>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <tags>Microsoft SSRS ReportViewer Report Viewer ReportingServices PBIRS Rdl Rdlc Paginated Reporting DataViz MSFT visualization WinForms</tags>
+    <dependencies>
+      <dependency id="Microsoft.SqlServer.Types" version="14.0.0" />
+    </dependencies>
+    <references>
+      <reference file="Microsoft.ReportViewer.Common.dll" />
+      <reference file="Microsoft.ReportViewer.DataVisualization.dll" />
+      <reference file="Microsoft.ReportViewer.Design.dll" />
+      <reference file="Microsoft.ReportViewer.ProcessingObjectModel.dll" />
+      <reference file="Microsoft.ReportViewer.Winforms.dll" />
+    </references>
+  </metadata>
+</package>

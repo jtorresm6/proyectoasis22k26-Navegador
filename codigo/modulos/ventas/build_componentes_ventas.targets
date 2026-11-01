@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Solo se importa desde el compilador de Ventas. Los proyectos originales
+       conservan sus referencias; aqui se resuelven con el perfil seleccionado. -->
+  <PropertyGroup>
+    <BibliotecasComponentesVentas>$(MSBuildThisFileDirectory)obj\Componentes\$(Configuration)\</BibliotecasComponentesVentas>
+  </PropertyGroup>
+  <Target Name="ResolverReferenciasComponentesVentas" BeforeTargets="ResolveAssemblyReferences">
+    <PropertyGroup>
+      <AssemblySearchPaths>$(BibliotecasComponentesVentas);$(AssemblySearchPaths)</AssemblySearchPaths>
+    </PropertyGroup>
+    <ItemGroup>
+      <Reference>
+        <RutaComponenteVentas>$(BibliotecasComponentesVentas)$([System.Text.RegularExpressions.Regex]::Replace('%(Reference.Identity)', ',.*', '')).dll</RutaComponenteVentas>
+        <HintPath Condition="'%(Reference.HintPath)' != ''">$([System.String]::Copy('%(Reference.HintPath)').Replace('\bin\Debug\', '\bin\$(Configuration)\'))</HintPath>
+        <HintPath Condition="Exists('%(Reference.RutaComponenteVentas)')">%(Reference.RutaComponenteVentas)</HintPath>
+      </Reference>
+    </ItemGroup>
+  </Target>
+  <Target Name="ReunirComponenteVentas" AfterTargets="Build" Condition="'$(OutputType)' == 'Library'">
+    <MakeDir Directories="$(BibliotecasComponentesVentas)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BibliotecasComponentesVentas)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

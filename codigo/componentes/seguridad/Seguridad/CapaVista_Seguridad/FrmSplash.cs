@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CapaVista_Logistica;
+//using CapaVista_Ventas;
 
 /*
  * ============================================================
@@ -92,13 +93,12 @@ namespace CapaVista_Seguridad
                         //principal = MDICompras;
                         //break;
 
-                    //case "Ventas":
-                        //var MDIVentas = new FrmMDIVentas();
-                        //MDIVentas.VentasMetActualizarInfoUsuario(
-                        //ClsSesionSeguridad.NombreEmpleado,
-                        //ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                        //principal = MDIVentas;
-                        //break;
+                 // case "Ventas":
+                   //  var mdiVentas = new CapaVista_Ventas.FrmMdiVentas(
+                     //     ClsSesionSeguridad.NombreEmpleado,
+                       //     ClsSesionSeguridad.SeguridadMetRolesComoTexto(), ClsSesionSeguridad.IdUsuario);
+                      //     principal = mdiVentas;
+                       // break;
 
                     //case "Bancos":
                         //var MdiBancos = new FrmMDIBancos();
@@ -117,7 +117,7 @@ namespace CapaVista_Seguridad
                         //break;
 
                     //case "RRHH":
-                        //var MdiRrhh = now FrmMDIRrhh();
+                        //var MdiRrhh = new FrmMDIRrhh();
                         //MdiRrhh.RrhhMetActualizarInfoUsuario(
                         //ClsSesionSeguridad.NombreEmpleado,
                         //ClsSesionSeguridad.SeguridadMetRolesComoTexto());

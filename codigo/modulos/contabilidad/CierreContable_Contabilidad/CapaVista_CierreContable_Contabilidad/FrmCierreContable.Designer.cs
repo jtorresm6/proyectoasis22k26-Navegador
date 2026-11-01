@@ -1,0 +1,222 @@
+﻿/* Área: Contabilidad. Autor: Donald Osorio. Carné: 0901-23-17982.
+ * Fecha: 14/10/2026. Propósito: presentación del prototipo de Cierre contable (Donald). */
+using System.Windows.Forms;
+using CapaVista_Contabilidad.Componentes;
+using CapaVista_Contabilidad.Properties;
+
+namespace CapaVista_Contabilidad
+{
+    partial class FrmCierreContable
+    {
+        private System.ComponentModel.IContainer components = null;
+        protected override void Dispose(bool Disposing)
+        {
+            if (Disposing && components != null) components.Dispose();
+            if (Disposing && _Polizas != null) _Polizas.Dispose();
+            base.Dispose(Disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        private void InitializeComponent()
+        {
+            this.ContabilidadLblTitulo = new System.Windows.Forms.Label();
+            this.ContabilidadPnlPeriodo = new Componentes.ClsPanelRedondeadoContabilidad();
+            this.ContabilidadLblPeriodo = new System.Windows.Forms.Label();
+            this.ContabilidadDtpPeriodo = new System.Windows.Forms.DateTimePicker();
+            this.ContabilidadBtnRevisar = new Componentes.ClsBotonContabilidad();
+            this.ContabilidadLblAlcance = new System.Windows.Forms.Label();
+            this.ContabilidadPnlPolizas = new Componentes.ClsPanelRedondeadoContabilidad();
+            this.ContabilidadLblPolizas = new System.Windows.Forms.Label();
+            this.ContabilidadDgvPolizas = new Componentes.ClsTablaContabilidad();
+            this.ContabilidadColPoliza = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContabilidadColFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContabilidadColEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContabilidadColDebe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContabilidadColHaber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContabilidadColDiferencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContabilidadLblValidacion = new System.Windows.Forms.Label();
+            this.ContabilidadLblResumen = new System.Windows.Forms.Label();
+            this.ContabilidadBtnSimular = new Componentes.ClsBotonContabilidad();
+            System.Windows.Forms.DataGridViewCellStyle EstiloContabilidadColFecha = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle EstiloContabilidadColDebe = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle EstiloContabilidadColHaber = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle EstiloContabilidadColDiferencia = new System.Windows.Forms.DataGridViewCellStyle();
+            ((System.ComponentModel.ISupportInitialize)(this.ContabilidadDgvPolizas)).BeginInit();
+            this.ContabilidadPnlPeriodo.SuspendLayout();
+            this.ContabilidadPnlPolizas.SuspendLayout();
+            this.SuspendLayout();
+            this.ContabilidadLblTitulo.Name = "ContabilidadLblTitulo";
+            this.Controls.Add(this.ContabilidadLblTitulo);
+            this.ContabilidadLblTitulo.Text = "Cierre contable";
+            this.ContabilidadLblTitulo.Location = new System.Drawing.Point(24, 22);
+            this.ContabilidadLblTitulo.Size = new System.Drawing.Size(1132, 38);
+            this.ContabilidadLblTitulo.ForeColor = System.Drawing.Color.FromArgb(35, 50, 61);
+            this.ContabilidadLblTitulo.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadLblTitulo.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.ContabilidadLblTitulo.Font = new System.Drawing.Font("Lucida Fax", 20F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic);
+            this.ContabilidadPnlPeriodo.Name = "ContabilidadPnlPeriodo";
+            this.Controls.Add(this.ContabilidadPnlPeriodo);
+            this.ContabilidadPnlPeriodo.Location = new System.Drawing.Point(24, 76);
+            this.ContabilidadPnlPeriodo.Size = new System.Drawing.Size(1132, 130);
+            this.ContabilidadPnlPeriodo.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadPnlPeriodo.ColorRelleno = System.Drawing.Color.White;
+            this.ContabilidadPnlPeriodo.ColorBorde = System.Drawing.Color.FromArgb(212, 222, 228);
+            this.ContabilidadPnlPeriodo.Radio = 18;
+            this.ContabilidadLblPeriodo.Name = "ContabilidadLblPeriodo";
+            this.ContabilidadPnlPeriodo.Controls.Add(this.ContabilidadLblPeriodo);
+            this.ContabilidadLblPeriodo.Text = "Período contable";
+            this.ContabilidadLblPeriodo.Location = new System.Drawing.Point(24, 20);
+            this.ContabilidadLblPeriodo.Size = new System.Drawing.Size(240, 24);
+            this.ContabilidadLblPeriodo.ForeColor = System.Drawing.Color.FromArgb(35, 50, 61);
+            this.ContabilidadLblPeriodo.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadLblPeriodo.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.ContabilidadDtpPeriodo.Name = "ContabilidadDtpPeriodo";
+            this.ContabilidadPnlPeriodo.Controls.Add(this.ContabilidadDtpPeriodo);
+            this.ContabilidadDtpPeriodo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.ContabilidadDtpPeriodo.CustomFormat = "dd/MM/yyyy";
+            this.ContabilidadDtpPeriodo.Location = new System.Drawing.Point(24, 46);
+            this.ContabilidadDtpPeriodo.Size = new System.Drawing.Size(240, 30);
+            this.ContabilidadDtpPeriodo.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.ContabilidadDtpPeriodo.CustomFormat = "yyyy-MM";
+            this.ContabilidadDtpPeriodo.ShowUpDown = true;
+            this.ContabilidadBtnRevisar.Name = "ContabilidadBtnRevisar";
+            this.ContabilidadPnlPeriodo.Controls.Add(this.ContabilidadBtnRevisar);
+            this.ContabilidadBtnRevisar.Text = "Revisar período";
+            this.ContabilidadBtnRevisar.Location = new System.Drawing.Point(290, 40);
+            this.ContabilidadBtnRevisar.Size = new System.Drawing.Size(210, 42);
+            this.ContabilidadBtnRevisar.Estilo = Componentes.EstiloBotonContabilidad.Acento;
+            this.ContabilidadLblAlcance.Name = "ContabilidadLblAlcance";
+            this.ContabilidadPnlPeriodo.Controls.Add(this.ContabilidadLblAlcance);
+            this.ContabilidadLblAlcance.Text = "Las pólizas anuladas no se incluyen en los totales del cierre.";
+            this.ContabilidadLblAlcance.Location = new System.Drawing.Point(530, 26);
+            this.ContabilidadLblAlcance.Size = new System.Drawing.Size(560, 64);
+            this.ContabilidadLblAlcance.ForeColor = System.Drawing.Color.FromArgb(35, 50, 61);
+            this.ContabilidadLblAlcance.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadLblAlcance.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.ContabilidadPnlPolizas.Name = "ContabilidadPnlPolizas";
+            this.Controls.Add(this.ContabilidadPnlPolizas);
+            this.ContabilidadPnlPolizas.Location = new System.Drawing.Point(24, 222);
+            this.ContabilidadPnlPolizas.Size = new System.Drawing.Size(1132, 324);
+            this.ContabilidadPnlPolizas.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadPnlPolizas.ColorRelleno = System.Drawing.Color.White;
+            this.ContabilidadPnlPolizas.ColorBorde = System.Drawing.Color.FromArgb(212, 222, 228);
+            this.ContabilidadPnlPolizas.Radio = 18;
+            this.ContabilidadLblPolizas.Name = "ContabilidadLblPolizas";
+            this.ContabilidadPnlPolizas.Controls.Add(this.ContabilidadLblPolizas);
+            this.ContabilidadLblPolizas.Text = "Pólizas del período";
+            this.ContabilidadLblPolizas.Location = new System.Drawing.Point(20, 14);
+            this.ContabilidadLblPolizas.Size = new System.Drawing.Size(1092, 24);
+            this.ContabilidadLblPolizas.ForeColor = System.Drawing.Color.FromArgb(35, 50, 61);
+            this.ContabilidadLblPolizas.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadLblPolizas.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.ContabilidadDgvPolizas.Name = "ContabilidadDgvPolizas";
+            this.ContabilidadPnlPolizas.Controls.Add(this.ContabilidadDgvPolizas);
+            this.ContabilidadDgvPolizas.Location = new System.Drawing.Point(20, 52);
+            this.ContabilidadDgvPolizas.Size = new System.Drawing.Size(1092, 214);
+            this.ContabilidadDgvPolizas.AutoGenerateColumns = false;
+            this.ContabilidadDgvPolizas.ReadOnly = true;
+            this.ContabilidadDgvPolizas.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Bottom;
+            this.ContabilidadColPoliza.Name = "ContabilidadColPoliza";
+            this.ContabilidadColPoliza.DataPropertyName = "Poliza";
+            this.ContabilidadColPoliza.HeaderText = "Póliza";
+            this.ContabilidadColPoliza.MinimumWidth = 90;
+            this.ContabilidadColFecha.Name = "ContabilidadColFecha";
+            this.ContabilidadColFecha.DataPropertyName = "Fecha";
+            this.ContabilidadColFecha.HeaderText = "Fecha";
+            this.ContabilidadColFecha.MinimumWidth = 90;
+            EstiloContabilidadColFecha.Format = "dd/MM/yyyy";
+            this.ContabilidadColFecha.DefaultCellStyle = EstiloContabilidadColFecha;
+            this.ContabilidadColEstado.Name = "ContabilidadColEstado";
+            this.ContabilidadColEstado.DataPropertyName = "Estado";
+            this.ContabilidadColEstado.HeaderText = "Estado";
+            this.ContabilidadColEstado.MinimumWidth = 90;
+            this.ContabilidadColDebe.Name = "ContabilidadColDebe";
+            this.ContabilidadColDebe.DataPropertyName = "Debe";
+            this.ContabilidadColDebe.HeaderText = "Debe (Q)";
+            this.ContabilidadColDebe.MinimumWidth = 90;
+            EstiloContabilidadColDebe.Format = "N2";
+            EstiloContabilidadColDebe.FormatProvider = new System.Globalization.CultureInfo("es-GT");
+            EstiloContabilidadColDebe.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.ContabilidadColDebe.DefaultCellStyle = EstiloContabilidadColDebe;
+            this.ContabilidadColHaber.Name = "ContabilidadColHaber";
+            this.ContabilidadColHaber.DataPropertyName = "Haber";
+            this.ContabilidadColHaber.HeaderText = "Haber (Q)";
+            this.ContabilidadColHaber.MinimumWidth = 90;
+            EstiloContabilidadColHaber.Format = "N2";
+            EstiloContabilidadColHaber.FormatProvider = new System.Globalization.CultureInfo("es-GT");
+            EstiloContabilidadColHaber.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.ContabilidadColHaber.DefaultCellStyle = EstiloContabilidadColHaber;
+            this.ContabilidadColDiferencia.Name = "ContabilidadColDiferencia";
+            this.ContabilidadColDiferencia.DataPropertyName = "Diferencia";
+            this.ContabilidadColDiferencia.HeaderText = "Diferencia (Q)";
+            this.ContabilidadColDiferencia.MinimumWidth = 90;
+            EstiloContabilidadColDiferencia.Format = "N2";
+            EstiloContabilidadColDiferencia.FormatProvider = new System.Globalization.CultureInfo("es-GT");
+            EstiloContabilidadColDiferencia.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.ContabilidadColDiferencia.DefaultCellStyle = EstiloContabilidadColDiferencia;
+            this.ContabilidadDgvPolizas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.ContabilidadColPoliza, this.ContabilidadColFecha, this.ContabilidadColEstado, this.ContabilidadColDebe, this.ContabilidadColHaber, this.ContabilidadColDiferencia });
+            this.ContabilidadLblValidacion.Name = "ContabilidadLblValidacion";
+            this.ContabilidadPnlPolizas.Controls.Add(this.ContabilidadLblValidacion);
+            this.ContabilidadLblValidacion.Text = "";
+            this.ContabilidadLblValidacion.Location = new System.Drawing.Point(20, 280);
+            this.ContabilidadLblValidacion.Size = new System.Drawing.Size(1092, 36);
+            this.ContabilidadLblValidacion.ForeColor = System.Drawing.Color.FromArgb(35, 50, 61);
+            this.ContabilidadLblValidacion.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadLblValidacion.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.ContabilidadLblResumen.Name = "ContabilidadLblResumen";
+            this.Controls.Add(this.ContabilidadLblResumen);
+            this.ContabilidadLblResumen.Text = "";
+            this.ContabilidadLblResumen.Location = new System.Drawing.Point(26, 558);
+            this.ContabilidadLblResumen.Size = new System.Drawing.Size(1130, 24);
+            this.ContabilidadLblResumen.ForeColor = System.Drawing.Color.FromArgb(35, 50, 61);
+            this.ContabilidadLblResumen.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadLblResumen.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.ContabilidadBtnSimular.Name = "ContabilidadBtnSimular";
+            this.Controls.Add(this.ContabilidadBtnSimular);
+            this.ContabilidadBtnSimular.Text = "Cerrar período";
+            this.ContabilidadBtnSimular.Location = new System.Drawing.Point(936, 626);
+            this.ContabilidadBtnSimular.Size = new System.Drawing.Size(220, 42);
+            this.ContabilidadBtnSimular.Estilo = Componentes.EstiloBotonContabilidad.Dorado;
+            this.ContabilidadBtnSimular.Icono = global::CapaVista_Contabilidad.Properties.Resources.ico_aplicar;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = global::CapaVista_Contabilidad.Properties.Resources.Icono_Contabilidad;
+            this.MaximizeBox = false;
+            this.Name = "FrmCierreContable";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "10004 - CierreContable";
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1180, 688);
+            this.BackColor = System.Drawing.Color.FromArgb(246, 247, 248);
+            this.Font = new System.Drawing.Font("Segoe UI", 10F);
+            ((System.ComponentModel.ISupportInitialize)(this.ContabilidadDgvPolizas)).EndInit();
+            this.ContabilidadPnlPeriodo.ResumeLayout(false);
+            this.ContabilidadPnlPeriodo.PerformLayout();
+            this.ContabilidadPnlPolizas.ResumeLayout(false);
+            this.ContabilidadPnlPolizas.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Label ContabilidadLblTitulo;
+        private Componentes.ClsPanelRedondeadoContabilidad ContabilidadPnlPeriodo;
+        private System.Windows.Forms.Label ContabilidadLblPeriodo;
+        private System.Windows.Forms.DateTimePicker ContabilidadDtpPeriodo;
+        private Componentes.ClsBotonContabilidad ContabilidadBtnRevisar;
+        private System.Windows.Forms.Label ContabilidadLblAlcance;
+        private Componentes.ClsPanelRedondeadoContabilidad ContabilidadPnlPolizas;
+        private System.Windows.Forms.Label ContabilidadLblPolizas;
+        private Componentes.ClsTablaContabilidad ContabilidadDgvPolizas;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContabilidadColPoliza;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContabilidadColFecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContabilidadColEstado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContabilidadColDebe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContabilidadColHaber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContabilidadColDiferencia;
+        private System.Windows.Forms.Label ContabilidadLblValidacion;
+        private System.Windows.Forms.Label ContabilidadLblResumen;
+        private Componentes.ClsBotonContabilidad ContabilidadBtnSimular;
+    }
+}

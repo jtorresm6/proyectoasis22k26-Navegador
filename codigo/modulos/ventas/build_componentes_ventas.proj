@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PropiedadesComponentesVentas>Configuration=$(Configuration);Platform=AnyCPU;PlatformTarget=AnyCPU;BuildProjectReferences=false;CustomBeforeMicrosoftCommonTargets=$(MSBuildThisFileDirectory)build_componentes_ventas.targets</PropiedadesComponentesVentas>
+  </PropertyGroup>
+  <ItemGroup>
+    <ConsultasModelo Include="..\..\componentes\consultas\Consultas\CapaModelo_Consultas\CapaModelo_Consultas.csproj" />
+    <ConsultasControlador Include="..\..\componentes\consultas\Consultas\CapaControlador_Consultas\CapaControlador_Consultas.csproj" />
+    <ConsultasVista Include="..\..\componentes\consultas\Consultas\CapaVista_Consultas\CapaVista_Consultas.csproj" />
+    <SeguridadModelo Include="..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\CapaModelo_Seguridad.csproj" />
+    <SeguridadControlador Include="..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\CapaControlador_Seguridad.csproj" />
+    <BotonesModelo Include="..\..\componentes\reporteador\BtnActualizar_Reporteador\CapaModelo_BtnActualizar_Reporteador\CapaModelo_BtnActualizar_Reporteador.csproj" />
+    <BotonesModelo Include="..\..\componentes\reporteador\BtnBusqueda_Reporteador\CapaModelo_BtnBusqueda\CapaModelo_BtnBusqueda_Reporteador.csproj" />
+    <BotonesModelo Include="..\..\componentes\reporteador\BtnEditar_Reporteador\CapaModelo_BtnEditar_Reporteador\CapaModelo_BtnEditar_Reporteador.csproj" />
+    <BotonesModelo Include="..\..\componentes\reporteador\BtnEliminar_Reporteador\CapaModelo_BtnEliminar_Reporteador\CapaModelo_BtnEliminar_Reporteador.csproj" />
+    <BotonesModelo Include="..\..\componentes\reporteador\BtnGuardar_Reporteador\CapaModelo_BtnGuardar_Reporteador\CapaModelo_BtnGuardar_Reporteador.csproj" />
+    <BotonesModelo Include="..\..\componentes\reporteador\BtnLimpiar_Reporteador\CapaModelo_BtnLimpiar_Reporteador\CapaModelo_BtnLimpiar_Reporteador.csproj" />
+    <BotonesModelo Include="..\..\componentes\reporteador\BtnRuta_Reporteador\CapaModelo_BtnRuta_Reporteador\CapaModelo_BtnRuta_Reporteador.csproj" />
+    <BotonesModelo Include="..\..\componentes\reporteador\BtnVerReporte_Reporteador\CapaModelo_BtnVerReporte_Reporteador\CapaModelo_BtnVerReporte_Reporteador.csproj" />
+    <BotonesControlador Include="..\..\componentes\reporteador\BtnActualizar_Reporteador\CapaControlador_BtnActualizar_Reporteador\CapaControlador_BtnActualizar_Reporteador.csproj" />
+    <BotonesControlador Include="..\..\componentes\reporteador\BtnBusqueda_Reporteador\CapaControlador_BtnBusqueda\CapaControlador_BtnBusqueda_Reporteador.csproj" />
+    <BotonesControlador Include="..\..\componentes\reporteador\BtnEditar_Reporteador\CapaControlador_BtnEditar_Reporteador\CapaControlador_BtnEditar_Reporteador.csproj" />
+    <BotonesControlador Include="..\..\componentes\reporteador\BtnEliminar_Reporteador\CapaControlador_BtnEliminar_Reporteador\CapaControlador_BtnEliminar_Reporteador.csproj" />
+    <BotonesControlador Include="..\..\componentes\reporteador\BtnGuardar_Reporteador\CapaControlador_BtnGuardar_Reporteador\CapaControlador_BtnGuardar_Reporteador.csproj" />
+    <BotonesControlador Include="..\..\componentes\reporteador\BtnLimpiar_Reporteador\CapaControlador_BtnLimpiar_Reporteador\CapaControlador_BtnLimpiar_Reporteador.csproj" />
+    <BotonesControlador Include="..\..\componentes\reporteador\BtnRuta_Reporteador\CapaControlador_BtnRuta_Reporteador\CapaControlador_BtnRuta_Reporteador.csproj" />
+    <BotonesControlador Include="..\..\componentes\reporteador\BtnVerReporte_Reporteador\CapaControlador_BtnVerReporte_Reporteador\CapaControlador_BtnVerReporte_Reporteador.csproj" />
+    <BotonesVista Include="..\..\componentes\reporteador\BtnActualizar_Reporteador\CapaVista_BtnActualizar_Reporteador\CapaVista_BtnActualizar_Reporteador.csproj" />
+    <BotonesVista Include="..\..\componentes\reporteador\BtnBusqueda_Reporteador\CapaVista_BtnBusqueda\CapaVista_BtnBusqueda_Reporteador.csproj" />
+    <BotonesVista Include="..\..\componentes\reporteador\BtnEditar_Reporteador\CapaVista_BtnEditar_Reporteador\CapaVista_BtnEditar_Reporteador.csproj" />
+    <BotonesVista Include="..\..\componentes\reporteador\BtnEliminar_Reporteador\CapaVista_BtnEliminar_Reporteador\CapaVista_BtnEliminar_Reporteador.csproj" />
+    <BotonGuardarVista Include="..\..\componentes\reporteador\BtnGuardar_Reporteador\CapaVista_BtnGuardar_Reporteador\CapaVista_BtnGuardar_Reporteador.csproj" />
+    <BotonesVista Include="..\..\componentes\reporteador\BtnLimpiar_Reporteador\CapaVista_BtnLimpiar_Reporteador\CapaVista_BtnLimpiar_Reporteador.csproj" />
+    <BotonesVista Include="..\..\componentes\reporteador\BtnRuta_Reporteador\CapaVista_BtnRuta_Reporteador\CapaVista_BtnRuta_Reporteador.csproj" />
+    <BotonesVista Include="..\..\componentes\reporteador\BtnVerReporte_Reporteador\CapaVista_BtnVerReporte_Reporteador\CapaVista_BtnVerReporte_Reporteador.csproj" />
+    <ReporteadorModelo Include="..\..\componentes\reporteador\Reporteador\CapaModelo_Reporteador\CapaModelo_Reporteador.csproj" />
+    <ReporteadorControlador Include="..\..\componentes\reporteador\Reporteador\CapaControlador_Reporteador\CapaControlador_Reporteador.csproj" />
+    <ReporteadorVista Include="..\..\componentes\reporteador\Reporteador\CapaVista_Reporteador\CapaVista_Reporteador.csproj" />
+    <NavegadorModelo Include="..\..\componentes\navegador\Navegador\CapaModelo_Navegador\CapaModelo_Navegador.csproj" />
+    <NavegadorControlador Include="..\..\componentes\navegador\Navegador\CapaControlador_Navegador\CapaControlador_Navegador.csproj" />
+    <NavegadorAuxiliar Include="..\..\componentes\navegador\Navegador\Control_Usuarios\Control_Usuarios.csproj" />
+    <NavegadorVista Include="..\..\componentes\navegador\Navegador\CapaVista_Navegador\CapaVista_Navegador.csproj" />
+    <LogisticaMdiVentas Include="..\Logistica\Logistica\CapaVista_Logistica\CapaVista_Logistica.csproj" />
+    <LogisticaTransporteInternoVentas Include="..\Logistica\TransporteInterno_Logistica\CapaVista_TransporteInterno_Logistica\CapaVista_TransporteInterno_Logistica.csproj" />
+    <LogisticaModeloVentas Include="..\Logistica\*\CapaModelo_*\*.csproj" />
+    <LogisticaControladorVentas Include="..\Logistica\*\CapaControlador_*\*.csproj" />
+    <LogisticaVistaVentas Include="..\Logistica\*\CapaVista_*\*.csproj" Exclude="@(LogisticaMdiVentas);@(LogisticaTransporteInternoVentas)" />
+    <ComponenteVentas Include="@(LogisticaModeloVentas);@(LogisticaControladorVentas);@(LogisticaVistaVentas);@(LogisticaTransporteInternoVentas);@(LogisticaMdiVentas)">
+      <Biblioteca>%(Filename).dll</Biblioteca>
+    </ComponenteVentas>
+    <SeguridadVista Include="..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj" />
+    <EjecutableComponente Include="..\..\componentes\consultas\Ejecucion_Consultas\Ejecucion_Consultas\Ejecucion_Consultas.csproj" />
+    <EjecutableComponente Include="..\..\componentes\navegador\Ejecucion_Navegador\Ejecucion_Navegador\Ejecucion_Navegador.csproj" />
+    <EjecutableComponente Include="..\..\componentes\seguridad\Ejecucion_Seguridad\Ejecucion_Seguridad\Ejecucion_Seguridad.csproj" />
+    <EjecutableComponente Include="..\..\componentes\reporteador\Ejecucion_Reporteador\Ejecucion_Reporteador\Ejecucion_Reporteador.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ComponenteVentas Include="..\..\componentes\consultas\Consultas\CapaModelo_Consultas\CapaModelo_Consultas.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\consultas\Consultas\</AdditionalProperties>
+      <Biblioteca>CapaModelo_Consultas.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\consultas\Consultas\CapaControlador_Consultas\CapaControlador_Consultas.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\consultas\Consultas\</AdditionalProperties>
+      <Biblioteca>CapaControlador_Consultas.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\consultas\Consultas\CapaVista_Consultas\CapaVista_Consultas.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\consultas\Consultas\</AdditionalProperties>
+      <Biblioteca>CapaVista_Consultas.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\CapaModelo_Seguridad.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\seguridad\Seguridad\</AdditionalProperties>
+      <Biblioteca>CapaModelo_Seguridad.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\CapaControlador_Seguridad.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\seguridad\Seguridad\</AdditionalProperties>
+      <Biblioteca>CapaControlador_Seguridad.dll</Biblioteca>
+    </ComponenteVentas>
+    <PaquetesComponenteVentas Include="..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\CapaControlador_Seguridad.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\seguridad\Seguridad\</AdditionalProperties>
+    </PaquetesComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnActualizar_Reporteador\CapaModelo_BtnActualizar_Reporteador\CapaModelo_BtnActualizar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnActualizar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaModelo_BtnActualizar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnBusqueda_Reporteador\CapaModelo_BtnBusqueda\CapaModelo_BtnBusqueda_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnBusqueda_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaModelo_BtnBusqueda.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnEditar_Reporteador\CapaModelo_BtnEditar_Reporteador\CapaModelo_BtnEditar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnEditar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaModelo_BtnEditar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnEliminar_Reporteador\CapaModelo_BtnEliminar_Reporteador\CapaModelo_BtnEliminar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnEliminar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaModelo_BtnEliminar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnGuardar_Reporteador\CapaModelo_BtnGuardar_Reporteador\CapaModelo_BtnGuardar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnGuardar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaModelo_BtnGuardar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnLimpiar_Reporteador\CapaModelo_BtnLimpiar_Reporteador\CapaModelo_BtnLimpiar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnLimpiar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaModelo_BtnLimpiar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnRuta_Reporteador\CapaModelo_BtnRuta_Reporteador\CapaModelo_BtnRuta_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnRuta_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaModelo_BtnRuta_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnVerReporte_Reporteador\CapaModelo_BtnVerReporte_Reporteador\CapaModelo_BtnVerReporte_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnVerReporte_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaModelo_BtnVerReporte_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnActualizar_Reporteador\CapaControlador_BtnActualizar_Reporteador\CapaControlador_BtnActualizar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnActualizar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaControlador_BtnActualizar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnBusqueda_Reporteador\CapaControlador_BtnBusqueda\CapaControlador_BtnBusqueda_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnBusqueda_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaControlador_BtnBusqueda.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnEditar_Reporteador\CapaControlador_BtnEditar_Reporteador\CapaControlador_BtnEditar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnEditar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaControlador_BtnEditar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnEliminar_Reporteador\CapaControlador_BtnEliminar_Reporteador\CapaControlador_BtnEliminar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnEliminar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaControlador_BtnEliminar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnGuardar_Reporteador\CapaControlador_BtnGuardar_Reporteador\CapaControlador_BtnGuardar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnGuardar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaControlador_BtnGuardar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnLimpiar_Reporteador\CapaControlador_BtnLimpiar_Reporteador\CapaControlador_BtnLimpiar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnLimpiar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaControlador_BtnLimpiar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnRuta_Reporteador\CapaControlador_BtnRuta_Reporteador\CapaControlador_BtnRuta_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnRuta_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaControlador_BtnRuta_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnVerReporte_Reporteador\CapaControlador_BtnVerReporte_Reporteador\CapaControlador_BtnVerReporte_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnVerReporte_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaControlador_BtnVerReporte_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnActualizar_Reporteador\CapaVista_BtnActualizar_Reporteador\CapaVista_BtnActualizar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnActualizar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaVista_BtnActualizar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnBusqueda_Reporteador\CapaVista_BtnBusqueda\CapaVista_BtnBusqueda_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnBusqueda_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaVista_BtnBusqueda.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnEditar_Reporteador\CapaVista_BtnEditar_Reporteador\CapaVista_BtnEditar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnEditar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaVista_BtnEditar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnEliminar_Reporteador\CapaVista_BtnEliminar_Reporteador\CapaVista_BtnEliminar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnEliminar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaVista_BtnEliminar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnGuardar_Reporteador\CapaVista_BtnGuardar_Reporteador\CapaVista_BtnGuardar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnGuardar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaVista_BtnGuardar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnLimpiar_Reporteador\CapaVista_BtnLimpiar_Reporteador\CapaVista_BtnLimpiar_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnLimpiar_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaVista_BtnLimpiar_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnRuta_Reporteador\CapaVista_BtnRuta_Reporteador\CapaVista_BtnRuta_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnRuta_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaVista_BtnRuta_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\BtnVerReporte_Reporteador\CapaVista_BtnVerReporte_Reporteador\CapaVista_BtnVerReporte_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnVerReporte_Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaVista_BtnVerReporte_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <PaquetesComponenteVentas Include="..\..\componentes\reporteador\BtnVerReporte_Reporteador\CapaVista_BtnVerReporte_Reporteador\CapaVista_BtnVerReporte_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\BtnVerReporte_Reporteador\</AdditionalProperties>
+    </PaquetesComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\Reporteador\CapaModelo_Reporteador\CapaModelo_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaModelo_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\Reporteador\CapaControlador_Reporteador\CapaControlador_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaControlador_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <PaquetesComponenteVentas Include="..\..\componentes\reporteador\Reporteador\CapaControlador_Reporteador\CapaControlador_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\Reporteador\</AdditionalProperties>
+    </PaquetesComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\Reporteador\CapaVista_Reporteador\CapaVista_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\Reporteador\</AdditionalProperties>
+      <Biblioteca>CapaVista_Reporteador.dll</Biblioteca>
+    </ComponenteVentas>
+    <PaquetesComponenteVentas Include="..\..\componentes\reporteador\Reporteador\CapaVista_Reporteador\CapaVista_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\Reporteador\</AdditionalProperties>
+    </PaquetesComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\navegador\Navegador\CapaModelo_Navegador\CapaModelo_Navegador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\navegador\Navegador\</AdditionalProperties>
+      <Biblioteca>CapaModelo_Navegador.dll</Biblioteca>
+    </ComponenteVentas>
+    <PaquetesComponenteVentas Include="..\..\componentes\navegador\Navegador\CapaModelo_Navegador\CapaModelo_Navegador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\navegador\Navegador\</AdditionalProperties>
+    </PaquetesComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\navegador\Navegador\CapaControlador_Navegador\CapaControlador_Navegador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\navegador\Navegador\</AdditionalProperties>
+      <Biblioteca>CapaControlador_Navegador.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\navegador\Navegador\Control_Usuarios\Control_Usuarios.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\navegador\Navegador\</AdditionalProperties>
+      <Biblioteca>Control_Usuarios.dll</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\navegador\Navegador\CapaVista_Navegador\CapaVista_Navegador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\navegador\Navegador\</AdditionalProperties>
+      <Biblioteca>CapaVista_Navegador.dll</Biblioteca>
+    </ComponenteVentas>
+    <PaquetesComponenteVentas Include="..\..\componentes\navegador\Navegador\CapaVista_Navegador\CapaVista_Navegador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\navegador\Navegador\</AdditionalProperties>
+    </PaquetesComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\seguridad\Seguridad\</AdditionalProperties>
+      <Biblioteca>CapaVista_Seguridad.dll</Biblioteca>
+    </ComponenteVentas>
+    <PaquetesComponenteVentas Include="..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\seguridad\Seguridad\</AdditionalProperties>
+    </PaquetesComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\consultas\Ejecucion_Consultas\Ejecucion_Consultas\Ejecucion_Consultas.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\consultas\Ejecucion_Consultas\</AdditionalProperties>
+      <Biblioteca>Ejecucion_Consultas.exe</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\navegador\Ejecucion_Navegador\Ejecucion_Navegador\Ejecucion_Navegador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\navegador\Ejecucion_Navegador\</AdditionalProperties>
+      <Biblioteca>Ejecucion_Navegador.exe</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\seguridad\Ejecucion_Seguridad\Ejecucion_Seguridad\Ejecucion_Seguridad.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\seguridad\Ejecucion_Seguridad\</AdditionalProperties>
+      <Biblioteca>Ejecucion_Seguridad.exe</Biblioteca>
+    </ComponenteVentas>
+    <ComponenteVentas Include="..\..\componentes\reporteador\Ejecucion_Reporteador\Ejecucion_Reporteador\Ejecucion_Reporteador.csproj">
+      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\componentes\reporteador\Ejecucion_Reporteador\</AdditionalProperties>
+      <Biblioteca>Ejecucion_Reporteador.exe</Biblioteca>
+    </ComponenteVentas>
+  </ItemGroup>
+  <Target Name="CompilarComponentesVentas">
+    <Error Condition="!Exists('%(ComponenteVentas.Identity)')" Text="Falta el proyecto del componente: %(ComponenteVentas.Identity)" />
+    <Message Text="[1/8] Compilando con los paquetes locales de cada solucion..." Importance="high" />
+    <Message Text="[2/8] Consultas: Modelo, Controlador y Vista..." Importance="high" />
+    <MSBuild Projects="@(ConsultasModelo)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(ConsultasControlador)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(ConsultasVista)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <Message Text="[3/8] Seguridad: Modelo y Controlador que necesita Navegador..." Importance="high" />
+    <MSBuild Projects="@(SeguridadModelo)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(SeguridadControlador)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <Message Text="[4/8] Botones de Reporteador: Actualizar, Busqueda, Editar, Eliminar, Guardar, Limpiar, Ruta y Ver reporte..." Importance="high" />
+    <MSBuild Projects="@(BotonesModelo)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(BotonesControlador)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(BotonesVista)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(BotonGuardarVista)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <Message Text="[5/8] Reporteador: sus tres capas despues de todos los botones..." Importance="high" />
+    <MSBuild Projects="@(ReporteadorModelo)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(ReporteadorControlador)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(ReporteadorVista)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <Message Text="[6/8] Navegador..." Importance="high" />
+    <MSBuild Projects="@(NavegadorModelo)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(NavegadorControlador)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(NavegadorAuxiliar)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(NavegadorVista)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <CallTarget Targets="CompilarLogisticaVentas" />
+    <CallTarget Targets="CompilarFormulariosVentas" />
+    <MSBuild Projects="VentasYCxC\CapaVista_Ventas\CapaVista_Ventas.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(SeguridadVista)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(EjecutableComponente)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+  </Target>
+  <Target Name="CompilarLogisticaVentas">
+    <Message Text="[7/8] Logistica y sus formularios antes de Vista de Seguridad..." Importance="high" />
+    <MSBuild Projects="@(LogisticaModeloVentas)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(LogisticaControladorVentas)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(LogisticaVistaVentas)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <!-- Transporte Interno usa Transporte Externo; el MDI usa todas las vistas. -->
+    <MSBuild Projects="@(LogisticaTransporteInternoVentas)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(LogisticaMdiVentas)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" StopOnFirstFailure="true" />
+  </Target>
+</Project>
