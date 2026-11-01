@@ -1,5 +1,17 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 using System.Drawing;
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 24/10/2026
+ * ==================================================================
+ * Propósito :
+ *  Centraliza los tamaños de formularios, la presentación monetaria y la configuración visual compartida.
+ * ===================================================================
+*/
 
 namespace CapaVista_Componentes.Componentes
 {
@@ -8,13 +20,20 @@ namespace CapaVista_Componentes.Componentes
         public static Size TamanoFormulario => new Size(1300, 700);
         public static int AlturaContenido => 723;
 
+        public static string ComprasFuncFormatearMonto(decimal Monto, ComprasEnumTipoMoneda Moneda = ComprasEnumTipoMoneda.Quetzales)
+        {
+            string Simbolo = Moneda == ComprasEnumTipoMoneda.Dolares ? "$" :
+                Moneda == ComprasEnumTipoMoneda.Euros ? "€" : "Q";
+            return Simbolo + " " + Monto.ToString("N2", System.Globalization.CultureInfo.InvariantCulture);
+        }
+
         public static void ComprasMetFijarTamanoFormulario(Form Formulario)
         {
             Formulario.AutoSize = false;
             Formulario.FormBorderStyle = FormBorderStyle.FixedSingle;
             Formulario.MaximizeBox = false;
             Formulario.MinimizeBox = true;
-            Formulario.StartPosition = FormStartPosition.CenterParent;
+            Formulario.StartPosition = FormStartPosition.CenterScreen;
             var Recursos = new System.Resources.ResourceManager("CapaVista_Componentes.Componentes.RecursosCompras", typeof(ClsPresentacionCompras).Assembly);
             Formulario.Icon = (Icon)Recursos.GetObject("IconoCompras");
             Formulario.ClientSize = TamanoFormulario;
@@ -24,6 +43,8 @@ namespace CapaVista_Componentes.Componentes
             {
                 Rectangle Area = Screen.FromControl(Formulario.Owner ?? Formulario).WorkingArea;
                 ComprasMetAjustarAreaFormulario(Formulario, Area);
+                Formulario.Location = new Point(Area.Left + (Area.Width - Formulario.Width) / 2,
+                    Area.Top + (Area.Height - Formulario.Height) / 2);
             };
             ComprasMetAplicarScrollVertical(Formulario);
         }
@@ -51,7 +72,7 @@ namespace CapaVista_Componentes.Componentes
             Formulario.MaximumSize = Tamano;
         }
 
-        public static void ComprasProcAgregarColumna(UsrDataGridViewCompras Tabla, string Campo,
+        public static void ComprasProcAgregarColumna(ComprasUsrDataGridView Tabla, string Campo,
             string Encabezado, int Peso, bool EsMonto)
         {
             Tabla.AutoGenerateColumns = false;
@@ -65,7 +86,7 @@ namespace CapaVista_Componentes.Componentes
 
             if (EsMonto)
             {
-                Columna.DefaultCellStyle.Format = "N2";
+                Columna.DefaultCellStyle.Format = "'Q '#,##0.00";
                 Columna.DefaultCellStyle.FormatProvider = System.Globalization.CultureInfo.InvariantCulture;
                 Columna.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             }
@@ -73,9 +94,9 @@ namespace CapaVista_Componentes.Componentes
             Tabla.Columns.Add(Columna);
         }
 
-        public static void ComprasProcMostrarMonto(UsrTextBoxCompras Entrada, decimal Monto)
+        public static void ComprasProcMostrarMonto(ComprasUsrTextBox Entrada, decimal Monto)
         {
-            Entrada.Text = Monto.ToString("N2", System.Globalization.CultureInfo.InvariantCulture);
+            Entrada.Text = ComprasFuncFormatearMonto(Monto, Entrada.TipoMoneda);
             Entrada.Entrada.SelectAll();
             Entrada.Entrada.SelectionAlignment = HorizontalAlignment.Right;
         }

@@ -1,4 +1,4 @@
-﻿using CapaVista_Compras;
+using CapaVista_Compras;
 using System;
 using System.Windows.Forms;
 
