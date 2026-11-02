@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using CapaVista_MovimientosClientes;
+using CapaVista_Pedidos;
 
 namespace CapaVista_Ventas
 {
@@ -14,7 +15,7 @@ namespace CapaVista_Ventas
         private readonly HashSet<Button> _Abiertos = new HashSet<Button>();
         private readonly Dictionary<Button, List<Button>> _Grupos = new Dictionary<Button, List<Button>>();
 
-        internal ClsMenuProcesosVentas(TableLayoutPanel Menu, Button Movimientos, Button Pagos, Action<Form> Abrir, Func<int> Usuario)
+        internal ClsMenuProcesosVentas(TableLayoutPanel Menu, Button Movimientos, Button Pagos, Button Pedidos, Action<Form> Abrir, Func<int> Usuario)
         {
             _Menu = Menu;
             // Evita pintar cada fila por separado durante la expansion y el desplazamiento.
@@ -29,7 +30,7 @@ namespace CapaVista_Ventas
             foreach (Control Original in Originales)
             {
                 VentasMetAgregar(Original);
-                if (Original != Movimientos && Original != Pagos) continue;
+                if (Original != Movimientos && Original != Pagos && Original != Pedidos) continue;
                 var Padre = (Button)Original;
                 var Hijos = new List<Button>();
                 _Grupos.Add(Padre, Hijos);
@@ -44,7 +45,9 @@ namespace CapaVista_Ventas
                 };
                 string[] Titulos = Original == Movimientos
                     ? new[] { "Estado de cuenta", "Cargos y ajustes" }
-                    : new[] { "Recepción de pagos", "Depósitos a Bancos", "Consulta de recibos" };
+                    : Original == Pedidos
+                        ? new[] { "Seguimiento de pedidos", "Nuevo pedido" }
+                        : new[] { "Recepción de pagos", "Depósitos a Bancos", "Consulta de recibos" };
                 foreach (string Titulo in Titulos)
                 {
                     string Opcion = Titulo;
@@ -59,7 +62,8 @@ namespace CapaVista_Ventas
                     {
                         using (var Formulario = VentasFuncCrear(Opcion))
                         {
-                            Formulario.VentasIdUsuario = Usuario();
+                            var Movimiento = Formulario as FrmMovimientosClientesVentas;
+                            if (Movimiento != null) Movimiento.VentasIdUsuario = Usuario();
                             Abrir(Formulario);
                         }
                     };
@@ -121,7 +125,7 @@ namespace CapaVista_Ventas
             _Menu.Height = (int)_Menu.RowStyles.Cast<RowStyle>().Sum(Fila => Fila.Height);
         }
 
-        private static FrmMovimientosClientesVentas VentasFuncCrear(string Opcion)
+        private static Form VentasFuncCrear(string Opcion)
         {
             switch (Opcion)
             {
@@ -129,6 +133,8 @@ namespace CapaVista_Ventas
                 case "Cargos y ajustes": return new FrmCargosAjustesVentas();
                 case "Recepción de pagos": return new FrmRecepcionPagosVentas();
                 case "Depósitos a Bancos": return new FrmDepositosBancosVentas();
+                case "Seguimiento de pedidos": return new FrmSeguimientoPedidos();
+                case "Nuevo pedido": return new FrmPedidoVentas();
                 default: return new FrmConsultaRecibosVentas();
             }
         }

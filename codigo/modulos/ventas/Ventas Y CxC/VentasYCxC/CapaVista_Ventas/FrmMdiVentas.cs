@@ -26,7 +26,7 @@ namespace CapaVista_Ventas
             InitializeComponent();
             VentasMetAjustarIconoMantenimientos();
             VentasMetAjustarBotonMantenimientos();
-            _MenuProcesos = new ClsMenuProcesosVentas(VentasTlpMenu, VentasBtnMovimientosClientes, VentasBtnRecepcionPagos, VentasMetAbrirFormulario, () => _IdUsuario);
+            _MenuProcesos = new ClsMenuProcesosVentas(VentasTlpMenu, VentasBtnMovimientosClientes, VentasBtnRecepcionPagos, VentasBtnPedidos, VentasMetAbrirFormulario, () => _IdUsuario);
             // El doble búfer reduce el parpadeo al redimensionar la ventana.
             DoubleBuffered = true;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer |
@@ -193,11 +193,10 @@ namespace CapaVista_Ventas
                 VentasMetAbrirFormulario(Formulario);
         }
 
-        // Abre el formulario independiente de pedidos.
+        // Abre el seguimiento y desde allí la creación o edición de pedidos.
         private void VentasMetBtnPedidosClick(object Origen, EventArgs Evento)
         {
-            using (var Formulario = new CapaVista_Pedidos.FrmPedidoVentas())
-                VentasMetAbrirFormulario(Formulario);
+            _MenuProcesos.VentasMetAlternar(VentasBtnPedidos);
         }
 
         // Abre el formulario independiente de facturas.
