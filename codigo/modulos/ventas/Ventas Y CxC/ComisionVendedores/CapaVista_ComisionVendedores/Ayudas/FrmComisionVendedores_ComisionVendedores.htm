@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Comisiones de vendedores</title>
+  <style>
+    body { margin: 28px; color: #3B1D4A; background: #F8F5F9; font: 14px Tahoma, sans-serif; }
+    header { display: flex; align-items: center; gap: 24px; border-bottom: 4px solid #C9A24A; padding-bottom: 16px; }
+    header img.logo { width: 210px; height: auto; }
+    header img.mascota { width: 115px; height: 150px; object-fit: contain; }
+    h1 { font: italic bold 25px "Lucida Sans Unicode", sans-serif; color: #3B1D4A; }
+    h2 { margin-top: 26px; color: #7B3F93; font-size: 18px; }
+    li { margin: 8px 0; line-height: 1.45; }
+    .nota { background: #E4D4EA; border-left: 5px solid #7B3F93; padding: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <img class="logo" src="../Resources/Ayudas/logoEmpresa.png" alt="Embutidos de Calidad S.A.">
+    <div><h1>7008 – Comisión de vendedores</h1><p>Ayuda del módulo de Ventas y Cuentas por Cobrar</p></div>
+    <img class="mascota" src="../Resources/Ayudas/mascotaVentas.png" alt="Mascota de Ventas">
+  </header>
+  <h2>Calcular comisiones</h2>
+  <ol>
+    <li>En la pestaña <strong>Calcular comisión</strong>, selecciona las fechas de inicio y fin.</li>
+    <li>Pulsa <strong>Calcular</strong>. El reporte muestra los movimientos devengados por cobros confirmados dentro del período y las asignaciones de comisión relacionadas.</li>
+    <li>Revisa el vendedor, factura, método, base cobrada y monto de comisión. Los importes muestran el símbolo de la moneda de cada factura.</li>
+    <li>Después de pagar las comisiones al vendedor por el medio autorizado, pulsa <strong>Pagar comisiones</strong> y confirma. Esto marca los abonos pendientes incluidos en el cálculo como pagados.</li>
+  </ol>
+  <p class="nota">El módulo no transfiere dinero al vendedor ni registra automáticamente un movimiento de nómina. El estado «Pagado» indica que el usuario confirmó el pago y guardó la fecha.</p>
+  <h2>Asignar comisión a una factura</h2>
+  <ol>
+    <li>Abre la pestaña <strong>Asignar factura</strong>, selecciona una factura emitida y el vendedor.</li>
+    <li>Pulsa <strong>Calcular factura</strong> y selecciona el criterio de comisión para cada producto: producto, marca, línea o categoría.</li>
+    <li>Revisa las bases, tasas y montos antes de pulsar <strong>Asignar vendedor</strong>.</li>
+  </ol>
+  <h2>Registrar un abono del cliente</h2>
+  <p>Usa <strong>Registrar abono cliente</strong> para aplicar un pago parcial a una factura con saldo. El sistema devenga la comisión proporcional al cobro confirmado.</p>
+  <h2>Mantener porcentajes</h2>
+  <p>En <strong>Mantenimiento de porcentajes</strong>, busca por tipo de porcentaje, selecciona el elemento específico, ingresa una tasa entre 0% y 99% y pulsa <strong>Actualizar porcentaje</strong>.</p>
+</body>
+</html>

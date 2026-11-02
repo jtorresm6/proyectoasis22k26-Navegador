@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -33,17 +33,16 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contratos\IRepositorioComision.cs" />
     <Compile Include="Entidades\ClsVentaVendedorBase.cs" />
     <Compile Include="Entidades\ClsProductoComision.cs" />
-    <Compile Include="Entidades\ClsComisionCalculada.cs" />
     <Compile Include="Entidades\ClsFacturaComision.cs" />
     <Compile Include="Entidades\ClsVendedorComision.cs" />
     <Compile Include="Entidades\ClsDetalleProductoComision.cs" />
+    <Compile Include="Entidades\ClsFacturaPago.cs" />
+    <Compile Include="Entidades\ClsFormaPagoVenta.cs" />
     <Compile Include="Repositorios\ClsConexion.cs" />
     <Compile Include="Repositorios\ClsSentencias.cs" />
     <Compile Include="Repositorios\ClsRepositorioComision.cs" />
@@ -53,11 +52,5 @@
     <None Include="..\scripts\ComisionVendedores.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\..\VentasYCxC\CapaModelo_Ventas\CapaModelo_Ventas.csproj">
-      <Project>{1CCD5DF0-9BE4-4A86-8A60-20600E4FF3DC}</Project>
-      <Name>CapaModelo_Ventas</Name>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
+
