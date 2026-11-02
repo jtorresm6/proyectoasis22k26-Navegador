@@ -96,9 +96,9 @@ namespace CapaVista_Componentes.Componentes
 
         public static void ComprasProcMostrarMonto(ComprasUsrTextBox Entrada, decimal Monto)
         {
-            Entrada.Text = ComprasFuncFormatearMonto(Monto, Entrada.TipoMoneda);
+            Entrada.Text = Entrada.ComprasFuncObtenerSimboloMoneda() + " " + Monto.ToString("N2");
             Entrada.Entrada.SelectAll();
-            Entrada.Entrada.SelectionAlignment = HorizontalAlignment.Right;
+            Entrada.Entrada.SelectionAlignment = Entrada.AlineacionMoneda;
         }
 
     }
