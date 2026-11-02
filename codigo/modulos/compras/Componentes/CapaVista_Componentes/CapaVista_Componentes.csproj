@@ -50,17 +50,17 @@
     <Compile Include="Componentes\ClsDatePickerCompras.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Componentes\UsrEncabezadoCompras.cs">
+    <Compile Include="Componentes\ComprasUsrEncabezado.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Componentes\UsrEncabezadoCompras.Designer.cs">
-      <DependentUpon>UsrEncabezadoCompras.cs</DependentUpon>
+    <Compile Include="Componentes\ComprasUsrEncabezado.Designer.cs">
+      <DependentUpon>ComprasUsrEncabezado.cs</DependentUpon>
     </Compile>
-    <Compile Include="Componentes\UsrRangoFechasCompras.cs">
+    <Compile Include="Componentes\ComprasUsrRangoFechas.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Componentes\UsrRangoFechasCompras.Designer.cs">
-      <DependentUpon>UsrRangoFechasCompras.cs</DependentUpon>
+    <Compile Include="Componentes\ComprasUsrRangoFechas.Designer.cs">
+      <DependentUpon>ComprasUsrRangoFechas.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -70,16 +70,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Componentes\UsrMDITabCompras.cs">
+    <Compile Include="Componentes\ComprasUsrMDITab.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Componentes\UsrMDITabCompras.Designer.cs">
-      <DependentUpon>UsrMDITabCompras.cs</DependentUpon>
+    <Compile Include="Componentes\ComprasUsrMDITab.Designer.cs">
+      <DependentUpon>ComprasUsrMDITab.cs</DependentUpon>
     </Compile>
     <Compile Include="Componentes\ClsTemaCompras.cs" />
-    <Compile Include="Componentes\ClsActualizacionDisenoCompras.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Componentes\ClsButtonCompras.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -110,68 +107,68 @@
     <Compile Include="Componentes\ClsTableLayoutPanelCompras.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Componentes\UsrBaseCompras.cs">
+    <Compile Include="Componentes\ComprasUsrBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Componentes\UsrBaseCompras.Designer.cs">
-      <DependentUpon>UsrBaseCompras.cs</DependentUpon>
+    <Compile Include="Componentes\ComprasUsrBase.Designer.cs">
+      <DependentUpon>ComprasUsrBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Componentes\UsrDataGridViewCompras.cs">
+    <Compile Include="Componentes\ComprasUsrDataGridView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Componentes\UsrDataGridViewCompras.Designer.cs">
-      <DependentUpon>UsrDataGridViewCompras.cs</DependentUpon>
+    <Compile Include="Componentes\ComprasUsrDataGridView.Designer.cs">
+      <DependentUpon>ComprasUsrDataGridView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Componentes\UsrLabelCompras.cs">
+    <Compile Include="Componentes\ComprasUsrLabel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Componentes\UsrLabelCompras.Designer.cs">
-      <DependentUpon>UsrLabelCompras.cs</DependentUpon>
+    <Compile Include="Componentes\ComprasUsrLabel.Designer.cs">
+      <DependentUpon>ComprasUsrLabel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Componentes\UsrTextBoxCompras.cs">
+    <Compile Include="Componentes\ComprasUsrTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Componentes\UsrComboBoxCompras.cs">
+    <Compile Include="Componentes\ComprasUsrComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Componentes\UsrComboBoxCompras.Designer.cs">
-      <DependentUpon>UsrComboBoxCompras.cs</DependentUpon>
+    <Compile Include="Componentes\ComprasUsrComboBox.Designer.cs">
+      <DependentUpon>ComprasUsrComboBox.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Componentes\UsrEncabezadoCompras.resx">
-      <DependentUpon>UsrEncabezadoCompras.cs</DependentUpon>
+    <EmbeddedResource Include="Componentes\ComprasUsrEncabezado.resx">
+      <DependentUpon>ComprasUsrEncabezado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Componentes\UsrMDITabCompras.resx">
-      <DependentUpon>UsrMDITabCompras.cs</DependentUpon>
+    <EmbeddedResource Include="Componentes\ComprasUsrMDITab.resx">
+      <DependentUpon>ComprasUsrMDITab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Componentes\ClsSelectorCompras.resx">
       <DependentUpon>ClsSelectorCompras.cs</DependentUpon>
       <LogicalName>CapaVista_Componentes.Componentes.ClsSelectorCompras.resources</LogicalName>
     </EmbeddedResource>
-    <Compile Include="Componentes\UsrTextBoxCompras.Designer.cs">
-      <DependentUpon>UsrTextBoxCompras.cs</DependentUpon>
+    <Compile Include="Componentes\ComprasUsrTextBox.Designer.cs">
+      <DependentUpon>ComprasUsrTextBox.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Componentes\UsrComboBoxCompras.resx">
-      <DependentUpon>UsrComboBoxCompras.cs</DependentUpon>
-      <LogicalName>CapaVista_Componentes.Componentes.UsrComboBoxCompras.resources</LogicalName>
+    <EmbeddedResource Include="Componentes\ComprasUsrComboBox.resx">
+      <DependentUpon>ComprasUsrComboBox.cs</DependentUpon>
+      <LogicalName>CapaVista_Componentes.Componentes.ComprasUsrComboBox.resources</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Componentes\UsrBaseCompras.resx">
-      <DependentUpon>UsrBaseCompras.cs</DependentUpon>
-      <LogicalName>CapaVista_Componentes.Componentes.UsrBaseCompras.resources</LogicalName>
+    <EmbeddedResource Include="Componentes\ComprasUsrBase.resx">
+      <DependentUpon>ComprasUsrBase.cs</DependentUpon>
+      <LogicalName>CapaVista_Componentes.Componentes.ComprasUsrBase.resources</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Componentes\UsrDataGridViewCompras.resx">
-      <DependentUpon>UsrDataGridViewCompras.cs</DependentUpon>
-      <LogicalName>CapaVista_Componentes.Componentes.UsrDataGridViewCompras.resources</LogicalName>
+    <EmbeddedResource Include="Componentes\ComprasUsrDataGridView.resx">
+      <DependentUpon>ComprasUsrDataGridView.cs</DependentUpon>
+      <LogicalName>CapaVista_Componentes.Componentes.ComprasUsrDataGridView.resources</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Componentes\UsrLabelCompras.resx">
-      <DependentUpon>UsrLabelCompras.cs</DependentUpon>
-      <LogicalName>CapaVista_Componentes.Componentes.UsrLabelCompras.resources</LogicalName>
+    <EmbeddedResource Include="Componentes\ComprasUsrLabel.resx">
+      <DependentUpon>ComprasUsrLabel.cs</DependentUpon>
+      <LogicalName>CapaVista_Componentes.Componentes.ComprasUsrLabel.resources</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Componentes\UsrRangoFechasCompras.resx">
-      <DependentUpon>UsrRangoFechasCompras.cs</DependentUpon>
+    <EmbeddedResource Include="Componentes\ComprasUsrRangoFechas.resx">
+      <DependentUpon>ComprasUsrRangoFechas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Componentes\UsrTextBoxCompras.resx">
-      <DependentUpon>UsrTextBoxCompras.cs</DependentUpon>
-      <LogicalName>CapaVista_Componentes.Componentes.UsrTextBoxCompras.resources</LogicalName>
+    <EmbeddedResource Include="Componentes\ComprasUsrTextBox.resx">
+      <DependentUpon>ComprasUsrTextBox.cs</DependentUpon>
+      <LogicalName>CapaVista_Componentes.Componentes.ComprasUsrTextBox.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -180,8 +177,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Componentes\ClsPresentacionCompras.cs" />
-    <Compile Include="Componentes\UsrDataGridViewCompras.Paginacion.cs">
-      <DependentUpon>UsrDataGridViewCompras.cs</DependentUpon>
+    <Compile Include="Componentes\ComprasUsrDataGridView.Paginacion.cs">
+      <DependentUpon>ComprasUsrDataGridView.cs</DependentUpon>
       <SubType>UserControl</SubType>
     </Compile>
     <EmbeddedResource Include="Componentes\RecursosCompras.resx">

@@ -1,6 +1,6 @@
 namespace CapaVista_Componentes.Componentes
 {
-    partial class UsrRangoFechasCompras
+    partial class ComprasUsrRangoFechas
     {
         private System.ComponentModel.IContainer _Components = null;
 
@@ -13,8 +13,8 @@ namespace CapaVista_Componentes.Componentes
         private void InitializeComponent()
         {
             this.ComprasTlpRango = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasLblFechaInicio = new UsrLabelCompras();
-            this.ComprasLblFechaFin = new UsrLabelCompras();
+            this.ComprasLblFechaInicio = new ComprasUsrLabel();
+            this.ComprasLblFechaFin = new ComprasUsrLabel();
             this.ComprasDtpFechaInicio = new ClsDatePickerCompras();
             this.ComprasDtpFechaFin = new ClsDatePickerCompras();
             this.ComprasTlpRango.SuspendLayout();
@@ -54,7 +54,7 @@ namespace CapaVista_Componentes.Componentes
             this.BackColor = ClsTemaCompras.FondoGeneral;
             this.ForeColor = ClsTemaCompras.PrincipalNavegador;
             this.Controls.Add(this.ComprasTlpRango);
-            this.Name = "UsrRangoFechasCompras";
+            this.Name = "ComprasUsrRangoFechas";
             this.Margin = new System.Windows.Forms.Padding(0);
             this.MinimumSize = new System.Drawing.Size(400, 80);
             this.Size = new System.Drawing.Size(440, 80);
@@ -63,8 +63,8 @@ namespace CapaVista_Componentes.Componentes
         }
 
         private System.Windows.Forms.TableLayoutPanel ComprasTlpRango;
-        private UsrLabelCompras ComprasLblFechaInicio;
-        private UsrLabelCompras ComprasLblFechaFin;
+        private ComprasUsrLabel ComprasLblFechaInicio;
+        private ComprasUsrLabel ComprasLblFechaFin;
         private ClsDatePickerCompras ComprasDtpFechaInicio;
         private ClsDatePickerCompras ComprasDtpFechaFin;
     }

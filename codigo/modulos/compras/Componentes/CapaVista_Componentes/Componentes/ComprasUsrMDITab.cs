@@ -14,9 +14,9 @@ using System.Windows.Forms;
 
 namespace CapaVista_Componentes.Componentes
 {
-    public partial class UsrMDITabCompras : UserControl
+    public partial class ComprasUsrMDITab : UserControl
     {
-        public UsrMDITabCompras()
+        public ComprasUsrMDITab()
         {
             InitializeComponent();
         }

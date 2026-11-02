@@ -1,6 +1,6 @@
 namespace CapaVista_Componentes.Componentes
 {
-    partial class UsrEncabezadoCompras
+    partial class ComprasUsrEncabezado
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -28,12 +28,12 @@ namespace CapaVista_Componentes.Componentes
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsrEncabezadoCompras));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComprasUsrEncabezado));
             this.ComprasTlpPrincipal = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasPbxIcono = new System.Windows.Forms.PictureBox();
             this.ComprasTlpTItuloCodigo = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
-            this.ComprasLblTitulo = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblDescripcion = new CapaVista_Componentes.Componentes.UsrLabelCompras();
+            this.ComprasLblTitulo = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblDescripcion = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasTlpPrincipal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ComprasPbxIcono)).BeginInit();
             this.ComprasTlpTItuloCodigo.SuspendLayout();
@@ -133,7 +133,7 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasLblDescripcion.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.ComprasLblDescripcion.Texto = "Descripcion";
             // 
-            // UsrEncabezadoCompras
+            // ComprasUsrEncabezado
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = CapaVista_Componentes.Componentes.ClsTemaCompras.PrincipalNavegador;
@@ -141,7 +141,7 @@ namespace CapaVista_Componentes.Componentes
             this.Margin = new System.Windows.Forms.Padding(0);
             this.MaximumSize = new System.Drawing.Size(1500, 130);
             this.MinimumSize = new System.Drawing.Size(0, 130);
-            this.Name = "UsrEncabezadoCompras";
+            this.Name = "ComprasUsrEncabezado";
             this.Size = new System.Drawing.Size(1000, 130);
             this.ComprasTlpPrincipal.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ComprasPbxIcono)).EndInit();
@@ -154,8 +154,8 @@ namespace CapaVista_Componentes.Componentes
 
         private ClsTableLayoutPanelCompras ComprasTlpPrincipal;
         private System.Windows.Forms.PictureBox ComprasPbxIcono;
-        private UsrLabelCompras ComprasLblDescripcion;
+        private ComprasUsrLabel ComprasLblDescripcion;
         private ClsTableLayoutPanelCompras ComprasTlpTItuloCodigo;
-        private UsrLabelCompras ComprasLblTitulo;
+        private ComprasUsrLabel ComprasLblTitulo;
     }
 }

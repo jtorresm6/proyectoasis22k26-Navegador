@@ -17,35 +17,13 @@ using System.Windows.Forms;
 
 namespace CapaVista_Componentes.Componentes
 {
-    public partial class UsrBaseCompras : UserControl
+    public partial class ComprasUsrBase : UserControl
     {
 
         private Size _TamanoDiseno;
         private float _EscalaAltura = 1F;
         internal event EventHandler ComprasEvtTamanoNecesario;
         internal Size ComprasTamanoDiseno => _TamanoDiseno;
-
-        [Category("Compras")]
-        [DisplayName("Ancho maximizado")]
-        [Description("True: ancho de 1807. False: ancho de 1610. Conserva la altura actual, con un mínimo de 723.")]
-        [DefaultValue(false)]
-        [RefreshProperties(RefreshProperties.All)]
-        public bool AnchoMaximizado
-        {
-            get { return Width == 1807; }
-            set
-            {
-                int Altura = Math.Max(Height, 723);
-                MaximumSize = new Size(1807, 0);
-                MinimumSize = new Size(1610, 723);
-                Size = new Size(value ? 1807 : 1610, Altura);
-                if (!_TamanoDiseno.IsEmpty)
-                {
-                    _TamanoDiseno = new Size(Width, _TamanoDiseno.Height);
-                    ComprasProcNotificarTamano();
-                }
-            }
-        }
 
         internal void ComprasProcRegistrarDiseno()
         {
@@ -73,13 +51,13 @@ namespace CapaVista_Componentes.Componentes
             base.OnLoad(Evento);
         }
 
-        protected void ComprasProcAgregarColumna(UsrDataGridViewCompras Tabla, string Campo,
+        protected void ComprasProcAgregarColumna(ComprasUsrDataGridView Tabla, string Campo,
             string Encabezado, int Peso, bool EsMonto)
         {
             ClsPresentacionCompras.ComprasProcAgregarColumna(Tabla, Campo, Encabezado, Peso, EsMonto);
         }
 
-        protected void ComprasProcMostrarMonto(UsrTextBoxCompras Entrada, decimal Monto)
+        protected void ComprasProcMostrarMonto(ComprasUsrTextBox Entrada, decimal Monto)
         {
             ClsPresentacionCompras.ComprasProcMostrarMonto(Entrada, Monto);
         }
@@ -98,7 +76,7 @@ namespace CapaVista_Componentes.Componentes
             ComprasProcNotificarTamano();
         }
 
-        public UsrBaseCompras()
+        public ComprasUsrBase()
         {
             InitializeComponent();
             DoubleBuffered = true;

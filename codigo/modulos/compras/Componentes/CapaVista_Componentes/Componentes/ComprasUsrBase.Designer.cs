@@ -1,6 +1,6 @@
 ﻿namespace CapaVista_Componentes.Componentes
 {
-    partial class UsrBaseCompras
+    partial class ComprasUsrBase
     {
         private System.ComponentModel.IContainer _Componentes = null;
 
@@ -27,7 +27,7 @@
             this.Margin = new System.Windows.Forms.Padding(0);
             this.MaximumSize = new System.Drawing.Size(1807, 0);
             this.MinimumSize = new System.Drawing.Size(1610, 723);
-            this.Name = "UsrBaseCompras";
+            this.Name = "ComprasUsrBase";
             this.Size = new System.Drawing.Size(1610, 723);
             this.ResumeLayout(false);
 

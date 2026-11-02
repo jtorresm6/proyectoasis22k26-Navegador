@@ -187,6 +187,8 @@ namespace CapaVista_Componentes.Componentes
 
         protected override Size DefaultSize => new Size(80, 80);
 
+        protected override bool ShowFocusCues => false;
+
         protected override void OnPaint(PaintEventArgs Evento)
         {
             if (!_AplicarColoresEstado)
@@ -216,12 +218,6 @@ namespace CapaVista_Componentes.Componentes
                     Evento.Graphics.DrawImage(BackgroundImage, AreaImagen, 0, 0, BackgroundImage.Width,
                         BackgroundImage.Height, GraphicsUnit.Pixel, Atributos);
                 }
-            }
-            if (Focused && ShowFocusCues)
-            {
-                var Area = ClientRectangle;
-                Area.Inflate(-2, -2);
-                ControlPaint.DrawBorder(Evento.Graphics, Area, ClsTemaCompras.AcentoNavegador, ButtonBorderStyle.Solid);
             }
         }
 

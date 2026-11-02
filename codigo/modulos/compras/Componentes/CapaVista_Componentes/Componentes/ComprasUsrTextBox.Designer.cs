@@ -1,7 +1,7 @@
 
 namespace CapaVista_Componentes.Componentes
 {
-    partial class UsrTextBoxCompras
+    partial class ComprasUsrTextBox
     {
         private System.ComponentModel.IContainer _Componentes = null;
 
@@ -21,8 +21,8 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasTlpMain = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasPnlBorde = new System.Windows.Forms.Panel();
             this.ComprasPnlInterior = new System.Windows.Forms.Panel();
-            this.ComprasTxtTexto = new System.Windows.Forms.RichTextBox();
-            this.ComprasLblError = new CapaVista_Componentes.Componentes.UsrLabelCompras();
+            this.ComprasTxtTexto = new CapaVista_Componentes.Componentes.ComprasRichTextBox();
+            this.ComprasLblError = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasTlpMain.SuspendLayout();
             this.ComprasPnlBorde.SuspendLayout();
             this.ComprasPnlInterior.SuspendLayout();
@@ -67,7 +67,7 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasPnlInterior.Location = new System.Drawing.Point(1, 1);
             this.ComprasPnlInterior.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasPnlInterior.Name = "ComprasPnlInterior";
-            this.ComprasPnlInterior.Padding = new System.Windows.Forms.Padding(6, 1, 6, 1);
+            this.ComprasPnlInterior.Padding = new System.Windows.Forms.Padding(6, 6, 6, 1);
             this.ComprasPnlInterior.Size = new System.Drawing.Size(166, 28);
             this.ComprasPnlInterior.TabIndex = 0;
             // 
@@ -108,7 +108,7 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasLblError.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ComprasLblError.Texto = "";
             // 
-            // UsrTextBoxCompras
+            // ComprasUsrTextBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -117,7 +117,7 @@ namespace CapaVista_Componentes.Componentes
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.ForeColor = CapaVista_Componentes.Componentes.ClsTemaCompras.PrincipalNavegador;
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "UsrTextBoxCompras";
+            this.Name = "ComprasUsrTextBox";
             this.Size = new System.Drawing.Size(174, 66);
             this.ComprasTlpMain.ResumeLayout(false);
             this.ComprasPnlBorde.ResumeLayout(false);
@@ -131,7 +131,7 @@ namespace CapaVista_Componentes.Componentes
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras ComprasTlpMain;
         private System.Windows.Forms.Panel ComprasPnlBorde;
         private System.Windows.Forms.Panel ComprasPnlInterior;
-        private UsrLabelCompras ComprasLblError;
-        private System.Windows.Forms.RichTextBox ComprasTxtTexto;
+        private ComprasUsrLabel ComprasLblError;
+        private CapaVista_Componentes.Componentes.ComprasRichTextBox ComprasTxtTexto;
     }
 }

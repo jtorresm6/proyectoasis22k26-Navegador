@@ -18,7 +18,7 @@ namespace CapaVista_Componentes.Componentes
 {
     [DefaultProperty("DataSource")]
     [DefaultEvent("CellClick")]
-    public partial class UsrDataGridViewCompras : UserControl
+    public partial class ComprasUsrDataGridView : UserControl
     {
 
         private int _FilaHover = -1;
@@ -45,7 +45,7 @@ namespace CapaVista_Componentes.Componentes
         private const int _AlturaMinimaFila = 28;
         private const int _AlturaMaximaFila = 40;
 
-        public UsrDataGridViewCompras()
+        public ComprasUsrDataGridView()
         {
             InitializeComponent();
             ComprasProcInicializarPaginacion();

@@ -1,6 +1,6 @@
 ﻿namespace CapaVista_Componentes.Componentes
 {
-    partial class UsrDataGridViewCompras
+    partial class ComprasUsrDataGridView
     {
         private System.ComponentModel.IContainer _Componentes = null;
 
@@ -93,7 +93,7 @@
             this.ForeColor = ClsTemaCompras.PrincipalNavegador;
             this.Controls.Add(this.ComprasPnlBorde);
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "UsrDataGridViewCompras";
+            this.Name = "ComprasUsrDataGridView";
             this.ComprasPnlBorde.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ComprasDgvMain)).EndInit();
             this.ResumeLayout(false);

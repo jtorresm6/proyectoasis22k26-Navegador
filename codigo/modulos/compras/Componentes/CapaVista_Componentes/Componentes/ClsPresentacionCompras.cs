@@ -72,7 +72,7 @@ namespace CapaVista_Componentes.Componentes
             Formulario.MaximumSize = Tamano;
         }
 
-        public static void ComprasProcAgregarColumna(UsrDataGridViewCompras Tabla, string Campo,
+        public static void ComprasProcAgregarColumna(ComprasUsrDataGridView Tabla, string Campo,
             string Encabezado, int Peso, bool EsMonto)
         {
             Tabla.AutoGenerateColumns = false;
@@ -94,11 +94,11 @@ namespace CapaVista_Componentes.Componentes
             Tabla.Columns.Add(Columna);
         }
 
-        public static void ComprasProcMostrarMonto(UsrTextBoxCompras Entrada, decimal Monto)
+        public static void ComprasProcMostrarMonto(ComprasUsrTextBox Entrada, decimal Monto)
         {
-            Entrada.Text = ComprasFuncFormatearMonto(Monto, Entrada.TipoMoneda);
+            Entrada.Text = Entrada.ComprasFuncObtenerSimboloMoneda() + " " + Monto.ToString("N2");
             Entrada.Entrada.SelectAll();
-            Entrada.Entrada.SelectionAlignment = HorizontalAlignment.Right;
+            Entrada.Entrada.SelectionAlignment = Entrada.AlineacionMoneda;
         }
 
     }

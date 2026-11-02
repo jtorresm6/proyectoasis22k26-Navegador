@@ -27,7 +27,7 @@ namespace CapaVista_Componentes.Componentes
 
     [DefaultBindingProperty("Text")]
     [DefaultEvent("Click")]
-    public partial class UsrLabelCompras : UserControl
+    public partial class ComprasUsrLabel : UserControl
     {
 
         private bool _MostrarAsterisco = true;
@@ -40,7 +40,7 @@ namespace CapaVista_Componentes.Componentes
             ComprasLblTexto.Invalidate();
         }
 
-        public UsrLabelCompras()
+        public ComprasUsrLabel()
         {
             InitializeComponent();
             DoubleBuffered = true;
@@ -198,7 +198,8 @@ namespace CapaVista_Componentes.Componentes
         public void ComprasMetMostrarAsterisco(bool Mostrar)
         {
             if (_MostrarAsterisco == Mostrar && ComprasTlpMain.ColumnCount == (Mostrar ? 2 : 1)) return;
-            using (new ClsActualizacionDisenoCompras(ComprasTlpMain))
+            ComprasTlpMain.SuspendLayout();
+            try
             {
                 if (Mostrar)
                 {
@@ -229,6 +230,10 @@ namespace CapaVista_Componentes.Componentes
                 }
 
                 _MostrarAsterisco = Mostrar;
+            }
+            finally
+            {
+                ComprasTlpMain.ResumeLayout(true);
             }
         }
 

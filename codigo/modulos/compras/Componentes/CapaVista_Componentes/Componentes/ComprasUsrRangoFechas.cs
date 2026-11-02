@@ -18,13 +18,13 @@ namespace CapaVista_Componentes.Componentes
 {
     [DefaultProperty("FechaInicio")]
     [DefaultEvent("RangoCambiado")]
-    public partial class UsrRangoFechasCompras : UserControl
+    public partial class ComprasUsrRangoFechas : UserControl
     {
         private bool _ActualizandoRango;
         private DateTime _FechaInicio;
         private DateTime _FechaFin;
 
-        public UsrRangoFechasCompras()
+        public ComprasUsrRangoFechas()
         {
             InitializeComponent();
             DoubleBuffered = true;

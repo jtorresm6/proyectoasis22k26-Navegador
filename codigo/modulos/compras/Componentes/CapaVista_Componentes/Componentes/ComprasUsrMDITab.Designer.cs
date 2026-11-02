@@ -1,6 +1,6 @@
 namespace CapaVista_Componentes.Componentes
 {
-    partial class UsrMDITabCompras
+    partial class ComprasUsrMDITab
     {
         private System.ComponentModel.IContainer _Componentes = null;
         protected override void Dispose(bool Disposing)
@@ -30,14 +30,14 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasTlpOpcion.Size = new System.Drawing.Size(252, 82);
             this.ComprasTlpOpcion.TabIndex = 0;
             // 
-            // UsrMDITabCompras
+            // ComprasUsrMDITab
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Controls.Add(this.ComprasTlpOpcion);
             this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "UsrMDITabCompras";
+            this.Name = "ComprasUsrMDITab";
             this.Size = new System.Drawing.Size(252, 82);
             this.ResumeLayout(false);
 

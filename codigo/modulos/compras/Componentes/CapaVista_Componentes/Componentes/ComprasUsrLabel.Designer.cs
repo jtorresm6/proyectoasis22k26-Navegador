@@ -1,6 +1,6 @@
 ﻿namespace CapaVista_Componentes.Componentes
 {
-    partial class UsrLabelCompras
+    partial class ComprasUsrLabel
     {
         private System.ComponentModel.IContainer _Componentes = null;
 
@@ -64,7 +64,7 @@
             this.ForeColor = ClsTemaCompras.PrincipalNavegador;
             this.Controls.Add(this.ComprasTlpMain);
             this.MaximumSize = new System.Drawing.Size(1000, 0);
-            this.Name = "UsrLabelCompras";
+            this.Name = "ComprasUsrLabel";
             this.Size = new System.Drawing.Size(208, 20);
             this.ComprasTlpMain.ResumeLayout(false);
             this.ComprasTlpMain.PerformLayout();

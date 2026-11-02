@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 /*
@@ -16,14 +17,16 @@ using System.Windows.Forms;
 namespace CapaVista_Componentes.Componentes
 {
     [DefaultProperty("Titulo")]
-    public partial class UsrEncabezadoCompras : UserControl
+    public partial class ComprasUsrEncabezado : UserControl
     {
         private string _Titulo = "Titulo";
         private string _Codigo = "6000";
+        private readonly Image _IconoPredeterminado;
 
-        public UsrEncabezadoCompras()
+        public ComprasUsrEncabezado()
         {
             InitializeComponent();
+            _IconoPredeterminado = ComprasPbxIcono.BackgroundImage;
             ComprasProcActualizarTitulo();
             DoubleBuffered = true;
             TabStop = false;
@@ -75,6 +78,21 @@ namespace CapaVista_Componentes.Componentes
                 ComprasProcActualizarTitulo();
             }
         }
+
+        [Category("Compras")]
+        [Description("Imagen del encabezado. Restablecer recupera el icono original.")]
+        [Browsable(true)]
+        [Localizable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Image Icono
+        {
+            get => ComprasPbxIcono.BackgroundImage;
+            set => ComprasPbxIcono.BackgroundImage = value;
+        }
+
+        public bool ShouldSerializeIcono() => !ReferenceEquals(Icono, _IconoPredeterminado);
+
+        public void ResetIcono() => Icono = _IconoPredeterminado;
 
         private void ComprasProcActualizarTitulo()
         {
