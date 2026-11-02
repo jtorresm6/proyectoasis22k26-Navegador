@@ -204,7 +204,7 @@ try {
     if ($configuration -ieq 'Debug') { $configuration='Debug' } else { $configuration='Release' }
 
     # Primero se localizan TODAS las soluciones del modulo.
-    $moduleNames = @('Componentes','MovimientosProveedores','Polizas','OrdenesCompra','PagosProveedores','AprobacionFinanciera','CierreMovimientos','Compras')
+    $moduleNames = @('Componentes','MovimientosProveedores','Polizas','OrdenesCompra','PagosProveedores','AprobacionFinanciera','CierreMovimientos','Herramientas','Compras')
     foreach ($name in $moduleNames) { $null = Add-Step "$name.sln" }
     $expected = @($moduleNames | ForEach-Object { "$_.sln" })
     $execution = @('Compras') + @($moduleNames | Where-Object { $_ -notin @('Compras','Componentes') })

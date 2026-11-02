@@ -64,6 +64,9 @@
     <Reference Include="CapaVista_CierreMovimientos">
       <HintPath>..\..\CierreMovimientos\CapaVista_CierreMovimientos\bin\$(Configuration)\CapaVista_CierreMovimientos.dll</HintPath>
     </Reference>
+    <Reference Include="CapaVista_Herramientas">
+      <HintPath>..\..\Herramientas\CapaVista_Herramientas\bin\$(Configuration)\CapaVista_Herramientas.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="CapaControlador_Seguridad">
       <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\$(Configuration)\CapaControlador_Seguridad.dll</HintPath>

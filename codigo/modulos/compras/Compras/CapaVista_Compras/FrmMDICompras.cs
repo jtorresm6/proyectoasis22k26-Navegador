@@ -300,6 +300,13 @@ namespace CapaVista_Compras
         }
         // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
 
+        // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
+        private void ComprasMetAbrirHerramientas(object Remitente, EventArgs Evento)
+        {
+            ComprasMetAbrirSubproceso<CapaVista_Herramientas.FrmHerramientasMoneda>(ComprasTlpHerramientas);
+        }
+        // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
+
         private void ComprasMetOpcionPendienteClick(object Remitente, EventArgs Evento)
         {
             

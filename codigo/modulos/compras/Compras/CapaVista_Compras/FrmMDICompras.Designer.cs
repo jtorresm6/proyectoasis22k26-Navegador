@@ -814,7 +814,7 @@ namespace CapaVista_Compras
             this.ComprasTlpHerramientas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpHerramientas.Size = new System.Drawing.Size(258, 61);
             this.ComprasTlpHerramientas.TabIndex = 9;
-            this.ComprasTlpHerramientas.Click += new System.EventHandler(this.ComprasMetOpcionPendienteClick);
+            this.ComprasTlpHerramientas.Click += new System.EventHandler(this.ComprasMetAbrirHerramientas);
             this.ComprasBtnIconoHerramientas.TipoBoton = CapaVista_Componentes.Componentes.ComprasTipoBoton.Libre;
             // 
             // ComprasBtnIconoHerramientas
@@ -840,7 +840,7 @@ namespace CapaVista_Compras
             this.ComprasBtnIconoHerramientas.TabIndex = 0;
             this.ComprasBtnIconoHerramientas.Text = "?";
             this.ComprasBtnIconoHerramientas.UseVisualStyleBackColor = false;
-            this.ComprasBtnIconoHerramientas.Click += new System.EventHandler(this.ComprasMetOpcionPendienteClick);
+            this.ComprasBtnIconoHerramientas.Click += new System.EventHandler(this.ComprasMetAbrirHerramientas);
             // 
             // ComprasLblHerramientas
             // 
@@ -863,7 +863,7 @@ namespace CapaVista_Compras
             this.ComprasLblHerramientas.Text = "Herramientas";
             this.ComprasLblHerramientas.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ComprasLblHerramientas.Texto = "Herramientas";
-            this.ComprasLblHerramientas.Click += new System.EventHandler(this.ComprasMetOpcionPendienteClick);
+            this.ComprasLblHerramientas.Click += new System.EventHandler(this.ComprasMetAbrirHerramientas);
             // 
             // ComprasTlpSalir
             // 
