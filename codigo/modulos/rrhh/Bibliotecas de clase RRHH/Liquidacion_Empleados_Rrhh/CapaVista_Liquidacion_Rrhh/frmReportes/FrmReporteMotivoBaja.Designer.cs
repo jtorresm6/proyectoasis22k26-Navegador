@@ -28,27 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmReporteMotivoBaja));
+            this.RrhhRdvMotivoBaja = new Microsoft.Reporting.WinForms.ReportViewer();
             this.SuspendLayout();
             // 
-            // reportViewer1
+            // RrhhRdvMotivoBaja
             // 
-            this.reportViewer1.Location = new System.Drawing.Point(0, 0);
-            this.reportViewer1.Name = "reportViewer1";
-            this.reportViewer1.ServerReport.BearerToken = null;
-            this.reportViewer1.Size = new System.Drawing.Size(776, 440);
-            this.reportViewer1.TabIndex = 0;
+            this.RrhhRdvMotivoBaja.Location = new System.Drawing.Point(0, 0);
+            this.RrhhRdvMotivoBaja.Name = "RrhhRdvMotivoBaja";
+            this.RrhhRdvMotivoBaja.ServerReport.BearerToken = null;
+            this.RrhhRdvMotivoBaja.Size = new System.Drawing.Size(776, 440);
+            this.RrhhRdvMotivoBaja.TabIndex = 0;
             // 
             // FrmReporteMotivoBaja
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.reportViewer1);
+            this.Controls.Add(this.RrhhRdvMotivoBaja);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Name = "FrmReporteMotivoBaja";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "9702 – ReporteMotivoBaja";
             this.Load += new System.EventHandler(this.FrmReporteMotivoBaja_Load);
             this.ResumeLayout(false);
@@ -57,6 +59,6 @@
 
         #endregion
 
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private Microsoft.Reporting.WinForms.ReportViewer RrhhRdvMotivoBaja;
     }
 }
