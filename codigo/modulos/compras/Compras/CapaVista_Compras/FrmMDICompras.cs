@@ -31,6 +31,11 @@ namespace CapaVista_Compras
         private readonly Dictionary<TableLayoutPanel, ColumnStyle> _ColumnasNavegador =
             new Dictionary<TableLayoutPanel, ColumnStyle>();
 
+        // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
+        // Seguridad asigna aquí cómo crear su FrmBitacora al abrir este MDI después del login.
+        public Func<Form> CrearBitacora { get; set; }
+        // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
+
         public FrmMDICompras()
         {
             InitializeComponent();
@@ -164,10 +169,17 @@ namespace CapaVista_Compras
 
         private void ComprasMetAbrirSubproceso<T>(CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras Opcion) where T : Form, new()
         {
+            ComprasMetAbrirSubproceso(Opcion, () => new T());
+        }
+
+        // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
+        // Versión que recibe cómo crear el formulario, para abrir formularios de otros componentes
+        private void ComprasMetAbrirSubproceso(CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras Opcion, Func<Form> CrearFormulario)
+        {
             if (IsDisposed || Disposing) return;
             if (_FormularioSubproceso != null && !_FormularioSubproceso.IsDisposed)
             {
-                if (_FormularioSubproceso is T)
+                if (ReferenceEquals(_OpcionSubproceso, Opcion))
                 {
                     if (_FormularioSubproceso.WindowState == FormWindowState.Minimized)
                         _FormularioSubproceso.WindowState = FormWindowState.Normal;
@@ -178,7 +190,7 @@ namespace CapaVista_Compras
                 if (_FormularioSubproceso != null && !_FormularioSubproceso.IsDisposed) return;
             }
 
-            Form Formulario = new T();
+            Form Formulario = CrearFormulario();
             bool FlujoOrdenes = Formulario is CapaVista_OrdenesCompra.FrmEncabezados;
             while (Formulario != null)
             {
@@ -214,6 +226,7 @@ namespace CapaVista_Compras
                 Formulario = CrearSiguiente == null ? null : CrearSiguiente();
             }
         }
+        // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
 
         private void ComprasMetActualizarSeleccionSubproceso()
         {
@@ -271,6 +284,21 @@ namespace CapaVista_Compras
         {
             ComprasMetAbrirSubproceso<FrmMantenimientoProveedor>(ComprasTlpProveedores);
         }
+
+        // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
+        private void ComprasMetAbrirBitacora(object Remitente, EventArgs Evento)
+        {
+            if (CrearBitacora == null)
+            {
+                MessageBox.Show(this,
+                    "La bitácora está disponible al ingresar a Compras desde el inicio de sesión de Seguridad.",
+                    "Bitácora", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            ComprasMetAbrirSubproceso(ComprasTlpBitacora, CrearBitacora);
+        }
+        // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
 
         private void ComprasMetOpcionPendienteClick(object Remitente, EventArgs Evento)
         {
