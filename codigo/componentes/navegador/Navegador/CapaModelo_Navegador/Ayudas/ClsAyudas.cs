@@ -107,7 +107,7 @@ namespace CapaModelo_Navegador
                 if (!NavegadorFuncCopiaVigente(Ruta, Recurso))
                 {
                     Directory.CreateDirectory(Carpeta);
-                    NavegadorFuncCopiarRecurso(Recurso, Ruta);
+                    NavegadorMetCopiarRecurso(Recurso, Ruta);
                 }
 
                 if (!_CopiasVerificadas.Contains(Ruta))
@@ -146,7 +146,7 @@ namespace CapaModelo_Navegador
         }
 
         // Se copia a un archivo temporal y solo al terminar se le pone el nombre definitivo
-        private void NavegadorFuncCopiarRecurso(Stream Recurso, string Ruta)
+        private void NavegadorMetCopiarRecurso(Stream Recurso, string Ruta)
         {
             string Temporal = Ruta + "." + Guid.NewGuid().ToString("N") + ".tmp";
 

@@ -99,6 +99,7 @@ function Get-ProjectInfo([IO.FileInfo]$File) {
         Assembly = $assemblyName
         Rank = $rank
         Xml = $xml
+        LastErrors = @()
         Dependencies = New-Object 'System.Collections.Generic.HashSet[string]' ([StringComparer]::OrdinalIgnoreCase)
     }
 }
@@ -290,6 +291,34 @@ function Copy-LegacyDlls($Project) {
     foreach ($dll in $dlls) { Copy-Item -LiteralPath $dll.FullName -Destination $release -Force }
 }
 
+function New-LegacyBuildTargets([string]$LogDirectory) {
+    # Ajustes de los BAT de RRHH y Bancos, sin modificar los proyectos originales.
+    $path = Join-Path $LogDirectory 'ajustes_rrhh_bancos.targets'
+    $content = @'
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="GeneralADExcluirClass1Ausente" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <Compile Remove="Class1.cs" Condition="!Exists('$(MSBuildProjectDirectory)\Class1.cs')" />
+    </ItemGroup>
+  </Target>
+  <Target Name="GeneralADResolverVistaBancos" BeforeTargets="ResolveAssemblyReferences"
+          Condition="'$(MSBuildProjectName)' == 'Ejecucion_Bancos' and '$(BancoVistaDll)' != ''">
+    <Error Condition="!Exists('$(BancoVistaDll)')" Text="Falta la DLL de CapaVista_Bancos en Bibliotecas de Bancos. Revise su compilacion." />
+    <ItemGroup>
+      <Reference Remove="CapaVista_Bancos*" />
+      <Reference Include="CapaVista_Bancos">
+        <HintPath>$(BancoVistaDll)</HintPath>
+        <SpecificVersion>False</SpecificVersion>
+        <Private>True</Private>
+      </Reference>
+    </ItemGroup>
+  </Target>
+</Project>
+'@
+    [IO.File]::WriteAllText($path, $content, $utf8)
+    return $path
+}
+
 try {
     $codeDirectory = Join-Path $repo 'codigo'
     $helpDirectory = Join-Path $repo 'ayuda'
@@ -321,6 +350,9 @@ try {
     if (-not $UsarAyudasExistentes -and $help.Count -gt 0) { $compiler = Find-Tool 'HHC' }
     $msbuild = Find-Tool 'MSBUILD'
     Write-Status "MSBuild: $msbuild"
+    $legacyTargets = New-LegacyBuildTargets $logDirectory
+    Write-Status 'Ajustes RRHH/Bancos: Class1.cs ausente y referencia de Ejecucion_Bancos.'
+    Write-Status 'Logistica se compila antes de CapaVista_Seguridad y de su ejecutable, segun sus dependencias.'
     if ($UsarAyudasExistentes) {
         Write-Status '[AVISO] Se conservan y validan los CHM existentes; no se recompilan sus fuentes HTML.'
         foreach ($item in $help) { Assert-Chm $item.Destination }
@@ -344,18 +376,37 @@ try {
             $log = Join-Path $logDirectory ('ronda_{0}_proyecto_{1:D3}_{2}.log' -f $round, $index, $safeName)
             Write-Status "[$index/$($plan.Count)] $($project.Relative)"
             try {
+                $project.LastErrors = @()
                 $solution = (Get-SolutionDirectory $project.Directory).TrimEnd('\', '/') + '/'
-                $arguments = @($project.Path, '/restore', '/p:RestorePackagesConfig=true', ('/p:SolutionDir=' + $solution), '/t:Build', '/p:Configuration=Debug', '/nologo', '/verbosity:minimal')
-                $code = Invoke-Logged $msbuild $arguments $log
+                $arguments = @($project.Path, '/restore', '/p:RestorePackagesConfig=true', ('/p:SolutionDir=' + $solution), ('/p:CustomAfterMicrosoftCommonTargets=' + $legacyTargets), '/t:Build', '/p:Configuration=Debug', '/nologo', '/verbosity:minimal')
+                if ($project.Xml.SelectSingleNode("//*[local-name()='Compile' and @Include='Class1.cs']") -and -not (Test-Path -LiteralPath (Join-Path $project.Directory 'Class1.cs'))) {
+                    Write-Status '[AJUSTE RRHH] Se omite la referencia a Class1.cs ausente, sin modificar el .csproj.'
+                }
+                if ($project.Name -eq 'Ejecucion_Bancos') {
+                    $bancoDll = Join-Path $repo 'codigo\modulos\bancos\Bibliotecas de Bancos\Bancos\CapaVista_Bancos\bin\Debug\CapaVista_Bancos.dll'
+                    $arguments += '/p:BancoVistaDll=' + $bancoDll
+                    Write-Status '[AJUSTE BANCOS] Se usa CapaVista_Bancos desde Bibliotecas de Bancos.'
+                }
+                # Algunas tareas de .NET Framework resuelven App.config desde
+                # el directorio actual, aunque reciban el CSProj por ruta absoluta.
+                Push-Location -LiteralPath $project.Directory
+                try { $code = Invoke-Logged $msbuild $arguments $log }
+                finally { Pop-Location }
                 if ($code -ne 0) { throw "MSBuild termino con codigo $code. Log: $log" }
                 Copy-LegacyDlls $project
                 $completed++
                 Write-Status '[OK]'
             } catch {
                 $failed.Add($project)
+                $project.LastErrors = @($_.Exception.Message)
                 Write-Status "[ERROR] $($_.Exception.Message)"
                 if (Test-Path -LiteralPath $log) {
-                    Get-Content -LiteralPath $log | Where-Object { $_ -match '(?i)\berror\b|MSB3245|MSB3243' } | Select-Object -First 12 | ForEach-Object { Write-Host $_ }
+                    $diagnostics = @(Get-Content -LiteralPath $log | Where-Object { $_ -match '(?i)\berror\b' } | Select-Object -First 12)
+                    if ($diagnostics.Count -eq 0) {
+                        $diagnostics = @(Get-Content -LiteralPath $log | Where-Object { $_ -match 'MSB3245|MSB3243' } | Select-Object -First 12)
+                    }
+                    $diagnostics | ForEach-Object { Write-Host $_ }
+                    $project.LastErrors += $diagnostics
                 }
             }
         }
@@ -371,7 +422,10 @@ try {
     Write-Status "Resultado: $completed correctos, $($pending.Count) con errores, $($plan.Count) en total."
     Write-Status "Log completo: $script:globalLog"
     if ($pending.Count -gt 0) {
-        foreach ($project in $pending) { Write-Status "PENDIENTE $($project.Relative)" }
+        foreach ($project in $pending) {
+            Write-Status "PENDIENTE $($project.Relative)"
+            $project.LastErrors | Select-Object -First 3 | ForEach-Object { Write-Status "  $_" }
+        }
         exit 1
     }
     exit 0
