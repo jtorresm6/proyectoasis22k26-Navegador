@@ -27,15 +27,12 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
         private DateTime _CreatedAt;
         private DateTime _UpdatedAt;
 
- 
         private ClsRepositorioNominaEncabezado _RepositorioNominaEncabezado;
-
+        private ClsModeloComisiones _ModeloComisiones;
 
         public EstadoEntidad Estado { private get; set; }
 
-
         private List<ClsModeloNominaEncabezado> _ListaNominas;
-
 
         public int IdNominaEncabezado { get => _IdNominaEncabezado; set => _IdNominaEncabezado = value; }
 
@@ -46,7 +43,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
 
         public DateTime FechaInicioNominaEncabezado { get => _FechaInicioNominaEncabezado; set => _FechaInicioNominaEncabezado = value; }
         public DateTime FechaFinalNominaEncabezado { get => _FechaFinalNominaEncabezado; set => _FechaFinalNominaEncabezado = value; }
-
 
         [Range(typeof(decimal), "0", "99999999.9999", ErrorMessage = "El Salario base está fuera de rango")]
         public decimal SalarioBaseNominaEncabezado { get => _SalarioBaseNominaEncabezado; private set => _SalarioBaseNominaEncabezado = value; }
@@ -72,20 +68,21 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
         public DateTime CreatedAt { get => _CreatedAt; private set => _CreatedAt = value; }
         public DateTime UpdatedAt { get => _UpdatedAt; private set => _UpdatedAt = value; }
 
-        
+        // Conceptos aplicados en el ultimo calculo 
         public List<ClsConceptoCalculado> ConceptosCalculados { get; private set; }
 
+       
         public ClsModeloNominaEncabezado()
         {
             _RepositorioNominaEncabezado = new ClsRepositorioNominaEncabezado();
+            _ModeloComisiones = new ClsModeloComisiones();
             _EstadoNminaEncabezado = "Aprobada";
             _FechaInicioNominaEncabezado = DateTime.Today;
             _FechaFinalNominaEncabezado = DateTime.Today;
             ConceptosCalculados = new List<ClsConceptoCalculado>();
         }
 
-       
-        public string RrhhMetCalcularNomina()
+        public string RrhhMetCalcularConceptos()
         {
             try
             {
@@ -94,30 +91,23 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
                 if (_FechaFinalNominaEncabezado.Date < _FechaInicioNominaEncabezado.Date)
                     return "La fecha final no puede ser menor a la fecha inicial";
 
-                if (!_RepositorioNominaEncabezado.RrhhMetEsEmpleadoActivo(_IdEmpleado))
-                    return "El empleado seleccionado no está activo";
-
-                // 1. Salario base
+                
                 decimal? Salario = _RepositorioNominaEncabezado.RrhhMetObtenerSalarioEmpleado(_IdEmpleado);
                 if (Salario == null)
                     return "El empleado seleccionado no tiene un salario registrado";
                 if (Salario.Value <= 0)
                     return "El empleado no tiene un salario válido";
 
-                // 2. Horas extra (se toma el pago ya calculado en tblHoraExtra)
-                int Duracion;
-                decimal TotalHorasExtra;
-                _RepositorioNominaEncabezado.RrhhMetObtenerResumenHorasExtra(
-                    _IdEmpleado, _FechaInicioNominaEncabezado, _FechaFinalNominaEncabezado,
-                    out Duracion, out TotalHorasExtra);
-
-                // 3. Percepciones y deducciones aplicables
                 var Conceptos = new List<ClsConceptoCalculado>();
                 decimal TotalPercepcion = 0;
                 decimal TotalDeduccion = 0;
 
                 foreach (ClsPercepcionDeduccion Concepto in _RepositorioNominaEncabezado.RrhhMetObtenerConceptosAplicables(_IdEmpleado))
                 {
+                    if (string.Equals(Concepto.NombrePercepcionDeduccion, ClsConceptoCalculado.NombreConceptoComision,
+                            StringComparison.OrdinalIgnoreCase))
+                        continue;
+
                     decimal Monto;
 
                     if (Concepto.TipoPercepcionDeduccion == "%")
@@ -128,7 +118,7 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
                     {
                         Monto = Concepto.ValorTipoPercepcionDeduccion;
                     }
-                    else // Tabla: se busca el rango donde cae el salario
+                    else 
                     {
                         string Modo;
                         decimal ValorRango;
@@ -137,7 +127,7 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
                             Concepto.IdPercepcionDeduccion, Salario.Value, out Modo, out ValorRango, out MontoFijoBase);
 
                         if (!Encontrado)
-                            continue; // el salario no cae en ningun rango: el concepto no aplica
+                            continue; 
 
                         Monto = MontoFijoBase + (Modo == "%" ? Salario.Value * ValorRango / 100m : ValorRango);
                     }
@@ -158,14 +148,59 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
                         TotalDeduccion += Monto;
                 }
 
-                // 4. Totales
+                decimal TotalComisiones = Math.Round(
+                    _ModeloComisiones.RrhhMetObtenerTotalComisiones(_IdEmpleado, _FechaInicioNominaEncabezado, _FechaFinalNominaEncabezado),
+                    4, MidpointRounding.AwayFromZero);
+                if (TotalComisiones > 0)
+                {
+                    Conceptos.Add(new ClsConceptoCalculado
+                    {
+                        IdPercepcionDeduccion = 0, 
+                        NombreConcepto = ClsConceptoCalculado.NombreConceptoComision,
+                        EsPercepcion = true,
+                        Monto = TotalComisiones
+                    });
+                    TotalPercepcion += TotalComisiones;
+                }
+
                 _SalarioBaseNominaEncabezado = Salario.Value;
-                _DuracionHoraExtraNominaEncabezado = Duracion;
-                _TotalHorasExtraNominaEncabezado = TotalHorasExtra;
                 _TotalPercepcionNominaEncabezado = TotalPercepcion;
                 _TotalDeduccionNominaEncabezado = TotalDeduccion;
-                _TotalNetoNominaEncabezado = Salario.Value + TotalPercepcion + TotalHorasExtra - TotalDeduccion;
                 ConceptosCalculados = Conceptos;
+                return null;
+            }
+            catch (Exception Ex)
+            {
+                return RrhhMetObtenerMensajeError(Ex);
+            }
+        }
+
+        public string RrhhMetCalcularNomina()
+        {
+            try
+            {
+                if (_IdEmpleado <= 0)
+                    return "Debe seleccionar un empleado";
+                if (_FechaFinalNominaEncabezado.Date < _FechaInicioNominaEncabezado.Date)
+                    return "La fecha final no puede ser menor a la fecha inicial";
+
+                if (!_RepositorioNominaEncabezado.RrhhMetEsEmpleadoActivo(_IdEmpleado))
+                    return "El empleado seleccionado no está activo";
+
+                string ErrorConceptos = RrhhMetCalcularConceptos();
+                if (ErrorConceptos != null)
+                    return ErrorConceptos;
+
+                int Duracion;
+                decimal TotalHorasExtra;
+                _RepositorioNominaEncabezado.RrhhMetObtenerResumenHorasExtra(
+                    _IdEmpleado, _FechaInicioNominaEncabezado, _FechaFinalNominaEncabezado,
+                    out Duracion, out TotalHorasExtra);
+
+                _DuracionHoraExtraNominaEncabezado = Duracion;
+                _TotalHorasExtraNominaEncabezado = TotalHorasExtra;
+                _TotalNetoNominaEncabezado = _SalarioBaseNominaEncabezado + _TotalPercepcionNominaEncabezado
+                                             + TotalHorasExtra - _TotalDeduccionNominaEncabezado;
 
                 if (_TotalNetoNominaEncabezado < 0)
                     return "Las deducciones superan los ingresos del empleado; revise los conceptos asignados";
@@ -183,7 +218,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
             string Mensaje = null;
             try
             {
-                // Reglas de negocio (antes del switch)
                 if (Estado == EstadoEntidad.Modified || Estado == EstadoEntidad.Deleted)
                 {
                     if (_IdNominaEncabezado <= 0)
@@ -195,7 +229,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
 
                 if (Estado == EstadoEntidad.Modified)
                 {
-                    // Una nomina rechazada ya liberó sus horas extra: no se puede reactivar
                     var NominaActual = RrhhMetObtenerTodos().FirstOrDefault(e => e._IdNominaEncabezado == _IdNominaEncabezado);
                     if (NominaActual == null)
                         return "No se encontró la nómina seleccionada";
@@ -322,5 +355,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
 
             return "Ocurrió un error inesperado: " + Texto;
         }
+
     }
 }

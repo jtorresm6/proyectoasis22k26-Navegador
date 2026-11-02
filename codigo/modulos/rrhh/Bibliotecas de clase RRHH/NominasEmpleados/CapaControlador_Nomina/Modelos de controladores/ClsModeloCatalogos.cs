@@ -21,6 +21,16 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
             return _RepositorioCatalogos.RrhhMetObtenerEmpleados();
         }
 
+        public List<KeyValuePair<int, string>> RrhhMetObtenerEmpleadosActivos()
+        {
+            return _RepositorioCatalogos.RrhhMetObtenerEmpleadosActivos();
+        }
+
+        public string RrhhMetObtenerDepartamentoEmpleado(int IdEmpleado)
+        {
+            return _RepositorioCatalogos.RrhhMetObtenerDepartamentoEmpleado(IdEmpleado);
+        }
+
         public List<KeyValuePair<int, string>> RrhhMetObtenerDepartamentos()
         {
             return _RepositorioCatalogos.RrhhMetObtenerDepartamentos();

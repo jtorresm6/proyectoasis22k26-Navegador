@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ayudas\ClsValidacionDatos.cs" />
+    <Compile Include="Formularios\FrmNominaDetalle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmNominaDetalle.Designer.cs">
+      <DependentUpon>FrmNominaDetalle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FrmNominaEmpleado.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <EmbeddedResource Include="Formularios\FrmNominaDetalle.resx">
+      <DependentUpon>FrmNominaDetalle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmNominaEmpleado.resx">
       <DependentUpon>FrmNominaEmpleado.cs</DependentUpon>
     </EmbeddedResource>

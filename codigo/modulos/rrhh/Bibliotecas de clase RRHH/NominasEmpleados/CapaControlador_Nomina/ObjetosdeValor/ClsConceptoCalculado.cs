@@ -8,6 +8,9 @@ namespace CapaControlador_Nomina.ObjetosdeValor
 {
     public class ClsConceptoCalculado
     {
+
+        public const string NombreConceptoComision = "Comisión por Ventas";
+
         public int IdPercepcionDeduccion { get; set; }
         public string NombreConcepto { get; set; }
         public bool EsPercepcion { get; set; }

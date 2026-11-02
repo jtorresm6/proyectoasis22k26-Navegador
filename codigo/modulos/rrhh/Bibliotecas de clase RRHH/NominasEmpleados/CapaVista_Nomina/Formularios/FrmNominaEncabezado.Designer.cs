@@ -30,18 +30,31 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNominaEncabezado));
             this.RrhhPnlDatosInfoConcep = new System.Windows.Forms.Panel();
+            this.RrhhTxtMetodoPago = new System.Windows.Forms.TextBox();
             this.RrhhCboPeriodo = new System.Windows.Forms.ComboBox();
             this.RrhhLblMetodoPago = new System.Windows.Forms.Label();
             this.RrhhCboEstadoNomina = new System.Windows.Forms.ComboBox();
             this.RrhhLblPuesto = new System.Windows.Forms.Label();
-            this.RrhhTxtPuesto = new System.Windows.Forms.TextBox();
+            this.RrhhTxtDepartamento = new System.Windows.Forms.TextBox();
             this.RrhhLblNombreEmpleado = new System.Windows.Forms.Label();
             this.RrhhLblEstadoNomina = new System.Windows.Forms.Label();
             this.RrhhPnlInfoConfiCalculo = new System.Windows.Forms.Panel();
+            this.RrhhTxtHorasExtra = new System.Windows.Forms.TextBox();
+            this.RrhhLblHorasExtra = new System.Windows.Forms.Label();
+            this.RrhhTxtSalarioBase = new System.Windows.Forms.TextBox();
+            this.RrhhDtpFechaFin = new System.Windows.Forms.DateTimePicker();
+            this.RrhhDtpFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.RrhhLblSalarioBase = new System.Windows.Forms.Label();
             this.RrhhLblFechaFin = new System.Windows.Forms.Label();
             this.RrhhLblFechaInicio = new System.Windows.Forms.Label();
             this.RrhhPnlInfoTablaNomina = new System.Windows.Forms.Panel();
+            this.RrhhLblDetallesNomina = new System.Windows.Forms.Label();
+            this.RrhhTxtTotalNeto = new System.Windows.Forms.TextBox();
+            this.RrhhTxtTotalDeducciones = new System.Windows.Forms.TextBox();
+            this.RrhhTxtTotalPercepciones = new System.Windows.Forms.TextBox();
+            this.RrhhLblTotalNeto = new System.Windows.Forms.Label();
+            this.RrhhLblTotalDeducciones = new System.Windows.Forms.Label();
+            this.RrhhLblTotalPercepciones = new System.Windows.Forms.Label();
             this.RrhhBtnAbrir = new System.Windows.Forms.Button();
             this.RrhhDgvListaNominaEncabezado = new System.Windows.Forms.DataGridView();
             this.RrhhLblConsultaGeneral = new System.Windows.Forms.Label();
@@ -75,19 +88,6 @@
             this.RrhhLblSubtituloNominaEncabezado = new System.Windows.Forms.Label();
             this.RrhhLblNominaEncabezado = new System.Windows.Forms.Label();
             this.RrhhPbIconoNominaEncabezado = new System.Windows.Forms.PictureBox();
-            this.RrhhTxtMetodoPago = new System.Windows.Forms.TextBox();
-            this.RrhhDtpFechaInicio = new System.Windows.Forms.DateTimePicker();
-            this.RrhhDtpFechaFin = new System.Windows.Forms.DateTimePicker();
-            this.RrhhTxtSalarioBase = new System.Windows.Forms.TextBox();
-            this.RrhhLblHorasExtra = new System.Windows.Forms.Label();
-            this.RrhhTxtHorasExtra = new System.Windows.Forms.TextBox();
-            this.RrhhLblTotalPercepciones = new System.Windows.Forms.Label();
-            this.RrhhLblTotalDeducciones = new System.Windows.Forms.Label();
-            this.RrhhLblTotalNeto = new System.Windows.Forms.Label();
-            this.RrhhTxtTotalPercepciones = new System.Windows.Forms.TextBox();
-            this.RrhhTxtTotalDeducciones = new System.Windows.Forms.TextBox();
-            this.RrhhTxtTotalNeto = new System.Windows.Forms.TextBox();
-            this.RrhhLblDetallesNomina = new System.Windows.Forms.Label();
             this.RrhhPnlDatosInfoConcep.SuspendLayout();
             this.RrhhPnlInfoConfiCalculo.SuspendLayout();
             this.RrhhPnlInfoTablaNomina.SuspendLayout();
@@ -113,13 +113,21 @@
             this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhLblMetodoPago);
             this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhCboEstadoNomina);
             this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhLblPuesto);
-            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhTxtPuesto);
+            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhTxtDepartamento);
             this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhLblNombreEmpleado);
             this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhLblEstadoNomina);
             this.RrhhPnlDatosInfoConcep.Location = new System.Drawing.Point(12, 295);
             this.RrhhPnlDatosInfoConcep.Name = "RrhhPnlDatosInfoConcep";
             this.RrhhPnlDatosInfoConcep.Size = new System.Drawing.Size(500, 283);
             this.RrhhPnlDatosInfoConcep.TabIndex = 11;
+            // 
+            // RrhhTxtMetodoPago
+            // 
+            this.RrhhTxtMetodoPago.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhTxtMetodoPago.Location = new System.Drawing.Point(199, 188);
+            this.RrhhTxtMetodoPago.Name = "RrhhTxtMetodoPago";
+            this.RrhhTxtMetodoPago.Size = new System.Drawing.Size(284, 30);
+            this.RrhhTxtMetodoPago.TabIndex = 14;
             // 
             // RrhhCboPeriodo
             // 
@@ -129,6 +137,7 @@
             this.RrhhCboPeriodo.Name = "RrhhCboPeriodo";
             this.RrhhCboPeriodo.Size = new System.Drawing.Size(284, 31);
             this.RrhhCboPeriodo.TabIndex = 8;
+            this.RrhhCboPeriodo.SelectedIndexChanged += new System.EventHandler(this.RrhhCboPeriodo_SelectedIndexChanged);
             // 
             // RrhhLblMetodoPago
             // 
@@ -161,13 +170,13 @@
             this.RrhhLblPuesto.TabIndex = 5;
             this.RrhhLblPuesto.Text = "Puesto:";
             // 
-            // RrhhTxtPuesto
+            // RrhhTxtDepartamento
             // 
-            this.RrhhTxtPuesto.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhTxtPuesto.Location = new System.Drawing.Point(199, 133);
-            this.RrhhTxtPuesto.Name = "RrhhTxtPuesto";
-            this.RrhhTxtPuesto.Size = new System.Drawing.Size(284, 30);
-            this.RrhhTxtPuesto.TabIndex = 3;
+            this.RrhhTxtDepartamento.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhTxtDepartamento.Location = new System.Drawing.Point(199, 133);
+            this.RrhhTxtDepartamento.Name = "RrhhTxtDepartamento";
+            this.RrhhTxtDepartamento.Size = new System.Drawing.Size(284, 30);
+            this.RrhhTxtDepartamento.TabIndex = 3;
             // 
             // RrhhLblNombreEmpleado
             // 
@@ -206,6 +215,54 @@
             this.RrhhPnlInfoConfiCalculo.Name = "RrhhPnlInfoConfiCalculo";
             this.RrhhPnlInfoConfiCalculo.Size = new System.Drawing.Size(500, 283);
             this.RrhhPnlInfoConfiCalculo.TabIndex = 12;
+            // 
+            // RrhhTxtHorasExtra
+            // 
+            this.RrhhTxtHorasExtra.Enabled = false;
+            this.RrhhTxtHorasExtra.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhTxtHorasExtra.Location = new System.Drawing.Point(195, 231);
+            this.RrhhTxtHorasExtra.Name = "RrhhTxtHorasExtra";
+            this.RrhhTxtHorasExtra.Size = new System.Drawing.Size(284, 30);
+            this.RrhhTxtHorasExtra.TabIndex = 21;
+            // 
+            // RrhhLblHorasExtra
+            // 
+            this.RrhhLblHorasExtra.AutoSize = true;
+            this.RrhhLblHorasExtra.Font = new System.Drawing.Font("Tahoma", 9.5F);
+            this.RrhhLblHorasExtra.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
+            this.RrhhLblHorasExtra.Location = new System.Drawing.Point(17, 237);
+            this.RrhhLblHorasExtra.Name = "RrhhLblHorasExtra";
+            this.RrhhLblHorasExtra.Size = new System.Drawing.Size(162, 19);
+            this.RrhhLblHorasExtra.TabIndex = 20;
+            this.RrhhLblHorasExtra.Text = "Duración horas extra:";
+            // 
+            // RrhhTxtSalarioBase
+            // 
+            this.RrhhTxtSalarioBase.Enabled = false;
+            this.RrhhTxtSalarioBase.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhTxtSalarioBase.Location = new System.Drawing.Point(195, 186);
+            this.RrhhTxtSalarioBase.Name = "RrhhTxtSalarioBase";
+            this.RrhhTxtSalarioBase.Size = new System.Drawing.Size(284, 30);
+            this.RrhhTxtSalarioBase.TabIndex = 15;
+            // 
+            // RrhhDtpFechaFin
+            // 
+            this.RrhhDtpFechaFin.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.RrhhDtpFechaFin.Location = new System.Drawing.Point(195, 139);
+            this.RrhhDtpFechaFin.Name = "RrhhDtpFechaFin";
+            this.RrhhDtpFechaFin.Size = new System.Drawing.Size(284, 29);
+            this.RrhhDtpFechaFin.TabIndex = 19;
+            this.RrhhDtpFechaFin.ValueChanged += new System.EventHandler(this.RrhhDtpFechaFin_ValueChanged);
+            // 
+            // RrhhDtpFechaInicio
+            // 
+            this.RrhhDtpFechaInicio.CustomFormat = "dd/mm/yyyy";
+            this.RrhhDtpFechaInicio.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.RrhhDtpFechaInicio.Location = new System.Drawing.Point(195, 86);
+            this.RrhhDtpFechaInicio.Name = "RrhhDtpFechaInicio";
+            this.RrhhDtpFechaInicio.Size = new System.Drawing.Size(284, 29);
+            this.RrhhDtpFechaInicio.TabIndex = 18;
+            this.RrhhDtpFechaInicio.ValueChanged += new System.EventHandler(this.RrhhDtpFechaInicio_ValueChanged);
             // 
             // RrhhLblSalarioBase
             // 
@@ -256,6 +313,77 @@
             this.RrhhPnlInfoTablaNomina.Size = new System.Drawing.Size(500, 283);
             this.RrhhPnlInfoTablaNomina.TabIndex = 13;
             // 
+            // RrhhLblDetallesNomina
+            // 
+            this.RrhhLblDetallesNomina.AutoSize = true;
+            this.RrhhLblDetallesNomina.Font = new System.Drawing.Font("Tahoma", 9.5F);
+            this.RrhhLblDetallesNomina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
+            this.RrhhLblDetallesNomina.Location = new System.Drawing.Point(23, 243);
+            this.RrhhLblDetallesNomina.Name = "RrhhLblDetallesNomina";
+            this.RrhhLblDetallesNomina.Size = new System.Drawing.Size(167, 19);
+            this.RrhhLblDetallesNomina.TabIndex = 27;
+            this.RrhhLblDetallesNomina.Text = "Detalles de la nomina:";
+            // 
+            // RrhhTxtTotalNeto
+            // 
+            this.RrhhTxtTotalNeto.Enabled = false;
+            this.RrhhTxtTotalNeto.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhTxtTotalNeto.Location = new System.Drawing.Point(191, 183);
+            this.RrhhTxtTotalNeto.Name = "RrhhTxtTotalNeto";
+            this.RrhhTxtTotalNeto.Size = new System.Drawing.Size(284, 30);
+            this.RrhhTxtTotalNeto.TabIndex = 26;
+            // 
+            // RrhhTxtTotalDeducciones
+            // 
+            this.RrhhTxtTotalDeducciones.Enabled = false;
+            this.RrhhTxtTotalDeducciones.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhTxtTotalDeducciones.Location = new System.Drawing.Point(191, 135);
+            this.RrhhTxtTotalDeducciones.Name = "RrhhTxtTotalDeducciones";
+            this.RrhhTxtTotalDeducciones.Size = new System.Drawing.Size(284, 30);
+            this.RrhhTxtTotalDeducciones.TabIndex = 25;
+            // 
+            // RrhhTxtTotalPercepciones
+            // 
+            this.RrhhTxtTotalPercepciones.Enabled = false;
+            this.RrhhTxtTotalPercepciones.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhTxtTotalPercepciones.Location = new System.Drawing.Point(191, 88);
+            this.RrhhTxtTotalPercepciones.Name = "RrhhTxtTotalPercepciones";
+            this.RrhhTxtTotalPercepciones.Size = new System.Drawing.Size(284, 30);
+            this.RrhhTxtTotalPercepciones.TabIndex = 22;
+            // 
+            // RrhhLblTotalNeto
+            // 
+            this.RrhhLblTotalNeto.AutoSize = true;
+            this.RrhhLblTotalNeto.Font = new System.Drawing.Font("Tahoma", 9.5F);
+            this.RrhhLblTotalNeto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
+            this.RrhhLblTotalNeto.Location = new System.Drawing.Point(23, 188);
+            this.RrhhLblTotalNeto.Name = "RrhhLblTotalNeto";
+            this.RrhhLblTotalNeto.Size = new System.Drawing.Size(89, 19);
+            this.RrhhLblTotalNeto.TabIndex = 24;
+            this.RrhhLblTotalNeto.Text = "Total Neto:";
+            // 
+            // RrhhLblTotalDeducciones
+            // 
+            this.RrhhLblTotalDeducciones.AutoSize = true;
+            this.RrhhLblTotalDeducciones.Font = new System.Drawing.Font("Tahoma", 9.5F);
+            this.RrhhLblTotalDeducciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
+            this.RrhhLblTotalDeducciones.Location = new System.Drawing.Point(23, 138);
+            this.RrhhLblTotalDeducciones.Name = "RrhhLblTotalDeducciones";
+            this.RrhhLblTotalDeducciones.Size = new System.Drawing.Size(144, 19);
+            this.RrhhLblTotalDeducciones.TabIndex = 23;
+            this.RrhhLblTotalDeducciones.Text = "Total Deducciones:";
+            // 
+            // RrhhLblTotalPercepciones
+            // 
+            this.RrhhLblTotalPercepciones.AutoSize = true;
+            this.RrhhLblTotalPercepciones.Font = new System.Drawing.Font("Tahoma", 9.5F);
+            this.RrhhLblTotalPercepciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
+            this.RrhhLblTotalPercepciones.Location = new System.Drawing.Point(23, 90);
+            this.RrhhLblTotalPercepciones.Name = "RrhhLblTotalPercepciones";
+            this.RrhhLblTotalPercepciones.Size = new System.Drawing.Size(147, 19);
+            this.RrhhLblTotalPercepciones.TabIndex = 22;
+            this.RrhhLblTotalPercepciones.Text = "Total Percepciones:";
+            // 
             // RrhhBtnAbrir
             // 
             this.RrhhBtnAbrir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
@@ -267,7 +395,7 @@
             this.RrhhBtnAbrir.TabIndex = 1;
             this.RrhhBtnAbrir.Text = "Abrir";
             this.RrhhBtnAbrir.UseVisualStyleBackColor = false;
-            this.RrhhBtnAbrir.Click += new System.EventHandler(this.RrhhBtnRangos_Click);
+            this.RrhhBtnAbrir.Click += new System.EventHandler(this.RrhhBtnAbrir_Click);
             // 
             // RrhhDgvListaNominaEncabezado
             // 
@@ -278,6 +406,7 @@
             this.RrhhDgvListaNominaEncabezado.RowTemplate.Height = 24;
             this.RrhhDgvListaNominaEncabezado.Size = new System.Drawing.Size(1511, 293);
             this.RrhhDgvListaNominaEncabezado.TabIndex = 15;
+            this.RrhhDgvListaNominaEncabezado.SelectionChanged += new System.EventHandler(this.RrhhDgvListaNominaEncabezado_SelectionChanged);
             // 
             // RrhhLblConsultaGeneral
             // 
@@ -298,6 +427,7 @@
             this.RrhhTxtBuscar.Name = "RrhhTxtBuscar";
             this.RrhhTxtBuscar.Size = new System.Drawing.Size(397, 30);
             this.RrhhTxtBuscar.TabIndex = 16;
+            this.RrhhTxtBuscar.TextChanged += new System.EventHandler(this.RrhhTxtBuscar_TextChanged);
             // 
             // RrhhDedBtnAyuda
             // 
@@ -462,6 +592,7 @@
             this.RrhhDedBtnSalir.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnSalir.TabIndex = 10;
             this.RrhhDedBtnSalir.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnSalir.Click += new System.EventHandler(this.RrhhDedBtnSalir_Click);
             // 
             // RrhhDedBtnRefrescar
             // 
@@ -473,6 +604,7 @@
             this.RrhhDedBtnRefrescar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnRefrescar.TabIndex = 9;
             this.RrhhDedBtnRefrescar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnRefrescar.Click += new System.EventHandler(this.RrhhDedBtnRefrescar_Click);
             // 
             // RrhhDedBtnFin
             // 
@@ -484,6 +616,7 @@
             this.RrhhDedBtnFin.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnFin.TabIndex = 8;
             this.RrhhDedBtnFin.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnFin.Click += new System.EventHandler(this.RrhhDedBtnFin_Click);
             // 
             // RrhhDedBtnSiguiente
             // 
@@ -495,6 +628,7 @@
             this.RrhhDedBtnSiguiente.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnSiguiente.TabIndex = 7;
             this.RrhhDedBtnSiguiente.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnSiguiente.Click += new System.EventHandler(this.RrhhDedBtnSiguiente_Click);
             // 
             // RrhhDedBtnAnterior
             // 
@@ -506,6 +640,7 @@
             this.RrhhDedBtnAnterior.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnAnterior.TabIndex = 6;
             this.RrhhDedBtnAnterior.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnAnterior.Click += new System.EventHandler(this.RrhhDedBtnAnterior_Click);
             // 
             // RrhhDedBtnInicio
             // 
@@ -517,6 +652,7 @@
             this.RrhhDedBtnInicio.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnInicio.TabIndex = 5;
             this.RrhhDedBtnInicio.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnInicio.Click += new System.EventHandler(this.RrhhDedBtnInicio_Click);
             // 
             // RrhhDedBtnImprimir
             // 
@@ -551,6 +687,7 @@
             this.RrhhDedBtnModificar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnModificar.TabIndex = 2;
             this.RrhhDedBtnModificar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnModificar.Click += new System.EventHandler(this.RrhhDedBtnModificar_Click);
             // 
             // RrhhDedBtnGuardar
             // 
@@ -562,6 +699,7 @@
             this.RrhhDedBtnGuardar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnGuardar.TabIndex = 1;
             this.RrhhDedBtnGuardar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnGuardar.Click += new System.EventHandler(this.RrhhDedBtnGuardar_Click);
             // 
             // RrhhPnlNominaEncabezado
             // 
@@ -622,131 +760,6 @@
             this.RrhhPbIconoNominaEncabezado.TabIndex = 0;
             this.RrhhPbIconoNominaEncabezado.TabStop = false;
             // 
-            // RrhhTxtMetodoPago
-            // 
-            this.RrhhTxtMetodoPago.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhTxtMetodoPago.Location = new System.Drawing.Point(199, 188);
-            this.RrhhTxtMetodoPago.Name = "RrhhTxtMetodoPago";
-            this.RrhhTxtMetodoPago.Size = new System.Drawing.Size(284, 30);
-            this.RrhhTxtMetodoPago.TabIndex = 14;
-            // 
-            // RrhhDtpFechaInicio
-            // 
-            this.RrhhDtpFechaInicio.CustomFormat = "dd/mm/yyyy";
-            this.RrhhDtpFechaInicio.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.RrhhDtpFechaInicio.Location = new System.Drawing.Point(195, 86);
-            this.RrhhDtpFechaInicio.Name = "RrhhDtpFechaInicio";
-            this.RrhhDtpFechaInicio.Size = new System.Drawing.Size(284, 29);
-            this.RrhhDtpFechaInicio.TabIndex = 18;
-            // 
-            // RrhhDtpFechaFin
-            // 
-            this.RrhhDtpFechaFin.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.RrhhDtpFechaFin.Location = new System.Drawing.Point(195, 139);
-            this.RrhhDtpFechaFin.Name = "RrhhDtpFechaFin";
-            this.RrhhDtpFechaFin.Size = new System.Drawing.Size(284, 29);
-            this.RrhhDtpFechaFin.TabIndex = 19;
-            // 
-            // RrhhTxtSalarioBase
-            // 
-            this.RrhhTxtSalarioBase.Enabled = false;
-            this.RrhhTxtSalarioBase.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhTxtSalarioBase.Location = new System.Drawing.Point(195, 186);
-            this.RrhhTxtSalarioBase.Name = "RrhhTxtSalarioBase";
-            this.RrhhTxtSalarioBase.Size = new System.Drawing.Size(284, 30);
-            this.RrhhTxtSalarioBase.TabIndex = 15;
-            // 
-            // RrhhLblHorasExtra
-            // 
-            this.RrhhLblHorasExtra.AutoSize = true;
-            this.RrhhLblHorasExtra.Font = new System.Drawing.Font("Tahoma", 9.5F);
-            this.RrhhLblHorasExtra.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblHorasExtra.Location = new System.Drawing.Point(17, 237);
-            this.RrhhLblHorasExtra.Name = "RrhhLblHorasExtra";
-            this.RrhhLblHorasExtra.Size = new System.Drawing.Size(162, 19);
-            this.RrhhLblHorasExtra.TabIndex = 20;
-            this.RrhhLblHorasExtra.Text = "Duración horas extra:";
-            // 
-            // RrhhTxtHorasExtra
-            // 
-            this.RrhhTxtHorasExtra.Enabled = false;
-            this.RrhhTxtHorasExtra.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhTxtHorasExtra.Location = new System.Drawing.Point(195, 231);
-            this.RrhhTxtHorasExtra.Name = "RrhhTxtHorasExtra";
-            this.RrhhTxtHorasExtra.Size = new System.Drawing.Size(284, 30);
-            this.RrhhTxtHorasExtra.TabIndex = 21;
-            // 
-            // RrhhLblTotalPercepciones
-            // 
-            this.RrhhLblTotalPercepciones.AutoSize = true;
-            this.RrhhLblTotalPercepciones.Font = new System.Drawing.Font("Tahoma", 9.5F);
-            this.RrhhLblTotalPercepciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblTotalPercepciones.Location = new System.Drawing.Point(23, 90);
-            this.RrhhLblTotalPercepciones.Name = "RrhhLblTotalPercepciones";
-            this.RrhhLblTotalPercepciones.Size = new System.Drawing.Size(147, 19);
-            this.RrhhLblTotalPercepciones.TabIndex = 22;
-            this.RrhhLblTotalPercepciones.Text = "Total Percepciones:";
-            // 
-            // RrhhLblTotalDeducciones
-            // 
-            this.RrhhLblTotalDeducciones.AutoSize = true;
-            this.RrhhLblTotalDeducciones.Font = new System.Drawing.Font("Tahoma", 9.5F);
-            this.RrhhLblTotalDeducciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblTotalDeducciones.Location = new System.Drawing.Point(23, 138);
-            this.RrhhLblTotalDeducciones.Name = "RrhhLblTotalDeducciones";
-            this.RrhhLblTotalDeducciones.Size = new System.Drawing.Size(144, 19);
-            this.RrhhLblTotalDeducciones.TabIndex = 23;
-            this.RrhhLblTotalDeducciones.Text = "Total Deducciones:";
-            // 
-            // RrhhLblTotalNeto
-            // 
-            this.RrhhLblTotalNeto.AutoSize = true;
-            this.RrhhLblTotalNeto.Font = new System.Drawing.Font("Tahoma", 9.5F);
-            this.RrhhLblTotalNeto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblTotalNeto.Location = new System.Drawing.Point(23, 188);
-            this.RrhhLblTotalNeto.Name = "RrhhLblTotalNeto";
-            this.RrhhLblTotalNeto.Size = new System.Drawing.Size(89, 19);
-            this.RrhhLblTotalNeto.TabIndex = 24;
-            this.RrhhLblTotalNeto.Text = "Total Neto:";
-            // 
-            // RrhhTxtTotalPercepciones
-            // 
-            this.RrhhTxtTotalPercepciones.Enabled = false;
-            this.RrhhTxtTotalPercepciones.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhTxtTotalPercepciones.Location = new System.Drawing.Point(191, 88);
-            this.RrhhTxtTotalPercepciones.Name = "RrhhTxtTotalPercepciones";
-            this.RrhhTxtTotalPercepciones.Size = new System.Drawing.Size(284, 30);
-            this.RrhhTxtTotalPercepciones.TabIndex = 22;
-            // 
-            // RrhhTxtTotalDeducciones
-            // 
-            this.RrhhTxtTotalDeducciones.Enabled = false;
-            this.RrhhTxtTotalDeducciones.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhTxtTotalDeducciones.Location = new System.Drawing.Point(191, 135);
-            this.RrhhTxtTotalDeducciones.Name = "RrhhTxtTotalDeducciones";
-            this.RrhhTxtTotalDeducciones.Size = new System.Drawing.Size(284, 30);
-            this.RrhhTxtTotalDeducciones.TabIndex = 25;
-            // 
-            // RrhhTxtTotalNeto
-            // 
-            this.RrhhTxtTotalNeto.Enabled = false;
-            this.RrhhTxtTotalNeto.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhTxtTotalNeto.Location = new System.Drawing.Point(191, 183);
-            this.RrhhTxtTotalNeto.Name = "RrhhTxtTotalNeto";
-            this.RrhhTxtTotalNeto.Size = new System.Drawing.Size(284, 30);
-            this.RrhhTxtTotalNeto.TabIndex = 26;
-            // 
-            // RrhhLblDetallesNomina
-            // 
-            this.RrhhLblDetallesNomina.AutoSize = true;
-            this.RrhhLblDetallesNomina.Font = new System.Drawing.Font("Tahoma", 9.5F);
-            this.RrhhLblDetallesNomina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblDetallesNomina.Location = new System.Drawing.Point(23, 243);
-            this.RrhhLblDetallesNomina.Name = "RrhhLblDetallesNomina";
-            this.RrhhLblDetallesNomina.Size = new System.Drawing.Size(167, 19);
-            this.RrhhLblDetallesNomina.TabIndex = 27;
-            this.RrhhLblDetallesNomina.Text = "Detalles de la nomina:";
-            // 
             // FrmNominaEncabezado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -782,8 +795,8 @@
             this.MinimizeBox = false;
             this.Name = "FrmNominaEncabezado";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "9505 – Nomina Encabezadp";
-            this.Load += new System.EventHandler(this.FrmNominas_Load);
+            this.Text = "9505 – Nomina Encabezado";
+            this.Load += new System.EventHandler(this.FrmNominaEncabezado_Load);
             this.RrhhPnlDatosInfoConcep.ResumeLayout(false);
             this.RrhhPnlDatosInfoConcep.PerformLayout();
             this.RrhhPnlInfoConfiCalculo.ResumeLayout(false);
@@ -833,7 +846,7 @@
         private System.Windows.Forms.Label RrhhLblInformacionConcepto;
         private System.Windows.Forms.PictureBox RrhhPbIconInforme;
         private System.Windows.Forms.Label RrhhLblNombreEmpleado;
-        private System.Windows.Forms.TextBox RrhhTxtPuesto;
+        private System.Windows.Forms.TextBox RrhhTxtDepartamento;
         private System.Windows.Forms.Panel RrhhPnlConcepto;
         private System.Windows.Forms.ComboBox RrhhCboPeriodo;
         private System.Windows.Forms.Label RrhhLblMetodoPago;
