@@ -20,17 +20,5 @@ namespace CapaModelo_Nomina.Repositorios
         {
             return new OdbcConnection(_ConnectionString);
         }
-
-        public void RrhhMetDesconexion(OdbcConnection ConexionOdbc)
-        {
-            try
-            {
-                ConexionOdbc.Close();
-            }
-            catch (OdbcException)
-            {
-                Console.WriteLine("No se desconecto");
-            }
-        }
     }
 }

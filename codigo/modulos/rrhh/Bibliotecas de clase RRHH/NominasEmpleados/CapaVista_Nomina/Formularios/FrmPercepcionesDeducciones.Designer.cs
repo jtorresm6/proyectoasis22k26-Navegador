@@ -261,6 +261,7 @@
             this.RrhhClbAplicacion.Name = "RrhhClbAplicacion";
             this.RrhhClbAplicacion.Size = new System.Drawing.Size(120, 79);
             this.RrhhClbAplicacion.TabIndex = 15;
+            this.RrhhClbAplicacion.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.RrhhClbAplicacion_ItemCheck);
             // 
             // RrhhLblValor
             // 
@@ -344,6 +345,7 @@
             this.RrhhDgvListaConceptos.RowTemplate.Height = 24;
             this.RrhhDgvListaConceptos.Size = new System.Drawing.Size(1511, 293);
             this.RrhhDgvListaConceptos.TabIndex = 15;
+            this.RrhhDgvListaConceptos.SelectionChanged += new System.EventHandler(this.RrhhDgvListaConceptos_SelectionChanged);
             // 
             // RrhhLblConsultaGeneral
             // 
@@ -364,6 +366,7 @@
             this.RrhhTxtBuscar.Name = "RrhhTxtBuscar";
             this.RrhhTxtBuscar.Size = new System.Drawing.Size(397, 30);
             this.RrhhTxtBuscar.TabIndex = 16;
+            this.RrhhTxtBuscar.TextChanged += new System.EventHandler(this.RrhhTxtBuscar_TextChanged);
             // 
             // RrhhDedBtnAyuda
             // 
@@ -539,6 +542,7 @@
             this.RrhhDedBtnRefrescar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnRefrescar.TabIndex = 9;
             this.RrhhDedBtnRefrescar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnRefrescar.Click += new System.EventHandler(this.RrhhDedBtnRefrescar_Click);
             // 
             // RrhhDedBtnFin
             // 
@@ -550,6 +554,7 @@
             this.RrhhDedBtnFin.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnFin.TabIndex = 8;
             this.RrhhDedBtnFin.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnFin.Click += new System.EventHandler(this.RrhhDedBtnFin_Click);
             // 
             // RrhhDedBtnSiguiente
             // 
@@ -561,6 +566,7 @@
             this.RrhhDedBtnSiguiente.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnSiguiente.TabIndex = 7;
             this.RrhhDedBtnSiguiente.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnSiguiente.Click += new System.EventHandler(this.RrhhDedBtnSiguiente_Click);
             // 
             // RrhhDedBtnAnterior
             // 
@@ -572,6 +578,7 @@
             this.RrhhDedBtnAnterior.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnAnterior.TabIndex = 6;
             this.RrhhDedBtnAnterior.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnAnterior.Click += new System.EventHandler(this.RrhhDedBtnAnterior_Click);
             // 
             // RrhhDedBtnInicio
             // 
@@ -583,6 +590,7 @@
             this.RrhhDedBtnInicio.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnInicio.TabIndex = 5;
             this.RrhhDedBtnInicio.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnInicio.Click += new System.EventHandler(this.RrhhDedBtnInicio_Click);
             // 
             // RrhhDedBtnImprimir
             // 
@@ -617,6 +625,7 @@
             this.RrhhDedBtnModificar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnModificar.TabIndex = 2;
             this.RrhhDedBtnModificar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnModificar.Click += new System.EventHandler(this.RrhhDedBtnModificar_Click);
             // 
             // RrhhDedBtnGuardar
             // 
@@ -628,6 +637,7 @@
             this.RrhhDedBtnGuardar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnGuardar.TabIndex = 1;
             this.RrhhDedBtnGuardar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnGuardar.Click += new System.EventHandler(this.RrhhDedBtnGuardar_Click);
             // 
             // RrhhPnlPercepcionDeducciones
             // 

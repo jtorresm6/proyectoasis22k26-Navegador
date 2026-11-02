@@ -63,6 +63,8 @@
             this.RrhhTxtBuscar = new System.Windows.Forms.TextBox();
             this.RrhhPbIconoConsultas = new System.Windows.Forms.PictureBox();
             this.RrhhDgvListaRangos = new System.Windows.Forms.DataGridView();
+            this.RrhhLblMontoActivo = new System.Windows.Forms.Label();
+            this.RrhhCboActivo = new System.Windows.Forms.CheckBox();
             this.RrhhPnlRangosValores.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbRangosValores)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconoRangosValores)).BeginInit();
@@ -140,6 +142,7 @@
             this.RrhhDedBtnGuardar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnGuardar.TabIndex = 1;
             this.RrhhDedBtnGuardar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnGuardar.Click += new System.EventHandler(this.RrhhDedBtnGuardar_Click);
             // 
             // RrhhDedBtnModificar
             // 
@@ -151,6 +154,7 @@
             this.RrhhDedBtnModificar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnModificar.TabIndex = 2;
             this.RrhhDedBtnModificar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnModificar.Click += new System.EventHandler(this.RrhhDedBtnModificar_Click);
             // 
             // RrhhDedBtnEliminar
             // 
@@ -162,6 +166,7 @@
             this.RrhhDedBtnEliminar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnEliminar.TabIndex = 3;
             this.RrhhDedBtnEliminar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnEliminar.Click += new System.EventHandler(this.RrhhDedBtnEliminar_Click);
             // 
             // RrhhDedBtnImprimir
             // 
@@ -184,6 +189,7 @@
             this.RrhhDedBtnRefrescar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnRefrescar.TabIndex = 5;
             this.RrhhDedBtnRefrescar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnRefrescar.Click += new System.EventHandler(this.RrhhDedBtnRefrescar_Click);
             // 
             // RrhhDedBtnInicio
             // 
@@ -195,6 +201,7 @@
             this.RrhhDedBtnInicio.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnInicio.TabIndex = 6;
             this.RrhhDedBtnInicio.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnInicio.Click += new System.EventHandler(this.RrhhDedBtnInicio_Click);
             // 
             // RrhhDedBtnAnterior
             // 
@@ -206,6 +213,7 @@
             this.RrhhDedBtnAnterior.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnAnterior.TabIndex = 7;
             this.RrhhDedBtnAnterior.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnAnterior.Click += new System.EventHandler(this.RrhhDedBtnAnterior_Click);
             // 
             // RrhhDedBtnSiguiente
             // 
@@ -217,6 +225,7 @@
             this.RrhhDedBtnSiguiente.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnSiguiente.TabIndex = 8;
             this.RrhhDedBtnSiguiente.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnSiguiente.Click += new System.EventHandler(this.RrhhDedBtnSiguiente_Click);
             // 
             // RrhhDedBtnFin
             // 
@@ -228,6 +237,7 @@
             this.RrhhDedBtnFin.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnFin.TabIndex = 9;
             this.RrhhDedBtnFin.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnFin.Click += new System.EventHandler(this.RrhhDedBtnFin_Click);
             // 
             // RrhhDedBtnAyuda
             // 
@@ -254,6 +264,8 @@
             // RrhhGbxRangosValores
             // 
             this.RrhhGbxRangosValores.BackColor = System.Drawing.Color.White;
+            this.RrhhGbxRangosValores.Controls.Add(this.RrhhCboActivo);
+            this.RrhhGbxRangosValores.Controls.Add(this.RrhhLblMontoActivo);
             this.RrhhGbxRangosValores.Controls.Add(this.RrhhTxtMontoFijo);
             this.RrhhGbxRangosValores.Controls.Add(this.RrhhTxtValor);
             this.RrhhGbxRangosValores.Controls.Add(this.RrhhClbModoValor);
@@ -278,7 +290,7 @@
             // RrhhTxtMontoFijo
             // 
             this.RrhhTxtMontoFijo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhTxtMontoFijo.Location = new System.Drawing.Point(718, 183);
+            this.RrhhTxtMontoFijo.Location = new System.Drawing.Point(718, 151);
             this.RrhhTxtMontoFijo.Name = "RrhhTxtMontoFijo";
             this.RrhhTxtMontoFijo.Size = new System.Drawing.Size(284, 30);
             this.RrhhTxtMontoFijo.TabIndex = 11;
@@ -286,7 +298,7 @@
             // RrhhTxtValor
             // 
             this.RrhhTxtValor.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhTxtValor.Location = new System.Drawing.Point(718, 119);
+            this.RrhhTxtValor.Location = new System.Drawing.Point(718, 101);
             this.RrhhTxtValor.Name = "RrhhTxtValor";
             this.RrhhTxtValor.Size = new System.Drawing.Size(284, 30);
             this.RrhhTxtValor.TabIndex = 10;
@@ -302,13 +314,14 @@
             this.RrhhClbModoValor.Name = "RrhhClbModoValor";
             this.RrhhClbModoValor.Size = new System.Drawing.Size(120, 48);
             this.RrhhClbModoValor.TabIndex = 9;
+            this.RrhhClbModoValor.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.RrhhClbModoValor_ItemCheck);
             // 
             // RrhhLblMontoFijo
             // 
             this.RrhhLblMontoFijo.AutoSize = true;
             this.RrhhLblMontoFijo.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.RrhhLblMontoFijo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblMontoFijo.Location = new System.Drawing.Point(574, 185);
+            this.RrhhLblMontoFijo.Location = new System.Drawing.Point(574, 154);
             this.RrhhLblMontoFijo.Name = "RrhhLblMontoFijo";
             this.RrhhLblMontoFijo.Size = new System.Drawing.Size(130, 21);
             this.RrhhLblMontoFijo.TabIndex = 8;
@@ -319,7 +332,7 @@
             this.RrhhLblValor.AutoSize = true;
             this.RrhhLblValor.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.RrhhLblValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblValor.Location = new System.Drawing.Point(574, 119);
+            this.RrhhLblValor.Location = new System.Drawing.Point(574, 105);
             this.RrhhLblValor.Name = "RrhhLblValor";
             this.RrhhLblValor.Size = new System.Drawing.Size(54, 21);
             this.RrhhLblValor.TabIndex = 7;
@@ -424,6 +437,7 @@
             this.RrhhTxtBuscar.Name = "RrhhTxtBuscar";
             this.RrhhTxtBuscar.Size = new System.Drawing.Size(401, 30);
             this.RrhhTxtBuscar.TabIndex = 1;
+            this.RrhhTxtBuscar.TextChanged += new System.EventHandler(this.RrhhTxtBuscar_TextChanged);
             // 
             // RrhhPbIconoConsultas
             // 
@@ -443,6 +457,29 @@
             this.RrhhDgvListaRangos.RowTemplate.Height = 24;
             this.RrhhDgvListaRangos.Size = new System.Drawing.Size(1111, 368);
             this.RrhhDgvListaRangos.TabIndex = 14;
+            this.RrhhDgvListaRangos.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.RrhhDgvListaRangos_CellFormatting);
+            this.RrhhDgvListaRangos.SelectionChanged += new System.EventHandler(this.RrhhDgvListaRangos_SelectionChanged);
+            // 
+            // RrhhLblMontoActivo
+            // 
+            this.RrhhLblMontoActivo.AutoSize = true;
+            this.RrhhLblMontoActivo.Font = new System.Drawing.Font("Tahoma", 9.75F);
+            this.RrhhLblMontoActivo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
+            this.RrhhLblMontoActivo.Location = new System.Drawing.Point(574, 203);
+            this.RrhhLblMontoActivo.Name = "RrhhLblMontoActivo";
+            this.RrhhLblMontoActivo.Size = new System.Drawing.Size(62, 21);
+            this.RrhhLblMontoActivo.TabIndex = 12;
+            this.RrhhLblMontoActivo.Text = "Activo:";
+            // 
+            // RrhhCboActivo
+            // 
+            this.RrhhCboActivo.AutoSize = true;
+            this.RrhhCboActivo.Location = new System.Drawing.Point(718, 204);
+            this.RrhhCboActivo.Name = "RrhhCboActivo";
+            this.RrhhCboActivo.Size = new System.Drawing.Size(48, 25);
+            this.RrhhCboActivo.TabIndex = 13;
+            this.RrhhCboActivo.Text = "Sí";
+            this.RrhhCboActivo.UseVisualStyleBackColor = true;
             // 
             // FrmRangos
             // 
@@ -470,6 +507,7 @@
             this.Name = "FrmRangos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "9504 – Rangos y Valores";
+            this.Load += new System.EventHandler(this.FrmRangos_Load);
             this.RrhhPnlRangosValores.ResumeLayout(false);
             this.RrhhPnlRangosValores.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbRangosValores)).EndInit();
@@ -520,5 +558,7 @@
         private System.Windows.Forms.TextBox RrhhTxtBuscar;
         private System.Windows.Forms.Button RrhhBtnConsultar;
         private System.Windows.Forms.DataGridView RrhhDgvListaRangos;
+        private System.Windows.Forms.CheckBox RrhhCboActivo;
+        private System.Windows.Forms.Label RrhhLblMontoActivo;
     }
 }

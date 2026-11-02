@@ -46,20 +46,20 @@
             this.RrhhDedBtnAyuda = new System.Windows.Forms.Button();
             this.RrhhDedBtnSalir = new System.Windows.Forms.Button();
             this.RrhhGbxAsignacionConceptos = new System.Windows.Forms.GroupBox();
+            this.RrhhCboActivo = new System.Windows.Forms.CheckBox();
+            this.RrhhLblActivo = new System.Windows.Forms.Label();
+            this.RrhhCboDepartamento = new System.Windows.Forms.ComboBox();
+            this.RrhhCboEmpleado = new System.Windows.Forms.ComboBox();
             this.RrhhClbTipoAsignacion = new System.Windows.Forms.CheckedListBox();
             this.RrhhLblTipoAsignacion = new System.Windows.Forms.Label();
-            this.RrhhLblConcepto = new System.Windows.Forms.ComboBox();
+            this.RrhhCboConcepto = new System.Windows.Forms.ComboBox();
             this.RrhhLblDepartamento = new System.Windows.Forms.Label();
             this.RrhhLblEmpleado = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.RrhhCboEmpleado = new System.Windows.Forms.ComboBox();
-            this.RrhhCboDepartamento = new System.Windows.Forms.ComboBox();
             this.RrhhPnlConceptoRegistrados = new System.Windows.Forms.Panel();
-            this.RrhhPbIconoConsultas = new System.Windows.Forms.PictureBox();
-            this.RrhhTxtBuscar = new System.Windows.Forms.TextBox();
             this.RrhhBtnConsultar = new System.Windows.Forms.Button();
-            this.RrhhLblActivo = new System.Windows.Forms.Label();
-            this.RrhhCboActivo = new System.Windows.Forms.CheckBox();
+            this.RrhhTxtBuscar = new System.Windows.Forms.TextBox();
+            this.RrhhPbIconoConsultas = new System.Windows.Forms.PictureBox();
             this.RrhhDgvListaAsignaciones = new System.Windows.Forms.DataGridView();
             this.RrhhPnlAsignacionConceptos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIAsignacionConceptos)).BeginInit();
@@ -137,6 +137,7 @@
             this.RrhhDedBtnGuardar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnGuardar.TabIndex = 1;
             this.RrhhDedBtnGuardar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnGuardar.Click += new System.EventHandler(this.RrhhDedBtnGuardar_Click);
             // 
             // RrhhDedBtnModificar
             // 
@@ -148,6 +149,7 @@
             this.RrhhDedBtnModificar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnModificar.TabIndex = 2;
             this.RrhhDedBtnModificar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnModificar.Click += new System.EventHandler(this.RrhhDedBtnModificar_Click);
             // 
             // RrhhDedBtnEliminar
             // 
@@ -159,6 +161,7 @@
             this.RrhhDedBtnEliminar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnEliminar.TabIndex = 3;
             this.RrhhDedBtnEliminar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnEliminar.Click += new System.EventHandler(this.RrhhDedBtnEliminar_Click);
             // 
             // RrhhDedBtnImprimir
             // 
@@ -181,6 +184,7 @@
             this.RrhhDedBtnRefrescar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnRefrescar.TabIndex = 5;
             this.RrhhDedBtnRefrescar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnRefrescar.Click += new System.EventHandler(this.RrhhDedBtnRefrescar_Click);
             // 
             // RrhhDedBtnInicio
             // 
@@ -192,6 +196,7 @@
             this.RrhhDedBtnInicio.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnInicio.TabIndex = 6;
             this.RrhhDedBtnInicio.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnInicio.Click += new System.EventHandler(this.RrhhDedBtnInicio_Click);
             // 
             // RrhhDedBtnAnterior
             // 
@@ -203,6 +208,7 @@
             this.RrhhDedBtnAnterior.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnAnterior.TabIndex = 7;
             this.RrhhDedBtnAnterior.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnAnterior.Click += new System.EventHandler(this.RrhhDedBtnAnterior_Click);
             // 
             // RrhhDedBtnSiguiente
             // 
@@ -214,6 +220,7 @@
             this.RrhhDedBtnSiguiente.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnSiguiente.TabIndex = 8;
             this.RrhhDedBtnSiguiente.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnSiguiente.Click += new System.EventHandler(this.RrhhDedBtnSiguiente_Click);
             // 
             // RrhhDedBtnFin
             // 
@@ -225,6 +232,7 @@
             this.RrhhDedBtnFin.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnFin.TabIndex = 9;
             this.RrhhDedBtnFin.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnFin.Click += new System.EventHandler(this.RrhhDedBtnFin_Click);
             // 
             // RrhhDedBtnAyuda
             // 
@@ -257,7 +265,7 @@
             this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhCboEmpleado);
             this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhClbTipoAsignacion);
             this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhLblTipoAsignacion);
-            this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhLblConcepto);
+            this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhCboConcepto);
             this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhLblDepartamento);
             this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhLblEmpleado);
             this.RrhhGbxAsignacionConceptos.Controls.Add(this.label3);
@@ -270,6 +278,45 @@
             this.RrhhGbxAsignacionConceptos.TabStop = false;
             this.RrhhGbxAsignacionConceptos.Text = "Datos del rango";
             // 
+            // RrhhCboActivo
+            // 
+            this.RrhhCboActivo.AutoSize = true;
+            this.RrhhCboActivo.Location = new System.Drawing.Point(710, 170);
+            this.RrhhCboActivo.Name = "RrhhCboActivo";
+            this.RrhhCboActivo.Size = new System.Drawing.Size(48, 25);
+            this.RrhhCboActivo.TabIndex = 13;
+            this.RrhhCboActivo.Text = "Si";
+            this.RrhhCboActivo.UseVisualStyleBackColor = true;
+            // 
+            // RrhhLblActivo
+            // 
+            this.RrhhLblActivo.AutoSize = true;
+            this.RrhhLblActivo.Font = new System.Drawing.Font("Tahoma", 9.75F);
+            this.RrhhLblActivo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
+            this.RrhhLblActivo.Location = new System.Drawing.Point(544, 170);
+            this.RrhhLblActivo.Name = "RrhhLblActivo";
+            this.RrhhLblActivo.Size = new System.Drawing.Size(62, 21);
+            this.RrhhLblActivo.TabIndex = 12;
+            this.RrhhLblActivo.Text = "Activo:";
+            // 
+            // RrhhCboDepartamento
+            // 
+            this.RrhhCboDepartamento.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhCboDepartamento.FormattingEnabled = true;
+            this.RrhhCboDepartamento.Location = new System.Drawing.Point(710, 107);
+            this.RrhhCboDepartamento.Name = "RrhhCboDepartamento";
+            this.RrhhCboDepartamento.Size = new System.Drawing.Size(284, 31);
+            this.RrhhCboDepartamento.TabIndex = 11;
+            // 
+            // RrhhCboEmpleado
+            // 
+            this.RrhhCboEmpleado.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhCboEmpleado.FormattingEnabled = true;
+            this.RrhhCboEmpleado.Location = new System.Drawing.Point(710, 51);
+            this.RrhhCboEmpleado.Name = "RrhhCboEmpleado";
+            this.RrhhCboEmpleado.Size = new System.Drawing.Size(284, 31);
+            this.RrhhCboEmpleado.TabIndex = 10;
+            // 
             // RrhhClbTipoAsignacion
             // 
             this.RrhhClbTipoAsignacion.Font = new System.Drawing.Font("Tahoma", 9.75F);
@@ -281,6 +328,7 @@
             this.RrhhClbTipoAsignacion.Name = "RrhhClbTipoAsignacion";
             this.RrhhClbTipoAsignacion.Size = new System.Drawing.Size(120, 48);
             this.RrhhClbTipoAsignacion.TabIndex = 9;
+            this.RrhhClbTipoAsignacion.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.RrhhClbTipoAsignacion_ItemCheck);
             // 
             // RrhhLblTipoAsignacion
             // 
@@ -293,14 +341,14 @@
             this.RrhhLblTipoAsignacion.TabIndex = 6;
             this.RrhhLblTipoAsignacion.Text = "Tipo de asignación:";
             // 
-            // RrhhLblConcepto
+            // RrhhCboConcepto
             // 
-            this.RrhhLblConcepto.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhLblConcepto.FormattingEnabled = true;
-            this.RrhhLblConcepto.Location = new System.Drawing.Point(183, 51);
-            this.RrhhLblConcepto.Name = "RrhhLblConcepto";
-            this.RrhhLblConcepto.Size = new System.Drawing.Size(284, 31);
-            this.RrhhLblConcepto.TabIndex = 3;
+            this.RrhhCboConcepto.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhCboConcepto.FormattingEnabled = true;
+            this.RrhhCboConcepto.Location = new System.Drawing.Point(183, 51);
+            this.RrhhCboConcepto.Name = "RrhhCboConcepto";
+            this.RrhhCboConcepto.Size = new System.Drawing.Size(284, 31);
+            this.RrhhCboConcepto.TabIndex = 3;
             // 
             // RrhhLblDepartamento
             // 
@@ -335,24 +383,6 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Concepto";
             // 
-            // RrhhCboEmpleado
-            // 
-            this.RrhhCboEmpleado.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhCboEmpleado.FormattingEnabled = true;
-            this.RrhhCboEmpleado.Location = new System.Drawing.Point(710, 51);
-            this.RrhhCboEmpleado.Name = "RrhhCboEmpleado";
-            this.RrhhCboEmpleado.Size = new System.Drawing.Size(284, 31);
-            this.RrhhCboEmpleado.TabIndex = 10;
-            // 
-            // RrhhCboDepartamento
-            // 
-            this.RrhhCboDepartamento.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhCboDepartamento.FormattingEnabled = true;
-            this.RrhhCboDepartamento.Location = new System.Drawing.Point(710, 107);
-            this.RrhhCboDepartamento.Name = "RrhhCboDepartamento";
-            this.RrhhCboDepartamento.Size = new System.Drawing.Size(284, 31);
-            this.RrhhCboDepartamento.TabIndex = 11;
-            // 
             // RrhhPnlConceptoRegistrados
             // 
             this.RrhhPnlConceptoRegistrados.AutoSize = true;
@@ -366,24 +396,6 @@
             this.RrhhPnlConceptoRegistrados.Size = new System.Drawing.Size(1110, 55);
             this.RrhhPnlConceptoRegistrados.TabIndex = 13;
             // 
-            // RrhhPbIconoConsultas
-            // 
-            this.RrhhPbIconoConsultas.BackColor = System.Drawing.Color.Transparent;
-            this.RrhhPbIconoConsultas.Image = global::CapaVista_Nomina.Properties.Resources.btn_empleados_diseno;
-            this.RrhhPbIconoConsultas.Location = new System.Drawing.Point(13, 7);
-            this.RrhhPbIconoConsultas.Name = "RrhhPbIconoConsultas";
-            this.RrhhPbIconoConsultas.Size = new System.Drawing.Size(40, 38);
-            this.RrhhPbIconoConsultas.TabIndex = 0;
-            this.RrhhPbIconoConsultas.TabStop = false;
-            // 
-            // RrhhTxtBuscar
-            // 
-            this.RrhhTxtBuscar.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhTxtBuscar.Location = new System.Drawing.Point(59, 12);
-            this.RrhhTxtBuscar.Name = "RrhhTxtBuscar";
-            this.RrhhTxtBuscar.Size = new System.Drawing.Size(401, 30);
-            this.RrhhTxtBuscar.TabIndex = 1;
-            // 
             // RrhhBtnConsultar
             // 
             this.RrhhBtnConsultar.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_consultar_sin_bordes1;
@@ -394,26 +406,24 @@
             this.RrhhBtnConsultar.TabIndex = 2;
             this.RrhhBtnConsultar.UseVisualStyleBackColor = true;
             // 
-            // RrhhLblActivo
+            // RrhhTxtBuscar
             // 
-            this.RrhhLblActivo.AutoSize = true;
-            this.RrhhLblActivo.Font = new System.Drawing.Font("Tahoma", 9.75F);
-            this.RrhhLblActivo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblActivo.Location = new System.Drawing.Point(544, 170);
-            this.RrhhLblActivo.Name = "RrhhLblActivo";
-            this.RrhhLblActivo.Size = new System.Drawing.Size(62, 21);
-            this.RrhhLblActivo.TabIndex = 12;
-            this.RrhhLblActivo.Text = "Activo:";
+            this.RrhhTxtBuscar.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhTxtBuscar.Location = new System.Drawing.Point(59, 12);
+            this.RrhhTxtBuscar.Name = "RrhhTxtBuscar";
+            this.RrhhTxtBuscar.Size = new System.Drawing.Size(401, 30);
+            this.RrhhTxtBuscar.TabIndex = 1;
+            this.RrhhTxtBuscar.TextChanged += new System.EventHandler(this.RrhhTxtBuscar_TextChanged);
             // 
-            // RrhhCboActivo
+            // RrhhPbIconoConsultas
             // 
-            this.RrhhCboActivo.AutoSize = true;
-            this.RrhhCboActivo.Location = new System.Drawing.Point(710, 170);
-            this.RrhhCboActivo.Name = "RrhhCboActivo";
-            this.RrhhCboActivo.Size = new System.Drawing.Size(48, 25);
-            this.RrhhCboActivo.TabIndex = 13;
-            this.RrhhCboActivo.Text = "Si";
-            this.RrhhCboActivo.UseVisualStyleBackColor = true;
+            this.RrhhPbIconoConsultas.BackColor = System.Drawing.Color.Transparent;
+            this.RrhhPbIconoConsultas.Image = global::CapaVista_Nomina.Properties.Resources.btn_empleados_diseno;
+            this.RrhhPbIconoConsultas.Location = new System.Drawing.Point(13, 7);
+            this.RrhhPbIconoConsultas.Name = "RrhhPbIconoConsultas";
+            this.RrhhPbIconoConsultas.Size = new System.Drawing.Size(40, 38);
+            this.RrhhPbIconoConsultas.TabIndex = 0;
+            this.RrhhPbIconoConsultas.TabStop = false;
             // 
             // RrhhDgvListaAsignaciones
             // 
@@ -424,6 +434,8 @@
             this.RrhhDgvListaAsignaciones.RowTemplate.Height = 24;
             this.RrhhDgvListaAsignaciones.Size = new System.Drawing.Size(1113, 364);
             this.RrhhDgvListaAsignaciones.TabIndex = 14;
+            this.RrhhDgvListaAsignaciones.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.RrhhDgvListaAsignaciones_CellFormatting);
+            this.RrhhDgvListaAsignaciones.SelectionChanged += new System.EventHandler(this.RrhhDgvListaAsignaciones_SelectionChanged);
             // 
             // FrmAsignacionConceptos
             // 
@@ -453,6 +465,7 @@
             this.Name = "FrmAsignacionConceptos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "9503 – Asignación de conceptos";
+            this.Load += new System.EventHandler(this.FrmAsignacionConceptos_Load);
             this.RrhhPnlAsignacionConceptos.ResumeLayout(false);
             this.RrhhPnlAsignacionConceptos.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIAsignacionConceptos)).EndInit();
@@ -490,7 +503,7 @@
         private System.Windows.Forms.Label RrhhLblDepartamento;
         private System.Windows.Forms.Label RrhhLblEmpleado;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox RrhhLblConcepto;
+        private System.Windows.Forms.ComboBox RrhhCboConcepto;
         private System.Windows.Forms.CheckedListBox RrhhClbTipoAsignacion;
         private System.Windows.Forms.Label RrhhLblTipoAsignacion;
         private System.Windows.Forms.ComboBox RrhhCboDepartamento;

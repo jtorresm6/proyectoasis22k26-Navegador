@@ -9,5 +9,6 @@ namespace CapaModelo_Nomina.Contratos
 {
     public interface IRepositorioPercepcionDeduccion : IRepositorioGenerico<ClsPercepcionDeduccion>
     {
+        int RrhhMetContarPorNombre(string NombrePercepcionDeduccion, int IdExcluir);
     }
 }

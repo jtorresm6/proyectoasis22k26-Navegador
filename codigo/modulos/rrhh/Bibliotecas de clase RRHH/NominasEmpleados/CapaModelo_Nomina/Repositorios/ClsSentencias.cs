@@ -10,7 +10,10 @@ namespace CapaModelo_Nomina.Repositorios
 {
     public abstract class ClsSentencias : ClsConexion
     {
-        private DataTable _TablaDatos;
+        public int RrhhMetEjecucionNonQuery(string ComandoTexto, CommandType ComandoTipo)
+        {
+            return RrhhMetEjecucionNonQuery(ComandoTexto, new List<OdbcParameter>(), ComandoTipo);
+        }
 
         public int RrhhMetEjecucionNonQuery(string ComandoTexto, List<OdbcParameter> Parametros, CommandType ComandoTipo)
         {
@@ -28,8 +31,9 @@ namespace CapaModelo_Nomina.Repositorios
             }
         }
 
-       
-        public int RrhhMetEjecucionNonQuery(string ComandoTexto, List<OdbcParameter> Parametros, CommandType ComandoTipo, OdbcConnection Conexion, OdbcTransaction Transaccion)
+        // Con transaccion (conexion abierta y transaccion que maneja quien llama)
+        public int RrhhMetEjecucionNonQuery(string ComandoTexto, List<OdbcParameter> Parametros, CommandType ComandoTipo,
+            OdbcConnection Conexion, OdbcTransaction Transaccion)
         {
             using (var Comando = new OdbcCommand())
             {
@@ -41,29 +45,31 @@ namespace CapaModelo_Nomina.Repositorios
                 return Comando.ExecuteNonQuery();
             }
         }
-        
 
+        // Devuelve un solo valor (por ejemplo SELECT LAST_INSERT_ID()) dentro de una transaccion
+        public object RrhhMetEjecucionEscalar(string ComandoTexto, List<OdbcParameter> Parametros, CommandType ComandoTipo,
+            OdbcConnection Conexion, OdbcTransaction Transaccion)
+        {
+            using (var Comando = new OdbcCommand())
+            {
+                Comando.Connection = Conexion;
+                Comando.Transaction = Transaccion;
+                Comando.CommandText = ComandoTexto;
+                Comando.CommandType = ComandoTipo;
+                Comando.Parameters.AddRange(Parametros.ToArray());
+                return Comando.ExecuteScalar();
+            }
+        }
+
+        // ---------- Consultas (SELECT) ----------
         public DataTable RrhhMetEjecucionConsulta(string ComandoTexto, CommandType ComandoTipo)
         {
-            _TablaDatos = new DataTable();
-            using (var ConexionActiva = RrhhMetObtenerConexion())
-            {
-                ConexionActiva.Open();
-                using (var Comando = new OdbcCommand())
-                {
-                    Comando.Connection = ConexionActiva;
-                    Comando.CommandText = ComandoTexto;
-                    Comando.CommandType = ComandoTipo;
-                    using (var LectorDatos = Comando.ExecuteReader())
-                        _TablaDatos.Load(LectorDatos);
-                }
-                return _TablaDatos;
-            }
+            return RrhhMetEjecucionConsulta(ComandoTexto, ComandoTipo, new List<OdbcParameter>());
         }
 
         public DataTable RrhhMetEjecucionConsulta(string ComandoTexto, CommandType ComandoTipo, List<OdbcParameter> Parametros)
         {
-            _TablaDatos = new DataTable();
+            var TablaDatos = new DataTable();
             using (var ConexionActiva = RrhhMetObtenerConexion())
             {
                 ConexionActiva.Open();
@@ -74,10 +80,10 @@ namespace CapaModelo_Nomina.Repositorios
                     Comando.CommandType = ComandoTipo;
                     Comando.Parameters.AddRange(Parametros.ToArray());
                     using (var LectorDatos = Comando.ExecuteReader())
-                        _TablaDatos.Load(LectorDatos);
+                        TablaDatos.Load(LectorDatos);
                 }
-                return _TablaDatos;
             }
+            return TablaDatos;
         }
     }
 }
