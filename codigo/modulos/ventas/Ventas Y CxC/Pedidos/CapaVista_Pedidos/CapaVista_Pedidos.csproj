@@ -28,34 +28,32 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmPedidoVentas.cs">
+    <Compile Include="Formularios\FrmPedidoVentas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmPedidoVentas.Designer.cs">
-      <DependentUpon>FrmPedidoVentas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmPedidoVentas.Estilo.cs">
-      <DependentUpon>FrmPedidoVentas.cs</DependentUpon>
+    <Compile Include="Formularios\FrmSeguimientoPedidos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmPedidoVentas.Catalogos.cs">
-      <DependentUpon>FrmPedidoVentas.cs</DependentUpon>
-      <SubType>Form</SubType>
+    <Compile Include="Formularios\FrmSeguimientoPedidos.Designer.cs">
+      <DependentUpon>FrmSeguimientoPedidos.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmPedidoVentas.Cotizacion.cs">
+    <Compile Include="Formularios\FrmPedidoVentas.Datos.cs">
       <DependentUpon>FrmPedidoVentas.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmPedidoVentas.Detalle.cs">
+    <Compile Include="Formularios\FrmPedidoVentas.Designer.cs">
       <DependentUpon>FrmPedidoVentas.cs</DependentUpon>
-      <SubType>Form</SubType>
     </Compile>
-    <EmbeddedResource Include="FrmPedidoVentas.resx">
+    <EmbeddedResource Include="Formularios\FrmPedidoVentas.resx">
       <DependentUpon>FrmPedidoVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmSeguimientoPedidos.resx">
+      <DependentUpon>FrmSeguimientoPedidos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
