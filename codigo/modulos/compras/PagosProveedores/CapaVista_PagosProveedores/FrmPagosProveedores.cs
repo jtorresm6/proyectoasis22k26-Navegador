@@ -333,7 +333,7 @@ namespace CapaVista_PagosProveedores
                     "Hay datos sin guardar. ¿Desea descartarlos y registrar un nuevo pago?",
                     _TituloMensajes,
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+                    MessageBoxIcon.Warning);
 
                 if (Respuesta != DialogResult.Yes)
                     return;
@@ -359,7 +359,7 @@ namespace CapaVista_PagosProveedores
                     Pregunta,
                     _TituloMensajes,
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+                    MessageBoxIcon.Warning);
 
                 if (Respuesta != DialogResult.Yes)
                     return;
@@ -471,7 +471,7 @@ namespace CapaVista_PagosProveedores
                 "¿Desea eliminar el pago " + NoPago + "?",
                 _TituloMensajes,
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+                MessageBoxIcon.Warning);
 
             if (Respuesta != DialogResult.Yes)
                 return;
@@ -561,7 +561,7 @@ namespace CapaVista_PagosProveedores
             ComprasCboFactura.SelectedIndexChanged += ComprasMetFacturaCambio;
         }
 
-        private void ComprasMetLlenarCombo(UsrComboBoxCompras Combo, object Origen, string MiembroTexto, string MiembroValor)
+        private void ComprasMetLlenarCombo(ComprasUsrComboBox Combo, object Origen, string MiembroTexto, string MiembroValor)
         {
             if (MiembroTexto != null)
                 Combo.DisplayMember = MiembroTexto;
@@ -570,27 +570,27 @@ namespace CapaVista_PagosProveedores
             Combo.DataSource = Origen;
         }
 
-        private object ComprasFuncValorCombo(UsrComboBoxCompras Combo)
+        private object ComprasFuncValorCombo(ComprasUsrComboBox Combo)
         {
             return Combo.SelectedValue;
         }
 
-        private string ComprasFuncTextoCombo(UsrComboBoxCompras Combo)
+        private string ComprasFuncTextoCombo(ComprasUsrComboBox Combo)
         {
             return Combo.Text;
         }
 
-        private void ComprasMetFijarValorCombo(UsrComboBoxCompras Combo, object Valor)
+        private void ComprasMetFijarValorCombo(ComprasUsrComboBox Combo, object Valor)
         {
             Combo.SelectedValue = Valor;
         }
 
-        private void ComprasMetFijarTextoCombo(UsrComboBoxCompras Combo, string Texto)
+        private void ComprasMetFijarTextoCombo(ComprasUsrComboBox Combo, string Texto)
         {
             Combo.Text = Texto;
         }
 
-        private void ComprasMetFijarIndiceCombo(UsrComboBoxCompras Combo, int Indice)
+        private void ComprasMetFijarIndiceCombo(ComprasUsrComboBox Combo, int Indice)
         {
             try
             {
@@ -601,12 +601,12 @@ namespace CapaVista_PagosProveedores
             }
         }
 
-        private string ComprasFuncTexto(UsrTextBoxCompras Caja)
+        private string ComprasFuncTexto(ComprasUsrTextBox Caja)
         {
             return Caja.Text ?? "";
         }
 
-        private void ComprasMetFijarTexto(UsrTextBoxCompras Caja, string Texto)
+        private void ComprasMetFijarTexto(ComprasUsrTextBox Caja, string Texto)
         {
             Caja.Text = Texto;
         }

@@ -21,7 +21,7 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasTlpMain = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasPnlBorde = new System.Windows.Forms.Panel();
             this.ComprasPnlInterior = new System.Windows.Forms.Panel();
-            this.ComprasTxtTexto = new CapaVista_Componentes.Componentes.ComprasRichTextBox();
+            this.ComprasTxtTexto = new System.Windows.Forms.RichTextBox();
             this.ComprasLblError = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasTlpMain.SuspendLayout();
             this.ComprasPnlBorde.SuspendLayout();
@@ -67,7 +67,7 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasPnlInterior.Location = new System.Drawing.Point(1, 1);
             this.ComprasPnlInterior.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasPnlInterior.Name = "ComprasPnlInterior";
-            this.ComprasPnlInterior.Padding = new System.Windows.Forms.Padding(6, 6, 6, 1);
+            this.ComprasPnlInterior.Padding = new System.Windows.Forms.Padding(6, 1, 6, 1);
             this.ComprasPnlInterior.Size = new System.Drawing.Size(166, 28);
             this.ComprasPnlInterior.TabIndex = 0;
             // 
@@ -132,6 +132,6 @@ namespace CapaVista_Componentes.Componentes
         private System.Windows.Forms.Panel ComprasPnlBorde;
         private System.Windows.Forms.Panel ComprasPnlInterior;
         private ComprasUsrLabel ComprasLblError;
-        private CapaVista_Componentes.Componentes.ComprasRichTextBox ComprasTxtTexto;
+        private System.Windows.Forms.RichTextBox ComprasTxtTexto;
     }
 }

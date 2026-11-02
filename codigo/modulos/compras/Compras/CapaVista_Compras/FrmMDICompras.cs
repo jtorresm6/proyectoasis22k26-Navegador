@@ -35,8 +35,8 @@ namespace CapaVista_Compras
         {
             InitializeComponent();
             ComprasBtnAyuda.Enabled = false;
-            ComprasTlpBitacora.Enabled = true;
-            ComprasTlpHerramientas.Enabled = true;
+            ComprasTlpBitacora.Enabled = false;
+            ComprasTlpHerramientas.Enabled = false;
             ComprasLblBienvenido.Tipografia = CapaVista_Componentes.Componentes.TipografiaCompras.TituloBienvenida;
             ComprasLblKpi1.Texto = "Antigüedad promedio de saldos";
             ComprasLblKpi2.Texto = "Órdenes autorizadas a tiempo (%)";
@@ -60,7 +60,7 @@ namespace CapaVista_Compras
                 Panel.RowStyles[1].SizeType = SizeType.Absolute;
                 Panel.RowStyles[1].Height = 30F;
                 Panel.RowStyles[2].SizeType = SizeType.Absolute;
-                Panel.RowStyles[2].Height = 64F;
+                Panel.RowStyles[2].Height = 38F;
                 foreach (Control Elemento in Panel.Controls)
                     if (Panel.GetRow(Elemento) == 2) Elemento.Margin = new Padding(2);
             }
@@ -71,6 +71,19 @@ namespace CapaVista_Compras
             ComprasLblUsuario.Texto = "Usuario: " + Usuario;
             ComprasLblRol.Texto = "Rol: " + Rol;
         }   
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams Parametros = base.CreateParams;
+                // Buffer the entire child control tree during sidebar resizing.
+                // DoubleBuffered on the form alone does not buffer child windows.
+                const int EstiloComposicion = 0x02000000; // WS_EX_COMPOSITED
+                Parametros.ExStyle |= EstiloComposicion;
+                return Parametros;
+            }
+        }
 
         protected override bool ProcessCmdKey(ref Message Mensaje, Keys Teclas)
         {
@@ -284,30 +297,17 @@ namespace CapaVista_Compras
             }));
         }
 
-        [System.Runtime.InteropServices.DllImport("user32.dll", EntryPoint = "SendMessageW")]
-        private static extern IntPtr ComprasEnviarMensaje(IntPtr Ventana, int Mensaje, IntPtr Parametro, IntPtr Datos);
-
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
-        private static extern bool RedrawWindow(IntPtr Ventana, IntPtr Rectangulo, IntPtr Region, uint Opciones);
-
         private void ComprasProcAlternarMenuClick(object Remitente, EventArgs Evento)
         {
             if (IsDisposed || Disposing || !ComprasTlpPrincipal.IsHandleCreated) return;
-            IntPtr Ventana = ComprasTlpPrincipal.Handle;
-            ComprasEnviarMensaje(Ventana, 0x000B, IntPtr.Zero, IntPtr.Zero);
+            SuspendLayout();
             try
             {
                 ComprasMetCambiarNavegador();
-                ComprasMetAjustarDashboard();
             }
             finally
             {
-                if (!ComprasTlpPrincipal.IsDisposed && ComprasTlpPrincipal.IsHandleCreated)
-                {
-                    ComprasEnviarMensaje(Ventana, 0x000B, new IntPtr(1), IntPtr.Zero);
-                    RedrawWindow(Ventana, IntPtr.Zero, IntPtr.Zero, 0x0585);
-                }
+                ResumeLayout(true);
             }
         }
 

@@ -13,15 +13,8 @@ namespace CapaVista_Contabilidad
 {
     partial class FrmMDIContabilidad
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer _Componentes = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="LiberarRecursos">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool LiberarRecursos)
         {
             if (LiberarRecursos && (_Componentes != null))
@@ -33,13 +26,8 @@ namespace CapaVista_Contabilidad
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager Recursos = new System.ComponentModel.ComponentResourceManager(typeof(FrmMDIContabilidad));
             this.ContabilidadPnlFondo = new System.Windows.Forms.Panel();
             this.ContabilidadPnlPrincipal = new System.Windows.Forms.Panel();
             this.ContabilidadPnlLateral = new System.Windows.Forms.Panel();
@@ -53,6 +41,8 @@ namespace CapaVista_Contabilidad
             this.ContabilidadPnlKPI4 = new System.Windows.Forms.Panel();
             this.ContabilidadPnlKPI5 = new System.Windows.Forms.Panel();
             this.ContabilidadPnlKPI6 = new System.Windows.Forms.Panel();
+            this.ContabilidadLblUsuario = new System.Windows.Forms.Label();
+            this.ContabilidadLblUsuarioRol = new System.Windows.Forms.Label();
             this.ContabilidadLblBienvenido = new System.Windows.Forms.Label();
             this.ContabilidadLblModulo = new System.Windows.Forms.Label();
             this.ContabilidadLblParrafo = new System.Windows.Forms.Label();
@@ -80,6 +70,12 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnActivosFijos = new System.Windows.Forms.Button();
             this.ContabilidadBtnCierreContable = new System.Windows.Forms.Button();
             this.ContabilidadBtnEstadosFinancieros = new System.Windows.Forms.Button();
+            this.ContabilidadBtnCatalogos = new System.Windows.Forms.Button();
+            this.ContabilidadBtnPaises = new System.Windows.Forms.Button();
+            this.ContabilidadBtnModulosContables = new System.Windows.Forms.Button();
+            this.ContabilidadBtnVidaUtil = new System.Windows.Forms.Button();
+            this.ContabilidadBtnCuentas = new System.Windows.Forms.Button();
+            this.ContabilidadBtnCuentasModulo = new System.Windows.Forms.Button();
             this.ContabilidadPbLogo = new System.Windows.Forms.PictureBox();
             this.ContabilidadPbButti = new System.Windows.Forms.PictureBox();
             this.ContabilidadPbInfo = new System.Windows.Forms.PictureBox();
@@ -99,31 +95,33 @@ namespace CapaVista_Contabilidad
             ((System.ComponentModel.ISupportInitialize)(this.ContabilidadPbButti)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ContabilidadPbInfo)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ContabilidadPnlFondo
-            // 
             this.ContabilidadPnlFondo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
             this.ContabilidadPnlFondo.Controls.Add(this.ContabilidadPnlPrincipal);
             this.ContabilidadPnlFondo.Controls.Add(this.ContabilidadPnlLateral);
             this.ContabilidadPnlFondo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContabilidadPnlFondo.Location = new System.Drawing.Point(0, 0);
             this.ContabilidadPnlFondo.Name = "ContabilidadPnlFondo";
-            this.ContabilidadPnlFondo.Size = new System.Drawing.Size(1538, 845);
+            this.ContabilidadPnlFondo.Size = new System.Drawing.Size(1538, 1022);
             this.ContabilidadPnlFondo.TabIndex = 0;
-            // 
-            // ContabilidadPnlPrincipal
-            // 
             this.ContabilidadPnlPrincipal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
+            this.ContabilidadPnlPrincipal.Controls.Add(this.ContabilidadLblUsuarioRol);
             this.ContabilidadPnlPrincipal.Controls.Add(this.ContabilidadBtnBurger);
+            this.ContabilidadPnlPrincipal.Controls.Add(this.ContabilidadLblUsuario);
             this.ContabilidadPnlPrincipal.Controls.Add(this.ContabilidadPnlDashboard);
             this.ContabilidadPnlPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContabilidadPnlPrincipal.Location = new System.Drawing.Point(302, 0);
             this.ContabilidadPnlPrincipal.Name = "ContabilidadPnlPrincipal";
-            this.ContabilidadPnlPrincipal.Size = new System.Drawing.Size(1236, 845);
+            this.ContabilidadPnlPrincipal.Size = new System.Drawing.Size(1236, 1022);
             this.ContabilidadPnlPrincipal.TabIndex = 1;
-            // 
-            // ContabilidadBtnBurger
-            // 
+            this.ContabilidadLblUsuarioRol.AutoSize = true;
+            this.ContabilidadLblUsuarioRol.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadLblUsuarioRol.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ContabilidadLblUsuarioRol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
+            this.ContabilidadLblUsuarioRol.Location = new System.Drawing.Point(400, 15);
+            this.ContabilidadLblUsuarioRol.Name = "ContabilidadLblUsuarioRol";
+            this.ContabilidadLblUsuarioRol.Size = new System.Drawing.Size(194, 20);
+            this.ContabilidadLblUsuarioRol.TabIndex = 3;
+            this.ContabilidadLblUsuarioRol.Text = "Rol: Sin sesión";
             this.ContabilidadBtnBurger.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnBurger.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.burguer;
             this.ContabilidadBtnBurger.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -138,19 +136,22 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnBurger.TabIndex = 0;
             this.ContabilidadBtnBurger.UseVisualStyleBackColor = false;
             this.ContabilidadBtnBurger.Click += new System.EventHandler(this.ContabilidadMetAlternarMenu);
-            // 
-            // ContabilidadPnlLateral
-            // 
+            this.ContabilidadLblUsuario.AutoSize = true;
+            this.ContabilidadLblUsuario.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadLblUsuario.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ContabilidadLblUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
+            this.ContabilidadLblUsuario.Location = new System.Drawing.Point(64, 15);
+            this.ContabilidadLblUsuario.Name = "ContabilidadLblUsuario";
+            this.ContabilidadLblUsuario.Size = new System.Drawing.Size(305, 20);
+            this.ContabilidadLblUsuario.TabIndex = 2;
+            this.ContabilidadLblUsuario.Text = "Usuario: Sin sesión";
             this.ContabilidadPnlLateral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
             this.ContabilidadPnlLateral.Controls.Add(this.ContabilidadPnlNavegador);
             this.ContabilidadPnlLateral.Dock = System.Windows.Forms.DockStyle.Left;
             this.ContabilidadPnlLateral.Location = new System.Drawing.Point(0, 0);
             this.ContabilidadPnlLateral.Name = "ContabilidadPnlLateral";
-            this.ContabilidadPnlLateral.Size = new System.Drawing.Size(302, 845);
+            this.ContabilidadPnlLateral.Size = new System.Drawing.Size(302, 1022);
             this.ContabilidadPnlLateral.TabIndex = 0;
-            // 
-            // ContabilidadPnlNavegador
-            // 
             this.ContabilidadPnlNavegador.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.ContabilidadPnlNavegador.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
@@ -161,14 +162,17 @@ namespace CapaVista_Contabilidad
             this.ContabilidadPnlNavegador.Controls.Add(this.ContabilidadBtnActivosFijos);
             this.ContabilidadPnlNavegador.Controls.Add(this.ContabilidadBtnCierreContable);
             this.ContabilidadPnlNavegador.Controls.Add(this.ContabilidadBtnEstadosFinancieros);
+            this.ContabilidadPnlNavegador.Controls.Add(this.ContabilidadBtnCatalogos);
+            this.ContabilidadPnlNavegador.Controls.Add(this.ContabilidadBtnPaises);
+            this.ContabilidadPnlNavegador.Controls.Add(this.ContabilidadBtnModulosContables);
+            this.ContabilidadPnlNavegador.Controls.Add(this.ContabilidadBtnVidaUtil);
+            this.ContabilidadPnlNavegador.Controls.Add(this.ContabilidadBtnCuentas);
+            this.ContabilidadPnlNavegador.Controls.Add(this.ContabilidadBtnCuentasModulo);
             this.ContabilidadPnlNavegador.Controls.Add(this.ContabilidadPbLogo);
             this.ContabilidadPnlNavegador.Location = new System.Drawing.Point(16, 14);
             this.ContabilidadPnlNavegador.Name = "ContabilidadPnlNavegador";
-            this.ContabilidadPnlNavegador.Size = new System.Drawing.Size(270, 837);
+            this.ContabilidadPnlNavegador.Size = new System.Drawing.Size(270, 1014);
             this.ContabilidadPnlNavegador.TabIndex = 0;
-            // 
-            // ContabilidadBtnPolizasLocales
-            // 
             this.ContabilidadBtnPolizasLocales.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnPolizasLocales.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi1;
             this.ContabilidadBtnPolizasLocales.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -178,19 +182,12 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnPolizasLocales.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnPolizasLocales.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
             this.ContabilidadBtnPolizasLocales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ContabilidadBtnPolizasLocales.ForeColor = System.Drawing.Color.FromArgb(212, 222, 228);
-            this.ContabilidadBtnPolizasLocales.Padding = new System.Windows.Forms.Padding(56, 0, 0, 0);
-            this.ContabilidadBtnPolizasLocales.Text = "Pólizas locales";
-            this.ContabilidadBtnPolizasLocales.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ContabilidadBtnPolizasLocales.Location = new System.Drawing.Point(3, 135);
             this.ContabilidadBtnPolizasLocales.Name = "ContabilidadBtnPolizasLocales";
             this.ContabilidadBtnPolizasLocales.Size = new System.Drawing.Size(264, 53);
             this.ContabilidadBtnPolizasLocales.TabIndex = 1;
             this.ContabilidadBtnPolizasLocales.UseVisualStyleBackColor = false;
             this.ContabilidadBtnPolizasLocales.Click += new System.EventHandler(this.ContabilidadMetAbrirPolizasLocales);
-            // 
-            // ContabilidadBtnPresupuestos
-            // 
             this.ContabilidadBtnPresupuestos.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnPresupuestos.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi2;
             this.ContabilidadBtnPresupuestos.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -200,19 +197,12 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnPresupuestos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnPresupuestos.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
             this.ContabilidadBtnPresupuestos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ContabilidadBtnPresupuestos.ForeColor = System.Drawing.Color.FromArgb(212, 222, 228);
-            this.ContabilidadBtnPresupuestos.Padding = new System.Windows.Forms.Padding(56, 0, 0, 0);
-            this.ContabilidadBtnPresupuestos.Text = "Presupuestos";
-            this.ContabilidadBtnPresupuestos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ContabilidadBtnPresupuestos.Location = new System.Drawing.Point(3, 197);
             this.ContabilidadBtnPresupuestos.Name = "ContabilidadBtnPresupuestos";
             this.ContabilidadBtnPresupuestos.Size = new System.Drawing.Size(264, 53);
             this.ContabilidadBtnPresupuestos.TabIndex = 2;
             this.ContabilidadBtnPresupuestos.UseVisualStyleBackColor = false;
             this.ContabilidadBtnPresupuestos.Click += new System.EventHandler(this.ContabilidadMetAbrirPresupuestos);
-            // 
-            // ContabilidadBtnActivosFijos
-            // 
             this.ContabilidadBtnActivosFijos.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnActivosFijos.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi3;
             this.ContabilidadBtnActivosFijos.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -222,19 +212,12 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnActivosFijos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnActivosFijos.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
             this.ContabilidadBtnActivosFijos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ContabilidadBtnActivosFijos.ForeColor = System.Drawing.Color.FromArgb(212, 222, 228);
-            this.ContabilidadBtnActivosFijos.Padding = new System.Windows.Forms.Padding(56, 0, 0, 0);
-            this.ContabilidadBtnActivosFijos.Text = "Activos fijos";
-            this.ContabilidadBtnActivosFijos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ContabilidadBtnActivosFijos.Location = new System.Drawing.Point(3, 259);
             this.ContabilidadBtnActivosFijos.Name = "ContabilidadBtnActivosFijos";
             this.ContabilidadBtnActivosFijos.Size = new System.Drawing.Size(264, 53);
             this.ContabilidadBtnActivosFijos.TabIndex = 3;
             this.ContabilidadBtnActivosFijos.UseVisualStyleBackColor = false;
             this.ContabilidadBtnActivosFijos.Click += new System.EventHandler(this.ContabilidadMetAbrirActivosFijos);
-            // 
-            // ContabilidadBtnCierreContable
-            // 
             this.ContabilidadBtnCierreContable.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnCierreContable.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi4;
             this.ContabilidadBtnCierreContable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -244,19 +227,12 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnCierreContable.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnCierreContable.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
             this.ContabilidadBtnCierreContable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ContabilidadBtnCierreContable.ForeColor = System.Drawing.Color.FromArgb(212, 222, 228);
-            this.ContabilidadBtnCierreContable.Padding = new System.Windows.Forms.Padding(56, 0, 0, 0);
-            this.ContabilidadBtnCierreContable.Text = "Cierre contable";
-            this.ContabilidadBtnCierreContable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ContabilidadBtnCierreContable.Location = new System.Drawing.Point(3, 321);
             this.ContabilidadBtnCierreContable.Name = "ContabilidadBtnCierreContable";
             this.ContabilidadBtnCierreContable.Size = new System.Drawing.Size(264, 53);
             this.ContabilidadBtnCierreContable.TabIndex = 4;
             this.ContabilidadBtnCierreContable.UseVisualStyleBackColor = false;
             this.ContabilidadBtnCierreContable.Click += new System.EventHandler(this.ContabilidadMetAbrirCierreContable);
-            // 
-            // ContabilidadBtnEstadosFinancieros
-            // 
             this.ContabilidadBtnEstadosFinancieros.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnEstadosFinancieros.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi5;
             this.ContabilidadBtnEstadosFinancieros.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -266,19 +242,107 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnEstadosFinancieros.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnEstadosFinancieros.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
             this.ContabilidadBtnEstadosFinancieros.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ContabilidadBtnEstadosFinancieros.ForeColor = System.Drawing.Color.FromArgb(212, 222, 228);
-            this.ContabilidadBtnEstadosFinancieros.Padding = new System.Windows.Forms.Padding(56, 0, 0, 0);
-            this.ContabilidadBtnEstadosFinancieros.Text = "Estados financieros";
-            this.ContabilidadBtnEstadosFinancieros.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ContabilidadBtnEstadosFinancieros.Location = new System.Drawing.Point(3, 383);
             this.ContabilidadBtnEstadosFinancieros.Name = "ContabilidadBtnEstadosFinancieros";
             this.ContabilidadBtnEstadosFinancieros.Size = new System.Drawing.Size(264, 53);
             this.ContabilidadBtnEstadosFinancieros.TabIndex = 5;
             this.ContabilidadBtnEstadosFinancieros.UseVisualStyleBackColor = false;
             this.ContabilidadBtnEstadosFinancieros.Click += new System.EventHandler(this.ContabilidadMetAbrirEstadosFinancieros);
-            // 
-            // ContabilidadPbLogo
-            // 
+            this.ContabilidadBtnCatalogos.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnCatalogos.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi11;
+            this.ContabilidadBtnCatalogos.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ContabilidadBtnCatalogos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ContabilidadBtnCatalogos.FlatAppearance.BorderSize = 0;
+            this.ContabilidadBtnCatalogos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnCatalogos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnCatalogos.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
+            this.ContabilidadBtnCatalogos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ContabilidadBtnCatalogos.Location = new System.Drawing.Point(3, 445);
+            this.ContabilidadBtnCatalogos.Name = "ContabilidadBtnCatalogos";
+            this.ContabilidadBtnCatalogos.Size = new System.Drawing.Size(264, 53);
+            this.ContabilidadBtnCatalogos.TabIndex = 6;
+            this.ContabilidadBtnCatalogos.UseVisualStyleBackColor = false;
+            this.ContabilidadBtnCatalogos.Click += new System.EventHandler(this.ContabilidadMetAlternarCatalogos);
+            this.ContabilidadBtnPaises.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnPaises.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi6;
+            this.ContabilidadBtnPaises.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ContabilidadBtnPaises.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ContabilidadBtnPaises.FlatAppearance.BorderSize = 0;
+            this.ContabilidadBtnPaises.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnPaises.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnPaises.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
+            this.ContabilidadBtnPaises.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ContabilidadBtnPaises.Location = new System.Drawing.Point(21, 505);
+            this.ContabilidadBtnPaises.Name = "ContabilidadBtnPaises";
+            this.ContabilidadBtnPaises.Size = new System.Drawing.Size(246, 49);
+            this.ContabilidadBtnPaises.TabIndex = 7;
+            this.ContabilidadBtnPaises.UseVisualStyleBackColor = false;
+            this.ContabilidadBtnPaises.Visible = false;
+            this.ContabilidadBtnPaises.Click += new System.EventHandler(this.ContabilidadMetAbrirPaises);
+            this.ContabilidadBtnModulosContables.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnModulosContables.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi7;
+            this.ContabilidadBtnModulosContables.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ContabilidadBtnModulosContables.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ContabilidadBtnModulosContables.FlatAppearance.BorderSize = 0;
+            this.ContabilidadBtnModulosContables.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnModulosContables.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnModulosContables.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
+            this.ContabilidadBtnModulosContables.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ContabilidadBtnModulosContables.Location = new System.Drawing.Point(21, 561);
+            this.ContabilidadBtnModulosContables.Name = "ContabilidadBtnModulosContables";
+            this.ContabilidadBtnModulosContables.Size = new System.Drawing.Size(246, 49);
+            this.ContabilidadBtnModulosContables.TabIndex = 8;
+            this.ContabilidadBtnModulosContables.UseVisualStyleBackColor = false;
+            this.ContabilidadBtnModulosContables.Visible = false;
+            this.ContabilidadBtnModulosContables.Click += new System.EventHandler(this.ContabilidadMetAbrirModulosContables);
+            this.ContabilidadBtnVidaUtil.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnVidaUtil.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi8;
+            this.ContabilidadBtnVidaUtil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ContabilidadBtnVidaUtil.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ContabilidadBtnVidaUtil.FlatAppearance.BorderSize = 0;
+            this.ContabilidadBtnVidaUtil.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnVidaUtil.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnVidaUtil.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
+            this.ContabilidadBtnVidaUtil.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ContabilidadBtnVidaUtil.Location = new System.Drawing.Point(21, 617);
+            this.ContabilidadBtnVidaUtil.Name = "ContabilidadBtnVidaUtil";
+            this.ContabilidadBtnVidaUtil.Size = new System.Drawing.Size(246, 49);
+            this.ContabilidadBtnVidaUtil.TabIndex = 9;
+            this.ContabilidadBtnVidaUtil.UseVisualStyleBackColor = false;
+            this.ContabilidadBtnVidaUtil.Visible = false;
+            this.ContabilidadBtnVidaUtil.Click += new System.EventHandler(this.ContabilidadMetAbrirVidaUtil);
+            this.ContabilidadBtnCuentas.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnCuentas.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi9;
+            this.ContabilidadBtnCuentas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ContabilidadBtnCuentas.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ContabilidadBtnCuentas.FlatAppearance.BorderSize = 0;
+            this.ContabilidadBtnCuentas.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnCuentas.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnCuentas.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
+            this.ContabilidadBtnCuentas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ContabilidadBtnCuentas.Location = new System.Drawing.Point(21, 673);
+            this.ContabilidadBtnCuentas.Name = "ContabilidadBtnCuentas";
+            this.ContabilidadBtnCuentas.Size = new System.Drawing.Size(246, 49);
+            this.ContabilidadBtnCuentas.TabIndex = 10;
+            this.ContabilidadBtnCuentas.UseVisualStyleBackColor = false;
+            this.ContabilidadBtnCuentas.Visible = false;
+            this.ContabilidadBtnCuentas.Click += new System.EventHandler(this.ContabilidadMetAbrirCuentas);
+            this.ContabilidadBtnCuentasModulo.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnCuentasModulo.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi10;
+            this.ContabilidadBtnCuentasModulo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ContabilidadBtnCuentasModulo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ContabilidadBtnCuentasModulo.FlatAppearance.BorderSize = 0;
+            this.ContabilidadBtnCuentasModulo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnCuentasModulo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnCuentasModulo.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular);
+            this.ContabilidadBtnCuentasModulo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ContabilidadBtnCuentasModulo.Location = new System.Drawing.Point(21, 729);
+            this.ContabilidadBtnCuentasModulo.Name = "ContabilidadBtnCuentasModulo";
+            this.ContabilidadBtnCuentasModulo.Size = new System.Drawing.Size(246, 49);
+            this.ContabilidadBtnCuentasModulo.TabIndex = 11;
+            this.ContabilidadBtnCuentasModulo.UseVisualStyleBackColor = false;
+            this.ContabilidadBtnCuentasModulo.Visible = false;
+            this.ContabilidadBtnCuentasModulo.Click += new System.EventHandler(this.ContabilidadMetAbrirCuentasModulo);
             this.ContabilidadPbLogo.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPbLogo.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.logo;
             this.ContabilidadPbLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -287,9 +351,6 @@ namespace CapaVista_Contabilidad
             this.ContabilidadPbLogo.Size = new System.Drawing.Size(133, 127);
             this.ContabilidadPbLogo.TabIndex = 0;
             this.ContabilidadPbLogo.TabStop = false;
-            // 
-            // ContabilidadPnlDashboard
-            // 
             this.ContabilidadPnlDashboard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -311,27 +372,22 @@ namespace CapaVista_Contabilidad
             this.ContabilidadPnlDashboard.Controls.Add(this.ContabilidadPbButti);
             this.ContabilidadPnlDashboard.Location = new System.Drawing.Point(0, 48);
             this.ContabilidadPnlDashboard.Name = "ContabilidadPnlDashboard";
-            this.ContabilidadPnlDashboard.Size = new System.Drawing.Size(1220, 783);
+            this.ContabilidadPnlDashboard.Size = new System.Drawing.Size(1220, 960);
             this.ContabilidadPnlDashboard.TabIndex = 1;
-            // 
-            // ContabilidadPnlInfo
-            // 
             this.ContabilidadPnlInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ContabilidadPnlInfo.BackColor = System.Drawing.Color.White;
+            this.ContabilidadPnlInfo.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPnlInfo.Controls.Add(this.ContabilidadPbInfo);
             this.ContabilidadPnlInfo.Controls.Add(this.ContabilidadLblNotaTexto);
             this.ContabilidadPnlInfo.Controls.Add(this.ContabilidadLblNotaTitulo);
             this.ContabilidadPnlInfo.Controls.Add(this.ContabilidadPnlInfoDivisor);
             this.ContabilidadPnlInfo.Controls.Add(this.ContabilidadLblInfoTexto);
             this.ContabilidadPnlInfo.Controls.Add(this.ContabilidadLblInfoTitulo);
-            this.ContabilidadPnlInfo.Location = new System.Drawing.Point(44, 663);
+            this.ContabilidadPnlInfo.Location = new System.Drawing.Point(44, 658);
             this.ContabilidadPnlInfo.Name = "ContabilidadPnlInfo";
-            this.ContabilidadPnlInfo.Size = new System.Drawing.Size(1132, 96);
+            this.ContabilidadPnlInfo.Size = new System.Drawing.Size(1094, 96);
             this.ContabilidadPnlInfo.TabIndex = 12;
-            // 
-            // ContabilidadLblInfoTitulo
-            // 
+            this.ContabilidadPnlInfo.Paint += new System.Windows.Forms.PaintEventHandler(this.ContabilidadMetPintarInformacion);
             this.ContabilidadLblInfoTitulo.AutoSize = true;
             this.ContabilidadLblInfoTitulo.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblInfoTitulo.Font = new System.Drawing.Font("Lucida Fax", 14.25F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -341,64 +397,46 @@ namespace CapaVista_Contabilidad
             this.ContabilidadLblInfoTitulo.Size = new System.Drawing.Size(363, 23);
             this.ContabilidadLblInfoTitulo.TabIndex = 0;
             this.ContabilidadLblInfoTitulo.Text = "Información relevante del módulo";
-            // 
-            // ContabilidadLblInfoTexto
-            // 
-            this.ContabilidadLblInfoTexto.AutoSize = false;
+            this.ContabilidadLblInfoTexto.AutoSize = true;
             this.ContabilidadLblInfoTexto.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblInfoTexto.Font = new System.Drawing.Font("Tahoma", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblInfoTexto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
             this.ContabilidadLblInfoTexto.Location = new System.Drawing.Point(30, 52);
             this.ContabilidadLblInfoTexto.Name = "ContabilidadLblInfoTexto";
-            this.ContabilidadLblInfoTexto.Size = new System.Drawing.Size(627, 40);
+            this.ContabilidadLblInfoTexto.Size = new System.Drawing.Size(524, 18);
             this.ContabilidadLblInfoTexto.TabIndex = 1;
             this.ContabilidadLblInfoTexto.Text = "Administre pólizas, presupuestos y activos fijos. Consulte cierres y estados financieros.";
-            // 
-            // ContabilidadPnlInfoDivisor
-            // 
             this.ContabilidadPnlInfoDivisor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(222)))), ((int)(((byte)(228)))));
-            this.ContabilidadPnlInfoDivisor.Location = new System.Drawing.Point(679, 14);
+            this.ContabilidadPnlInfoDivisor.Location = new System.Drawing.Point(700, 14);
             this.ContabilidadPnlInfoDivisor.Name = "ContabilidadPnlInfoDivisor";
             this.ContabilidadPnlInfoDivisor.Size = new System.Drawing.Size(2, 68);
             this.ContabilidadPnlInfoDivisor.TabIndex = 2;
-            // 
-            // ContabilidadPbInfo
-            // 
             this.ContabilidadPbInfo.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPbInfo.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.info;
             this.ContabilidadPbInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ContabilidadPbInfo.Location = new System.Drawing.Point(707, 24);
+            this.ContabilidadPbInfo.Location = new System.Drawing.Point(728, 24);
             this.ContabilidadPbInfo.Name = "ContabilidadPbInfo";
             this.ContabilidadPbInfo.Size = new System.Drawing.Size(48, 48);
             this.ContabilidadPbInfo.TabIndex = 3;
             this.ContabilidadPbInfo.TabStop = false;
-            // 
-            // ContabilidadLblNotaTitulo
-            // 
             this.ContabilidadLblNotaTitulo.AutoSize = true;
             this.ContabilidadLblNotaTitulo.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblNotaTitulo.Font = new System.Drawing.Font("Lucida Fax", 12F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblNotaTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblNotaTitulo.Location = new System.Drawing.Point(769, 14);
+            this.ContabilidadLblNotaTitulo.Location = new System.Drawing.Point(790, 14);
             this.ContabilidadLblNotaTitulo.Name = "ContabilidadLblNotaTitulo";
             this.ContabilidadLblNotaTitulo.Size = new System.Drawing.Size(197, 19);
             this.ContabilidadLblNotaTitulo.TabIndex = 4;
             this.ContabilidadLblNotaTitulo.Text = "Nota de integración";
-            // 
-            // ContabilidadLblNotaTexto
-            // 
-            this.ContabilidadLblNotaTexto.AutoSize = false;
+            this.ContabilidadLblNotaTexto.AutoSize = true;
             this.ContabilidadLblNotaTexto.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblNotaTexto.Font = new System.Drawing.Font("Tahoma", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblNotaTexto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblNotaTexto.Location = new System.Drawing.Point(771, 40);
+            this.ContabilidadLblNotaTexto.Location = new System.Drawing.Point(792, 38);
             this.ContabilidadLblNotaTexto.Name = "ContabilidadLblNotaTexto";
-            this.ContabilidadLblNotaTexto.Size = new System.Drawing.Size(341, 48);
+            this.ContabilidadLblNotaTexto.Size = new System.Drawing.Size(264, 34);
             this.ContabilidadLblNotaTexto.TabIndex = 5;
             this.ContabilidadLblNotaTexto.Text = "Las pólizas concentran los movimientos\r\ncontables de los módulos de la empresa.";
-            // 
-            // ContabilidadBtnAyuda
-            // 
             this.ContabilidadBtnAyuda.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnAyuda.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.btn_ayuda;
             this.ContabilidadBtnAyuda.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -412,237 +450,178 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnAyuda.Size = new System.Drawing.Size(84, 84);
             this.ContabilidadBtnAyuda.TabIndex = 11;
             this.ContabilidadBtnAyuda.UseVisualStyleBackColor = false;
-            // 
-            // ContabilidadPnlKPI1
-            // 
+            this.ContabilidadBtnAyuda.Click += new System.EventHandler(this.ContabilidadMetMostrarAyuda);
             this.ContabilidadPnlKPI1.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPnlKPI1.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.kpi1;
             this.ContabilidadPnlKPI1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ContabilidadPnlKPI1.Controls.Add(this.ContabilidadLblKPIResp1);
             this.ContabilidadPnlKPI1.Controls.Add(this.ContabilidadLblKPI1);
-            this.ContabilidadPnlKPI1.Location = new System.Drawing.Point(44, 443);
+            this.ContabilidadPnlKPI1.Location = new System.Drawing.Point(44, 445);
             this.ContabilidadPnlKPI1.Name = "ContabilidadPnlKPI1";
-            this.ContabilidadPnlKPI1.Size = new System.Drawing.Size(178, 196);
+            this.ContabilidadPnlKPI1.Size = new System.Drawing.Size(172, 189);
             this.ContabilidadPnlKPI1.TabIndex = 4;
-            // 
-            // ContabilidadLblKPIResp1
-            // 
             this.ContabilidadLblKPIResp1.AutoSize = true;
             this.ContabilidadLblKPIResp1.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPIResp1.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPIResp1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPIResp1.Location = new System.Drawing.Point(14, 98);
+            this.ContabilidadLblKPIResp1.Location = new System.Drawing.Point(14, 95);
             this.ContabilidadLblKPIResp1.Name = "ContabilidadLblKPIResp1";
             this.ContabilidadLblKPIResp1.Size = new System.Drawing.Size(44, 43);
             this.ContabilidadLblKPIResp1.TabIndex = 1;
             this.ContabilidadLblKPIResp1.Text = "0";
-            // 
-            // ContabilidadLblKPI1
-            // 
             this.ContabilidadLblKPI1.AutoSize = true;
             this.ContabilidadLblKPI1.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPI1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPI1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPI1.Location = new System.Drawing.Point(18, 143);
+            this.ContabilidadLblKPI1.Location = new System.Drawing.Point(18, 138);
             this.ContabilidadLblKPI1.Name = "ContabilidadLblKPI1";
             this.ContabilidadLblKPI1.Size = new System.Drawing.Size(130, 40);
             this.ContabilidadLblKPI1.TabIndex = 0;
             this.ContabilidadLblKPI1.Text = "Pólizas\r\nregistradas";
-            // 
-            // ContabilidadPnlKPI2
-            // 
             this.ContabilidadPnlKPI2.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPnlKPI2.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.kpi2;
             this.ContabilidadPnlKPI2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ContabilidadPnlKPI2.Controls.Add(this.ContabilidadLblKPIResp2);
             this.ContabilidadPnlKPI2.Controls.Add(this.ContabilidadLblKPI2);
-            this.ContabilidadPnlKPI2.Location = new System.Drawing.Point(234, 443);
+            this.ContabilidadPnlKPI2.Location = new System.Drawing.Point(228, 445);
             this.ContabilidadPnlKPI2.Name = "ContabilidadPnlKPI2";
-            this.ContabilidadPnlKPI2.Size = new System.Drawing.Size(178, 196);
+            this.ContabilidadPnlKPI2.Size = new System.Drawing.Size(172, 189);
             this.ContabilidadPnlKPI2.TabIndex = 5;
-            // 
-            // ContabilidadLblKPIResp2
-            // 
             this.ContabilidadLblKPIResp2.AutoSize = true;
             this.ContabilidadLblKPIResp2.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPIResp2.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPIResp2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPIResp2.Location = new System.Drawing.Point(14, 98);
+            this.ContabilidadLblKPIResp2.Location = new System.Drawing.Point(14, 95);
             this.ContabilidadLblKPIResp2.Name = "ContabilidadLblKPIResp2";
             this.ContabilidadLblKPIResp2.Size = new System.Drawing.Size(44, 43);
             this.ContabilidadLblKPIResp2.TabIndex = 1;
             this.ContabilidadLblKPIResp2.Text = "0";
-            // 
-            // ContabilidadLblKPI2
-            // 
             this.ContabilidadLblKPI2.AutoSize = true;
             this.ContabilidadLblKPI2.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPI2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPI2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPI2.Location = new System.Drawing.Point(18, 143);
+            this.ContabilidadLblKPI2.Location = new System.Drawing.Point(18, 138);
             this.ContabilidadLblKPI2.Name = "ContabilidadLblKPI2";
             this.ContabilidadLblKPI2.Size = new System.Drawing.Size(130, 40);
             this.ContabilidadLblKPI2.TabIndex = 0;
             this.ContabilidadLblKPI2.Text = "Presupuestos\r\nvigentes";
-            // 
-            // ContabilidadPnlKPI3
-            // 
             this.ContabilidadPnlKPI3.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPnlKPI3.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.kpi3;
             this.ContabilidadPnlKPI3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ContabilidadPnlKPI3.Controls.Add(this.ContabilidadLblKPIResp3);
             this.ContabilidadPnlKPI3.Controls.Add(this.ContabilidadLblKPI3);
-            this.ContabilidadPnlKPI3.Location = new System.Drawing.Point(424, 443);
+            this.ContabilidadPnlKPI3.Location = new System.Drawing.Point(412, 445);
             this.ContabilidadPnlKPI3.Name = "ContabilidadPnlKPI3";
-            this.ContabilidadPnlKPI3.Size = new System.Drawing.Size(178, 196);
+            this.ContabilidadPnlKPI3.Size = new System.Drawing.Size(172, 189);
             this.ContabilidadPnlKPI3.TabIndex = 6;
-            // 
-            // ContabilidadLblKPIResp3
-            // 
             this.ContabilidadLblKPIResp3.AutoSize = true;
             this.ContabilidadLblKPIResp3.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPIResp3.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPIResp3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPIResp3.Location = new System.Drawing.Point(14, 98);
+            this.ContabilidadLblKPIResp3.Location = new System.Drawing.Point(14, 95);
             this.ContabilidadLblKPIResp3.Name = "ContabilidadLblKPIResp3";
             this.ContabilidadLblKPIResp3.Size = new System.Drawing.Size(44, 43);
             this.ContabilidadLblKPIResp3.TabIndex = 1;
             this.ContabilidadLblKPIResp3.Text = "0";
-            // 
-            // ContabilidadLblKPI3
-            // 
             this.ContabilidadLblKPI3.AutoSize = true;
             this.ContabilidadLblKPI3.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPI3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPI3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPI3.Location = new System.Drawing.Point(18, 143);
+            this.ContabilidadLblKPI3.Location = new System.Drawing.Point(18, 138);
             this.ContabilidadLblKPI3.Name = "ContabilidadLblKPI3";
             this.ContabilidadLblKPI3.Size = new System.Drawing.Size(130, 40);
             this.ContabilidadLblKPI3.TabIndex = 0;
             this.ContabilidadLblKPI3.Text = "Activos\r\nfijos";
-            // 
-            // ContabilidadPnlKPI4
-            // 
             this.ContabilidadPnlKPI4.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPnlKPI4.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.kpi4;
             this.ContabilidadPnlKPI4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ContabilidadPnlKPI4.Controls.Add(this.ContabilidadLblKPIResp4);
             this.ContabilidadPnlKPI4.Controls.Add(this.ContabilidadLblKPI4);
-            this.ContabilidadPnlKPI4.Location = new System.Drawing.Point(614, 443);
+            this.ContabilidadPnlKPI4.Location = new System.Drawing.Point(596, 445);
             this.ContabilidadPnlKPI4.Name = "ContabilidadPnlKPI4";
-            this.ContabilidadPnlKPI4.Size = new System.Drawing.Size(178, 196);
+            this.ContabilidadPnlKPI4.Size = new System.Drawing.Size(172, 189);
             this.ContabilidadPnlKPI4.TabIndex = 7;
-            // 
-            // ContabilidadLblKPIResp4
-            // 
             this.ContabilidadLblKPIResp4.AutoSize = true;
             this.ContabilidadLblKPIResp4.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPIResp4.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPIResp4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPIResp4.Location = new System.Drawing.Point(14, 98);
+            this.ContabilidadLblKPIResp4.Location = new System.Drawing.Point(14, 95);
             this.ContabilidadLblKPIResp4.Name = "ContabilidadLblKPIResp4";
             this.ContabilidadLblKPIResp4.Size = new System.Drawing.Size(44, 43);
             this.ContabilidadLblKPIResp4.TabIndex = 1;
             this.ContabilidadLblKPIResp4.Text = "0";
-            // 
-            // ContabilidadLblKPI4
-            // 
             this.ContabilidadLblKPI4.AutoSize = true;
             this.ContabilidadLblKPI4.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPI4.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPI4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPI4.Location = new System.Drawing.Point(18, 143);
+            this.ContabilidadLblKPI4.Location = new System.Drawing.Point(18, 138);
             this.ContabilidadLblKPI4.Name = "ContabilidadLblKPI4";
             this.ContabilidadLblKPI4.Size = new System.Drawing.Size(130, 40);
             this.ContabilidadLblKPI4.TabIndex = 0;
             this.ContabilidadLblKPI4.Text = "Períodos\r\ncerrados";
-            // 
-            // ContabilidadPnlKPI5
-            // 
             this.ContabilidadPnlKPI5.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPnlKPI5.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.kpi5;
             this.ContabilidadPnlKPI5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ContabilidadPnlKPI5.Controls.Add(this.ContabilidadLblKPIResp5);
             this.ContabilidadPnlKPI5.Controls.Add(this.ContabilidadLblKPI5);
-            this.ContabilidadPnlKPI5.Location = new System.Drawing.Point(804, 443);
+            this.ContabilidadPnlKPI5.Location = new System.Drawing.Point(781, 445);
             this.ContabilidadPnlKPI5.Name = "ContabilidadPnlKPI5";
-            this.ContabilidadPnlKPI5.Size = new System.Drawing.Size(178, 196);
+            this.ContabilidadPnlKPI5.Size = new System.Drawing.Size(172, 189);
             this.ContabilidadPnlKPI5.TabIndex = 8;
-            // 
-            // ContabilidadLblKPIResp5
-            // 
             this.ContabilidadLblKPIResp5.AutoSize = true;
             this.ContabilidadLblKPIResp5.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPIResp5.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPIResp5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPIResp5.Location = new System.Drawing.Point(14, 98);
+            this.ContabilidadLblKPIResp5.Location = new System.Drawing.Point(14, 95);
             this.ContabilidadLblKPIResp5.Name = "ContabilidadLblKPIResp5";
             this.ContabilidadLblKPIResp5.Size = new System.Drawing.Size(44, 43);
             this.ContabilidadLblKPIResp5.TabIndex = 1;
             this.ContabilidadLblKPIResp5.Text = "0";
-            // 
-            // ContabilidadLblKPI5
-            // 
             this.ContabilidadLblKPI5.AutoSize = true;
             this.ContabilidadLblKPI5.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPI5.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPI5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPI5.Location = new System.Drawing.Point(18, 143);
+            this.ContabilidadLblKPI5.Location = new System.Drawing.Point(18, 138);
             this.ContabilidadLblKPI5.Name = "ContabilidadLblKPI5";
             this.ContabilidadLblKPI5.Size = new System.Drawing.Size(130, 40);
             this.ContabilidadLblKPI5.TabIndex = 0;
             this.ContabilidadLblKPI5.Text = "Estados\r\nemitidos";
-            // 
-            // ContabilidadPnlKPI6
-            // 
             this.ContabilidadPnlKPI6.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPnlKPI6.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.kpi6;
             this.ContabilidadPnlKPI6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ContabilidadPnlKPI6.Controls.Add(this.ContabilidadLblKPIResp6);
             this.ContabilidadPnlKPI6.Controls.Add(this.ContabilidadLblKPI6);
-            this.ContabilidadPnlKPI6.Location = new System.Drawing.Point(994, 443);
+            this.ContabilidadPnlKPI6.Location = new System.Drawing.Point(965, 445);
             this.ContabilidadPnlKPI6.Name = "ContabilidadPnlKPI6";
-            this.ContabilidadPnlKPI6.Size = new System.Drawing.Size(178, 196);
+            this.ContabilidadPnlKPI6.Size = new System.Drawing.Size(172, 189);
             this.ContabilidadPnlKPI6.TabIndex = 9;
-            // 
-            // ContabilidadLblKPIResp6
-            // 
             this.ContabilidadLblKPIResp6.AutoSize = true;
             this.ContabilidadLblKPIResp6.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPIResp6.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPIResp6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPIResp6.Location = new System.Drawing.Point(14, 98);
+            this.ContabilidadLblKPIResp6.Location = new System.Drawing.Point(14, 95);
             this.ContabilidadLblKPIResp6.Name = "ContabilidadLblKPIResp6";
             this.ContabilidadLblKPIResp6.Size = new System.Drawing.Size(44, 43);
             this.ContabilidadLblKPIResp6.TabIndex = 1;
             this.ContabilidadLblKPIResp6.Text = "0";
-            // 
-            // ContabilidadLblKPI6
-            // 
             this.ContabilidadLblKPI6.AutoSize = true;
             this.ContabilidadLblKPI6.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblKPI6.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblKPI6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblKPI6.Location = new System.Drawing.Point(18, 143);
+            this.ContabilidadLblKPI6.Location = new System.Drawing.Point(18, 138);
             this.ContabilidadLblKPI6.Name = "ContabilidadLblKPI6";
             this.ContabilidadLblKPI6.Size = new System.Drawing.Size(130, 40);
             this.ContabilidadLblKPI6.TabIndex = 0;
             this.ContabilidadLblKPI6.Text = "Cuentas\r\ncontables";
-            // 
-            // ContabilidadLblResumen
-            // 
             this.ContabilidadLblResumen.AutoSize = true;
             this.ContabilidadLblResumen.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblResumen.Font = new System.Drawing.Font("Lucida Fax", 20.25F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContabilidadLblResumen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(50)))), ((int)(((byte)(61)))));
-            this.ContabilidadLblResumen.Location = new System.Drawing.Point(38, 394);
+            this.ContabilidadLblResumen.Location = new System.Drawing.Point(38, 401);
             this.ContabilidadLblResumen.Name = "ContabilidadLblResumen";
             this.ContabilidadLblResumen.Size = new System.Drawing.Size(319, 32);
             this.ContabilidadLblResumen.TabIndex = 3;
             this.ContabilidadLblResumen.Text = "Resumen del Sistema";
-            // 
-            // ContabilidadLblParrafo
-            // 
             this.ContabilidadLblParrafo.AutoSize = true;
             this.ContabilidadLblParrafo.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblParrafo.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -652,9 +631,6 @@ namespace CapaVista_Contabilidad
             this.ContabilidadLblParrafo.Size = new System.Drawing.Size(435, 80);
             this.ContabilidadLblParrafo.TabIndex = 2;
             this.ContabilidadLblParrafo.Text = "Gestiona las pólizas, presupuestos y activos fijos.\r\nOrganiza los cierres y estados financieros\r\nde la empresa de forma ordenada y eficiente.";
-            // 
-            // ContabilidadLblModulo
-            // 
             this.ContabilidadLblModulo.AutoSize = true;
             this.ContabilidadLblModulo.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblModulo.Font = new System.Drawing.Font("Lucida Fax", 20.25F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -664,9 +640,6 @@ namespace CapaVista_Contabilidad
             this.ContabilidadLblModulo.Size = new System.Drawing.Size(419, 32);
             this.ContabilidadLblModulo.TabIndex = 1;
             this.ContabilidadLblModulo.Text = "MÓDULO DE CONTABILIDAD";
-            // 
-            // ContabilidadLblBienvenido
-            // 
             this.ContabilidadLblBienvenido.AutoSize = true;
             this.ContabilidadLblBienvenido.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblBienvenido.Font = new System.Drawing.Font("Lucida Fax", 45F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -676,30 +649,24 @@ namespace CapaVista_Contabilidad
             this.ContabilidadLblBienvenido.Size = new System.Drawing.Size(418, 68);
             this.ContabilidadLblBienvenido.TabIndex = 0;
             this.ContabilidadLblBienvenido.Text = "¡Bienvenido!";
-            // 
-            // ContabilidadPbButti
-            // 
             this.ContabilidadPbButti.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPbButti.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.DonButi;
             this.ContabilidadPbButti.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ContabilidadPbButti.Location = new System.Drawing.Point(524, 10);
+            this.ContabilidadPbButti.Location = new System.Drawing.Point(508, 10);
             this.ContabilidadPbButti.Name = "ContabilidadPbButti";
-            this.ContabilidadPbButti.Size = new System.Drawing.Size(296, 393);
+            this.ContabilidadPbButti.Size = new System.Drawing.Size(313, 415);
             this.ContabilidadPbButti.TabIndex = 0;
             this.ContabilidadPbButti.TabStop = false;
-            // 
-            // FrmMDIContabilidad
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1538, 845);
+            this.ClientSize = new System.Drawing.Size(1538, 1022);
             this.Controls.Add(this.ContabilidadPnlFondo);
-            this.Icon = ((System.Drawing.Icon)(Recursos.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1000, 650);
+            this.Icon = global::CapaVista_Contabilidad.Properties.Resources.Icono_Contabilidad;
+            this.MinimumSize = new System.Drawing.Size(1000, 800);
             this.Name = "FrmMDIContabilidad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Text = "10000 - PrincipalContabilidad";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ContabilidadPnlFondo.ResumeLayout(false);
             this.ContabilidadPnlPrincipal.ResumeLayout(false);
             this.ContabilidadPnlLateral.ResumeLayout(false);
@@ -743,6 +710,8 @@ namespace CapaVista_Contabilidad
         private System.Windows.Forms.Panel ContabilidadPnlKPI4;
         private System.Windows.Forms.Panel ContabilidadPnlKPI5;
         private System.Windows.Forms.Panel ContabilidadPnlKPI6;
+        private System.Windows.Forms.Label ContabilidadLblUsuario;
+        private System.Windows.Forms.Label ContabilidadLblUsuarioRol;
         private System.Windows.Forms.Label ContabilidadLblBienvenido;
         private System.Windows.Forms.Label ContabilidadLblModulo;
         private System.Windows.Forms.Label ContabilidadLblParrafo;
@@ -770,6 +739,12 @@ namespace CapaVista_Contabilidad
         private System.Windows.Forms.Button ContabilidadBtnActivosFijos;
         private System.Windows.Forms.Button ContabilidadBtnCierreContable;
         private System.Windows.Forms.Button ContabilidadBtnEstadosFinancieros;
+        private System.Windows.Forms.Button ContabilidadBtnCatalogos;
+        private System.Windows.Forms.Button ContabilidadBtnPaises;
+        private System.Windows.Forms.Button ContabilidadBtnModulosContables;
+        private System.Windows.Forms.Button ContabilidadBtnVidaUtil;
+        private System.Windows.Forms.Button ContabilidadBtnCuentas;
+        private System.Windows.Forms.Button ContabilidadBtnCuentasModulo;
         private System.Windows.Forms.PictureBox ContabilidadPbLogo;
         private System.Windows.Forms.PictureBox ContabilidadPbButti;
         private System.Windows.Forms.PictureBox ContabilidadPbInfo;

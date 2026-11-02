@@ -80,6 +80,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmMantenimientoConceptoProveedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMantenimientoConceptoProveedor.Designer.cs">
+      <DependentUpon>FrmMantenimientoConceptoProveedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMantenimientoPlazo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMantenimientoPlazo.Designer.cs">
+      <DependentUpon>FrmMantenimientoPlazo.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMantenimientoProveedor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +113,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FrmMantenimientoConceptoProveedor.resx">
+      <DependentUpon>FrmMantenimientoConceptoProveedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMantenimientoPlazo.resx">
+      <DependentUpon>FrmMantenimientoPlazo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmMantenimientoProveedor.resx">
       <DependentUpon>FrmMantenimientoProveedor.cs</DependentUpon>
     </EmbeddedResource>

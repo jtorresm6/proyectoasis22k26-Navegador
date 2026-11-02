@@ -7,7 +7,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Ejecutable_Ventas
+namespace Ejecucion_Ventas
 {
     internal static class Program
     {

@@ -53,7 +53,7 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasPnlBorde.Location = new System.Drawing.Point(3, 3);
             this.ComprasPnlBorde.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasPnlBorde.Name = "ComprasPnlBorde";
-            this.ComprasPnlBorde.Padding = new System.Windows.Forms.Padding(1, 1, 1, 0);
+            this.ComprasPnlBorde.Padding = new System.Windows.Forms.Padding(1);
             this.ComprasPnlBorde.Size = new System.Drawing.Size(168, 30);
             this.ComprasPnlBorde.TabIndex = 2;
             // 

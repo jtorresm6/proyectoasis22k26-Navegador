@@ -1,4 +1,4 @@
-﻿using CapaControlador_Componentes;
+using CapaControlador_Componentes;
 using System;
 using System.ComponentModel;
 using System.Data;
@@ -24,18 +24,7 @@ namespace CapaVista_Componentes.Componentes
     {
         Ninguno = 0,
         Proveedores = 1,
-        Metodos = 2,
-        Plazos = 3,
-        ConceptoProveedor = 4,
-        Monedas = 5,
-        TiposCambio = 6,
-        Sucursales = 7,
-        Bodegas = 8,
-        Categorias = 9,
-        Lineas = 10,
-        Marcas = 11,
-        Productos = 12,
-        ProductosPorSku = 13
+        Metodos = 2
     }
 
 
@@ -43,10 +32,6 @@ namespace CapaVista_Componentes.Componentes
     [DefaultEvent("SelectedIndexChanged")]
     public partial class ComprasUsrComboBox : UserControl
     {
-
-        [Category("Compras")]
-        [DefaultValue(false)]
-        public bool PermitirRuedaMouse { get; set; }
 
         private bool _ErrorVisible;
         private bool _MostrarEtiquetaError = true;
@@ -63,7 +48,7 @@ namespace CapaVista_Componentes.Componentes
 
         [Category("Compras")]
         [Description("Permite escribir y muestra sugerencias nativas de las opciones del combo conforme se escribe.")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         [RefreshProperties(RefreshProperties.All)]
         public bool PermitirEscritura
         {
@@ -188,7 +173,6 @@ namespace CapaVista_Componentes.Componentes
         public ComprasUsrComboBox()
         {
             InitializeComponent();
-            PermitirEscritura = true;
             DoubleBuffered = true;
             ComprasLblError.ComprasProcConservarRojo();
             ComprasCboEntrada.TextChanged += (Sender, Evento) => ComprasProcTextoCambiado(Evento);
@@ -287,7 +271,7 @@ namespace CapaVista_Componentes.Componentes
         public int SelectedIndex { get => ComprasCboEntrada.SelectedIndex; set => ComprasCboEntrada.SelectedIndex = value; }
 
         [Category("Comportamiento")]
-        [DefaultValue(ComboBoxStyle.DropDown)]
+        [DefaultValue(ComboBoxStyle.DropDownList)]
         [RefreshProperties(RefreshProperties.All)]
         public ComboBoxStyle DropDownStyle
         {
@@ -483,76 +467,11 @@ namespace CapaVista_Componentes.Componentes
                     Mostrar = "nombreProveedor";
                     break;
 
-                case EnmTipoDatosCompras.Plazos:
-                    Tabla = "tblPlazo";
-                    Valor = "idPlazo";
-                    Mostrar = "nombrePlazo";
-                    break;
-
-                case EnmTipoDatosCompras.ConceptoProveedor:
-                    Tabla = "tblConceptoProveedor";
-                    Valor = "idConceptoProveedor";
-                    Mostrar = "nombreConceptoProveedor";
-                    break;
-
-                case EnmTipoDatosCompras.Monedas:
-                    Tabla = "tblMoneda";
-                    Valor = "idMoneda";
-                    Mostrar = "nombreMoneda";
-                    break;
-
-                case EnmTipoDatosCompras.TiposCambio:
-                    Tabla = "tblTipoCambio";
-                    Valor = "idTipoCambio";
-                    Mostrar = "descripcionTipoCambio";
-                    break;
-
-                case EnmTipoDatosCompras.Sucursales:
-                    Tabla = "tblSucursal";
-                    Valor = "idSucursal";
-                    Mostrar = "nombreSucursal";
-                    break;
-
-                case EnmTipoDatosCompras.Bodegas:
-                    Tabla = "tblBodega";
-                    Valor = "idBodega";
-                    Mostrar = "nombreBodega";
-                    break;
-
-                case EnmTipoDatosCompras.Categorias:
-                    Tabla = "tblCategoria";
-                    Valor = "idCategoria";
-                    Mostrar = "nombreCategoria";
-                    break;
-
-                case EnmTipoDatosCompras.Lineas:
-                    Tabla = "tblLinea";
-                    Valor = "idLinea";
-                    Mostrar = "nombreLinea";
-                    break;
-
-                case EnmTipoDatosCompras.Marcas:
-                    Tabla = "tblMarca";
-                    Valor = "idMarca";
-                    Mostrar = "nombreMarca";
-                    break;
-
-                case EnmTipoDatosCompras.Productos:
-                    Tabla = "tblProducto";
-                    Valor = "idProducto";
-                    Mostrar = "nombreProducto";
-                    break;
-
-                case EnmTipoDatosCompras.ProductosPorSku:
-                    Tabla = "tblProducto";
-                    Valor = "idProducto";
-                    Mostrar = "skuProducto";
-                    break;
-
                 case EnmTipoDatosCompras.Metodos:
-                    Tabla = "tblMetodoPago";
-                    Valor = "idMetodoPago";
-                    Mostrar = "nombreMetodoPago";
+             
+                    Tabla = string.Empty;
+                    Valor = "IDmetodo";
+                    Mostrar = "nombreMetodo";
                     break;
 
                 default:
@@ -567,6 +486,17 @@ namespace CapaVista_Componentes.Componentes
 
             try
             {
+                if (_TipoDatos == EnmTipoDatosCompras.Metodos)
+                {
+                    DataTable Metodos = new DataTable();
+                    Metodos.Columns.Add("IDmetodo", typeof(string));
+                    Metodos.Columns.Add("nombreMetodo", typeof(string));
+                    foreach (string Metodo in new[] { "Transferencia", "Cheque", "Efectivo", "Deposito" })
+                        Metodos.Rows.Add(Metodo, Metodo);
+                    ComprasMetCargarDatos(Metodos);
+                    return;
+                }
+
                 ComprasProcObtenerConfiguracion(_TipoDatos,
                     out string Tabla, out string Valor, out string Mostrar);
 

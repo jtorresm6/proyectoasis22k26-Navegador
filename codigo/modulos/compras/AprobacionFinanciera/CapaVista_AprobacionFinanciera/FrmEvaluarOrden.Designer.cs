@@ -32,13 +32,13 @@ namespace CapaVista_AprobacionFinanciera
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEvaluarOrden));
             this.ComprasTlpContenidoVisible = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasDgvDetalleOrden = new CapaVista_Componentes.Componentes.UsrDataGridViewCompras();
+            this.ComprasDgvDetalleOrden = new CapaVista_Componentes.Componentes.ComprasUsrDataGridView();
             this.ComprasTlpAcciones = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasBtnAprobar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnRechazar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnRegresar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.UsrEncabezadoCompras();
+            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
             this.ComprasPnlDesplazamiento = new CapaVista_Componentes.Componentes.ClsPanelVerticalCompras();
             this.ComprasLblEvaluacion = new CapaVista_Componentes.Componentes.ClsEtiquetaCompras();
@@ -243,6 +243,7 @@ namespace CapaVista_AprobacionFinanciera
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "FrmEvaluarOrden";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "6009 – EvaluarOrden";
             this.ComprasTlpContenidoVisible.ResumeLayout(false);
             this.ComprasTlpAcciones.ResumeLayout(false);
@@ -258,11 +259,11 @@ namespace CapaVista_AprobacionFinanciera
         private System.Windows.Forms.TableLayoutPanel ComprasTlpContenidoVisible;
         private System.Windows.Forms.TableLayoutPanel ComprasTlpAcciones;
         private System.Windows.Forms.TableLayoutPanel ComprasTlpFormulario;
-        private CapaVista_Componentes.Componentes.UsrEncabezadoCompras ComprasUsrEncabezadoFormulario;
+        private CapaVista_Componentes.Componentes.ComprasUsrEncabezado ComprasUsrEncabezadoFormulario;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnRegresar;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnRechazar;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnAprobar;
         private CapaVista_Componentes.Componentes.ClsEtiquetaCompras ComprasLblEvaluacion;
-        private CapaVista_Componentes.Componentes.UsrDataGridViewCompras ComprasDgvDetalleOrden;
+        private CapaVista_Componentes.Componentes.ComprasUsrDataGridView ComprasDgvDetalleOrden;
     }
 }

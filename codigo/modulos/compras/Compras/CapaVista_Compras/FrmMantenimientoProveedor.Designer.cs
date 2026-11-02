@@ -31,7 +31,7 @@ namespace CapaVista_Compras
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMantenimientoProveedor));
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
-            this.ComprasUsrMantenimiento = new CapaVista_Navegador.Navegador();
+            this.ComprasNavMantenimiento = new CapaVista_Navegador.Navegador();
             this.ComprasPnlDesplazamiento = new CapaVista_Componentes.Componentes.ClsPanelVerticalCompras();
             this.ComprasTlpFormulario.SuspendLayout();
             this.ComprasPnlContenido.SuspendLayout();
@@ -50,13 +50,13 @@ namespace CapaVista_Compras
             this.ComprasTlpFormulario.Name = "ComprasTlpFormulario";
             this.ComprasTlpFormulario.RowCount = 1;
             this.ComprasTlpFormulario.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ComprasTlpFormulario.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.ComprasTlpFormulario.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 873F));
             this.ComprasTlpFormulario.Size = new System.Drawing.Size(1279, 873);
             this.ComprasTlpFormulario.TabIndex = 0;
             // 
             // ComprasPnlContenido
             // 
-            this.ComprasPnlContenido.Controls.Add(this.ComprasUsrMantenimiento);
+            this.ComprasPnlContenido.Controls.Add(this.ComprasNavMantenimiento);
             this.ComprasPnlContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasPnlContenido.Location = new System.Drawing.Point(0, 0);
             this.ComprasPnlContenido.Margin = new System.Windows.Forms.Padding(0);
@@ -64,14 +64,14 @@ namespace CapaVista_Compras
             this.ComprasPnlContenido.Size = new System.Drawing.Size(1279, 873);
             this.ComprasPnlContenido.TabIndex = 1;
             // 
-            // ComprasUsrMantenimiento
+            // ComprasNavMantenimiento
             // 
-            this.ComprasUsrMantenimiento.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasUsrMantenimiento.Location = new System.Drawing.Point(0, 0);
-            this.ComprasUsrMantenimiento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ComprasUsrMantenimiento.Name = "ComprasUsrMantenimiento";
-            this.ComprasUsrMantenimiento.Size = new System.Drawing.Size(1279, 873);
-            this.ComprasUsrMantenimiento.TabIndex = 0;
+            this.ComprasNavMantenimiento.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ComprasNavMantenimiento.Location = new System.Drawing.Point(0, 0);
+            this.ComprasNavMantenimiento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ComprasNavMantenimiento.Name = "ComprasNavMantenimiento";
+            this.ComprasNavMantenimiento.Size = new System.Drawing.Size(1279, 873);
+            this.ComprasNavMantenimiento.TabIndex = 0;
             // 
             // ComprasPnlDesplazamiento
             // 
@@ -110,6 +110,6 @@ namespace CapaVista_Compras
         private System.Windows.Forms.TableLayoutPanel ComprasTlpFormulario;
         private CapaVista_Componentes.Componentes.ClsPanelVerticalCompras ComprasPnlDesplazamiento;
         private System.Windows.Forms.Panel ComprasPnlContenido;
-        private CapaVista_Navegador.Navegador ComprasUsrMantenimiento;
+        private CapaVista_Navegador.Navegador ComprasNavMantenimiento;
     }
 }

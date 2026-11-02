@@ -64,9 +64,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo_OrdenesCompra">
-      <HintPath>..\CapaModelo_OrdenesCompra\bin\$(Configuration)\CapaModelo_OrdenesCompra.dll</HintPath>
-    </Reference>
     <Reference Include="CapaControlador_OrdenesCompra">
       <HintPath>..\CapaControlador_OrdenesCompra\bin\$(Configuration)\CapaControlador_OrdenesCompra.dll</HintPath>
     </Reference>

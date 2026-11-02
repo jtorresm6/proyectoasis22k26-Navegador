@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{82CF6C57-8B4A-49F4-A33A-BFE0F3F3E416}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CapaControlador_ComisionVendedores</RootNamespace>
+    <AssemblyName>CapaControlador_ComisionVendedores</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Contratos\IControladorComision.cs" />
+    <Compile Include="Enumeraciones\EnumMetodoComision.cs" />
+    <Compile Include="Enumeraciones\EnumBaseComision.cs" />
+    <Compile Include="DTO\ClsComisionVendedorResultado.cs" />
+    <Compile Include="DTO\ClsProductoPorcentaje.cs" />
+    <Compile Include="DTO\ClsComisionFacturaDetalle.cs" />
+    <Compile Include="DTO\ClsFacturaComisionVista.cs" />
+    <Compile Include="DTO\ClsVendedorComisionVista.cs" />
+    <Compile Include="Controladores\ClsControladorComision.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\CapaModelo_ComisionVendedores\CapaModelo_ComisionVendedores.csproj">
+      <Project>{B2CB8153-52FB-4DBB-9098-064314373454}</Project>
+      <Name>CapaModelo_ComisionVendedores</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

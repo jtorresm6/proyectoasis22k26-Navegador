@@ -17,8 +17,6 @@ namespace CapaVista_AprobacionFinanciera
         public FrmAprobacionFinanciera()
         {
             InitializeComponent();
-            ComprasBtnVer.Enabled = false;
-            ComprasBtnEvaluar.Enabled = false;
             ComprasBtnRegresar.Click += (Remitente, Evento) => Close();
             CapaVista_Componentes.Componentes.ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
         }

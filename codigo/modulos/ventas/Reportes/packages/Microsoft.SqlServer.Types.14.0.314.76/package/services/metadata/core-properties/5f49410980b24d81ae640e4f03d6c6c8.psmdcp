@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties">
+  <dc:creator>Microsoft</dc:creator>
+  <dc:description>Allows you to use SQL Server spatial types on a machine without SQL Server installed. Useful when deploying to Windows Azure. Also enables Entity Framework spatial types to be used (DbGeography and DbGeometry).</dc:description>
+  <dc:identifier>Microsoft.SqlServer.Types</dc:identifier>
+  <version>14.0.100.187</version>
+  <keywords>SQL spatial geometry geography azure EF EntityFramework DbGeography DbGeometry GIS geospatial OGC sql-server</keywords>
+  <lastModifiedBy>NuGet, Version=3.5.0.1938, Culture=neutral, PublicKeyToken=31bf3856ad364e35;Microsoft Windows NT 6.2.9200.0;.NET Framework 4.5</lastModifiedBy>
+</coreProperties>

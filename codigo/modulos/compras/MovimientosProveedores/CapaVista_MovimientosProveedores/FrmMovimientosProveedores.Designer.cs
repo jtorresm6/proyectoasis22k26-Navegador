@@ -3,7 +3,7 @@ namespace CapaVista_MovimientosProveedores
     partial class FrmMovimientosProveedores
     {
         private System.Windows.Forms.TableLayoutPanel ComprasTlpFormulario;
-        private CapaVista_Componentes.Componentes.UsrEncabezadoCompras ComprasUsrEncabezadoFormulario;
+        private CapaVista_Componentes.Componentes.ComprasUsrEncabezado ComprasUsrEncabezadoFormulario;
         /// <summary>
         /// Variable del diseñador necesaria.
         /// </summary>
@@ -34,9 +34,9 @@ namespace CapaVista_MovimientosProveedores
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMovimientosProveedores));
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.UsrEncabezadoCompras();
+            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
-            this.ComprasDgvMovimientos = new CapaVista_Componentes.Componentes.UsrDataGridViewCompras();
+            this.ComprasDgvMovimientos = new CapaVista_Componentes.Componentes.ComprasUsrDataGridView();
             this.ComprasPnlProveedor = new CapaVista_Componentes.Componentes.ClsPanelCompras();
             this.ComprasLblCorreo = new CapaVista_Componentes.Componentes.ClsEtiquetaCompras();
             this.ComprasLblSeparadorCorreo = new CapaVista_Componentes.Componentes.ClsEtiquetaCompras();
@@ -47,10 +47,10 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasLblTituloNit = new CapaVista_Componentes.Componentes.ClsEtiquetaCompras();
             this.ComprasLblNombreProveedor = new CapaVista_Componentes.Componentes.ClsEtiquetaCompras();
             this.ComprasPnlFiltros = new CapaVista_Componentes.Componentes.ClsPanelCompras();
-            this.ComprasCboProveedor = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasUsrFechas = new CapaVista_Componentes.Componentes.UsrRangoFechasCompras();
-            this.ComprasCboEstado = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasCboTipoMovimiento = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
+            this.ComprasCboProveedor = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasUsrFechas = new CapaVista_Componentes.Componentes.ComprasUsrRangoFechas();
+            this.ComprasCboEstado = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasCboTipoMovimiento = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
             this.ComprasBtnConsultar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasLblEstado = new CapaVista_Componentes.Componentes.ClsEtiquetaCompras();
             this.ComprasLblTipoDeMovimiento = new CapaVista_Componentes.Componentes.ClsEtiquetaCompras();
@@ -444,7 +444,7 @@ namespace CapaVista_MovimientosProveedores
         private CapaVista_Componentes.Componentes.ClsEtiquetaCompras ComprasLblNit;
         private CapaVista_Componentes.Componentes.ClsEtiquetaCompras ComprasLblTituloNit;
         private CapaVista_Componentes.Componentes.ClsEtiquetaCompras ComprasLblNombreProveedor;
-        private CapaVista_Componentes.Componentes.UsrDataGridViewCompras ComprasDgvMovimientos;
+        private CapaVista_Componentes.Componentes.ComprasUsrDataGridView ComprasDgvMovimientos;
         private System.Windows.Forms.DataGridViewColumn ComprasColFecha;
         private System.Windows.Forms.DataGridViewColumn ComprasColTipoMovimiento;
         private System.Windows.Forms.DataGridViewColumn ComprasColDocumento;
@@ -453,9 +453,9 @@ namespace CapaVista_MovimientosProveedores
         private System.Windows.Forms.DataGridViewColumn ComprasColHaber;
         private System.Windows.Forms.DataGridViewColumn ComprasColSaldo;
         private System.Windows.Forms.DataGridViewColumn ComprasColEstado;
-        private CapaVista_Componentes.Componentes.UsrComboBoxCompras ComprasCboEstado;
-        private CapaVista_Componentes.Componentes.UsrComboBoxCompras ComprasCboTipoMovimiento;
-        private CapaVista_Componentes.Componentes.UsrComboBoxCompras ComprasCboProveedor;
-        private CapaVista_Componentes.Componentes.UsrRangoFechasCompras ComprasUsrFechas;
+        private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboEstado;
+        private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboTipoMovimiento;
+        private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboProveedor;
+        private CapaVista_Componentes.Componentes.ComprasUsrRangoFechas ComprasUsrFechas;
     }
 }

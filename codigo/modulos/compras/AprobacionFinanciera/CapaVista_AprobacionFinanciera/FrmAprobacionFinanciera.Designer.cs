@@ -32,13 +32,13 @@ namespace CapaVista_AprobacionFinanciera
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAprobacionFinanciera));
             this.ComprasTlpContenidoVisible = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasDgvOrdenesDisponibles = new CapaVista_Componentes.Componentes.UsrDataGridViewCompras();
+            this.ComprasDgvOrdenesDisponibles = new CapaVista_Componentes.Componentes.ComprasUsrDataGridView();
             this.ComprasTlpAcciones = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasBtnVer = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnEvaluar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnRegresar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.UsrEncabezadoCompras();
+            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
             this.ComprasPnlDesplazamiento = new CapaVista_Componentes.Componentes.ClsPanelVerticalCompras();
             this.ComprasLblTitulo = new CapaVista_Componentes.Componentes.ClsEtiquetaCompras();
@@ -102,6 +102,7 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasBtnVer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnVer.BackgroundImage")));
             this.ComprasBtnVer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasBtnVer.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComprasBtnVer.EsActivo = true;
             this.ComprasBtnVer.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasBtnVer.FlatAppearance.BorderSize = 0;
             this.ComprasBtnVer.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(173)))), ((int)(((byte)(213)))));
@@ -126,6 +127,7 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasBtnEvaluar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnEvaluar.BackgroundImage")));
             this.ComprasBtnEvaluar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasBtnEvaluar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComprasBtnEvaluar.EsActivo = true;
             this.ComprasBtnEvaluar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasBtnEvaluar.FlatAppearance.BorderSize = 0;
             this.ComprasBtnEvaluar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(173)))), ((int)(((byte)(213)))));
@@ -246,6 +248,7 @@ namespace CapaVista_AprobacionFinanciera
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "FrmAprobacionFinanciera";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "6005 – AprobacionFinanciera";
             this.ComprasTlpContenidoVisible.ResumeLayout(false);
             this.ComprasTlpAcciones.ResumeLayout(false);
@@ -261,8 +264,8 @@ namespace CapaVista_AprobacionFinanciera
         private System.Windows.Forms.TableLayoutPanel ComprasTlpContenidoVisible;
         private System.Windows.Forms.TableLayoutPanel ComprasTlpAcciones;
         private System.Windows.Forms.TableLayoutPanel ComprasTlpFormulario;
-        private CapaVista_Componentes.Componentes.UsrEncabezadoCompras ComprasUsrEncabezadoFormulario;
-        private CapaVista_Componentes.Componentes.UsrDataGridViewCompras ComprasDgvOrdenesDisponibles;
+        private CapaVista_Componentes.Componentes.ComprasUsrEncabezado ComprasUsrEncabezadoFormulario;
+        private CapaVista_Componentes.Componentes.ComprasUsrDataGridView ComprasDgvOrdenesDisponibles;
         private CapaVista_Componentes.Componentes.ClsEtiquetaCompras ComprasLblTitulo;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnVer;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnEvaluar;

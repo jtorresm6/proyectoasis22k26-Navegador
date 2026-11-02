@@ -3,7 +3,7 @@ using System.Data;
 using CapaModelo_Componentes.Repositorios;
 using System.Globalization;
 using CapaModelo_OrdenesCompra.Contratos;
-using CapaModelo_OrdenesCompra.Entidades;
+using CapaControlador_OrdenesCompra.Entidades;
 using CapaModelo_OrdenesCompra.Repositorios;
 
 /*
@@ -72,7 +72,8 @@ namespace CapaControlador_OrdenesCompra
         public ClsCompraPorPagar ComprasFuncObtener(int Id)
         {
             if (Id <= 0) throw new ArgumentOutOfRangeException(nameof(Id));
-            return _Repositorio.ComprasFuncObtener(Id);
+            var Compra = _Repositorio.ComprasFuncObtener(Id);
+            return Compra == null ? null : new ClsCompraPorPagar(Compra);
         }
 
         public DataTable ComprasFuncFiltrar(DataTable Datos, string Palabra, string Estado, DateTime? Inicio, DateTime? Fin)

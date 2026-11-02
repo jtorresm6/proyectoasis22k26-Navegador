@@ -82,7 +82,7 @@ namespace CapaControlador_Seguridad
                 else
                     Mensaje = "Ocurrió un problema al procesar la solicitud. Verifique los datos e intente nuevamente.";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Mensaje = "Ocurrió un error inesperado en el sistema. Intente nuevamente o contacte al administrador.";
             }

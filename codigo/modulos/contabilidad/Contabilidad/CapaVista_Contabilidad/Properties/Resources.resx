@@ -94,6 +94,24 @@
   <data name="botonmdi5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\botonmdi5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="botonmdi6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonmdi6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonmdi7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonmdi7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonmdi8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonmdi8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonmdi9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonmdi9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonmdi10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonmdi10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonmdi11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonmdi11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 
   <data name="kpi1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\kpi1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -131,9 +149,6 @@
     <value>..\Resources\info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 
-  <data name="Icono_Contabilidad" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icono-Contabilidad.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ico_aplicar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_aplicar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -170,4 +185,9 @@
   <data name="ico_quitar_oscuro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_quitar_oscuro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <!-- Inicio de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026 -->
+  <data name="Icono_Contabilidad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icono-Contabilidad.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <!-- Fin de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026 -->
 </root>

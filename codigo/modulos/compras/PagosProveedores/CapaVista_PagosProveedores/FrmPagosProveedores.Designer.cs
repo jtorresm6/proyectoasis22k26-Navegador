@@ -6,7 +6,7 @@ namespace CapaVista_PagosProveedores
     partial class FrmPagosProveedores
     {
         private System.Windows.Forms.TableLayoutPanel ComprasTlpFormulario;
-        private CapaVista_Componentes.Componentes.UsrEncabezadoCompras ComprasUsrEncabezadoFormulario;
+        private CapaVista_Componentes.Componentes.ComprasUsrEncabezado ComprasUsrEncabezadoFormulario;
         private System.ComponentModel.IContainer _Componentes = null;
         private CapaVista_Componentes.Componentes.ClsPanelVerticalCompras ComprasPnlDesplazamiento;
         private System.Windows.Forms.Panel ComprasPnlContenido;
@@ -21,41 +21,41 @@ namespace CapaVista_PagosProveedores
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPagosProveedores));
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.UsrEncabezadoCompras();
+            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
-            this.ComprasDgvPagos = new CapaVista_Componentes.Componentes.UsrDataGridViewCompras();
+            this.ComprasDgvPagos = new CapaVista_Componentes.Componentes.ComprasUsrDataGridView();
             this.ComprasGbxRegistrarPago = new CapaVista_Componentes.Componentes.ClsGroupBoxCompras();
             this.ComprasTlpRegistro = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
-            this.ComprasLblProveedorPago = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblFactura = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblFechaPago = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasCboProveedorPago = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasCboFactura = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasTxtFechaPago = new CapaVista_Componentes.Componentes.UsrTextBoxCompras();
-            this.ComprasLblMonto = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblMetodo = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblReferencia = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasTxtMonto = new CapaVista_Componentes.Componentes.UsrTextBoxCompras();
-            this.ComprasCboMetodo = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasTxtReferencia = new CapaVista_Componentes.Componentes.UsrTextBoxCompras();
+            this.ComprasLblProveedorPago = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblFactura = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblFechaPago = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasCboProveedorPago = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasCboFactura = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasTxtFechaPago = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
+            this.ComprasLblMonto = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblMetodo = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblReferencia = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasTxtMonto = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
+            this.ComprasCboMetodo = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasTxtReferencia = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
             this.ComprasPnlBotones = new System.Windows.Forms.Panel();
             this.ComprasBtnEliminar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnEditar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnCancelar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnGuardar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasTlpFiltros = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
-            this.ComprasCboProveedor = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasLblProveedor = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblEstado = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblDesde = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblHasta = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasCboEstado = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasTxtDesde = new CapaVista_Componentes.Componentes.UsrTextBoxCompras();
-            this.ComprasTxtHasta = new CapaVista_Componentes.Componentes.UsrTextBoxCompras();
+            this.ComprasCboProveedor = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasLblProveedor = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblEstado = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblDesde = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblHasta = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasCboEstado = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasTxtDesde = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
+            this.ComprasTxtHasta = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
             this.ComprasPnlEncabezado = new System.Windows.Forms.Panel();
             this.ComprasBtnNuevoPago = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasPnlDesplazamiento = new CapaVista_Componentes.Componentes.ClsPanelVerticalCompras();
-            this.ComprasLblTitulo = new CapaVista_Componentes.Componentes.UsrLabelCompras();
+            this.ComprasLblTitulo = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasTlpFormulario.SuspendLayout();
             this.ComprasPnlContenido.SuspendLayout();
             this.ComprasGbxRegistrarPago.SuspendLayout();
@@ -711,21 +711,21 @@ namespace CapaVista_PagosProveedores
         }
 
         private Panel ComprasPnlEncabezado;
-        private UsrLabelCompras ComprasLblTitulo;
+        private ComprasUsrLabel ComprasLblTitulo;
         private ClsButtonCompras ComprasBtnNuevoPago;
 
         private ClsTableLayoutPanelCompras ComprasTlpFiltros;
-        private UsrLabelCompras ComprasLblProveedor, ComprasLblEstado, ComprasLblDesde, ComprasLblHasta;
-        private UsrComboBoxCompras ComprasCboProveedor, ComprasCboEstado;
-        private UsrTextBoxCompras ComprasTxtDesde, ComprasTxtHasta;
+        private ComprasUsrLabel ComprasLblProveedor, ComprasLblEstado, ComprasLblDesde, ComprasLblHasta;
+        private ComprasUsrComboBox ComprasCboProveedor, ComprasCboEstado;
+        private ComprasUsrTextBox ComprasTxtDesde, ComprasTxtHasta;
 
-        private UsrDataGridViewCompras ComprasDgvPagos;
+        private ComprasUsrDataGridView ComprasDgvPagos;
 
         private ClsGroupBoxCompras ComprasGbxRegistrarPago;
         private ClsTableLayoutPanelCompras ComprasTlpRegistro;
-        private UsrLabelCompras ComprasLblProveedorPago, ComprasLblFactura, ComprasLblFechaPago, ComprasLblMonto, ComprasLblMetodo, ComprasLblReferencia;
-        private UsrComboBoxCompras ComprasCboProveedorPago, ComprasCboFactura, ComprasCboMetodo;
-        private UsrTextBoxCompras ComprasTxtFechaPago, ComprasTxtMonto, ComprasTxtReferencia;
+        private ComprasUsrLabel ComprasLblProveedorPago, ComprasLblFactura, ComprasLblFechaPago, ComprasLblMonto, ComprasLblMetodo, ComprasLblReferencia;
+        private ComprasUsrComboBox ComprasCboProveedorPago, ComprasCboFactura, ComprasCboMetodo;
+        private ComprasUsrTextBox ComprasTxtFechaPago, ComprasTxtMonto, ComprasTxtReferencia;
         private Panel ComprasPnlBotones;
         private ClsButtonCompras ComprasBtnEliminar, ComprasBtnEditar, ComprasBtnCancelar, ComprasBtnGuardar;
     }

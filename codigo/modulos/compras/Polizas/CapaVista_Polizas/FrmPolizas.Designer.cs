@@ -3,7 +3,7 @@ namespace CapaVista_Polizas
     partial class FrmPolizas
     {
         private System.Windows.Forms.TableLayoutPanel ComprasTlpFormulario;
-        private CapaVista_Componentes.Componentes.UsrEncabezadoCompras ComprasUsrEncabezadoFormulario;
+        private CapaVista_Componentes.Componentes.ComprasUsrEncabezado ComprasUsrEncabezadoFormulario;
         private System.ComponentModel.IContainer _Componentes = null;
         private CapaVista_Componentes.Componentes.ClsPanelVerticalCompras ComprasPnlDesplazamiento;
         private System.Windows.Forms.Panel ComprasPnlContenido;
@@ -18,29 +18,29 @@ namespace CapaVista_Polizas
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPolizas));
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.UsrEncabezadoCompras();
+            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
             this.ComprasGbxDetalle = new CapaVista_Componentes.Componentes.ClsGroupBoxCompras();
-            this.ComprasLblDiferencia = new CapaVista_Componentes.Componentes.UsrLabelCompras();
+            this.ComprasLblDiferencia = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasBtnEnviar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnGuardar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnNuevo = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnIngresarCuenta = new CapaVista_Componentes.Componentes.ClsButtonCompras();
-            this.ComprasCboCuenta = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasLblCuenta = new CapaVista_Componentes.Componentes.UsrLabelCompras();
+            this.ComprasCboCuenta = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasLblCuenta = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasGbxEncabezado = new CapaVista_Componentes.Componentes.ClsGroupBoxCompras();
-            this.ComprasLblDescripcion = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasTxtDescripcion = new CapaVista_Componentes.Componentes.UsrTextBoxCompras();
-            this.ComprasLblFecha = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasCboFecha = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasLblPeriodo = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasTxtPeriodo = new CapaVista_Componentes.Componentes.UsrTextBoxCompras();
-            this.ComprasLblOrigen = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblEstado = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasCboOrigen = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasCboEstado = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
+            this.ComprasLblDescripcion = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasTxtDescripcion = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
+            this.ComprasLblFecha = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasCboFecha = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasLblPeriodo = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasTxtPeriodo = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
+            this.ComprasLblOrigen = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblEstado = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasCboOrigen = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasCboEstado = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
             this.ComprasPnlDesplazamiento = new CapaVista_Componentes.Componentes.ClsPanelVerticalCompras();
-            this.ComprasLblTitulo = new CapaVista_Componentes.Componentes.UsrLabelCompras();
+            this.ComprasLblTitulo = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasTlpFormulario.SuspendLayout();
             this.ComprasPnlContenido.SuspendLayout();
             this.ComprasGbxDetalle.SuspendLayout();
@@ -491,6 +491,7 @@ namespace CapaVista_Polizas
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FrmPolizas";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "6002 – Polizas";
             this.ComprasTlpFormulario.ResumeLayout(false);
             this.ComprasPnlContenido.ResumeLayout(false);
@@ -502,24 +503,24 @@ namespace CapaVista_Polizas
         }
 
         private CapaVista_Componentes.Componentes.ClsGroupBoxCompras ComprasGbxEncabezado;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblTitulo;
-        private CapaVista_Componentes.Componentes.UsrTextBoxCompras ComprasTxtPeriodo;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblOrigen;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblEstado;
-        private CapaVista_Componentes.Componentes.UsrComboBoxCompras ComprasCboOrigen;
-        private CapaVista_Componentes.Componentes.UsrComboBoxCompras ComprasCboEstado;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblDescripcion;
-        private CapaVista_Componentes.Componentes.UsrTextBoxCompras ComprasTxtDescripcion;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblFecha;
-        private CapaVista_Componentes.Componentes.UsrComboBoxCompras ComprasCboFecha;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblPeriodo;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblTitulo;
+        private CapaVista_Componentes.Componentes.ComprasUsrTextBox ComprasTxtPeriodo;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblOrigen;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblEstado;
+        private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboOrigen;
+        private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboEstado;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblDescripcion;
+        private CapaVista_Componentes.Componentes.ComprasUsrTextBox ComprasTxtDescripcion;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblFecha;
+        private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboFecha;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblPeriodo;
         private CapaVista_Componentes.Componentes.ClsGroupBoxCompras ComprasGbxDetalle;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblDiferencia;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblDiferencia;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnEnviar;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnGuardar;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnNuevo;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnIngresarCuenta;
-        private CapaVista_Componentes.Componentes.UsrComboBoxCompras ComprasCboCuenta;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblCuenta;
+        private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboCuenta;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblCuenta;
     }
 }
