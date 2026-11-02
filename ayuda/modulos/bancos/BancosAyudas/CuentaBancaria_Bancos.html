@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <title>Ayudas - Cuenta Bancaria</title>
+    <style>
+        .pasos { text-align: left; font-size: 20px; margin: 15px 45px 30px; }
+        .pasos li { margin-bottom: 12px; }
+        .indice { line-height: 1.9; }
+        .nota { border-left: 5px solid #2d8a55; margin: 15px 20px; }
+        .captura { max-width: 1100px; margin: 24px auto 36px; }
+        .captura a { display: block; }
+        .captura img { display: block; width: 100%; height: auto; border: 1px solid #789581; border-radius: 8px; box-sizing: border-box; }
+        .captura figcaption { padding: 12px 16px; text-align: left; font-size: 18px; line-height: 1.5; color: #1c4a30; }
+        .captura a:focus-visible { outline: 3px solid #1c4a30; outline-offset: 4px; }
+        @media (max-width: 600px) { .pasos { margin-left: 25px; margin-right: 10px; } h1 { font-size: 30px; } }
+    </style>
+</head>
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png" alt="Logo del sistema">
+        <img class="imgButti" src="Imagenes/LogoYMascota/butti1.png" alt="Mascota de Bancos">
+        <h1>Ayudas - Cuenta Bancaria</h1>
+    </center>
+    <br>
+    <div class="container">
+        <h2>Mantenimiento de cuentas bancarias</h2>
+        <figure class="captura">
+            <a href="Imagenes/CuentaBancaria/CuentaBancaria_general.png" target="_blank" rel="noopener" title="Ampliar captura">
+                <img src="Imagenes/CuentaBancaria/CuentaBancaria_general.png" alt="Vista real de Cuenta Bancaria con la barra de acciones y los botones inferiores Ayuda y Reporte" loading="lazy">
+            </a>
+            <figcaption><strong>Vista general.</strong> La barra superior contiene las acciones de mantenimiento. En la esquina inferior izquierda están Ayuda y Reporte. Haz clic en cualquier captura de este manual para ampliarla.</figcaption>
+        </figure>
+        <p>Esta ventana del módulo de Bancos permite ingresar, consultar, modificar y eliminar cuentas bancarias mediante la barra del Navegador. Los datos guardados se muestran en la tabla desplegable. Los botones inferiores de <strong>Reporte</strong> y <strong>Ayuda</strong> abren el listado imprimible de cuentas y este manual, respectivamente.</p>
+        <p class="indice"><a href="#ingresar">1. Ingresar</a> · <a href="#buscar">2. Consultar y buscar</a> · <a href="#modificar">3. Modificar</a> · <a href="#eliminar">4. Eliminar</a> · <a href="#guardar">5. Guardar y cancelar</a> · <a href="#navegar">6. Navegar y refrescar</a> · <a href="#reporte">7. Reporte</a> · <a href="#ayuda">8. Ayuda y salir</a> · <a href="#problemas">9. Mensajes frecuentes</a></p>
+        <p class="nota">Las acciones disponibles dependen de los permisos del usuario. Los campos se generan a partir de la estructura de cuentas bancarias de la base de datos instalada; utiliza los nombres que aparecen en tu formulario.</p>
+
+        <h2 id="ingresar">1. Ingresar una cuenta bancaria</h2>
+        <figure class="captura">
+            <a href="Imagenes/CuentaBancaria/CuentaBancaria_ingresar.png" target="_blank" rel="noopener" title="Ampliar captura">
+                <img src="Imagenes/CuentaBancaria/CuentaBancaria_ingresar.png" alt="Panel Nuevo registro de Cuenta Bancaria con los campos de captura vacíos" loading="lazy">
+            </a>
+            <figcaption><strong>Paso 1: presiona Ingresar.</strong> Aparece el panel Nuevo registro. Completa el identificador habilitado, número, nombre, cuenta contable y límite de sobregiro; selecciona el banco y la moneda.</figcaption>
+        </figure>
+        <ol class="pasos">
+            <li>Presiona <strong>Ingresar</strong> en la barra del Navegador. Se desplegarán la tabla de cuentas y el panel para capturar un registro nuevo.</li>
+            <li>Completa los campos habilitados. Revisa cuidadosamente el número de cuenta y los demás datos que solicite el formulario. Conserva los ceros iniciales que formen parte del número de cuenta.</li>
+            <li>En las listas de datos relacionados, selecciona un registro existente del catálogo correspondiente. Si no aparece la opción necesaria, primero debe registrarse en su mantenimiento.</li>
+            <li>Los campos que muestran <strong>(automático)</strong> los asigna el sistema: no debes escribir en ellos.</li>
+            <li>Presiona <strong>Guardar</strong>, revisa la confirmación y acepta para registrar la cuenta. El mensaje <strong>Registro guardado correctamente</strong> confirma la operación y la tabla se actualiza.</li>
+        </ol>
+        <p>Si deseas abandonar la captura antes de guardar, presiona <strong>Cancelar</strong>. Si aparece una validación, corrige el dato indicado y vuelve a guardar.</p>
+        <figure class="captura">
+            <a href="Imagenes/CuentaBancaria/CuentaBancaria_campos.png" target="_blank" rel="noopener" title="Ampliar captura">
+                <img src="Imagenes/CuentaBancaria/CuentaBancaria_campos.png" alt="Parte inferior del panel de ingreso con banco, moneda, tipo de cuenta, estado y fechas" loading="lazy">
+            </a>
+            <figcaption><strong>Paso 2: desplázate dentro del panel.</strong> La barra vertical permite ver el tipo de cuenta, la casilla de estado activo y las fechas. Revisa estos campos antes de usar Guardar; Cancelar cierra la captura.</figcaption>
+        </figure>
+
+        <h2 id="buscar">2. Consultar y buscar una cuenta</h2>
+        <figure class="captura">
+            <a href="Imagenes/CuentaBancaria/CuentaBancaria_buscar.png" target="_blank" rel="noopener" title="Ampliar captura">
+                <img src="Imagenes/CuentaBancaria/CuentaBancaria_buscar.png" alt="Ventana Consultas con Campo, Operador, Valor, botón Buscar y tabla de resultados" loading="lazy">
+            </a>
+            <figcaption><strong>Paso 1: abre Consultar.</strong> En Agregar Filtro selecciona un Campo y un Operador, escribe el Valor y presiona Buscar cuando se habilite. Los resultados aparecen en Seleccione un Registro.</figcaption>
+        </figure>
+        <ol class="pasos">
+            <li>Presiona <strong>Consultar</strong>. El sistema carga la tabla y abre la ventana del componente Consultas.</li>
+            <li>Selecciona el <strong>Campo</strong> por el que quieres buscar, elige un <strong>Operador</strong>, escribe el <strong>Valor</strong> y presiona <strong>Buscar</strong> cuando el botón se habilite.</li>
+            <li>Selecciona el registro en Consultas. Al regresar, la tabla del Navegador mostrará la cuenta elegida, filtrada por su identificador.</li>
+            <li>Haz clic sobre la fila para dejarla seleccionada si deseas modificarla o eliminarla.</li>
+            <li>Para volver al listado completo, presiona <strong>Refrescar</strong>.</li>
+        </ol>
+        <p>Si cierras Consultas sin seleccionar un registro, queda disponible la tabla completa que se cargó al iniciar la consulta.</p>
+
+        <h2 id="modificar">3. Modificar una cuenta bancaria</h2>
+        <figure class="captura">
+            <a href="Imagenes/CuentaBancaria/CuentaBancaria_modificar.png" target="_blank" rel="noopener" title="Ampliar captura">
+                <img src="Imagenes/CuentaBancaria/CuentaBancaria_modificar.png" alt="Panel Modificar registro con los valores de una cuenta y su identificador bloqueado" loading="lazy">
+            </a>
+            <figcaption><strong>Paso 2: selecciona una fila y presiona Modificar.</strong> El panel carga los valores de la cuenta. El identificador aparece gris y bloqueado. Usa Guardar para confirmar los cambios o Cancelar para descartarlos.</figcaption>
+        </figure>
+        <ol class="pasos">
+            <li>Localiza la cuenta mediante <strong>Consultar</strong> o despliega el listado con <strong>Refrescar</strong>.</li>
+            <li>Selecciona su fila y presiona <strong>Modificar</strong>.</li>
+            <li>El panel se abrirá con los datos actuales. Cambia únicamente los campos necesarios; el identificador o llave primaria permanece bloqueado durante la modificación.</li>
+            <li>Presiona <strong>Guardar</strong> y confirma la operación. Verifica el mensaje de éxito y los datos actualizados en la tabla.</li>
+        </ol>
+        <p>Para descartar cambios que todavía no se han guardado, presiona <strong>Cancelar</strong>.</p>
+
+        <h2 id="eliminar">4. Eliminar una cuenta bancaria</h2>
+        <figure class="captura">
+            <a href="Imagenes/CuentaBancaria/CuentaBancaria_eliminar.png" target="_blank" rel="noopener" title="Ampliar captura">
+                <img src="Imagenes/CuentaBancaria/CuentaBancaria_eliminar.png" alt="Diálogo Confirmar eliminación sobre la tabla con los botones Sí y No" loading="lazy">
+            </a>
+            <figcaption><strong>Paso 2: revisa la confirmación.</strong> Después de seleccionar la cuenta y pulsar Eliminar, el sistema pregunta si deseas borrarla. Sí confirma la eliminación; No la cancela. Para obtener esta captura se eligió No.</figcaption>
+        </figure>
+        <ol class="pasos">
+            <li>Consulta la cuenta y selecciona la fila correcta en la tabla.</li>
+            <li>Verifica su identificador y número de cuenta antes de presionar <strong>Eliminar</strong>.</li>
+            <li>Lee la confirmación. Selecciona <strong>Sí</strong> para eliminar o <strong>No</strong> para conservar el registro.</li>
+            <li>Cuando aparezca <strong>Registro eliminado correctamente</strong>, la tabla se actualizará.</li>
+        </ol>
+        <p class="nota">Una cuenta relacionada con otros registros puede tener restricciones que impidan su eliminación. Si el sistema rechaza la operación, revisa el mensaje mostrado. Cancelar no recupera una cuenta que ya fue eliminada.</p>
+
+        <h2 id="guardar">5. Guardar y cancelar</h2>
+        <p><strong>Guardar:</strong> se utiliza después de Ingresar o Modificar. Valida los datos y solicita la confirmación correspondiente. Si hay un error, el panel permanece abierto para corregirlo. Si no hay un registro en edición, el sistema te pedirá abrir uno primero.</p>
+        <p><strong>Cancelar:</strong> cierra el panel de captura o modificación y descarta lo que aún no se haya guardado. No deshace operaciones ya confirmadas.</p>
+
+        <h2 id="navegar">6. Recorrer la tabla y refrescar</h2>
+        <figure class="captura">
+            <a href="Imagenes/CuentaBancaria/CuentaBancaria_tabla.png" target="_blank" rel="noopener" title="Ampliar captura">
+                <img src="Imagenes/CuentaBancaria/CuentaBancaria_tabla.png" alt="Tabla de cuentas con una fila seleccionada y la barra de navegación visible" loading="lazy">
+            </a>
+            <figcaption><strong>Seleccionar y recorrer.</strong> La fila azul es la cuenta seleccionada. Usa Inicio, Anterior, Siguiente y Fin para recorrer el listado; Refrescar vuelve a cargarlo. La barra horizontal inferior permite ver las demás columnas.</figcaption>
+        </figure>
+        <p><strong>Inicio, Anterior, Siguiente y Fin:</strong> permiten recorrer las filas del listado mostrado. También puedes seleccionar una cuenta directamente con un clic en la tabla.</p>
+        <p><strong>Refrescar:</strong> vuelve a consultar las cuentas guardadas y muestra el listado completo. También cierra el panel de edición, por lo que debes guardar tus cambios antes de usarlo si deseas conservarlos.</p>
+        <p>La tabla es de consulta: para cambiar valores utiliza <strong>Modificar</strong>. Las columnas corresponden a los campos disponibles en la base de datos instalada.</p>
+
+        <h2 id="reporte">7. Generar, imprimir y exportar el reporte</h2>
+        <ol class="pasos">
+            <li>Guarda los cambios de la cuenta antes de generar el reporte.</li>
+            <li>Presiona el botón <strong>Reporte ubicado en la parte inferior</strong> de Cuenta Bancaria.</li>
+            <li>Se abrirá <strong>Reporte de cuentas bancarias</strong> con el listado completo de cuentas guardadas, sus columnas, la fecha de generación y la cantidad de registros. La selección o búsqueda del Navegador no limita este listado.</li>
+            <li>Utiliza los controles del visor para cambiar de página, ajustar el zoom o buscar texto dentro del reporte.</li>
+            <li>Para obtener una copia, usa <strong>Imprimir</strong> o el menú <strong>Exportar</strong> del visor y selecciona un formato disponible, como PDF o Excel.</li>
+            <li>Cierra el visor para regresar al mantenimiento. Si cambian los datos, cierra y abre de nuevo el reporte para consultar una versión actualizada.</li>
+        </ol>
+        <p>Si no existen cuentas, el visor indicará que no hay cuentas bancarias registradas. El botón <strong>Imprimir de la barra del Navegador</strong> abre el componente general Reporteador y sus reportes configurados; para este listado específico utiliza el botón inferior de Reporte.</p>
+
+        <h2 id="ayuda">8. Ayuda y salir</h2>
+        <p><strong>Ayuda inferior:</strong> abre este manual de Cuenta Bancaria en el navegador web predeterminado. <strong>Ayuda de la barra del Navegador:</strong> abre la documentación general de ese componente.</p>
+        <p><strong>Salir en la barra del Navegador:</strong> cierra el panel de edición y contrae la tabla, dejando visible la barra. Para cerrar Cuenta Bancaria, utiliza el control de cierre de la ventana. Guarda primero cualquier cambio que desees conservar.</p>
+
+        <h2 id="problemas">9. Mensajes frecuentes</h2>
+        <p><strong>Seleccione un registro:</strong> despliega la tabla y haz clic en una fila antes de modificar o eliminar.</p>
+        <p><strong>Datos incompletos, identificador duplicado o referencia inexistente:</strong> revisa los campos indicados y selecciona valores válidos de los catálogos relacionados.</p>
+        <p><strong>Error al cargar la tabla o el reporte:</strong> verifica que la conexión a la base de datos esté disponible y solicita al administrador revisar la configuración si el problema continúa.</p>
+        <p><strong>No se encontró el archivo de ayuda:</strong> la instalación debe incluir CuentaBancaria_Bancos.html y sus carpetas de estilos e imágenes dentro de ayuda/modulos/bancos/BancosAyudas.</p>
+        <br><br>
+    </div>
+</body>
+</html>

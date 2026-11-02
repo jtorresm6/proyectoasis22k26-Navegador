@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <title>Ayudas - Bancos</title>
+</head>
+
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png">
+        <img class="imgButti" src="Imagenes/LogoYMascota/butti3.png">
+        <h1>Mantenimiento</h1>
+        <h1>Ayudas - Bancos</h1>
+    </center>
+    <br>
+    <div class="container">
+
+        <h2>Descripción</h2>
+        <p>
+            El formulario de <strong>Bancos</strong> permite registrar, consultar, modificar y eliminar
+            los bancos que utiliza la empresa. Cada banco se identifica por un código único y un nombre.
+            Este mantenimiento es la base para asociar cuentas bancarias dentro del módulo bancario.
+        </p>
+        <br><br>
+
+        <h2>Pantalla principal</h2>
+        <p>
+            Al abrir el formulario, el navegador se muestra en estado inicial. Los campos aparecen vacíos
+            y la tabla inferior no contiene registros hasta que se realice alguna operación. La barra de
+            estado indica <em>"1001 – Crud tblBanco"</em> confirmando que la conexión con la tabla es correcta.
+        </p>
+        <img class="imgVentana" src="Imagenes/FrmBancoNavegador/02_formulario_vacio.png">
+        <br><br><br>
+
+        <h2>Ingresar un banco</h2>
+        <p>
+            Para registrar un nuevo banco, presione el botón <strong>Ingresar</strong>. Los campos
+            <em>codigoBanco</em> y <em>nombreBanco</em> se habilitarán para captura. El campo
+            <em>Pk_Banco</em> es asignado automáticamente por la base de datos y no se puede editar.
+            Ingrese el código, el nombre, marque el estado <em>is_active</em> si el banco está activo
+            y presione <strong>Guardar</strong>.
+        </p>
+        <p>
+            El sistema mostrará un cuadro de confirmación con el resumen del registro antes de almacenarlo.
+            Presione <strong>Sí</strong> para confirmar o <strong>No</strong> para cancelar.
+        </p>
+        <img class="imgVentana" src="Imagenes/FrmBancoNavegador/01_ingresar_confirmar.png">
+        <br><br><br>
+
+        <h2>Registro guardado</h2>
+        <p>
+            Al confirmar el ingreso, el registro se almacena en la base de datos y aparece en la tabla
+            inferior. El sistema regresa automáticamente al modo de consulta mostrando el nuevo registro
+            con su <em>Pk_Banco</em> asignado.
+        </p>
+        <img class="imgVentana" src="Imagenes/FrmBancoNavegador/03_guardado_primer_registro.png">
+        <br><br><br>
+
+        <h2>Modificar un banco</h2>
+        <p>
+            Seleccione el registro a modificar en la tabla y presione el botón <strong>Modificar</strong>.
+            Los campos se cargarán con los datos actuales del banco seleccionado. El campo
+            <em>Pk_Banco</em> permanece bloqueado ya que es la llave primaria y no puede modificarse.
+            Realice los cambios necesarios y presione <strong>Guardar</strong>.
+        </p>
+        <img class="imgVentana" src="Imagenes/FrmBancoNavegador/04_modificar_seleccionado.png">
+        <br><br><br>
+
+        <h2>Confirmar modificación</h2>
+        <p>
+            Al presionar <strong>Guardar</strong> en modo Modificar, el sistema muestra un cuadro de
+            confirmación con los nuevos datos del registro. Verifique que los datos sean correctos y
+            presione <strong>Sí</strong> para aplicar los cambios o <strong>No</strong> para descartarlos.
+        </p>
+        <img class="imgVentana" src="Imagenes/FrmBancoNavegador/05_modificar_confirmar.png">
+        <br><br><br>
+
+        <h2>Modificación exitosa</h2>
+        <p>
+            Tras confirmar la modificación, la tabla se actualiza automáticamente mostrando los datos
+            nuevos del registro. El sistema regresa al modo de consulta.
+        </p>
+        <img class="imgVentana" src="Imagenes/FrmBancoNavegador/06_modificado_resultado.png">
+        <br><br><br>
+
+        <h2>Eliminar un banco</h2>
+        <p>
+            Para eliminar un banco, selecciónelo en la tabla y presione el botón <strong>Eliminar</strong>.
+            El sistema mostrará un cuadro de confirmación indicando qué registro será eliminado.
+            Presione <strong>Sí</strong> para confirmar la eliminación permanente o <strong>No</strong>
+            para cancelar. Esta acción no se puede deshacer.
+        </p>
+        <img class="imgVentana" src="Imagenes/FrmBancoNavegador/07_eliminar_confirmar.png">
+        <br><br><br>
+
+    </div>
+</body>
+</html>
