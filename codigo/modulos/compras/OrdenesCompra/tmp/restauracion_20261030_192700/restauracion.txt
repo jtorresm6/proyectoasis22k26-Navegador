@@ -1,0 +1,19 @@
+Restauracion de OrdenesCompra
+
+Se conservaron los archivos nuevos existentes y se restauraron los proyectos y vistas.
+No se usaron comandos Git ni se modifico Seguridad.
+
+Archivos restaurados o apartados:
+CapaControlador_OrdenesCompra\CapaControlador_OrdenesCompra.csproj
+CapaControlador_OrdenesCompra\ClsComprasPorPagar.cs (apartado en version_anterior)
+CapaModelo_OrdenesCompra\CapaModelo_OrdenesCompra.csproj
+CapaVista_OrdenesCompra\CapaVista_OrdenesCompra.csproj
+CapaVista_OrdenesCompra\FrmEncabezados.cs
+CapaVista_OrdenesCompra\FrmEncabezados.Designer.cs
+CapaVista_OrdenesCompra\FrmOrdenesCompra.cs
+CapaVista_OrdenesCompra\FrmOrdenesCompra.Designer.cs
+CapaVista_OrdenesCompra\Properties\Resources.Designer.cs
+CapaModelo_OrdenesCompra\Contratos\IRepositorioComprasPorPagar.cs (apartado en version_anterior)
+CapaModelo_OrdenesCompra\Entidades\ClsCompraPorPagar.cs (apartado en version_anterior)
+CapaModelo_OrdenesCompra\Repositorios\ClsRepositorioComprasPorPagar.cs (apartado en version_anterior)
+CapaControlador_OrdenesCompra\Entidades\ClsCompraPorPagar.cs (apartado en version_anterior)

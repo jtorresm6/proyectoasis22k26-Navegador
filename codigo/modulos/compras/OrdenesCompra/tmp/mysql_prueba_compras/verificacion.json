@@ -1,0 +1,18 @@
+{
+  "motor": "MySQL 8.0.46, instancia aislada sin TCP",
+  "comprobaciones": 29,
+  "cantidades": {
+    "tblProveedor": 4,
+    "tblOrdenCompra": 12,
+    "tblDetalleOrdenCompra": 24,
+    "tblCompra": 3,
+    "tblDetalleCompra": 6,
+    "tblCuentaPorPagar": 4,
+    "tblDevolucionCompra": 1,
+    "tblDetalleDevolucionCompra": 1,
+    "tblPagoProveedor": 5,
+    "tblDetallePagoProveedor": 2,
+    "tblSolicitudPago": 5
+  },
+  "resultado": "correcto"
+}

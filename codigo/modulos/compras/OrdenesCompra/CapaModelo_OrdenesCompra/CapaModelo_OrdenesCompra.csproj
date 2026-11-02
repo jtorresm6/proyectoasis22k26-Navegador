@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaModelo_Seguridad">
+      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\bin\$(Configuration)\CapaModelo_Seguridad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,17 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contratos\IRepositorioComprasPorPagar.cs" />
-    <Compile Include="Repositorios\ClsRepositorioComprasPorPagar.cs" />
+    <Compile Include="Contratos\IRepositorioOrdenesCompra.cs" />
+    <Compile Include="Repositorios\ClsRepositorioOrdenesCompra.cs" />
+    <Compile Include="Repositorios\ClsRepositorioBaseOrdenesCompra.cs" />
+    <Compile Include="Repositorios\ClsConsultasOrdenesCompra.cs" />
+    <Compile Include="Repositorios\ClsComandosOrdenesCompra.cs" />
+    <Compile Include="Repositorios\ClsErroresDatosOrdenesCompra.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entidades\ClsCompraPorPagar.cs" />
+    <Compile Include="Entidades\ClsOrdenCompra.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Reference Include="CapaModelo_Componentes">
-      <HintPath>..\..\Componentes\CapaModelo_Componentes\bin\$(Configuration)\CapaModelo_Componentes.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>

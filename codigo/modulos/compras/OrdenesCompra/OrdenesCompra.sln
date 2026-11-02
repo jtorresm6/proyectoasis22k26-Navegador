@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37710.0 d17.14
+VisualStudioVersion = 17.14.37710.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_OrdenesCompra", "CapaVista_OrdenesCompra\CapaVista_OrdenesCompra.csproj", "{C7EB30A5-37AA-468E-BF62-900F767F74B5}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_OrdenesComp
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_OrdenesCompra", "CapaModelo_OrdenesCompra\CapaModelo_OrdenesCompra.csproj", "{34CAB7C7-934E-4F2A-866C-61906FC678B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebaUnitaria_OrdenesCompra", "PruebaUnitaria_OrdenesCompra\PruebaUnitaria_OrdenesCompra.csproj", "{026A527B-B8BF-4D64-A2FD-017CA3E844F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{34CAB7C7-934E-4F2A-866C-61906FC678B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34CAB7C7-934E-4F2A-866C-61906FC678B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34CAB7C7-934E-4F2A-866C-61906FC678B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{026A527B-B8BF-4D64-A2FD-017CA3E844F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{026A527B-B8BF-4D64-A2FD-017CA3E844F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{026A527B-B8BF-4D64-A2FD-017CA3E844F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{026A527B-B8BF-4D64-A2FD-017CA3E844F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

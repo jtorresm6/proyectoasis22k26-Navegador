@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapaVista_OrdenesCompra.Presentacion;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -15,39 +16,63 @@ using CapaVista_Componentes.Componentes;
  * Fecha : 24/10/2026
  * ==================================================================
  * Propósito :
- *  Presenta las compras por pagar y administra su búsqueda y filtros,
- *  la actualización de datos y la apertura de órdenes nuevas o existentes.
+ *  Coordina la consulta y apertura de órdenes de compra desde su listado.
  * ===================================================================
 */
+
+
+
+
+
+
+
+
 
 namespace CapaVista_OrdenesCompra
 {
     public partial class FrmEncabezados : Form
     {
-        private readonly ClsComprasPorPagar _Controlador;
+        private readonly ClsOrdenesCompra _Controlador;
         private DataTable _Datos;
         private bool _Cargando;
+        private bool _CargaInicial = true;
         private bool _AbriendoCompra;
         private bool _RestableciendoFiltros;
         public bool AbrirOrden { get; private set; }
-        private ClsCompraPorPagar _CompraSeleccionada;
+        private ClsOrdenCompra _CompraSeleccionada;
+        
+        
+        
         public Form ComprasFuncCrearOrdenSeleccionada()
         {
             if (!AbrirOrden) throw new InvalidOperationException("No hay una orden seleccionada.");
-            return new FrmOrdenesCompra(_CompraSeleccionada, _Controlador);
+            return _CompraSeleccionada == null
+                ? (Form)new FrmOrdenesCompra()
+                : new FrmDetalleOrdenCompra(_CompraSeleccionada, _Controlador);
         }
 
-        public FrmEncabezados() : this(new ClsComprasPorPagar()) { }
-        public FrmEncabezados(ClsComprasPorPagar Controlador)
+        
+        
+        
+        public FrmEncabezados() : this(new ClsOrdenesCompra()) { }
+        
+        
+        
+        
+        public FrmEncabezados(ClsOrdenesCompra Controlador)
         {
             _Controlador = Controlador ?? throw new ArgumentNullException(nameof(Controlador));
             InitializeComponent();
             ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
-            ComprasCboEstado.Items.AddRange(new object[] { "Todos", "Pendiente", "Parcial", "Pagada", "Anulada" });
+            ComprasCboEstado.Items.AddRange(new object[] { "Todos", "Pendiente", "Autorizada", "Rechazada", "Anulada", "Recibida" });
             ComprasProcRestablecerFiltros();
-            ComprasProcConfigurarTabla();
+            ClsTablasOrdenesCompra.ComprasProcConfigurarEncabezados(ComprasDgvEncabezados);
             ComprasTxtBuscar.TextChanged += (Remitente, Evento) => ComprasProcAplicarFiltros();
-            ComprasCboEstado.SelectedIndexChanged += (Remitente, Evento) => ComprasProcAplicarFiltros();
+            ComprasCboEstado.SelectedIndexChanged += (Remitente, Evento) =>
+            {
+                if (!_RestableciendoFiltros)
+                    ComprasProcAplicarFiltros();
+            };
             ComprasUsrFechas.RangoCambiado += (Remitente, Evento) => ComprasProcAplicarFiltros();
             ComprasChkFechas.CheckedChanged += (Remitente, Evento) =>
             {
@@ -60,65 +85,102 @@ namespace CapaVista_OrdenesCompra
             ComprasDgvEncabezados.CellDoubleClick += ComprasProcAbrirCompra;
         }
 
+        
+        
+        
         protected override async void OnLoad(EventArgs Evento)
         {
             base.OnLoad(Evento);
             await ComprasProcCargarDatosAsync();
         }
 
-        private void ComprasProcConfigurarTabla()
+
+        
+        
+        
+        private void ComprasProcActualizarDisponibilidad()
         {
-            ComprasDgvEncabezados.Tabla.RowTemplate.MinimumHeight = 40;
-            ComprasDgvEncabezados.Tabla.RowTemplate.Height = 40;
-            ComprasDgvEncabezados.AutoGenerateColumns = false;
-            foreach (var Campo in new[] {
-                new[] { "numeroFacturaCuentaPorPagar", "Factura", "16" },
-                new[] { "nombreProveedor", "Proveedor", "24" },
-                new[] { "nitProveedor", "NIT", "11" },
-                new[] { "fechaEmisionCuentaPorPagar", "Emision", "12" },
-                new[] { "fechaVencimientoCuentaPorPagar", "Vencimiento", "12" },
-                new[] { "montoTotalCuentaPorPagar", "Monto total", "12" },
-                new[] { "saldoCuentaPorPagar", "Saldo", "12" },
-                new[] { "estadoCuentaPorPagar", "Estado", "11" } })
-            {
-                var Columna = new DataGridViewTextBoxColumn { Name = "ComprasCol" + Campo[0],
-                    DataPropertyName = Campo[0], HeaderText = Campo[1], FillWeight = int.Parse(Campo[2]), ReadOnly = true };
-                if (Campo[0].StartsWith("fecha")) Columna.DefaultCellStyle.Format = "dd/MM/yyyy";
-                if (Campo[0] == "montoTotalCuentaPorPagar" || Campo[0] == "saldoCuentaPorPagar")
-                {
-                    Columna.DefaultCellStyle.Format = "'Q '#,##0.00";
-                    Columna.DefaultCellStyle.FormatProvider = System.Globalization.CultureInfo.InvariantCulture;
-                    Columna.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                }
-                ComprasDgvEncabezados.Columns.Add(Columna);
-            }
+            bool Disponible = !_Cargando && !_AbriendoCompra;
+            ComprasBtnActualizar.Enabled = Disponible;
+            ComprasBtnNuevaOrden.Enabled = Disponible;
+            ComprasGbxFiltros.Enabled = Disponible;
+            ComprasDgvEncabezados.Enabled = Disponible;
+            ComprasBtnCerrar.Enabled = true;
+            UseWaitCursor = !Disponible;
         }
 
+        
+        
+        
+        
         private async Task ComprasProcCargarDatosAsync()
         {
             if (_Cargando) return;
+            Point Desplazamiento = ComprasPnlDesplazamiento.AutoScrollPosition;
+            Control Foco = ComprasFuncControlEnfocado(this);
             _Cargando = true;
-            ComprasBtnActualizar.Enabled = false;
-            ComprasBtnNuevaOrden.Enabled = false;
-            UseWaitCursor = true;
+            ComprasProcActualizarDisponibilidad();
+            ComprasPnlDesplazamiento.AutoScrollPosition = new Point(-Desplazamiento.X, -Desplazamiento.Y);
+            string Estado = ComprasCboEstado.Text;
             ComprasLblResultado.ColorTexto = ClsTemaCompras.PrincipalNavegador;
-            ComprasLblResultado.Texto = "Cargando compras por pagar...";
+            ComprasLblResultado.Texto = "Cargando órdenes de compra...";
             try
             {
-                DataTable Datos = await Task.Run(() => _Controlador.ComprasFuncListar());
-                if (IsDisposed || Disposing) return;
+                DataTable Datos = await Task.Run(() => _Controlador.ComprasFuncListar(Estado));
+                if (IsDisposed || Disposing)
+                {
+                    Datos.Dispose();
+                    return;
+                }
+                DataTable Anteriores = _Datos;
                 _Datos = Datos;
+                Anteriores?.Dispose();
                 ComprasProcAplicarFiltros();
             }
             catch (Exception Ex)
             {
-                if (!IsDisposed && !Disposing) ComprasProcMostrarError("No se pudieron cargar las compras por pagar.", Ex);
+                if (!IsDisposed && !Disposing)
+                {
+                    ComprasProcVaciarDatos();
+                    ComprasProcMostrarError("No se pudieron cargar las órdenes de compra.", Ex);
+                }
             }
             finally
             {
                 _Cargando = false;
-                if (!IsDisposed && !Disposing) { ComprasBtnActualizar.Enabled = true; ComprasBtnNuevaOrden.Enabled = true; UseWaitCursor = false; }
+                if (!IsDisposed && !Disposing)
+                {
+                    ComprasProcActualizarDisponibilidad();
+                    if (_CargaInicial)
+                    {
+                        _CargaInicial = false;
+                        ComprasBtnNuevaOrden.Focus();
+                        ComprasPnlDesplazamiento.AutoScrollPosition = Point.Empty;
+                    }
+                    else
+                    {
+                        if (Foco != null && !Foco.IsDisposed && Foco.CanFocus)
+                            Foco.Focus();
+                        ComprasPnlDesplazamiento.AutoScrollPosition = new Point(-Desplazamiento.X, -Desplazamiento.Y);
+                    }
+                }
             }
+        }
+
+        
+        
+        
+        
+        private static Control ComprasFuncControlEnfocado(Control Contenedor)
+        {
+            if (Contenedor.Focused) return Contenedor;
+            if (!Contenedor.ContainsFocus) return null;
+            foreach (Control Hijo in Contenedor.Controls)
+            {
+                Control Foco = ComprasFuncControlEnfocado(Hijo);
+                if (Foco != null) return Foco;
+            }
+            return null;
         }
 
         private void ComprasProcAplicarFiltros()
@@ -126,17 +188,33 @@ namespace CapaVista_OrdenesCompra
             if (_Datos == null || _RestableciendoFiltros) return;
             DateTime? Inicio = ComprasChkFechas.Checked ? (DateTime?)ComprasUsrFechas.FechaInicio : null;
             DateTime? Fin = ComprasChkFechas.Checked ? (DateTime?)ComprasUsrFechas.FechaFin : null;
-            DataTable Resultado = _Controlador.ComprasFuncFiltrar(_Datos, ComprasTxtBuscar.Text, ComprasCboEstado.Text, Inicio, Fin);
+            DataTable Resultado;
+            try
+            {
+                Resultado = _Controlador.ComprasFuncFiltrar(_Datos, ComprasTxtBuscar.Text, ComprasCboEstado.Text, Inicio, Fin);
+            }
+            catch (ArgumentException Ex)
+            {
+                ComprasLblResultado.ColorTexto = Color.Red;
+                ComprasLblResultado.Texto = Ex.Message;
+                return;
+            }
+            Point Desplazamiento = ComprasPnlDesplazamiento.AutoScrollPosition;
+            var Anterior = ComprasDgvEncabezados.DataSource as DataTable;
             ComprasDgvEncabezados.DataSource = Resultado;
+            Anterior?.Dispose();
             ComprasDgvEncabezados.ClearSelection();
             if (!string.IsNullOrWhiteSpace(ComprasTxtBuscar.Text) && Resultado.Rows.Count == 0)
-                ComprasTxtBuscar.ComprasMetMostrarError("No se encontraron compras por pagar para la búsqueda.");
+                ComprasTxtBuscar.ComprasMetMostrarError("No se encontraron órdenes de compra para la búsqueda.");
             else
                 ComprasTxtBuscar.ComprasMetLimpiarError();
             ComprasLblResultado.ColorTexto = ClsTemaCompras.PrincipalNavegador;
-            ComprasLblResultado.Texto = Resultado.Rows.Count + " compras por pagar. Doble clic para abrir.";
+            ComprasLblResultado.Texto = Resultado.Rows.Count + " órdenes de compra. Doble clic para abrir.";
         }
 
+        
+        
+        
         private async Task ComprasProcRefrescarAsync()
         {
             if (_Cargando || _AbriendoCompra) return;
@@ -144,6 +222,10 @@ namespace CapaVista_OrdenesCompra
             await ComprasProcCargarDatosAsync();
         }
 
+        
+        
+        
+        
         private void ComprasProcRestablecerFiltros()
         {
             _RestableciendoFiltros = true;
@@ -160,6 +242,9 @@ namespace CapaVista_OrdenesCompra
             finally { _RestableciendoFiltros = false; }
         }
 
+        
+        
+        
         private void ComprasProcNuevaOrden(object Remitente, EventArgs Evento)
         {
             if (_Cargando || _AbriendoCompra) return;
@@ -169,25 +254,33 @@ namespace CapaVista_OrdenesCompra
             finally { _AbriendoCompra = false; }
         }
 
-        private void ComprasProcMostrarOrden(ClsCompraPorPagar Compra)
+        
+        
+        
+        
+        private void ComprasProcMostrarOrden(ClsOrdenCompra Compra)
         {
             _CompraSeleccionada = Compra;
             AbrirOrden = true;
             Close();
         }
 
+        
+        
+        
+        
         private async void ComprasProcAbrirCompra(object Remitente, DataGridViewCellEventArgs Evento)
         {
-            if (_Cargando || _AbriendoCompra || Evento.RowIndex < 0 || Evento.RowIndex >= ComprasDgvEncabezados.Rows.Count) return;
+            if (_Cargando || _AbriendoCompra || Evento.RowIndex < 0 || Evento.ColumnIndex < 0
+                || Evento.RowIndex >= ComprasDgvEncabezados.Rows.Count) return;
             var Fila = ComprasDgvEncabezados.Rows[Evento.RowIndex].DataBoundItem as DataRowView;
             if (Fila == null) return;
             _AbriendoCompra = true;
-            ComprasDgvEncabezados.Enabled = false;
-            UseWaitCursor = true;
+            ComprasProcActualizarDisponibilidad();
             try
             {
-                int Id = Convert.ToInt32(Fila["idCuentaPorPagar"]);
-                ClsCompraPorPagar Compra = await Task.Run(() => _Controlador.ComprasFuncObtener(Id));
+                int Id = Convert.ToInt32(Fila["idOrdenCompra"]);
+                ClsOrdenCompra Compra = await Task.Run(() => _Controlador.ComprasFuncObtener(Id));
                 if (IsDisposed || Disposing) return;
                 UseWaitCursor = false;
                 if (Compra == null) { ComprasLblResultado.Texto = "La compra ya no esta disponible. Actualiza la lista."; return; }
@@ -200,10 +293,34 @@ namespace CapaVista_OrdenesCompra
             finally
             {
                 _AbriendoCompra = false;
-                if (!IsDisposed && !Disposing) { ComprasDgvEncabezados.Enabled = true; UseWaitCursor = false; }
+                if (!IsDisposed && !Disposing) ComprasProcActualizarDisponibilidad();
             }
         }
 
+        
+        
+        
+        private void ComprasProcVaciarDatos()
+        {
+            var Resultado = ComprasDgvEncabezados.DataSource as DataTable;
+            ComprasDgvEncabezados.DataSource = null;
+            Resultado?.Dispose();
+            _Datos?.Dispose();
+            _Datos = null;
+        }
+
+        
+        
+        
+        protected override void OnFormClosed(FormClosedEventArgs Evento)
+        {
+            ComprasProcVaciarDatos();
+            base.OnFormClosed(Evento);
+        }
+
+        
+        
+        
         private void ComprasProcMostrarError(string Mensaje, Exception Ex)
         {
             System.Diagnostics.Debug.WriteLine(Ex);

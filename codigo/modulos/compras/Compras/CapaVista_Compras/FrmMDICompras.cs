@@ -24,6 +24,10 @@ namespace CapaVista_Compras
         private Form _FormularioSubproceso;
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras _OpcionSubproceso;
         private bool _NavegadorContraido;
+        private bool _CatalogosAbierto;
+        private Panel _PanelDesplazamientoNavegador;
+        private int _DesplazamientoNavegador;
+        private int _RuedaNavegador;
         private bool _PantallaCompleta;
         private FormBorderStyle _BordeAnterior;
         private FormWindowState _EstadoAnterior;
@@ -39,6 +43,10 @@ namespace CapaVista_Compras
         public FrmMDICompras()
         {
             InitializeComponent();
+            ComprasMetConfigurarDesplazamientoNavegador();
+            ComprasTlpCatalogos.Paint += ComprasMetPintarFlechaCatalogos;
+            ComprasLblCatalogos.Margin = new Padding(3, 4, 26, 4);
+            ComprasMetAcomodarCatalogos();
             ComprasBtnAyuda.Enabled = false;
             ComprasTlpBitacora.Enabled = false;
             ComprasTlpHerramientas.Enabled = false;
@@ -211,7 +219,8 @@ namespace CapaVista_Compras
                         var Encabezados = Formulario as CapaVista_OrdenesCompra.FrmEncabezados;
                         if (Encabezados != null && Encabezados.AbrirOrden)
                             CrearSiguiente = Encabezados.ComprasFuncCrearOrdenSeleccionada;
-                        else if (Formulario is CapaVista_OrdenesCompra.FrmOrdenesCompra)
+                        else if (Formulario is CapaVista_OrdenesCompra.FrmOrdenesCompra
+                            || Formulario is CapaVista_OrdenesCompra.FrmDetalleOrdenCompra)
                             CrearSiguiente = () => new CapaVista_OrdenesCompra.FrmEncabezados();
                     }
                 }
@@ -238,6 +247,7 @@ namespace CapaVista_Compras
                 Opcion.Seleccionado = ReferenceEquals(Opcion, _OpcionSubproceso);
                 if (!Opcion.Seleccionado) Opcion.ComprasProcActualizarHover(false);
             }
+            ComprasTlpCatalogos.Seleccionado = ReferenceEquals(_OpcionSubproceso, ComprasTlpProveedores);
         }
 
         private void ComprasMetSubprocesoCerrado(object Remitente, FormClosedEventArgs Evento)
@@ -278,6 +288,103 @@ namespace CapaVista_Compras
         private void ComprasMetAbrirCierreMovimientos(object Remitente, EventArgs Evento)
         {
             ComprasMetAbrirSubproceso<CapaVista_CierreMovimientos.FrmCierreMovimientos>(ComprasTlpCierreMovimientos);
+        }
+
+        private void ComprasMetConfigurarDesplazamientoNavegador()
+        {
+            _PanelDesplazamientoNavegador = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Margin = Padding.Empty,
+                BackColor = ComprasTlpNavegador.BackColor,
+                Name = "ComprasPnlDesplazamientoNavegador"
+            };
+            ComprasTlpPrincipal.Controls.Remove(ComprasTlpNavegador);
+            ComprasTlpPrincipal.Controls.Add(_PanelDesplazamientoNavegador, 0, 0);
+            ComprasTlpPrincipal.SetRowSpan(_PanelDesplazamientoNavegador, 2);
+            ComprasTlpNavegador.MinimumSize = System.Drawing.Size.Empty;
+            ComprasTlpNavegador.MaximumSize = System.Drawing.Size.Empty;
+            ComprasTlpNavegador.Dock = DockStyle.None;
+            ComprasTlpNavegador.Location = System.Drawing.Point.Empty;
+            _PanelDesplazamientoNavegador.Controls.Add(ComprasTlpNavegador);
+            _PanelDesplazamientoNavegador.SizeChanged += (Origen, Evento) => ComprasMetAjustarDesplazamientoNavegador();
+            ComprasMetConectarRuedaNavegador(_PanelDesplazamientoNavegador);
+        }
+
+        private void ComprasMetConectarRuedaNavegador(Control Elemento)
+        {
+            Elemento.MouseWheel += ComprasMetDesplazarNavegador;
+            foreach (Control Hijo in Elemento.Controls) ComprasMetConectarRuedaNavegador(Hijo);
+        }
+
+        private void ComprasMetDesplazarNavegador(object Remitente, MouseEventArgs Evento)
+        {
+            var Rueda = Evento as HandledMouseEventArgs;
+            if (Rueda != null)
+            {
+                if (Rueda.Handled) return;
+                Rueda.Handled = true;
+            }
+            _RuedaNavegador += Evento.Delta;
+            int Pasos = _RuedaNavegador / SystemInformation.MouseWheelScrollDelta;
+            _RuedaNavegador %= SystemInformation.MouseWheelScrollDelta;
+            int Lineas = SystemInformation.MouseWheelScrollLines;
+            int Distancia = Lineas < 0 ? _PanelDesplazamientoNavegador.ClientSize.Height : Lineas * 20;
+            _DesplazamientoNavegador -= Pasos * Distancia;
+            ComprasMetAjustarDesplazamientoNavegador();
+        }
+
+        private void ComprasMetAjustarDesplazamientoNavegador()
+        {
+            if (_PanelDesplazamientoNavegador == null) return;
+            int AltoContenido = ComprasTlpNavegador.Padding.Vertical;
+            foreach (RowStyle Fila in ComprasTlpNavegador.RowStyles)
+                if (Fila.SizeType == SizeType.Absolute) AltoContenido += (int)Math.Ceiling(Fila.Height);
+            int AltoVisible = _PanelDesplazamientoNavegador.ClientSize.Height;
+            int Alto = Math.Max(AltoVisible, AltoContenido);
+            _DesplazamientoNavegador = Math.Max(0, Math.Min(_DesplazamientoNavegador, Alto - AltoVisible));
+            ComprasTlpNavegador.SetBounds(0, -_DesplazamientoNavegador, ComprasTlpNavegador.Width, Alto);
+        }
+
+        private void ComprasMetAlternarCatalogos(object Remitente, EventArgs Evento)
+        {
+            _CatalogosAbierto = !_CatalogosAbierto;
+            ComprasMetAcomodarCatalogos();
+        }
+
+        private void ComprasMetAcomodarCatalogos()
+        {
+            ComprasTlpNavegador.SuspendLayout();
+            try
+            {
+                Control[] Opciones = { ComprasTlpProveedores, ComprasTlpMantenimiento2, ComprasTlpMantenimiento3 };
+                foreach (Control Opcion in Opciones)
+                {
+                    Opcion.Visible = _CatalogosAbierto;
+                    Opcion.Margin = new Padding(_NavegadorContraido ? 0 : 18, 2, 0, 2);
+                    ComprasTlpNavegador.RowStyles[ComprasTlpNavegador.GetRow(Opcion)].Height = _CatalogosAbierto ? ComprasTlpNavegador.RowStyles[7].Height : 0F;
+                }
+            }
+            finally
+            {
+                ComprasTlpNavegador.ResumeLayout(true);
+            }
+            ComprasMetAjustarDesplazamientoNavegador();
+            ComprasLblCatalogos.Texto = "Catálogos";
+            ComprasBtnIconoCatalogos.AccessibleName = _CatalogosAbierto ? "Contraer catálogos" : "Expandir catálogos";
+            ComprasTlpCatalogos.Invalidate();
+        }
+
+        private void ComprasMetPintarFlechaCatalogos(object Remitente, PaintEventArgs Evento)
+        {
+            if (_NavegadorContraido) return;
+            int X = ComprasTlpCatalogos.Width - 26;
+            int Y = ComprasTlpCatalogos.Height / 2;
+            System.Drawing.Point[] Flecha = _CatalogosAbierto
+                ? new[] { new System.Drawing.Point(X, Y - 3), new System.Drawing.Point(X + 10, Y - 3), new System.Drawing.Point(X + 5, Y + 4) }
+                : new[] { new System.Drawing.Point(X + 2, Y - 6), new System.Drawing.Point(X + 2, Y + 6), new System.Drawing.Point(X + 9, Y) };
+            using (var Pincel = new System.Drawing.SolidBrush(ComprasLblCatalogos.ColorTexto))
+                Evento.Graphics.FillPolygon(Pincel, Flecha);
         }
 
         private void ComprasMetAbrirProveedores(object Remitente, EventArgs Evento)
@@ -363,6 +470,7 @@ namespace CapaVista_Compras
                     ? 64 + ComprasTlpNavegador.Padding.Horizontal : 270;
                 ComprasTlpPrincipal.ColumnStyles[0].Width = _NavegadorContraido
                     ? ComprasTlpNavegador.Width + 16 : 286F;
+                ComprasMetAcomodarCatalogos();
                 ComprasBtnAlternarNavegador.AccessibleName = _NavegadorContraido
                     ? "Expandir menú" : "Contraer menú";
             }
