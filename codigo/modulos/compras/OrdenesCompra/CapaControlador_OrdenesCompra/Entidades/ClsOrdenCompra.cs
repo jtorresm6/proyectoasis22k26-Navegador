@@ -1,26 +1,5 @@
 ﻿using System;
 
-/*
- * ==================================================================
- * Área : Compras
- * Autor : Diego Fernando Santizo Samayoa
- * Carné : 0901-22-15950
- * Fecha : 24/10/2026
- * ==================================================================
- * Propósito :
- *  Expone los datos de una orden de compra a los consumidores del controlador.
- * ===================================================================
-*/
-
-
-
-
-
-
-
-
-
-
 namespace CapaControlador_OrdenesCompra.Entidades
 {
     public sealed class ClsOrdenCompra
@@ -34,6 +13,8 @@ namespace CapaControlador_OrdenesCompra.Entidades
         public decimal MontoTotal { get; }
         public decimal Subtotal { get; }
         public decimal Descuento { get; }
+        public decimal Impuesto { get; }
+        public bool Bloqueado { get; }
         public int IdPlazo { get; }
         public string NombrePlazo { get; }
         public int DiasPlazo { get; }
@@ -48,10 +29,6 @@ namespace CapaControlador_OrdenesCompra.Entidades
         public string DireccionProveedor { get; }
         public bool ProveedorActivo { get; }
 
-        
-        
-        
-        
         internal ClsOrdenCompra(CapaModelo_OrdenesCompra.Entidades.ClsOrdenCompra Compra)
         {
             if (Compra == null) throw new ArgumentNullException(nameof(Compra));
@@ -63,6 +40,8 @@ namespace CapaControlador_OrdenesCompra.Entidades
             MontoTotal = Compra.MontoTotal;
             Subtotal = Compra.Subtotal;
             Descuento = Compra.Descuento;
+            Impuesto = Compra.Impuesto;
+            Bloqueado = Compra.Bloqueado;
             IdPlazo = Compra.IdPlazo;
             NombrePlazo = Compra.NombrePlazo;
             DiasPlazo = Compra.DiasPlazo;

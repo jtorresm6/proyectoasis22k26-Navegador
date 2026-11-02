@@ -207,7 +207,8 @@ namespace CapaVista_Compras
                         var Encabezados = Formulario as CapaVista_OrdenesCompra.FrmEncabezados;
                         if (Encabezados != null && Encabezados.AbrirOrden)
                             CrearSiguiente = Encabezados.ComprasFuncCrearOrdenSeleccionada;
-                        else if (Formulario is CapaVista_OrdenesCompra.FrmOrdenesCompra)
+                        else if (Formulario is CapaVista_OrdenesCompra.FrmOrdenesCompra
+                            || Formulario is CapaVista_OrdenesCompra.FrmDetalleOrdenCompra)
                             CrearSiguiente = () => new CapaVista_OrdenesCompra.FrmEncabezados();
                     }
                 }

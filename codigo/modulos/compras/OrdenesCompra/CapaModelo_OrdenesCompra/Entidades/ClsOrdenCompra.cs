@@ -1,27 +1,6 @@
 ﻿using System;
 using System.Data;
 
-/*
- * ==================================================================
- * Área : Compras
- * Autor : Diego Fernando Santizo Samayoa
- * Carné : 0901-22-15950
- * Fecha : 24/10/2026
- * ==================================================================
- * Propósito :
- *  Representa los datos persistidos de una orden de compra.
- * ===================================================================
-*/
-
-
-
-
-
-
-
-
-
-
 namespace CapaModelo_OrdenesCompra.Entidades
 {
     public sealed class ClsOrdenCompra
@@ -35,6 +14,8 @@ namespace CapaModelo_OrdenesCompra.Entidades
         public decimal MontoTotal { get; }
         public decimal Subtotal { get; }
         public decimal Descuento { get; }
+        public decimal Impuesto { get; }
+        public bool Bloqueado { get; }
         public int IdPlazo { get; }
         public string NombrePlazo { get; }
         public int DiasPlazo { get; }
@@ -49,21 +30,19 @@ namespace CapaModelo_OrdenesCompra.Entidades
         public string DireccionProveedor { get; }
         public bool ProveedorActivo { get; }
 
-        
-        
-        
-        
         public ClsOrdenCompra(DataRow Fila)
         {
             if (Fila == null) throw new ArgumentNullException(nameof(Fila));
             IdOrdenCompra = Convert.ToInt32(Fila["idOrdenCompra"]);
             IdProveedor = Convert.ToInt32(Fila["idProveedor"]);
-            CodigoOrdenCompra = Convert.ToString(Fila["codigoOrdenCompra"]);
+            CodigoOrdenCompra = IdOrdenCompra.ToString(System.Globalization.CultureInfo.InvariantCulture);
             FechaEmision = Convert.ToDateTime(Fila["fechaEmisionOrdenCompra"]).Date;
             FechaVencimiento = Convert.ToDateTime(Fila["fechaVencimientoOrdenCompra"]).Date;
             MontoTotal = Convert.ToDecimal(Fila["totalOrdenCompra"]);
             Subtotal = Convert.ToDecimal(Fila["subtotalOrdenCompra"]);
             Descuento = Convert.ToDecimal(Fila["descuentoOrdenCompra"]);
+            Impuesto = Convert.ToDecimal(Fila["impuestoOrdenCompra"]);
+            Bloqueado = Convert.ToBoolean(Fila["bloqueadoOrdenCompra"]);
             IdPlazo = Convert.ToInt32(Fila["idPlazo"]);
             NombrePlazo = Convert.ToString(Fila["nombrePlazo"]);
             DiasPlazo = Convert.ToInt32(Fila["diasPlazo"]);

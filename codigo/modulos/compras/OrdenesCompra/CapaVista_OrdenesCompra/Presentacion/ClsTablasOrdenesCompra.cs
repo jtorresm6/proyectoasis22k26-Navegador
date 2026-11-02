@@ -3,34 +3,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using CapaVista_Componentes.Componentes;
 
-/*
- * ==================================================================
- * Área : Compras
- * Autor : Diego Fernando Santizo Samayoa
- * Carné : 0901-22-15950
- * Fecha : 24/10/2026
- * ==================================================================
- * Propósito :
- *  Configura las columnas de los DGV de órdenes de compra.
- * ===================================================================
-*/
-
-
-
-
-
-
-
-
-
 namespace CapaVista_OrdenesCompra.Presentacion
 {
     internal static class ClsTablasOrdenesCompra
     {
-        
-        
-        
-        
+
         internal static void ComprasProcConfigurarEncabezados(ComprasUsrDataGridView Tabla)
         {
             Tabla.Tabla.RowTemplate.MinimumHeight = 40;
@@ -62,20 +39,17 @@ namespace CapaVista_OrdenesCompra.Presentacion
             Tabla.AllowUserToDeleteRows = false;
         }
 
-        
-        
-        
-        
         internal static void ComprasProcConfigurarDetalles(ComprasUsrDataGridView Tabla)
         {
             Tabla.AutoGenerateColumns = false;
+            ClsPresentacionCompras.ComprasProcAgregarColumna(Tabla, "ordenDetalleOrdenCompra", "L?nea", 10, false);
             ClsPresentacionCompras.ComprasProcAgregarColumna(Tabla, "idProducto", "ID producto", 12, false);
             ClsPresentacionCompras.ComprasProcAgregarColumna(Tabla, "cantidadDetalleOrdenCompra", "Cantidad", 20, true);
             ClsPresentacionCompras.ComprasProcAgregarColumna(Tabla, "costoUnitarioDetalleOrdenCompra", "Costo unitario", 22, true);
             ClsPresentacionCompras.ComprasProcAgregarColumna(Tabla, "descuentoPorcentajeDetalleOrdenCompra", "Descuento %", 20, true);
             ClsPresentacionCompras.ComprasProcAgregarColumna(Tabla, "subtotalDetalleOrdenCompra", "Subtotal", 22, true);
             foreach (DataGridViewColumn Columna in Tabla.Columns)
-                Columna.DefaultCellStyle.Format = Columna.DataPropertyName == "idProducto" ? "0" : "N4";
+                Columna.DefaultCellStyle.Format = (Columna.DataPropertyName == "idProducto" || Columna.DataPropertyName == "ordenDetalleOrdenCompra") ? "0" : "N4";
             Tabla.Columns["ComprasColdescuentoPorcentajeDetalleOrdenCompra"].DefaultCellStyle.Format = "N2";
             Tabla.Tabla.DefaultCellStyle.Alignment =
                 System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;

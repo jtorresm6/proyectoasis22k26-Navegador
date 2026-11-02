@@ -35,6 +35,7 @@ namespace CapaVista_OrdenesCompra
         private readonly ClsOrdenesCompra _Controlador;
         private DataTable _Datos;
         private bool _Cargando;
+        private bool _CargaInicial = true;
         private bool _AbriendoCompra;
         private bool _RestableciendoFiltros;
         public bool AbrirOrden { get; private set; }
@@ -45,7 +46,9 @@ namespace CapaVista_OrdenesCompra
         public Form ComprasFuncCrearOrdenSeleccionada()
         {
             if (!AbrirOrden) throw new InvalidOperationException("No hay una orden seleccionada.");
-            return new FrmOrdenesCompra(_CompraSeleccionada, _Controlador);
+            return _CompraSeleccionada == null
+                ? (Form)new FrmOrdenesCompra()
+                : new FrmDetalleOrdenCompra(_CompraSeleccionada, _Controlador);
         }
 
         
@@ -65,10 +68,10 @@ namespace CapaVista_OrdenesCompra
             ComprasProcRestablecerFiltros();
             ClsTablasOrdenesCompra.ComprasProcConfigurarEncabezados(ComprasDgvEncabezados);
             ComprasTxtBuscar.TextChanged += (Remitente, Evento) => ComprasProcAplicarFiltros();
-            ComprasCboEstado.SelectedIndexChanged += async (Remitente, Evento) =>
+            ComprasCboEstado.SelectedIndexChanged += (Remitente, Evento) =>
             {
                 if (!_RestableciendoFiltros)
-                    await ComprasProcCargarDatosAsync();
+                    ComprasProcAplicarFiltros();
             };
             ComprasUsrFechas.RangoCambiado += (Remitente, Evento) => ComprasProcAplicarFiltros();
             ComprasChkFechas.CheckedChanged += (Remitente, Evento) =>
@@ -113,8 +116,11 @@ namespace CapaVista_OrdenesCompra
         private async Task ComprasProcCargarDatosAsync()
         {
             if (_Cargando) return;
+            Point Desplazamiento = ComprasPnlDesplazamiento.AutoScrollPosition;
+            Control Foco = ComprasFuncControlEnfocado(this);
             _Cargando = true;
             ComprasProcActualizarDisponibilidad();
+            ComprasPnlDesplazamiento.AutoScrollPosition = new Point(-Desplazamiento.X, -Desplazamiento.Y);
             string Estado = ComprasCboEstado.Text;
             ComprasLblResultado.ColorTexto = ClsTemaCompras.PrincipalNavegador;
             ComprasLblResultado.Texto = "Cargando órdenes de compra...";
@@ -142,7 +148,22 @@ namespace CapaVista_OrdenesCompra
             finally
             {
                 _Cargando = false;
-                if (!IsDisposed && !Disposing) ComprasProcActualizarDisponibilidad();
+                if (!IsDisposed && !Disposing)
+                {
+                    ComprasProcActualizarDisponibilidad();
+                    if (_CargaInicial)
+                    {
+                        _CargaInicial = false;
+                        ComprasBtnNuevaOrden.Focus();
+                        ComprasPnlDesplazamiento.AutoScrollPosition = Point.Empty;
+                    }
+                    else
+                    {
+                        if (Foco != null && !Foco.IsDisposed && Foco.CanFocus)
+                            Foco.Focus();
+                        ComprasPnlDesplazamiento.AutoScrollPosition = new Point(-Desplazamiento.X, -Desplazamiento.Y);
+                    }
+                }
             }
         }
 
@@ -150,6 +171,18 @@ namespace CapaVista_OrdenesCompra
         
         
         
+        private static Control ComprasFuncControlEnfocado(Control Contenedor)
+        {
+            if (Contenedor.Focused) return Contenedor;
+            if (!Contenedor.ContainsFocus) return null;
+            foreach (Control Hijo in Contenedor.Controls)
+            {
+                Control Foco = ComprasFuncControlEnfocado(Hijo);
+                if (Foco != null) return Foco;
+            }
+            return null;
+        }
+
         private void ComprasProcAplicarFiltros()
         {
             if (_Datos == null || _RestableciendoFiltros) return;
@@ -166,6 +199,7 @@ namespace CapaVista_OrdenesCompra
                 ComprasLblResultado.Texto = Ex.Message;
                 return;
             }
+            Point Desplazamiento = ComprasPnlDesplazamiento.AutoScrollPosition;
             var Anterior = ComprasDgvEncabezados.DataSource as DataTable;
             ComprasDgvEncabezados.DataSource = Resultado;
             Anterior?.Dispose();

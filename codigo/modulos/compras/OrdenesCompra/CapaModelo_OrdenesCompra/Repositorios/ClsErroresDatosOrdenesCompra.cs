@@ -1,34 +1,11 @@
 ﻿using System;
 using System.Data.Odbc;
 
-/*
- * ==================================================================
- * Área : Compras
- * Autor : Diego Fernando Santizo Samayoa
- * Carné : 0901-22-15950
- * Fecha : 24/10/2026
- * ==================================================================
- * Propósito :
- *  Traduce errores ODBC a mensajes de órdenes de compra.
- * ===================================================================
-*/
-
-
-
-
-
-
-
-
-
 namespace CapaModelo_OrdenesCompra.Repositorios
 {
     internal static class ClsErroresDatosOrdenesCompra
     {
-        
-        
-        
-        
+
         internal static Exception ComprasFuncTraducirError(OdbcException Error)
         {
             string Mensaje = "No se pudo completar la operación. Verifica la conexión configurada en Seguridad.";

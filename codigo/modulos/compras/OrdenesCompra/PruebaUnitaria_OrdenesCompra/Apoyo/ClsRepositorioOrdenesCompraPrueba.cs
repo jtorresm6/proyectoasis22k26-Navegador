@@ -3,24 +3,13 @@ using System.Data;
 using CapaModelo_OrdenesCompra.Contratos;
 using CapaModelo_OrdenesCompra.Entidades;
 
-/*
- * ==================================================================
- * Área : Compras
- * Autor : Diego Fernando Santizo Samayoa
- * Carné : 0901-22-15950
- * Fecha : 30/10/2026
- * ==================================================================
- * Propósito :
- *  Sustituye el acceso a datos de órdenes de compra durante las pruebas unitarias.
- * ===================================================================
-*/
-
 namespace PruebaUnitaria_OrdenesCompra.Apoyo
 {
     internal sealed class ClsRepositorioOrdenesCompraPrueba : IRepositorioOrdenesCompra, IDisposable
     {
         internal DataTable Datos { get; }
         internal string EstadoSolicitado { get; private set; }
+        internal decimal ImpuestoCreado { get; private set; }
         internal string CodigoCreado { get; private set; }
         internal string ComentarioCreado { get; private set; }
         internal DateTime EmisionCreada { get; private set; }
@@ -61,10 +50,83 @@ namespace PruebaUnitaria_OrdenesCompra.Apoyo
             return Resultado;
         }
 
+        public DataTable ComprasFuncListarSucursales()
+        {
+            var Datos = new DataTable();
+            Datos.Columns.Add("idSucursal", typeof(int));
+            Datos.Columns.Add("nombreSucursal", typeof(string));
+            Datos.Rows.Add(1, "Central");
+            Datos.Rows.Add(2, "Norte");
+            return Datos;
+        }
+
+        public DataTable ComprasFuncListarBodegas()
+        {
+            var Datos = new DataTable();
+            Datos.Columns.Add("idBodega", typeof(int));
+            Datos.Columns.Add("nombreBodega", typeof(string));
+            Datos.Columns.Add("Fk_Sucursal_Codigo", typeof(int));
+            Datos.Columns.Add("paisBodega", typeof(string));
+            Datos.Rows.Add(11, "Bodega Central", 1, "Guatemala");
+            Datos.Rows.Add(12, "Bodega Norte", 2, "Mexico");
+            return Datos;
+        }
+
+        public DataTable ComprasFuncListarProductos()
+        {
+            var Datos = new DataTable();
+            Datos.Columns.Add("idProducto", typeof(int));
+            Datos.Columns.Add("skuProducto", typeof(string));
+            Datos.Columns.Add("nombreProducto", typeof(string));
+            Datos.Columns.Add("descripcionProducto", typeof(string));
+            Datos.Columns.Add("pesoProducto", typeof(decimal));
+            Datos.Columns.Add("precioCostoProducto", typeof(decimal));
+            Datos.Rows.Add(1, "SKU-001", "Producto Uno", "Descripcion Uno", 1.5M, 77M);
+            Datos.Rows.Add(2, "SKU-002", "Producto Dos", "Descripcion Dos", 2M, 154M);
+            return Datos;
+        }
+
+        public DataTable ComprasFuncListarMonedas()
+        {
+            var Datos = new DataTable();
+            Datos.Columns.Add("idMoneda", typeof(long));
+            Datos.Columns.Add("codigoMoneda", typeof(string));
+            Datos.Columns.Add("nombreMoneda", typeof(string));
+            Datos.Columns.Add("simboloMoneda", typeof(string));
+            Datos.Rows.Add(10L, "GTQ", "Quetzal", "Q");
+            Datos.Rows.Add(20L, "USD", "Dolar", "$");
+            Datos.Rows.Add(30L, "EUR", "Euro", "EUR");
+            Datos.Rows.Add(40L, "JPY", "Yen", "JPY");
+            return Datos;
+        }
+
+        public DataTable ComprasFuncListarPlazos()
+        {
+            var Datos = new DataTable();
+            Datos.Columns.Add("idPlazo", typeof(int));
+            Datos.Columns.Add("nombrePlazo", typeof(string));
+            Datos.Columns.Add("diasPlazo", typeof(int));
+            Datos.Rows.Add(1, "Contado", 0);
+            Datos.Rows.Add(2, "30 dias", 30);
+            Datos.Rows.Add(3, "60 dias", 60);
+            return Datos;
+        }
+
+        public DataTable ComprasFuncObtenerTipoCambio(long IdMoneda, DateTime Fecha)
+        {
+            var Datos = new DataTable();
+            Datos.Columns.Add("idTipoCambio", typeof(long));
+            Datos.Columns.Add("valorTipoCambio", typeof(decimal));
+            Datos.Columns.Add("fechaTipoCambio", typeof(DateTime));
+            if (IdMoneda == 20L) Datos.Rows.Add(901L, 7.7M, Fecha.Date);
+            if (IdMoneda == 30L) Datos.Rows.Add(902L, 8.4M, Fecha.Date);
+            return Datos;
+        }
+
         public DataTable ComprasFuncListarProveedores()
         {
             using (var Vista = new DataView(Datos, "estadoProveedor = true", "nombreProveedor", DataViewRowState.CurrentRows))
-                return Vista.ToTable(true, "idProveedor", "nombreProveedor");
+                return Vista.ToTable(true, "idProveedor", "nombreProveedor", "nitProveedor", "telefonoProveedor", "correoProveedor", "direccionProveedor", "estadoProveedor", "saldoActualProveedor", "idPlazo");
         }
 
         public void ComprasProcCambiarEstado(int Id, string Estado)
@@ -86,10 +148,11 @@ namespace PruebaUnitaria_OrdenesCompra.Apoyo
             VencimientoActualizado = Fecha;
         }
 
-        public int ComprasFuncCrear(string CodigoOrdenCompra, int IdProveedor, int IdPlazo, int IdMoneda,
-            DateTime Emision, DateTime Vencimiento, decimal TipoCambio, decimal Subtotal, decimal Descuento, string Comentario)
+        public int ComprasFuncCrear(int IdProveedor, int IdPlazo, int IdMoneda,
+            DateTime Emision, DateTime Vencimiento, decimal TipoCambio, decimal Subtotal, decimal Descuento, string Comentario, decimal Impuesto = 0M)
         {
-            CodigoCreado = CodigoOrdenCompra;
+            ImpuestoCreado = Impuesto;
+            CodigoCreado = string.Empty;
             ComentarioCreado = Comentario;
             EmisionCreada = Emision;
             VencimientoCreado = Vencimiento;
@@ -114,6 +177,9 @@ namespace PruebaUnitaria_OrdenesCompra.Apoyo
             foreach (string Campo in new[] { "tipoCambioOrdenCompra", "subtotalOrdenCompra", "descuentoOrdenCompra", "totalOrdenCompra" })
                 Tabla.Columns.Add(Campo, typeof(decimal));
             Tabla.Columns.Add("estadoProveedor", typeof(bool));
+            Tabla.Columns.Add("saldoActualProveedor", typeof(decimal)).DefaultValue = 0M;
+            Tabla.Columns.Add("impuestoOrdenCompra", typeof(decimal)).DefaultValue = 0M;
+            Tabla.Columns.Add("bloqueadoOrdenCompra", typeof(bool)).DefaultValue = false;
             Tabla.PrimaryKey = new[] { Tabla.Columns["idOrdenCompra"] };
             string[] Estados = { "Pendiente", "Autorizada", "Rechazada", "Anulada", "Recibida" };
             string[] Proveedores = { "José Cárnicos", "Empaques", "José Cárnicos", "Insumos", "Empaques" };

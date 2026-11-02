@@ -4,18 +4,6 @@ using System.Data;
 using CapaControlador_OrdenesCompra;
 using PruebaUnitaria_OrdenesCompra.Apoyo;
 
-/*
- * ==================================================================
- * Área : Compras
- * Autor : Diego Fernando Santizo Samayoa
- * Carné : 0901-22-15950
- * Fecha : 30/10/2026
- * ==================================================================
- * Propósito :
- *  Verifica las entradas y límites de creación y vencimiento de órdenes.
- * ===================================================================
-*/
-
 namespace PruebaUnitaria_OrdenesCompra
 {
     [TestClass]
@@ -42,32 +30,94 @@ namespace PruebaUnitaria_OrdenesCompra
         }
 
         [TestMethod]
+        public void Test_CalcularVencimientoRespetaDiasYAnioBisiesto()
+        {
+            Assert.AreEqual(new DateTime(2028, 3, 29), _Controlador.ComprasFuncCalcularVencimiento(new DateTime(2028, 2, 28, 15, 30, 0), 30));
+            Assert.AreEqual(_Emision.Date, _Controlador.ComprasFuncCalcularVencimiento(_Emision.AddHours(9), 0));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Test_CalcularVencimientoRechazaPlazoNegativo()
+        {
+            _Controlador.ComprasFuncCalcularVencimiento(_Emision, -1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Test_ObtenerTipoCambioRechazaMonedaInvalida()
+        {
+            _Controlador.ComprasFuncObtenerTipoCambio(0L, _Emision);
+        }
+
+        [TestMethod]
+        public void Test_CrearSinCodigoConImpuesto()
+        {
+            int Id = _Controlador.ComprasFuncCrear(3, 2, 1, _Emision, _Vencimiento,
+                1M, 100M, 10M, " Insumos ", 10.8M);
+            Assert.AreEqual(900, Id);
+            Assert.AreEqual(10.8M, _Repositorio.ImpuestoCreado);
+            Assert.AreEqual("Insumos", _Repositorio.ComentarioCreado);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Test_CrearRechazaImpuestoNegativo()
+        {
+            _Controlador.ComprasFuncCrear(3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 0M, "", -1M);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Test_CrearRechazaImpuestoConCincoDecimales()
+        {
+            _Controlador.ComprasFuncCrear(3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 0M, "", 0.00001M);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Test_CrearRechazaTotalFueraDeRango()
+        {
+            _Controlador.ComprasFuncCrear(3, 2, 1, _Emision, _Vencimiento, 1M, 99999999.9999M, 0M, "", 1M);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Test_ActualizarVencimientoRechazaOrdenBloqueada()
+        {
+            _Repositorio.Datos.Rows.Find(101)["bloqueadoOrdenCompra"] = true;
+            _Controlador.ComprasProcActualizarVencimiento(101, _Vencimiento);
+        }
+
+        [TestMethod]
+        public void Test_ObtenerMapeaImpuestoYBloqueo()
+        {
+            DataRow Fila = _Repositorio.Datos.Rows.Find(101);
+            Fila["impuestoOrdenCompra"] = 12M;
+            Fila["bloqueadoOrdenCompra"] = true;
+            var Orden = _Controlador.ComprasFuncObtener(101);
+            Assert.AreEqual(12M, Orden.Impuesto);
+            Assert.IsTrue(Orden.Bloqueado);
+            Assert.AreEqual("101", Orden.NumeroOrden);
+        }
+
+        [TestMethod]
         public void Test_CrearDevuelvePkYNormalizaTextos()
         {
-            // Arrange
             string Codigo = " 000-OC-001 ";
             string Comentario = " Insumos ";
-
-            // Act
             int Resultado = _Controlador.ComprasFuncCrear(Codigo, 3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, Comentario);
-
-            // Assert
             Assert.AreEqual(900, Resultado);
-            Assert.AreEqual("000-OC-001", _Repositorio.CodigoCreado);
+            Assert.AreEqual(string.Empty, _Repositorio.CodigoCreado);
             Assert.AreEqual("Insumos", _Repositorio.ComentarioCreado);
         }
 
         [TestMethod]
         public void Test_CrearEliminaHoraDeLasFechas()
         {
-            // Arrange
             DateTime Emision = _Emision.AddHours(9);
             DateTime Vencimiento = _Vencimiento.AddHours(18);
-
-            // Act
             _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, Emision, Vencimiento, 1M, 100M, 10M, "Insumos");
-
-            // Assert
             Assert.AreEqual(_Emision, _Repositorio.EmisionCreada);
             Assert.AreEqual(_Vencimiento, _Repositorio.VencimientoCreado);
         }
@@ -76,144 +126,89 @@ namespace PruebaUnitaria_OrdenesCompra
         [ExpectedException(typeof(ArgumentException))]
         public void Test_CrearRechazaCodigoVacio()
         {
-            // Arrange
             string Codigo = "   ";
-
-            // Act
             _Controlador.ComprasFuncCrear(Codigo, 3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, "Insumos");
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void Test_CrearRechazaCodigoMayorDeTreinta()
         {
-            // Arrange
             string Codigo = new string('A', 31);
-
-            // Act
             _Controlador.ComprasFuncCrear(Codigo, 3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, "Insumos");
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
 
         [TestMethod]
         public void Test_CrearAceptaCodigoDeTreinta()
         {
-            // Arrange
             string Codigo = new string('A', 30);
-
-            // Act
             _Controlador.ComprasFuncCrear(Codigo, 3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, "Insumos");
-
-            // Assert
-            Assert.AreEqual(Codigo, _Repositorio.CodigoCreado);
+            Assert.AreEqual(string.Empty, _Repositorio.CodigoCreado);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void Test_CrearRechazaProveedorInvalido()
         {
-            // Arrange
             int IdProveedor = 0;
-
-            // Act
             _Controlador.ComprasFuncCrear("OC-001", IdProveedor, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, "Insumos");
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void Test_CrearRechazaVencimientoAnterior()
         {
-            // Arrange
             DateTime Vencimiento = _Emision.AddDays(-1);
-
-            // Act
             _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, Vencimiento, 1M, 100M, 10M, "Insumos");
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void Test_CrearRechazaTipoCambioCero()
         {
-            // Arrange
             decimal TipoCambio = 0M;
-
-            // Act
             _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, _Vencimiento, TipoCambio, 100M, 10M, "Insumos");
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Test_CrearRechazaTipoCambioConSieteDecimales()
         {
-            // Arrange
             decimal TipoCambio = 1.0000001M;
-
-            // Act
             _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, _Vencimiento, TipoCambio, 100M, 10M, "Insumos");
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Test_CrearRechazaMontoConCincoDecimales()
         {
-            // Arrange
             decimal Subtotal = 100.00001M;
-
-            // Act
             _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, _Vencimiento, 1M, Subtotal, 10M, "Insumos");
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Test_CrearRechazaDescuentoMayorQueSubtotal()
         {
-            // Arrange
             decimal Subtotal = 100M;
             decimal Descuento = 101M;
-
-            // Act
             _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, _Vencimiento, 1M, Subtotal, Descuento, "Insumos");
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void Test_CrearRechazaComentarioExcesivo()
         {
-            // Arrange
             string Comentario = new string('A', 501);
-
-            // Act
             _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, Comentario);
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
 
         [TestMethod]
         public void Test_ActualizarVencimientoDeOrdenPendiente()
         {
-            // Arrange
             int IdOrden = 101;
             DateTime Fecha = new DateTime(2026, 11, 15, 8, 0, 0);
-
-            // Act
             _Controlador.ComprasProcActualizarVencimiento(IdOrden, Fecha);
-
-            // Assert
             Assert.AreEqual(Fecha.Date, _Repositorio.VencimientoActualizado);
         }
 
@@ -221,28 +216,18 @@ namespace PruebaUnitaria_OrdenesCompra
         [ExpectedException(typeof(InvalidOperationException))]
         public void Test_ActualizarVencimientoRechazaOrdenRecibida()
         {
-            // Arrange
             int IdOrden = 105;
             DateTime Fecha = new DateTime(2026, 12, 15);
-
-            // Act
             _Controlador.ComprasProcActualizarVencimiento(IdOrden, Fecha);
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void Test_ActualizarVencimientoRechazaFechaAnterior()
         {
-            // Arrange
             int IdOrden = 101;
             DateTime Fecha = new DateTime(2026, 9, 30);
-
-            // Act
             _Controlador.ComprasProcActualizarVencimiento(IdOrden, Fecha);
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
         }
     }
 }
