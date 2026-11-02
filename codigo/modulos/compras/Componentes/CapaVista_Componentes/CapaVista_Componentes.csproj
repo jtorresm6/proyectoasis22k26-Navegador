@@ -31,9 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaControlador_Componentes">
-      <HintPath>..\CapaControlador_Componentes\bin\$(Configuration)\CapaControlador_Componentes.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\CapaControlador_Componentes\CapaControlador_Componentes.csproj">
+      <Project>{A539B6E1-1363-4B6A-8992-ED27B8C333FB}</Project>
+      <Name>CapaControlador_Componentes</Name>
+    </ProjectReference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Design" />
     <Reference Include="System.Windows.Forms" />

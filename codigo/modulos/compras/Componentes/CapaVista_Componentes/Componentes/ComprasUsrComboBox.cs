@@ -24,7 +24,18 @@ namespace CapaVista_Componentes.Componentes
     {
         Ninguno = 0,
         Proveedores = 1,
-        Metodos = 2
+        Metodos = 2,
+        Plazos = 3,
+        ConceptoProveedor = 4,
+        Monedas = 5,
+        TiposCambio = 6,
+        Sucursales = 7,
+        Bodegas = 8,
+        Categorias = 9,
+        Lineas = 10,
+        Marcas = 11,
+        Productos = 12,
+        ProductosPorSku = 13
     }
 
 
@@ -32,6 +43,9 @@ namespace CapaVista_Componentes.Componentes
     [DefaultEvent("SelectedIndexChanged")]
     public partial class ComprasUsrComboBox : UserControl
     {
+        [Category("Compras")]
+        [DefaultValue(false)]
+        public bool PermitirRuedaMouse { get; set; }
 
         private bool _ErrorVisible;
         private bool _MostrarEtiquetaError = true;
@@ -465,6 +479,72 @@ namespace CapaVista_Componentes.Componentes
                     Tabla = "tblProveedor";
                     Valor = "idProveedor";
                     Mostrar = "nombreProveedor";
+                    break;
+
+                case EnmTipoDatosCompras.Plazos:
+                    Tabla = "tblPlazo";
+                    Valor = "idPlazo";
+                    Mostrar = "nombrePlazo";
+                    break;
+
+                case EnmTipoDatosCompras.ConceptoProveedor:
+                    Tabla = "tblConceptoProveedor";
+                    Valor = "idConceptoProveedor";
+                    Mostrar = "nombreConceptoProveedor";
+                    break;
+
+                case EnmTipoDatosCompras.Monedas:
+                    Tabla = "tblMoneda";
+                    Valor = "idMoneda";
+                    Mostrar = "nombreMoneda";
+                    break;
+
+                case EnmTipoDatosCompras.TiposCambio:
+                    Tabla = "tblTipoCambio";
+                    Valor = "idTipoCambio";
+                    Mostrar = "descripcionTipoCambio";
+                    break;
+
+                case EnmTipoDatosCompras.Sucursales:
+                    Tabla = "tblSucursal";
+                    Valor = "idSucursal";
+                    Mostrar = "nombreSucursal";
+                    break;
+
+                case EnmTipoDatosCompras.Bodegas:
+                    Tabla = "tblBodega";
+                    Valor = "idBodega";
+                    Mostrar = "nombreBodega";
+                    break;
+
+                case EnmTipoDatosCompras.Categorias:
+                    Tabla = "tblCategoria";
+                    Valor = "idCategoria";
+                    Mostrar = "nombreCategoria";
+                    break;
+
+                case EnmTipoDatosCompras.Lineas:
+                    Tabla = "tblLinea";
+                    Valor = "idLinea";
+                    Mostrar = "nombreLinea";
+                    break;
+
+                case EnmTipoDatosCompras.Marcas:
+                    Tabla = "tblMarca";
+                    Valor = "idMarca";
+                    Mostrar = "nombreMarca";
+                    break;
+
+                case EnmTipoDatosCompras.Productos:
+                    Tabla = "tblProducto";
+                    Valor = "idProducto";
+                    Mostrar = "nombreProducto";
+                    break;
+
+                case EnmTipoDatosCompras.ProductosPorSku:
+                    Tabla = "tblProducto";
+                    Valor = "idProducto";
+                    Mostrar = "skuProducto";
                     break;
 
                 case EnmTipoDatosCompras.Metodos:

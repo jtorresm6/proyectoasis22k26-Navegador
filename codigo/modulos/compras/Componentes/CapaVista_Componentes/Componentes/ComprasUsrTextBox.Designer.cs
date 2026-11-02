@@ -21,7 +21,7 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasTlpMain = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasPnlBorde = new System.Windows.Forms.Panel();
             this.ComprasPnlInterior = new System.Windows.Forms.Panel();
-            this.ComprasTxtTexto = new System.Windows.Forms.RichTextBox();
+            this.ComprasTxtTexto = new CapaVista_Componentes.Componentes.ComprasRichTextBox();
             this.ComprasLblError = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasTlpMain.SuspendLayout();
             this.ComprasPnlBorde.SuspendLayout();
@@ -132,6 +132,6 @@ namespace CapaVista_Componentes.Componentes
         private System.Windows.Forms.Panel ComprasPnlBorde;
         private System.Windows.Forms.Panel ComprasPnlInterior;
         private ComprasUsrLabel ComprasLblError;
-        private System.Windows.Forms.RichTextBox ComprasTxtTexto;
+        private CapaVista_Componentes.Componentes.ComprasRichTextBox ComprasTxtTexto;
     }
 }

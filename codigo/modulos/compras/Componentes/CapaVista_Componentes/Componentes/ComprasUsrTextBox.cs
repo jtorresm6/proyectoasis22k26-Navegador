@@ -1,4 +1,8 @@
 using System;
+using CapaControlador_Componentes;
+using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -18,6 +22,44 @@ using System.Windows.Forms;
 
 namespace CapaVista_Componentes.Componentes
 {
+    public enum ComprasEnumTipoEntrada
+    {
+        Texto,
+        Enteros,
+        Porcentaje,
+        Moneda
+    }
+
+    public class ComprasTipoMonedaConverter : StringConverter
+    {
+        public override bool GetStandardValuesSupported(ITypeDescriptorContext Contexto) => true;
+        public override bool GetStandardValuesExclusive(ITypeDescriptorContext Contexto) => true;
+
+        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext Contexto)
+        {
+            var Codigos = new List<string>();
+            foreach (DataRow Moneda in new ClsComboCompras().ComprasFuncEnviarDatos("tblMoneda", "idMoneda", "nombreMoneda").Rows)
+                Codigos.Add(Convert.ToString(Moneda["codigoMoneda"]));
+            return new StandardValuesCollection(Codigos);
+        }
+    }
+    public class ComprasRichTextBox : RichTextBox
+    {
+        public ComprasRichTextBox()
+        {
+            ComprasFiltroRueda.Instalar();
+        }
+
+        protected override void WndProc(ref Message Mensaje)
+        {
+            if ((Mensaje.Msg == 0x020A || Mensaje.Msg == 0x020E) && ComprasFiltroRueda.DebeBloquear(this))
+            {
+                ComprasFiltroRueda.EnviarAlContenedor(this, ref Mensaje);
+                return;
+            }
+            base.WndProc(ref Mensaje);
+        }
+    }
     
     public enum ComprasEnumTipoMoneda
     {
@@ -30,6 +72,25 @@ namespace CapaVista_Componentes.Componentes
     [DefaultEvent("TextChanged")]
     public partial class ComprasUsrTextBox : UserControl
     {
+        [Category("Compras")]
+        [DefaultValue(false)]
+        public bool PermitirRuedaMouse { get; set; }
+
+        private HorizontalAlignment _AlineacionMoneda = HorizontalAlignment.Right;
+
+        [Category("Compras")]
+        [DefaultValue(HorizontalAlignment.Right)]
+        public HorizontalAlignment AlineacionMoneda
+        {
+            get => _AlineacionMoneda;
+            set
+            {
+                if (!Enum.IsDefined(typeof(HorizontalAlignment), value))
+                    throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(HorizontalAlignment));
+                _AlineacionMoneda = value;
+                ComprasProcAplicarFormatoTexto();
+            }
+        }
         private bool _ErrorVisible;
         private bool _MostrarEtiquetaError = true;
         private int _AlturaEtiquetaError = 22;
@@ -42,10 +103,63 @@ namespace CapaVista_Componentes.Componentes
         private bool _SoloEnteros;
         private bool _RestaurandoEntero;
         private string _UltimoTextoEntero = string.Empty;
+        private bool _ModoPorcentaje;
+        private string _UltimoTextoPorcentaje = string.Empty;
+
+        [Category("Compras")]
+        [DefaultValue(ComprasEnumTipoEntrada.Texto)]
+        [RefreshProperties(RefreshProperties.All)]
+        public ComprasEnumTipoEntrada TipoEntrada
+        {
+            get => _ModoPorcentaje ? ComprasEnumTipoEntrada.Porcentaje :
+                _SoloEnteros ? ComprasEnumTipoEntrada.Enteros :
+                _ModoMoneda ? ComprasEnumTipoEntrada.Moneda : ComprasEnumTipoEntrada.Texto;
+            set
+            {
+                if (!Enum.IsDefined(typeof(ComprasEnumTipoEntrada), value))
+                    throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(ComprasEnumTipoEntrada));
+                if (TipoEntrada == value) return;
+                string Limpio = Text;
+                if (_ModoPorcentaje) Limpio = Limpio.TrimEnd().TrimEnd('%').TrimEnd();
+                if (_ModoMoneda) Limpio = Limpio.Replace(ComprasFuncObtenerSimboloMoneda(), "").Replace(",", "").Trim();
+                _ModoPorcentaje = false;
+                SoloEnteros = false;
+                ModoMoneda = false;
+                Text = Limpio;
+                if (value == ComprasEnumTipoEntrada.Enteros) SoloEnteros = true;
+                else if (value == ComprasEnumTipoEntrada.Moneda) ModoMoneda = true;
+                else if (value == ComprasEnumTipoEntrada.Porcentaje)
+                {
+                    _UltimoTextoPorcentaje = ComprasFuncEsPorcentaje(Text) ? Text : string.Empty;
+                    Text = _UltimoTextoPorcentaje;
+                    _ModoPorcentaje = true;
+                    ComprasProcFormatearPorcentaje();
+                }
+            }
+        }
+
+        private static bool ComprasFuncEsPorcentaje(string Texto)
+        {
+            string Numero = Texto.TrimEnd().TrimEnd('%').TrimEnd();
+            if (Numero.Length == 0) return Texto.Length == 0;
+            string Separador = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            string Digitos = Numero.Replace(Separador, "");
+            return Digitos.Length > 0 && ComprasFuncEsTextoEntero(Digitos) &&
+                decimal.TryParse(Numero, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture,
+                    out decimal Valor) && Valor >= 0 && Valor <= 100;
+        }
+
+        private void ComprasProcFormatearPorcentaje()
+        {
+            if (!_ModoPorcentaje || string.IsNullOrWhiteSpace(Text)) return;
+            string Numero = Text.TrimEnd().TrimEnd('%').TrimEnd();
+            if (decimal.TryParse(Numero, out decimal Valor)) Text = Valor.ToString("0.##") + " %";
+        }
 
         
         private bool _ModoMoneda = false;
-        private ComprasEnumTipoMoneda _TipoMoneda = ComprasEnumTipoMoneda.Quetzales;
+        private string _TipoMoneda = string.Empty;
+        private string _SimboloMoneda = "Q";
         private bool _ProtegiendoMoneda = false;
 
         [Category("Compras")]
@@ -100,7 +214,7 @@ namespace CapaVista_Componentes.Componentes
             try
             {
                 ComprasTxtTexto.SelectAll();
-                ComprasTxtTexto.SelectionAlignment = _ModoMoneda ? HorizontalAlignment.Right : _AlineacionTexto;
+                ComprasTxtTexto.SelectionAlignment = _ModoMoneda ? _AlineacionMoneda : _AlineacionTexto;
                 ComprasTxtTexto.SelectionIndent = _SangriaTexto;
                 ComprasTxtTexto.Select(Inicio, Longitud);
             }
@@ -120,7 +234,11 @@ namespace CapaVista_Componentes.Componentes
             set
             {
                 if (_SoloEnteros == value) return;
-                if (value) ModoMoneda = false;
+                if (value)
+                {
+                    _ModoPorcentaje = false;
+                    ModoMoneda = false;
+                }
                 _SoloEnteros = value;
                 if (value)
                 {
@@ -179,11 +297,15 @@ namespace CapaVista_Componentes.Componentes
             get => _ModoMoneda;
             set
             {
-                if (value) SoloEnteros = false;
+                if (value)
+                {
+                    _ModoPorcentaje = false;
+                    SoloEnteros = false;
+                }
                 _ModoMoneda = value;
                 if (_ModoMoneda)
                 {
-                    ComprasTxtTexto.SelectionAlignment = HorizontalAlignment.Right;
+                    ComprasProcAplicarFormatoTexto();
                     ComprasMetAplicarFormatoMoneda();
                 }
                 else
@@ -195,17 +317,47 @@ namespace CapaVista_Componentes.Componentes
 
         [Category("Compras")]
         [Description("Define el tipo de moneda a mostrar cuando ModoMoneda está activado.")]
-        [DefaultValue(ComprasEnumTipoMoneda.Quetzales)]
-        public ComprasEnumTipoMoneda TipoMoneda
+        [DefaultValue("")]
+        [TypeConverter(typeof(ComprasTipoMonedaConverter))]
+        public string TipoMoneda
         {
             get => _TipoMoneda;
             set
             {
-                _TipoMoneda = value;
-                if (_ModoMoneda) ComprasMetAplicarFormatoMoneda();
+                string Codigo = (value ?? string.Empty).Trim();
+                if (Codigo.Length == 0)
+                {
+                    ComprasProcConfigurarMoneda(string.Empty, "Q");
+                    return;
+                }
+                foreach (DataRow Moneda in new ClsComboCompras().ComprasFuncEnviarDatos("tblMoneda", "idMoneda", "nombreMoneda").Rows)
+                {
+                    if (!string.Equals(Convert.ToString(Moneda["codigoMoneda"]), Codigo, StringComparison.OrdinalIgnoreCase)) continue;
+                    ComprasMetConfigurarMoneda(Convert.ToString(Moneda["codigoMoneda"]), Convert.ToString(Moneda["simboloMoneda"]));
+                    return;
+                }
+                throw new ArgumentException("La moneda no existe en tblMoneda.", nameof(value));
             }
         }
         
+        public void ComprasMetConfigurarMoneda(string Codigo, string Simbolo)
+        {
+            if (string.IsNullOrWhiteSpace(Codigo)) throw new ArgumentException("Indica el codigo de moneda.", nameof(Codigo));
+            if (string.IsNullOrWhiteSpace(Simbolo)) throw new ArgumentException("Indica el simbolo de moneda.", nameof(Simbolo));
+            ComprasProcConfigurarMoneda(Codigo.Trim(), Simbolo.Trim());
+        }
+
+        private void ComprasProcConfigurarMoneda(string Codigo, string Simbolo)
+        {
+            string Anterior = _SimboloMoneda;
+            _TipoMoneda = Codigo;
+            _SimboloMoneda = Simbolo;
+            if (!_ModoMoneda) return;
+            if (Text.StartsWith(Anterior, StringComparison.Ordinal))
+                Text = Simbolo + Text.Substring(Anterior.Length);
+            ComprasMetAplicarFormatoMoneda();
+        }
+
         private void ComprasProcActualizarEspacioError()
         {
             if (ComprasLblError == null || ComprasTlpMain == null) return;
@@ -262,11 +414,13 @@ namespace CapaVista_Componentes.Componentes
             {
                 ComprasProcActualizarBorde();
                 if (_ModoMoneda) ComprasMetRemoverFormatoMoneda();
+                if (_ModoPorcentaje) Text = Text.TrimEnd().TrimEnd('%').TrimEnd();
             };
             ComprasTxtTexto.Leave += (Sender, Evento) =>
             {
                 ComprasProcActualizarBorde();
                 if (_ModoMoneda) ComprasMetAplicarFormatoMoneda();
+                ComprasProcFormatearPorcentaje();
             };
             
             ComprasMetLimpiarError();
@@ -274,15 +428,9 @@ namespace CapaVista_Componentes.Componentes
 
         
 
-        private string ComprasFuncObtenerSimboloMoneda()
+        internal string ComprasFuncObtenerSimboloMoneda()
         {
-            switch (_TipoMoneda)
-            {
-                case ComprasEnumTipoMoneda.Dolares: return "$";
-                case ComprasEnumTipoMoneda.Euros: return "€";
-                case ComprasEnumTipoMoneda.Quetzales:
-                default: return "Q";
-            }
+            return _SimboloMoneda;
         }
 
         private void ComprasMetAplicarFormatoMoneda()
@@ -345,6 +493,22 @@ namespace CapaVista_Componentes.Componentes
         private void ComprasProcTextoCambiado(EventArgs Evento)
         {
             if (_RestaurandoEntero) return;
+            if (_ModoPorcentaje)
+            {
+                if (!ComprasFuncEsPorcentaje(ComprasTxtTexto.Text))
+                {
+                    int Posicion = ComprasTxtTexto.SelectionStart;
+                    _RestaurandoEntero = true;
+                    try
+                    {
+                        ComprasTxtTexto.Text = _UltimoTextoPorcentaje;
+                        ComprasTxtTexto.SelectionStart = Math.Min(Posicion, _UltimoTextoPorcentaje.Length);
+                    }
+                    finally { _RestaurandoEntero = false; }
+                    return;
+                }
+                _UltimoTextoPorcentaje = ComprasTxtTexto.Text;
+            }
             if (_SoloEnteros)
             {
                 if (!ComprasFuncEsTextoEntero(ComprasTxtTexto.Text))

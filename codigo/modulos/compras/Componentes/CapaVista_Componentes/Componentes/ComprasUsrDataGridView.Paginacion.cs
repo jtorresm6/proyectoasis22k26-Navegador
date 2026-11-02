@@ -27,7 +27,22 @@ namespace CapaVista_Componentes.Componentes
         private ClsButtonCompras ComprasBtnSiguiente;
         private Label ComprasLblPagina;
         private int _PaginaActual;
-        private const int _RegistrosPorPagina = 15;
+        private int _RegistrosPorPagina = 15;
+
+        [Category("Compras")]
+        [DefaultValue(15)]
+        public int RegistrosPorPagina
+        {
+            get => _RegistrosPorPagina;
+            set
+            {
+                if (value < 1) throw new ArgumentOutOfRangeException(nameof(value));
+                if (_RegistrosPorPagina == value) return;
+                _RegistrosPorPagina = value;
+                _PaginaActual = 0;
+                ComprasProcMostrarPagina();
+            }
+        }
         private bool _ActualizandoPagina;
         private bool _PaginaPendiente;
         private string _CampoOrden;
@@ -157,10 +172,10 @@ namespace CapaVista_Componentes.Componentes
             try
             {
                 int Total = _VistaDatos != null ? _VistaDatos.Count : ComprasDgvMain.Rows.Count - (ComprasDgvMain.NewRowIndex >= 0 ? 1 : 0);
-                int Paginas = Math.Max(1, (Total + _RegistrosPorPagina - 1) / _RegistrosPorPagina);
+                int Paginas = Total == 0 ? 1 : 1 + (Total - 1) / _RegistrosPorPagina;
                 _PaginaActual = Math.Max(0, Math.Min(_PaginaActual, Paginas - 1));
                 int Inicio = _PaginacionHabilitada ? _PaginaActual * _RegistrosPorPagina : 0;
-                int Fin = _PaginacionHabilitada ? Math.Min(Total, Inicio + _RegistrosPorPagina) : Total;
+                int Fin = _PaginacionHabilitada ? Inicio + Math.Min(Total - Inicio, _RegistrosPorPagina) : Total;
                 if (_VistaDatos != null)
                 {
                     DataTable Anterior = _TablaPagina;
