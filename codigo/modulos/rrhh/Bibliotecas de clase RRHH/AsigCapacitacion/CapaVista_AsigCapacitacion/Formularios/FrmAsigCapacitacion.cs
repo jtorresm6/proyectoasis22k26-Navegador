@@ -1,5 +1,7 @@
 ﻿using CapaControlador_AsigCapacitacion.Modelos_de_Controladores;
 using CapaControlador_Seguridad;
+using CapaControlador_Seguridad.Objetos_de_valor;
+using CapaVista_Seguridad.Ayudas;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,15 +33,33 @@ namespace CapaVista_AsigCapacitacion.Formularios
     {
         private ClsModeloAsigCapacitacion _Asignacion = new ClsModeloAsigCapacitacion();
         private int _IdAsignacionSeleccionada = 0;
+        private ClsPermisoAplicacion _MisPermisos;
+
+        private const int ID_MODULO = 9000;
+        private const int ID_APLICACION = 9305;
 
         public FrmAsigCapacitacion()
         {
             InitializeComponent();
             this.Load += new System.EventHandler(this.FrmAsigCapacitacion_Load);
         }
-
+       
         private void FrmAsigCapacitacion_Load(object sender, EventArgs e)
         {
+            var MapaBotones = new Dictionary<Control, TipoPermiso>
+    {
+        { RrhhiBtnGuardarAsigCap,   TipoPermiso.Insertar },
+        { RrhhiBtnModificarAsigCap, TipoPermiso.Editar },
+        { RrhhiBtnEliminarAsigCap,  TipoPermiso.Eliminar },
+        { RrhhiBtnReporteAsigCap,  TipoPermiso.Imprimir }
+    };
+
+            _MisPermisos = ClsSeguridadFormHelper.SeguridadMetInicializarSeguridad(
+                this, ID_MODULO, ID_APLICACION, MapaBotones);
+
+            if (!_MisPermisos.TieneAcceso)
+                return;
+
             CargarCombos();
             RrhhMetListarAsignaciones();
             RrhhMetReinicio();

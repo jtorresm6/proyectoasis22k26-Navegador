@@ -7,6 +7,9 @@
 :: Logs: logs\build_rrhh junto al .bat; cada proyecto tiene su propio log.
 :: Conserva copias Debug en bin\Release para referencias heredadas.
 :: MSBUILD_MANUAL puede indicar una ruta alternativa a MSBuild.exe.
+:: Modificado por: Byron Alexander Chiquito Paredes 0901-23-3747 (02/11/2026)
+:: Omite los proyectos MSTest, solo restaura NuGet donde hay paquetes,
+:: las rondas 2 y 3 solo repiten lo que fallo y el menu final abre el login.
 setlocal EnableExtensions DisableDelayedExpansion
 chcp 65001 >nul
 color 0A
@@ -23,6 +26,8 @@ title Compilacion global - Consultas, Navegador, Seguridad, Logistica y RRHH
 
 :INICIO
 set "PASO=0"
+:: Limpia las marcas de proyectos compilados de una corrida anterior
+for /f "delims==" %%V in ('set OK_ 2^>nul') do set "%%V="
 set /a total=0
 set /a ok=0
 set /a fail=0
@@ -128,6 +133,7 @@ if exist "%FALL_PREV%" del "%FALL_PREV%"
 set "RONDA=1"
 
 :RONDA
+set /a IDX=0
 set /a total=0
 set /a ok=0
 set /a fail=0
@@ -189,13 +195,28 @@ if exist "%FALLIDOS%" echo (errores por ronda y paso en "%LOG_DIR%")
 
 :: --------------------------------------------------------------------------
 if /I "%~1"=="/auto" goto FIN_OK
+
+:MENU
 echo.
 echo Presiona una opcion:
+echo [L] Abrir el login de Seguridad
 echo [R] Recompilar
 echo [S] Salir
-choice /c RS /n /m "Seleccion: "
-if errorlevel 2 goto FIN_OK
-if errorlevel 1 goto INICIO
+choice /c LRS /n /m "Seleccion: "
+if errorlevel 3 goto FIN_OK
+if errorlevel 2 goto INICIO
+if errorlevel 1 goto ABRIR_LOGIN
+goto MENU
+
+:ABRIR_LOGIN
+set "LOGIN_EXE=%COMPONENTES_DIR%\seguridad\Ejecucion_Seguridad\Ejecucion_Seguridad\bin\Debug\Ejecucion_Seguridad.exe"
+if not exist "%LOGIN_EXE%" (
+    echo [ERROR] No se encontro Ejecucion_Seguridad.exe. Compila primero.
+    goto MENU
+)
+for %%i in ("%LOGIN_EXE%") do start "" /d "%%~dpi" "%%~fi"
+echo Login de Seguridad abierto.
+goto MENU
 
 :FIN_OK
 set "EXIT_CODE=0"
@@ -230,6 +251,13 @@ exit /b 0
 :: ==========================================================================
 :CompilarProyecto
 echo "%~1"| findstr /i /l /c:"\packages\" /c:"\obj\" /c:"\bin\" >nul && exit /b 0
+call :EsPrueba "%~1" && exit /b 0
+:: Si ya compilo en una ronda anterior no se vuelve a compilar
+set /a IDX+=1
+if defined OK_%IDX% (
+    set /a P_OK+=1
+    exit /b 0
+)
 set "PROJ=%~1"
 set "PROJ_NAME=%~n1"
 set "PROJ_DIR=%~dp1"
@@ -244,7 +272,11 @@ set SDARG=/p:SolutionDir="%SLN_DIR%\"
 :: El .csproj original no se modifica.
 set "FIX_ARG="
 if not exist "%PROJ_DIR%Class1.cs" findstr /i /c:"Class1.cs" "%PROJ%" >nul && call :PrepararFixReporteador
-"%MSBUILD_PATH%" "%PROJ%" %FIX_ARG% /restore /p:RestorePackagesConfig=true %SDARG% /t:Rebuild /p:Configuration=Debug /nologo /verbosity:minimal > "%PLOG%" 2>&1
+:: Solo se restaura NuGet en los proyectos que tienen paquetes
+set "RESTORE_ARG="
+if exist "%PROJ_DIR%packages.config" set "RESTORE_ARG=/restore /p:RestorePackagesConfig=true"
+findstr /i /c:"<PackageReference" "%PROJ%" >nul && set "RESTORE_ARG=/restore /p:RestorePackagesConfig=true"
+"%MSBUILD_PATH%" "%PROJ%" %FIX_ARG% %RESTORE_ARG% %SDARG% /t:Rebuild /p:Configuration=Debug /nologo /verbosity:minimal > "%PLOG%" 2>&1
 set "RC=%errorlevel%"
 >>"%LOG_FILE%" echo ------ %PROJ%
 type "%PLOG%" >> "%LOG_FILE%"
@@ -252,6 +284,7 @@ if not "%RC%"=="0" goto CP_ERROR
 call :CopiarDebugARelease "%PROJ_DIR%"
 if errorlevel 1 goto CP_ERROR
 echo   [OK] %PROJ_NAME%
+set "OK_%IDX%=1"
 set /a P_OK+=1
 exit /b 0
 
@@ -331,4 +364,16 @@ set "FIX_TARGETS=%LOG_DIR%\reporteador_sin_class1.targets"
 >> "%FIX_TARGETS%" echo ^</Project^>
 set FIX_ARG=/p:CustomAfterMicrosoftCommonTargets="%FIX_TARGETS%"
 echo   [AJUSTE] Se omite Class1.cs ausente sin modificar %PROJ_NAME%.csproj.
+exit /b 0
+
+
+:: ==========================================================================
+:: FUNCION: DETECTAR LOS PROYECTOS MSTest (no se compilan aqui)
+:: ==========================================================================
+:EsPrueba
+echo %~n1| findstr /i /b /c:"MSTest" >nul && goto EP_SI
+findstr /i /c:"MSTest.TestFramework" "%~1" >nul && goto EP_SI
+exit /b 1
+:EP_SI
+if "%RONDA%"=="1" echo   [OMITIDO] %~n1 (pruebas MSTest)
 exit /b 0

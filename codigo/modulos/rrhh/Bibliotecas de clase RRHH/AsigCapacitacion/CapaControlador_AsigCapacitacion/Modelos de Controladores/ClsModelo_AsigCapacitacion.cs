@@ -1,4 +1,5 @@
 ﻿using CapaControlador_Seguridad;
+using CapaModelo_AsigCapacitacion;
 using CapaModelo_AsigCapacitacion.Entidades;
 using CapaModelo_AsigCapacitacion.Repositorios;
 using System;

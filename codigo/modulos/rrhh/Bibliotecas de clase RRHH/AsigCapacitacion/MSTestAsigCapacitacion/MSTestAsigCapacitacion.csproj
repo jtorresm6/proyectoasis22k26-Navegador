@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="MSTest" Version="3.6.4" />
+    <PackageReference Include="System.Data.Odbc" Version="10.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CapaControlador_AsigCapacitacion\CapaControlador_AsigCapacitacion.csproj" />
+    <ProjectReference Include="..\CapaModelo_AsigCapacitacion\CapaModelo_AsigCapacitacion.csproj" />
+    <ProjectReference Include="..\CapaVista_AsigCapacitacion\CapaVista_AsigCapacitacion.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CapaControlador_AsigCapacitacion">
+      <HintPath>..\CapaControlador_AsigCapacitacion\bin\Debug\CapaControlador_AsigCapacitacion.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaControlador_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaModelo_AsigCapacitacion">
+      <HintPath>..\CapaModelo_AsigCapacitacion\bin\Debug\CapaModelo_AsigCapacitacion.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_AsigCapacitacion">
+      <HintPath>..\CapaVista_AsigCapacitacion\bin\Debug\CapaVista_AsigCapacitacion.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+</Project>
