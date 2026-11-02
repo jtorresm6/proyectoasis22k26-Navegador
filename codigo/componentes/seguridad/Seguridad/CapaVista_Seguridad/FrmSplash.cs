@@ -1,7 +1,7 @@
 ﻿using CapaControlador_Seguridad.Objetos_de_valor;
 //using CapaVista_Bancos.Formularios;
 //using CapaVista_Rrhh.Formularios;
-//using CapaVista_Logistica.Formularios;
+
 
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 //using CapaVista_Ventas;
+//using CapaVista_Logistica.Formularios;
 
 /*
  * ============================================================
@@ -81,10 +82,10 @@ namespace CapaVista_Seguridad
                   //case "Logistica":
                     //var MDILogistica = new CapaVista_Logistica.Formularios.FrmMDILogistica();
                       //MDILogistica.LogisticaMetActualizarInfoUsuario(
-                       //ClsSesionSeguridad.NombreEmpleado,
-                        //ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                        //principal = MDILogistica;
-                        //break;
+                     // ClsSesionSeguridad.NombreEmpleado,
+                     // ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                     //  principal = MDILogistica;
+                     //  break;
 
                     //case "Compras":
                         //var MDICompras = new FrmMDICompras();
