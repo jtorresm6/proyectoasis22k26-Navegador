@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaControlador_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="CapaModelo_EvaluacionDesempeño">
       <HintPath>..\CapaModelo_EvaluacionDesempeño\bin\Debug\CapaModelo_EvaluacionDesempeño.dll</HintPath>
     </Reference>
@@ -44,10 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controladores\ClsModeloPlanMejora.cs" />
+    <Compile Include="Controladores\ClsModeloVerEvaluaciones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controladores\" />
     <Folder Include="ObjetosDeValor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

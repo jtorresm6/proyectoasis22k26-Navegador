@@ -30,7 +30,18 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmVacaciones));
             this.RrhhNavVacaciones = new CapaVista_Navegador.Navegador();
+            this.RrhhLblAntiguedad = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            //
+            // RrhhLblAntiguedad
+            //
+            this.RrhhLblAntiguedad.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.RrhhLblAntiguedad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
+            this.RrhhLblAntiguedad.Location = new System.Drawing.Point(12, 12);
+            this.RrhhLblAntiguedad.Name = "RrhhLblAntiguedad";
+            this.RrhhLblAntiguedad.Size = new System.Drawing.Size(1435, 70);
+            this.RrhhLblAntiguedad.TabIndex = 1;
+            this.RrhhLblAntiguedad.Text = "Presione Ingresar y elija un empleado para ver su fecha de contratación y si puede optar a vacaciones.";
             // 
             // RrhhNavVacaciones
             // 
@@ -45,6 +56,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1462, 640);
             this.Controls.Add(this.RrhhNavVacaciones);
+            this.Controls.Add(this.RrhhLblAntiguedad);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -58,5 +70,6 @@
         #endregion
 
         private CapaVista_Navegador.Navegador RrhhNavVacaciones;
+        private System.Windows.Forms.Label RrhhLblAntiguedad;
     }
 }

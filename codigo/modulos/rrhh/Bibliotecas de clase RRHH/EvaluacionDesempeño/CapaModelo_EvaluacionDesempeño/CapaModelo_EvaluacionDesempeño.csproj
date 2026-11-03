@@ -41,11 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contratos\IRepositorioPlanMejora.cs" />
+    <Compile Include="Contratos\IRepositorioVerEvaluaciones.cs" />
+    <Compile Include="Entidades\ClsPlanMejora.cs" />
+    <Compile Include="Entidades\ClsResultadoEvaluacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entidades\" />
-    <Folder Include="Repositorios\" />
+    <Compile Include="Repositorios\ClsConexion.cs" />
+    <Compile Include="Repositorios\ClsRepositorioPlanMejora.cs" />
+    <Compile Include="Repositorios\ClsRepositorioVerEvaluaciones.cs" />
+    <Compile Include="Repositorios\ClsSentencias.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
