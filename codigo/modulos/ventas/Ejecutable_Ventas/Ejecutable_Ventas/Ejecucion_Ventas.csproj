@@ -84,7 +84,7 @@
       <Project>{F7AD1A78-73BD-4D8F-87D1-1C5B495D1160}</Project>
       <Name>CapaVista_Seguridad</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Ventas Y CxC\VentasYCxC\CapaVista_Ventas\CapaVista_Ventas.csproj">
+    <ProjectReference Include="..\..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaVista_Ventas\CapaVista_Ventas.csproj">
       <Project>{9496BD61-6249-436E-B168-BB5C8C6ABFB0}</Project>
       <Name>CapaVista_Ventas</Name>
     </ProjectReference>

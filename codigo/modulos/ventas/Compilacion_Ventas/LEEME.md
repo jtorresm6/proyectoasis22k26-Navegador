@@ -15,7 +15,7 @@ build_ventas.bat Release /sinpausa
 
 ReportViewer y SQL Server Types se referencian desde los paquetes versionados en
 `codigo/componentes/reporteador/BtnVerReporte_Reporteador/packages`. Listado de
-precios utiliza el paquete ODBC versionado en `Ventas Y CxC/VentasYCxC/packages`.
+precios utiliza el paquete ODBC versionado en `Biblioteca de clase Ventas Y CxC/VentasYCxC/packages`.
 No requieren copiar DLL manualmente, instalar ReportViewer en Visual Studio ni
 descargar paquetes para ejecutar este BAT. Las rutas son relativas al repositorio.
 

@@ -6,6 +6,7 @@ setlocal EnableExtensions DisableDelayedExpansion
 
 set "VENTAS_ROOT=%~dp0"
 set "VENTAS_BUILD=%VENTAS_ROOT%Compilacion_Ventas\"
+set "VENTAS_BIBLIOTECAS=%VENTAS_ROOT%Biblioteca de clase Ventas Y CxC\"
 set "VENTAS_CONFIG=%~1"
 set "VENTAS_SINPAUSA=0"
 if /i "%~2"=="/sinpausa" set "VENTAS_SINPAUSA=1"
@@ -66,6 +67,7 @@ if errorlevel 1 goto SIN_MSBUILD
 if not exist "%VENTAS_BUILD%build_ventas.proj" goto SIN_PROYECTO
 if not exist "%VENTAS_BUILD%build_componentes_ventas.proj" goto SIN_PROYECTO
 if not exist "%VENTAS_BUILD%build_componentes_ventas.targets" goto SIN_PROYECTO
+if not exist "%VENTAS_BIBLIOTECAS%VentasYCxC\CapaModelo_Ventas\CapaModelo_Ventas.csproj" goto SIN_BIBLIOTECAS
 if not exist "%VENTAS_BUILD%logs" mkdir "%VENTAS_BUILD%logs"
 if not exist "%VENTAS_BUILD%logs" goto SIN_LOGS
 echo         MSBuild disponible.
@@ -97,6 +99,12 @@ goto RESUMEN
 :SIN_LOGS
 echo.
 echo   %VENTAS_ROJO%[!] No se pudo preparar la carpeta de logs.%VENTAS_RESET%
+goto RESUMEN
+
+:SIN_BIBLIOTECAS
+echo.
+echo   %VENTAS_ROJO%[!] No se encontraron las bibliotecas de Ventas.%VENTAS_RESET%
+echo       Ruta esperada: "%VENTAS_BIBLIOTECAS%"
 goto RESUMEN
 
 :SIN_DIRECTORIO

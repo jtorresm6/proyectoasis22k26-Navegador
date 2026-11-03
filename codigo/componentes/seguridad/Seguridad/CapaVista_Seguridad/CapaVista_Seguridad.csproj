@@ -51,7 +51,7 @@
       <HintPath>..\..\..\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Ventas">
-      <HintPath>..\..\..\..\modulos\ventas\Ventas Y CxC\VentasYCxC\CapaVista_Ventas\bin\Debug\CapaVista_Ventas.dll</HintPath>
+      <HintPath>..\..\..\..\modulos\ventas\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaVista_Ventas\bin\Debug\CapaVista_Ventas.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>

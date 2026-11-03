@@ -6,6 +6,7 @@
  */
 using System;
 using System.Windows.Forms;
+using CapaVista_Seguridad;
 
 namespace Ejecucion_Ventas
 {

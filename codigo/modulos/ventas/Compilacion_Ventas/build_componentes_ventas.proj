@@ -267,7 +267,7 @@
     <MSBuild Projects="@(NavegadorVista)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
     <CallTarget Targets="CompilarLogisticaVentas" />
     <CallTarget Targets="CompilarFormulariosVentas" />
-    <MSBuild Projects="..\Ventas Y CxC\VentasYCxC\CapaVista_Ventas\CapaVista_Ventas.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" StopOnFirstFailure="true" />
+    <MSBuild Projects="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaVista_Ventas\CapaVista_Ventas.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" StopOnFirstFailure="true" />
     <MSBuild Projects="@(SeguridadVista)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
     <MSBuild Projects="@(EjecutableComponente)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
   </Target>
