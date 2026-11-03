@@ -24,17 +24,13 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
         private DateTime _CreatedAt;
         private DateTime _UpdatedAt;
 
-        // 2. Repositorio privado
+     
         private ClsRepositorioPercepcionDeduccion _RepositorioPercepcionDeduccion;
 
-        // 3. Estado
         public EstadoEntidad Estado { private get; set; }
 
-        // 4. Lista privada para busquedas en memoria
         private List<ClsModeloPercepcionDeduccion> _ListaPercepcionesDeducciones;
 
-        // 5. Propiedades publicas
-        // Autoincremental: sin validaciones (se exige solo en Modified y Deleted)
         public int IdPercepcionDeduccion { get => _IdPercepcionDeduccion; set => _IdPercepcionDeduccion = value; }
 
         [Required(ErrorMessage = "El campo Nombre es requerido")]
@@ -64,13 +60,11 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
         public DateTime CreatedAt { get => _CreatedAt; private set => _CreatedAt = value; }
         public DateTime UpdatedAt { get => _UpdatedAt; private set => _UpdatedAt = value; }
 
-        // 6. Constructor
         public ClsModeloPercepcionDeduccion()
         {
             _RepositorioPercepcionDeduccion = new ClsRepositorioPercepcionDeduccion();
         }
 
-        // 7. Metodos publicos
         public string RrhhMetGrabarCambios()
         {
             string Mensaje = null;

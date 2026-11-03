@@ -27,7 +27,6 @@ namespace CapaModelo_Nomina.Repositorios
             _Delete = "DELETE FROM tblNominaDetalle WHERE idNominaDetalle=?";
         }
 
-        // ---------- Contrato generico ----------
         public int RrhhMetAgregar(ClsNominaDetalle Entidad)
         {
             return RrhhMetEjecucionNonQuery(_Insert, RrhhMetCrearParametrosInsert(Entidad), CommandType.Text);
@@ -54,7 +53,6 @@ namespace CapaModelo_Nomina.Repositorios
             return RrhhMetConvertirTabla(TablaDatos);
         }
 
-        // ---------- Metodos propios de la tabla ----------
         public int RrhhMetAgregarLote(List<ClsNominaDetalle> Lineas)
         {
             using (var Conexion = RrhhMetObtenerConexion())
@@ -120,7 +118,6 @@ namespace CapaModelo_Nomina.Repositorios
             return Convert.ToInt32(Tabla.Rows[0][0]);
         }
 
-        // ---------- Auxiliares ----------
         private List<ClsNominaDetalle> RrhhMetConvertirTabla(DataTable TablaDatos)
         {
             var Lista = new List<ClsNominaDetalle>();
@@ -149,7 +146,6 @@ namespace CapaModelo_Nomina.Repositorios
             return Parametros;
         }
 
-        // Parametros con tipo explicito (el driver ODBC no los infiere bien)
         private OdbcParameter RrhhMetParametroEntero(string Nombre, int Valor)
         {
             return new OdbcParameter(Nombre, OdbcType.Int) { Value = Valor };

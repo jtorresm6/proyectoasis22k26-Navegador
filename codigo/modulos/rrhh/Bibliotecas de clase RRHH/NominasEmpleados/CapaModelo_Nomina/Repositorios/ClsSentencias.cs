@@ -31,7 +31,6 @@ namespace CapaModelo_Nomina.Repositorios
             }
         }
 
-        // Con transaccion (conexion abierta y transaccion que maneja quien llama)
         public int RrhhMetEjecucionNonQuery(string ComandoTexto, List<OdbcParameter> Parametros, CommandType ComandoTipo,
             OdbcConnection Conexion, OdbcTransaction Transaccion)
         {
@@ -46,7 +45,6 @@ namespace CapaModelo_Nomina.Repositorios
             }
         }
 
-        // Devuelve un solo valor (por ejemplo SELECT LAST_INSERT_ID()) dentro de una transaccion
         public object RrhhMetEjecucionEscalar(string ComandoTexto, List<OdbcParameter> Parametros, CommandType ComandoTipo,
             OdbcConnection Conexion, OdbcTransaction Transaccion)
         {
@@ -61,7 +59,7 @@ namespace CapaModelo_Nomina.Repositorios
             }
         }
 
-        // ---------- Consultas (SELECT) ----------
+
         public DataTable RrhhMetEjecucionConsulta(string ComandoTexto, CommandType ComandoTipo)
         {
             return RrhhMetEjecucionConsulta(ComandoTexto, ComandoTipo, new List<OdbcParameter>());

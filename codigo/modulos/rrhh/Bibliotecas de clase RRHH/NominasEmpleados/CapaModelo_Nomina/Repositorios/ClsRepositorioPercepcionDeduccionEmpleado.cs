@@ -95,7 +95,6 @@ namespace CapaModelo_Nomina.Repositorios
             return Convert.ToInt32(Tabla.Rows[0][0]);
         }
 
-        // Parametros comunes de INSERT y UPDATE (mismo orden que el SQL, ODBC es posicional)
         private List<OdbcParameter> RrhhMetCrearParametros(ClsPercepcionDeduccionEmpleado Entidad)
         {
             var Parametros = new List<OdbcParameter>();

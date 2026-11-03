@@ -20,26 +20,19 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
         private DateTime _CreatedAt;
         private DateTime _UpdatedAt;
 
-        // 2. Repositorio privado
         private ClsRepositorioPercepcionDeduccionEmpleado _RepositorioPercepcionDeduccionEmpleado;
 
-        // 3. Estado
         public EstadoEntidad Estado { private get; set; }
 
-        // 4. Lista privada para busquedas en memoria
         private List<ClsModeloPercepcionDeduccionEmpleado> _ListaAsignaciones;
 
-        // 5. Propiedades publicas
-        // Autoincremental: sin validaciones (se exige solo en Modified y Deleted)
         public int IdPercepcionDeduccionEmpleado { get => _IdPercepcionDeduccionEmpleado; set => _IdPercepcionDeduccionEmpleado = value; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar una percepción/deducción")]
         public int IdPercepcionDeduccion { get => _IdPercepcionDeduccion; set => _IdPercepcionDeduccion = value; }
 
-        // Opcional: se valida en conjunto con IdDepartamento (al menos uno es obligatorio)
         public int? IdEmpleado { get => _IdEmpleado; set => _IdEmpleado = value; }
 
-        // Opcional: se valida en conjunto con IdEmpleado (al menos uno es obligatorio)
         public int? IdDepartamento { get => _IdDepartamento; set => _IdDepartamento = value; }
 
         public bool IsActive { get => _IsActive; set => _IsActive = value; }
@@ -47,19 +40,16 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
         public DateTime CreatedAt { get => _CreatedAt; private set => _CreatedAt = value; }
         public DateTime UpdatedAt { get => _UpdatedAt; private set => _UpdatedAt = value; }
 
-        // 6. Constructor
         public ClsModeloPercepcionDeduccionEmpleado()
         {
             _RepositorioPercepcionDeduccionEmpleado = new ClsRepositorioPercepcionDeduccionEmpleado();
         }
 
-        // 7. Metodos publicos
         public string RrhhMetGrabarCambios()
         {
             string Mensaje = null;
             try
             {
-                // Reglas de negocio (antes del switch)
                 if (Estado == EstadoEntidad.Modified || Estado == EstadoEntidad.Deleted)
                 {
                     if (_IdPercepcionDeduccionEmpleado <= 0)
@@ -68,7 +58,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
 
                 if (Estado == EstadoEntidad.Added || Estado == EstadoEntidad.Modified)
                 {
-                    // Un valor 0 o negativo (ej. combo sin seleccion) se trata como "sin asignar"
                     if (_IdEmpleado.HasValue && _IdEmpleado.Value <= 0)
                         _IdEmpleado = null;
                     if (_IdDepartamento.HasValue && _IdDepartamento.Value <= 0)
@@ -77,7 +66,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
                     if (_IdPercepcionDeduccion <= 0)
                         return "Debe seleccionar una percepción/deducción";
 
-                    // Regla principal: se asigna a un empleado o a un departamento, nunca a ambos ni a ninguno
                     if (!_IdEmpleado.HasValue && !_IdDepartamento.HasValue)
                         return "Debe asignar la percepción/deducción a un empleado o a un departamento";
                     if (_IdEmpleado.HasValue && _IdDepartamento.HasValue)
