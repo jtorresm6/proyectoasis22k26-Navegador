@@ -55,7 +55,7 @@
             this.RrhhCboConcepto = new System.Windows.Forms.ComboBox();
             this.RrhhLblDepartamento = new System.Windows.Forms.Label();
             this.RrhhLblEmpleado = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.RrhhLblConcepto = new System.Windows.Forms.Label();
             this.RrhhPnlConceptoRegistrados = new System.Windows.Forms.Panel();
             this.RrhhBtnConsultar = new System.Windows.Forms.Button();
             this.RrhhTxtBuscar = new System.Windows.Forms.TextBox();
@@ -173,6 +173,7 @@
             this.RrhhDedBtnImprimir.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnImprimir.TabIndex = 4;
             this.RrhhDedBtnImprimir.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnImprimir.Click += new System.EventHandler(this.RrhhDedBtnImprimir_Click);
             // 
             // RrhhDedBtnRefrescar
             // 
@@ -268,7 +269,7 @@
             this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhCboConcepto);
             this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhLblDepartamento);
             this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhLblEmpleado);
-            this.RrhhGbxAsignacionConceptos.Controls.Add(this.label3);
+            this.RrhhGbxAsignacionConceptos.Controls.Add(this.RrhhLblConcepto);
             this.RrhhGbxAsignacionConceptos.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold);
             this.RrhhGbxAsignacionConceptos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
             this.RrhhGbxAsignacionConceptos.Location = new System.Drawing.Point(12, 296);
@@ -372,16 +373,16 @@
             this.RrhhLblEmpleado.TabIndex = 1;
             this.RrhhLblEmpleado.Text = "Empleado:";
             // 
-            // label3
+            // RrhhLblConcepto
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F);
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.label3.Location = new System.Drawing.Point(24, 53);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(79, 21);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Concepto";
+            this.RrhhLblConcepto.AutoSize = true;
+            this.RrhhLblConcepto.Font = new System.Drawing.Font("Tahoma", 9.75F);
+            this.RrhhLblConcepto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
+            this.RrhhLblConcepto.Location = new System.Drawing.Point(24, 53);
+            this.RrhhLblConcepto.Name = "RrhhLblConcepto";
+            this.RrhhLblConcepto.Size = new System.Drawing.Size(79, 21);
+            this.RrhhLblConcepto.TabIndex = 0;
+            this.RrhhLblConcepto.Text = "Concepto";
             // 
             // RrhhPnlConceptoRegistrados
             // 
@@ -502,7 +503,7 @@
         private System.Windows.Forms.GroupBox RrhhGbxAsignacionConceptos;
         private System.Windows.Forms.Label RrhhLblDepartamento;
         private System.Windows.Forms.Label RrhhLblEmpleado;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label RrhhLblConcepto;
         private System.Windows.Forms.ComboBox RrhhCboConcepto;
         private System.Windows.Forms.CheckedListBox RrhhClbTipoAsignacion;
         private System.Windows.Forms.Label RrhhLblTipoAsignacion;

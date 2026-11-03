@@ -1,6 +1,7 @@
 ﻿using CapaControlador_Nomina.Modelos_de_controladores;
 using CapaControlador_Nomina.ObjetosdeValor;
 using CapaVista_Nomina.Ayudas;
+using CapaVista_Nomina.Reportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -478,6 +479,12 @@ namespace CapaVista_Nomina.Formularios
             RrhhMetConfigurarGrid();
             RrhhMetListarAsignaciones();
             RrhhMetReinicio();
+        }
+
+        private void RrhhDedBtnImprimir_Click(object sender, EventArgs e)
+        {
+            FrmReporteAsignacionConceptos reporte = new FrmReporteAsignacionConceptos();
+            reporte.Show();
         }
     }
 }

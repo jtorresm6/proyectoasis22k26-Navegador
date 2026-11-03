@@ -26,7 +26,6 @@ namespace CapaModelo_Nomina.Repositorios
             return Lista;
         }
 
-        // Solo empleados activos 
         public List<KeyValuePair<int, string>> RrhhMetObtenerEmpleadosActivos()
         {
             var Lista = new List<KeyValuePair<int, string>>();
@@ -43,7 +42,6 @@ namespace CapaModelo_Nomina.Repositorios
             return Lista;
         }
 
-        // Nombre del departamento al que pertenece el empleado
         public string RrhhMetObtenerDepartamentoEmpleado(int IdEmpleado)
         {
             var Parametros = new List<OdbcParameter>();

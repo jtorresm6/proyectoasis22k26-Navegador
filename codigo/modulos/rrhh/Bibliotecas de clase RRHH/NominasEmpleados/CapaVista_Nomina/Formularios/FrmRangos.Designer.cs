@@ -46,6 +46,8 @@
             this.RrhhDedBtnAyuda = new System.Windows.Forms.Button();
             this.RrhhDedBtnSalir = new System.Windows.Forms.Button();
             this.RrhhGbxRangosValores = new System.Windows.Forms.GroupBox();
+            this.RrhhCboActivo = new System.Windows.Forms.CheckBox();
+            this.RrhhLblMontoActivo = new System.Windows.Forms.Label();
             this.RrhhTxtMontoFijo = new System.Windows.Forms.TextBox();
             this.RrhhTxtValor = new System.Windows.Forms.TextBox();
             this.RrhhClbModoValor = new System.Windows.Forms.CheckedListBox();
@@ -63,8 +65,6 @@
             this.RrhhTxtBuscar = new System.Windows.Forms.TextBox();
             this.RrhhPbIconoConsultas = new System.Windows.Forms.PictureBox();
             this.RrhhDgvListaRangos = new System.Windows.Forms.DataGridView();
-            this.RrhhLblMontoActivo = new System.Windows.Forms.Label();
-            this.RrhhCboActivo = new System.Windows.Forms.CheckBox();
             this.RrhhPnlRangosValores.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbRangosValores)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconoRangosValores)).BeginInit();
@@ -178,6 +178,7 @@
             this.RrhhDedBtnImprimir.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnImprimir.TabIndex = 4;
             this.RrhhDedBtnImprimir.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnImprimir.Click += new System.EventHandler(this.RrhhDedBtnImprimir_Click);
             // 
             // RrhhDedBtnRefrescar
             // 
@@ -286,6 +287,27 @@
             this.RrhhGbxRangosValores.TabIndex = 12;
             this.RrhhGbxRangosValores.TabStop = false;
             this.RrhhGbxRangosValores.Text = "Datos del rango";
+            // 
+            // RrhhCboActivo
+            // 
+            this.RrhhCboActivo.AutoSize = true;
+            this.RrhhCboActivo.Location = new System.Drawing.Point(718, 204);
+            this.RrhhCboActivo.Name = "RrhhCboActivo";
+            this.RrhhCboActivo.Size = new System.Drawing.Size(48, 25);
+            this.RrhhCboActivo.TabIndex = 13;
+            this.RrhhCboActivo.Text = "Sí";
+            this.RrhhCboActivo.UseVisualStyleBackColor = true;
+            // 
+            // RrhhLblMontoActivo
+            // 
+            this.RrhhLblMontoActivo.AutoSize = true;
+            this.RrhhLblMontoActivo.Font = new System.Drawing.Font("Tahoma", 9.75F);
+            this.RrhhLblMontoActivo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
+            this.RrhhLblMontoActivo.Location = new System.Drawing.Point(574, 203);
+            this.RrhhLblMontoActivo.Name = "RrhhLblMontoActivo";
+            this.RrhhLblMontoActivo.Size = new System.Drawing.Size(62, 21);
+            this.RrhhLblMontoActivo.TabIndex = 12;
+            this.RrhhLblMontoActivo.Text = "Activo:";
             // 
             // RrhhTxtMontoFijo
             // 
@@ -459,27 +481,6 @@
             this.RrhhDgvListaRangos.TabIndex = 14;
             this.RrhhDgvListaRangos.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.RrhhDgvListaRangos_CellFormatting);
             this.RrhhDgvListaRangos.SelectionChanged += new System.EventHandler(this.RrhhDgvListaRangos_SelectionChanged);
-            // 
-            // RrhhLblMontoActivo
-            // 
-            this.RrhhLblMontoActivo.AutoSize = true;
-            this.RrhhLblMontoActivo.Font = new System.Drawing.Font("Tahoma", 9.75F);
-            this.RrhhLblMontoActivo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblMontoActivo.Location = new System.Drawing.Point(574, 203);
-            this.RrhhLblMontoActivo.Name = "RrhhLblMontoActivo";
-            this.RrhhLblMontoActivo.Size = new System.Drawing.Size(62, 21);
-            this.RrhhLblMontoActivo.TabIndex = 12;
-            this.RrhhLblMontoActivo.Text = "Activo:";
-            // 
-            // RrhhCboActivo
-            // 
-            this.RrhhCboActivo.AutoSize = true;
-            this.RrhhCboActivo.Location = new System.Drawing.Point(718, 204);
-            this.RrhhCboActivo.Name = "RrhhCboActivo";
-            this.RrhhCboActivo.Size = new System.Drawing.Size(48, 25);
-            this.RrhhCboActivo.TabIndex = 13;
-            this.RrhhCboActivo.Text = "Sí";
-            this.RrhhCboActivo.UseVisualStyleBackColor = true;
             // 
             // FrmRangos
             // 
