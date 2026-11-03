@@ -1,38 +1,77 @@
+/*
+ * ============================================================
+ * Área   : NuevoNavegador
+ * Autor  : Natali Sofía Montenegro Portillo
+ * Modificación: Evelyn Sofía Andrade Luna
+ * Carné  : 9959-23-1224
+ * Fecha  : 26/10/2026
+ *
+ * Propósito:
+ * Gestiona la visualización de la ayuda dinámica del componente
+ * Navegador. Solicita al Controlador la información del destino
+ * de ayuda correspondiente a la aplicación y muestra el archivo
+ * CHM y la página indicados. También presenta los mensajes
+ * correspondientes cuando no existe una ayuda disponible o
+ * cuando ocurre un error durante su apertura.
+ *
+ * ============================================================
+ */
+
 using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using CapaControlador_Navegador;
 
-//-----------------------------------------------------
-// - Hecho por: Natali Sofía Montenegro Portillo
-// - Carne: 0901-23-10017
+
 namespace CapaVista_Navegador
 {
-    // Ayuda permanente del componente: el archivo Navegador.chm viaja DENTRO de CapaVista_Navegador
-    // (recurso incrustado), así que no se parametriza ninguna ruta ni hay que copiar el archivo junto
-    // al ejecutable. Como HTML Help necesita un archivo en disco, se extrae a una carpeta temporal
-    // la primera vez (o si cambió de tamaño) y desde ahí se abre.
+    
     public static class ClsNavegadorAyuda
     {
         private const string _Recurso = "Navegador.chm";
 
-        public static void NavegadorMetMostrar(Control Padre)
+        // Inicio cambio - Evelyn Sofía Andrade Luna - 9959-23-1224 - 26/10/2026
+        public static void NavegadorMetMostrar(Navegador Componente)
         {
             try
             {
-                Help.ShowHelp(Padre, NavegadorFuncExtraer());
+                
+                Form Formulario = Componente.FindForm();
+                string NombreFormulario = Formulario == null ? "" : Formulario.GetType().Name;
+
+                ClsCtrlAyuda Controlador = new ClsCtrlAyuda();
+                ClsDestinoAyuda Destino = Controlador.NavegadorFuncObtenerDestino(Componente.NavegadorIdAplicacion, NombreFormulario);
+
+                if (Destino.RutaArchivo == "")
+                {
+                    MessageBox.Show(
+                        Destino.Mensaje,
+                        "Ayuda",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    return;
+                }
+
+                if (Destino.Pagina == "")
+                {
+                    Help.ShowHelp(Componente, Destino.RutaArchivo);
+                }
+                else
+                {
+                    Help.ShowHelp(Componente, Destino.RutaArchivo, HelpNavigator.Topic, Destino.Pagina);
+                }
             }
             catch (Exception Excepcion)
             {
                 MessageBox.Show(
-                    "No se pudo abrir la ayuda del Navegador.\n\n" + Excepcion.Message,
+                    "No se pudo abrir la ayuda de esta aplicación.\n\n" + Excepcion.Message,
                     "Ayuda",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
-
-        // Devuelve la ruta del .chm extraído del recurso incrustado .
+        
         private static string NavegadorFuncExtraer()
         {
             string Carpeta = Path.Combine(Path.GetTempPath(), "Navegador");
@@ -60,6 +99,4 @@ namespace CapaVista_Navegador
         }
     }
 }
-//--------------------------------------------------
-// - Final: Natali Sofía Montenegro Portillo
-// - Carne: 0901-23-10017
+

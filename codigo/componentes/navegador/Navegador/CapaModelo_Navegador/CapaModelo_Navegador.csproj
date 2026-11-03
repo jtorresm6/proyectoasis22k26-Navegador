@@ -55,9 +55,20 @@
     <Compile Include="datos\ClsRegistros.cs" />
     <Compile Include="datos\ClsTransaccion.cs" />
     <Compile Include="validaciones\ClsValidaciones.cs" />
+    <!-- Inicio cambio - Evelyn Sofía Andrade Luna - 9959-23-1224 - 26/10/2026 -->
+    <Compile Include="ayudas\ClsAyudas.cs" />
+    <!-- Fin cambio - Evelyn Sofía Andrade Luna - 9959-23-1224 - 26/10/2026 -->
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <!-- Inicio cambio - Evelyn Sofía Andrade Luna - 9959-23-1224 - 28/10/2026 -->
+    <!-- Ayudas del sistema: cada .chm de la carpeta ayuda del repositorio viaja dentro de este ensamblado, así el
+         sistema no depende de esa carpeta. Navegador.chm (ayuda estática obsoleta) ya viaja en CapaVista_Navegador. -->
+    <EmbeddedResource Include="..\..\..\..\..\ayuda\**\*.chm" Exclude="..\..\..\..\..\ayuda\componentes\navegador\Navegador.chm">
+      <Link>Ayudas\%(Filename)%(Extension)</Link>
+      <LogicalName>Ayudas/%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <!-- Fin cambio - Evelyn Sofía Andrade Luna - 9959-23-1224 - 28/10/2026 -->
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

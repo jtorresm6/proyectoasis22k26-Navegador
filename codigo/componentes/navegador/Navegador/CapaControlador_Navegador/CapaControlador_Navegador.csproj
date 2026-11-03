@@ -57,6 +57,10 @@
     <Compile Include="esquema\ClsCtrlEsquema.cs" />
     <Compile Include="registros\ClsCtrlRegistro.cs" />
     <Compile Include="registros\ClsCtrlTabla.cs" />
+    <!-- Inicio cambio - Evelyn Sofía Andrade Luna - 9959-23-1224 - 26/10/2026 -->
+    <Compile Include="ayudas\ClsCtrlAyuda.cs" />
+    <Compile Include="ayudas\ClsDestinoAyuda.cs" />
+    <!-- Fin cambio - Evelyn Sofía Andrade Luna - 9959-23-1224 - 26/10/2026 -->
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
