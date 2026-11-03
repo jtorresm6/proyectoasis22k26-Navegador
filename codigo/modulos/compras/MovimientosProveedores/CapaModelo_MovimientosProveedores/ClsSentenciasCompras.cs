@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Odbc;
 
 namespace CapaModelo_MovimientosProveedores
@@ -9,7 +8,7 @@ namespace CapaModelo_MovimientosProveedores
     {
         protected DataTable ComprasMetEjecucionConsulta(string Sql, params OdbcParameter[] Parametros)
         {
-            return ComprasFuncEjecucionConsulta(Sql, CommandType.Text, new List<OdbcParameter>(Parametros));
+            return EjecucionConsulta(Sql, CommandType.Text, Parametros);
         }
     }
 }

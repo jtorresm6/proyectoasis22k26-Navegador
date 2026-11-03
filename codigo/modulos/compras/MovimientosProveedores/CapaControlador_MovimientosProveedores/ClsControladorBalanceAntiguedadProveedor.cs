@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using CapaModelo_MovimientosProveedores.Entidades;
+using CapaModelo_MovimientosProveedores.Contratos;
 using CapaModelo_MovimientosProveedores.Repositorios;
 
 namespace CapaControlador_MovimientosProveedores
@@ -8,12 +9,12 @@ namespace CapaControlador_MovimientosProveedores
     /// <summary>Proporciona a la vista las filas del balance para el reporte RDLC.</summary>
     public sealed class ClsControladorBalanceAntiguedadProveedor
     {
-        private readonly ClsRepositorioBalanceAntiguedadProveedor _Repositorio;
+        private readonly IRepositorioBalanceAntiguedadProveedor _Repositorio;
 
         public ClsControladorBalanceAntiguedadProveedor()
             : this(new ClsRepositorioBalanceAntiguedadProveedor()) { }
 
-        public ClsControladorBalanceAntiguedadProveedor(ClsRepositorioBalanceAntiguedadProveedor Repositorio)
+        public ClsControladorBalanceAntiguedadProveedor(IRepositorioBalanceAntiguedadProveedor Repositorio)
         {
             if (Repositorio == null) throw new ArgumentNullException("Repositorio");
             _Repositorio = Repositorio;

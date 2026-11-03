@@ -42,7 +42,6 @@ namespace CapaVista_MovimientosProveedores
             };
             ComprasBtnGuardar.Click += (Remitente, Evento) => ComprasProcGuardarNota();
             ComprasBtnNueva.Click += (Remitente, Evento) => ComprasProcLimpiarFormulario();
-            ComprasBtnActualizar.Click += (Remitente, Evento) => ComprasProcCargarCatalogos();
             ComprasProcLimpiarFormulario();
             ComprasBtnGuardar.Enabled = false;
         }
