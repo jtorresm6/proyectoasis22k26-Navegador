@@ -44,7 +44,7 @@
       <HintPath>..\..\Cierre de Nominas\CapaVista_CierreNominas\bin\Debug\CapaVista_CierreNominas.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_EvaluacionDesempeño">
-      <HintPath>..\..\EvaluacionDesempeño\CapaVista_EvaluacionDesempeño\bin\Debug\CapaVista_EvaluacionDesempeño.dll</HintPath>
+      <HintPath>..\..\EvaluacionDesempeno\CapaVista_EvaluacionDesempeño\bin\Debug\CapaVista_EvaluacionDesempeño.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Empleado">
       <HintPath>..\..\Empleados\CapaVista_Empleado\bin\Debug\CapaVista_Empleado.dll</HintPath>
