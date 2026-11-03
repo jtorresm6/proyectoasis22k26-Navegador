@@ -34,8 +34,17 @@
     <Reference Include="CapaControlador_EvaluacionDesempeño">
       <HintPath>..\CapaControlador_EvaluacionDesempeño\bin\Debug\CapaControlador_EvaluacionDesempeño.dll</HintPath>
     </Reference>
+    <Reference Include="CapaModelo_EvaluacionDesempeño">
+      <HintPath>..\CapaModelo_EvaluacionDesempeño\bin\Debug\CapaModelo_EvaluacionDesempeño.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaControlador_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="CapaVista_Navegador">
       <HintPath>..\..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,6 +82,7 @@
     <Compile Include="Formularios\FrmVerEvaluaciones.Designer.cs">
       <DependentUpon>FrmVerEvaluaciones.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utilidades\ClsAccionesVista.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

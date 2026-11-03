@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6CA7A65E-9FA3-453C-97AD-2DE0B072A7E8}</ProjectGuid>
+    <ProjectGuid>{1A959547-5345-441D-A520-4ACD3690744D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CapaControlador_EvaluacionDesempeño</RootNamespace>
-    <AssemblyName>CapaControlador_EvaluacionDesempeño</AssemblyName>
+    <RootNamespace>CapaModelo_EvaluacionDesempeño</RootNamespace>
+    <AssemblyName>CapaModelo_EvaluacionDesempeño</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo_EvaluacionDesempeño">
-      <HintPath>..\CapaModelo_EvaluacionDesempeño\bin\Debug\CapaModelo_EvaluacionDesempeño.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,11 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contratos\IRepositorioPlanMejora.cs" />
+    <Compile Include="Contratos\IRepositorioVerEvaluaciones.cs" />
+    <Compile Include="Entidades\ClsPlanMejora.cs" />
+    <Compile Include="Entidades\ClsResultadoEvaluacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controladores\" />
-    <Folder Include="ObjetosDeValor\" />
+    <Compile Include="Repositorios\ClsConexion.cs" />
+    <Compile Include="Repositorios\ClsRepositorioPlanMejora.cs" />
+    <Compile Include="Repositorios\ClsRepositorioVerEvaluaciones.cs" />
+    <Compile Include="Repositorios\ClsSentencias.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

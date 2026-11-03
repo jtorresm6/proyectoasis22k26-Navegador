@@ -115,23 +115,17 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhPnlRetroalimentacion = new System.Windows.Forms.Panel();
             this.RrhhPnlEncabezadoRetroalimentacion = new System.Windows.Forms.Panel();
             this.RrhhLblTituloRetroalimentacion = new System.Windows.Forms.Label();
-            this.RrhhLblComentarioEvaluador = new System.Windows.Forms.Label();
-            this.RrhhTxtComentarioEvaluador = new System.Windows.Forms.TextBox();
             this.RrhhLblPlanMejora = new System.Windows.Forms.Label();
             this.RrhhTxtPlanMejora = new System.Windows.Forms.TextBox();
-            this.RrhhLblAvance = new System.Windows.Forms.Label();
-            this.RrhhPnlAvancePista = new System.Windows.Forms.Panel();
-            this.RrhhPnlAvanceRelleno = new System.Windows.Forms.Panel();
-            this.RrhhLblAvanceValor = new System.Windows.Forms.Label();
             this.RrhhPnlHistorial = new System.Windows.Forms.Panel();
             this.RrhhPnlEncabezadoHistorial = new System.Windows.Forms.Panel();
             this.RrhhLblTituloHistorial = new System.Windows.Forms.Label();
             this.RrhhDgvHistorial = new System.Windows.Forms.DataGridView();
-            this.RrhhColHistorialCiclo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RrhhColHistorialEvaluador = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RrhhColHistorialFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RrhhColHistorialPuntaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RrhhColHistorialNivel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RrhhColHistorialEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RrhhColHistorialPorcentaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RrhhPnlEncabezado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconoVerEvaluaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbMascota)).BeginInit();
@@ -150,14 +144,12 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhPnlTotalCriterios.SuspendLayout();
             this.RrhhPnlRetroalimentacion.SuspendLayout();
             this.RrhhPnlEncabezadoRetroalimentacion.SuspendLayout();
-            this.RrhhPnlAvancePista.SuspendLayout();
             this.RrhhPnlHistorial.SuspendLayout();
             this.RrhhPnlEncabezadoHistorial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhDgvHistorial)).BeginInit();
             this.RrhhPnlBotones = new System.Windows.Forms.Panel();
             this.RrhhBtnRefrescar = new System.Windows.Forms.Button();
             this.RrhhBtnImprimir = new System.Windows.Forms.Button();
-            this.RrhhBtnReporte = new System.Windows.Forms.Button();
             this.RrhhBtnInicio = new System.Windows.Forms.Button();
             this.RrhhBtnAnterior = new System.Windows.Forms.Button();
             this.RrhhBtnSiguiente = new System.Windows.Forms.Button();
@@ -314,7 +306,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhLblResumenCiclo.Name = "RrhhLblResumenCiclo";
             this.RrhhLblResumenCiclo.Size = new System.Drawing.Size(31, 13);
             this.RrhhLblResumenCiclo.TabIndex = 1;
-            this.RrhhLblResumenCiclo.Text = "Ciclo:";
+            this.RrhhLblResumenCiclo.Text = "Evaluación:";
             // 
             // RrhhCboResumenCiclo
             // 
@@ -983,13 +975,8 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhPnlRetroalimentacion.BackColor = System.Drawing.Color.White;
             this.RrhhPnlRetroalimentacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RrhhPnlRetroalimentacion.Controls.Add(this.RrhhPnlEncabezadoRetroalimentacion);
-            this.RrhhPnlRetroalimentacion.Controls.Add(this.RrhhLblComentarioEvaluador);
-            this.RrhhPnlRetroalimentacion.Controls.Add(this.RrhhTxtComentarioEvaluador);
             this.RrhhPnlRetroalimentacion.Controls.Add(this.RrhhLblPlanMejora);
             this.RrhhPnlRetroalimentacion.Controls.Add(this.RrhhTxtPlanMejora);
-            this.RrhhPnlRetroalimentacion.Controls.Add(this.RrhhLblAvance);
-            this.RrhhPnlRetroalimentacion.Controls.Add(this.RrhhPnlAvancePista);
-            this.RrhhPnlRetroalimentacion.Controls.Add(this.RrhhLblAvanceValor);
             this.RrhhPnlRetroalimentacion.Location = new System.Drawing.Point(835, 236);
             this.RrhhPnlRetroalimentacion.Margin = new System.Windows.Forms.Padding(3);
             this.RrhhPnlRetroalimentacion.Name = "RrhhPnlRetroalimentacion";
@@ -1017,44 +1004,15 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhLblTituloRetroalimentacion.Name = "RrhhLblTituloRetroalimentacion";
             this.RrhhLblTituloRetroalimentacion.Size = new System.Drawing.Size(188, 13);
             this.RrhhLblTituloRetroalimentacion.TabIndex = 0;
-            this.RrhhLblTituloRetroalimentacion.Text = "Retroalimentación y Plan de Mejora";
-            // 
-            // RrhhLblComentarioEvaluador
-            // 
-            this.RrhhLblComentarioEvaluador.AutoSize = true;
-            this.RrhhLblComentarioEvaluador.BackColor = System.Drawing.Color.Transparent;
-            this.RrhhLblComentarioEvaluador.Font = new System.Drawing.Font("Tahoma", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RrhhLblComentarioEvaluador.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(54)))));
-            this.RrhhLblComentarioEvaluador.Location = new System.Drawing.Point(14, 34);
-            this.RrhhLblComentarioEvaluador.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.RrhhLblComentarioEvaluador.Name = "RrhhLblComentarioEvaluador";
-            this.RrhhLblComentarioEvaluador.Size = new System.Drawing.Size(138, 13);
-            this.RrhhLblComentarioEvaluador.TabIndex = 1;
-            this.RrhhLblComentarioEvaluador.Text = "Comentario de tu evaluador:";
-            // 
-            // RrhhTxtComentarioEvaluador
-            // 
-            this.RrhhTxtComentarioEvaluador.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
-            this.RrhhTxtComentarioEvaluador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.RrhhTxtComentarioEvaluador.Font = new System.Drawing.Font("Segoe UI", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RrhhTxtComentarioEvaluador.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(54)))));
-            this.RrhhTxtComentarioEvaluador.Location = new System.Drawing.Point(14, 54);
-            this.RrhhTxtComentarioEvaluador.Margin = new System.Windows.Forms.Padding(3);
-            this.RrhhTxtComentarioEvaluador.Multiline = true;
-            this.RrhhTxtComentarioEvaluador.Name = "RrhhTxtComentarioEvaluador";
-            this.RrhhTxtComentarioEvaluador.ReadOnly = true;
-            this.RrhhTxtComentarioEvaluador.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.RrhhTxtComentarioEvaluador.Size = new System.Drawing.Size(328, 80);
-            this.RrhhTxtComentarioEvaluador.TabIndex = 2;
-            this.RrhhTxtComentarioEvaluador.TabStop = false;
-            // 
+            this.RrhhLblTituloRetroalimentacion.Text = "Plan de Mejora";
+            //
             // RrhhLblPlanMejora
             // 
             this.RrhhLblPlanMejora.AutoSize = true;
             this.RrhhLblPlanMejora.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblPlanMejora.Font = new System.Drawing.Font("Tahoma", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblPlanMejora.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(54)))));
-            this.RrhhLblPlanMejora.Location = new System.Drawing.Point(14, 146);
+            this.RrhhLblPlanMejora.Location = new System.Drawing.Point(14, 34);
             this.RrhhLblPlanMejora.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.RrhhLblPlanMejora.Name = "RrhhLblPlanMejora";
             this.RrhhLblPlanMejora.Size = new System.Drawing.Size(122, 13);
@@ -1067,58 +1025,15 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhTxtPlanMejora.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RrhhTxtPlanMejora.Font = new System.Drawing.Font("Segoe UI", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhTxtPlanMejora.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(54)))));
-            this.RrhhTxtPlanMejora.Location = new System.Drawing.Point(14, 164);
+            this.RrhhTxtPlanMejora.Location = new System.Drawing.Point(14, 54);
             this.RrhhTxtPlanMejora.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhTxtPlanMejora.Multiline = true;
             this.RrhhTxtPlanMejora.Name = "RrhhTxtPlanMejora";
             this.RrhhTxtPlanMejora.ReadOnly = true;
-            this.RrhhTxtPlanMejora.Size = new System.Drawing.Size(328, 18);
+            this.RrhhTxtPlanMejora.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.RrhhTxtPlanMejora.Size = new System.Drawing.Size(370, 120);
             this.RrhhTxtPlanMejora.TabIndex = 4;
             this.RrhhTxtPlanMejora.TabStop = false;
-            // 
-            // RrhhLblAvance
-            // 
-            this.RrhhLblAvance.AutoSize = true;
-            this.RrhhLblAvance.BackColor = System.Drawing.Color.Transparent;
-            this.RrhhLblAvance.Font = new System.Drawing.Font("Tahoma", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RrhhLblAvance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(52)))), ((int)(((byte)(54)))));
-            this.RrhhLblAvance.Location = new System.Drawing.Point(14, 204);
-            this.RrhhLblAvance.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.RrhhLblAvance.Name = "RrhhLblAvance";
-            this.RrhhLblAvance.Size = new System.Drawing.Size(44, 13);
-            this.RrhhLblAvance.TabIndex = 5;
-            this.RrhhLblAvance.Text = "Avance:";
-            // 
-            // RrhhPnlAvancePista
-            // 
-            this.RrhhPnlAvancePista.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(232)))), ((int)(((byte)(229)))));
-            this.RrhhPnlAvancePista.Controls.Add(this.RrhhPnlAvanceRelleno);
-            this.RrhhPnlAvancePista.Location = new System.Drawing.Point(70, 207);
-            this.RrhhPnlAvancePista.Margin = new System.Windows.Forms.Padding(3);
-            this.RrhhPnlAvancePista.Name = "RrhhPnlAvancePista";
-            this.RrhhPnlAvancePista.Size = new System.Drawing.Size(214, 10);
-            this.RrhhPnlAvancePista.TabIndex = 6;
-            // 
-            // RrhhPnlAvanceRelleno
-            // 
-            this.RrhhPnlAvanceRelleno.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(145)))));
-            this.RrhhPnlAvanceRelleno.Location = new System.Drawing.Point(0, 0);
-            this.RrhhPnlAvanceRelleno.Margin = new System.Windows.Forms.Padding(3);
-            this.RrhhPnlAvanceRelleno.Name = "RrhhPnlAvanceRelleno";
-            this.RrhhPnlAvanceRelleno.Size = new System.Drawing.Size(8, 10);
-            this.RrhhPnlAvanceRelleno.TabIndex = 0;
-            // 
-            // RrhhLblAvanceValor
-            // 
-            this.RrhhLblAvanceValor.BackColor = System.Drawing.Color.Transparent;
-            this.RrhhLblAvanceValor.Font = new System.Drawing.Font("Tahoma", 7.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RrhhLblAvanceValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblAvanceValor.Location = new System.Drawing.Point(292, 202);
-            this.RrhhLblAvanceValor.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.RrhhLblAvanceValor.Name = "RrhhLblAvanceValor";
-            this.RrhhLblAvanceValor.Size = new System.Drawing.Size(51, 16);
-            this.RrhhLblAvanceValor.TabIndex = 7;
-            this.RrhhLblAvanceValor.Text = "0%";
-            this.RrhhLblAvanceValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // RrhhPnlHistorial
             // 
@@ -1178,11 +1093,11 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhDgvHistorial.ColumnHeadersHeight = 28;
             this.RrhhDgvHistorial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.RrhhDgvHistorial.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.RrhhColHistorialCiclo,
+            this.RrhhColHistorialEvaluador,
             this.RrhhColHistorialFecha,
             this.RrhhColHistorialPuntaje,
             this.RrhhColHistorialNivel,
-            this.RrhhColHistorialEstado});
+            this.RrhhColHistorialPorcentaje});
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(244)))), ((int)(((byte)(243)))));
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Tahoma", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1206,14 +1121,14 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhDgvHistorial.Size = new System.Drawing.Size(1210, 168);
             this.RrhhDgvHistorial.TabIndex = 1;
             // 
-            // RrhhColHistorialCiclo
+            // RrhhColHistorialEvaluador
             // 
-            this.RrhhColHistorialCiclo.HeaderText = "Ciclo";
-            this.RrhhColHistorialCiclo.MinimumWidth = 3;
-            this.RrhhColHistorialCiclo.FillWeight = 163F;
-            this.RrhhColHistorialCiclo.Name = "RrhhColHistorialCiclo";
-            this.RrhhColHistorialCiclo.ReadOnly = true;
-            this.RrhhColHistorialCiclo.Width = 163;
+            this.RrhhColHistorialEvaluador.HeaderText = "Evaluador";
+            this.RrhhColHistorialEvaluador.MinimumWidth = 3;
+            this.RrhhColHistorialEvaluador.FillWeight = 163F;
+            this.RrhhColHistorialEvaluador.Name = "RrhhColHistorialEvaluador";
+            this.RrhhColHistorialEvaluador.ReadOnly = true;
+            this.RrhhColHistorialEvaluador.Width = 163;
             // 
             // RrhhColHistorialFecha
             // 
@@ -1246,16 +1161,16 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhColHistorialNivel.ReadOnly = true;
             this.RrhhColHistorialNivel.Width = 178;
             // 
-            // RrhhColHistorialEstado
+            // RrhhColHistorialPorcentaje
             // 
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.RrhhColHistorialEstado.DefaultCellStyle = dataGridViewCellStyle5;
-            this.RrhhColHistorialEstado.HeaderText = "Estado";
-            this.RrhhColHistorialEstado.MinimumWidth = 3;
-            this.RrhhColHistorialEstado.FillWeight = 249F;
-            this.RrhhColHistorialEstado.Name = "RrhhColHistorialEstado";
-            this.RrhhColHistorialEstado.ReadOnly = true;
-            this.RrhhColHistorialEstado.Width = 249;
+            this.RrhhColHistorialPorcentaje.DefaultCellStyle = dataGridViewCellStyle5;
+            this.RrhhColHistorialPorcentaje.HeaderText = "Porcentaje";
+            this.RrhhColHistorialPorcentaje.MinimumWidth = 3;
+            this.RrhhColHistorialPorcentaje.FillWeight = 249F;
+            this.RrhhColHistorialPorcentaje.Name = "RrhhColHistorialPorcentaje";
+            this.RrhhColHistorialPorcentaje.ReadOnly = true;
+            this.RrhhColHistorialPorcentaje.Width = 249;
             // 
             // FrmVerEvaluaciones
             // 
@@ -1265,7 +1180,6 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhPnlBotones.BackColor = System.Drawing.Color.Transparent;
             this.RrhhPnlBotones.Controls.Add(this.RrhhBtnRefrescar);
             this.RrhhPnlBotones.Controls.Add(this.RrhhBtnImprimir);
-            this.RrhhPnlBotones.Controls.Add(this.RrhhBtnReporte);
             this.RrhhPnlBotones.Controls.Add(this.RrhhBtnInicio);
             this.RrhhPnlBotones.Controls.Add(this.RrhhBtnAnterior);
             this.RrhhPnlBotones.Controls.Add(this.RrhhBtnSiguiente);
@@ -1309,22 +1223,6 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhBtnImprimir.TabIndex = 1;
             this.RrhhBtnImprimir.UseVisualStyleBackColor = false;
             // 
-            // RrhhBtnReporte
-            // 
-            this.RrhhBtnReporte.BackColor = System.Drawing.Color.Transparent;
-            this.RrhhBtnReporte.BackgroundImage = global::CapaVista_EvaluacionDesempeño.Properties.Resources.btn_reporte;
-            this.RrhhBtnReporte.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.RrhhBtnReporte.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.RrhhBtnReporte.FlatAppearance.BorderSize = 0;
-            this.RrhhBtnReporte.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.RrhhBtnReporte.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.RrhhBtnReporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnReporte.Location = new System.Drawing.Point(151, 1);
-            this.RrhhBtnReporte.Name = "RrhhBtnReporte";
-            this.RrhhBtnReporte.Size = new System.Drawing.Size(66, 66);
-            this.RrhhBtnReporte.TabIndex = 2;
-            this.RrhhBtnReporte.UseVisualStyleBackColor = false;
-            // 
             // RrhhBtnInicio
             // 
             this.RrhhBtnInicio.BackColor = System.Drawing.Color.Transparent;
@@ -1335,7 +1233,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhBtnInicio.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnInicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnInicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnInicio.Location = new System.Drawing.Point(225, 1);
+            this.RrhhBtnInicio.Location = new System.Drawing.Point(151, 1);
             this.RrhhBtnInicio.Name = "RrhhBtnInicio";
             this.RrhhBtnInicio.Size = new System.Drawing.Size(66, 66);
             this.RrhhBtnInicio.TabIndex = 3;
@@ -1351,7 +1249,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhBtnAnterior.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnAnterior.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnAnterior.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnAnterior.Location = new System.Drawing.Point(299, 1);
+            this.RrhhBtnAnterior.Location = new System.Drawing.Point(225, 1);
             this.RrhhBtnAnterior.Name = "RrhhBtnAnterior";
             this.RrhhBtnAnterior.Size = new System.Drawing.Size(66, 66);
             this.RrhhBtnAnterior.TabIndex = 4;
@@ -1367,7 +1265,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhBtnSiguiente.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnSiguiente.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnSiguiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnSiguiente.Location = new System.Drawing.Point(373, 1);
+            this.RrhhBtnSiguiente.Location = new System.Drawing.Point(299, 1);
             this.RrhhBtnSiguiente.Name = "RrhhBtnSiguiente";
             this.RrhhBtnSiguiente.Size = new System.Drawing.Size(66, 66);
             this.RrhhBtnSiguiente.TabIndex = 5;
@@ -1383,7 +1281,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhBtnFin.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnFin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnFin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnFin.Location = new System.Drawing.Point(447, 1);
+            this.RrhhBtnFin.Location = new System.Drawing.Point(373, 1);
             this.RrhhBtnFin.Name = "RrhhBtnFin";
             this.RrhhBtnFin.Size = new System.Drawing.Size(66, 66);
             this.RrhhBtnFin.TabIndex = 6;
@@ -1399,7 +1297,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhBtnAyuda.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnAyuda.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnAyuda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnAyuda.Location = new System.Drawing.Point(521, 1);
+            this.RrhhBtnAyuda.Location = new System.Drawing.Point(447, 1);
             this.RrhhBtnAyuda.Name = "RrhhBtnAyuda";
             this.RrhhBtnAyuda.Size = new System.Drawing.Size(66, 66);
             this.RrhhBtnAyuda.TabIndex = 7;
@@ -1415,7 +1313,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhBtnSalir.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnSalir.Location = new System.Drawing.Point(595, 1);
+            this.RrhhBtnSalir.Location = new System.Drawing.Point(521, 1);
             this.RrhhBtnSalir.Name = "RrhhBtnSalir";
             this.RrhhBtnSalir.Size = new System.Drawing.Size(66, 66);
             this.RrhhBtnSalir.TabIndex = 8;
@@ -1471,7 +1369,6 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhPnlRetroalimentacion.PerformLayout();
             this.RrhhPnlEncabezadoRetroalimentacion.ResumeLayout(false);
             this.RrhhPnlEncabezadoRetroalimentacion.PerformLayout();
-            this.RrhhPnlAvancePista.ResumeLayout(false);
             this.RrhhPnlHistorial.ResumeLayout(false);
             this.RrhhPnlEncabezadoHistorial.ResumeLayout(false);
             this.RrhhPnlEncabezadoHistorial.PerformLayout();
@@ -1546,29 +1443,22 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
         private System.Windows.Forms.Panel RrhhPnlRetroalimentacion;
         private System.Windows.Forms.Panel RrhhPnlEncabezadoRetroalimentacion;
         private System.Windows.Forms.Label RrhhLblTituloRetroalimentacion;
-        private System.Windows.Forms.Label RrhhLblComentarioEvaluador;
-        private System.Windows.Forms.TextBox RrhhTxtComentarioEvaluador;
         private System.Windows.Forms.Label RrhhLblPlanMejora;
         private System.Windows.Forms.TextBox RrhhTxtPlanMejora;
-        private System.Windows.Forms.Label RrhhLblAvance;
-        private System.Windows.Forms.Panel RrhhPnlAvancePista;
-        private System.Windows.Forms.Panel RrhhPnlAvanceRelleno;
-        private System.Windows.Forms.Label RrhhLblAvanceValor;
         private System.Windows.Forms.Panel RrhhPnlHistorial;
         private System.Windows.Forms.Panel RrhhPnlEncabezadoHistorial;
         private System.Windows.Forms.Label RrhhLblTituloHistorial;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RrhhColHistorialCiclo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RrhhColHistorialEvaluador;
         private System.Windows.Forms.DataGridViewTextBoxColumn RrhhColHistorialFecha;
         private System.Windows.Forms.DataGridViewTextBoxColumn RrhhColHistorialPuntaje;
         private System.Windows.Forms.DataGridViewTextBoxColumn RrhhColHistorialNivel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RrhhColHistorialEstado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RrhhColHistorialPorcentaje;
         private System.Windows.Forms.DataGridView RrhhDgvHistorial;
         private System.Windows.Forms.Label RrhhLblTitulo;
         private System.Windows.Forms.Label RrhhLblSubtitulo;
         private System.Windows.Forms.Panel RrhhPnlBotones;
         private System.Windows.Forms.Button RrhhBtnRefrescar;
         private System.Windows.Forms.Button RrhhBtnImprimir;
-        private System.Windows.Forms.Button RrhhBtnReporte;
         private System.Windows.Forms.Button RrhhBtnInicio;
         private System.Windows.Forms.Button RrhhBtnAnterior;
         private System.Windows.Forms.Button RrhhBtnSiguiente;

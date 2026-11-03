@@ -31,19 +31,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmRealizarEvaluacion));
             this.RrhhNavRealizarEvaluacion = new CapaVista_Navegador.Navegador();
             this.SuspendLayout();
-            // 
+            //
             // RrhhNavRealizarEvaluacion
-            // 
+            //
             this.RrhhNavRealizarEvaluacion.Location = new System.Drawing.Point(12, 92);
             this.RrhhNavRealizarEvaluacion.Name = "RrhhNavRealizarEvaluacion";
             this.RrhhNavRealizarEvaluacion.Size = new System.Drawing.Size(1435, 107);
             this.RrhhNavRealizarEvaluacion.TabIndex = 0;
-            // 
+            //
             // FrmRealizarEvaluacion
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1462, 640);
+            this.ClientSize = new System.Drawing.Size(1462, 730);
             this.Controls.Add(this.RrhhNavRealizarEvaluacion);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
