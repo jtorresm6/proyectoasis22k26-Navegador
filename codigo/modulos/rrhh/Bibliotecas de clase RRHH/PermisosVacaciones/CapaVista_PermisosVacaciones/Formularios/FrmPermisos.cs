@@ -1,8 +1,8 @@
 ﻿/*
  * ==================================================================
  * Área : Recursos Humanos
- * Autor : Byron Alexander Chiquito Paredes
- * Carné : 0901-23-3747
+ * Autor : daniella jurado
+ * Carné : 0901-23-3679
  * Fecha : 23/10/2026
  * Modificado por : Daniella Jurado 0901-23-3679 (02/11/2026)
  * ==================================================================
