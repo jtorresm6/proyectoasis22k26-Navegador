@@ -79,6 +79,20 @@ namespace CapaVista_Asistencia.Properties {
             }
         }
 
+        internal static System.Drawing.Bitmap btn_horas_extra {
+            get {
+                object obj = ResourceManager.GetObject("btn_horas_extra", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap icono_horas_extra {
+            get {
+                object obj = ResourceManager.GetObject("icono_horas_extra", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
         internal static System.Drawing.Bitmap btn_generar {
             get {
                 object obj = ResourceManager.GetObject("btn_generar", resourceCulture);

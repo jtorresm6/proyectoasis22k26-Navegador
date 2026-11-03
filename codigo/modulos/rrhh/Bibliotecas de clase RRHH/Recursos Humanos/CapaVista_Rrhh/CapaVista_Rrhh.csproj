@@ -98,6 +98,8 @@
     <None Include="Resources\btn_ayuda.png" />
     <None Include="Resources\btn_capacitaciones.png" />
     <None Include="Resources\btn_capacitaciones_diseno.png" />
+    <None Include="Resources\btn_catalogos.png" />
+    <None Include="Resources\btn_catalogos_diseno.png" />
     <None Include="Resources\btn_cerrarsesion.png" />
     <None Include="Resources\btn_cerrarsesion_diseno.png" />
     <None Include="Resources\btn_cierres.png" />

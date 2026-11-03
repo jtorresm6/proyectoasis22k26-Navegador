@@ -15,8 +15,12 @@ namespace CapaVista_Navegador
     //
     // Al cargar el formulario arma la grilla, el panel de ingreso/modificación, los permisos del
     // usuario en sesión (Seguridad) y la bitácora. El usuario y sus roles NO se parametrizan: salen de
-    // la sesión que dejó el login de Seguridad (ver ClsNavegadorSesion) y la ayuda es la del propio
-    // componente (ver ClsNavegadorAyuda). Lo que hace cada botón está en ClsNavegadorAcciones.
+    // la sesión que dejó el login de Seguridad (ver ClsNavegadorSesion).
+    // Inicio cambio - Evelyn Sofía Andrade Luna - 9959-23-1224 - 26/10/2026
+    // La ayuda sale de la aplicación configurada (IdAplicacion): el botón Ayuda abre la página de esa
+    // aplicación dentro del .chm de su módulo (ver ClsNavegadorAyuda).
+    // Fin cambio - Evelyn Sofía Andrade Luna - 9959-23-1224 - 26/10/2026
+    // Lo que hace cada botón está en ClsNavegadorAcciones.
     public partial class Navegador : UserControl
     {
         public event Action<string> NavegadorAccionSolicitada;

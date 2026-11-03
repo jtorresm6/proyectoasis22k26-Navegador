@@ -33,11 +33,17 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modelos de Controladores\ClsModeloAsistencia.cs" />
+    <Compile Include="Modelos de Controladores\ClsModeloHoraExtra.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CapaControlador_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="CapaModelo_Asistencia">
       <HintPath>..\CapaModelo_Asistencia\bin\Debug\CapaModelo_Asistencia.dll</HintPath>
     </Reference>
