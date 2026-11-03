@@ -4,6 +4,7 @@
  * Autor : Byron Alexander
  * Carné : 0901-23-3747
  * Fecha : 11/10/2026
+ * Última modificación : 02/11/2026
  * ==================================================================
  * Propósito :
  *  Formulario 9101 de Asistencia. Muestra el detalle de la asistencia
@@ -11,15 +12,31 @@
  *  lista de asistencias registradas con sus filtros. El empleado se
  *  busca por código o por nombre y sus datos se llenan solos.
  * Reglas especificas:
- *  Por ahora es un prototipo no funcional, inicia sin datos y lo que
- *  se ingresa solo queda en memoria mientras la ventana está abierta.
- *  Si el empleado tiene un permiso aprobado para la fecha, el
- *  estado queda en Permiso y no se puede cambiar. Las horas trabajadas
- *  y las incidencias se calculan con la jornada del empleado. Es
- *  ventana secundaria, no se puede maximizar.
+ *  Guarda, modifica y elimina en tblAsistenciaEmpleado por medio de
+ *  CapaControlador_Asistencia. Un empleado solo tiene una asistencia
+ *  por fecha. Si el empleado tiene un permiso aprobado por días o
+ *  vacaciones para la fecha, el estado queda en Permiso y no se puede
+ *  cambiar. Un permiso por horas quita la tardanza o la salida antes
+ *  de tiempo que cubre. Los días de capacitación cuentan como día
+ *  trabajado. No se registra asistencia desde la fecha de baja. Las
+ *  horas trabajadas y las incidencias se calculan con la jornada y la
+ *  tolerancia del empleado. Los botones Guardar, Modificar, Eliminar,
+ *  Imprimir y Reporte se habilitan según los permisos del usuario en
+ *  sesión (módulo 9000, aplicación 9101). El botón Horas extra abre la
+ *  ventana 9102 con la asistencia seleccionada. Reporte muestra
+ *  RpAsistencia.rdlc como en Seguridad; Imprimir abre el Reporteador
+ *  con la aplicación 9101, donde se registra ese reporte. Los dos usan
+ *  lo que la lista tiene filtrado. Generar queda sin uso por ahora.
+ *  Es ventana secundaria, no se puede maximizar.
  * ===================================================================
 */
 
+using CapaControlador_Asistencia.Modelos_de_Controladores;
+using CapaControlador_Seguridad;
+using CapaControlador_Seguridad.Objetos_de_valor;
+using CapaVista_Asistencia.frmReportes;
+using CapaVista_Reporteador;
+using CapaVista_Seguridad.Ayudas;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -34,8 +51,12 @@ namespace CapaVista_Asistencia.Formularios
 {
     public partial class FrmAsistencia : Form
     {
+        private readonly ClsModeloAsistencia _Asistencia = new ClsModeloAsistencia();
+        private ClsPermisoAplicacion _MisPermisos;
+
         private DataTable _Empleados;
         private DataTable _Permisos;
+        private DataTable _Capacitaciones;
         private DataTable _Asistencias;
         private DataView _Vista;
 
@@ -45,8 +66,6 @@ namespace CapaVista_Asistencia.Formularios
         private bool _HayCambios;
 
         private bool _CargandoRegistro;
-
-        private const int MinutosTolerancia = 5;
 
         private readonly Dictionary<Button, Image[]> _ImagenesBotones = new Dictionary<Button, Image[]>();
         private readonly HashSet<Button> _BotonesSinPermiso = new HashSet<Button>();
@@ -62,12 +81,14 @@ namespace CapaVista_Asistencia.Formularios
             InitializeComponent();
             this.DoubleBuffered = true;
             this.Load += FrmAsistencia_Load;
-            this.Shown += (s, e) => RrhhMetNuevoRegistro();
+            this.Shown += FrmAsistencia_Shown;
+            this.FormClosing += FrmAsistencia_FormClosing;
         }
 
         private void FrmAsistencia_Load(object sender, EventArgs e)
         {
             RrhhMetPrepararImagenes();
+            RrhhMetAplicarPermisos();
             RrhhMetRedondear(RrhhPnlDetalle, 14);
             RrhhMetRedondear(RrhhPnlRegistros, 14);
 
@@ -82,7 +103,6 @@ namespace CapaVista_Asistencia.Formularios
             };
 
             RrhhMetCrearTablas();
-            RrhhMetLlenarEmpleados();
 
             RrhhDtpDesde.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             RrhhDtpHasta.Value = RrhhDtpDesde.Value.AddMonths(1).AddDays(-1);
@@ -90,31 +110,170 @@ namespace CapaVista_Asistencia.Formularios
 
             _Vista = new DataView(_Asistencias);
             RrhhDgvAsistencias.DataSource = _Vista;
-            RrhhMetActualizarTotal();
+            RrhhMetCargarDatos();
+            RrhhMetAplicarFiltro();
+        }
+
+        private void FrmAsistencia_Shown(object sender, EventArgs e)
+        {
+            if (!_MisPermisos.TieneAcceso)
+            {
+                MessageBox.Show("No tiene acceso a la ventana de Asistencia. Consulte con el administrador del sistema.",
+                                "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _HayCambios = false;
+                this.Close();
+                return;
+            }
+            RrhhMetNuevoRegistro();
+        }
+
+        private void FrmAsistencia_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!_HayCambios) return;
+            DialogResult Respuesta = MessageBox.Show("Hay cambios sin guardar. ¿Desea salir de todas formas?", "Asistencia",
+                                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (Respuesta != DialogResult.Yes) e.Cancel = true;
+        }
+
+        // Permisos por botón con el helper de Seguridad, como las demás ventanas de RRHH
+        private void RrhhMetAplicarPermisos()
+        {
+            var MapaBotones = new Dictionary<Control, TipoPermiso>
+            {
+                { RrhhBtnGuardar, TipoPermiso.Insertar },
+                { RrhhBtnModificar, TipoPermiso.Editar },
+                { RrhhBtnEliminar, TipoPermiso.Eliminar },
+                { RrhhBtnGenerar, TipoPermiso.Imprimir },
+                { RrhhBtnImprimir, TipoPermiso.Imprimir },
+                { RrhhBtnReporte, TipoPermiso.Imprimir }
+            };
+            _MisPermisos = ClsSeguridadFormHelper.SeguridadMetInicializarSeguridad(
+                this, ClsModeloAsistencia.IdModulo, ClsModeloAsistencia.IdAplicacion, MapaBotones);
+
+            // Los que el helper dejó apagados no los vuelve a encender el estado de la ventana
+            foreach (Control Boton in MapaBotones.Keys)
+            {
+                if (!Boton.Enabled) RrhhMetDeshabilitarBoton((Button)Boton);
+            }
+
+            // Horas Extra tiene sus propios permisos (aplicación 9102)
+            if (!ClsSeguridadFormHelper.SeguridadMetTieneAcceso(ClsModeloHoraExtra.IdModulo, ClsModeloHoraExtra.IdAplicacion))
+                RrhhMetDeshabilitarBoton(RrhhBtnHorasExtra);
+        }
+
+        // ---------- Reportes ----------
+
+        // Datos del reporte: lo que la lista tiene filtrado en este momento
+        private DataTable RrhhMetDatosReporte()
+        {
+            var Datos = new DataTable("DsAsistencia");
+            Datos.Columns.Add("Codigo", typeof(string));
+            Datos.Columns.Add("Empleado", typeof(string));
+            Datos.Columns.Add("Departamento", typeof(string));
+            Datos.Columns.Add("Fecha", typeof(DateTime));
+            Datos.Columns.Add("Entrada", typeof(string));
+            Datos.Columns.Add("Salida", typeof(string));
+            Datos.Columns.Add("HorasTrabajadas", typeof(string));
+            Datos.Columns.Add("Estado", typeof(string));
+            Datos.Columns.Add("Observaciones", typeof(string));
+            Datos.Columns.Add("Periodo", typeof(string));
+
+            string Periodo = $"Del {RrhhDtpDesde.Value:dd/MM/yyyy} al {RrhhDtpHasta.Value:dd/MM/yyyy}";
+            if (RrhhCboFiltroEstado.SelectedIndex > 0) Periodo += $"  ·  Estado: {RrhhCboFiltroEstado.SelectedItem}";
+            foreach (DataRowView Fila in _Vista)
+            {
+                Datos.Rows.Add(Fila["codigoEmpleado"], Fila["nombreEmpleado"], Fila["departamentoEmpleado"],
+                               Fila["fechaAsistencia"], RrhhMetTextoHora(Fila["horaEntrada"]), RrhhMetTextoHora(Fila["horaSalida"]),
+                               Fila["horasTrabajadas"], Fila["estadoAsistencia"],
+                               Fila["observacionesAsistencia"].ToString() == "" ? "-" : Fila["observacionesAsistencia"], Periodo);
+            }
+            return Datos;
+        }
+
+        private static string RrhhMetTextoHora(object Hora)
+        {
+            return Hora is TimeSpan Valor ? Valor.ToString(@"hh\:mm") : "-";
+        }
+
+        // Reporte: igual que en Seguridad, abre la ventana del reporte .rdlc con lo que la lista tiene filtrado
+        private void RrhhBtnReporte_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var Reporte = new FrmReporteAsistencia(RrhhMetDatosReporte());
+                Reporte.Show();
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show("Error al abrir el reporte: " + Ex.Message, "Reporte",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Abre el Reporteador con la aplicación 9101 y los datos filtrados; ahí se registra el .rdlc de reportes\modulos\rrhh
+        private void RrhhBtnImprimir_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var Fuentes = new Dictionary<string, object> { { "DsAsistencia", RrhhMetDatosReporte() } };
+                using (var Reporteador = new FrmReportes())
+                {
+                    Reporteador.ReporteadorMetCargarReportes(ClsModeloAsistencia.IdAplicacion, Fuentes);
+                    Reporteador.ShowDialog(this);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show("No se pudo abrir el Reporteador.\n" + Ex.Message, "Asistencia",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void RrhhBtnHorasExtra_Click(object sender, EventArgs e)
+        {
+            using (var HorasExtra = new FrmHorasExtra(_IdSeleccionado))
+            {
+                HorasExtra.ShowDialog(this);
+            }
+        }
+
+        private void RrhhMetCargarDatos()
+        {
+            try
+            {
+                _Empleados = _Asistencia.RrhhMetObtenerEmpleados();
+                _Permisos = _Asistencia.RrhhMetObtenerPermisos();
+                _Capacitaciones = _Asistencia.RrhhMetObtenerCapacitaciones();
+                RrhhMetLlenarEmpleados();
+                RrhhMetCargarAsistencias();
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show("No se pudieron cargar los datos de asistencia.\n" + ClsModeloAsistencia.RrhhMetMensajeError(Ex), "Asistencia",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RrhhMetCargarAsistencias()
+        {
+            _CargandoRegistro = true;
+            _Asistencias.BeginLoadData();
+            _Asistencias.Clear();
+            foreach (ClsModeloAsistencia Item in _Asistencia.RrhhMetObtenerTodos())
+            {
+                object Entrada = Item.HoraEntrada.HasValue ? (object)Item.HoraEntrada.Value : DBNull.Value;
+                object Salida = Item.HoraSalida.HasValue ? (object)Item.HoraSalida.Value : DBNull.Value;
+                _Asistencias.Rows.Add(Item.IdAsistenciaEmpleado, Item.IdEmpleado, Item.CodigoEmpleado, Item.NombreEmpleado,
+                                      Item.DepartamentoEmpleado, Item.PuestoEmpleado, Item.FechaAsistencia.Date,
+                                      Entrada, Salida, Item.EstadoAsistencia, Item.Observaciones,
+                                      Item.CreatedAt, Item.UpdatedAt, RrhhMetHorasTrabajadas(Entrada, Salida));
+            }
+            _Asistencias.EndLoadData();
+            _CargandoRegistro = false;
         }
 
         private void RrhhMetCrearTablas()
         {
-            _Empleados = new DataTable();
-            _Empleados.Columns.Add("idEmpleado", typeof(int));
-            _Empleados.Columns.Add("codigoEmpleado", typeof(string));
-            _Empleados.Columns.Add("nombreEmpleado", typeof(string));
-            _Empleados.Columns.Add("departamentoEmpleado", typeof(string));
-            _Empleados.Columns.Add("puestoEmpleado", typeof(string));
-            _Empleados.Columns.Add("tipoPuesto", typeof(string));
-            _Empleados.Columns.Add("jornada", typeof(string));
-            _Empleados.Columns.Add("horaInicioJornada", typeof(TimeSpan));
-            _Empleados.Columns.Add("horaFinJornada", typeof(TimeSpan));
-
-            _Permisos = new DataTable();
-            _Permisos.Columns.Add("idPermiso", typeof(int));
-            _Permisos.Columns.Add("idEmpleado", typeof(int));
-            _Permisos.Columns.Add("tipoPermiso", typeof(string));
-            _Permisos.Columns.Add("fechaInicioPermiso", typeof(DateTime));
-            _Permisos.Columns.Add("fechaFinPermiso", typeof(DateTime));
-            _Permisos.Columns.Add("motivoPermiso", typeof(string));
-            _Permisos.Columns.Add("estadoPermiso", typeof(string));
-
             _Asistencias = new DataTable();
             _Asistencias.Columns.Add("idAsistencia", typeof(int));
             _Asistencias.Columns.Add("idEmpleado", typeof(int));
@@ -132,27 +291,16 @@ namespace CapaVista_Asistencia.Formularios
             _Asistencias.Columns.Add("horasTrabajadas", typeof(string));
         }
 
-        private void RrhhMetLlenarFila(DataRow Fila, int IdEmpleado, DateTime Fecha, object Entrada,
-                                       object Salida, string Estado, string Observaciones)
-        {
-            DataRow Empleado = RrhhMetBuscarEmpleado(IdEmpleado);
-            Fila["idEmpleado"] = IdEmpleado;
-            Fila["codigoEmpleado"] = Empleado["codigoEmpleado"];
-            Fila["nombreEmpleado"] = Empleado["nombreEmpleado"];
-            Fila["departamentoEmpleado"] = Empleado["departamentoEmpleado"];
-            Fila["puestoEmpleado"] = Empleado["puestoEmpleado"];
-            Fila["fechaAsistencia"] = Fecha;
-            Fila["horaEntrada"] = Entrada;
-            Fila["horaSalida"] = Salida;
-            Fila["estadoAsistencia"] = Estado;
-            Fila["observacionesAsistencia"] = Observaciones;
-            Fila["horasTrabajadas"] = RrhhMetHorasTrabajadas(Entrada, Salida);
-        }
-
         private DataRow RrhhMetBuscarEmpleado(int IdEmpleado)
         {
+            if (_Empleados == null) return null;
             DataRow[] Filas = _Empleados.Select("idEmpleado = " + IdEmpleado);
             return Filas.Length > 0 ? Filas[0] : null;
+        }
+
+        private static int RrhhMetTolerancia(DataRow Empleado)
+        {
+            return Empleado["minutosTolerancia"] == DBNull.Value ? 0 : (int)Empleado["minutosTolerancia"];
         }
 
         private DataRow RrhhMetEmpleadoActual()
@@ -160,17 +308,63 @@ namespace CapaVista_Asistencia.Formularios
             return _IdEmpleado == null ? null : RrhhMetBuscarEmpleado(_IdEmpleado.Value);
         }
 
-        private DataRow RrhhMetBuscarPermiso(int IdEmpleado, DateTime Fecha)
+        // Unidad DIAS: permisos por días y vacaciones; HORAS: permisos de unas horas
+        private DataRow[] RrhhMetBuscarPermisos(int IdEmpleado, DateTime Fecha, string Unidad)
         {
+            if (_Permisos == null) return new DataRow[0];
             string Dia = Fecha.Date.ToString("MM/dd/yyyy");
-            DataRow[] Filas = _Permisos.Select($"idEmpleado = {IdEmpleado} AND estadoPermiso = 'APROBADO' " +
-                                               $"AND fechaInicioPermiso <= #{Dia}# AND fechaFinPermiso >= #{Dia}#");
-            return Filas.Length > 0 ? Filas[0] : null;
+            return _Permisos.Select($"idEmpleado = {IdEmpleado} AND unidadPermiso = '{Unidad}' " +
+                                    $"AND fechaInicioPermiso <= #{Dia}# AND fechaFinPermiso >= #{Dia}#");
         }
 
         private DataRow RrhhMetPermisoActual()
         {
-            return _IdEmpleado == null ? null : RrhhMetBuscarPermiso(_IdEmpleado.Value, RrhhDtpFecha.Value);
+            if (_IdEmpleado == null) return null;
+            DataRow[] Filas = RrhhMetBuscarPermisos(_IdEmpleado.Value, RrhhDtpFecha.Value, "DIAS");
+            return Filas.Length > 0 ? Filas[0] : null;
+        }
+
+        private DataRow[] RrhhMetPermisosHorasActuales()
+        {
+            if (_IdEmpleado == null) return new DataRow[0];
+            return RrhhMetBuscarPermisos(_IdEmpleado.Value, RrhhDtpFecha.Value, "HORAS");
+        }
+
+        private DataRow RrhhMetCapacitacionActual()
+        {
+            if (_IdEmpleado == null || _Capacitaciones == null) return null;
+            string Dia = RrhhDtpFecha.Value.Date.ToString("MM/dd/yyyy");
+            DataRow[] Filas = _Capacitaciones.Select($"idEmpleado = {_IdEmpleado.Value} " +
+                                                     $"AND fechaInicio <= #{Dia}# AND fechaFin >= #{Dia}#");
+            return Filas.Length > 0 ? Filas[0] : null;
+        }
+
+        // Revisa si algún permiso por horas cubre el rango [Desde, Hasta] con la tolerancia de la jornada
+        private bool RrhhMetPermisoHorasCubre(TimeSpan Desde, TimeSpan Hasta, int Tolerancia)
+        {
+            var Margen = TimeSpan.FromMinutes(Tolerancia);
+            foreach (DataRow Permiso in RrhhMetPermisosHorasActuales())
+            {
+                if (Permiso["horaInicioPermiso"] == DBNull.Value || Permiso["horaFinPermiso"] == DBNull.Value) continue;
+                if ((TimeSpan)Permiso["horaInicioPermiso"] <= Desde + Margen && (TimeSpan)Permiso["horaFinPermiso"] >= Hasta - Margen)
+                    return true;
+            }
+            return false;
+        }
+
+        private bool RrhhMetTardanzaCubierta(DataRow Empleado, TimeSpan Entrada)
+        {
+            return RrhhMetPermisoHorasCubre((TimeSpan)Empleado["horaInicioJornada"], Entrada, RrhhMetTolerancia(Empleado));
+        }
+
+        private bool RrhhMetSalidaCubierta(DataRow Empleado, TimeSpan Salida)
+        {
+            return RrhhMetPermisoHorasCubre(Salida, (TimeSpan)Empleado["horaFinJornada"], RrhhMetTolerancia(Empleado));
+        }
+
+        private DateTime? RrhhMetFechaBaja(DataRow Empleado)
+        {
+            return Empleado == null || Empleado["fechaBaja"] == DBNull.Value ? (DateTime?)null : (DateTime)Empleado["fechaBaja"];
         }
 
         private static string RrhhMetHorasTrabajadas(object Entrada, object Salida)
@@ -234,6 +428,14 @@ namespace CapaVista_Asistencia.Formularios
             _CargandoRegistro = true;
             _IdSeleccionado = (int)Fila["idAsistencia"];
             RrhhMetPonerEmpleado(RrhhMetBuscarEmpleado((int)Fila["idEmpleado"]), null);
+            if (_IdEmpleado == null)
+            {
+                // El empleado ya no está activo, solo se muestra quién era
+                RrhhTxtCodigo.Text = Fila["codigoEmpleado"].ToString();
+                RrhhTxtEmpleado.Text = Fila["nombreEmpleado"].ToString();
+                RrhhTxtDepartamento.Text = Fila["departamentoEmpleado"].ToString();
+                RrhhTxtPuesto.Text = Fila["puestoEmpleado"].ToString();
+            }
             RrhhDtpFecha.Value = (DateTime)Fila["fechaAsistencia"];
             RrhhMetPonerHora(RrhhDtpHoraEntrada, Fila["horaEntrada"]);
             RrhhMetPonerHora(RrhhDtpHoraSalida, Fila["horaSalida"]);
@@ -349,24 +551,41 @@ namespace CapaVista_Asistencia.Formularios
                 RrhhCboEstado.SelectedItem = "Permiso";
                 RrhhCboEstado.Enabled = false;
                 RrhhMetQuitarError(RrhhCboEstado);
-                RrhhLblPermiso.Text = $"{Permiso["tipoPermiso"]} aprobado: {Permiso["motivoPermiso"]}";
+                RrhhLblPermiso.Text = Permiso["tipoPermiso"].ToString() == "Vacaciones"
+                    ? $"De vacaciones del {(DateTime)Permiso["fechaInicioPermiso"]:dd/MM} al {(DateTime)Permiso["fechaFinPermiso"]:dd/MM}"
+                    : $"{Permiso["tipoPermiso"]} aprobado: {Permiso["motivoPermiso"]}";
                 RrhhLblPermiso.Visible = true;
                 return;
             }
 
             RrhhCboEstado.Enabled = true;
-            RrhhLblPermiso.Visible = false;
+            RrhhLblPermiso.Text = RrhhMetAvisoDelDia();
+            RrhhLblPermiso.Visible = RrhhLblPermiso.Text.Length > 0;
             if (!_CargandoRegistro && RrhhCboEstado.SelectedItem?.ToString() == "Permiso")
                 RrhhCboEstado.SelectedItem = RrhhMetEstadoSugerido();
+        }
+
+        // Aviso de capacitación o permiso por horas que no bloquea el estado
+        private string RrhhMetAvisoDelDia()
+        {
+            DataRow Capacitacion = RrhhMetCapacitacionActual();
+            if (Capacitacion != null) return $"En capacitación: {Capacitacion["nombreCapacitacion"]}";
+
+            DataRow[] PermisosHoras = RrhhMetPermisosHorasActuales();
+            if (PermisosHoras.Length > 0 && PermisosHoras[0]["horaInicioPermiso"] != DBNull.Value)
+                return $"Permiso por horas de {(TimeSpan)PermisosHoras[0]["horaInicioPermiso"]:hh\\:mm} " +
+                       $"a {(TimeSpan)PermisosHoras[0]["horaFinPermiso"]:hh\\:mm}: {PermisosHoras[0]["motivoPermiso"]}";
+            return "";
         }
 
         private string RrhhMetEstadoSugerido()
         {
             if (RrhhMetPermisoActual() != null) return "Permiso";
             object Entrada = RrhhMetLeerHora(RrhhDtpHoraEntrada);
-            if (Entrada == DBNull.Value) return "Ausente";
+            if (Entrada == DBNull.Value) return RrhhMetCapacitacionActual() != null ? "Presente" : "Ausente";
             DataRow Empleado = RrhhMetEmpleadoActual();
-            if (Empleado != null && ((TimeSpan)Entrada - (TimeSpan)Empleado["horaInicioJornada"]).TotalMinutes > MinutosTolerancia)
+            if (Empleado != null && ((TimeSpan)Entrada - (TimeSpan)Empleado["horaInicioJornada"]).TotalMinutes > RrhhMetTolerancia(Empleado)
+                && !RrhhMetTardanzaCubierta(Empleado, (TimeSpan)Entrada))
                 return "Tardanza";
             return "Presente";
         }
@@ -387,20 +606,27 @@ namespace CapaVista_Asistencia.Formularios
         private string RrhhMetIncidencias(object Entrada, object Salida)
         {
             if (RrhhMetPermisoActual() != null) return "Cubierto por permiso";
-            if (Entrada == DBNull.Value) return "Sin marca de entrada";
+            bool EnCapacitacion = RrhhMetCapacitacionActual() != null;
+            if (Entrada == DBNull.Value) return EnCapacitacion ? "En capacitación" : "Sin marca de entrada";
             DataRow Empleado = RrhhMetEmpleadoActual();
             if (Empleado == null) return "-";
 
             var Incidencias = new List<string>();
             int Tarde = (int)((TimeSpan)Entrada - (TimeSpan)Empleado["horaInicioJornada"]).TotalMinutes;
-            if (Tarde > MinutosTolerancia) Incidencias.Add($"Llegó {Tarde} min tarde");
+            if (Tarde > RrhhMetTolerancia(Empleado))
+                Incidencias.Add(RrhhMetTardanzaCubierta(Empleado, (TimeSpan)Entrada)
+                                ? "Entrada cubierta por permiso" : $"Llegó {Tarde} min tarde");
 
             if (Salida == DBNull.Value)
                 Incidencias.Add("Sin marca de salida");
             else
             {
                 int Antes = (int)((TimeSpan)Empleado["horaFinJornada"] - (TimeSpan)Salida).TotalMinutes;
-                if (Antes > 0) Incidencias.Add($"Salió {Antes} min antes");
+                if (Antes > 0)
+                    Incidencias.Add(RrhhMetSalidaCubierta(Empleado, (TimeSpan)Salida)
+                                    ? "Salida cubierta por permiso" : $"Salió {Antes} min antes");
+                else if (Antes < 0)
+                    Incidencias.Add($"{-Antes} min después de la jornada");
             }
             return Incidencias.Count == 0 ? "-" : string.Join(", ", Incidencias);
         }
@@ -430,6 +656,10 @@ namespace CapaVista_Asistencia.Formularios
 
             if (RrhhDtpFecha.Value.Date > DateTime.Today)
                 RrhhMetMarcarError(RrhhDtpFecha, "La fecha no puede ser futura.");
+            else if (Empleado != null && RrhhDtpFecha.Value.Date < (DateTime)Empleado["fechaContratacion"])
+                RrhhMetMarcarError(RrhhDtpFecha, $"El empleado fue contratado el {(DateTime)Empleado["fechaContratacion"]:dd/MM/yyyy}.");
+            else if (RrhhMetFechaBaja(Empleado) is DateTime FechaBaja && RrhhDtpFecha.Value.Date >= FechaBaja)
+                RrhhMetMarcarError(RrhhDtpFecha, $"El empleado fue dado de baja el {FechaBaja:dd/MM/yyyy}.");
             else if (Empleado != null && RrhhMetExisteAsistencia((int)Empleado["idEmpleado"], RrhhDtpFecha.Value))
                 RrhhMetMarcarError(RrhhDtpFecha, "Este empleado ya tiene asistencia en esta fecha.");
 
@@ -442,8 +672,12 @@ namespace CapaVista_Asistencia.Formularios
                 RrhhMetMarcarError(RrhhCboEstado, "Seleccione el estado.");
             else if (Estado == "Permiso" && RrhhMetPermisoActual() == null)
                 RrhhMetMarcarError(RrhhCboEstado, "No tiene un permiso aprobado para esta fecha.");
-            else if (Estado != "Ausente" && Estado != "Permiso" && Entrada == DBNull.Value)
+            else if (Estado == "Tardanza" && Entrada == DBNull.Value)
+                RrhhMetMarcarError(RrhhCboEstado, "Sin hora de entrada no puede ser tardanza.");
+            else if (Estado == "Presente" && Entrada == DBNull.Value && RrhhMetCapacitacionActual() == null)
                 RrhhMetMarcarError(RrhhCboEstado, "Sin hora de entrada el estado debe ser Ausente.");
+            else if (Estado == "Ausente" && Entrada != DBNull.Value)
+                RrhhMetMarcarError(RrhhCboEstado, "Si está ausente quite la hora de entrada.");
 
             return _CamposConError.Count == 0;
         }
@@ -469,7 +703,7 @@ namespace CapaVista_Asistencia.Formularios
         {
             if (!_CamposConError.Remove(Campo)) return;
             _EtiquetasError[Campo].Visible = false;
-            if (Campo == RrhhCboEstado) RrhhLblPermiso.Visible = RrhhMetPermisoActual() != null;
+            if (Campo == RrhhCboEstado) RrhhLblPermiso.Visible = RrhhLblPermiso.Text.Length > 0;
             Campo.Parent.Invalidate();
         }
 
@@ -511,65 +745,94 @@ namespace CapaVista_Asistencia.Formularios
         {
             if (!RrhhMetValidar()) return;
 
-            DataRow Fila = _Asistencias.NewRow();
-            object UltimoId = _Asistencias.Compute("MAX(idAsistencia)", "");
-            Fila["idAsistencia"] = UltimoId == DBNull.Value ? 1 : (int)UltimoId + 1;
-            Fila["created_at"] = DateTime.Now;
-            Fila["updated_at"] = DateTime.Now;
-            RrhhMetPasarDetalleAFila(Fila);
-            _Asistencias.Rows.Add(Fila);
-
-            MessageBox.Show("La asistencia se guardó correctamente.", "Asistencia",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-            RrhhMetDespuesDeGuardar();
+            ClsModeloAsistencia Asistencia = RrhhMetDetalleAModelo();
+            Asistencia.Estado = EstadoEntidad.Added;
+            RrhhMetGrabar(Asistencia);
         }
 
         private void RrhhBtnModificar_Click(object sender, EventArgs e)
         {
-            if (_IdSeleccionado == null || !RrhhMetValidar()) return;
+            if (_IdSeleccionado == null) return;
+            if (!_HayCambios)
+            {
+                MessageBox.Show("No hay cambios para modificar.", "Asistencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (!RrhhMetValidar()) return;
 
-            DataRow Fila = _Asistencias.Select("idAsistencia = " + _IdSeleccionado)[0];
-            Fila["updated_at"] = DateTime.Now;
-            RrhhMetPasarDetalleAFila(Fila);
-
-            MessageBox.Show("La asistencia se modificó correctamente.", "Asistencia",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-            RrhhMetDespuesDeGuardar();
+            ClsModeloAsistencia Asistencia = RrhhMetDetalleAModelo();
+            Asistencia.IdAsistenciaEmpleado = _IdSeleccionado.Value;
+            Asistencia.Estado = EstadoEntidad.Modified;
+            RrhhMetGrabar(Asistencia);
         }
 
         private void RrhhBtnEliminar_Click(object sender, EventArgs e)
         {
             if (_IdSeleccionado == null) return;
 
-            DataRow Fila = _Asistencias.Select("idAsistencia = " + _IdSeleccionado)[0];
+            DataRow[] Filas = _Asistencias.Select("idAsistencia = " + _IdSeleccionado);
+            if (Filas.Length == 0) return;
+            DataRow Fila = Filas[0];
+
             DialogResult Respuesta = MessageBox.Show(
                 $"¿Seguro que desea eliminar la asistencia de {Fila["nombreEmpleado"]} del " +
                 $"{(DateTime)Fila["fechaAsistencia"]:dd/MM/yyyy}? Esta acción no se puede deshacer.",
                 "Eliminar asistencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
             if (Respuesta != DialogResult.Yes) return;
 
-            Fila.Delete();
-            _Asistencias.AcceptChanges();
-            RrhhMetDespuesDeGuardar();
+            var Asistencia = new ClsModeloAsistencia
+            {
+                IdAsistenciaEmpleado = _IdSeleccionado.Value,
+                IdEmpleado = (int)Fila["idEmpleado"],
+                FechaAsistencia = (DateTime)Fila["fechaAsistencia"],
+                Estado = EstadoEntidad.Deleted
+            };
+            RrhhMetGrabar(Asistencia);
         }
 
         private void RrhhBtnRefrescar_Click(object sender, EventArgs e)
         {
+            RrhhMetCargarDatos();
             RrhhMetNuevoRegistro();
             RrhhMetAplicarFiltro();
         }
 
-        private void RrhhMetPasarDetalleAFila(DataRow Fila)
+        private ClsModeloAsistencia RrhhMetDetalleAModelo()
         {
-            RrhhMetLlenarFila(Fila, _IdEmpleado.Value, RrhhDtpFecha.Value.Date,
-                              RrhhMetLeerHora(RrhhDtpHoraEntrada), RrhhMetLeerHora(RrhhDtpHoraSalida),
-                              RrhhCboEstado.SelectedItem.ToString(), RrhhTxtObservaciones.Text.Trim());
+            object Entrada = RrhhMetLeerHora(RrhhDtpHoraEntrada);
+            object Salida = RrhhMetLeerHora(RrhhDtpHoraSalida);
+            return new ClsModeloAsistencia
+            {
+                IdEmpleado = _IdEmpleado.Value,
+                FechaAsistencia = RrhhDtpFecha.Value.Date,
+                HoraEntrada = Entrada == DBNull.Value ? (TimeSpan?)null : (TimeSpan)Entrada,
+                HoraSalida = Salida == DBNull.Value ? (TimeSpan?)null : (TimeSpan)Salida,
+                EstadoAsistencia = RrhhCboEstado.SelectedItem.ToString(),
+                Observaciones = RrhhTxtObservaciones.Text.Trim()
+            };
+        }
+
+        private void RrhhMetGrabar(ClsModeloAsistencia Asistencia)
+        {
+            Cursor = Cursors.WaitCursor;
+            string Mensaje = Asistencia.RrhhMetGrabarCambios();
+            Cursor = Cursors.Default;
+
+            if (!Asistencia.Grabado)
+            {
+                MessageBox.Show(Mensaje, "Asistencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            MessageBox.Show(Mensaje, "Asistencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            RrhhMetDespuesDeGuardar();
         }
 
         private void RrhhMetDespuesDeGuardar()
         {
-            RrhhMetAplicarFiltro();
+            RrhhMetCargarDatos();
             RrhhMetNuevoRegistro();
+            RrhhMetAplicarFiltro();
         }
 
         private void RrhhDgvAsistencias_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
