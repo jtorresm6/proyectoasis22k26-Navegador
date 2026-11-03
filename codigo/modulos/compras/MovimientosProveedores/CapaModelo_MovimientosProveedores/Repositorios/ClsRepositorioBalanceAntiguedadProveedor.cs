@@ -1,12 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
 using CapaModelo_MovimientosProveedores.Entidades;
+using CapaModelo_MovimientosProveedores.Contratos;
 
 namespace CapaModelo_MovimientosProveedores.Repositorios
 {
-    public sealed class ClsRepositorioBalanceAntiguedadProveedor : ClsSentenciasCompras
+    public sealed class ClsRepositorioBalanceAntiguedadProveedor : RepositorioMaestro, IRepositorioBalanceAntiguedadProveedor
     {
         /// <summary>
         /// Clasifica los saldos actuales por vencimiento respecto a FechaCorte.
@@ -56,7 +57,7 @@ namespace CapaModelo_MovimientosProveedores.Repositorios
                 ORDER BY s.NombreProveedor, s.IdProveedor, s.IdMoneda";
 
             var Resultado = new List<ClsBalanceAntiguedadProveedor>();
-            using (DataTable Tabla = ComprasMetEjecucionConsulta(Consulta, Parametros.ToArray()))
+            using (DataTable Tabla = EjecucionConsulta(Consulta, CommandType.Text, Parametros.ToArray()))
             {
                 foreach (DataRow Fila in Tabla.Rows)
                 {

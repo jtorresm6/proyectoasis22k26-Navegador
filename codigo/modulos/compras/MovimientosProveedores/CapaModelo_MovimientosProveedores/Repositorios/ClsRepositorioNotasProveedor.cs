@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Odbc;
 using CapaModelo_MovimientosProveedores.Contratos;
@@ -6,31 +6,31 @@ using CapaModelo_MovimientosProveedores.Entidades;
 
 namespace CapaModelo_MovimientosProveedores.Repositorios
 {
-    public sealed class ClsRepositorioNotasProveedor : ClsSentenciasCompras, IRepositorioNotasProveedor
+    public sealed class ClsRepositorioNotasProveedor : RepositorioMaestro, IRepositorioNotasProveedor
     {
         public DataTable ComprasMetObtenerProveedores()
         {
-            return ComprasMetEjecucionConsulta("SELECT idProveedor, nombreProveedor, nitProveedor FROM tblProveedor WHERE estadoProveedor=1 ORDER BY nombreProveedor");
+            return EjecucionConsulta("SELECT idProveedor, nombreProveedor, nitProveedor FROM tblProveedor WHERE estadoProveedor=1 ORDER BY nombreProveedor", CommandType.Text);
         }
 
         public DataTable ComprasMetObtenerConceptos()
         {
-            return ComprasMetEjecucionConsulta(@"SELECT idConceptoProveedor, nombreConceptoProveedor, naturalezaConceptoProveedor
+            return EjecucionConsulta(@"SELECT idConceptoProveedor, nombreConceptoProveedor, naturalezaConceptoProveedor
                 FROM tblConceptoProveedor
                 WHERE (LOWER(nombreConceptoProveedor) IN ('nota de debito','nota de débito') AND naturalezaConceptoProveedor='Cargo')
                    OR (LOWER(nombreConceptoProveedor) IN ('nota de credito','nota de crédito') AND naturalezaConceptoProveedor='Abono')
-                ORDER BY naturalezaConceptoProveedor DESC");
+                ORDER BY naturalezaConceptoProveedor DESC", CommandType.Text);
         }
 
         public DataTable ComprasMetObtenerMonedas()
         {
             // Catálogo compartido utilizado también por Ventas.
-            return ComprasMetEjecucionConsulta("SELECT Pk_Moneda AS idMoneda, CONCAT(codigoMoneda, ' - ', nombreMoneda) AS nombreMoneda FROM tblMoneda WHERE is_active=1 ORDER BY codigoMoneda");
+            return EjecucionConsulta("SELECT Pk_Moneda AS idMoneda, CONCAT(codigoMoneda, ' - ', nombreMoneda) AS nombreMoneda FROM tblMoneda WHERE is_active=1 ORDER BY codigoMoneda", CommandType.Text);
         }
 
         public DataTable ComprasMetConsultarNotas(int IdProveedor)
         {
-            return ComprasMetEjecucionConsulta(@"SELECT c.nombreConceptoProveedor AS Tipo, c.naturalezaConceptoProveedor AS Naturaleza,
+            return EjecucionConsulta(@"SELECT c.nombreConceptoProveedor AS Tipo, c.naturalezaConceptoProveedor AS Naturaleza,
                     p.serieDocumentoCuentaPorPagar AS Serie, p.numeroDocumentoCuentaPorPagar AS Numero,
                     p.fechaEmisionCuentaPorPagar AS Emision, p.fechaVencimientoCuentaPorPagar AS Vencimiento,
                     p.idMoneda AS Moneda, p.tipoCambioCuentaPorPagar AS TipoCambio,
@@ -39,14 +39,14 @@ namespace CapaModelo_MovimientosProveedores.Repositorios
                 FROM tblCuentaPorPagar p JOIN tblConceptoProveedor c ON c.idConceptoProveedor=p.idConceptoProveedor
                 WHERE p.idProveedor=? AND LOWER(c.nombreConceptoProveedor) IN
                     ('nota de debito','nota de débito','nota de credito','nota de crédito')
-                ORDER BY p.fechaEmisionCuentaPorPagar DESC, p.created_at DESC",
+                ORDER BY p.fechaEmisionCuentaPorPagar DESC, p.created_at DESC", CommandType.Text,
                 new OdbcParameter("proveedor", OdbcType.Int) { Value = IdProveedor });
         }
 
         public void ComprasMetAgregar(ClsNotaProveedor Nota)
         {
-            Nota.ComprasMetValidar();
-            using (var Conexion = ComprasMetObtenerConexion())
+            if (Nota == null) throw new ArgumentNullException("Nota");
+            using (var Conexion = ObtenerConexion())
             {
                 Conexion.Open();
                 using (var Transaccion = Conexion.BeginTransaction())
