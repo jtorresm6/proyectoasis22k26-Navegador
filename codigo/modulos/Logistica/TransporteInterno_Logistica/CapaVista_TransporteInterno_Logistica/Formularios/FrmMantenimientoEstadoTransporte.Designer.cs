@@ -37,10 +37,10 @@
             // LogisticaNavEstados
             // 
             this.LogisticaNavEstados.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaNavEstados.Location = new System.Drawing.Point(20, 94);
-            this.LogisticaNavEstados.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LogisticaNavEstados.Location = new System.Drawing.Point(27, 116);
+            this.LogisticaNavEstados.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaNavEstados.Name = "LogisticaNavEstados";
-            this.LogisticaNavEstados.Size = new System.Drawing.Size(1078, 90);
+            this.LogisticaNavEstados.Size = new System.Drawing.Size(1437, 111);
             this.LogisticaNavEstados.TabIndex = 0;
             // 
             // LogisticaLblTituloEstados
@@ -49,9 +49,10 @@
             this.LogisticaLblTituloEstados.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaLblTituloEstados.Font = new System.Drawing.Font("Lucida Fax", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTituloEstados.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
-            this.LogisticaLblTituloEstados.Location = new System.Drawing.Point(37, 13);
+            this.LogisticaLblTituloEstados.Location = new System.Drawing.Point(49, 16);
+            this.LogisticaLblTituloEstados.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LogisticaLblTituloEstados.Name = "LogisticaLblTituloEstados";
-            this.LogisticaLblTituloEstados.Size = new System.Drawing.Size(126, 32);
+            this.LogisticaLblTituloEstados.Size = new System.Drawing.Size(151, 38);
             this.LogisticaLblTituloEstados.TabIndex = 1;
             this.LogisticaLblTituloEstados.Text = "Estados";
             // 
@@ -60,25 +61,25 @@
             this.ogisticaLblDescripcionEstados.AutoSize = true;
             this.ogisticaLblDescripcionEstados.BackColor = System.Drawing.Color.Transparent;
             this.ogisticaLblDescripcionEstados.Font = new System.Drawing.Font("Tahoma", 13.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ogisticaLblDescripcionEstados.Location = new System.Drawing.Point(40, 57);
-            this.ogisticaLblDescripcionEstados.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ogisticaLblDescripcionEstados.Location = new System.Drawing.Point(53, 70);
             this.ogisticaLblDescripcionEstados.Name = "ogisticaLblDescripcionEstados";
-            this.ogisticaLblDescripcionEstados.Size = new System.Drawing.Size(945, 22);
+            this.ogisticaLblDescripcionEstados.Size = new System.Drawing.Size(1165, 27);
             this.ogisticaLblDescripcionEstados.TabIndex = 8;
             this.ogisticaLblDescripcionEstados.Text = "Administra los estados utilizados para identificar la disponibilidad y condición " +
     "operativa de los vehículos y conductores.";
             // 
             // FrmMantenimientoEstadoTransporte
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
-            this.ClientSize = new System.Drawing.Size(1144, 741);
+            this.ClientSize = new System.Drawing.Size(1525, 912);
             this.Controls.Add(this.ogisticaLblDescripcionEstados);
             this.Controls.Add(this.LogisticaLblTituloEstados);
             this.Controls.Add(this.LogisticaNavEstados);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "FrmMantenimientoEstadoTransporte";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
