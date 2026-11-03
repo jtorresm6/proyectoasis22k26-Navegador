@@ -66,7 +66,7 @@ namespace CapaModelo_Nomina.Repositorios
                 Item.IdPercepcionDeduccionRango = Convert.ToInt32(Fila["idPercepcionDeduccionRango"]);
                 Item.IdPercepcionDeduccion = Convert.ToInt32(Fila["idPercepcionDeduccion"]);
                 Item.SalarioDesdePercepcionDeduccionRango = Convert.ToDecimal(Fila["salarioDesdePercepcionDeduccionRango"]);
-                // salarioHasta acepta NULL en la BD (sin limite superior)
+                
                 Item.SalarioHastaPercepcionDeduccionRango = Fila["salarioHastaPercepcionDeduccionRango"] == DBNull.Value
                     ? (decimal?)null
                     : Convert.ToDecimal(Fila["salarioHastaPercepcionDeduccionRango"]);
@@ -97,7 +97,6 @@ namespace CapaModelo_Nomina.Repositorios
             return Convert.ToInt32(Tabla.Rows[0][0]);
         }
 
-        // Parametros comunes de INSERT y UPDATE (mismo orden que el SQL, ODBC es posicional)
         private List<OdbcParameter> RrhhMetCrearParametros(ClsPercepcionDeduccionRango Entidad)
         {
             var Parametros = new List<OdbcParameter>();
@@ -111,7 +110,6 @@ namespace CapaModelo_Nomina.Repositorios
             return Parametros;
         }
 
-        // Decimal como texto con punto (InvariantCulture) para evitar problemas de coma/punto con el driver; NULL si no hay valor
         private OdbcParameter RrhhMetParametroDecimal(string Nombre, decimal? Valor)
         {
             return new OdbcParameter(Nombre, OdbcType.VarChar)

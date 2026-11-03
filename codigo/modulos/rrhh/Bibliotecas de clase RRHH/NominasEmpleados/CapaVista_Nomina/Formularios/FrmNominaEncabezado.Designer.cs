@@ -664,6 +664,7 @@
             this.RrhhDedBtnImprimir.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnImprimir.TabIndex = 4;
             this.RrhhDedBtnImprimir.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnImprimir.Click += new System.EventHandler(this.RrhhDedBtnImprimir_Click);
             // 
             // RrhhDedBtnEliminar
             // 

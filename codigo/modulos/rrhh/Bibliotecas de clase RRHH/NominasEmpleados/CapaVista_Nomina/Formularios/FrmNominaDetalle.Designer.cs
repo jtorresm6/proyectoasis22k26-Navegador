@@ -54,7 +54,6 @@
             this.RrhhDedBtnSiguiente = new System.Windows.Forms.Button();
             this.RrhhDedBtnAnterior = new System.Windows.Forms.Button();
             this.RrhhDedBtnImprimir = new System.Windows.Forms.Button();
-            this.RrhhDedBtnEliminar = new System.Windows.Forms.Button();
             this.RrhhDedBtnModificar = new System.Windows.Forms.Button();
             this.RrhhPnlNominaEncabezado = new System.Windows.Forms.Panel();
             this.RrhhDedBtnInicio = new System.Windows.Forms.Button();
@@ -65,8 +64,8 @@
             this.RrhhTxtTotalNeto = new System.Windows.Forms.TextBox();
             this.RrhhTxtTotalDeducciones = new System.Windows.Forms.TextBox();
             this.RrhhTxtTotalPercepciones = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.RrhhPnlResumen = new System.Windows.Forms.Panel();
+            this.RrhhLblIResumen = new System.Windows.Forms.Label();
             this.RrhhLblTotalNeto = new System.Windows.Forms.Label();
             this.RrhhLblTotalDeducciones = new System.Windows.Forms.Label();
             this.RrhhLblTotalPercepciones = new System.Windows.Forms.Label();
@@ -80,7 +79,7 @@
             this.RrhhPnlNominaEncabezado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhDgvListaDetalle)).BeginInit();
             this.RrhhPnlInfoConfiCalculo.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.RrhhPnlResumen.SuspendLayout();
             this.RrhhPnlConceptoRegistrados.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,7 +100,7 @@
             this.RrhhDedBtnAyuda.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.btn_ayuda;
             this.RrhhDedBtnAyuda.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RrhhDedBtnAyuda.ForeColor = System.Drawing.Color.Chartreuse;
-            this.RrhhDedBtnAyuda.Location = new System.Drawing.Point(970, 181);
+            this.RrhhDedBtnAyuda.Location = new System.Drawing.Point(871, 181);
             this.RrhhDedBtnAyuda.Name = "RrhhDedBtnAyuda";
             this.RrhhDedBtnAyuda.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnAyuda.TabIndex = 42;
@@ -292,7 +291,7 @@
             this.RrhhDedBtnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
             this.RrhhDedBtnSalir.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_salir_sin_bordes;
             this.RrhhDedBtnSalir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhDedBtnSalir.Location = new System.Drawing.Point(1074, 181);
+            this.RrhhDedBtnSalir.Location = new System.Drawing.Point(975, 181);
             this.RrhhDedBtnSalir.Name = "RrhhDedBtnSalir";
             this.RrhhDedBtnSalir.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnSalir.TabIndex = 34;
@@ -304,7 +303,7 @@
             this.RrhhDedBtnRefrescar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
             this.RrhhDedBtnRefrescar.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_refrescar_sin_bordes;
             this.RrhhDedBtnRefrescar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhDedBtnRefrescar.Location = new System.Drawing.Point(436, 181);
+            this.RrhhDedBtnRefrescar.Location = new System.Drawing.Point(337, 181);
             this.RrhhDedBtnRefrescar.Name = "RrhhDedBtnRefrescar";
             this.RrhhDedBtnRefrescar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnRefrescar.TabIndex = 33;
@@ -316,7 +315,7 @@
             this.RrhhDedBtnFin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
             this.RrhhDedBtnFin.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_fin_sin_bordes_final;
             this.RrhhDedBtnFin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhDedBtnFin.Location = new System.Drawing.Point(866, 181);
+            this.RrhhDedBtnFin.Location = new System.Drawing.Point(767, 181);
             this.RrhhDedBtnFin.Name = "RrhhDedBtnFin";
             this.RrhhDedBtnFin.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnFin.TabIndex = 32;
@@ -328,7 +327,7 @@
             this.RrhhDedBtnSiguiente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(161)))), ((int)(((byte)(59)))));
             this.RrhhDedBtnSiguiente.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_siguiente_sin_bordes;
             this.RrhhDedBtnSiguiente.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhDedBtnSiguiente.Location = new System.Drawing.Point(764, 181);
+            this.RrhhDedBtnSiguiente.Location = new System.Drawing.Point(665, 181);
             this.RrhhDedBtnSiguiente.Name = "RrhhDedBtnSiguiente";
             this.RrhhDedBtnSiguiente.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnSiguiente.TabIndex = 31;
@@ -340,7 +339,7 @@
             this.RrhhDedBtnAnterior.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(161)))), ((int)(((byte)(59)))));
             this.RrhhDedBtnAnterior.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_anterior_sin_bordes;
             this.RrhhDedBtnAnterior.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhDedBtnAnterior.Location = new System.Drawing.Point(659, 181);
+            this.RrhhDedBtnAnterior.Location = new System.Drawing.Point(560, 181);
             this.RrhhDedBtnAnterior.Name = "RrhhDedBtnAnterior";
             this.RrhhDedBtnAnterior.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnAnterior.TabIndex = 30;
@@ -352,22 +351,12 @@
             this.RrhhDedBtnImprimir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
             this.RrhhDedBtnImprimir.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_imprimir_sin_bordes;
             this.RrhhDedBtnImprimir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhDedBtnImprimir.Location = new System.Drawing.Point(325, 181);
+            this.RrhhDedBtnImprimir.Location = new System.Drawing.Point(226, 181);
             this.RrhhDedBtnImprimir.Name = "RrhhDedBtnImprimir";
             this.RrhhDedBtnImprimir.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnImprimir.TabIndex = 27;
             this.RrhhDedBtnImprimir.UseVisualStyleBackColor = false;
-            // 
-            // RrhhDedBtnEliminar
-            // 
-            this.RrhhDedBtnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhDedBtnEliminar.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_eliminar_sin_bordes;
-            this.RrhhDedBtnEliminar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhDedBtnEliminar.Location = new System.Drawing.Point(224, 181);
-            this.RrhhDedBtnEliminar.Name = "RrhhDedBtnEliminar";
-            this.RrhhDedBtnEliminar.Size = new System.Drawing.Size(87, 80);
-            this.RrhhDedBtnEliminar.TabIndex = 26;
-            this.RrhhDedBtnEliminar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnImprimir.Click += new System.EventHandler(this.RrhhDedBtnImprimir_Click);
             // 
             // RrhhDedBtnModificar
             // 
@@ -398,7 +387,7 @@
             this.RrhhDedBtnInicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
             this.RrhhDedBtnInicio.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_inicio_sin_bordes;
             this.RrhhDedBtnInicio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhDedBtnInicio.Location = new System.Drawing.Point(549, 181);
+            this.RrhhDedBtnInicio.Location = new System.Drawing.Point(450, 181);
             this.RrhhDedBtnInicio.Name = "RrhhDedBtnInicio";
             this.RrhhDedBtnInicio.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnInicio.TabIndex = 29;
@@ -445,7 +434,7 @@
             this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhTxtTotalNeto);
             this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhTxtTotalDeducciones);
             this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhTxtTotalPercepciones);
-            this.RrhhPnlInfoConfiCalculo.Controls.Add(this.panel1);
+            this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhPnlResumen);
             this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhLblTotalNeto);
             this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhLblTotalDeducciones);
             this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhLblTotalPercepciones);
@@ -478,27 +467,27 @@
             this.RrhhTxtTotalPercepciones.Size = new System.Drawing.Size(284, 30);
             this.RrhhTxtTotalPercepciones.TabIndex = 15;
             // 
-            // panel1
+            // RrhhPnlResumen
             // 
-            this.panel1.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.Pnl_fondo;
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(-2, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(500, 57);
-            this.panel1.TabIndex = 29;
+            this.RrhhPnlResumen.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.Pnl_fondo;
+            this.RrhhPnlResumen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.RrhhPnlResumen.Controls.Add(this.RrhhLblIResumen);
+            this.RrhhPnlResumen.Location = new System.Drawing.Point(-2, 0);
+            this.RrhhPnlResumen.Name = "RrhhPnlResumen";
+            this.RrhhPnlResumen.Size = new System.Drawing.Size(500, 57);
+            this.RrhhPnlResumen.TabIndex = 29;
             // 
-            // label1
+            // RrhhLblIResumen
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Lucida Fax", 13F, System.Drawing.FontStyle.Bold);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.label1.Location = new System.Drawing.Point(149, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(214, 25);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Resumen Nomina";
+            this.RrhhLblIResumen.AutoSize = true;
+            this.RrhhLblIResumen.BackColor = System.Drawing.Color.Transparent;
+            this.RrhhLblIResumen.Font = new System.Drawing.Font("Lucida Fax", 13F, System.Drawing.FontStyle.Bold);
+            this.RrhhLblIResumen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
+            this.RrhhLblIResumen.Location = new System.Drawing.Point(149, 17);
+            this.RrhhLblIResumen.Name = "RrhhLblIResumen";
+            this.RrhhLblIResumen.Size = new System.Drawing.Size(214, 25);
+            this.RrhhLblIResumen.TabIndex = 0;
+            this.RrhhLblIResumen.Text = "Resumen Nomina";
             // 
             // RrhhLblTotalNeto
             // 
@@ -560,7 +549,6 @@
             this.Controls.Add(this.RrhhDedBtnSiguiente);
             this.Controls.Add(this.RrhhDedBtnAnterior);
             this.Controls.Add(this.RrhhDedBtnImprimir);
-            this.Controls.Add(this.RrhhDedBtnEliminar);
             this.Controls.Add(this.RrhhDedBtnModificar);
             this.Controls.Add(this.RrhhPnlNominaEncabezado);
             this.Controls.Add(this.RrhhDedBtnInicio);
@@ -586,8 +574,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.RrhhDgvListaDetalle)).EndInit();
             this.RrhhPnlInfoConfiCalculo.ResumeLayout(false);
             this.RrhhPnlInfoConfiCalculo.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.RrhhPnlResumen.ResumeLayout(false);
+            this.RrhhPnlResumen.PerformLayout();
             this.RrhhPnlConceptoRegistrados.ResumeLayout(false);
             this.RrhhPnlConceptoRegistrados.PerformLayout();
             this.ResumeLayout(false);
@@ -621,7 +609,6 @@
         private System.Windows.Forms.Button RrhhDedBtnSiguiente;
         private System.Windows.Forms.Button RrhhDedBtnAnterior;
         private System.Windows.Forms.Button RrhhDedBtnImprimir;
-        private System.Windows.Forms.Button RrhhDedBtnEliminar;
         private System.Windows.Forms.Button RrhhDedBtnModificar;
         private System.Windows.Forms.Panel RrhhPnlNominaEncabezado;
         private System.Windows.Forms.Button RrhhDedBtnInicio;
@@ -630,8 +617,8 @@
         private System.Windows.Forms.DataGridView RrhhDgvListaDetalle;
         private System.Windows.Forms.Panel RrhhPnlInfoConfiCalculo;
         private System.Windows.Forms.Panel RrhhPnlConceptoRegistrados;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel RrhhPnlResumen;
+        private System.Windows.Forms.Label RrhhLblIResumen;
         private System.Windows.Forms.Label RrhhLblTotalNeto;
         private System.Windows.Forms.Label RrhhLblTotalDeducciones;
         private System.Windows.Forms.Label RrhhLblTotalPercepciones;

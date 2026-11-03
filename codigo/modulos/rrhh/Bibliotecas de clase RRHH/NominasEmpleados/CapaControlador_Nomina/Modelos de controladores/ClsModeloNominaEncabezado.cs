@@ -68,7 +68,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
         public DateTime CreatedAt { get => _CreatedAt; private set => _CreatedAt = value; }
         public DateTime UpdatedAt { get => _UpdatedAt; private set => _UpdatedAt = value; }
 
-        // Conceptos aplicados en el ultimo calculo 
         public List<ClsConceptoCalculado> ConceptosCalculados { get; private set; }
 
        

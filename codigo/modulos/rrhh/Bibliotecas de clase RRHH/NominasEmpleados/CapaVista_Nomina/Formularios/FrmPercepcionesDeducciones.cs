@@ -1,6 +1,7 @@
 ﻿using CapaControlador_Nomina.Modelos_de_controladores;
 using CapaControlador_Nomina.ObjetosdeValor;
 using CapaVista_Nomina.Ayudas;
+using CapaVista_Nomina.Reportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -385,6 +386,12 @@ namespace CapaVista_Nomina.Formularios
         private void RrhhDedBtnFin_Click(object sender, EventArgs e)
         {
             RrhhMetIrAFila(RrhhDgvListaConceptos.Rows.Count - 1);
+        }
+
+        private void RrhhDedBtnImprimir_Click(object sender, EventArgs e)
+        {
+            FrmReportePercepcionDeduccion reporte = new FrmReportePercepcionDeduccion();
+            reporte.Show();
         }
     }
 }

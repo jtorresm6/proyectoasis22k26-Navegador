@@ -18,7 +18,6 @@ namespace CapaModelo_Nomina.Repositorios
         private string _Update;
         private string _Delete;
 
-        // ==== AJUSTAR SI TUS COLUMNAS SE LLAMAN DISTINTO ====
         private const string COL_SALARIO_EMPLEADO = "salarioEmpleado";            // tblEmpleado
         private const string COL_DEPARTAMENTO_EMPLEADO = "idDepartamento";        // tblEmpleado
         private const string COL_FECHA_ASISTENCIA = "fechaAsistenciaEmpleado";    // tblAsistenciaEmpleado
@@ -37,15 +36,12 @@ namespace CapaModelo_Nomina.Repositorios
             _Delete = "DELETE FROM tblNominaEncabezado WHERE idNominaEncabezado=?";
         }
 
-        // Horas extra que entran a la nomina: aprobadas, activas, sin nomina asignada y dentro del periodo
         private const string FILTRO_HORAS_EXTRA =
             "he.idEmpleado = ? AND he.estadoHoraExtra = 'APROBADA' AND he.is_active = 1 " +
             "AND he.idNominaEncabezado IS NULL AND ae." + COL_FECHA_ASISTENCIA + " BETWEEN ? AND ?";
 
-        // ---------- Contrato generico ----------
         public int RrhhMetAgregar(ClsNominaEncabezado Entidad)
         {
-            // Encabezado + asignacion de horas extra en una sola transaccion
             using (var Conexion = RrhhMetObtenerConexion())
             {
                 Conexion.Open();
@@ -165,7 +161,6 @@ namespace CapaModelo_Nomina.Repositorios
             return Lista;
         }
 
-        // ---------- Metodos propios de la tabla ----------
         public bool RrhhMetEsEmpleadoActivo(int IdEmpleado)
         {
             string Sql = "SELECT COUNT(*) FROM tblEmpleado WHERE idEmpleado = ? AND is_active = 1";
@@ -204,7 +199,6 @@ namespace CapaModelo_Nomina.Repositorios
 
         public List<ClsPercepcionDeduccion> RrhhMetObtenerConceptosAplicables(int IdEmpleado)
         {
-            // 'Todos' siempre aplica; 'Algunos' solo si el empleado (o su departamento) esta asignado
             string Sql = "SELECT pd.idPercepcionDeduccion, pd.nombrePercepcionDeduccion, pd.periodoPercepcionDeduccion, " +
                          "pd.efectoPercepcionDeduccion, pd.tipoPercepcionDeduccion, pd.valorTipoPercepcionDeduccion, " +
                          "pd.aplicacionPercepcionDeduccion, pd.is_active " +
@@ -267,7 +261,6 @@ namespace CapaModelo_Nomina.Repositorios
 
         public int RrhhMetContarTraslapes(int IdEmpleado, DateTime FechaInicio, DateTime FechaFinal, int IdExcluir)
         {
-            // Nominas rechazadas no bloquean el periodo
             string Sql = "SELECT COUNT(*) FROM tblNominaEncabezado WHERE idEmpleado = ? " +
                          "AND estadoNminaEncabezado <> 'Rechazada' AND idNominaEncabezado <> ? " +
                          "AND fechaInicioNominaEncabezado <= ? AND fechaFinalNominaEncabezado >= ?";
@@ -280,7 +273,6 @@ namespace CapaModelo_Nomina.Repositorios
             return Convert.ToInt32(Tabla.Rows[0][0]);
         }
 
-        // ---------- Parametros con tipo explicito (el driver ODBC no los infiere bien) ----------
         private OdbcParameter RrhhMetParametroEntero(string Nombre, int Valor)
         {
             return new OdbcParameter(Nombre, OdbcType.Int) { Value = Valor };

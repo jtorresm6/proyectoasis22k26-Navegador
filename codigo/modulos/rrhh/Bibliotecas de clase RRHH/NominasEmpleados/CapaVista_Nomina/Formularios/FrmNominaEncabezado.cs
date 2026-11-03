@@ -1,6 +1,7 @@
 ﻿using CapaControlador_Nomina.Modelos_de_controladores;
 using CapaControlador_Nomina.ObjetosdeValor;
 using CapaVista_Nomina.Ayudas;
+using CapaVista_Nomina.Reportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -517,6 +518,12 @@ namespace CapaVista_Nomina.Formularios
         {
             FrmNominaDetalle NominaDetalle = new FrmNominaDetalle();
             NominaDetalle.ShowDialog(this);
+        }
+
+        private void RrhhDedBtnImprimir_Click(object sender, EventArgs e)
+        {
+            FrmReporteNominaEncabezado reporte = new FrmReporteNominaEncabezado();
+            reporte.Show();
         }
     }
 }

@@ -11,7 +11,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
 {
     public class ClsModeloNominaDetalle
     {
-        // 1. Campos privados
         private int _IdNominaDetalle;
         private int _IdNominaEncabezado;
         private int _IdPercepcionDeduccion;
@@ -20,14 +19,11 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
         private string _TipoConcepto;
         private DateTime _CreatedAt;
 
-        // 2. Repositorios privados
         private ClsRepositorioNominaDetalle _RepositorioNominaDetalle;
         private ClsRepositorioPercepcionDeduccion _RepositorioConceptos;
 
-        // 4. Lista privada para busquedas
         private List<ClsModeloNominaDetalle> _ListaDetalle;
 
-        // 5. Propiedades publicas (solo lectura hacia afuera)
         public int IdNominaDetalle { get => _IdNominaDetalle; private set => _IdNominaDetalle = value; }
         public int IdNominaEncabezado { get => _IdNominaEncabezado; private set => _IdNominaEncabezado = value; }
         public int IdPercepcionDeduccion { get => _IdPercepcionDeduccion; private set => _IdPercepcionDeduccion = value; }
@@ -36,17 +32,12 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
         public decimal MontoNominaDetalle { get => _MontoNominaDetalle; private set => _MontoNominaDetalle = value; }
         public DateTime CreatedAt { get => _CreatedAt; private set => _CreatedAt = value; }
 
-        // 6. Constructor
         public ClsModeloNominaDetalle()
         {
             _RepositorioNominaDetalle = new ClsRepositorioNominaDetalle();
             _RepositorioConceptos = new ClsRepositorioPercepcionDeduccion();
         }
 
-        // 7. Metodos publicos
-
-        // Guarda en tblNominaDetalle todos los conceptos (percepciones, deducciones y comision)
-        // de una nomina aprobada. Devuelve un mensaje de texto.
         public string RrhhMetGenerarDetalle(int IdNominaEncabezado)
         {
             try
@@ -59,14 +50,12 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
                 if (Nomina == null)
                     return "No se encontró la nómina seleccionada";
 
-                // Reglas de negocio
                 if (Nomina.EstadoNminaEncabezado != "Aprobada")
                     return "Solo se puede generar el detalle de nóminas en estado Aprobada";
 
                 if (_RepositorioNominaDetalle.RrhhMetContarPorNomina(IdNominaEncabezado) > 0)
                     return "El detalle de esta nómina ya fue generado";
 
-                // Se vuelve a calcular con la MISMA formula que uso el encabezado
                 var Calculo = new ClsModeloNominaEncabezado();
                 Calculo.IdEmpleado = Nomina.IdEmpleado;
                 Calculo.FechaInicioNominaEncabezado = Nomina.FechaInicioNominaEncabezado;
@@ -76,7 +65,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
                 if (ErrorCalculo != null)
                     return ErrorCalculo;
 
-                // El detalle debe sumar lo mismo que el encabezado. Si no, algo cambio desde que se genero la nómina
                 if (Math.Round(Calculo.TotalPercepcionNominaEncabezado, 4) != Math.Round(Nomina.TotalPercepcionNominaEncabezado, 4) ||
                     Math.Round(Calculo.TotalDeduccionNominaEncabezado, 4) != Math.Round(Nomina.TotalDeduccionNominaEncabezado, 4))
                 {
@@ -88,7 +76,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
                            "Rechace la nómina y genérela de nuevo.";
                 }
 
-                // Se arman las lineas del detalle
                 var Lineas = new List<ClsNominaDetalle>();
                 int? IdConceptoComision = null;
 
@@ -134,14 +121,12 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
             return _ListaDetalle;
         }
 
-        // Detalle de una nomina (para mostrarlo en pantalla)
         public List<ClsModeloNominaDetalle> RrhhMetObtenerPorNomina(int IdNominaEncabezado)
         {
             _ListaDetalle = RrhhMetConstruirLista(_RepositorioNominaDetalle.RrhhMetObtenerPorNomina(IdNominaEncabezado));
             return _ListaDetalle;
         }
 
-        // Nominas que ya tienen su detalle generado
         public List<int> RrhhMetObtenerNominasConDetalle()
         {
             return _RepositorioNominaDetalle.RrhhMetObtenerNominasConDetalle();
@@ -156,7 +141,6 @@ namespace CapaControlador_Nomina.Modelos_de_controladores
                 e._NombreConcepto.ToUpper().Contains(NombreConcepto.ToUpper()));
         }
 
-        // Une cada linea con el nombre y el efecto de su concepto
         private List<ClsModeloNominaDetalle> RrhhMetConstruirLista(IEnumerable<ClsNominaDetalle> Datos)
         {
             var Conceptos = _RepositorioConceptos.RrhhMetObtenerTodos()

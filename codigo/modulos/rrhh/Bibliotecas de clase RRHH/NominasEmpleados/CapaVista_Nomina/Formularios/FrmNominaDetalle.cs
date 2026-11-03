@@ -1,4 +1,5 @@
 ﻿using CapaControlador_Nomina.Modelos_de_controladores;
+using CapaVista_Nomina.Reportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -251,6 +252,12 @@ namespace CapaVista_Nomina.Formularios
         private void RrhhDedBtnFin_Click(object sender, EventArgs e)
         {
             RrhhMetIrANomina(RrhhCboNombreEmpleado.Items.Count - 1);
+        }
+
+        private void RrhhDedBtnImprimir_Click(object sender, EventArgs e)
+        {
+            FrmReporteNominaDetalle reporte = new FrmReporteNominaDetalle();
+            reporte.Show();
         }
     }
 }
