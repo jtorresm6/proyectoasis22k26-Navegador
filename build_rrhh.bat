@@ -23,6 +23,7 @@ title Compilacion global - Consultas, Navegador, Seguridad, Logistica y RRHH
 ::   set "MSBUILD_MANUAL=C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\MSBuild.exe"
 :: MSBUILD_MANUAL puede definirse en el entorno.
 
+set "TIPO_BUILD=Build"
 
 :INICIO
 set "PASO=0"
@@ -201,10 +202,12 @@ echo.
 echo Presiona una opcion:
 echo [L] Abrir el login de Seguridad
 echo [R] Recompilar
+echo [C] Compilar todo desde cero
 echo [S] Salir
-choice /c LRS /n /m "Seleccion: "
-if errorlevel 3 goto FIN_OK
-if errorlevel 2 goto INICIO
+choice /c LRCS /n /m "Seleccion: "
+if errorlevel 4 goto FIN_OK
+if errorlevel 3 (set "TIPO_BUILD=Rebuild" & goto INICIO)
+if errorlevel 2 (set "TIPO_BUILD=Build" & goto INICIO)
 if errorlevel 1 goto ABRIR_LOGIN
 goto MENU
 
@@ -247,7 +250,8 @@ exit /b 0
 :: ==========================================================================
 :: FUNCION: COMPILAR UN .CSPROJ
 :: /restore + RestorePackagesConfig -> baja los paquetes NuGet de un clone nuevo
-:: /t:Rebuild                       -> recompila desde cero
+:: /t:Build                         -> compila (salta lo que ya esta al dia)
+:: /t:Rebuild (opcion [C])          -> recompila desde cero
 :: ==========================================================================
 :CompilarProyecto
 echo "%~1"| findstr /i /l /c:"\packages\" /c:"\obj\" /c:"\bin\" >nul && exit /b 0
@@ -272,11 +276,17 @@ set SDARG=/p:SolutionDir="%SLN_DIR%\"
 :: El .csproj original no se modifica.
 set "FIX_ARG="
 if not exist "%PROJ_DIR%Class1.cs" findstr /i /c:"Class1.cs" "%PROJ%" >nul && call :PrepararFixReporteador
-:: Solo se restaura NuGet en los proyectos que tienen paquetes
+:: Solo se restaura NuGet en los proyectos que tienen paquetes y cuando hace falta:
+:: si ya estan bajados se salta, salvo en compilacion completa o al reintentar
 set "RESTORE_ARG="
-if exist "%PROJ_DIR%packages.config" set "RESTORE_ARG=/restore /p:RestorePackagesConfig=true"
-findstr /i /c:"<PackageReference" "%PROJ%" >nul && set "RESTORE_ARG=/restore /p:RestorePackagesConfig=true"
-"%MSBUILD_PATH%" "%PROJ%" %FIX_ARG% %RESTORE_ARG% %SDARG% /t:Rebuild /p:Configuration=Debug /nologo /verbosity:minimal > "%PLOG%" 2>&1
+set "NECESITA_NUGET=0"
+if exist "%PROJ_DIR%packages.config" if not exist "%SLN_DIR%packages\" set "NECESITA_NUGET=1"
+findstr /i /c:"<PackageReference" "%PROJ%" >nul && if not exist "%PROJ_DIR%obj\project.assets.json" set "NECESITA_NUGET=1"
+if /I "%TIPO_BUILD%"=="Rebuild" set "NECESITA_NUGET=1"
+if not "%RONDA%"=="1" set "NECESITA_NUGET=1"
+if exist "%PROJ_DIR%packages.config" if "%NECESITA_NUGET%"=="1" set "RESTORE_ARG=/restore /p:RestorePackagesConfig=true"
+findstr /i /c:"<PackageReference" "%PROJ%" >nul && if "%NECESITA_NUGET%"=="1" set "RESTORE_ARG=/restore /p:RestorePackagesConfig=true"
+"%MSBUILD_PATH%" "%PROJ%" %FIX_ARG% %RESTORE_ARG% %SDARG% /t:%TIPO_BUILD% /nodeReuse:true /p:Configuration=Debug /p:RunAnalyzers=false /nologo /verbosity:minimal > "%PLOG%" 2>&1
 set "RC=%errorlevel%"
 >>"%LOG_FILE%" echo ------ %PROJ%
 type "%PLOG%" >> "%LOG_FILE%"
@@ -325,8 +335,10 @@ set "CD_SRC=%~1bin\Debug"
 if not exist "%CD_SRC%\*.dll" exit /b 0
 set "CD_DST=%~1bin\Release"
 if not exist "%CD_DST%\" mkdir "%CD_DST%"
-copy /Y "%CD_SRC%\*.dll" "%CD_DST%\" >nul 2>&1
-exit /b %ERRORLEVEL%
+:: /D copia solo las DLL mas nuevas que las que ya estan en Release
+xcopy "%CD_SRC%\*.dll" "%CD_DST%\" /D /Y /Q >nul 2>&1
+if errorlevel 2 exit /b 1
+exit /b 0
 
 
 :: ==========================================================================

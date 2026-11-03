@@ -321,6 +321,7 @@ namespace CapaVista_Rrhh.Formularios
                 { RrhhBtnNomina, Properties.Resources.btn_nomina },
                 { RrhhBtnCierresNomina, Properties.Resources.btn_cierres },
                 { RrhhBtnLiquidacion, Properties.Resources.btn_liquidacion },
+                { RrhhBtnCatalogos, Properties.Resources.btn_catalogos },
                 { RrhhBtnCerrarSesion, Properties.Resources.btn_cerrarsesion }
             };
 
@@ -633,7 +634,9 @@ namespace CapaVista_Rrhh.Formularios
         // Flecha a la derecha de Catálogos: hacia abajo si está abierto.
         private void RrhhBtnCatalogos_Paint(object sender, PaintEventArgs e)
         {
-            int X = _NavegadorColapsado ? 22 : RrhhBtnCatalogos.Width - 26;
+            // con el menú contraído solo se ve el icono del libro, sin la flecha
+            if (_NavegadorColapsado) return;
+            int X = RrhhBtnCatalogos.Width - 26;
             int Y = RrhhBtnCatalogos.Height / 2;
             Point[] Flecha = _CatalogosAbierto
                 ? new[] { new Point(X, Y - 3), new Point(X + 10, Y - 3), new Point(X + 5, Y + 4) }

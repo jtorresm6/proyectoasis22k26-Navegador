@@ -79,6 +79,20 @@ namespace CapaVista_Rrhh.Properties {
             }
         }
 
+        internal static System.Drawing.Bitmap btn_catalogos {
+            get {
+                object obj = ResourceManager.GetObject("btn_catalogos", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap btn_catalogos_diseno {
+            get {
+                object obj = ResourceManager.GetObject("btn_catalogos_diseno", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap btn_cerrarsesion {
             get {
                 object obj = ResourceManager.GetObject("btn_cerrarsesion", resourceCulture);
