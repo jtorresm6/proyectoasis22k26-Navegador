@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_Pedidos", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_Pedidos", "CapaVista_Pedidos\CapaVista_Pedidos.csproj", "{14AE1E47-92A9-4C24-9B97-1EB0ACB85CA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPedidos", "TestPedidos\TestPedidos.csproj", "{C2B88E13-81FE-4BAE-B339-D7366FF11590}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{14AE1E47-92A9-4C24-9B97-1EB0ACB85CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14AE1E47-92A9-4C24-9B97-1EB0ACB85CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14AE1E47-92A9-4C24-9B97-1EB0ACB85CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2B88E13-81FE-4BAE-B339-D7366FF11590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2B88E13-81FE-4BAE-B339-D7366FF11590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2B88E13-81FE-4BAE-B339-D7366FF11590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2B88E13-81FE-4BAE-B339-D7366FF11590}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

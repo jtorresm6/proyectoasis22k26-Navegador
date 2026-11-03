@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1330,5 +1330,26 @@
         c2GB2oy7VSaY8txYkGlESbYTDHp2qXJVrpf3yvJIKmUWU0WLr/kmHyhcztc6UJJXirs1RuRnm/H/AFgz
         keQ1bJERAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="BotonOriginalIngresarVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\IngresarVentas.png;System.Drawing.Bitmap, System.Drawing</value>
+  </data>
+  <data name="BotonOriginalConsultarVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\ConsultarVentas.png;System.Drawing.Bitmap, System.Drawing</value>
+  </data>
+  <data name="BotonOriginalModificarVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\ModificarVentas.png;System.Drawing.Bitmap, System.Drawing</value>
+  </data>
+  <data name="BotonOriginalEliminarVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\EliminarVentas.png;System.Drawing.Bitmap, System.Drawing</value>
+  </data>
+  <data name="BotonOriginalRefrescarVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\RefrescarVentas.png;System.Drawing.Bitmap, System.Drawing</value>
+  </data>
+  <data name="BotonOriginalSalirVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\SalirVentas.png;System.Drawing.Bitmap, System.Drawing</value>
+  </data>
+  <data name="BotonOriginalGuardarVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\GuardarVentas.png;System.Drawing.Bitmap, System.Drawing</value>
   </data>
 </root>

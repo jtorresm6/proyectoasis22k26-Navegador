@@ -16,8 +16,8 @@
     <DebugType>pdbonly</DebugType><Optimize>true</Optimize><OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants><WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup><Reference Include="System" /><Reference Include="System.Core" /></ItemGroup>
-  <ItemGroup><Compile Include="ClsPedidoControlador.cs" /><Compile Include="ClsPedidoVistaDatos.cs" /></ItemGroup>
+  <ItemGroup><Reference Include="System" /><Reference Include="System.Core" /><Reference Include="System.Data" /></ItemGroup>
+  <ItemGroup><Compile Include="Controladores\ClsPedidoControlador.cs" /><Compile Include="Controladores\ClsPedidoAcciones.cs" /><Compile Include="Validaciones\ClsReglasPedidos.cs" /></ItemGroup>
   <ItemGroup><ProjectReference Include="..\CapaModelo_Pedidos\CapaModelo_Pedidos.csproj"><Project>{931217CE-76AB-43B7-AF21-1823C9BDAAE1}</Project><Name>CapaModelo_Pedidos</Name></ProjectReference></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

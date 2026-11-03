@@ -22,7 +22,7 @@
   <ItemGroup>
     <Reference Include="System" /><Reference Include="System.Core" /><Reference Include="System.Data" />
   </ItemGroup>
-  <ItemGroup><Compile Include="ClsPedidoDatos.cs" /><Compile Include="ClsConexion.cs" /><Compile Include="ClsPedidoRepositorio.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="Repositorios\ClsPedidoRepositorio.cs" /><Compile Include="Repositorios\ClsPedidoRepositorio.Consultas.cs" /><Compile Include="Conexion\ClsConexion.cs" /></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\..\VentasYCxC\CapaModelo_Ventas\CapaModelo_Ventas.csproj">
