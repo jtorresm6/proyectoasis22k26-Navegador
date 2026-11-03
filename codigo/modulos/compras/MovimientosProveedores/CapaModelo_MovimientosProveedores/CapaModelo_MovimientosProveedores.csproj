@@ -53,6 +53,8 @@
     <Compile Include="ClsConexionCompras.cs" />
     <Compile Include="ClsSentenciasCompras.cs" />
     <Compile Include="Entidades\ClsNotaProveedor.cs" />
+    <Compile Include="Entidades\ClsBalanceAntiguedadProveedor.cs" />
+    <Compile Include="Repositorios\ClsRepositorioBalanceAntiguedadProveedor.cs" />
     <Compile Include="Contratos\IRepositorioNotasProveedor.cs" />
     <Compile Include="Repositorios\ClsRepositorioNotasProveedor.cs" />
   </ItemGroup>
