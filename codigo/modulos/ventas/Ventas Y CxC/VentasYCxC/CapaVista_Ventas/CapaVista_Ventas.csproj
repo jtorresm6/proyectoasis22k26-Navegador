@@ -56,6 +56,9 @@
     <EmbeddedResource Include="FrmMdiVentas.resx">
       <DependentUpon>FrmMdiVentas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Ayudas\Ventas.chm">
+      <LogicalName>CapaVista_Ventas.Ayudas.Ventas.chm</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -268,6 +268,7 @@ namespace CapaVista_Pedidos
             this.Controls.Add(this.VentasPnlAcciones);
             this.Controls.Add(this.VentasPnlEncabezado);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("IconoVentas")));
             this.MinimumSize = new System.Drawing.Size(850, 540);
             this.Name = "FrmSeguimientoPedidos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

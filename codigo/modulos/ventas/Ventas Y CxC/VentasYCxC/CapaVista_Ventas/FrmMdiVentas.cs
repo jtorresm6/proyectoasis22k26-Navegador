@@ -6,7 +6,9 @@
  */
 using System;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace CapaVista_Ventas
@@ -239,9 +241,49 @@ namespace CapaVista_Ventas
 
         private void VentasMetBtnAyudaClick(object Origen, EventArgs Evento)
         {
-            MessageBox.Show(this, "Seleccione una opción del menú lateral. El botón de menú contrae o expande la navegación.\n\n" +
-                "Los indicadores se mostrarán cuando el controlador proporcione información. Para salir utilice Salir.",
-                "Ayuda de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            const string NombreRecurso = "CapaVista_Ventas.Ayudas.Ventas.chm";
+            using (Stream Manual = typeof(FrmMdiVentas).Assembly.GetManifestResourceStream(NombreRecurso))
+            {
+                if (Manual == null)
+                {
+                    MessageBox.Show(this, "No se encontró el manual de Ventas.", "Ayuda de Ventas",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                try
+                {
+                    byte[] Huella;
+                    using (SHA256 Resumen = SHA256.Create())
+                        Huella = Resumen.ComputeHash(Manual);
+
+                    string CarpetaAyuda = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                        "EmbutidosDeCalidad", "Ventas", "Ayuda");
+                    string NombreArchivo = "Ventas_" + BitConverter.ToString(Huella, 0, 8).Replace("-", "") + ".chm";
+                    string ArchivoAyuda = Path.Combine(CarpetaAyuda, NombreArchivo);
+
+                    if (!File.Exists(ArchivoAyuda))
+                    {
+                        Directory.CreateDirectory(CarpetaAyuda);
+                        Manual.Position = 0;
+                        using (var Destino = new FileStream(ArchivoAyuda, FileMode.CreateNew, FileAccess.Write))
+                            Manual.CopyTo(Destino);
+                    }
+
+                    Help.ShowHelp(this, ArchivoAyuda, "html/Ventas_General.html");
+                }
+                catch (IOException Error)
+                {
+                    MessageBox.Show(this, "No fue posible abrir el manual de Ventas. " + Error.Message,
+                        "Ayuda de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (UnauthorizedAccessException Error)
+                {
+                    MessageBox.Show(this, "No fue posible abrir el manual de Ventas. " + Error.Message,
+                        "Ayuda de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
