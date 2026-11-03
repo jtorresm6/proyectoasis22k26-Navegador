@@ -65,11 +65,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contratos\IRepositorioBajaEmpleado.cs" />
+    <Compile Include="Contratos\IRepositorioGenerico.cs" />
     <Compile Include="Contratos\IRepositorioMotivoBaja.cs" />
+    <Compile Include="Contratos\IRepositorioParametroLey.cs" />
+    <Compile Include="Entidades\ClsBajaEmpleado.cs" />
     <Compile Include="Entidades\ClsMotivoBaja.cs" />
+    <Compile Include="Entidades\ClsParametroLey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\ClsConexion.cs" />
+    <Compile Include="Repositorios\ClsRepositorioBajaEmpleado.cs" />
     <Compile Include="Repositorios\ClsRepositorioMotivoBaja.cs" />
+    <Compile Include="Repositorios\ClsRepositorioParametroLey.cs" />
     <Compile Include="Repositorios\ClsSentencias.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
