@@ -5,19 +5,35 @@ using System.Windows.Forms;
 using CapaControlador_MovimientosProveedores;
 using CapaVista_Componentes.Componentes;
 
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Carlos Andres Arriaza Lara
+ * Carné : 0901-23-13862
+ * Fecha : 30/10/2026
+ * ==================================================================
+ * Propósito :
+ *  Crear nuevas notas de débito y crédito para proveedores, registrando los movimientos en la cuenta por pagar.
+ * ===================================================================
+*/
 namespace CapaVista_MovimientosProveedores
 {
     public partial class FrmMovimientosProveedores : Form
     {
+
         private readonly ClsModeloNotaProveedor _ModeloNotaProveedor = new ClsModeloNotaProveedor();
         private bool _Guardando;
         private bool _CatalogosListos;
+        private int _IdConceptoDebito;
+        private int _IdConceptoCredito;
 
         public FrmMovimientosProveedores()
         {
             InitializeComponent();
             Load += (Remitente, Evento) => ComprasProcCargarCatalogos();
-            ComprasCboConcepto.SelectedIndexChanged += (Remitente, Evento) => ComprasProcActualizarResumen();
+            ComprasRdbDebito.CheckedChanged += (Remitente, Evento) => ComprasProcActualizarResumen();
+            ComprasRdbCredito.CheckedChanged += (Remitente, Evento) => ComprasProcActualizarResumen();
             ComprasTxtMonto.TextChanged += (Remitente, Evento) => ComprasProcActualizarResumen();
             ComprasTxtTipoCambio.TextChanged += (Remitente, Evento) => ComprasProcActualizarResumen();
             ComprasDtpFechaEmision.ValueChanged += (Remitente, Evento) => {
@@ -43,12 +59,13 @@ namespace CapaVista_MovimientosProveedores
         {
             _CatalogosListos = false;
             ComprasBtnGuardar.Enabled = false;
+            ComprasProcCargarTiposNota(null);
             try
             {
                 ComprasProcLlenarSelector(ComprasCboProveedor, _ModeloNotaProveedor.ComprasMetObtenerProveedores(), "nombreProveedor", "idProveedor");
-                ComprasProcLlenarSelector(ComprasCboConcepto, _ModeloNotaProveedor.ComprasMetObtenerConceptos(), "nombreConceptoProveedor", "idConceptoProveedor");
+                ComprasProcCargarTiposNota(_ModeloNotaProveedor.ComprasMetObtenerConceptos());
                 ComprasProcLlenarSelector(ComprasCboMoneda, _ModeloNotaProveedor.ComprasMetObtenerMonedas(), "nombreMoneda", "idMoneda");
-                _CatalogosListos = ComprasCboProveedor.Items.Count > 0 && ComprasCboConcepto.Items.Count > 0 && ComprasCboMoneda.Items.Count > 0;
+                _CatalogosListos = ComprasCboProveedor.Items.Count > 0 && (_IdConceptoDebito > 0 || _IdConceptoCredito > 0) && ComprasCboMoneda.Items.Count > 0;
                 ComprasBtnGuardar.Enabled = _CatalogosListos;
                 ComprasLblEstado.Text = _CatalogosListos ? "Seleccione un proveedor y complete los datos de la nota." : "Faltan proveedores, conceptos de nota o monedas activas. Complete los catálogos y pulse Actualizar.";
             }
@@ -61,21 +78,40 @@ namespace CapaVista_MovimientosProveedores
             return Selector.SelectedItem is DataRowView ? Convert.ToInt32(Selector.SelectedValue) : 0;
         }
 
-        private void ComprasProcSeleccionarNaturaleza(string Naturaleza)
+        private void ComprasProcCargarTiposNota(DataTable Conceptos)
         {
-            for (int Indice = 0; Indice < ComprasCboConcepto.Items.Count; Indice++)
+            // Los radios comparten un contenedor, por lo que solo se puede elegir uno.
+            // Débito usa el concepto Cargo y crédito el concepto Abono del catálogo;
+            // sus identificadores reales se envían al guardar, sin depender de un combo
+            // ni de IDs fijos. La elección siempre está habilitada, aunque falle
+            // la carga del catálogo; la existencia del concepto se valida al guardar.
+            // Al recargar se limpia la elección para no reutilizar IDs anteriores.
+            ComprasRdbDebito.Checked = false;
+            ComprasRdbCredito.Checked = false;
+            _IdConceptoDebito = 0;
+            _IdConceptoCredito = 0;
+            if (Conceptos != null)
             {
-                var Fila = ComprasCboConcepto.Items[Indice] as DataRowView;
-                if (Fila != null && Convert.ToString(Fila["naturalezaConceptoProveedor"]) == Naturaleza)
-                { ComprasCboConcepto.SelectedIndex = Indice; ComprasTxtSerie.Focus(); return; }
+                foreach (DataRow Concepto in Conceptos.Rows)
+                {
+                    string Naturaleza = Convert.ToString(Concepto["naturalezaConceptoProveedor"]).Trim();
+                    int IdConcepto = Convert.ToInt32(Concepto["idConceptoProveedor"]);
+                    if (string.Equals(Naturaleza, "Cargo", StringComparison.OrdinalIgnoreCase) && _IdConceptoDebito == 0) _IdConceptoDebito = IdConcepto;
+                    if (string.Equals(Naturaleza, "Abono", StringComparison.OrdinalIgnoreCase) && _IdConceptoCredito == 0) _IdConceptoCredito = IdConcepto;
+                }
             }
-            ComprasLblEstado.Text = "No está disponible el concepto solicitado. Revise el catálogo de conceptos de proveedor.";
+        }
+
+        private int ComprasFuncObtenerIdConceptoSeleccionado()
+        {
+            if (ComprasRdbDebito.Checked) return _IdConceptoDebito;
+            if (ComprasRdbCredito.Checked) return _IdConceptoCredito;
+            return 0;
         }
 
         private void ComprasProcActualizarResumen()
         {
-            var Concepto = ComprasCboConcepto.SelectedItem as DataRowView;
-            string Naturaleza = Concepto == null ? "" : Convert.ToString(Concepto["naturalezaConceptoProveedor"]);
+            string Naturaleza = ComprasRdbDebito.Checked ? "Cargo" : ComprasRdbCredito.Checked ? "Abono" : "";
             ComprasLblEfecto.Text = Naturaleza == "Cargo" ? "DÉBITO · Cargo que aumenta la cuenta por pagar" :
                 Naturaleza == "Abono" ? "CRÉDITO · Abono a favor de la cuenta del proveedor" : "Seleccione nota de débito o nota de crédito";
             decimal Monto, TipoCambio;
@@ -85,20 +121,10 @@ namespace CapaVista_MovimientosProveedores
                 : "Ingrese un importe y un tipo de cambio válidos para calcular el equivalente.";
         }
 
-        private static void ComprasProcMarcarTipoNota(Button Boton, bool Seleccionado)
-        {
-            Boton.BackColor = Seleccionado ? ClsTemaCompras.PrincipalNavegador : ClsTemaCompras.FondoBotones;
-            Boton.ForeColor = Seleccionado ? System.Drawing.Color.White : ClsTemaCompras.PrincipalNavegador;
-            Boton.FlatAppearance.BorderSize = Seleccionado ? 2 : 0;
-            Boton.FlatAppearance.BorderColor = ClsTemaCompras.AcentoNavegador;
-            Boton.FlatAppearance.MouseOverBackColor = Seleccionado ? ClsTemaCompras.AcentoNavegador : ClsTemaCompras.BotonHover;
-            Boton.FlatAppearance.MouseDownBackColor = Seleccionado ? ClsTemaCompras.PrincipalNavegador : ClsTemaCompras.BotonPresionado;
-            Boton.AccessibleDescription = Seleccionado ? "Tipo de nota seleccionado" : "Seleccionar este tipo de nota";
-        }
-
         private void ComprasProcLimpiarFormulario()
         {
-            ComprasCboConcepto.SelectedIndex = -1;
+            ComprasRdbDebito.Checked = false;
+            ComprasRdbCredito.Checked = false;
             ComprasCboMoneda.SelectedIndex = -1;
             ComprasTxtSerie.Clear();
             ComprasTxtNumero.Clear();
@@ -124,7 +150,18 @@ namespace CapaVista_MovimientosProveedores
         {
             if (_Guardando || !_CatalogosListos) return;
             if (ComprasFuncObtenerIdSeleccionado(ComprasCboProveedor) == 0) { ComprasProcMostrarAviso("Seleccione un proveedor."); ComprasCboProveedor.Focus(); return; }
-            if (ComprasFuncObtenerIdSeleccionado(ComprasCboConcepto) == 0) { ComprasProcMostrarAviso("Seleccione el tipo de nota."); ComprasCboConcepto.Focus(); return; }
+            int IdConcepto = ComprasFuncObtenerIdConceptoSeleccionado();
+            if (!ComprasRdbDebito.Checked && !ComprasRdbCredito.Checked)
+            {
+                ComprasProcMostrarAviso("Seleccione nota de débito o nota de crédito.");
+                ComprasRdbDebito.Focus();
+                return;
+            }
+            if (IdConcepto == 0)
+            {
+                ComprasProcMostrarAviso("El tipo de nota seleccionado no tiene un concepto disponible. Revise el catálogo de conceptos de proveedor y pulse Actualizar.");
+                return;
+            }
             if (string.IsNullOrWhiteSpace(ComprasTxtSerie.Text)) { ComprasProcMostrarAviso("Ingrese la serie."); ComprasTxtSerie.Focus(); return; }
             if (string.IsNullOrWhiteSpace(ComprasTxtNumero.Text)) { ComprasProcMostrarAviso("Ingrese el número del documento."); ComprasTxtNumero.Focus(); return; }
             if (ComprasFuncObtenerIdSeleccionado(ComprasCboMoneda) == 0) { ComprasProcMostrarAviso("Seleccione una moneda."); ComprasCboMoneda.Focus(); return; }
@@ -138,7 +175,7 @@ namespace CapaVista_MovimientosProveedores
             {
                 _Guardando = true;
                 ComprasBtnGuardar.Enabled = false;
-                _ModeloNotaProveedor.ComprasMetAgregar(ComprasFuncObtenerIdSeleccionado(ComprasCboProveedor), ComprasFuncObtenerIdSeleccionado(ComprasCboConcepto), ComprasTxtSerie.Text,
+                _ModeloNotaProveedor.ComprasMetAgregar(ComprasFuncObtenerIdSeleccionado(ComprasCboProveedor), IdConcepto, ComprasTxtSerie.Text,
                     ComprasTxtNumero.Text, ComprasDtpFechaEmision.Value, ComprasDtpFechaVencimiento.Value,
                     ComprasFuncObtenerIdSeleccionado(ComprasCboMoneda), TipoCambio, Monto);
             }
@@ -161,6 +198,9 @@ namespace CapaVista_MovimientosProveedores
             if (ErrorOdbc != null)
                 foreach (OdbcError Fallo in ErrorOdbc.Errors)
                     if (Fallo.NativeError == 1062) Detalle = "Ya existe una nota con ese proveedor, tipo, serie y número.";
+            if (string.IsNullOrWhiteSpace(Detalle))
+                Detalle = ErrorOdbc != null ? "El controlador ODBC no devolvió detalles del error al procesar la operación."
+                    : "La operación falló sin devolver un detalle adicional.";
             ComprasLblEstado.Text = Contexto;
             MessageBox.Show(this, Contexto + "\n\n" + Detalle, "Movimientos de proveedores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }

@@ -79,7 +79,7 @@ namespace CapaModelo_MovimientosProveedores.Repositorios
                             (idProveedor,idConceptoProveedor,serieDocumentoCuentaPorPagar,numeroDocumentoCuentaPorPagar,
                              fechaEmisionCuentaPorPagar,fechaVencimientoCuentaPorPagar,idMoneda,tipoCambioCuentaPorPagar,
                              montoTotalCuentaPorPagar,saldoActualCuentaPorPagar,estadoCuentaPorPagar)
-                            VALUES (?,?,?,?,?,?,?,?,?,?,'Pendiente')", Nota.IdProveedor, Nota.IdConceptoProveedor,
+                            VALUES (?,?,?,?,?,?,?,CAST(? AS DECIMAL(12,6)),CAST(? AS DECIMAL(12,4)),CAST(? AS DECIMAL(12,4)),'Pendiente')", Nota.IdProveedor, Nota.IdConceptoProveedor,
                             Nota.Serie, Nota.Numero, Nota.FechaEmision.Date, Nota.FechaVencimiento.Date,
                             Nota.IdMoneda, Nota.TipoCambio, Nota.Monto, Nota.Monto))
                             Comando.ExecuteNonQuery();
@@ -105,9 +105,14 @@ namespace CapaModelo_MovimientosProveedores.Repositorios
                 else if (Valor is DateTime) Parametro.OdbcType = OdbcType.Date;
                 else if (Valor is decimal)
                 {
-                    Parametro.OdbcType = OdbcType.Decimal;
-                    Parametro.Precision = 12;
-                    Parametro.Scale = (byte)(Indice == 7 ? 6 : 4);
+                    // Algunos controladores ODBC fallan al enlazar el decimal de seis
+                    // posiciones del tipo de cambio y no devuelven detalle del error.
+                    // Se envia como parametro de texto con punto decimal invariable;
+                    // los CAST del INSERT recuperan el DECIMAL exacto, sin usar double
+                    // ni concatenar el valor con SQL ni depender de la configuracion regional.
+                    Parametro.OdbcType = OdbcType.VarChar;
+                    Parametro.Size = 32;
+                    Parametro.Value = ((decimal)Valor).ToString(System.Globalization.CultureInfo.InvariantCulture);
                 }
                 else { Parametro.OdbcType = OdbcType.VarChar; Parametro.Size = 30; }
                 Comando.Parameters.Add(Parametro);
