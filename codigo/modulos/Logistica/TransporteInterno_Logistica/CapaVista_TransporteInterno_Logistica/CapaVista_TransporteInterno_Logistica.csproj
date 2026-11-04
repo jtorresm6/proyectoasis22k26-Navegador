@@ -49,6 +49,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formularios\FrmAlertaCadenaFrio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmAlertaCadenaFrio.Designer.cs">
+      <DependentUpon>FrmAlertaCadenaFrio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmDetalleViaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmDetalleViaje.Designer.cs">
+      <DependentUpon>FrmDetalleViaje.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmDetalleViajeProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmDetalleViajeProducto.Designer.cs">
+      <DependentUpon>FrmDetalleViajeProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmEncabezadoViaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmEncabezadoViaje.Designer.cs">
+      <DependentUpon>FrmEncabezadoViaje.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FrmMantenimientoCamaraRefrigeracion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +96,12 @@
     </Compile>
     <Compile Include="Formularios\FrmMantenimientoConductor.Designer.cs">
       <DependentUpon>FrmMantenimientoConductor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmTelemetriaTemperatura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmTelemetriaTemperatura.Designer.cs">
+      <DependentUpon>FrmTelemetriaTemperatura.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\FrmTipoTraslado.cs">
       <SubType>Form</SubType>
@@ -99,6 +129,18 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Formularios\FrmAlertaCadenaFrio.resx">
+      <DependentUpon>FrmAlertaCadenaFrio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmDetalleViaje.resx">
+      <DependentUpon>FrmDetalleViaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmDetalleViajeProducto.resx">
+      <DependentUpon>FrmDetalleViajeProducto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmEncabezadoViaje.resx">
+      <DependentUpon>FrmEncabezadoViaje.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmMantenimientoCamaraRefrigeracion.resx">
       <DependentUpon>FrmMantenimientoCamaraRefrigeracion.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,6 +152,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmMantenimientoConductor.resx">
       <DependentUpon>FrmMantenimientoConductor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmTelemetriaTemperatura.resx">
+      <DependentUpon>FrmTelemetriaTemperatura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmTipoTraslado.resx">
       <DependentUpon>FrmTipoTraslado.cs</DependentUpon>
