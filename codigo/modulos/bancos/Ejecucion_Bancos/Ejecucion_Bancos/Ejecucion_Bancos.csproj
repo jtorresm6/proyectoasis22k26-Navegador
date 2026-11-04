@@ -37,6 +37,9 @@
     <Reference Include="CapaVista_Bancos">
       <HintPath>..\..\Bibliotecas de Bancos\Bancos\CapaVista_Bancos\bin\Debug\CapaVista_Bancos.dll</HintPath>
     </Reference>
+    <Reference Include="CapaVista_Seguridad">
+      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
