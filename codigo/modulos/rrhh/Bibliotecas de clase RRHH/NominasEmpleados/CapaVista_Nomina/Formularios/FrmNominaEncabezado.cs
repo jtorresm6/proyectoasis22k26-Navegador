@@ -137,29 +137,35 @@ namespace CapaVista_Nomina.Formularios
 
         private void RrhhMetConfigurarGrid()
         {
-            RrhhDgvListaNominaEncabezado.AutoGenerateColumns = false;
-            RrhhDgvListaNominaEncabezado.Columns.Clear();
-            RrhhDgvListaNominaEncabezado.AllowUserToAddRows = false;
-            RrhhDgvListaNominaEncabezado.AllowUserToDeleteRows = false;
-            RrhhDgvListaNominaEncabezado.ReadOnly = true;
-            RrhhDgvListaNominaEncabezado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            RrhhDgvListaNominaEncabezado.MultiSelect = false;
+            var Grid = RrhhDgvListaNominaEncabezado;
+            Grid.AutoGenerateColumns = false;
+            Grid.Columns.Clear();
+            Grid.AllowUserToAddRows = false;
+            Grid.AllowUserToDeleteRows = false;
+            Grid.ReadOnly = true;
+            Grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            Grid.MultiSelect = false;
+
+            Grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Grid.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             var Dinero = new DataGridViewCellStyle { Format = "N2", Alignment = DataGridViewContentAlignment.MiddleRight };
             var Fecha = new DataGridViewCellStyle { Format = "dd/MM/yyyy" };
 
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "IdNominaEncabezado", DataPropertyName = "IdNominaEncabezado", HeaderText = "Código" });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "NombreEmpleado", DataPropertyName = "NombreEmpleado", HeaderText = "Empleado", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "FechaInicioNominaEncabezado", DataPropertyName = "FechaInicioNominaEncabezado", HeaderText = "Fecha Inicio", DefaultCellStyle = Fecha });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "FechaFinalNominaEncabezado", DataPropertyName = "FechaFinalNominaEncabezado", HeaderText = "Fecha Final", DefaultCellStyle = Fecha });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "SalarioBaseNominaEncabezado", DataPropertyName = "SalarioBaseNominaEncabezado", HeaderText = "Salario Base", DefaultCellStyle = Dinero });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "DuracionHoraExtraNominaEncabezado", DataPropertyName = "DuracionHoraExtraNominaEncabezado", HeaderText = "Min. Horas Extra" });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "TotalHorasExtraNominaEncabezado", DataPropertyName = "TotalHorasExtraNominaEncabezado", HeaderText = "Pago Horas Extra", DefaultCellStyle = Dinero });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "TotalPercepcionNominaEncabezado", DataPropertyName = "TotalPercepcionNominaEncabezado", HeaderText = "Percepciones", DefaultCellStyle = Dinero });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "TotalDeduccionNominaEncabezado", DataPropertyName = "TotalDeduccionNominaEncabezado", HeaderText = "Deducciones", DefaultCellStyle = Dinero });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "TotalNetoNominaEncabezado", DataPropertyName = "TotalNetoNominaEncabezado", HeaderText = "Neto a Pagar", DefaultCellStyle = Dinero });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "EstadoNminaEncabezado", DataPropertyName = "EstadoNminaEncabezado", HeaderText = "Estado" });
-            RrhhDgvListaNominaEncabezado.Columns.Add(new DataGridViewTextBoxColumn { Name = "CreatedAt", DataPropertyName = "CreatedAt", HeaderText = "Fecha Creación" });
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "IdNominaEncabezado", DataPropertyName = "IdNominaEncabezado", HeaderText = "Código", Width = 55 });
+
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "NombreEmpleado", DataPropertyName = "NombreEmpleado", HeaderText = "Empleado", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill, MinimumWidth = 170 });
+
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "FechaInicioNominaEncabezado", DataPropertyName = "FechaInicioNominaEncabezado", HeaderText = "Fecha Inicio", DefaultCellStyle = Fecha, Width = 80 });
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "FechaFinalNominaEncabezado", DataPropertyName = "FechaFinalNominaEncabezado", HeaderText = "Fecha Final", DefaultCellStyle = Fecha, Width = 80 });
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "SalarioBaseNominaEncabezado", DataPropertyName = "SalarioBaseNominaEncabezado", HeaderText = "Salario Base", DefaultCellStyle = Dinero, Width = 85 });
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "DuracionHoraExtraNominaEncabezado", DataPropertyName = "DuracionHoraExtraNominaEncabezado", HeaderText = "Min. Horas Extra", Width = 70 });
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "TotalHorasExtraNominaEncabezado", DataPropertyName = "TotalHorasExtraNominaEncabezado", HeaderText = "Pago Horas Extra", DefaultCellStyle = Dinero, Width = 80 });
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "TotalPercepcionNominaEncabezado", DataPropertyName = "TotalPercepcionNominaEncabezado", HeaderText = "Percepciones", DefaultCellStyle = Dinero, Width = 85 });
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "TotalDeduccionNominaEncabezado", DataPropertyName = "TotalDeduccionNominaEncabezado", HeaderText = "Deducciones", DefaultCellStyle = Dinero, Width = 85 });
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "TotalNetoNominaEncabezado", DataPropertyName = "TotalNetoNominaEncabezado", HeaderText = "Neto a Pagar", DefaultCellStyle = Dinero, Width = 90 });
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "EstadoNminaEncabezado", DataPropertyName = "EstadoNminaEncabezado", HeaderText = "Estado", Width = 75 });
+            Grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "CreatedAt", DataPropertyName = "CreatedAt", HeaderText = "Fecha Creación", Width = 110 });
         }
 
         // 3. Carga de datos y metodos auxiliares

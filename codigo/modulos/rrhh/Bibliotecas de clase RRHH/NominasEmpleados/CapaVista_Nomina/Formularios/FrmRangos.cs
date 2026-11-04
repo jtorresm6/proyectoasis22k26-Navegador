@@ -59,7 +59,6 @@ namespace CapaVista_Nomina.Formularios
             }
         }
 
-        // en pantallas de 1366x768 la ventana se reduce para que quepa completa
         private void RrhhMetAjustarAPantalla()
         {
             Rectangle Area = Screen.FromControl(this).WorkingArea;
@@ -119,7 +118,7 @@ namespace CapaVista_Nomina.Formularios
             var EstiloDecimal = new DataGridViewCellStyle { Format = "N4", Alignment = DataGridViewContentAlignment.MiddleRight };
 
             RrhhDgvListaRangos.Columns.Add(new DataGridViewTextBoxColumn { Name = "IdPercepcionDeduccionRango", DataPropertyName = "IdPercepcionDeduccionRango", HeaderText = "Código" });
-            // La columna de concepto muestra el nombre (ver CellFormatting)
+            
             RrhhDgvListaRangos.Columns.Add(new DataGridViewTextBoxColumn { Name = "IdPercepcionDeduccion", DataPropertyName = "IdPercepcionDeduccion", HeaderText = "Concepto", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill, MinimumWidth = 200 });
             RrhhDgvListaRangos.Columns.Add(new DataGridViewTextBoxColumn { Name = "SalarioDesdePercepcionDeduccionRango", DataPropertyName = "SalarioDesdePercepcionDeduccionRango", HeaderText = "Salario Inicial", DefaultCellStyle = EstiloDecimal });
             RrhhDgvListaRangos.Columns.Add(new DataGridViewTextBoxColumn
@@ -136,7 +135,6 @@ namespace CapaVista_Nomina.Formularios
             RrhhDgvListaRangos.Columns.Add(new DataGridViewTextBoxColumn { Name = "CreatedAt", DataPropertyName = "CreatedAt", HeaderText = "Fecha Creación" });
             RrhhDgvListaRangos.Columns.Add(new DataGridViewTextBoxColumn { Name = "UpdatedAt", DataPropertyName = "UpdatedAt", HeaderText = "Última Actualización" });
 
-            // Columnas angostas para dejarle espacio a Concepto
             RrhhDgvListaRangos.Columns["IdPercepcionDeduccionRango"].Width = 60;
             RrhhDgvListaRangos.Columns["ModoValorPercepcionDeduccionRango"].Width = 70;
             RrhhDgvListaRangos.Columns["IsActive"].Width = 60;
@@ -146,10 +144,8 @@ namespace CapaVista_Nomina.Formularios
             RrhhDgvListaRangos.CellFormatting += RrhhDgvListaRangos_CellFormatting;
         }
 
-        // 3. Carga de datos y metodos auxiliares
         private void RrhhMetCargarCombos()
         {
-            // Todos los conceptos para los nombres del grid, pero el combo solo muestra los de tipo "Tabla"
             var TodosConceptos = new ClsModeloPercepcionDeduccion().RrhhMetObtenerTodos();
             _NombresConceptos = TodosConceptos.ToDictionary(c => c.IdPercepcionDeduccion, c => c.NombrePercepcionDeduccion);
 
@@ -160,7 +156,6 @@ namespace CapaVista_Nomina.Formularios
                 .Where(c => c.TipoPercepcionDeduccion == TIPO_TABLA)
                 .ToList();
 
-            // CheckedListBox con selección única (valores iguales al ENUM de la base de datos)
             RrhhClbModoValor.CheckOnClick = true;
             RrhhClbModoValor.Items.Clear();
             RrhhClbModoValor.Items.AddRange(new object[] { MODO_PORCENTAJE, MODO_MONTO });
@@ -277,7 +272,6 @@ namespace CapaVista_Nomina.Formularios
             return true;
         }
 
-        // Flujo de guardado: copiar controles, asignar Estado, validar, grabar, mensaje y refrescar
         private void RrhhMetEjecutarOperacion(EstadoEntidad Estado, int IdRango)
         {
             try
