@@ -61,20 +61,21 @@ namespace CapaModelo_CierreNominas.Repositorios
              estadoPolizaCierreNomina, idUsuarioCierra)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            // Una nómina está ABIERTA si está Aprobada y todavía no existe en la tabla que se creo tblCierreNominaEmpleado.
-            
+            // Una nómina está ABIERTA si está Aprobada o Pagada y todavía no existe en la tabla que se creo tblCierreNominaEmpleado.
+            // El cierre es por mes: se agrupa por el mes de la fecha final de la nómina.
             _SelectNominasAbiertas = @"
         SELECT
-            DATE_FORMAT(ne.fechaFinalNominaEncabezado, '%Y-%m') AS periodoNomina,
-            ne.fechaInicioNominaEncabezado AS fechaInicioNomina,
-            ne.fechaFinalNominaEncabezado AS fechaFinalNomina,
+            DATE_FORMAT(MIN(ne.fechaFinalNominaEncabezado), '%Y-%m') AS periodoNomina,
+            DATE_SUB(MIN(ne.fechaFinalNominaEncabezado),
+                     INTERVAL DAYOFMONTH(MIN(ne.fechaFinalNominaEncabezado)) - 1 DAY) AS fechaInicioNomina,
+            LAST_DAY(MIN(ne.fechaFinalNominaEncabezado)) AS fechaFinalNomina,
             COUNT(*) AS cantidadEmpleadoNomina
         FROM tblNominaEncabezado ne
-        WHERE ne.estadoNminaEncabezado = 'Aprobada'
+        WHERE ne.estadoNminaEncabezado IN ('Aprobada', 'Pagada')
           AND NOT EXISTS (SELECT 1 FROM tblCierreNominaEmpleado ce
                           WHERE ce.idNominaEncabezado = ne.idNominaEncabezado)
-        GROUP BY ne.fechaInicioNominaEncabezado, ne.fechaFinalNominaEncabezado
-        ORDER BY ne.fechaFinalNominaEncabezado DESC";
+        GROUP BY YEAR(ne.fechaFinalNominaEncabezado), MONTH(ne.fechaFinalNominaEncabezado)
+        ORDER BY MIN(ne.fechaFinalNominaEncabezado) DESC";
 
             // efectoPercepcionDeduccion: 1 = percepción, 0 = deducción 
             _SelectPrevio = @"
@@ -92,9 +93,9 @@ namespace CapaModelo_CierreNominas.Repositorios
         INNER JOIN tblEmpleado e ON e.idEmpleado = ne.idEmpleado
         LEFT JOIN tblNominaDetalle nd ON nd.idNominaEncabezado = ne.idNominaEncabezado
         LEFT JOIN tblPercepcionDeduccion pd ON pd.idPercepcionDeduccion = nd.idPercepcionDeduccion
-        WHERE ne.fechaInicioNominaEncabezado = ?
-          AND ne.fechaFinalNominaEncabezado = ?
-          AND ne.estadoNminaEncabezado = 'Aprobada'
+        WHERE ne.fechaFinalNominaEncabezado >= ?
+          AND ne.fechaFinalNominaEncabezado <= ?
+          AND ne.estadoNminaEncabezado IN ('Aprobada', 'Pagada')
           AND NOT EXISTS (SELECT 1 FROM tblCierreNominaEmpleado ce
                           WHERE ce.idNominaEncabezado = ne.idNominaEncabezado)
         GROUP BY ne.idNominaEncabezado, ne.idEmpleado, e.codigoEmpleado, e.nombresEmpleado, e.apellidosEmpleado,
@@ -111,15 +112,15 @@ namespace CapaModelo_CierreNominas.Repositorios
         INNER JOIN tblNominaEncabezado ne ON ne.idNominaEncabezado = nd.idNominaEncabezado
         INNER JOIN tblPercepcionDeduccion pd ON pd.idPercepcionDeduccion = nd.idPercepcionDeduccion
         INNER JOIN tblCuenta c ON c.idCuenta = pd.idCuenta
-        WHERE ne.fechaInicioNominaEncabezado = ?
-          AND ne.fechaFinalNominaEncabezado = ?
-          AND ne.estadoNminaEncabezado = 'Aprobada'
+        WHERE ne.fechaFinalNominaEncabezado >= ?
+          AND ne.fechaFinalNominaEncabezado <= ?
+          AND ne.estadoNminaEncabezado IN ('Aprobada', 'Pagada')
           AND NOT EXISTS (SELECT 1 FROM tblCierreNominaEmpleado ce
                           WHERE ce.idNominaEncabezado = ne.idNominaEncabezado)
         GROUP BY pd.idCuenta, c.codigoCuenta, c.nombreCuenta, pd.efectoPercepcionDeduccion
         ORDER BY c.codigoCuenta";
 
-           
+
             _SelectEmpleadosPorCerrar = @"
         SELECT
             ne.idNominaEncabezado, ne.idEmpleado,
@@ -138,9 +139,9 @@ namespace CapaModelo_CierreNominas.Repositorios
                       WHERE ce.idEmpleado = ne.idEmpleado
                         AND YEAR(c.fechaFinalCierreNomina) = ?), 0) AS acumuladoDeduccionPrevio
         FROM tblNominaEncabezado ne
-        WHERE ne.fechaInicioNominaEncabezado = ?
-          AND ne.fechaFinalNominaEncabezado = ?
-          AND ne.estadoNminaEncabezado = 'Aprobada'
+        WHERE ne.fechaFinalNominaEncabezado >= ?
+          AND ne.fechaFinalNominaEncabezado <= ?
+          AND ne.estadoNminaEncabezado IN ('Aprobada', 'Pagada')
           AND NOT EXISTS (SELECT 1 FROM tblCierreNominaEmpleado x
                           WHERE x.idNominaEncabezado = ne.idNominaEncabezado)";
 
@@ -173,7 +174,7 @@ namespace CapaModelo_CierreNominas.Repositorios
 
         // Guarda el cierre completo en UNA transacción: encabezado + histórico de cada empleado.
         // Devuelve el idCierreNomina generado. Si algo falla se revierte todo y se relanza la excepción.
-        public int RRHHMetAgregar(ClsCierreNomina Entidad)
+        public int RrhhMetAgregar(ClsCierreNomina Entidad)
         {
             OdbcConnection Conexion = RrhhMetObtenerConexion();
             OdbcTransaction Transaccion = null;
@@ -188,12 +189,12 @@ namespace CapaModelo_CierreNominas.Repositorios
                 Parametros.Add(new OdbcParameter("p_fechaInicio", Entidad.FechaInicioCierreNomina.Date));
                 Parametros.Add(new OdbcParameter("p_fechaFinal", Entidad.FechaFinalCierreNomina.Date));
                 Parametros.Add(new OdbcParameter("p_cantidad", Entidad.CantidadEmpleadoCierreNomina));
-                Parametros.Add(RRHHMetCrearParametroDecimal("p_totalPercepcion", Entidad.TotalPercepcionCierreNomina));
-                Parametros.Add(RRHHMetCrearParametroDecimal("p_totalDeduccion", Entidad.TotalDeduccionCierreNomina));
-                Parametros.Add(RRHHMetCrearParametroDecimal("p_totalNeto", Entidad.TotalNetoCierreNomina));
-                Parametros.Add(RRHHMetCrearParametroDecimal("p_totalPatronal", Entidad.TotalPatronalCierreNomina));
-                Parametros.Add(RRHHMetCrearParametroDecimal("p_totalDebe", Entidad.TotalDebeCierreNomina));
-                Parametros.Add(RRHHMetCrearParametroDecimal("p_totalHaber", Entidad.TotalHaberCierreNomina));
+                Parametros.Add(RrhhMetCrearParametroDecimal("p_totalPercepcion", Entidad.TotalPercepcionCierreNomina));
+                Parametros.Add(RrhhMetCrearParametroDecimal("p_totalDeduccion", Entidad.TotalDeduccionCierreNomina));
+                Parametros.Add(RrhhMetCrearParametroDecimal("p_totalNeto", Entidad.TotalNetoCierreNomina));
+                Parametros.Add(RrhhMetCrearParametroDecimal("p_totalPatronal", Entidad.TotalPatronalCierreNomina));
+                Parametros.Add(RrhhMetCrearParametroDecimal("p_totalDebe", Entidad.TotalDebeCierreNomina));
+                Parametros.Add(RrhhMetCrearParametroDecimal("p_totalHaber", Entidad.TotalHaberCierreNomina));
                 Parametros.Add(new OdbcParameter("p_documentoOrigen", Entidad.DocumentoOrigenCierreNomina));
                 Parametros.Add(new OdbcParameter("p_codigoPoliza", Entidad.CodigoPolizaCierreNomina));
                 Parametros.Add(new OdbcParameter("p_fechaPoliza", Entidad.FechaPolizaCierreNomina.Date));
@@ -239,12 +240,12 @@ namespace CapaModelo_CierreNominas.Repositorios
                         Comando.Parameters.Add(new OdbcParameter("p_idCierre", IdCierre));
                         Comando.Parameters.Add(new OdbcParameter("p_idNomina", Convert.ToInt32(Fila["idNominaEncabezado"])));
                         Comando.Parameters.Add(new OdbcParameter("p_idEmpleado", Convert.ToInt32(Fila["idEmpleado"])));
-                        Comando.Parameters.Add(RRHHMetCrearParametroDecimal("p_salarioBase", Convert.ToDecimal(Fila["salarioBaseNominaEncabezado"])));
-                        Comando.Parameters.Add(RRHHMetCrearParametroDecimal("p_totalPercepcion", Percepcion));
-                        Comando.Parameters.Add(RRHHMetCrearParametroDecimal("p_totalDeduccion", Deduccion));
-                        Comando.Parameters.Add(RRHHMetCrearParametroDecimal("p_totalNeto", Convert.ToDecimal(Fila["totalNetoNominaEncabezado"])));
-                        Comando.Parameters.Add(RRHHMetCrearParametroDecimal("p_acumuladoPercepcion", Convert.ToDecimal(Fila["acumuladoPercepcionPrevio"]) + Percepcion));
-                        Comando.Parameters.Add(RRHHMetCrearParametroDecimal("p_acumuladoDeduccion", Convert.ToDecimal(Fila["acumuladoDeduccionPrevio"]) + Deduccion));
+                        Comando.Parameters.Add(RrhhMetCrearParametroDecimal("p_salarioBase", Convert.ToDecimal(Fila["salarioBaseNominaEncabezado"])));
+                        Comando.Parameters.Add(RrhhMetCrearParametroDecimal("p_totalPercepcion", Percepcion));
+                        Comando.Parameters.Add(RrhhMetCrearParametroDecimal("p_totalDeduccion", Deduccion));
+                        Comando.Parameters.Add(RrhhMetCrearParametroDecimal("p_totalNeto", Convert.ToDecimal(Fila["totalNetoNominaEncabezado"])));
+                        Comando.Parameters.Add(RrhhMetCrearParametroDecimal("p_acumuladoPercepcion", Convert.ToDecimal(Fila["acumuladoPercepcionPrevio"]) + Percepcion));
+                        Comando.Parameters.Add(RrhhMetCrearParametroDecimal("p_acumuladoDeduccion", Convert.ToDecimal(Fila["acumuladoDeduccionPrevio"]) + Deduccion));
                         Comando.ExecuteNonQuery();
                     }
                     Insertados++;
@@ -259,8 +260,33 @@ namespace CapaModelo_CierreNominas.Repositorios
                 Transaccion.Commit();
                 return IdCierre;
             }
-            catch
+            catch (Exception Ex)
             {
+                try
+                {
+                    var Texto = new System.Text.StringBuilder();
+                    Texto.AppendLine(DateTime.Now.ToString());
+                    Texto.AppendLine(Ex.ToString());
+
+                    var OdbcEx = Ex as OdbcException;
+                    if (OdbcEx != null)
+                    {
+                        foreach (OdbcError Error in OdbcEx.Errors)
+                            Texto.AppendLine("SQLState=" + Error.SQLState + " | Native=" + Error.NativeError +
+                                             " | Source=" + Error.Source + " | Msg=" + Error.Message);
+                    }
+
+                    Texto.AppendLine("IdUsuario=" + Entidad.IdUsuarioCierra +
+                                     " | Estado=[" + Entidad.EstadoPolizaCierreNomina + "]" +
+                                     " | Poliza=[" + Entidad.CodigoPolizaCierreNomina + "]" +
+                                     " | Doc=[" + Entidad.DocumentoOrigenCierreNomina + "]");
+
+                    System.IO.File.WriteAllText(
+                        System.IO.Path.Combine(System.IO.Path.GetTempPath(), "cierre_nomina_error.txt"),
+                        Texto.ToString());
+                }
+                catch (Exception) { }
+
                 if (Transaccion != null)
                 {
                     try { Transaccion.Rollback(); }
@@ -275,17 +301,17 @@ namespace CapaModelo_CierreNominas.Repositorios
         }
 
         // El cierre es irreversible: las correcciones se harán con la póliza de ajuste (pendiente de definir).
-        public int RRHHMetEditar(ClsCierreNomina Entidad)
+        public int RrhhMetEditar(ClsCierreNomina Entidad)
         {
             throw new NotSupportedException("El cierre de nómina es irreversible y no se puede editar.");
         }
 
-        public int RRHHMetRemover(ClsCierreNomina Entidad)
+        public int RrhhMetRemover(ClsCierreNomina Entidad)
         {
             throw new NotSupportedException("El cierre de nómina es irreversible y no se puede eliminar.");
         }
 
-        public IEnumerable<ClsCierreNomina> RRHHMetObtenerTodos()
+        public IEnumerable<ClsCierreNomina> RrhhMetObtenerTodos()
         {
             var ListaCierres = new List<ClsCierreNomina>();
             var TablaDatos = RrhhMetEjecucionConsulta(_SelectAll, CommandType.Text);
@@ -318,7 +344,7 @@ namespace CapaModelo_CierreNominas.Repositorios
             return ListaCierres;
         }
 
-        public IEnumerable<ClsNominaAbierta> RRHHMetObtenerNominasAbiertas()
+        public IEnumerable<ClsNominaAbierta> RrhhMetObtenerNominasAbiertas()
         {
             var ListaNominas = new List<ClsNominaAbierta>();
             var TablaDatos = RrhhMetEjecucionConsulta(_SelectNominasAbiertas, CommandType.Text);
@@ -336,7 +362,7 @@ namespace CapaModelo_CierreNominas.Repositorios
             return ListaNominas;
         }
 
-        public IEnumerable<ClsPrevioCierreNomina> RRHHMetObtenerPrevio(DateTime FechaInicio, DateTime FechaFinal)
+        public IEnumerable<ClsPrevioCierreNomina> RrhhMetObtenerPrevio(DateTime FechaInicio, DateTime FechaFinal)
         {
             var Parametros = new List<OdbcParameter>();
             Parametros.Add(new OdbcParameter("p_fechaInicio", FechaInicio.Date));
@@ -365,7 +391,7 @@ namespace CapaModelo_CierreNominas.Repositorios
             return ListaPrevio;
         }
 
-        public IEnumerable<ClsLineaPolizaNomina> RRHHMetObtenerLineasPoliza(DateTime FechaInicio, DateTime FechaFinal)
+        public IEnumerable<ClsLineaPolizaNomina> RrhhMetObtenerLineasPoliza(DateTime FechaInicio, DateTime FechaFinal)
         {
             var Parametros = new List<OdbcParameter>();
             Parametros.Add(new OdbcParameter("p_fechaInicio", FechaInicio.Date));
@@ -388,7 +414,7 @@ namespace CapaModelo_CierreNominas.Repositorios
             return ListaLineas;
         }
 
-        public IEnumerable<ClsCierreNominaEmpleado> RRHHMetObtenerDetalleCierre(int IdCierreNomina)
+        public IEnumerable<ClsCierreNominaEmpleado> RrhhMetObtenerDetalleCierre(int IdCierreNomina)
         {
             var Parametros = new List<OdbcParameter>();
             Parametros.Add(new OdbcParameter("p_idCierre", IdCierreNomina));
@@ -419,7 +445,7 @@ namespace CapaModelo_CierreNominas.Repositorios
             return ListaDetalle;
         }
 
-        public bool RRHHMetNominaCerrada(int IdNominaEncabezado)
+        public bool RrhhMetNominaCerrada(int IdNominaEncabezado)
         {
             var Parametros = new List<OdbcParameter>();
             Parametros.Add(new OdbcParameter("p_idNomina", IdNominaEncabezado));
@@ -428,12 +454,10 @@ namespace CapaModelo_CierreNominas.Repositorios
             return Convert.ToInt32(TablaDatos.Rows[0][0]) > 0;
         }
 
-        private static OdbcParameter RRHHMetCrearParametroDecimal(string Nombre, decimal Valor)
+        private static OdbcParameter RrhhMetCrearParametroDecimal(string Nombre, decimal Valor)
         {
-            var Parametro = new OdbcParameter(Nombre, OdbcType.Decimal);
-            Parametro.Precision = 12;
-            Parametro.Scale = 4;
-            Parametro.Value = Valor;
+            var Parametro = new OdbcParameter(Nombre, OdbcType.VarChar, 30);
+            Parametro.Value = Valor.ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture);
             return Parametro;
         }
     }

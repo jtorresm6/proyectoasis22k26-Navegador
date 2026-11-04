@@ -23,14 +23,14 @@ namespace CapaModelo_CierreNominas.Contratos
 {
     public interface IRepositorioCierreNomina : IRepositorioGenerico<ClsCierreNomina>
     {
-        IEnumerable<ClsNominaAbierta> RRHHMetObtenerNominasAbiertas();
+        IEnumerable<ClsNominaAbierta> RrhhMetObtenerNominasAbiertas();
 
-        IEnumerable<ClsPrevioCierreNomina> RRHHMetObtenerPrevio(DateTime FechaInicio, DateTime FechaFinal);
+        IEnumerable<ClsPrevioCierreNomina> RrhhMetObtenerPrevio(DateTime FechaInicio, DateTime FechaFinal);
 
-        IEnumerable<ClsLineaPolizaNomina> RRHHMetObtenerLineasPoliza(DateTime FechaInicio, DateTime FechaFinal);
+        IEnumerable<ClsLineaPolizaNomina> RrhhMetObtenerLineasPoliza(DateTime FechaInicio, DateTime FechaFinal);
 
-        IEnumerable<ClsCierreNominaEmpleado> RRHHMetObtenerDetalleCierre(int IdCierreNomina);
+        IEnumerable<ClsCierreNominaEmpleado> RrhhMetObtenerDetalleCierre(int IdCierreNomina);
 
-        bool RRHHMetNominaCerrada(int IdNominaEncabezado);
+        bool RrhhMetNominaCerrada(int IdNominaEncabezado);
     }
 }

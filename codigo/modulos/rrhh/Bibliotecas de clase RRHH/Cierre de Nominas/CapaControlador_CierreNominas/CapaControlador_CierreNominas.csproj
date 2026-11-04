@@ -31,10 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaControlador_PolizasCuentas_Contabilidad">
+      <HintPath>..\..\..\..\contabilidad\PolizasCuentas_Contabilidad\CapaControlador_PolizasCuentas_Contabilidad\bin\Debug\CapaControlador_PolizasCuentas_Contabilidad.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaControlador_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="CapaModelo_CierreNominas">
       <HintPath>..\CapaModelo_CierreNominas\bin\Debug\CapaModelo_CierreNominas.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,11 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modelo de Controladores\ClsModeloCierreNomina.cs" />
+    <Compile Include="Objetos De Valor\ClsConfiguracionCierreNomina.cs" />
+    <Compile Include="Objetos De Valor\ClsFilaCierreNominaValor.cs" />
+    <Compile Include="Objetos De Valor\ClsPeriodoNominaValor.cs" />
+    <Compile Include="Objetos De Valor\ClsResumenCierreNominaValor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modelos de Controladores\" />
-    <Folder Include="Objetos De valor\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
