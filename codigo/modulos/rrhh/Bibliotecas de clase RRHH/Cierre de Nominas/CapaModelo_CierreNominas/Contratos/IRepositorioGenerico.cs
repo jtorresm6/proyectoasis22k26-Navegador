@@ -20,9 +20,9 @@ namespace CapaModelo_CierreNominas.Contratos
 
     public interface IRepositorioGenerico<Entidad> where Entidad : class
     {
-        int RRHHMetAgregar(Entidad Entidad);
-        int RRHHMetEditar(Entidad Entidad);
-        int RRHHMetRemover(Entidad Entidad);
-        IEnumerable<Entidad> RRHHMetObtenerTodos();
+        int RrhhMetAgregar(Entidad Entidad);
+        int RrhhMetEditar(Entidad Entidad);
+        int RrhhMetRemover(Entidad Entidad);
+        IEnumerable<Entidad> RrhhMetObtenerTodos();
     }
 }

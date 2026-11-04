@@ -149,10 +149,12 @@ for %%C in (consultas reporteador navegador) do call :Vistas "%COMPONENTES_DIR%\
 :: Logistica: primero sus vistas y al final su MDI (carpeta Logistica)
 for /d %%D in ("%MODULOS_DIR%\Logistica\*") do if /i not "%%~nxD"=="Logistica" call :Vistas "%%~fD"
 call :Vistas "%MODULOS_DIR%\Logistica\Logistica"
+:: Seguridad <-> RRHH forman un ciclo: pasada 0 de Seguridad (sin MDI RRHH) antes de las vistas RRHH
+call :SeguridadBootstrap
 for /d %%D in ("%MODULOS_DIR%\rrhh\Bibliotecas de clase RRHH\*") do if /i not "%%~nxD"=="Recursos Humanos" call :Vistas "%%~fD"
 call :Vistas "%MODULOS_DIR%\rrhh\Bibliotecas de clase RRHH\Recursos Humanos"
-:: La vista de Seguridad va al final porque el Splash usa el MDI de Logistica
-call :Vistas "%COMPONENTES_DIR%\seguridad"
+:: La vista de Seguridad completa va al final: el Splash usa los MDI de Logistica y RRHH
+call :SeguridadFinal
 set "INCLUIR_EXE=1"
 for %%C in (consultas reporteador navegador seguridad) do call :Ejecutables "%COMPONENTES_DIR%\%%C"
 call :Ejecutables "%MODULOS_DIR%\rrhh\Bibliotecas de clase RRHH"
@@ -388,4 +390,93 @@ findstr /i /c:"MSTest.TestFramework" "%~1" >nul && goto EP_SI
 exit /b 1
 :EP_SI
 if "%RONDA%"=="1" echo   [OMITIDO] %~n1 (pruebas MSTest)
+exit /b 0
+
+
+:: ==========================================================================
+:: SEGURIDAD EN DOS PASADAS (rompe el ciclo Seguridad <-> RRHH sin tocar codigo)
+:: El Splash de Seguridad usa el MDI de RRHH y las vistas de RRHH usan
+:: CapaVista_Seguridad. En un clone limpio ninguna DLL existe todavia.
+:: Pasada 0: compila CapaVista_Seguridad con una COPIA temporal de FrmSplash.cs
+::           (en logs\build_rrhh) sin la referencia a RRHH. El codigo del repo
+::           no se modifica.
+:: Pasada final: Rebuild de CapaVista_Seguridad con el FrmSplash.cs original,
+::           cuando ya existen las DLL de RRHH.
+:: ==========================================================================
+:SeguridadBootstrap
+if defined OK_SEGFULL exit /b 0
+set "SEG_PROJ="
+for /r "%COMPONENTES_DIR%\seguridad" %%F in (CapaVista_Seguridad*.csproj) do if not defined SEG_PROJ set "SEG_PROJ=%%~fF"
+if not defined SEG_PROJ exit /b 0
+for %%F in ("%SEG_PROJ%") do set "SEG_DIR=%%~dpF"
+set "SPLASH_SRC=%SEG_DIR%FrmSplash.cs"
+if not exist "%SPLASH_SRC%" exit /b 0
+:: Si ya hay una DLL previa (como en una copia vieja) y no es Rebuild, no hace falta
+if exist "%SEG_DIR%bin\Debug\CapaVista_Seguridad.dll" if /I "%TIPO_BUILD%"=="Build" exit /b 0
+
+set "SPLASH_BOOT=%LOG_DIR%\FrmSplash.bootstrap.cs"
+set "SPLASH_PS=%LOG_DIR%\splash_bootstrap.ps1"
+set "SEG_TARGETS=%LOG_DIR%\seguridad_bootstrap.targets"
+if exist "%SPLASH_BOOT%" del "%SPLASH_BOOT%"
+
+:: Script que copia FrmSplash.cs quitando el using de RRHH y el case "RRHH"
+> "%SPLASH_PS%" echo $l = Get-Content -LiteralPath $env:SPLASH_SRC -Encoding UTF8
+>> "%SPLASH_PS%" echo $o = New-Object System.Collections.Generic.List[string]
+>> "%SPLASH_PS%" echo $skip = $false
+>> "%SPLASH_PS%" echo foreach ($x in $l) {
+>> "%SPLASH_PS%" echo   if ($x -match 'CapaVista_Rrhh') { continue }
+>> "%SPLASH_PS%" echo   if (($x -match 'case\s+"RRHH"') -and ($x -notmatch '//')) { $skip = $true; continue }
+>> "%SPLASH_PS%" echo   if ($skip) {
+>> "%SPLASH_PS%" echo     if ($x -match 'default:') { $skip = $false } else { if ($x -match 'break;') { $skip = $false }; continue }
+>> "%SPLASH_PS%" echo   }
+>> "%SPLASH_PS%" echo   $o.Add($x)
+>> "%SPLASH_PS%" echo }
+>> "%SPLASH_PS%" echo Set-Content -LiteralPath $env:SPLASH_BOOT -Value $o -Encoding UTF8
+powershell -NoProfile -ExecutionPolicy Bypass -File "%SPLASH_PS%" >nul 2>&1
+if not exist "%SPLASH_BOOT%" goto SB_SIN_COPIA
+
+:: Targets: en esta pasada se compila la copia en lugar del FrmSplash.cs original
+> "%SEG_TARGETS%" echo ^<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"^>
+>> "%SEG_TARGETS%" echo   ^<Target Name="SplashBootstrap" BeforeTargets="CoreCompile"^>
+>> "%SEG_TARGETS%" echo     ^<ItemGroup^>
+>> "%SEG_TARGETS%" echo       ^<Compile Remove="**\FrmSplash.cs" /^>
+>> "%SEG_TARGETS%" echo       ^<Compile Include="%SPLASH_BOOT%" /^>
+>> "%SEG_TARGETS%" echo     ^</ItemGroup^>
+>> "%SEG_TARGETS%" echo   ^</Target^>
+>> "%SEG_TARGETS%" echo ^</Project^>
+
+set "PLOG=%LOG_DIR%\ronda_%RONDA%_seguridad_pasada0.log"
+echo   [PASADA 0] CapaVista_Seguridad sin el MDI de RRHH ...
+call :BuscarSln "%SEG_DIR%"
+if not defined SLN_DIR set "SLN_DIR=%SEG_DIR%..\"
+set SDARG=/p:SolutionDir="%SLN_DIR%\"
+set "RESTORE_ARG="
+if exist "%SEG_DIR%packages.config" if not exist "%SLN_DIR%packages\" set "RESTORE_ARG=/restore /p:RestorePackagesConfig=true"
+findstr /i /c:"<PackageReference" "%SEG_PROJ%" >nul && if not exist "%SEG_DIR%obj\project.assets.json" set "RESTORE_ARG=/restore /p:RestorePackagesConfig=true"
+"%MSBUILD_PATH%" "%SEG_PROJ%" /p:CustomAfterMicrosoftCommonTargets="%SEG_TARGETS%" %RESTORE_ARG% %SDARG% /t:Build /nodeReuse:true /p:Configuration=Debug /p:RunAnalyzers=false /nologo /verbosity:minimal > "%PLOG%" 2>&1
+set "RC=%errorlevel%"
+>>"%LOG_FILE%" echo ------ PASADA 0 %SEG_PROJ%
+type "%PLOG%" >> "%LOG_FILE%"
+if not "%RC%"=="0" goto SB_ERROR
+call :CopiarDebugARelease "%SEG_DIR%"
+echo   [OK] CapaVista_Seguridad (pasada 0)
+exit /b 0
+
+:SB_ERROR
+echo   [AVISO] Fallo la pasada 0 de CapaVista_Seguridad (codigo %RC%).
+findstr /i /c:": error " /c:"error MSB" /c:"error NU" "%PLOG%"
+echo   Detalle: "%PLOG%"
+exit /b 0
+
+:SB_SIN_COPIA
+echo   [AVISO] No se pudo generar la copia temporal de FrmSplash.cs; se omite la pasada 0.
+exit /b 0
+
+:SeguridadFinal
+set "TIPO_PREV=%TIPO_BUILD%"
+set "TIPO_BUILD=Rebuild"
+set /a PF_ANTES=P_FAIL
+call :Vistas "%COMPONENTES_DIR%\seguridad"
+set "TIPO_BUILD=%TIPO_PREV%"
+if %P_FAIL% EQU %PF_ANTES% set "OK_SEGFULL=1"
 exit /b 0

@@ -20,7 +20,7 @@ namespace CapaModelo_CierreNominas.Entidades
 {
     public class ClsNominaAbierta
     {
-        public string PeriodoNomina { get; set; }              
+        public string PeriodoNomina { get; set; }
         public DateTime FechaInicioNomina { get; set; }
         public DateTime FechaFinalNomina { get; set; }
         public int CantidadEmpleadoNomina { get; set; }
