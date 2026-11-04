@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CapaVista_Bancos.Formularios;
+using CapaVista_Seguridad;
 
 namespace Ejecucion_Bancos
 {
@@ -17,7 +18,7 @@ namespace Ejecucion_Bancos
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMDIBancos());
+            Application.Run(new FrmLogin());
         }
     }
 }
