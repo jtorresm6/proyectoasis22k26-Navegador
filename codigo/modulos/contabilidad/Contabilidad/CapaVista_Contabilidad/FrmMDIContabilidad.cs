@@ -288,7 +288,9 @@ namespace CapaVista_Contabilidad
         private void ContabilidadMetAbrirPolizasLocales(object Remitente, EventArgs Evento)
         {
             // Inicio de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026
-            ContabilidadMetAbrirPantalla(10001, (Button)Remitente, Permisos => new FrmPolizasLocales(Permisos, _IdModulo));
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
+            ContabilidadMetAbrirPantalla(10001, (Button)Remitente, Permisos => new FrmPolizas(Permisos, _IdModulo));
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
             // Fin de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026
         }
 

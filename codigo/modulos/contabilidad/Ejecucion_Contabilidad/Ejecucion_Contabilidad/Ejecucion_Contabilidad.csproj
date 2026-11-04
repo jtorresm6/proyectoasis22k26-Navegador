@@ -45,6 +45,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
     </Reference>
+    <!-- Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 03/11/2026 -->
+    <Reference Include="CapaVista_Seguridad">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
+    </Reference>
+    <!-- Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 03/11/2026 -->
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

@@ -29,6 +29,14 @@ namespace CapaControlador_Contabilidad
 {
     public class ClsControladorSeguridadContabilidad
     {
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
+        public static string ContabilidadFuncUsuarioSesion()
+        {
+            if (!ClsSesionSeguridad.HaySesionActiva) return string.Empty;
+            return string.IsNullOrWhiteSpace(ClsSesionSeguridad.NombreUsuario) ? ClsSesionSeguridad.NombreEmpleado : ClsSesionSeguridad.NombreUsuario;
+        }
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
+
         private const string _NombreModulo = "Contabilidad";
 
         private readonly Dictionary<int, string> _Aplicaciones = new Dictionary<int, string>
@@ -36,6 +44,9 @@ namespace CapaControlador_Contabilidad
             { 10001, "Pólizas locales" }, { 10002, "Presupuestos" },
             { 10003, "Activos fijos" }, { 10004, "Cierre contable" },
             { 10005, "Estados financieros" },
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
+            { 10006, "Detalle de póliza" },
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
             { 10011, "Mantenimiento de países" },
             { 10012, "Mantenimiento de módulos contables" },
             { 10013, "Mantenimiento de vida útil" },

@@ -22,7 +22,9 @@ namespace CapaVista_Contabilidad
 
         private static readonly System.Collections.Generic.Dictionary<string, int> _Codigos = new System.Collections.Generic.Dictionary<string, int>
         {
-            { "FrmEstadosFinancieros", 10005 }
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
+            { "FrmEstadosFinancieros", 10005 }, { "FrmReporteEstadoFinanciero", 10005 }
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
         };
 
         internal static void ContabilidadMetPrepararVentana(Form Formulario, string Titulo, Size AreaCliente)

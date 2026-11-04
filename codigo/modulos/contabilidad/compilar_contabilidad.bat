@@ -6,7 +6,8 @@
 :: ============================================================================
 :: Compila, en orden, solo lo necesario para abrir Contabilidad:
 ::   Seguridad (modelo y controlador), Consultas, Reporteador, Navegador,
-::   base de Contabilidad, las 5 soluciones, el MDI y Ejecucion_Contabilidad.
+::   Logistica y la vista de Seguridad (para el login), base de Contabilidad,
+::   las 5 soluciones, el MDI y Ejecucion_Contabilidad.
 :: Se detiene en el primer error.
 :: Funciona desde cualquier carpeta: busca el repositorio en la ruta que se le
 :: pase, subiendo desde el bat o desde la carpeta actual, y en C:\proyectoasis22k26.
@@ -71,6 +72,22 @@ for %%K in (CapaModelo CapaControlador CapaVista) do (
 for %%K in (CapaModelo CapaControlador CapaVista) do (
     call :compilar "%C%\navegador\Navegador\%%K_Navegador\%%K_Navegador.csproj" || goto :fallo
 )
+
+:: Inicio de cambio: Gabriel Andre Guillen Pocon - 0901-23-1998 - 03/11/2026
+set "L=%RAIZ%\codigo\modulos\Logistica"
+for %%K in (CapaModelo CapaControlador CapaVista) do (
+    call :compilar "%L%\Cierre_Inventario\%%K_CierreInventario\%%K_CierreInventario.csproj" || goto :fallo
+)
+for %%S in (Inventario MuestreoAuditoria TransporteExterno TransporteInterno Traslados) do (
+    for %%K in (CapaModelo CapaControlador CapaVista) do (
+        call :compilar "%L%\%%S_Logistica\%%K_%%S_Logistica\%%K_%%S_Logistica.csproj" || goto :fallo
+    )
+)
+for %%K in (CapaModelo CapaControlador CapaVista) do (
+    call :compilar "%L%\Logistica\%%K_Logistica\%%K_Logistica.csproj" || goto :fallo
+)
+call :compilar "%C%\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj" || goto :fallo
+:: Fin de cambio: Gabriel Andre Guillen Pocon - 0901-23-1998 - 03/11/2026
 
 call :compilar "%M%\Contabilidad\CapaModelo_Contabilidad\CapaModelo_Contabilidad.csproj" || goto :fallo
 call :compilar "%M%\Contabilidad\CapaControlador_Contabilidad\CapaControlador_Contabilidad.csproj" || goto :fallo

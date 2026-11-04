@@ -41,6 +41,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\ClsRepositorioContabilidad.cs" />
     <Compile Include="Repositorios\ClsRepositorioMaestroContabilidad.cs" />
+    <!-- Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 30/10/2026 -->
+    <Compile Include="Entidades\ClsImpuestoContabilidad.cs" />
+    <Compile Include="Repositorios\ClsRepositorioImpuestosContabilidad.cs" />
+    <!-- Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 30/10/2026 -->
+    <!-- Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 02/11/2026 -->
+    <Compile Include="Entidades\ClsImpuestoTramoContabilidad.cs" />
+    <!-- Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 02/11/2026 -->
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
