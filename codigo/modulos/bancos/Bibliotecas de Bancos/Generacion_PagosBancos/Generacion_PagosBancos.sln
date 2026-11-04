@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37516.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_GeneracionPagosBancos", "CapaModelo_GeneracionPagosBancos\CapaModelo_GeneracionPagosBancos.csproj", "{84B5E1D6-AE9C-46D8-A0CA-E8F2F806E8E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_GeneracionPagosBancos", "CapaControlador_GeneracionPagosBancos\CapaControlador_GeneracionPagosBancos.csproj", "{284FA13E-60CB-4C20-9D0B-4F0E60432AAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_GeneracionPagosBancos", "CapaVista_GeneracionPagosBancos\CapaVista_GeneracionPagosBancos.csproj", "{7DCCC297-E977-4B75-89FA-69EAE8623EE3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84B5E1D6-AE9C-46D8-A0CA-E8F2F806E8E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84B5E1D6-AE9C-46D8-A0CA-E8F2F806E8E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84B5E1D6-AE9C-46D8-A0CA-E8F2F806E8E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84B5E1D6-AE9C-46D8-A0CA-E8F2F806E8E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{284FA13E-60CB-4C20-9D0B-4F0E60432AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{284FA13E-60CB-4C20-9D0B-4F0E60432AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{284FA13E-60CB-4C20-9D0B-4F0E60432AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{284FA13E-60CB-4C20-9D0B-4F0E60432AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DCCC297-E977-4B75-89FA-69EAE8623EE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DCCC297-E977-4B75-89FA-69EAE8623EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DCCC297-E977-4B75-89FA-69EAE8623EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DCCC297-E977-4B75-89FA-69EAE8623EE3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B5D1F4C-E05B-46FA-80C8-D7009FCA410B}
+	EndGlobalSection
+EndGlobal

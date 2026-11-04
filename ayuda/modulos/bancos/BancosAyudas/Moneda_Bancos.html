@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <title>Ayudas - Monedas</title>
+</head>
+
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png">
+        <img class="imgButti" src="Imagenes/LogoYMascota/butti2.png">
+        <h1>Mantenimiento</h1>
+        <h1>Ayudas - Monedas</h1>
+    </center>
+    <br>
+    <div class="container">
+        <h2>Monedas</h2>
+        <p> Esta es la ventana de mantenimiento de monedas del módulo de Bancos. Aquí puede consultar, agregar, modificar y eliminar
+            las monedas con las que trabaja la empresa (por ejemplo el Quetzal y el Dólar). Cada moneda tiene un código de tres letras,
+            un nombre y un símbolo. En las imágenes de esta ayuda, los números rojos indican el orden en que se explica cada elemento.
+        </p>
+        <br><br><br>
+
+        <h2>¿Cómo abrir la ventana de Monedas?</h2>
+        <p> 1. En el menú de la izquierda busque la sección "Mantenimientos". </p>
+        <p> 2. Presione el botón "Monedas". Se abrirá la ventana "8001 – MantenimientoMoneda". </p>
+        <img class="imgVentanaMDI" src="Imagenes/Moneda/Moneda_acceso.png">
+        <br><br><br>
+
+        <h2>Conozca la ventana</h2>
+        <p> 1. Barra de botones: contiene todas las acciones que puede realizar con las monedas. </p>
+        <p> 2. Tabla de monedas: muestra una moneda por fila. La fila en azul es la moneda seleccionada. </p>
+        <p> La tabla tiene estas columnas: "Pk_Moneda" es el número que el sistema asigna a cada moneda; "codigoMoneda" es el código de tres letras
+            (por ejemplo GTQ o USD); "nombreMoneda" es el nombre completo; "simboloMoneda" es el símbolo que se usa al escribir un monto (por ejemplo Q o US$);
+            "is_active" indica si la moneda está activa (1) o inactiva (0); "created_at" es la fecha en que se creó el registro y "updated_at" la fecha de su
+            última modificación.
+        </p>
+        <img class="imgVentanaMDI" src="Imagenes/Moneda/Moneda_general.png">
+        <br><br><br>
+
+        <h2>Los botones de la barra</h2>
+        <p> 1. Ingresar; permite escribir una moneda nueva. </p>
+        <p> 2. Consultar; busca una moneda en la tabla. </p>
+        <p> 3. Modificar; permite cambiar los datos de la moneda seleccionada. </p>
+        <p> 4. Eliminar; borra la moneda seleccionada. </p>
+        <p> 5. Guardar; confirma lo que escribió al ingresar o modificar. </p>
+        <p> 6. Cancelar; deja lo que estaba haciendo sin guardar cambios. </p>
+        <p> 7. Refrescar; vuelve a cargar la tabla con los datos más recientes. </p>
+        <p> 8. Imprimir; después de usar la ventana este botón es reemplazado por el botón verde "Reporte", que abre el reporte de monedas. </p>
+        <p> 9. Ayuda; abre un archivo de ayuda. </p>
+        <p> 10. Inicio; se posiciona en la primera moneda de la tabla. </p>
+        <p> 11. Anterior; retrocede una moneda. </p>
+        <p> 12. Siguiente; avanza una moneda. </p>
+        <p> 13. Fin; se posiciona en la última moneda de la tabla. </p>
+        <p> 14. Salir; oculta el formulario y la tabla. </p>
+        <img class="imgVentanaMDI" src="Imagenes/Moneda/Moneda_botones.png">
+        <br><br><br>
+
+        <h2>Ingresar</h2>
+        <p> Use este botón para registrar una moneda nueva. Siga estos pasos: </p>
+        <p> 1. Presione el botón "Ingresar"; se abre el formulario "Nuevo registro". </p>
+        <p> 2. Pk_Moneda; es el número de la moneda. El sistema lo asigna solo, no necesita escribirlo. </p>
+        <p> 3. codigoMoneda; escriba el código de tres letras de la moneda, por ejemplo "GTQ". Debe tener exactamente tres letras. </p>
+        <p> 4. nombreMoneda; escriba el nombre completo, por ejemplo "Quetzal guatemalteco". </p>
+        <p> 5. simboloMoneda; escriba el símbolo de la moneda, por ejemplo "Q". </p>
+        <p> 6. is_active; deje la casilla marcada si la moneda debe estar activa. Si la desmarca, la moneda queda inactiva. </p>
+        <p> Los campos "created_at" y "updated_at" son las fechas del registro; no es necesario cambiarlas. Cuando termine de llenar los datos presione "Guardar". </p>
+        <img class="imgVentanaMDI" src="Imagenes/Moneda/Moneda_ingresar.png">
+        <br><br><br>
+
+        <h2>Guardar</h2>
+        <p> Después de presionar "Ingresar" (o "Modificar") y llenar los datos, siga estos pasos: </p>
+        <p> 1. Presione el botón "Guardar". Si falta algún dato (código de tres letras, nombre o símbolo) el sistema se lo indicará y no se guardará nada hasta
+            que lo corrija. </p>
+        <p> 2. Aparece el mensaje "Registro guardado correctamente", que confirma que los datos quedaron registrados. </p>
+        <p> 3. Presione "Aceptar". La tabla se actualiza y muestra la moneda guardada. </p>
+        <img class="imgVentanaMDI" src="Imagenes/Moneda/Moneda_guardar.png">
+        <br><br><br>
+
+        <h2>Consultar</h2>
+        <p> 1. Presione el botón "Consultar". Se abre una ventana para elegir la moneda que desea buscar; selecciónela y acepte. La tabla muestra solo
+            esa moneda. Si cierra la ventana sin elegir, la tabla se queda como estaba. Para volver a ver todas las monedas presione "Refrescar". </p>
+        <img class="imgVentana" src="Imagenes/Moneda/Moneda_consultar.png">
+        <br><br><br>
+
+        <h2>Modificar</h2>
+        <p> Use este botón para corregir los datos de una moneda que ya existe. </p>
+        <p> 1. Seleccione en la tabla la moneda que desea cambiar y presione el botón "Modificar". Los datos de esa moneda aparecen en el formulario; el número
+            (Pk_Moneda) no se puede cambiar. </p>
+        <p> 2. Cambie lo que necesite y presione "Guardar". Aparece un mensaje de confirmación y la tabla se actualiza con los nuevos datos. </p>
+        <p> Si una moneda ya no se debe usar, puede desmarcar la casilla "is_active" para dejarla inactiva en lugar de eliminarla. </p>
+        <img class="imgVentana" src="Imagenes/Moneda/Moneda_modificar.png">
+        <br><br><br>
+
+        <h2>Eliminar</h2>
+        <p> 1. Seleccione en la tabla la moneda que desea eliminar y presione el botón "Eliminar". </p>
+        <p> 2. El sistema le pide confirmar. Si acepta, la moneda se elimina y la tabla se actualiza sin ella. </p>
+        <p> Importante: si la moneda ya está siendo usada en otros datos del sistema (por ejemplo en una cuenta bancaria), no se podrá eliminar. En ese caso
+            utilice "Modificar" y desmarque la casilla "is_active". </p>
+        <img class="imgVentana" src="Imagenes/Moneda/Moneda_eliminar.png">
+        <br><br><br>
+
+        <h2>Cancelar</h2>
+        <p> Si está ingresando o modificando una moneda y ya no desea continuar, presione "Cancelar". El formulario se cierra y no se guarda ningún cambio.
+            Este botón no elimina monedas.
+        </p>
+        <img class="imgVentana" src="Imagenes/Moneda/Moneda_cancelar.png">
+        <br><br><br>
+
+        <h2>Reporte</h2>
+        <p> 1. Presione el botón verde "Reporte". Aparece en el lugar del botón "Imprimir" cuando empieza a usar la ventana (por ejemplo, al elegir una moneda
+            o presionar "Siguiente"). </p>
+        <img class="imgVentana" src="Imagenes/Moneda/Moneda_reporte_boton.png">
+        <br><br>
+        <p> Se abre la ventana "8001 – ReporteMoneda" con el listado de todas las monedas: código, nombre, símbolo, fecha de creación y si está activa. Esta ventana tiene
+            sus propias herramientas: </p>
+        <p> 1. Páginas; permite pasar a la página anterior o siguiente del reporte y ver en qué página se encuentra. </p>
+        <p> 2. Imprimir y exportar; permiten imprimir el reporte, cambiar la forma de verlo y guardarlo como archivo (por ejemplo PDF, Word o Excel). </p>
+        <p> 3. Zoom; agranda o reduce el tamaño del reporte en pantalla. </p>
+        <p> 4. Buscar; escriba una palabra y presione "Buscar" para encontrarla dentro del reporte; "Siguiente" va a la siguiente coincidencia. </p>
+        <p> 5. Listado de monedas; es el contenido del reporte. </p>
+        <img class="imgVentana" src="Imagenes/Moneda/Moneda_reporte.png">
+        <br><br><br>
+
+        <h2>Extras</h2>
+        <p> 1. Refrescar; actualiza la tabla con los datos más recientes y quita cualquier búsqueda hecha con "Consultar". Es útil si los datos cambiaron fuera de esta ventana. </p>
+        <p> 2. Inicio; nos posiciona en la primera moneda de la tabla. </p>
+        <p> 3. Anterior; retrocede una moneda dentro de la tabla. </p>
+        <p> 4. Siguiente; avanza una moneda dentro de la tabla. </p>
+        <p> 5. Fin; nos posiciona en la última moneda de la tabla. </p>
+        <img class="imgVentana" src="Imagenes/Moneda/Moneda_extras.png">
+        <br><br><br>
+
+        <h2>Ayuda</h2>
+        <p> 1. Este botón abre un archivo de ayuda con información que debe conocer para usar correctamente esta ventana. </p>
+        <img class="imgVentana" src="Imagenes/Moneda/Moneda_ayuda.png">
+        <br><br><br>
+
+        <h2>Salir</h2>
+        <p> 1. Al presionar este botón se oculta el formulario y la tabla y solo queda visible la barra de botones. Para cerrar la ventana por completo
+            use la X de la esquina superior derecha. </p>
+        <img class="imgVentana" src="Imagenes/Moneda/Moneda_salir.png">
+        <br><br><br>
+    </div>
+</body>
+</html>

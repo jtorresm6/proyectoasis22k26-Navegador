@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+	<param name="ImageType" value="Folder">
+</OBJECT>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="General">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="MDI">
+			<param name="Local" value="MDI_Bancos.html">
+			<param name="ImageNumber" value="13">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Mantenimientos">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Monedas">
+			<param name="Local" value="Moneda_Bancos.html">
+			<param name="ImageNumber" value="6">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Bancos">
+			<param name="Local" value="Bancos_Bancos.html">
+			<param name="ImageNumber" value="6">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Tipo de Cuenta Bancaria">
+			<param name="Local" value="Bancos_Bancos.html">
+			<param name="URL" value="TipoCuentaBancaria_Bancos.html">
+			<param name="ImageNumber" value="6">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Tipo Transaccion">
+			<param name="Local" value="TipoTransaccion_Bancos.html">
+			<param name="ImageNumber" value="6">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Cuenta Bancaria">
+			<param name="Local" value="CuentaBancaria_Bancos.html">
+			<param name="ImageNumber" value="6">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Procesos">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+</UL>
+</BODY></HTML>

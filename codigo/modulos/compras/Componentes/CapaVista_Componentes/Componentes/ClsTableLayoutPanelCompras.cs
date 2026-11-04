@@ -1,9 +1,21 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 24/10/2026
+ * ==================================================================
+ * Propósito :
+ *  Organiza controles en filas y columnas y administra su presentación y estado seleccionado.
+ * ===================================================================
+*/
 
 namespace CapaVista_Componentes.Componentes
 {
@@ -63,6 +75,7 @@ namespace CapaVista_Componentes.Componentes
                 _Seleccionado = value;
                 ComprasProcActualizarFondo();
                 ComprasProcActualizarColorTexto();
+                Invalidate();
             }
         }
 
@@ -127,6 +140,14 @@ namespace CapaVista_Componentes.Componentes
             ForeColor = ClsTemaCompras.PrincipalNavegador;
             DoubleBuffered = true;
             ResizeRedraw = true;
+        }
+
+        protected override void OnPaint(PaintEventArgs Evento)
+        {
+            base.OnPaint(Evento);
+            if (!_Seleccionado) return;
+            using (var Pincel = new SolidBrush(ClsTemaCompras.AcentoNavegador))
+                Evento.Graphics.FillRectangle(Pincel, 0, 0, 4, Height);
         }
 
         internal void ComprasProcOcultarActualizacion()
