@@ -141,13 +141,3 @@ WHERE NOT EXISTS (SELECT 1 FROM tblRangoAntiguedad x WHERE x.nombreRangoAntigued
 INSERT INTO tblPeriodoCompras (anioPeriodoCompras, mesPeriodoCompras, fechaInicioPeriodoCompras, fechaFinPeriodoCompras)
 SELECT 2026, 10, '2026-10-01', '2026-10-31'
 WHERE NOT EXISTS (SELECT 1 FROM tblPeriodoCompras);
-
-   
-USE dbsistemaembutidos;
-SET SQL_SAFE_UPDATES = 0;
-UPDATE tblEncabezadoPagoProveedor SET estadoPagoProveedor = 'Pagado' WHERE referenciaPagoProveedor = 'TRF-PROG-01';
-SET SQL_SAFE_UPDATES = 1;
-
-SELECT idPagoProveedor FROM tblEncabezadoPagoProveedor WHERE referenciaPagoProveedor = 'TRF-PROG-01';
--- Con el número que salga (en una base recién instalada es 2):
-UPDATE tblEncabezadoPagoProveedor SET estadoPagoProveedor = 'Pagado' WHERE idPagoProveedor = 2;
