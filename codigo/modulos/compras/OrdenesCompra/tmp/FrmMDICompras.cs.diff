@@ -1,0 +1,189 @@
+--- HEAD
++++ incoming
+@@ -22,7 +22,6 @@
+         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras _OpcionSubproceso;
+         private bool _NavegadorContraido;
+         private bool _CatalogosAbierto;
+-        private bool _RegistrosCompraAbierto;
+         private Panel _PanelDesplazamientoNavegador;
+         private int _DesplazamientoNavegador;
+         private int _RuedaNavegador;
+@@ -32,22 +31,16 @@
+         private System.Drawing.Rectangle _LimitesAnteriores;
+         private readonly Dictionary<TableLayoutPanel, ColumnStyle> _ColumnasNavegador =
+             new Dictionary<TableLayoutPanel, ColumnStyle>();
+-        // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
+-        // Seguridad asigna aquí cómo crear su FrmBitacora al abrir este MDI después del login.
+-        public Func<Form> CrearBitacora { get; set; }
+-        // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
+         public FrmMDICompras()
+         {
+             InitializeComponent();
+             ComprasMetConfigurarDesplazamientoNavegador();
+-            ComprasTlpRegistrosCompra.Paint += ComprasMetPintarFlechaRegistrosCompra;
+             ComprasTlpCatalogos.Paint += ComprasMetPintarFlechaCatalogos;
+             ComprasLblCatalogos.Margin = new Padding(3, 4, 26, 4);
+             ComprasMetAcomodarCatalogos();
+-            ComprasMetAcomodarRegistrosCompra();
+             ComprasBtnAyuda.Enabled = false;
+-            ComprasTlpBitacora.Enabled = true;
+-            ComprasTlpHerramientas.Enabled = true;
++            ComprasTlpBitacora.Enabled = false;
++            ComprasTlpHerramientas.Enabled = false;
+             ComprasLblBienvenido.Tipografia = CapaVista_Componentes.Componentes.TipografiaCompras.TituloBienvenida;
+             ComprasLblKpi1.Texto = "Antigüedad promedio de saldos";
+             ComprasLblKpi2.Texto = "Órdenes autorizadas a tiempo (%)";
+@@ -167,16 +160,10 @@
+         }
+         private void ComprasMetAbrirSubproceso<T>(CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras Opcion) where T : Form, new()
+         {
+-            ComprasMetAbrirSubproceso(Opcion, () => new T());
+-        }
+-        // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
+-        // Versión que recibe cómo crear el formulario, para abrir formularios de otros componentes
+-        private void ComprasMetAbrirSubproceso(CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras Opcion, Func<Form> CrearFormulario)
+-        {
+             if (IsDisposed || Disposing) return;
+             if (_FormularioSubproceso != null && !_FormularioSubproceso.IsDisposed)
+             {
+-                if (ReferenceEquals(_OpcionSubproceso, Opcion))
++                if (_FormularioSubproceso is T)
+                 {
+                     if (_FormularioSubproceso.WindowState == FormWindowState.Minimized)
+                         _FormularioSubproceso.WindowState = FormWindowState.Normal;
+@@ -186,7 +173,7 @@
+                 _FormularioSubproceso.Close();
+                 if (_FormularioSubproceso != null && !_FormularioSubproceso.IsDisposed) return;
+             }
+-            Form Formulario = CrearFormulario();
++            Form Formulario = new T();
+             bool FlujoOrdenes = Formulario is CapaVista_OrdenesCompra.FrmEncabezados;
+             while (Formulario != null)
+             {
+@@ -223,7 +210,6 @@
+                 Formulario = CrearSiguiente == null ? null : CrearSiguiente();
+             }
+         }
+-        // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
+         private void ComprasMetActualizarSeleccionSubproceso()
+         {
+             if (IsDisposed || Disposing) return;
+@@ -234,12 +220,7 @@
+                 Opcion.Seleccionado = ReferenceEquals(Opcion, _OpcionSubproceso);
+                 if (!Opcion.Seleccionado) Opcion.ComprasProcActualizarHover(false);
+             }
+-            ComprasTlpRegistrosCompra.Seleccionado = ReferenceEquals(_OpcionSubproceso, ComprasTlpOrdenesCompra)
+-                || ReferenceEquals(_OpcionSubproceso, ComprasTlpRegistroCompras)
+-                || ReferenceEquals(_OpcionSubproceso, ComprasTlpDevolucionesCompras);
+-            ComprasTlpCatalogos.Seleccionado = ReferenceEquals(_OpcionSubproceso, ComprasTlpProveedores)
+-                || ReferenceEquals(_OpcionSubproceso, ComprasTlpMantenimiento2)
+-                || ReferenceEquals(_OpcionSubproceso, ComprasTlpMantenimiento3);
++            ComprasTlpCatalogos.Seleccionado = ReferenceEquals(_OpcionSubproceso, ComprasTlpProveedores);
+         }
+         private void ComprasMetSubprocesoCerrado(object Remitente, FormClosedEventArgs Evento)
+         {
+@@ -265,6 +246,10 @@
+         private void ComprasMetAbrirPagosProveedores(object Remitente, EventArgs Evento)
+         {
+             ComprasMetAbrirSubproceso<CapaVista_PagosProveedores.FrmPagosProveedores>(ComprasTlpPagosProveedores);
++        }
++        private void ComprasMetAbrirAprobacionFinanciera(object Remitente, EventArgs Evento)
++        {
++            ComprasMetAbrirSubproceso<CapaVista_AprobacionFinanciera.FrmAprobacionFinanciera>(ComprasTlpAprobacionFinanciera);
+         }
+         private void ComprasMetAbrirCierreMovimientos(object Remitente, EventArgs Evento)
+         {
+@@ -337,7 +322,7 @@
+                 {
+                     Opcion.Visible = _CatalogosAbierto;
+                     Opcion.Margin = new Padding(_NavegadorContraido ? 0 : 18, 2, 0, 2);
+-                    ComprasTlpNavegador.RowStyles[ComprasTlpNavegador.GetRow(Opcion)].Height = _CatalogosAbierto ? ComprasTlpNavegador.RowStyles[ComprasTlpNavegador.GetRow(ComprasTlpCatalogos)].Height : 0F;
++                    ComprasTlpNavegador.RowStyles[ComprasTlpNavegador.GetRow(Opcion)].Height = _CatalogosAbierto ? ComprasTlpNavegador.RowStyles[7].Height : 0F;
+                 }
+             }
+             finally
+@@ -360,74 +345,12 @@
+             using (var Pincel = new System.Drawing.SolidBrush(ComprasLblCatalogos.ColorTexto))
+                 Evento.Graphics.FillPolygon(Pincel, Flecha);
+         }
+-        private void ComprasMetAlternarRegistrosCompra(object Remitente, EventArgs Evento)
+-        {
+-            _RegistrosCompraAbierto = !_RegistrosCompraAbierto;
+-            ComprasMetAcomodarRegistrosCompra();
+-        }
+-        private void ComprasMetAcomodarRegistrosCompra()
+-        {
+-            ComprasTlpNavegador.SuspendLayout();
+-            try
+-            {
+-                Control[] Opciones = { ComprasTlpOrdenesCompra, ComprasTlpRegistroCompras, ComprasTlpDevolucionesCompras };
+-                foreach (Control Opcion in Opciones)
+-                {
+-                    Opcion.Visible = _RegistrosCompraAbierto;
+-                    Opcion.Margin = new Padding(_NavegadorContraido ? 0 : 18, 2, 0, 2);
+-                    ComprasTlpNavegador.RowStyles[ComprasTlpNavegador.GetRow(Opcion)].Height = _RegistrosCompraAbierto ? ComprasTlpNavegador.RowStyles[ComprasTlpNavegador.GetRow(ComprasTlpRegistrosCompra)].Height : 0F;
+-                }
+-            }
+-            finally
+-            {
+-                ComprasTlpNavegador.ResumeLayout(true);
+-            }
+-            ComprasMetAjustarDesplazamientoNavegador();
+-            ComprasLblRegistrosCompra.Texto = "Registros de compra";
+-            ComprasBtnIconoRegistrosCompra.AccessibleName = _RegistrosCompraAbierto ? "Contraer registros de compra" : "Expandir registros de compra";
+-            ComprasTlpRegistrosCompra.Invalidate();
+-        }
+-        private void ComprasMetPintarFlechaRegistrosCompra(object Remitente, PaintEventArgs Evento)
+-        {
+-            if (_NavegadorContraido) return;
+-            int X = ComprasTlpRegistrosCompra.Width - 26;
+-            int Y = ComprasTlpRegistrosCompra.Height / 2;
+-            System.Drawing.Point[] Flecha = _RegistrosCompraAbierto
+-                ? new[] { new System.Drawing.Point(X, Y - 3), new System.Drawing.Point(X + 10, Y - 3), new System.Drawing.Point(X + 5, Y + 4) }
+-                : new[] { new System.Drawing.Point(X + 2, Y - 6), new System.Drawing.Point(X + 2, Y + 6), new System.Drawing.Point(X + 9, Y) };
+-            using (var Pincel = new System.Drawing.SolidBrush(ComprasLblRegistrosCompra.ColorTexto))
+-                Evento.Graphics.FillPolygon(Pincel, Flecha);
+-        }
+         private void ComprasMetAbrirProveedores(object Remitente, EventArgs Evento)
+         {
+             ComprasMetAbrirSubproceso<FrmMantenimientoProveedor>(ComprasTlpProveedores);
+         }
+-        // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
+-        private void ComprasMetAbrirBitacora(object Remitente, EventArgs Evento)
+-        {
+-            if (CrearBitacora == null)
+-            {
+-                MessageBox.Show(this,
+-                    "La bitácora está disponible al ingresar a Compras desde el inicio de sesión de Seguridad.",
+-                    "Bitácora", MessageBoxButtons.OK, MessageBoxIcon.Information);
+-                return;
+-            }
+-            ComprasMetAbrirSubproceso(ComprasTlpBitacora, CrearBitacora);
+-        }
+-        // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
+-        // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
+-        private void ComprasMetAbrirHerramientas(object Remitente, EventArgs Evento)
+-        {
+-            ComprasMetAbrirSubproceso<CapaVista_Herramientas.FrmHerramientasMoneda>(ComprasTlpHerramientas);
+-        }
+-        // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
+-        private void ComprasMetAbrirPlazos(object Remitente, EventArgs Evento)
+-        {
+-            ComprasMetAbrirSubproceso<FrmMantenimientoPlazo>(ComprasTlpMantenimiento2);
+-        }
+-        private void ComprasMetAbrirConceptosProveedor(object Remitente, EventArgs Evento)
+-        {
+-            ComprasMetAbrirSubproceso<FrmMantenimientoConceptoProveedor>(ComprasTlpMantenimiento3);
++        private void ComprasMetOpcionPendienteClick(object Remitente, EventArgs Evento)
++        {
+         }
+         private void ComprasProcSalirClick(object Remitente, EventArgs Evento)
+         {
+@@ -479,7 +402,6 @@
+                 ComprasTlpPrincipal.ColumnStyles[0].Width = _NavegadorContraido
+                     ? ComprasTlpNavegador.Width + 16 : 286F;
+                 ComprasMetAcomodarCatalogos();
+-                ComprasMetAcomodarRegistrosCompra();
+                 ComprasBtnAlternarNavegador.AccessibleName = _NavegadorContraido
+                     ? "Expandir menú" : "Contraer menú";
+             }
