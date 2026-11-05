@@ -7,25 +7,19 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- tblCorrelativoVenta | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7000
 CREATE TABLE `tblCorrelativoVenta` (
-  `idaplicacion` INT NOT NULL DEFAULT 7000,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idCorrelativoVenta` INT NOT NULL AUTO_INCREMENT,
   `prefijoCorrelativoVenta` VARCHAR(30) NOT NULL,
   `ultimoNumeroCorrelativoVenta` BIGINT NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_CorrelativoVenta` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_CorrelativoVenta` PRIMARY KEY (`idCorrelativoVenta`),
   CONSTRAINT `ckCorrelativoVentaNumeroNoNegativo` CHECK (ultimoNumeroCorrelativoVenta >= 0),
-  CONSTRAINT `uqCorrelativoVentaClaveNegocio` UNIQUE (`prefijoCorrelativoVenta`),
-  CONSTRAINT `ckCorrelativoVentaIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckCorrelativoVentaIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `uqCorrelativoVentaClaveNegocio` UNIQUE (`prefijoCorrelativoVenta`)
 ) ENGINE=InnoDB;
 
 -- tblTipoCliente | Autor: Diego Alejandro Cheng Peña - 0901-22-8091 | Modulo: 7000 | Aplicacion: 7002
 CREATE TABLE `tblTipoCliente` (
-  `idaplicacion` INT NOT NULL DEFAULT 7002,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idTipoCliente` INT NOT NULL AUTO_INCREMENT,
   `codigoTipoCliente` VARCHAR(30) NOT NULL,
   `nombreTipoCliente` VARCHAR(100) NOT NULL,
   `porcentajeDescuentoTipoCliente` DECIMAL(5,2) NOT NULL DEFAULT 0.00,
@@ -33,155 +27,131 @@ CREATE TABLE `tblTipoCliente` (
   `activoTipoCliente` BOOLEAN NOT NULL DEFAULT 1,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_TipoCliente` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_TipoCliente` PRIMARY KEY (`idTipoCliente`),
   CONSTRAINT `uqTipoClientecodigo` UNIQUE (`codigoTipoCliente`),
   CONSTRAINT `uqTipoClientenombre` UNIQUE (`nombreTipoCliente`),
   CONSTRAINT `ckTipoClienteporcentajeDescuentoRango` CHECK (`porcentajeDescuentoTipoCliente` BETWEEN 0 AND 100),
-  CONSTRAINT `ckTipoClienteactivoBooleano` CHECK (`activoTipoCliente` IN (0,1)),
-  CONSTRAINT `ckTipoClienteIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckTipoClienteIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckTipoClienteactivoBooleano` CHECK (`activoTipoCliente` IN (0,1))
 ) ENGINE=InnoDB;
 
 -- tblListaPrecioEncabezado | Autor: Diego Alejandro Cheng Peña - 0901-22-8091 | Modulo: 7000 | Aplicacion: 7002
 CREATE TABLE `tblListaPrecioEncabezado` (
-  `idaplicacion` INT NOT NULL DEFAULT 7002,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_TipoCliente_Codigo` INT NOT NULL,
+  `idListaPrecioEncabezado` INT NOT NULL AUTO_INCREMENT,
+  `idTipoCliente` INT NOT NULL,
   `codigoListaPrecioEncabezado` VARCHAR(30) NOT NULL,
   `nombreListaPrecioEncabezado` VARCHAR(100) NOT NULL,
-  `Fk_Moneda_Codigo` BIGINT NOT NULL,
+  `idMoneda` BIGINT NOT NULL,
   `vigenteDesdeListaPrecioEncabezado` DATE NOT NULL,
   `vigenteHastaListaPrecioEncabezado` DATE NULL,
   `activoListaPrecioEncabezado` BOOLEAN NOT NULL DEFAULT 1,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ListaPrecioEncabezado` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_ListaPrecioEncabezado` PRIMARY KEY (`idListaPrecioEncabezado`),
   CONSTRAINT `uqListaPrecioEncabezadocodigo` UNIQUE (`codigoListaPrecioEncabezado`),
-  KEY `idxListaPrecioEncabezadoTipoCliente` (`Fk_TipoCliente_Codigo`),
-  KEY `idxListaPrecioEncabezadoMonedaCodigo` (`Fk_Moneda_Codigo`),
+  KEY `idxListaPrecioEncabezadoTipoCliente` (`idTipoCliente`),
+  KEY `idxListaPrecioEncabezadoMonedaCodigo` (`idMoneda`),
   CONSTRAINT `ckListaPrecioEncabezadoactivoListaPrecioEncabezadoBooleano` CHECK (activoListaPrecioEncabezado IN (0,1)),
-  CONSTRAINT `ckListaPrecioEncabezadoFechasCoherentes` CHECK (vigenteHastaListaPrecioEncabezado >= vigenteDesdeListaPrecioEncabezado),
-  CONSTRAINT `ckListaPrecioEncabezadoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckListaPrecioEncabezadoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckListaPrecioEncabezadoFechasCoherentes` CHECK (vigenteHastaListaPrecioEncabezado >= vigenteDesdeListaPrecioEncabezado)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblListaPrecioEncabezado`
-  ADD CONSTRAINT `Fk_ListaPrecioEncabezado_Moneda` FOREIGN KEY (`Fk_Moneda_Codigo`)
+  ADD CONSTRAINT `Fk_ListaPrecioEncabezado_Moneda` FOREIGN KEY (`idMoneda`)
     REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ListaPrecioEncabezado_TipoCliente` FOREIGN KEY (`Fk_TipoCliente_Codigo`)
-    REFERENCES `tblTipoCliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_ListaPrecioEncabezado_TipoCliente` FOREIGN KEY (`idTipoCliente`)
+    REFERENCES `tblTipoCliente` (`idTipoCliente`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblPrecioTipoCliente | Autor: Diego Alejandro Cheng Peña - 0901-22-8091 | Modulo: 7000 | Aplicacion: 7002
 CREATE TABLE `tblPrecioTipoCliente` (
-  `idaplicacion` INT NOT NULL DEFAULT 7002,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_TipoCliente_Codigo` INT NOT NULL,
-  `Fk_Producto_Codigo` INT NOT NULL,
+  `idPrecioTipoCliente` INT NOT NULL AUTO_INCREMENT,
+  `idTipoCliente` INT NOT NULL,
+  `idProducto` INT NOT NULL,
   `porcentajeDescuento` DECIMAL(5,2) NOT NULL DEFAULT 0.00,
   `precioBase` DECIMAL(12,4) NOT NULL,
   `precioFinal` DECIMAL(12,4) GENERATED ALWAYS AS (ROUND(precioBase * (1 - (porcentajeDescuento / 100)), 4)) STORED,
   `activo` BOOLEAN NOT NULL DEFAULT 1,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_PrecioTipoCliente` PRIMARY KEY (`id`),
-  CONSTRAINT `uqPrecioTipoCliente_TipoClienteProducto` UNIQUE (`Fk_TipoCliente_Codigo`, `Fk_Producto_Codigo`),
-  CONSTRAINT `ckPrecioTipoClienteDescuentoRango` CHECK (`porcentajeDescuento` BETWEEN 0 AND 100),
-  CONSTRAINT `ckPrecioTipoClienteIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckPrecioTipoClienteIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `Pk_PrecioTipoCliente` PRIMARY KEY (`idPrecioTipoCliente`),
+  CONSTRAINT `uqPrecioTipoCliente_TipoClienteProducto` UNIQUE (`idTipoCliente`, `idProducto`),
+  CONSTRAINT `ckPrecioTipoClienteDescuentoRango` CHECK (`porcentajeDescuento` BETWEEN 0 AND 100)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblPrecioTipoCliente`
-  ADD CONSTRAINT `Fk_PrecioTipoCliente_TipoCliente` FOREIGN KEY (`Fk_TipoCliente_Codigo`) REFERENCES `tblTipoCliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_PrecioTipoCliente_Producto` FOREIGN KEY (`Fk_Producto_Codigo`) REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_PrecioTipoCliente_TipoCliente` FOREIGN KEY (`idTipoCliente`) REFERENCES `tblTipoCliente` (`idTipoCliente`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_PrecioTipoCliente_Producto` FOREIGN KEY (`idProducto`) REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblHistorialModificacionPrecio | Autor: Diego Alejandro Cheng Peña - 0901-22-8091 | Modulo: 7000 | Aplicacion: 7002
 CREATE TABLE `tblHistorialModificacionPrecio` (
-  `idaplicacion` INT NOT NULL DEFAULT 7002,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_TipoCliente_Codigo` INT NOT NULL,
+  `idHistorialModificacionPrecio` INT NOT NULL AUTO_INCREMENT,
+  `idTipoCliente` INT NOT NULL,
   `tipoModificacion` ENUM('DESCUENTO_PORCENTAJE', 'AUMENTO_PORCENTAJE', 'AUMENTO_BASE') NOT NULL,
   `valorModificacion` DECIMAL(12,4) NOT NULL,
   `alcanceModificacion` ENUM('INDIVIDUAL', 'SELECCIONADOS', 'TODOS_FILTROS') NOT NULL,
-  `Fk_Marca_Codigo` INT NULL,
-  `Fk_Linea_Codigo` INT NULL,
-  `Fk_Categoria_Codigo` INT NULL,
-  `Fk_Proveedor_Codigo` INT NULL,
-  `Fk_Producto_Codigo` INT NULL,
-  `Fk_Usuario_Registro` INT NOT NULL,
+  `idMarca` INT NULL,
+  `idLinea` INT NULL,
+  `idCategoria` INT NULL,
+  `idProveedor` INT NULL,
+  `idProducto` INT NULL,
+  `idUsuarioRegistro` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_HistorialModificacionPrecio` PRIMARY KEY (`id`),
-  CONSTRAINT `ckHistorialModificacionPrecioIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckHistorialModificacionPrecioIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `Pk_HistorialModificacionPrecio` PRIMARY KEY (`idHistorialModificacionPrecio`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblHistorialModificacionPrecio`
-  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_TipoCliente` FOREIGN KEY (`Fk_TipoCliente_Codigo`) REFERENCES `tblTipoCliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Usuario` FOREIGN KEY (`Fk_Usuario_Registro`) REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Marca` FOREIGN KEY (`Fk_Marca_Codigo`) REFERENCES `tblMarca` (`Pk_Marca`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Linea` FOREIGN KEY (`Fk_Linea_Codigo`) REFERENCES `tblLinea` (`Pk_Linea`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Categoria` FOREIGN KEY (`Fk_Categoria_Codigo`) REFERENCES `tblCategoria` (`Pk_Categoria`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Proveedor` FOREIGN KEY (`Fk_Proveedor_Codigo`) REFERENCES `tblProveedor` (`Pk_Proveedor`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Producto` FOREIGN KEY (`Fk_Producto_Codigo`) REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_TipoCliente` FOREIGN KEY (`idTipoCliente`) REFERENCES `tblTipoCliente` (`idTipoCliente`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Usuario` FOREIGN KEY (`idUsuarioRegistro`) REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Marca` FOREIGN KEY (`idMarca`) REFERENCES `tblMarca` (`Pk_Marca`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Linea` FOREIGN KEY (`idLinea`) REFERENCES `tblLinea` (`Pk_Linea`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Categoria` FOREIGN KEY (`idCategoria`) REFERENCES `tblCategoria` (`Pk_Categoria`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Proveedor` FOREIGN KEY (`idProveedor`) REFERENCES `tblProveedor` (`Pk_Proveedor`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_HistorialModificacionPrecio_Producto` FOREIGN KEY (`idProducto`) REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblListaPrecioDetalle | Autor: Diego Alejandro Cheng Peña - 0901-22-8091 | Modulo: 7000 | Aplicacion: 7002
 CREATE TABLE `tblListaPrecioDetalle` (
-  `idaplicacion` INT NOT NULL DEFAULT 7002,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_ListaPrecioEncabezado_Codigo` INT NOT NULL,
-  `Fk_Producto_Codigo` INT NOT NULL,
+  `idListaPrecioDetalle` INT NOT NULL AUTO_INCREMENT,
+  `idListaPrecioEncabezado` INT NOT NULL,
+  `idProducto` INT NOT NULL,
   `precioUnitarioListaPrecioDetalle` DECIMAL(12,4) NOT NULL,
   `activoListaPrecioDetalle` BOOLEAN NOT NULL DEFAULT 1,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ListaPrecioDetalle` PRIMARY KEY (`Fk_ListaPrecioEncabezado_Codigo`, `id`),
-  CONSTRAINT `uqListaPrecioDetalleListaPrecioEncabezadoCodigoProductoCodigo` UNIQUE (`Fk_ListaPrecioEncabezado_Codigo`, `Fk_Producto_Codigo`),
-  KEY `idxListaPrecioDetalleProductoCodigo` (`Fk_Producto_Codigo`),
+  CONSTRAINT `Pk_ListaPrecioDetalle` PRIMARY KEY (`idListaPrecioEncabezado`, `idListaPrecioDetalle`),
+  CONSTRAINT `uqListaPrecioDetalleListaPrecioEncabezadoCodigoProductoCodigo` UNIQUE (`idListaPrecioEncabezado`, `idProducto`),
+  KEY `idxListaPrecioDetalleProductoCodigo` (`idProducto`),
   CONSTRAINT `ckListaPrecioDetalleactivoListaPrecioDetalleBooleano` CHECK (activoListaPrecioDetalle IN (0,1)),
   CONSTRAINT `ckListaPrecioDetallePrecioNoNegativo` CHECK (precioUnitarioListaPrecioDetalle >= 0),
-  CONSTRAINT `ckListaPrecioDetalleIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckListaPrecioDetalleIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015),
-  CONSTRAINT `uqListaPrecioDetalleId` UNIQUE (`id`)
+  CONSTRAINT `uqListaPrecioDetalleId` UNIQUE (`idListaPrecioDetalle`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblListaPrecioDetalle`
-  ADD CONSTRAINT `Fk_ListaPrecioDetalle_ListaPrecioEncabezado` FOREIGN KEY (`Fk_ListaPrecioEncabezado_Codigo`)
-    REFERENCES `tblListaPrecioEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ListaPrecioDetalle_Producto` FOREIGN KEY (`Fk_Producto_Codigo`)
+  ADD CONSTRAINT `Fk_ListaPrecioDetalle_ListaPrecioEncabezado` FOREIGN KEY (`idListaPrecioEncabezado`)
+    REFERENCES `tblListaPrecioEncabezado` (`idListaPrecioEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_ListaPrecioDetalle_Producto` FOREIGN KEY (`idProducto`)
     REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblClienteListaPrecio | Autor: Diego Alejandro Cheng Peña - 0901-22-8091 | Modulo: 7000 | Aplicacion: 7002
 CREATE TABLE `tblClienteListaPrecio` (
-  `idaplicacion` INT NOT NULL DEFAULT 7002,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_Cliente_Codigo` INT NOT NULL,
-  `Fk_ListaPrecioEncabezado_Codigo` INT NOT NULL,
+  `idClienteListaPrecio` INT NOT NULL AUTO_INCREMENT,
+  `idCliente` INT NOT NULL,
+  `idListaPrecioEncabezado` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ClienteListaPrecio` PRIMARY KEY (`id`),
-  KEY `idxClienteListaPrecioListaPrecioEncabezadoCodigo` (`Fk_ListaPrecioEncabezado_Codigo`),
-  CONSTRAINT `uqClienteListaPrecioClaveNegocio` UNIQUE (`Fk_Cliente_Codigo`),
-  CONSTRAINT `ckClienteListaPrecioIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckClienteListaPrecioIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `Pk_ClienteListaPrecio` PRIMARY KEY (`idClienteListaPrecio`),
+  KEY `idxClienteListaPrecioListaPrecioEncabezadoCodigo` (`idListaPrecioEncabezado`),
+  CONSTRAINT `uqClienteListaPrecioClaveNegocio` UNIQUE (`idCliente`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblClienteListaPrecio`
-  ADD CONSTRAINT `Fk_ClienteListaPrecio_Cliente` FOREIGN KEY (`Fk_Cliente_Codigo`)
-    REFERENCES `tblCliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ClienteListaPrecio_ListaPrecioEncabezado` FOREIGN KEY (`Fk_ListaPrecioEncabezado_Codigo`)
-    REFERENCES `tblListaPrecioEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_ClienteListaPrecio_Cliente` FOREIGN KEY (`idCliente`)
+    REFERENCES `tblCliente` (`idCliente`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_ClienteListaPrecio_ListaPrecioEncabezado` FOREIGN KEY (`idListaPrecioEncabezado`)
+    REFERENCES `tblListaPrecioEncabezado` (`idListaPrecioEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblHistorialModificacionPrecioDetalle | Autor: Diego Alejandro Cheng Peña - 0901-22-8091 | Modulo: 7000 | Aplicacion: 7002
 CREATE TABLE `tblHistorialModificacionPrecioDetalle` (
-  `idaplicacion` INT NOT NULL DEFAULT 7002,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_HistorialModificacionPrecio_Codigo` INT NOT NULL,
-  `Fk_Producto_Codigo` INT NOT NULL,
+  `idHistorialModificacionPrecioDetalle` INT NOT NULL AUTO_INCREMENT,
+  `idHistorialModificacionPrecio` INT NOT NULL,
+  `idProducto` INT NOT NULL,
   `porcentajeDescuentoAnterior` DECIMAL(5,2) NOT NULL,
   `precioBaseAnterior` DECIMAL(12,4) NOT NULL,
   `precioFinalAnterior` DECIMAL(12,4) NOT NULL,
@@ -189,278 +159,246 @@ CREATE TABLE `tblHistorialModificacionPrecioDetalle` (
   `precioBaseNuevo` DECIMAL(12,4) NOT NULL,
   `precioFinalNuevo` DECIMAL(12,4) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_HistorialModificacionPrecioDetalle` PRIMARY KEY (`Fk_HistorialModificacionPrecio_Codigo`, `id`),
-  CONSTRAINT `ckHistorialModificacionPrecioDetalleIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckHistorialModificacionPrecioDetalleIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015),
-  CONSTRAINT `uqHistorialModificacionPrecioDetalleId` UNIQUE (`id`)
+  CONSTRAINT `Pk_HistorialModificacionPrecioDetalle` PRIMARY KEY (`idHistorialModificacionPrecio`, `idHistorialModificacionPrecioDetalle`),
+  CONSTRAINT `uqHistorialModificacionPrecioDetalleId` UNIQUE (`idHistorialModificacionPrecioDetalle`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblHistorialModificacionPrecioDetalle`
-  ADD CONSTRAINT `Fk_HistorialDetalle_HistorialEncabezado` FOREIGN KEY (`Fk_HistorialModificacionPrecio_Codigo`) REFERENCES `tblHistorialModificacionPrecio` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_HistorialDetalle_Producto` FOREIGN KEY (`Fk_Producto_Codigo`) REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_HistorialDetalle_HistorialEncabezado` FOREIGN KEY (`idHistorialModificacionPrecio`) REFERENCES `tblHistorialModificacionPrecio` (`idHistorialModificacionPrecio`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_HistorialDetalle_Producto` FOREIGN KEY (`idProducto`) REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblNotaCxC | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7014
 CREATE TABLE `tblNotaCxC` (
-  `idaplicacion` INT NOT NULL DEFAULT 7014,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idNotaCxC` INT NOT NULL AUTO_INCREMENT,
   `numeroNotaCxC` VARCHAR(30) NOT NULL,
-  `Fk_FacturaEncabezado_Codigo` INT NOT NULL,
+  `idFacturaEncabezado` INT NOT NULL,
   `tipoNotaCxC` VARCHAR(10) NOT NULL,
   `fechaNotaCxC` DATE NOT NULL,
   `montoNotaCxC` DECIMAL(12,4) NOT NULL,
   `motivoNotaCxC` TEXT NOT NULL,
   `estadoNotaCxC` VARCHAR(20) NOT NULL,
-  `Fk_Usuario_Registro` INT NOT NULL,
+  `idUsuarioRegistro` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_NotaCxC` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_NotaCxC` PRIMARY KEY (`idNotaCxC`),
   CONSTRAINT `uqNotaCxCnumero` UNIQUE (`numeroNotaCxC`),
-  KEY `idxNotaCxCFacturaEncabezadoCodigo` (`Fk_FacturaEncabezado_Codigo`),
-  KEY `idxNotaCxCUsuarioRegistro` (`Fk_Usuario_Registro`),
+  KEY `idxNotaCxCFacturaEncabezadoCodigo` (`idFacturaEncabezado`),
+  KEY `idxNotaCxCUsuarioRegistro` (`idUsuarioRegistro`),
   CONSTRAINT `ckNotaCxCMontoPositivo` CHECK (montoNotaCxC > 0),
   CONSTRAINT `ckNotaCxCValoresTipoNota` CHECK (tipoNotaCxC IN ('CREDITO','DEBITO')),
-  CONSTRAINT `ckNotaCxCValoresEstadoNota` CHECK (estadoNotaCxC IN ('BORRADOR','APLICADA','ANULADA')),
-  CONSTRAINT `ckNotaCxCIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckNotaCxCIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckNotaCxCValoresEstadoNota` CHECK (estadoNotaCxC IN ('BORRADOR','APLICADA','ANULADA'))
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblNotaCxC`
-  ADD CONSTRAINT `Fk_NotaCxC_FacturaEncabezado` FOREIGN KEY (`Fk_FacturaEncabezado_Codigo`)
-    REFERENCES `tblFacturaEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_NotaCxC_Usuario_Registro` FOREIGN KEY (`Fk_Usuario_Registro`)
+  ADD CONSTRAINT `Fk_NotaCxC_FacturaEncabezado` FOREIGN KEY (`idFacturaEncabezado`)
+    REFERENCES `tblFacturaEncabezado` (`idFacturaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_NotaCxC_Usuario_Registro` FOREIGN KEY (`idUsuarioRegistro`)
     REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblMovimientoCxC | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7003
 CREATE TABLE `tblMovimientoCxC` (
-  `idaplicacion` INT NOT NULL DEFAULT 7003,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_FacturaEncabezado_Codigo` INT NOT NULL,
-  `Fk_AplicacionPago_Codigo` INT NULL,
-  `Fk_NotaCxC_Codigo` INT NULL,
-  `Fk_MovimientoCxC_Revertido` INT NULL,
+  `idMovimientoCxC` INT NOT NULL AUTO_INCREMENT,
+  `idFacturaEncabezado` INT NOT NULL,
+  `idAplicacionPago` INT NULL,
+  `idNotaCxC` INT NULL,
+  `idMovimientoCxCRevertido` INT NULL,
   `fechaMovimientoCxC` DATE NOT NULL,
   `tipoMovimientoCxC` VARCHAR(30) NOT NULL,
   `descripcionMovimientoCxC` VARCHAR(255) NOT NULL,
   `cargoMovimientoCxC` DECIMAL(12,4) NOT NULL DEFAULT 0,
   `abonoMovimientoCxC` DECIMAL(12,4) NOT NULL DEFAULT 0,
-  `Fk_Usuario_Registro` INT NOT NULL,
+  `idUsuarioRegistro` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_MovimientoCxC` PRIMARY KEY (`id`),
-  CONSTRAINT `uqMovimientoCxCAplicacionPagoCodigo` UNIQUE (`Fk_AplicacionPago_Codigo`),
-  CONSTRAINT `uqMovimientoCxCNotaCxCCodigo` UNIQUE (`Fk_NotaCxC_Codigo`),
-  CONSTRAINT `uqMovimientoCxCRevertido` UNIQUE (`Fk_MovimientoCxC_Revertido`),
-  KEY `idxMovimientoCxCFacturaEncabezadoCodigofecha` (`Fk_FacturaEncabezado_Codigo`, `fechaMovimientoCxC`),
+  CONSTRAINT `Pk_MovimientoCxC` PRIMARY KEY (`idMovimientoCxC`),
+  CONSTRAINT `uqMovimientoCxCAplicacionPagoCodigo` UNIQUE (`idAplicacionPago`),
+  CONSTRAINT `uqMovimientoCxCNotaCxCCodigo` UNIQUE (`idNotaCxC`),
+  CONSTRAINT `uqMovimientoCxCRevertido` UNIQUE (`idMovimientoCxCRevertido`),
+  KEY `idxMovimientoCxCFacturaEncabezadoCodigofecha` (`idFacturaEncabezado`, `fechaMovimientoCxC`),
   KEY `idxMovimientoCxCfecha` (`fechaMovimientoCxC`),
-  KEY `idxMovimientoCxCUsuarioRegistro` (`Fk_Usuario_Registro`),
+  KEY `idxMovimientoCxCUsuarioRegistro` (`idUsuarioRegistro`),
   CONSTRAINT `ckMovimientoCxCCargoAbonoExcluyentes` CHECK (cargoMovimientoCxC >= 0 AND abonoMovimientoCxC >= 0 AND ((cargoMovimientoCxC > 0 AND abonoMovimientoCxC = 0) OR (abonoMovimientoCxC > 0 AND cargoMovimientoCxC = 0))),
-  CONSTRAINT `ckMovimientoCxCReversionIdentificada` CHECK ((tipoMovimientoCxC = 'REVERSO' AND Fk_MovimientoCxC_Revertido IS NOT NULL) OR (tipoMovimientoCxC <> 'REVERSO' AND Fk_MovimientoCxC_Revertido IS NULL)),
-  CONSTRAINT `ckMovimientoCxCValoresTipoMovimiento` CHECK (tipoMovimientoCxC IN ('FACTURA','PAGO','NOTA_CREDITO','NOTA_DEBITO','AJUSTE_POSITIVO','AJUSTE_NEGATIVO','REVERSO')),
-  CONSTRAINT `ckMovimientoCxCIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckMovimientoCxCIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckMovimientoCxCReversionIdentificada` CHECK ((tipoMovimientoCxC = 'REVERSO' AND idMovimientoCxCRevertido IS NOT NULL) OR (tipoMovimientoCxC <> 'REVERSO' AND idMovimientoCxCRevertido IS NULL)),
+  CONSTRAINT `ckMovimientoCxCValoresTipoMovimiento` CHECK (tipoMovimientoCxC IN ('FACTURA','PAGO','NOTA_CREDITO','NOTA_DEBITO','AJUSTE_POSITIVO','AJUSTE_NEGATIVO','REVERSO'))
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblMovimientoCxC`
-  ADD CONSTRAINT `Fk_MovimientoCxC_FacturaEncabezado` FOREIGN KEY (`Fk_FacturaEncabezado_Codigo`)
-    REFERENCES `tblFacturaEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_MovimientoCxC_AplicacionPago` FOREIGN KEY (`Fk_AplicacionPago_Codigo`)
-    REFERENCES `tblAplicacionPago` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_MovimientoCxC_NotaCxC` FOREIGN KEY (`Fk_NotaCxC_Codigo`)
-    REFERENCES `tblNotaCxC` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_MovimientoCxC_MovimientoCxC_Revertido` FOREIGN KEY (`Fk_MovimientoCxC_Revertido`)
-    REFERENCES `tblMovimientoCxC` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_MovimientoCxC_Usuario_Registro` FOREIGN KEY (`Fk_Usuario_Registro`)
+  ADD CONSTRAINT `Fk_MovimientoCxC_FacturaEncabezado` FOREIGN KEY (`idFacturaEncabezado`)
+    REFERENCES `tblFacturaEncabezado` (`idFacturaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_MovimientoCxC_AplicacionPago` FOREIGN KEY (`idAplicacionPago`)
+    REFERENCES `tblAplicacionPago` (`idAplicacionPago`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_MovimientoCxC_NotaCxC` FOREIGN KEY (`idNotaCxC`)
+    REFERENCES `tblNotaCxC` (`idNotaCxC`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_MovimientoCxC_MovimientoCxC_Revertido` FOREIGN KEY (`idMovimientoCxCRevertido`)
+    REFERENCES `tblMovimientoCxC` (`idMovimientoCxC`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_MovimientoCxC_Usuario_Registro` FOREIGN KEY (`idUsuarioRegistro`)
     REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblDepositoVentaEncabezado | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7015
 CREATE TABLE `tblDepositoVentaEncabezado` (
-  `idaplicacion` INT NOT NULL DEFAULT 7015,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idDepositoVentaEncabezado` INT NOT NULL AUTO_INCREMENT,
   `codigoDepositoVentaEncabezado` VARCHAR(30) NOT NULL,
   `fechaDepositoVentaEncabezado` DATE NOT NULL,
   `referenciaDepositoVentaEncabezado` VARCHAR(100) NULL,
-  `Fk_Moneda_Codigo` BIGINT NOT NULL,
+  `idMoneda` BIGINT NOT NULL,
   `totalDepositoVentaEncabezado` DECIMAL(12,4) NOT NULL,
   `estadoDepositoVentaEncabezado` VARCHAR(25) NOT NULL DEFAULT 'PREPARADO',
-  `Fk_Usuario_Registro` INT NOT NULL,
+  `idUsuarioRegistro` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Fk_CuentaBancaria_Codigo` BIGINT NOT NULL,
-  `Fk_TipoTransaccion_Codigo` BIGINT NOT NULL,
-  `Fk_MovimientoBancario_Codigo` BIGINT NULL,
+  `idCuentaBancaria` BIGINT NOT NULL,
+  `idTipoTransaccion` BIGINT NOT NULL,
+  `idMovimientoBancario` BIGINT NULL,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_DepositoVentaEncabezado` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_DepositoVentaEncabezado` PRIMARY KEY (`idDepositoVentaEncabezado`),
   CONSTRAINT `uqDepositoVentaEncabezadocodigo` UNIQUE (`codigoDepositoVentaEncabezado`),
-  CONSTRAINT `uqDepositoVentaEncabezadoMovimientoBancarioCodigo` UNIQUE (`Fk_MovimientoBancario_Codigo`),
-  KEY `idxDepositoVentaEncabezadoUsuarioRegistro` (`Fk_Usuario_Registro`),
-  KEY `idxDepositoVentaEncabezadoMonedaCodigo` (`Fk_Moneda_Codigo`),
-  KEY `idxDepositoVentaEncabezadoCuentaBancariaCodigo` (`Fk_CuentaBancaria_Codigo`),
-  KEY `idxDepositoVentaEncabezadoTipoTransaccionCodigo` (`Fk_TipoTransaccion_Codigo`),
+  CONSTRAINT `uqDepositoVentaEncabezadoMovimientoBancarioCodigo` UNIQUE (`idMovimientoBancario`),
+  KEY `idxDepositoVentaEncabezadoUsuarioRegistro` (`idUsuarioRegistro`),
+  KEY `idxDepositoVentaEncabezadoMonedaCodigo` (`idMoneda`),
+  KEY `idxDepositoVentaEncabezadoCuentaBancariaCodigo` (`idCuentaBancaria`),
+  KEY `idxDepositoVentaEncabezadoTipoTransaccionCodigo` (`idTipoTransaccion`),
   CONSTRAINT `ckDepositoVentaEncabezadoTotalPositivo` CHECK (totalDepositoVentaEncabezado > 0),
-  CONSTRAINT `ckDepositoVentaEncabezadoValoresEstadoDeposito` CHECK (estadoDepositoVentaEncabezado IN ('PREPARADO','ENVIADO','CONFIRMADO','ANULADO')),
-  CONSTRAINT `ckDepositoVentaEncabezadoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckDepositoVentaEncabezadoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckDepositoVentaEncabezadoValoresEstadoDeposito` CHECK (estadoDepositoVentaEncabezado IN ('PREPARADO','ENVIADO','CONFIRMADO','ANULADO'))
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblDepositoVentaEncabezado`
-  ADD CONSTRAINT `Fk_DepositoVentaEncabezado_Usuario_Registro` FOREIGN KEY (`Fk_Usuario_Registro`)
+  ADD CONSTRAINT `Fk_DepositoVentaEncabezado_Usuario_Registro` FOREIGN KEY (`idUsuarioRegistro`)
     REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_DepositoVentaEncabezado_Moneda` FOREIGN KEY (`Fk_Moneda_Codigo`)
+  ADD CONSTRAINT `Fk_DepositoVentaEncabezado_Moneda` FOREIGN KEY (`idMoneda`)
     REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_DepositoVentaEncabezado_CuentaBancaria` FOREIGN KEY (`Fk_CuentaBancaria_Codigo`)
+  ADD CONSTRAINT `Fk_DepositoVentaEncabezado_CuentaBancaria` FOREIGN KEY (`idCuentaBancaria`)
     REFERENCES `tblCuentaBancaria` (`Pk_CuentaBancaria`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_DepositoVentaEncabezado_TipoTransaccion` FOREIGN KEY (`Fk_TipoTransaccion_Codigo`)
+  ADD CONSTRAINT `Fk_DepositoVentaEncabezado_TipoTransaccion` FOREIGN KEY (`idTipoTransaccion`)
     REFERENCES `tblTipoTransaccion` (`Pk_TipoTransaccion`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_DepositoVentaEncabezado_MovimientoBancario` FOREIGN KEY (`Fk_MovimientoBancario_Codigo`)
+  ADD CONSTRAINT `Fk_DepositoVentaEncabezado_MovimientoBancario` FOREIGN KEY (`idMovimientoBancario`)
     REFERENCES `tblMovimientoBancario` (`Pk_MovimientoBancario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblReciboPago | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7005
 CREATE TABLE `tblReciboPago` (
-  `idaplicacion` INT NOT NULL DEFAULT 7005,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idReciboPago` INT NOT NULL AUTO_INCREMENT,
   `numeroReciboPago` VARCHAR(30) NOT NULL,
-  `Fk_Cliente_Codigo` INT NOT NULL,
-  `Fk_Moneda_Codigo` BIGINT NOT NULL,
+  `idCliente` INT NOT NULL,
+  `idMoneda` BIGINT NOT NULL,
   `fechaReciboPago` DATE NOT NULL,
   `montoReciboPago` DECIMAL(12,4) NOT NULL,
   `referenciaReciboPago` VARCHAR(255) NULL,
   `estadoReciboPago` VARCHAR(20) NOT NULL,
   `observacionesReciboPago` TEXT NULL,
-  `Fk_Usuario_Registro` INT NOT NULL,
+  `idUsuarioRegistro` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `Fk_FormaPagoVenta_Codigo` INT NOT NULL,
-  CONSTRAINT `Pk_ReciboPago` PRIMARY KEY (`id`),
+  `idFormaPagoVenta` INT NOT NULL,
+  CONSTRAINT `Pk_ReciboPago` PRIMARY KEY (`idReciboPago`),
   CONSTRAINT `uqReciboPagonumero` UNIQUE (`numeroReciboPago`),
-  KEY `idxReciboPagoClienteCodigofecha` (`Fk_Cliente_Codigo`, `fechaReciboPago`),
-  KEY `idxReciboPagoMonedaCodigo` (`Fk_Moneda_Codigo`),
-  KEY `idxReciboPagoUsuarioRegistro` (`Fk_Usuario_Registro`),
-  KEY `idxReciboPagoFormaPagoVentaCodigo` (`Fk_FormaPagoVenta_Codigo`),
+  KEY `idxReciboPagoClienteCodigofecha` (`idCliente`, `fechaReciboPago`),
+  KEY `idxReciboPagoMonedaCodigo` (`idMoneda`),
+  KEY `idxReciboPagoUsuarioRegistro` (`idUsuarioRegistro`),
+  KEY `idxReciboPagoFormaPagoVentaCodigo` (`idFormaPagoVenta`),
   CONSTRAINT `ckReciboPagoMontoPositivo` CHECK (montoReciboPago > 0),
-  CONSTRAINT `ckReciboPagoValoresEstadoPago` CHECK (estadoReciboPago IN ('BORRADOR','CONFIRMADO','ANULADO')),
-  CONSTRAINT `ckReciboPagoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckReciboPagoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckReciboPagoValoresEstadoPago` CHECK (estadoReciboPago IN ('BORRADOR','CONFIRMADO','ANULADO'))
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblReciboPago`
-  ADD CONSTRAINT `Fk_ReciboPago_Cliente` FOREIGN KEY (`Fk_Cliente_Codigo`)
-    REFERENCES `tblCliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ReciboPago_Usuario_Registro` FOREIGN KEY (`Fk_Usuario_Registro`)
+  ADD CONSTRAINT `Fk_ReciboPago_Cliente` FOREIGN KEY (`idCliente`)
+    REFERENCES `tblCliente` (`idCliente`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_ReciboPago_Usuario_Registro` FOREIGN KEY (`idUsuarioRegistro`)
     REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ReciboPago_Moneda` FOREIGN KEY (`Fk_Moneda_Codigo`)
+  ADD CONSTRAINT `Fk_ReciboPago_Moneda` FOREIGN KEY (`idMoneda`)
     REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ReciboPago_FormaPagoVenta` FOREIGN KEY (`Fk_FormaPagoVenta_Codigo`)
-    REFERENCES `tblFormaPagoVenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_ReciboPago_FormaPagoVenta` FOREIGN KEY (`idFormaPagoVenta`)
+    REFERENCES `tblFormaPagoVenta` (`idFormaPagoVenta`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblDepositoVentaDetalle | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7015
 CREATE TABLE `tblDepositoVentaDetalle` (
-  `idaplicacion` INT NOT NULL DEFAULT 7015,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_DepositoVentaEncabezado_Codigo` INT NOT NULL,
-  `Fk_ReciboPago_Codigo` INT NOT NULL,
+  `idDepositoVentaDetalle` INT NOT NULL AUTO_INCREMENT,
+  `idDepositoVentaEncabezado` INT NOT NULL,
+  `idReciboPago` INT NOT NULL,
   `importeDepositoVentaDetalle` DECIMAL(12,4) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_DepositoVentaDetalle` PRIMARY KEY (`Fk_DepositoVentaEncabezado_Codigo`, `id`),
-  KEY `idxDepositoVentaDetalleReciboPagoCodigo` (`Fk_ReciboPago_Codigo`),
+  CONSTRAINT `Pk_DepositoVentaDetalle` PRIMARY KEY (`idDepositoVentaEncabezado`, `idDepositoVentaDetalle`),
+  KEY `idxDepositoVentaDetalleReciboPagoCodigo` (`idReciboPago`),
   CONSTRAINT `ckDepositoVentaDetalleImportePositivo` CHECK (importeDepositoVentaDetalle > 0),
-  CONSTRAINT `uqDepositoVentaDetalleClaveNegocio` UNIQUE (`Fk_DepositoVentaEncabezado_Codigo`, `Fk_ReciboPago_Codigo`),
-  CONSTRAINT `ckDepositoVentaDetalleIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckDepositoVentaDetalleIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015),
-  CONSTRAINT `uqDepositoVentaDetalleId` UNIQUE (`id`)
+  CONSTRAINT `uqDepositoVentaDetalleClaveNegocio` UNIQUE (`idDepositoVentaEncabezado`, `idReciboPago`),
+  CONSTRAINT `uqDepositoVentaDetalleId` UNIQUE (`idDepositoVentaDetalle`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblDepositoVentaDetalle`
-  ADD CONSTRAINT `Fk_DepositoVentaDetalle_DepositoVentaEncabezado` FOREIGN KEY (`Fk_DepositoVentaEncabezado_Codigo`)
-    REFERENCES `tblDepositoVentaEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_DepositoVentaDetalle_ReciboPago` FOREIGN KEY (`Fk_ReciboPago_Codigo`)
-    REFERENCES `tblReciboPago` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_DepositoVentaDetalle_DepositoVentaEncabezado` FOREIGN KEY (`idDepositoVentaEncabezado`)
+    REFERENCES `tblDepositoVentaEncabezado` (`idDepositoVentaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_DepositoVentaDetalle_ReciboPago` FOREIGN KEY (`idReciboPago`)
+    REFERENCES `tblReciboPago` (`idReciboPago`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblAplicacionPago | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7005
 CREATE TABLE `tblAplicacionPago` (
-  `idaplicacion` INT NOT NULL DEFAULT 7005,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_ReciboPago_Codigo` INT NOT NULL,
-  `Fk_FacturaEncabezado_Codigo` INT NOT NULL,
+  `idAplicacionPago` INT NOT NULL AUTO_INCREMENT,
+  `idReciboPago` INT NOT NULL,
+  `idFacturaEncabezado` INT NOT NULL,
   `fechaAplicacionPago` DATE NOT NULL,
   `montoAplicadoAplicacionPago` DECIMAL(12,4) NOT NULL,
   `estadoAplicacionPago` VARCHAR(20) NOT NULL,
-  `Fk_Usuario_Registro` INT NOT NULL,
+  `idUsuarioRegistro` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_AplicacionPago` PRIMARY KEY (`id`),
-  KEY `idxAplicacionPagoFacturaEncabezadoCodigofecha` (`Fk_FacturaEncabezado_Codigo`, `fechaAplicacionPago`),
-  KEY `idxAplicacionPagoReciboPagoCodigo` (`Fk_ReciboPago_Codigo`),
-  KEY `idxAplicacionPagoUsuarioRegistro` (`Fk_Usuario_Registro`),
+  CONSTRAINT `Pk_AplicacionPago` PRIMARY KEY (`idAplicacionPago`),
+  KEY `idxAplicacionPagoFacturaEncabezadoCodigofecha` (`idFacturaEncabezado`, `fechaAplicacionPago`),
+  KEY `idxAplicacionPagoReciboPagoCodigo` (`idReciboPago`),
+  KEY `idxAplicacionPagoUsuarioRegistro` (`idUsuarioRegistro`),
   CONSTRAINT `ckAplicacionPagoMontoPositivo` CHECK (montoAplicadoAplicacionPago > 0),
-  CONSTRAINT `ckAplicacionPagoValoresEstadoAplicacion` CHECK (estadoAplicacionPago IN ('APLICADA','REVERTIDA')),
-  CONSTRAINT `ckAplicacionPagoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckAplicacionPagoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckAplicacionPagoValoresEstadoAplicacion` CHECK (estadoAplicacionPago IN ('APLICADA','REVERTIDA'))
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblAplicacionPago`
-  ADD CONSTRAINT `Fk_AplicacionPago_ReciboPago` FOREIGN KEY (`Fk_ReciboPago_Codigo`)
-    REFERENCES `tblReciboPago` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_AplicacionPago_FacturaEncabezado` FOREIGN KEY (`Fk_FacturaEncabezado_Codigo`)
-    REFERENCES `tblFacturaEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_AplicacionPago_Usuario_Registro` FOREIGN KEY (`Fk_Usuario_Registro`)
+  ADD CONSTRAINT `Fk_AplicacionPago_ReciboPago` FOREIGN KEY (`idReciboPago`)
+    REFERENCES `tblReciboPago` (`idReciboPago`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_AplicacionPago_FacturaEncabezado` FOREIGN KEY (`idFacturaEncabezado`)
+    REFERENCES `tblFacturaEncabezado` (`idFacturaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_AplicacionPago_Usuario_Registro` FOREIGN KEY (`idUsuarioRegistro`)
     REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblCotizacionEncabezado | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7011
 CREATE TABLE `tblCotizacionEncabezado` (
-  `idaplicacion` INT NOT NULL DEFAULT 7011,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idCotizacionEncabezado` INT NOT NULL AUTO_INCREMENT,
   `numeroCotizacionEncabezado` VARCHAR(30) NOT NULL,
-  `Fk_Cliente_Codigo` INT NOT NULL,
-  `Fk_Vendedor_Codigo` INT NOT NULL,
-  `Fk_Moneda_Codigo` BIGINT NOT NULL,
+  `idCliente` INT NOT NULL,
+  `idVendedor` INT NOT NULL,
+  `idMoneda` BIGINT NOT NULL,
   `fechaEmisionCotizacionEncabezado` DATE NOT NULL,
   `vigenteHastaCotizacionEncabezado` DATE NOT NULL,
   `estadoCotizacionEncabezado` VARCHAR(25) NOT NULL,
   `observacionesCotizacionEncabezado` TEXT NULL,
-  `Fk_Usuario_Registro` INT NOT NULL,
+  `idUsuarioRegistro` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `Fk_ListaPrecioEncabezado_Codigo` INT NOT NULL,
-  CONSTRAINT `Pk_CotizacionEncabezado` PRIMARY KEY (`id`),
+  `idListaPrecioEncabezado` INT NOT NULL,
+  CONSTRAINT `Pk_CotizacionEncabezado` PRIMARY KEY (`idCotizacionEncabezado`),
   CONSTRAINT `uqCotizacionEncabezadonumero` UNIQUE (`numeroCotizacionEncabezado`),
-  KEY `idxCotizacionEncabezadoClienteCodigo` (`Fk_Cliente_Codigo`),
-  KEY `idxCotizacionEncabezadoVendedorCodigo` (`Fk_Vendedor_Codigo`),
-  KEY `idxCotizacionEncabezadoMonedaCodigo` (`Fk_Moneda_Codigo`),
-  KEY `idxCotizacionEncabezadoUsuarioRegistro` (`Fk_Usuario_Registro`),
-  KEY `idxCotizacionEncabezadoListaPrecioEncabezadoCodigo` (`Fk_ListaPrecioEncabezado_Codigo`),
+  KEY `idxCotizacionEncabezadoClienteCodigo` (`idCliente`),
+  KEY `idxCotizacionEncabezadoVendedorCodigo` (`idVendedor`),
+  KEY `idxCotizacionEncabezadoMonedaCodigo` (`idMoneda`),
+  KEY `idxCotizacionEncabezadoUsuarioRegistro` (`idUsuarioRegistro`),
+  KEY `idxCotizacionEncabezadoListaPrecioEncabezadoCodigo` (`idListaPrecioEncabezado`),
   CONSTRAINT `ckCotizacionEncabezadoValoresEstadoCotizacion` CHECK (estadoCotizacionEncabezado IN ('BORRADOR','EMITIDA','ACEPTADA','RECHAZADA','VENCIDA','ANULADA')),
-  CONSTRAINT `ckCotizacionEncabezadoFechasCoherentes` CHECK (vigenteHastaCotizacionEncabezado >= fechaEmisionCotizacionEncabezado),
-  CONSTRAINT `ckCotizacionEncabezadoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckCotizacionEncabezadoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckCotizacionEncabezadoFechasCoherentes` CHECK (vigenteHastaCotizacionEncabezado >= fechaEmisionCotizacionEncabezado)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblCotizacionEncabezado`
-  ADD CONSTRAINT `Fk_CotizacionEncabezado_Cliente` FOREIGN KEY (`Fk_Cliente_Codigo`)
-    REFERENCES `tblCliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_CotizacionEncabezado_Vendedor` FOREIGN KEY (`Fk_Vendedor_Codigo`)
-    REFERENCES `tblVendedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_CotizacionEncabezado_Usuario_Registro` FOREIGN KEY (`Fk_Usuario_Registro`)
+  ADD CONSTRAINT `Fk_CotizacionEncabezado_Cliente` FOREIGN KEY (`idCliente`)
+    REFERENCES `tblCliente` (`idCliente`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_CotizacionEncabezado_Vendedor` FOREIGN KEY (`idVendedor`)
+    REFERENCES `tblVendedor` (`idVendedor`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_CotizacionEncabezado_Usuario_Registro` FOREIGN KEY (`idUsuarioRegistro`)
     REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_CotizacionEncabezado_Moneda` FOREIGN KEY (`Fk_Moneda_Codigo`)
+  ADD CONSTRAINT `Fk_CotizacionEncabezado_Moneda` FOREIGN KEY (`idMoneda`)
     REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_CotizacionEncabezado_ListaPrecioEncabezado` FOREIGN KEY (`Fk_ListaPrecioEncabezado_Codigo`)
-    REFERENCES `tblListaPrecioEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_CotizacionEncabezado_ListaPrecioEncabezado` FOREIGN KEY (`idListaPrecioEncabezado`)
+    REFERENCES `tblListaPrecioEncabezado` (`idListaPrecioEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblCotizacionDetalle | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7011
 CREATE TABLE `tblCotizacionDetalle` (
-  `idaplicacion` INT NOT NULL DEFAULT 7011,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_CotizacionEncabezado_Codigo` INT NOT NULL,
+  `idCotizacionDetalle` INT NOT NULL AUTO_INCREMENT,
+  `idCotizacionEncabezado` INT NOT NULL,
   `numeroLineaCotizacionDetalle` INT NOT NULL,
-  `Fk_Producto_Codigo` INT NOT NULL,
+  `idProducto` INT NOT NULL,
   `descripcionItemCotizacionDetalle` VARCHAR(255) NOT NULL,
   `cantidadCotizacionDetalle` DECIMAL(12,4) NOT NULL,
   `precioUnitarioCotizacionDetalle` DECIMAL(12,4) NOT NULL,
@@ -470,79 +408,71 @@ CREATE TABLE `tblCotizacionDetalle` (
   `totalLineaCotizacionDetalle` DECIMAL(12,4) GENERATED ALWAYS AS (ROUND(cantidadCotizacionDetalle * precioUnitarioCotizacionDetalle - descuentoMontoCotizacionDetalle + impuestoMontoCotizacionDetalle, 4)) STORED,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_CotizacionDetalle` PRIMARY KEY (`Fk_CotizacionEncabezado_Codigo`, `id`),
-  CONSTRAINT `uqCotizacionDetalleCotizacionEncabezadoCodigonumeroLinea` UNIQUE (`Fk_CotizacionEncabezado_Codigo`, `numeroLineaCotizacionDetalle`),
-  KEY `idxCotizacionDetalleProductoCodigo` (`Fk_Producto_Codigo`),
+  CONSTRAINT `Pk_CotizacionDetalle` PRIMARY KEY (`idCotizacionEncabezado`, `idCotizacionDetalle`),
+  CONSTRAINT `uqCotizacionDetalleCotizacionEncabezadoCodigonumeroLinea` UNIQUE (`idCotizacionEncabezado`, `numeroLineaCotizacionDetalle`),
+  KEY `idxCotizacionDetalleProductoCodigo` (`idProducto`),
   CONSTRAINT `ckCotizacionDetalletasaImpuestoCotizacionDetalleRango` CHECK (tasaImpuestoCotizacionDetalle BETWEEN 0 AND 0.99),
   CONSTRAINT `ckCotizacionDetalleCantidadPrecioDescuentoValidos` CHECK (cantidadCotizacionDetalle > 0 AND precioUnitarioCotizacionDetalle >= 0 AND descuentoMontoCotizacionDetalle >= 0 AND descuentoMontoCotizacionDetalle <= cantidadCotizacionDetalle * precioUnitarioCotizacionDetalle),
   CONSTRAINT `ckCotizacionDetalleNumeroLineaPositivo` CHECK (numeroLineaCotizacionDetalle > 0),
-  CONSTRAINT `uqCotizacionDetalleId` UNIQUE (`id`),
-  CONSTRAINT `ckCotizacionDetalleIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckCotizacionDetalleIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `uqCotizacionDetalleId` UNIQUE (`idCotizacionDetalle`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblCotizacionDetalle`
-  ADD CONSTRAINT `Fk_CotizacionDetalle_CotizacionEncabezado` FOREIGN KEY (`Fk_CotizacionEncabezado_Codigo`)
-    REFERENCES `tblCotizacionEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_CotizacionDetalle_Producto` FOREIGN KEY (`Fk_Producto_Codigo`)
+  ADD CONSTRAINT `Fk_CotizacionDetalle_CotizacionEncabezado` FOREIGN KEY (`idCotizacionEncabezado`)
+    REFERENCES `tblCotizacionEncabezado` (`idCotizacionEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_CotizacionDetalle_Producto` FOREIGN KEY (`idProducto`)
     REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblPedidoEncabezado | Autor: Natali Sofía Montenegro Portillo - 0901-23-10017 | Modulo: 7000 | Aplicacion: 7004
 CREATE TABLE `tblPedidoEncabezado` (
-  `idaplicacion` INT NOT NULL DEFAULT 7004,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idPedidoEncabezado` INT NOT NULL AUTO_INCREMENT,
   `referenciaPedidoEncabezado` VARCHAR(30) NOT NULL,
-  `Fk_CotizacionEncabezado_Codigo` INT NULL,
-  `Fk_Cliente_Codigo` INT NOT NULL,
-  `Fk_Vendedor_Codigo` INT NOT NULL,
-  `Fk_Moneda_Codigo` BIGINT NOT NULL,
+  `idCotizacionEncabezado` INT NULL,
+  `idCliente` INT NOT NULL,
+  `idVendedor` INT NOT NULL,
+  `idMoneda` BIGINT NOT NULL,
   `fechaPedidoEncabezado` DATE NOT NULL,
   `fechaEntregaPedidoEncabezado` DATE NULL,
   `fechaVencimientoPedidoEncabezado` DATE NULL,
   `estadoPedidoEncabezado` VARCHAR(25) NOT NULL DEFAULT 'PENDIENTE',
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_PedidoEncabezado` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_PedidoEncabezado` PRIMARY KEY (`idPedidoEncabezado`),
   CONSTRAINT `uqPedidoEncabezadoReferencia` UNIQUE (`referenciaPedidoEncabezado`),
-  CONSTRAINT `uqPedidoEncabezadoCotizacion` UNIQUE (`Fk_CotizacionEncabezado_Codigo`),
-  KEY `idxPedidoEncabezadoCliente` (`Fk_Cliente_Codigo`),
-  KEY `idxPedidoEncabezadoVendedor` (`Fk_Vendedor_Codigo`),
-  KEY `idxPedidoEncabezadoMoneda` (`Fk_Moneda_Codigo`),
+  CONSTRAINT `uqPedidoEncabezadoCotizacion` UNIQUE (`idCotizacionEncabezado`),
+  KEY `idxPedidoEncabezadoCliente` (`idCliente`),
+  KEY `idxPedidoEncabezadoVendedor` (`idVendedor`),
+  KEY `idxPedidoEncabezadoMoneda` (`idMoneda`),
   CONSTRAINT `ckPedidoEncabezadoEstado` CHECK (`estadoPedidoEncabezado` IN ('PENDIENTE','CONFIRMADO','COMPLETADO','ANULADO')),
   CONSTRAINT `ckPedidoEncabezadoFechas` CHECK (
     (`fechaEntregaPedidoEncabezado` IS NULL OR `fechaEntregaPedidoEncabezado` >= `fechaPedidoEncabezado`)
     AND (`fechaVencimientoPedidoEncabezado` IS NULL OR `fechaVencimientoPedidoEncabezado` >= `fechaPedidoEncabezado`)
-  ),
-  CONSTRAINT `ckPedidoEncabezadoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckPedidoEncabezadoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  )
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblPedidoEncabezado`
-  ADD CONSTRAINT `Fk_PedidoEncabezado_Cotizacion` FOREIGN KEY (`Fk_CotizacionEncabezado_Codigo`)
-    REFERENCES `tblCotizacionEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_PedidoEncabezado_Cliente` FOREIGN KEY (`Fk_Cliente_Codigo`)
-    REFERENCES `tblCliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_PedidoEncabezado_Vendedor` FOREIGN KEY (`Fk_Vendedor_Codigo`)
-    REFERENCES `tblVendedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_PedidoEncabezado_Moneda` FOREIGN KEY (`Fk_Moneda_Codigo`)
+  ADD CONSTRAINT `Fk_PedidoEncabezado_Cotizacion` FOREIGN KEY (`idCotizacionEncabezado`)
+    REFERENCES `tblCotizacionEncabezado` (`idCotizacionEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_PedidoEncabezado_Cliente` FOREIGN KEY (`idCliente`)
+    REFERENCES `tblCliente` (`idCliente`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_PedidoEncabezado_Vendedor` FOREIGN KEY (`idVendedor`)
+    REFERENCES `tblVendedor` (`idVendedor`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_PedidoEncabezado_Moneda` FOREIGN KEY (`idMoneda`)
     REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblPedidoDetalle | Autor: Natali Sofía Montenegro Portillo - 0901-23-10017 | Modulo: 7000 | Aplicacion: 7004
 CREATE TABLE `tblPedidoDetalle` (
-  `idaplicacion` INT NOT NULL DEFAULT 7004,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_PedidoEncabezado_Codigo` INT NOT NULL,
+  `idPedidoDetalle` INT NOT NULL AUTO_INCREMENT,
+  `idPedidoEncabezado` INT NOT NULL,
   `OrdenPedido` INT NOT NULL,
-  `Fk_Producto_Codigo` INT NOT NULL,
+  `idProducto` INT NOT NULL,
   `cantidadPedidoDetalle` DECIMAL(12,4) NOT NULL,
   `precioUnitarioPedidoDetalle` DECIMAL(12,4) NOT NULL,
   `descuentoMontoPedidoDetalle` DECIMAL(12,4) NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_PedidoDetalle` PRIMARY KEY (`Fk_PedidoEncabezado_Codigo`, `id`),
-  KEY `idxPedidoDetalleProducto` (`Fk_Producto_Codigo`),
+  CONSTRAINT `Pk_PedidoDetalle` PRIMARY KEY (`idPedidoEncabezado`, `idPedidoDetalle`),
+  KEY `idxPedidoDetalleProducto` (`idProducto`),
   CONSTRAINT `ckPedidoDetalleOrdenPositivo` CHECK (`OrdenPedido` > 0),
   CONSTRAINT `ckPedidoDetalleCantidadPrecioDescuento` CHECK (
     `cantidadPedidoDetalle` > 0
@@ -550,24 +480,20 @@ CREATE TABLE `tblPedidoDetalle` (
     AND `descuentoMontoPedidoDetalle` >= 0
     AND `descuentoMontoPedidoDetalle` <= `cantidadPedidoDetalle` * `precioUnitarioPedidoDetalle`
   ),
-  CONSTRAINT `uqPedidoDetalleClaveNegocio` UNIQUE (`Fk_PedidoEncabezado_Codigo`, `OrdenPedido`, `Fk_Producto_Codigo`),
-  CONSTRAINT `ckPedidoDetalleIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckPedidoDetalleIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015),
-  CONSTRAINT `uqPedidoDetalleId` UNIQUE (`id`)
+  CONSTRAINT `uqPedidoDetalleClaveNegocio` UNIQUE (`idPedidoEncabezado`, `OrdenPedido`, `idProducto`),
+  CONSTRAINT `uqPedidoDetalleId` UNIQUE (`idPedidoDetalle`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblPedidoDetalle`
-  ADD CONSTRAINT `Fk_PedidoDetalle_PedidoEncabezado` FOREIGN KEY (`Fk_PedidoEncabezado_Codigo`)
-    REFERENCES `tblPedidoEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_PedidoDetalle_Producto` FOREIGN KEY (`Fk_Producto_Codigo`)
+  ADD CONSTRAINT `Fk_PedidoDetalle_PedidoEncabezado` FOREIGN KEY (`idPedidoEncabezado`)
+    REFERENCES `tblPedidoEncabezado` (`idPedidoEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_PedidoDetalle_Producto` FOREIGN KEY (`idProducto`)
     REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblClienteFacturaVersion | Autor: Matthew Andreé Juárez Xoy - 0901-23-4250 | Modulo: 7000 | Aplicacion: 7007
 CREATE TABLE `tblClienteFacturaVersion` (
-  `idaplicacion` INT NOT NULL DEFAULT 7007,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_Cliente_Codigo` INT NOT NULL,
+  `idClienteFacturaVersion` INT NOT NULL AUTO_INCREMENT,
+  `idCliente` INT NOT NULL,
   `numeroVersionClienteFacturaVersion` INT NOT NULL,
   `tipoIdentificacionClienteFacturaVersion` ENUM('NIT','CUI','CF') NOT NULL,
   `nitClienteFacturaVersion` CHAR(10) NULL,
@@ -576,32 +502,28 @@ CREATE TABLE `tblClienteFacturaVersion` (
   `direccionClienteFacturaVersion` VARCHAR(500) NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ClienteFacturaVersion` PRIMARY KEY (`id`),
-  CONSTRAINT `uqClienteFacturaVersionClienteCodigonumeroVersion` UNIQUE (`Fk_Cliente_Codigo`, `numeroVersionClienteFacturaVersion`),
+  CONSTRAINT `Pk_ClienteFacturaVersion` PRIMARY KEY (`idClienteFacturaVersion`),
+  CONSTRAINT `uqClienteFacturaVersionClienteCodigonumeroVersion` UNIQUE (`idCliente`, `numeroVersionClienteFacturaVersion`),
   CONSTRAINT `ckClienteFacturaVersionIdentificacionCoherente` CHECK ((tipoIdentificacionClienteFacturaVersion = 'CF' AND nitClienteFacturaVersion IS NULL AND dpiClienteFacturaVersion IS NULL) OR (tipoIdentificacionClienteFacturaVersion = 'NIT' AND nitClienteFacturaVersion IS NOT NULL AND dpiClienteFacturaVersion IS NULL) OR (tipoIdentificacionClienteFacturaVersion = 'CUI' AND dpiClienteFacturaVersion IS NOT NULL AND nitClienteFacturaVersion IS NULL)),
-  CONSTRAINT `ckClienteFacturaVersionVersionPositiva` CHECK (numeroVersionClienteFacturaVersion > 0),
-  CONSTRAINT `ckClienteFacturaVersionIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckClienteFacturaVersionIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckClienteFacturaVersionVersionPositiva` CHECK (numeroVersionClienteFacturaVersion > 0)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblClienteFacturaVersion`
-  ADD CONSTRAINT `Fk_ClienteFacturaVersion_Cliente` FOREIGN KEY (`Fk_Cliente_Codigo`)
-    REFERENCES `tblCliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_ClienteFacturaVersion_Cliente` FOREIGN KEY (`idCliente`)
+    REFERENCES `tblCliente` (`idCliente`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblFacturaEncabezado | Autor: Matthew Andreé Juárez Xoy - 0901-23-4250 | Modulo: 7000 | Aplicacion: 7007
 CREATE TABLE `tblFacturaEncabezado` (
-  `idaplicacion` INT NOT NULL DEFAULT 7007,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idFacturaEncabezado` INT NOT NULL AUTO_INCREMENT,
   `uuidDteFacturaEncabezado` CHAR(36) NOT NULL,
   `serieFacturaEncabezado` VARCHAR(30) NOT NULL,
   `numeroFacturaEncabezado` VARCHAR(30) NOT NULL,
-  `Fk_Sucursal_Codigo` INT NOT NULL,
-  `Fk_ClienteFacturaVersion_Codigo` INT NOT NULL,
-  `Fk_Vendedor_Codigo` INT NULL,
-  `Fk_Moneda_Codigo` BIGINT NOT NULL,
-  `Fk_CotizacionEncabezado_Codigo` INT NULL,
-  `Fk_PedidoEncabezado_Codigo` INT NULL,
+  `idSucursal` INT NOT NULL,
+  `idClienteFacturaVersion` INT NOT NULL,
+  `idVendedor` INT NULL,
+  `idMoneda` BIGINT NOT NULL,
+  `idCotizacionEncabezado` INT NULL,
+  `idPedidoEncabezado` INT NULL,
   `fechaEmisionFacturaEncabezado` DATETIME NOT NULL,
   `fechaVencimientoFacturaEncabezado` DATE NOT NULL,
   `tipoDteFacturaEncabezado` VARCHAR(30) NOT NULL DEFAULT 'Factura',
@@ -612,49 +534,45 @@ CREATE TABLE `tblFacturaEncabezado` (
   `impuestoIvaFacturaEncabezado` DECIMAL(12,4) NOT NULL DEFAULT 0.0000,
   `totalFacturaEncabezado` DECIMAL(12,4) NOT NULL DEFAULT 0.0000,
   `observacionesFacturaEncabezado` TEXT NULL,
-  `Fk_Usuario_Registro` INT NOT NULL,
+  `idUsuarioRegistro` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_FacturaEncabezado` PRIMARY KEY (`id`),
-  CONSTRAINT `uqFacturaEncabezadoSucursalCodigoserienumero` UNIQUE (`Fk_Sucursal_Codigo`, `serieFacturaEncabezado`, `numeroFacturaEncabezado`),
-  CONSTRAINT `uqFacturaEncabezadoCotizacionEncabezadoCodigo` UNIQUE (`Fk_CotizacionEncabezado_Codigo`),
-  KEY `idxFacturaEncabezadoPedidoEncabezadoCodigo` (`Fk_PedidoEncabezado_Codigo`),
-  KEY `idxFacturaEncabezadoVendedorCodigo` (`Fk_Vendedor_Codigo`),
-  KEY `idxFacturaEncabezadoMonedaCodigo` (`Fk_Moneda_Codigo`),
-  KEY `idxFacturaEncabezadoUsuarioRegistro` (`Fk_Usuario_Registro`),
-  KEY `idxFacturaEncabezadoClienteFacturaVersionCodigo` (`Fk_ClienteFacturaVersion_Codigo`),
+  CONSTRAINT `Pk_FacturaEncabezado` PRIMARY KEY (`idFacturaEncabezado`),
+  CONSTRAINT `uqFacturaEncabezadoSucursalCodigoserienumero` UNIQUE (`idSucursal`, `serieFacturaEncabezado`, `numeroFacturaEncabezado`),
+  CONSTRAINT `uqFacturaEncabezadoCotizacionEncabezadoCodigo` UNIQUE (`idCotizacionEncabezado`),
+  KEY `idxFacturaEncabezadoPedidoEncabezadoCodigo` (`idPedidoEncabezado`),
+  KEY `idxFacturaEncabezadoVendedorCodigo` (`idVendedor`),
+  KEY `idxFacturaEncabezadoMonedaCodigo` (`idMoneda`),
+  KEY `idxFacturaEncabezadoUsuarioRegistro` (`idUsuarioRegistro`),
+  KEY `idxFacturaEncabezadoClienteFacturaVersionCodigo` (`idClienteFacturaVersion`),
   CONSTRAINT `ckFacturaEncabezadoCondicionPagoValida` CHECK (condicionPagoFacturaEncabezado IN ('CONTADO','CREDITO')),
   CONSTRAINT `ckFacturaEncabezadoValoresEstadoFactura` CHECK (estadoFacturaEncabezado IN ('BORRADOR','EMITIDA','ANULADA')),
   CONSTRAINT `ckFacturaEncabezadoFechasCoherentes` CHECK (fechaVencimientoFacturaEncabezado >= DATE(fechaEmisionFacturaEncabezado)),
-  CONSTRAINT `uqFacturaEncabezadoClaveNegocio` UNIQUE (`uuidDteFacturaEncabezado`),
-  CONSTRAINT `ckFacturaEncabezadoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckFacturaEncabezadoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `uqFacturaEncabezadoClaveNegocio` UNIQUE (`uuidDteFacturaEncabezado`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblFacturaEncabezado`
-  ADD CONSTRAINT `Fk_FacturaEncabezado_Sucursal` FOREIGN KEY (`Fk_Sucursal_Codigo`)
+  ADD CONSTRAINT `Fk_FacturaEncabezado_Sucursal` FOREIGN KEY (`idSucursal`)
 REFERENCES `tblSucursal` (`Pk_Sucursal`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_FacturaEncabezado_ClienteFacturaVersion` FOREIGN KEY (`Fk_ClienteFacturaVersion_Codigo`)
-REFERENCES `tblClienteFacturaVersion` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_FacturaEncabezado_Vendedor` FOREIGN KEY (`Fk_Vendedor_Codigo`)
-REFERENCES `tblVendedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_FacturaEncabezado_Moneda` FOREIGN KEY (`Fk_Moneda_Codigo`)
+  ADD CONSTRAINT `Fk_FacturaEncabezado_ClienteFacturaVersion` FOREIGN KEY (`idClienteFacturaVersion`)
+REFERENCES `tblClienteFacturaVersion` (`idClienteFacturaVersion`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_FacturaEncabezado_Vendedor` FOREIGN KEY (`idVendedor`)
+REFERENCES `tblVendedor` (`idVendedor`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_FacturaEncabezado_Moneda` FOREIGN KEY (`idMoneda`)
 REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_FacturaEncabezado_CotizacionEncabezado` FOREIGN KEY (`Fk_CotizacionEncabezado_Codigo`)
-REFERENCES `tblCotizacionEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_FacturaEncabezado_PedidoEncabezado` FOREIGN KEY (`Fk_PedidoEncabezado_Codigo`)
-REFERENCES `tblPedidoEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_FacturaEncabezado_Usuario_Registro` FOREIGN KEY (`Fk_Usuario_Registro`)
+  ADD CONSTRAINT `Fk_FacturaEncabezado_CotizacionEncabezado` FOREIGN KEY (`idCotizacionEncabezado`)
+REFERENCES `tblCotizacionEncabezado` (`idCotizacionEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_FacturaEncabezado_PedidoEncabezado` FOREIGN KEY (`idPedidoEncabezado`)
+REFERENCES `tblPedidoEncabezado` (`idPedidoEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_FacturaEncabezado_Usuario_Registro` FOREIGN KEY (`idUsuarioRegistro`)
 REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblFacturaDetalle | Autor: Matthew Andreé Juárez Xoy - 0901-23-4250 | Modulo: 7000 | Aplicacion: 7007
 CREATE TABLE `tblFacturaDetalle` (
-  `idaplicacion` INT NOT NULL DEFAULT 7007,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `Fk_FacturaEncabezado_UuidDte` CHAR(36) NOT NULL,
+  `idFacturaEncabezadoUuidDte` CHAR(36) NOT NULL,
   `numeroLineaFacturaDetalle` INT NOT NULL,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_Producto_Codigo` INT NOT NULL,
+  `idFacturaDetalle` INT NOT NULL AUTO_INCREMENT,
+  `idProducto` INT NOT NULL,
   `cantidadFacturaDetalle` DECIMAL(12,4) NOT NULL,
   `precioUnitarioFacturaDetalle` DECIMAL(12,4) NOT NULL,
   `descuentoMontoFacturaDetalle` DECIMAL(12,4) NOT NULL DEFAULT 0.0000,
@@ -664,28 +582,24 @@ CREATE TABLE `tblFacturaDetalle` (
   `totalLineaFacturaDetalle` DECIMAL(12,4) GENERATED ALWAYS AS (ROUND(cantidadFacturaDetalle * precioUnitarioFacturaDetalle - descuentoMontoFacturaDetalle + impuestoMontoFacturaDetalle, 4)) STORED,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_FacturaDetalle` PRIMARY KEY (`Fk_FacturaEncabezado_UuidDte`, `id`),
-  KEY `idxFacturaDetalleProductoCodigo` (`Fk_Producto_Codigo`),
+  CONSTRAINT `Pk_FacturaDetalle` PRIMARY KEY (`idFacturaEncabezadoUuidDte`, `idFacturaDetalle`),
+  KEY `idxFacturaDetalleProductoCodigo` (`idProducto`),
   CONSTRAINT `ckFacturaDetalletasaImpuestoFacturaDetalleRango` CHECK (tasaImpuestoFacturaDetalle BETWEEN 0 AND 0.99),
   CONSTRAINT `ckFacturaDetalleCantidadPrecioDescuentoValidos` CHECK (cantidadFacturaDetalle > 0 AND precioUnitarioFacturaDetalle >= 0 AND descuentoMontoFacturaDetalle >= 0 AND descuentoMontoFacturaDetalle <= cantidadFacturaDetalle * precioUnitarioFacturaDetalle),
   CONSTRAINT `ckFacturaDetalleNumeroLineaPositivo` CHECK (numeroLineaFacturaDetalle > 0),
-  CONSTRAINT `uqFacturaDetalleClaveNegocio` UNIQUE (`Fk_FacturaEncabezado_UuidDte`, `numeroLineaFacturaDetalle`),
-  CONSTRAINT `ckFacturaDetalleIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckFacturaDetalleIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015),
-  CONSTRAINT `uqFacturaDetalleId` UNIQUE (`id`)
+  CONSTRAINT `uqFacturaDetalleClaveNegocio` UNIQUE (`idFacturaEncabezadoUuidDte`, `numeroLineaFacturaDetalle`),
+  CONSTRAINT `uqFacturaDetalleId` UNIQUE (`idFacturaDetalle`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblFacturaDetalle`
-  ADD CONSTRAINT `Fk_FacturaDetalle_FacturaEncabezado` FOREIGN KEY (`Fk_FacturaEncabezado_UuidDte`)
+  ADD CONSTRAINT `Fk_FacturaDetalle_FacturaEncabezado` FOREIGN KEY (`idFacturaEncabezadoUuidDte`)
 REFERENCES `tblFacturaEncabezado` (`uuidDteFacturaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_FacturaDetalle_Producto` FOREIGN KEY (`Fk_Producto_Codigo`)
+  ADD CONSTRAINT `Fk_FacturaDetalle_Producto` FOREIGN KEY (`idProducto`)
 REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblReglaComision | Autor: Roger Yankhel de Jesús Herrera Alcántara - 0901-23-2429 | Modulo: 7000 | Aplicacion: 7013
 CREATE TABLE `tblReglaComision` (
-  `idaplicacion` INT NOT NULL DEFAULT 7013,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idReglaComision` INT NOT NULL AUTO_INCREMENT,
   `codigoReglaComision` VARCHAR(30) NOT NULL,
   `nombreReglaComision` VARCHAR(100) NOT NULL,
   `baseCalculoReglaComision` VARCHAR(30) NOT NULL,
@@ -695,122 +609,106 @@ CREATE TABLE `tblReglaComision` (
   `requiereAutorizacionReglaComision` BOOLEAN NOT NULL DEFAULT 1,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ReglaComision` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_ReglaComision` PRIMARY KEY (`idReglaComision`),
   CONSTRAINT `uqReglaComisioncodigo` UNIQUE (`codigoReglaComision`),
   CONSTRAINT `ckReglaComisiontasaComisionReglaComisionRango` CHECK (tasaComisionReglaComision BETWEEN 0 AND 0.99),
   CONSTRAINT `ckReglaComisionrequiereAutorizacionReglaComisionBooleano` CHECK (requiereAutorizacionReglaComision IN (0,1)),
   CONSTRAINT `ckReglaComisionValoresBaseCalculo` CHECK (baseCalculoReglaComision IN ('VENTA_NETA','COBRO_NETO')),
-  CONSTRAINT `ckReglaComisionFechasCoherentes` CHECK (vigenteHastaReglaComision >= vigenteDesdeReglaComision),
-  CONSTRAINT `ckReglaComisionIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckReglaComisionIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckReglaComisionFechasCoherentes` CHECK (vigenteHastaReglaComision >= vigenteDesdeReglaComision)
 ) ENGINE=InnoDB;
 
 -- tblComisionEncabezado | Autor: Roger Yankhel de Jesús Herrera Alcántara - 0901-23-2429 | Modulo: 7000 | Aplicacion: 7013
 CREATE TABLE `tblComisionEncabezado` (
-  `idaplicacion` INT NOT NULL DEFAULT 7013,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idComisionEncabezado` INT NOT NULL AUTO_INCREMENT,
   `numeroComisionEncabezado` VARCHAR(30) NOT NULL,
-  `Fk_Vendedor_Codigo` INT NOT NULL,
-  `Fk_ReglaComision_Codigo` INT NOT NULL,
-  `Fk_Moneda_Codigo` BIGINT NOT NULL,
+  `idVendedor` INT NOT NULL,
+  `idReglaComision` INT NOT NULL,
+  `idMoneda` BIGINT NOT NULL,
   `fechaDesdeComisionEncabezado` DATE NOT NULL,
   `fechaHastaComisionEncabezado` DATE NOT NULL,
   `estadoComisionEncabezado` VARCHAR(25) NOT NULL,
-  `Fk_Usuario_Solicita` INT NULL,
+  `idUsuarioSolicita` INT NULL,
   `fechaSolicitudComisionEncabezado` DATETIME NULL,
-  `Fk_Usuario_Autoriza` INT NULL,
+  `idUsuarioAutoriza` INT NULL,
   `fechaAutorizacionComisionEncabezado` DATETIME NULL,
   `comentarioAutorizacionComisionEncabezado` TEXT NULL,
   `referenciaContableComisionEncabezado` VARCHAR(100) NULL,
   `fechaEnvioComisionEncabezado` DATETIME NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ComisionEncabezado` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_ComisionEncabezado` PRIMARY KEY (`idComisionEncabezado`),
   CONSTRAINT `uqComisionEncabezadonumero` UNIQUE (`numeroComisionEncabezado`),
-  KEY `idxComisionEncabezadoVendedorCodigofechaDesdefechaHasta` (`Fk_Vendedor_Codigo`, `fechaDesdeComisionEncabezado`, `fechaHastaComisionEncabezado`),
-  KEY `idxComisionEncabezadoReglaComisionCodigo` (`Fk_ReglaComision_Codigo`),
-  KEY `idxComisionEncabezadoMonedaCodigo` (`Fk_Moneda_Codigo`),
-  KEY `idxComisionEncabezadoUsuarioSolicita` (`Fk_Usuario_Solicita`),
-  KEY `idxComisionEncabezadoUsuarioAutoriza` (`Fk_Usuario_Autoriza`),
+  KEY `idxComisionEncabezadoVendedorCodigofechaDesdefechaHasta` (`idVendedor`, `fechaDesdeComisionEncabezado`, `fechaHastaComisionEncabezado`),
+  KEY `idxComisionEncabezadoReglaComisionCodigo` (`idReglaComision`),
+  KEY `idxComisionEncabezadoMonedaCodigo` (`idMoneda`),
+  KEY `idxComisionEncabezadoUsuarioSolicita` (`idUsuarioSolicita`),
+  KEY `idxComisionEncabezadoUsuarioAutoriza` (`idUsuarioAutoriza`),
   CONSTRAINT `ckComisionEncabezadoValoresEstadoComision` CHECK (estadoComisionEncabezado IN ('BORRADOR','SOLICITADA','APROBADA','RECHAZADA','ENVIADA')),
-  CONSTRAINT `ckComisionEncabezadoFechasCoherentes` CHECK (fechaHastaComisionEncabezado >= fechaDesdeComisionEncabezado),
-  CONSTRAINT `ckComisionEncabezadoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckComisionEncabezadoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckComisionEncabezadoFechasCoherentes` CHECK (fechaHastaComisionEncabezado >= fechaDesdeComisionEncabezado)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblComisionEncabezado`
-  ADD CONSTRAINT `Fk_ComisionEncabezado_Vendedor` FOREIGN KEY (`Fk_Vendedor_Codigo`)
-    REFERENCES `tblVendedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionEncabezado_ReglaComision` FOREIGN KEY (`Fk_ReglaComision_Codigo`)
-    REFERENCES `tblReglaComision` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionEncabezado_Usuario_Solicita` FOREIGN KEY (`Fk_Usuario_Solicita`)
+  ADD CONSTRAINT `Fk_ComisionEncabezado_Vendedor` FOREIGN KEY (`idVendedor`)
+    REFERENCES `tblVendedor` (`idVendedor`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_ComisionEncabezado_ReglaComision` FOREIGN KEY (`idReglaComision`)
+    REFERENCES `tblReglaComision` (`idReglaComision`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_ComisionEncabezado_Usuario_Solicita` FOREIGN KEY (`idUsuarioSolicita`)
     REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionEncabezado_Usuario_Autoriza` FOREIGN KEY (`Fk_Usuario_Autoriza`)
+  ADD CONSTRAINT `Fk_ComisionEncabezado_Usuario_Autoriza` FOREIGN KEY (`idUsuarioAutoriza`)
     REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionEncabezado_Moneda` FOREIGN KEY (`Fk_Moneda_Codigo`)
+  ADD CONSTRAINT `Fk_ComisionEncabezado_Moneda` FOREIGN KEY (`idMoneda`)
     REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblComisionFacturaEncabezado | Autor: Roger Yankhel de Jesús Herrera Alcántara - 0901-23-2429 | Modulo: 7000 | Aplicacion: 7013
 CREATE TABLE `tblComisionFacturaEncabezado` (
-  `idaplicacion` INT NOT NULL DEFAULT 7013,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_FacturaEncabezado_Codigo` INT NOT NULL,
+  `idComisionFacturaEncabezado` INT NOT NULL AUTO_INCREMENT,
+  `idFacturaEncabezado` INT NOT NULL,
   `metodoComisionFacturaEncabezado` ENUM('LINEA','PRODUCTO','CATEGORIA','MARCA','MIXTA') NOT NULL,
   `estadoComisionFacturaEncabezado` ENUM('CALCULADA','ANULADA') NOT NULL DEFAULT 'CALCULADA',
   `observacionesComisionFacturaEncabezado` TEXT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ComisionFacturaEncabezado` PRIMARY KEY (`id`),
-  CONSTRAINT `uqComisionFacturaEncabezadoFacturaEncabezadoCodigo` UNIQUE (`Fk_FacturaEncabezado_Codigo`),
-  CONSTRAINT `ckComisionFacturaEncabezadoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckComisionFacturaEncabezadoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `Pk_ComisionFacturaEncabezado` PRIMARY KEY (`idComisionFacturaEncabezado`),
+  CONSTRAINT `uqComisionFacturaEncabezadoFacturaEncabezadoCodigo` UNIQUE (`idFacturaEncabezado`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblComisionFacturaEncabezado`
-  ADD CONSTRAINT `Fk_ComisionFacturaEncabezado_FacturaEncabezado` FOREIGN KEY (`Fk_FacturaEncabezado_Codigo`)
-    REFERENCES `tblFacturaEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_ComisionFacturaEncabezado_FacturaEncabezado` FOREIGN KEY (`idFacturaEncabezado`)
+    REFERENCES `tblFacturaEncabezado` (`idFacturaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblComisionDetalle | Autor: Roger Yankhel de Jesús Herrera Alcántara - 0901-23-2429 | Modulo: 7000 | Aplicacion: 7013
 CREATE TABLE `tblComisionDetalle` (
-  `idaplicacion` INT NOT NULL DEFAULT 7013,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_ComisionEncabezado_Codigo` INT NOT NULL,
-  `Fk_FacturaEncabezado_Codigo` INT NOT NULL,
-  `Fk_AplicacionPago_Codigo` INT NULL,
+  `idComisionDetalle` INT NOT NULL AUTO_INCREMENT,
+  `idComisionEncabezado` INT NOT NULL,
+  `idFacturaEncabezado` INT NOT NULL,
+  `idAplicacionPago` INT NULL,
   `baseComisionDetalle` DECIMAL(12,4) NOT NULL,
   `tasaAplicadaComisionDetalle` DECIMAL(3,2) NOT NULL,
   `montoComisionDetalle` DECIMAL(12,4) GENERATED ALWAYS AS (ROUND(baseComisionDetalle * tasaAplicadaComisionDetalle, 4)) STORED,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ComisionDetalle` PRIMARY KEY (`Fk_ComisionEncabezado_Codigo`, `id`),
-  KEY `idxComisionDetalleComisionEncabezadoCodigo` (`Fk_ComisionEncabezado_Codigo`),
-  KEY `idxComisionDetalleFacturaEncabezadoCodigo` (`Fk_FacturaEncabezado_Codigo`),
-  KEY `idxComisionDetalleAplicacionPagoCodigo` (`Fk_AplicacionPago_Codigo`),
+  CONSTRAINT `Pk_ComisionDetalle` PRIMARY KEY (`idComisionEncabezado`, `idComisionDetalle`),
+  KEY `idxComisionDetalleComisionEncabezadoCodigo` (`idComisionEncabezado`),
+  KEY `idxComisionDetalleFacturaEncabezadoCodigo` (`idFacturaEncabezado`),
+  KEY `idxComisionDetalleAplicacionPagoCodigo` (`idAplicacionPago`),
   CONSTRAINT `ckComisionDetalletasaAplicadaComisionDetalleRango` CHECK (tasaAplicadaComisionDetalle BETWEEN 0 AND 0.99),
   CONSTRAINT `ckComisionDetalleBaseNoNegativa` CHECK (baseComisionDetalle >= 0),
-  CONSTRAINT `ckComisionDetalleIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckComisionDetalleIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015),
-  CONSTRAINT `uqComisionDetalleId` UNIQUE (`id`)
+  CONSTRAINT `uqComisionDetalleId` UNIQUE (`idComisionDetalle`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblComisionDetalle`
-  ADD CONSTRAINT `Fk_ComisionDetalle_ComisionEncabezado` FOREIGN KEY (`Fk_ComisionEncabezado_Codigo`)
-    REFERENCES `tblComisionEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionDetalle_FacturaEncabezado` FOREIGN KEY (`Fk_FacturaEncabezado_Codigo`)
-    REFERENCES `tblFacturaEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionDetalle_AplicacionPago` FOREIGN KEY (`Fk_AplicacionPago_Codigo`)
-    REFERENCES `tblAplicacionPago` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_ComisionDetalle_ComisionEncabezado` FOREIGN KEY (`idComisionEncabezado`)
+    REFERENCES `tblComisionEncabezado` (`idComisionEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_ComisionDetalle_FacturaEncabezado` FOREIGN KEY (`idFacturaEncabezado`)
+    REFERENCES `tblFacturaEncabezado` (`idFacturaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_ComisionDetalle_AplicacionPago` FOREIGN KEY (`idAplicacionPago`)
+    REFERENCES `tblAplicacionPago` (`idAplicacionPago`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblComisionAbono | Autor: Roger Yankhel de Jesús Herrera Alcántara - 0901-23-2429 | Modulo: 7000 | Aplicacion: 7013
 CREATE TABLE `tblComisionAbono` (
-  `idaplicacion` INT NOT NULL DEFAULT 7013,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_ComisionFacturaEncabezado_Codigo` INT NOT NULL,
-  `Fk_AplicacionPago_Codigo` INT NOT NULL,
+  `idComisionAbono` INT NOT NULL AUTO_INCREMENT,
+  `idComisionFacturaEncabezado` INT NOT NULL,
+  `idAplicacionPago` INT NOT NULL,
   `tasaFacturaPagadaAcumuladaComisionAbono` DECIMAL(5,4) NOT NULL,
   `montoComisionDevengadoComisionAbono` DECIMAL(12,4) NOT NULL,
   `estadoPagoVendedorComisionAbono` ENUM('PENDIENTE','PAGADO','REVERSADO') NOT NULL DEFAULT 'PENDIENTE',
@@ -819,70 +717,62 @@ CREATE TABLE `tblComisionAbono` (
   `observacionesComisionAbono` TEXT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ComisionAbono` PRIMARY KEY (`id`),
-  CONSTRAINT `uqComisionAbonoAplicacionPagoCodigo` UNIQUE (`Fk_AplicacionPago_Codigo`),
-  KEY `idxComisionAbonoComisionFacturaEncabezadoCodigoestadoPa19c1f12f` (`Fk_ComisionFacturaEncabezado_Codigo`, `estadoPagoVendedorComisionAbono`),
+  CONSTRAINT `Pk_ComisionAbono` PRIMARY KEY (`idComisionAbono`),
+  CONSTRAINT `uqComisionAbonoAplicacionPagoCodigo` UNIQUE (`idAplicacionPago`),
+  KEY `idxComisionAbonoComisionFacturaEncabezadoCodigoestadoPa19c1f12f` (`idComisionFacturaEncabezado`, `estadoPagoVendedorComisionAbono`),
   CONSTRAINT `ckComisionAbonotasaFacturaPagadaAcumuladaComisionAbonoRango` CHECK (tasaFacturaPagadaAcumuladaComisionAbono BETWEEN 0 AND 1),
   CONSTRAINT `ckComisionAbonoDevengoNoNegativo` CHECK (montoComisionDevengadoComisionAbono >= 0),
-  CONSTRAINT `ckComisionAbonoFechaPagoVendedor` CHECK (estadoPagoVendedorComisionAbono <> 'PAGADO' OR fechaPagoVendedorComisionAbono IS NOT NULL),
-  CONSTRAINT `ckComisionAbonoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckComisionAbonoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckComisionAbonoFechaPagoVendedor` CHECK (estadoPagoVendedorComisionAbono <> 'PAGADO' OR fechaPagoVendedorComisionAbono IS NOT NULL)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblComisionAbono`
-  ADD CONSTRAINT `Fk_ComisionAbono_ComisionFacturaEncabezado` FOREIGN KEY (`Fk_ComisionFacturaEncabezado_Codigo`)
-    REFERENCES `tblComisionFacturaEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionAbono_AplicacionPago` FOREIGN KEY (`Fk_AplicacionPago_Codigo`)
-    REFERENCES `tblAplicacionPago` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_ComisionAbono_ComisionFacturaEncabezado` FOREIGN KEY (`idComisionFacturaEncabezado`)
+    REFERENCES `tblComisionFacturaEncabezado` (`idComisionFacturaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_ComisionAbono_AplicacionPago` FOREIGN KEY (`idAplicacionPago`)
+    REFERENCES `tblAplicacionPago` (`idAplicacionPago`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblComisionFacturaDetalle | Autor: Roger Yankhel de Jesús Herrera Alcántara - 0901-23-2429 | Modulo: 7000 | Aplicacion: 7013
 CREATE TABLE `tblComisionFacturaDetalle` (
-  `idaplicacion` INT NOT NULL DEFAULT 7013,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_ComisionFacturaEncabezado_Codigo` INT NOT NULL,
-  `Fk_FacturaDetalle_Codigo` INT NOT NULL,
+  `idComisionFacturaDetalle` INT NOT NULL AUTO_INCREMENT,
+  `idComisionFacturaEncabezado` INT NOT NULL,
+  `idFacturaDetalle` INT NOT NULL,
   `metodoComisionFacturaDetalle` ENUM('LINEA','PRODUCTO','CATEGORIA','MARCA') NOT NULL,
   `nombreClasificacionHistoricaComisionFacturaDetalle` VARCHAR(100) NOT NULL,
   `tasaAplicadaComisionFacturaDetalle` DECIMAL(3,2) NOT NULL,
   `baseComisionFacturaDetalle` DECIMAL(12,4) NOT NULL,
   `montoComisionLineaComisionFacturaDetalle` DECIMAL(12,4) GENERATED ALWAYS AS (ROUND(baseComisionFacturaDetalle * tasaAplicadaComisionFacturaDetalle, 4)) STORED,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Fk_Linea_Codigo` INT NULL,
-  `Fk_Categoria_Codigo` INT NULL,
-  `Fk_Marca_Codigo` INT NULL,
+  `idLinea` INT NULL,
+  `idCategoria` INT NULL,
+  `idMarca` INT NULL,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ComisionFacturaDetalle` PRIMARY KEY (`Fk_ComisionFacturaEncabezado_Codigo`, `id`),
-  CONSTRAINT `uqComisionFacturaDetalleFacturaDetalleCodigo` UNIQUE (`Fk_FacturaDetalle_Codigo`),
-  KEY `idxComisionFacturaDetalleComisionFacturaEncabezadoCodigo` (`Fk_ComisionFacturaEncabezado_Codigo`),
-  KEY `idxComisionFacturaDetalleLineaCodigo` (`Fk_Linea_Codigo`),
-  KEY `idxComisionFacturaDetalleCategoriaCodigo` (`Fk_Categoria_Codigo`),
-  KEY `idxComisionFacturaDetalleMarcaCodigo` (`Fk_Marca_Codigo`),
+  CONSTRAINT `Pk_ComisionFacturaDetalle` PRIMARY KEY (`idComisionFacturaEncabezado`, `idComisionFacturaDetalle`),
+  CONSTRAINT `uqComisionFacturaDetalleFacturaDetalleCodigo` UNIQUE (`idFacturaDetalle`),
+  KEY `idxComisionFacturaDetalleComisionFacturaEncabezadoCodigo` (`idComisionFacturaEncabezado`),
+  KEY `idxComisionFacturaDetalleLineaCodigo` (`idLinea`),
+  KEY `idxComisionFacturaDetalleCategoriaCodigo` (`idCategoria`),
+  KEY `idxComisionFacturaDetalleMarcaCodigo` (`idMarca`),
   CONSTRAINT `ckComisionFacturaDetalletasaAplicadaComisionFacturaDetalleRango` CHECK (tasaAplicadaComisionFacturaDetalle BETWEEN 0 AND 0.99),
   CONSTRAINT `ckComisionFacturaDetalleBaseNoNegativa` CHECK (baseComisionFacturaDetalle >= 0),
-  CONSTRAINT `ckComisionFacturaDetalleClasificacionTipada` CHECK ((metodoComisionFacturaDetalle = 'PRODUCTO' AND Fk_Linea_Codigo IS NULL AND Fk_Categoria_Codigo IS NULL AND Fk_Marca_Codigo IS NULL) OR (metodoComisionFacturaDetalle = 'LINEA' AND Fk_Linea_Codigo IS NOT NULL AND Fk_Categoria_Codigo IS NULL AND Fk_Marca_Codigo IS NULL) OR (metodoComisionFacturaDetalle = 'CATEGORIA' AND Fk_Categoria_Codigo IS NOT NULL AND Fk_Linea_Codigo IS NULL AND Fk_Marca_Codigo IS NULL) OR (metodoComisionFacturaDetalle = 'MARCA' AND Fk_Marca_Codigo IS NOT NULL AND Fk_Linea_Codigo IS NULL AND Fk_Categoria_Codigo IS NULL)),
-  CONSTRAINT `ckComisionFacturaDetalleIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckComisionFacturaDetalleIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015),
-  CONSTRAINT `uqComisionFacturaDetalleId` UNIQUE (`id`)
+  CONSTRAINT `ckComisionFacturaDetalleClasificacionTipada` CHECK ((metodoComisionFacturaDetalle = 'PRODUCTO' AND idLinea IS NULL AND idCategoria IS NULL AND idMarca IS NULL) OR (metodoComisionFacturaDetalle = 'LINEA' AND idLinea IS NOT NULL AND idCategoria IS NULL AND idMarca IS NULL) OR (metodoComisionFacturaDetalle = 'CATEGORIA' AND idCategoria IS NOT NULL AND idLinea IS NULL AND idMarca IS NULL) OR (metodoComisionFacturaDetalle = 'MARCA' AND idMarca IS NOT NULL AND idLinea IS NULL AND idCategoria IS NULL)),
+  CONSTRAINT `uqComisionFacturaDetalleId` UNIQUE (`idComisionFacturaDetalle`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblComisionFacturaDetalle`
-  ADD CONSTRAINT `Fk_ComisionFacturaDetalle_ComisionFacturaEncabezado` FOREIGN KEY (`Fk_ComisionFacturaEncabezado_Codigo`)
-    REFERENCES `tblComisionFacturaEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionFacturaDetalle_FacturaDetalle` FOREIGN KEY (`Fk_FacturaDetalle_Codigo`)
-    REFERENCES `tblFacturaDetalle` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionFacturaDetalle_Linea` FOREIGN KEY (`Fk_Linea_Codigo`)
+  ADD CONSTRAINT `Fk_ComisionFacturaDetalle_ComisionFacturaEncabezado` FOREIGN KEY (`idComisionFacturaEncabezado`)
+    REFERENCES `tblComisionFacturaEncabezado` (`idComisionFacturaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_ComisionFacturaDetalle_FacturaDetalle` FOREIGN KEY (`idFacturaDetalle`)
+    REFERENCES `tblFacturaDetalle` (`idFacturaDetalle`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_ComisionFacturaDetalle_Linea` FOREIGN KEY (`idLinea`)
     REFERENCES `tblLinea` (`Pk_Linea`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionFacturaDetalle_Categoria` FOREIGN KEY (`Fk_Categoria_Codigo`)
+  ADD CONSTRAINT `Fk_ComisionFacturaDetalle_Categoria` FOREIGN KEY (`idCategoria`)
     REFERENCES `tblCategoria` (`Pk_Categoria`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_ComisionFacturaDetalle_Marca` FOREIGN KEY (`Fk_Marca_Codigo`)
+  ADD CONSTRAINT `Fk_ComisionFacturaDetalle_Marca` FOREIGN KEY (`idMarca`)
     REFERENCES `tblMarca` (`Pk_Marca`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblCliente | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7009
 CREATE TABLE `tblCliente` (
-  `idaplicacion` INT NOT NULL DEFAULT 7009,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idCliente` INT NOT NULL AUTO_INCREMENT,
   `codigoCliente` VARCHAR(30) NOT NULL,
   `tipoIdentificacionCliente` ENUM('NIT','CUI','CF') NOT NULL,
   `nombreCliente` VARCHAR(100) NOT NULL,
@@ -892,175 +782,147 @@ CREATE TABLE `tblCliente` (
   `correoCliente` VARCHAR(150) NULL,
   `diasCreditoCliente` INT NOT NULL DEFAULT 0,
   `limiteCreditoCliente` DECIMAL(12,4) NOT NULL DEFAULT 0,
-  `Fk_Moneda_Credito` BIGINT NOT NULL,
+  `idMonedaCredito` BIGINT NOT NULL,
   `activoCliente` BOOLEAN NOT NULL DEFAULT 1,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `nitCliente` CHAR(10) NULL,
   `dpiCliente` CHAR(13) NULL,
-  CONSTRAINT `Pk_Cliente` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_Cliente` PRIMARY KEY (`idCliente`),
   CONSTRAINT `uqClientecodigo` UNIQUE (`codigoCliente`),
   CONSTRAINT `uqClientenit` UNIQUE (`nitCliente`),
   CONSTRAINT `uqClientedpi` UNIQUE (`dpiCliente`),
-  KEY `idxClienteMonedaCredito` (`Fk_Moneda_Credito`),
+  KEY `idxClienteMonedaCredito` (`idMonedaCredito`),
   CONSTRAINT `ckClienteactivoClienteBooleano` CHECK (activoCliente IN (0,1)),
   CONSTRAINT `ckClienteIdentificacionCoherente` CHECK ((tipoIdentificacionCliente = 'CF' AND nitCliente IS NULL AND dpiCliente IS NULL) OR (tipoIdentificacionCliente = 'NIT' AND nitCliente IS NOT NULL AND dpiCliente IS NULL) OR (tipoIdentificacionCliente = 'CUI' AND dpiCliente IS NOT NULL AND nitCliente IS NULL)),
-  CONSTRAINT `ckClienteCreditoNoNegativo` CHECK (diasCreditoCliente >= 0 AND limiteCreditoCliente >= 0),
-  CONSTRAINT `ckClienteIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckClienteIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckClienteCreditoNoNegativo` CHECK (diasCreditoCliente >= 0 AND limiteCreditoCliente >= 0)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblCliente`
-  ADD CONSTRAINT `Fk_Cliente_Moneda_Credito` FOREIGN KEY (`Fk_Moneda_Credito`)
+  ADD CONSTRAINT `Fk_Cliente_Moneda_Credito` FOREIGN KEY (`idMonedaCredito`)
     REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblVendedor | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7009
 CREATE TABLE `tblVendedor` (
-  `idaplicacion` INT NOT NULL DEFAULT 7009,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idVendedor` INT NOT NULL AUTO_INCREMENT,
   `codigoVendedor` VARCHAR(30) NOT NULL,
-  `Fk_Empleado_Codigo` INT NOT NULL,
+  `idEmpleado` INT NOT NULL,
   `activoVendedor` BOOLEAN NOT NULL DEFAULT 1,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_Vendedor` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_Vendedor` PRIMARY KEY (`idVendedor`),
   CONSTRAINT `uqVendedorcodigo` UNIQUE (`codigoVendedor`),
-  CONSTRAINT `uqVendedorEmpleadoCodigo` UNIQUE (`Fk_Empleado_Codigo`),
-  CONSTRAINT `ckVendedoractivoVendedorBooleano` CHECK (activoVendedor IN (0,1)),
-  CONSTRAINT `ckVendedorIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckVendedorIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `uqVendedorEmpleadoCodigo` UNIQUE (`idEmpleado`),
+  CONSTRAINT `ckVendedoractivoVendedorBooleano` CHECK (activoVendedor IN (0,1))
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblVendedor`
-  ADD CONSTRAINT `Fk_Vendedor_Empleado` FOREIGN KEY (`Fk_Empleado_Codigo`)
+  ADD CONSTRAINT `Fk_Vendedor_Empleado` FOREIGN KEY (`idEmpleado`)
     REFERENCES `tblEmpleado` (`idEmpleado`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblProductoVenta | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7009
 CREATE TABLE `tblProductoVenta` (
-  `idaplicacion` INT NOT NULL DEFAULT 7009,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL,
+  `idProductoVenta` INT NOT NULL,
   `tipoItemProductoVenta` CHAR(1) NOT NULL,
   `unidadMedidaProductoVenta` VARCHAR(30) NOT NULL,
   `tasaImpuestoProductoVenta` DECIMAL(3,2) NOT NULL DEFAULT 0,
   `activoProductoVenta` BOOLEAN NOT NULL DEFAULT 1,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ProductoVenta` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_ProductoVenta` PRIMARY KEY (`idProductoVenta`),
   CONSTRAINT `ckProductoVentatasaImpuestoProductoVentaRango` CHECK (tasaImpuestoProductoVenta BETWEEN 0 AND 0.99),
   CONSTRAINT `ckProductoVentaactivoProductoVentaBooleano` CHECK (activoProductoVenta IN (0,1)),
-  CONSTRAINT `ckProductoVentaTipoItemValido` CHECK (tipoItemProductoVenta IN ('B','S')),
-  CONSTRAINT `ckProductoVentaIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckProductoVentaIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckProductoVentaTipoItemValido` CHECK (tipoItemProductoVenta IN ('B','S'))
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblProductoVenta`
-  ADD CONSTRAINT `Fk_ProductoVenta_Producto` FOREIGN KEY (`id`)
+  ADD CONSTRAINT `Fk_ProductoVenta_Producto` FOREIGN KEY (`idProductoVenta`)
     REFERENCES `tblProducto` (`Pk_Producto`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblFormaPagoVenta | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7009
 CREATE TABLE `tblFormaPagoVenta` (
-  `idaplicacion` INT NOT NULL DEFAULT 7009,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idFormaPagoVenta` INT NOT NULL AUTO_INCREMENT,
   `codigoFormaPagoVenta` VARCHAR(30) NOT NULL,
   `nombreFormaPagoVenta` VARCHAR(100) NOT NULL,
   `requiereReferenciaFormaPagoVenta` BOOLEAN NOT NULL DEFAULT FALSE,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_FormaPagoVenta` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_FormaPagoVenta` PRIMARY KEY (`idFormaPagoVenta`),
   CONSTRAINT `uqFormaPagoVentacodigo` UNIQUE (`codigoFormaPagoVenta`),
-  CONSTRAINT `ckFormaPagoVentarequiereReferenciaFormaPagoVentaBooleano` CHECK (requiereReferenciaFormaPagoVenta IN (0,1)),
-  CONSTRAINT `ckFormaPagoVentaIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckFormaPagoVentaIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckFormaPagoVentarequiereReferenciaFormaPagoVentaBooleano` CHECK (requiereReferenciaFormaPagoVenta IN (0,1))
 ) ENGINE=InnoDB;
 
 -- tblCierreMovimientoCxCEncabezado | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7010
 CREATE TABLE `tblCierreMovimientoCxCEncabezado` (
-  `idaplicacion` INT NOT NULL DEFAULT 7010,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idCierreMovimientoCxCEncabezado` INT NOT NULL AUTO_INCREMENT,
   `numeroCierreMovimientoCxCEncabezado` VARCHAR(30) NOT NULL,
   `fechaDesdeCierreMovimientoCxCEncabezado` DATE NOT NULL,
   `fechaHastaCierreMovimientoCxCEncabezado` DATE NOT NULL,
   `fechaCorteCierreMovimientoCxCEncabezado` DATE NOT NULL,
-  `Fk_Moneda_Codigo` BIGINT NOT NULL,
+  `idMoneda` BIGINT NOT NULL,
   `tipoCierreMovimientoCxCEncabezado` VARCHAR(20) NOT NULL,
   `estadoCierreMovimientoCxCEncabezado` VARCHAR(20) NOT NULL,
   `documentosRevisadosCierreMovimientoCxCEncabezado` BOOLEAN NOT NULL DEFAULT 0,
   `pagosConciliadosCierreMovimientoCxCEncabezado` BOOLEAN NOT NULL DEFAULT 0,
   `observacionesCierreMovimientoCxCEncabezado` TEXT NULL,
-  `Fk_Usuario_Responsable` INT NOT NULL,
+  `idUsuarioResponsable` INT NOT NULL,
   `fechaConfirmacionCierreMovimientoCxCEncabezado` DATETIME NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_CierreMovimientoCxCEncabezado` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_CierreMovimientoCxCEncabezado` PRIMARY KEY (`idCierreMovimientoCxCEncabezado`),
   CONSTRAINT `uqCierreMovimientoCxCEncabezadonumero` UNIQUE (`numeroCierreMovimientoCxCEncabezado`),
-  KEY `idxCierreMovimientoCxCEncabezadoMonedaCodigofechaDesdefechaHasta` (`Fk_Moneda_Codigo`, `fechaDesdeCierreMovimientoCxCEncabezado`, `fechaHastaCierreMovimientoCxCEncabezado`),
-  KEY `idxCierreMovimientoCxCEncabezadoUsuarioResponsable` (`Fk_Usuario_Responsable`),
+  KEY `idxCierreMovimientoCxCEncabezadoMonedaCodigofechaDesdefechaHasta` (`idMoneda`, `fechaDesdeCierreMovimientoCxCEncabezado`, `fechaHastaCierreMovimientoCxCEncabezado`),
+  KEY `idxCierreMovimientoCxCEncabezadoUsuarioResponsable` (`idUsuarioResponsable`),
   CONSTRAINT `ckCierreMovimientoCxCEncabezadodocumentosRevisadosCierra3aaae2a` CHECK (documentosRevisadosCierreMovimientoCxCEncabezado IN (0,1)),
   CONSTRAINT `ckCierreMovimientoCxCEncabezadopagosConciliadosCierreMob8223bf3` CHECK (pagosConciliadosCierreMovimientoCxCEncabezado IN (0,1)),
   CONSTRAINT `ckCierreMovimientoCxCEncabezadoValoresTipoCierre` CHECK (tipoCierreMovimientoCxCEncabezado IN ('MENSUAL','ANUAL')),
   CONSTRAINT `ckCierreMovimientoCxCEncabezadoValoresEstadoCierre` CHECK (estadoCierreMovimientoCxCEncabezado IN ('BORRADOR','CONFIRMADO','ANULADO')),
-  CONSTRAINT `ckCierreMovimientoCxCEncabezadoFechasCoherentes` CHECK (fechaHastaCierreMovimientoCxCEncabezado >= fechaDesdeCierreMovimientoCxCEncabezado),
-  CONSTRAINT `ckCierreMovimientoCxCEncabezadoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckCierreMovimientoCxCEncabezadoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `ckCierreMovimientoCxCEncabezadoFechasCoherentes` CHECK (fechaHastaCierreMovimientoCxCEncabezado >= fechaDesdeCierreMovimientoCxCEncabezado)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblCierreMovimientoCxCEncabezado`
-  ADD CONSTRAINT `Fk_CierreMovimientoCxCEncabezado_Usuario_Responsable` FOREIGN KEY (`Fk_Usuario_Responsable`)
+  ADD CONSTRAINT `Fk_CierreMovimientoCxCEncabezado_Usuario_Responsable` FOREIGN KEY (`idUsuarioResponsable`)
     REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_CierreMovimientoCxCEncabezado_Moneda` FOREIGN KEY (`Fk_Moneda_Codigo`)
+  ADD CONSTRAINT `Fk_CierreMovimientoCxCEncabezado_Moneda` FOREIGN KEY (`idMoneda`)
     REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblControlPeriodoCxC | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7010
 CREATE TABLE `tblControlPeriodoCxC` (
-  `idaplicacion` INT NOT NULL DEFAULT 7010,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_Moneda_Codigo` BIGINT NOT NULL,
+  `idControlPeriodoCxC` INT NOT NULL AUTO_INCREMENT,
+  `idMoneda` BIGINT NOT NULL,
   `fechaUltimoCierreControlPeriodoCxC` DATE NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_ControlPeriodoCxC` PRIMARY KEY (`id`),
-  CONSTRAINT `uqControlPeriodoCxCClaveNegocio` UNIQUE (`Fk_Moneda_Codigo`),
-  CONSTRAINT `ckControlPeriodoCxCIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckControlPeriodoCxCIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `Pk_ControlPeriodoCxC` PRIMARY KEY (`idControlPeriodoCxC`),
+  CONSTRAINT `uqControlPeriodoCxCClaveNegocio` UNIQUE (`idMoneda`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblControlPeriodoCxC`
-  ADD CONSTRAINT `Fk_ControlPeriodoCxC_Moneda` FOREIGN KEY (`Fk_Moneda_Codigo`)
+  ADD CONSTRAINT `Fk_ControlPeriodoCxC_Moneda` FOREIGN KEY (`idMoneda`)
     REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblCuentaContableCxC | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7000
 CREATE TABLE `tblCuentaContableCxC` (
-  `idaplicacion` INT NOT NULL DEFAULT 7000,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_Moneda_Codigo` BIGINT NOT NULL,
+  `idCuentaContableCxC` INT NOT NULL AUTO_INCREMENT,
+  `idMoneda` BIGINT NOT NULL,
   `tipoCuentaContableCxC` VARCHAR(30) NOT NULL,
   `cuentaClientesCuentaContableCxC` VARCHAR(30) NOT NULL,
   `cuentaContrapartidaCuentaContableCxC` VARCHAR(30) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_CuentaContableCxC` PRIMARY KEY (`id`),
-  CONSTRAINT `uqCuentaContableCxCClaveNegocio` UNIQUE (`Fk_Moneda_Codigo`, `tipoCuentaContableCxC`),
-  CONSTRAINT `ckCuentaContableCxCIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckCuentaContableCxCIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `Pk_CuentaContableCxC` PRIMARY KEY (`idCuentaContableCxC`),
+  CONSTRAINT `uqCuentaContableCxCClaveNegocio` UNIQUE (`idMoneda`, `tipoCuentaContableCxC`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblCuentaContableCxC`
-  ADD CONSTRAINT `Fk_CuentaContableCxC_Moneda` FOREIGN KEY (`Fk_Moneda_Codigo`)
+  ADD CONSTRAINT `Fk_CuentaContableCxC_Moneda` FOREIGN KEY (`idMoneda`)
     REFERENCES `tblMoneda` (`Pk_Moneda`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblCierreSaldoCliente | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7010
 CREATE TABLE `tblCierreSaldoCliente` (
-  `idaplicacion` INT NOT NULL DEFAULT 7010,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_CierreMovimientoCxCEncabezado_Codigo` INT NOT NULL,
-  `Fk_Cliente_Codigo` INT NOT NULL,
+  `idCierreSaldoCliente` INT NOT NULL AUTO_INCREMENT,
+  `idCierreMovimientoCxCEncabezado` INT NOT NULL,
+  `idCliente` INT NOT NULL,
   `codigoClienteCierreSaldoCliente` VARCHAR(30) NOT NULL,
   `nombreClienteCierreSaldoCliente` VARCHAR(100) NOT NULL,
   `saldoAnteriorCierreSaldoCliente` DECIMAL(12,4) NOT NULL,
@@ -1071,54 +933,46 @@ CREATE TABLE `tblCierreSaldoCliente` (
   `saldoActualCierreSaldoCliente` DECIMAL(12,4) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_CierreSaldoCliente` PRIMARY KEY (`Fk_CierreMovimientoCxCEncabezado_Codigo`, `id`),
-  KEY `idxCierreSaldoClienteClienteCodigo` (`Fk_Cliente_Codigo`),
-  CONSTRAINT `uqCierreSaldoClienteClaveNegocio` UNIQUE (`Fk_CierreMovimientoCxCEncabezado_Codigo`, `Fk_Cliente_Codigo`),
-  CONSTRAINT `ckCierreSaldoClienteIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckCierreSaldoClienteIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015),
-  CONSTRAINT `uqCierreSaldoClienteId` UNIQUE (`id`)
+  CONSTRAINT `Pk_CierreSaldoCliente` PRIMARY KEY (`idCierreMovimientoCxCEncabezado`, `idCierreSaldoCliente`),
+  KEY `idxCierreSaldoClienteClienteCodigo` (`idCliente`),
+  CONSTRAINT `uqCierreSaldoClienteClaveNegocio` UNIQUE (`idCierreMovimientoCxCEncabezado`, `idCliente`),
+  CONSTRAINT `uqCierreSaldoClienteId` UNIQUE (`idCierreSaldoCliente`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblCierreSaldoCliente`
-  ADD CONSTRAINT `Fk_CierreSaldoCliente_CierreMovimientoCxCEncabezado` FOREIGN KEY (`Fk_CierreMovimientoCxCEncabezado_Codigo`)
-    REFERENCES `tblCierreMovimientoCxCEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_CierreSaldoCliente_Cliente` FOREIGN KEY (`Fk_Cliente_Codigo`)
-    REFERENCES `tblCliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_CierreSaldoCliente_CierreMovimientoCxCEncabezado` FOREIGN KEY (`idCierreMovimientoCxCEncabezado`)
+    REFERENCES `tblCierreMovimientoCxCEncabezado` (`idCierreMovimientoCxCEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_CierreSaldoCliente_Cliente` FOREIGN KEY (`idCliente`)
+    REFERENCES `tblCliente` (`idCliente`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblTrasladoCxCEncabezado | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7010
 CREATE TABLE `tblTrasladoCxCEncabezado` (
-  `idaplicacion` INT NOT NULL DEFAULT 7010,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_CierreMovimientoCxCEncabezado_Codigo` INT NOT NULL,
+  `idTrasladoCxCEncabezado` INT NOT NULL AUTO_INCREMENT,
+  `idCierreMovimientoCxCEncabezado` INT NOT NULL,
   `claveIntegracionTrasladoCxCEncabezado` VARCHAR(80) NOT NULL,
   `estadoTrasladoCxCEncabezado` VARCHAR(20) NOT NULL DEFAULT 'PENDIENTE',
   `referenciaContableTrasladoCxCEncabezado` VARCHAR(100) NULL,
-  `Fk_Usuario_Codigo` INT NOT NULL,
+  `idUsuario` INT NOT NULL,
   `fechaConfirmacionTrasladoCxCEncabezado` DATETIME NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_TrasladoCxCEncabezado` PRIMARY KEY (`id`),
+  CONSTRAINT `Pk_TrasladoCxCEncabezado` PRIMARY KEY (`idTrasladoCxCEncabezado`),
   CONSTRAINT `uqTrasladoCxCEncabezadoclaveIntegracion` UNIQUE (`claveIntegracionTrasladoCxCEncabezado`),
-  KEY `idxTrasladoCxCEncabezadoUsuarioCodigo` (`Fk_Usuario_Codigo`),
+  KEY `idxTrasladoCxCEncabezadoUsuarioCodigo` (`idUsuario`),
   CONSTRAINT `ckTrasladoCxCEncabezadoValoresEstado` CHECK (estadoTrasladoCxCEncabezado IN ('PENDIENTE','PREPARADO','ENVIADO','CONFIRMADO','RECHAZADO')),
-  CONSTRAINT `uqTrasladoCxCEncabezadoClaveNegocio` UNIQUE (`Fk_CierreMovimientoCxCEncabezado_Codigo`),
-  CONSTRAINT `ckTrasladoCxCEncabezadoIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckTrasladoCxCEncabezadoIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015)
+  CONSTRAINT `uqTrasladoCxCEncabezadoClaveNegocio` UNIQUE (`idCierreMovimientoCxCEncabezado`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblTrasladoCxCEncabezado`
-  ADD CONSTRAINT `Fk_TrasladoCxCEncabezado_CierreMovimientoCxCEncabezado` FOREIGN KEY (`Fk_CierreMovimientoCxCEncabezado_Codigo`)
-    REFERENCES `tblCierreMovimientoCxCEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_TrasladoCxCEncabezado_Usuario` FOREIGN KEY (`Fk_Usuario_Codigo`)
+  ADD CONSTRAINT `Fk_TrasladoCxCEncabezado_CierreMovimientoCxCEncabezado` FOREIGN KEY (`idCierreMovimientoCxCEncabezado`)
+    REFERENCES `tblCierreMovimientoCxCEncabezado` (`idCierreMovimientoCxCEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_TrasladoCxCEncabezado_Usuario` FOREIGN KEY (`idUsuario`)
     REFERENCES `tblUsuario` (`idUsuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblTrasladoCxCDetalle | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7010
 CREATE TABLE `tblTrasladoCxCDetalle` (
-  `idaplicacion` INT NOT NULL DEFAULT 7010,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_TrasladoCxCEncabezado_Codigo` INT NOT NULL,
+  `idTrasladoCxCDetalle` INT NOT NULL AUTO_INCREMENT,
+  `idTrasladoCxCEncabezado` INT NOT NULL,
   `numeroLineaTrasladoCxCDetalle` INT NOT NULL,
   `cuentaTrasladoCxCDetalle` VARCHAR(30) NOT NULL,
   `descripcionTrasladoCxCDetalle` VARCHAR(100) NOT NULL,
@@ -1126,43 +980,37 @@ CREATE TABLE `tblTrasladoCxCDetalle` (
   `haberTrasladoCxCDetalle` DECIMAL(12,4) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_TrasladoCxCDetalle` PRIMARY KEY (`Fk_TrasladoCxCEncabezado_Codigo`, `id`),
+  CONSTRAINT `Pk_TrasladoCxCDetalle` PRIMARY KEY (`idTrasladoCxCEncabezado`, `idTrasladoCxCDetalle`),
   CONSTRAINT `ckTrasladoCxCDetalleDebeHaberNoNegativos` CHECK (debeTrasladoCxCDetalle >= 0 AND haberTrasladoCxCDetalle >= 0),
-  CONSTRAINT `uqTrasladoCxCDetalleClaveNegocio` UNIQUE (`Fk_TrasladoCxCEncabezado_Codigo`, `numeroLineaTrasladoCxCDetalle`),
-  CONSTRAINT `ckTrasladoCxCDetalleIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckTrasladoCxCDetalleIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015),
-  CONSTRAINT `uqTrasladoCxCDetalleId` UNIQUE (`id`)
+  CONSTRAINT `uqTrasladoCxCDetalleClaveNegocio` UNIQUE (`idTrasladoCxCEncabezado`, `numeroLineaTrasladoCxCDetalle`),
+  CONSTRAINT `uqTrasladoCxCDetalleId` UNIQUE (`idTrasladoCxCDetalle`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblTrasladoCxCDetalle`
-  ADD CONSTRAINT `Fk_TrasladoCxCDetalle_TrasladoCxCEncabezado` FOREIGN KEY (`Fk_TrasladoCxCEncabezado_Codigo`)
-    REFERENCES `tblTrasladoCxCEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_TrasladoCxCDetalle_TrasladoCxCEncabezado` FOREIGN KEY (`idTrasladoCxCEncabezado`)
+    REFERENCES `tblTrasladoCxCEncabezado` (`idTrasladoCxCEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- tblCierreMovimientoCxCDetalle | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7010
 CREATE TABLE `tblCierreMovimientoCxCDetalle` (
-  `idaplicacion` INT NOT NULL DEFAULT 7010,
-  `idmodulo` INT NOT NULL DEFAULT 7000,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Fk_CierreMovimientoCxCEncabezado_Codigo` INT NOT NULL,
-  `Fk_FacturaEncabezado_Codigo` INT NOT NULL,
+  `idCierreMovimientoCxCDetalle` INT NOT NULL AUTO_INCREMENT,
+  `idCierreMovimientoCxCEncabezado` INT NOT NULL,
+  `idFacturaEncabezado` INT NOT NULL,
   `saldoInicialCierreMovimientoCxCDetalle` DECIMAL(12,4) NOT NULL,
   `cargosPeriodoCierreMovimientoCxCDetalle` DECIMAL(12,4) NOT NULL,
   `abonosPeriodoCierreMovimientoCxCDetalle` DECIMAL(12,4) NOT NULL,
   `saldoFinalCierreMovimientoCxCDetalle` DECIMAL(12,4) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT `Pk_CierreMovimientoCxCDetalle` PRIMARY KEY (`Fk_CierreMovimientoCxCEncabezado_Codigo`, `id`),
-  CONSTRAINT `uqCierreMovimientoCxCDetalleCierreMovimientoCxCEncabeza4f1c6502` UNIQUE (`Fk_CierreMovimientoCxCEncabezado_Codigo`, `Fk_FacturaEncabezado_Codigo`),
-  KEY `idxCierreMovimientoCxCDetalleFacturaEncabezadoCodigo` (`Fk_FacturaEncabezado_Codigo`),
-  CONSTRAINT `ckCierreMovimientoCxCDetalleIdModulo` CHECK (`idmodulo` = 7000),
-  CONSTRAINT `ckCierreMovimientoCxCDetalleIdAplicacion` CHECK (`idaplicacion` BETWEEN 7000 AND 7015),
-  CONSTRAINT `uqCierreMovimientoCxCDetalleId` UNIQUE (`id`)
+  CONSTRAINT `Pk_CierreMovimientoCxCDetalle` PRIMARY KEY (`idCierreMovimientoCxCEncabezado`, `idCierreMovimientoCxCDetalle`),
+  CONSTRAINT `uqCierreMovimientoCxCDetalleCierreMovimientoCxCEncabeza4f1c6502` UNIQUE (`idCierreMovimientoCxCEncabezado`, `idFacturaEncabezado`),
+  KEY `idxCierreMovimientoCxCDetalleFacturaEncabezadoCodigo` (`idFacturaEncabezado`),
+  CONSTRAINT `uqCierreMovimientoCxCDetalleId` UNIQUE (`idCierreMovimientoCxCDetalle`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `tblCierreMovimientoCxCDetalle`
-  ADD CONSTRAINT `Fk_CierreMovimientoCxCDetalle_CierreMovimientoCxCEncabezado` FOREIGN KEY (`Fk_CierreMovimientoCxCEncabezado_Codigo`)
-    REFERENCES `tblCierreMovimientoCxCEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `Fk_CierreMovimientoCxCDetalle_FacturaEncabezado` FOREIGN KEY (`Fk_FacturaEncabezado_Codigo`)
-    REFERENCES `tblFacturaEncabezado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Fk_CierreMovimientoCxCDetalle_CierreMovimientoCxCEncabezado` FOREIGN KEY (`idCierreMovimientoCxCEncabezado`)
+    REFERENCES `tblCierreMovimientoCxCEncabezado` (`idCierreMovimientoCxCEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `Fk_CierreMovimientoCxCDetalle_FacturaEncabezado` FOREIGN KEY (`idFacturaEncabezado`)
+    REFERENCES `tblFacturaEncabezado` (`idFacturaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 SET FOREIGN_KEY_CHECKS = @ventas_fk_checks_anterior;
