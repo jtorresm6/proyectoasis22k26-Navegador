@@ -3,16 +3,8 @@
  * ============================================================================
  * MÓDULO: LOGÍSTICA
  * FORMULARIO: FrmMDILogistica
- *
  * DESCRIPCIÓN:
- * Formulario principal del módulo de Logística, encargado de gestionar la
- * navegación y el acceso a los diferentes submódulos del sistema, incluyendo
- * inventario, catálogo de productos, ubicaciones, transporte, traslados,
- * auditoría y cierre de inventario.
- *
- * Implementa métodos estandarizados para abrir formularios secundarios,
- * actualizar la información del usuario activo y administrar los eventos
- * de los botones del menú principal.
+ * Formulario principal con navegación mediante menús desplegables.
  *
  * RESPONSABLE: VELVETH SARAÍ CHAVEZ MEJÍA
  * CARNÉ: 0901 23 6269
@@ -23,22 +15,12 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-// Formularios del módulo de Inventario.
+// Formularios de los submódulos.
 using CapaVista_Inventario_Logistica.Formularios;
-
-// Formularios del módulo de Traslados.
 using CapaVista_Traslados_Logistica.Formularios;
-
-// Formularios del módulo de Muestreo y Auditoría.
 using CapaVista_MuestreoAuditoria_Logistica.Formularios;
-
-// Formularios del módulo de Cierre de Inventario.
 using CapaVista_CierreInventario_Logistica.Formularios;
-
-// Formularios del módulo de Enlaces.
 using CapaVista_Enlace_Logistica.Formas;
-
-// Formularios del módulo de Transporte Interno.
 using CapaVista_TransporteInterno_Logistica.Formularios;
 
 namespace CapaVista_Logistica.Formularios
@@ -52,14 +34,18 @@ namespace CapaVista_Logistica.Formularios
         public FrmMDILogistica()
         {
             InitializeComponent();
+
+            // Ajustar el contenedor a la ventana.
+            LogisticaPnlMDI.Dock = DockStyle.Fill;
+
+            // Configurar los menús desplegables.
+            MetPanelesSubMenu();
         }
 
         // ============================================
-        // MÉTODOS DEL MDI
+        // ACTUALIZAR INFORMACIÓN DEL USUARIO
         // ============================================
 
-        // Actualizar información del usuario activo.
-        // Método requerido por el componente de Seguridad.
         public void LogisticaMetActualizarInfoUsuario(
             string Nombre, string Rol)
         {
@@ -70,161 +56,238 @@ namespace CapaVista_Logistica.Formularios
                 LogisticaLblUsuario.Right + 30;
         }
 
-        // Procedimiento para abrir formularios secundarios.
-        public void LogisticaMetAbrirFormulario(Form Formulario)
-        {
-            using (Formulario)
-            {
-                Formulario.StartPosition =
-                    FormStartPosition.CenterParent;
+        // ============================================
+        // INICIALIZAR SUBMENÚS
+        // ============================================
 
-                Formulario.ShowDialog(this);
+        private void MetPanelesSubMenu()
+        {
+            // Ocultar todos los submenús al iniciar.
+            MetEsconderSubMenu();
+
+            // Habilitar el desplazamiento vertical.
+            LogisticaPnlNavegador.AutoScroll = true;
+
+            // Eliminar la altura fija de desplazamiento.
+            LogisticaPnlNavegador.AutoScrollMinSize =
+                Size.Empty;
+
+            LogisticaPnlNavegador.AutoScrollMargin =
+                new Size(0, 10);
+
+            // Ocultar el panel final porque está vacío.
+            LogistincaPnlMenuFin.Visible = false;
+
+            // Configurar eventos de los menús principales.
+            // Mantenimientos ya tiene su evento en Designer.
+
+            LogisticaBtnMenuGestionInventario.Click +=
+                (s, e) => metShowSubMenu(
+                    LogisticaPnlMenuGestionInventario);
+
+            LogisticaBtnMenuCierreInventario.Click +=
+                (s, e) => metShowSubMenu(
+                    LogisticaPnlMenuCierreInventario);
+
+            LogisticaBtnMenuGestionTraslados.Click +=
+                (s, e) => metShowSubMenu(
+                    LogisticaBtnMenuTraslados);
+
+            LogisticaBtnMenuGestionViajes.Click +=
+                (s, e) => metShowSubMenu(
+                    LogisticaPnlMenuGesionViajes);
+
+            LogisticaBtnMenuTransporteExterno.Click +=
+                (s, e) => metShowSubMenu(
+                    LogisticaPnlMenuTransporteExterno);
+
+            LogisticaBtnMenuAdministracion.Click +=
+                (s, e) => metShowSubMenu(
+                    LogisticaPnlMenuAdministracionCostos);
+
+            // Organizar los botones inicialmente.
+            MetOrganizarMenu();
+        }
+
+        // ============================================
+        // OCULTAR TODOS LOS SUBMENÚS
+        // ============================================
+
+        private void MetEsconderSubMenu()
+        {
+            LogisticaPnlMenuMantenimientos.Visible = false;
+
+            LogisticaPnlMenuGestionInventario.Visible = false;
+
+            LogisticaPnlMenuCierreInventario.Visible = false;
+
+            LogisticaBtnMenuTraslados.Visible = false;
+
+            LogisticaPnlMenuGesionViajes.Visible = false;
+
+            LogisticaPnlMenuTransporteExterno.Visible = false;
+
+            LogisticaPnlMenuAdministracionCostos.Visible = false;
+        }
+
+        // ============================================
+        // MOSTRAR U OCULTAR SUBMENÚ
+        // ============================================
+
+        private void metShowSubMenu(Panel subMenu)
+        {
+            // Verificar si el submenú estaba cerrado.
+            bool abrirMenu = !subMenu.Visible;
+
+            // Cerrar los demás submenús.
+            MetEsconderSubMenu();
+
+            // Abrir únicamente el menú seleccionado.
+            subMenu.Visible = abrirMenu;
+
+            // Reacomodar todos los botones.
+            MetOrganizarMenu();
+        }
+
+        // ============================================
+        // ORGANIZAR LOS MENÚS VERTICALMENTE
+        // ============================================
+
+        private void MetOrganizarMenu()
+        {
+            // Guardar el desplazamiento actual.
+            int scrollActual = Math.Max(
+                0,
+                -LogisticaPnlNavegador.AutoScrollPosition.Y);
+
+            LogisticaPnlNavegador.SuspendLayout();
+
+            // Volver temporalmente al inicio.
+            LogisticaPnlNavegador.AutoScrollPosition =
+                Point.Empty;
+
+            // Iniciar debajo del logotipo.
+            int posicionY = LogisticaPbLogo.Bottom + 6;
+
+            // 1. Mantenimientos.
+            MetPosicionarSeccion(
+                LogisticaBtnMenuMantenimientos,
+                LogisticaPnlMenuMantenimientos,
+                ref posicionY);
+
+            // 2. Gestión de Inventario.
+            MetPosicionarSeccion(
+                LogisticaBtnMenuGestionInventario,
+                LogisticaPnlMenuGestionInventario,
+                ref posicionY);
+
+            // 3. Cierre y Auditoría.
+            MetPosicionarSeccion(
+                LogisticaBtnMenuCierreInventario,
+                LogisticaPnlMenuCierreInventario,
+                ref posicionY);
+
+            // 4. Gestión de Traslados.
+            MetPosicionarSeccion(
+                LogisticaBtnMenuGestionTraslados,
+                LogisticaBtnMenuTraslados,
+                ref posicionY);
+
+            // 5. Gestión de Viajes.
+            MetPosicionarSeccion(
+                LogisticaBtnMenuGestionViajes,
+                LogisticaPnlMenuGesionViajes,
+                ref posicionY);
+
+            // 6. Transporte Externo.
+            MetPosicionarSeccion(
+                LogisticaBtnMenuTransporteExterno,
+                LogisticaPnlMenuTransporteExterno,
+                ref posicionY);
+
+            // 7. Administración.
+            MetPosicionarSeccion(
+                LogisticaBtnMenuAdministracion,
+                LogisticaPnlMenuAdministracionCostos,
+                ref posicionY);
+
+            // 8. Cerrar sesión.
+            LogisticaBtnCerrarSesion.Top = posicionY;
+
+            posicionY +=
+                LogisticaBtnCerrarSesion.Height + 12;
+
+            // Actualizar el área desplazable.
+            LogisticaPnlNavegador.AutoScrollMinSize =
+                new Size(0, posicionY);
+
+            LogisticaPnlNavegador.ResumeLayout(true);
+
+            // Restaurar el desplazamiento si es posible.
+            LogisticaPnlNavegador.AutoScrollPosition =
+                new Point(0, scrollActual);
+        }
+
+        // ============================================
+        // POSICIONAR UNA SECCIÓN DEL MENÚ
+        // ============================================
+
+        private void MetPosicionarSeccion(
+            Button boton,
+            Panel subMenu,
+            ref int posicionY)
+        {
+            // Posicionar el botón principal.
+            boton.Top = posicionY;
+
+            // Avanzar según la altura del botón.
+            posicionY += boton.Height + 6;
+
+            // Posicionar el submenú.
+            subMenu.Top = posicionY;
+
+            // Solamente reservar espacio si está visible.
+            if (subMenu.Visible)
+            {
+                posicionY += subMenu.Height + 6;
             }
         }
 
         // ============================================
-        // EVENTOS DE BOTONES
-        // ============================================
-
-        // ============================================
-        // UBICACIONES / SUCURSALES
-        // ============================================
-
-        public void LogisticaBtnUbicaciones_Click(
-            object sender, EventArgs e)
-        {
-            LogisticaMetAbrirFormulario(
-                new FrmMantenimientoSucursales());
-        }
-
-        // ============================================
-        // CATÁLOGO DE PRODUCTOS
+        // EVENTO DEL MENÚ MANTENIMIENTOS
         // ============================================
 
         public void LogisticaBtnCatalogo_Click(
             object sender, EventArgs e)
         {
-            LogisticaMetAbrirFormulario(
-                new FrmMantenimientoProducto());
-        }
-
-        // ============================================
-        // INVENTARIO / STOCK
-        // ============================================
-
-        public void LogisticaBtnInventario_Click(
-            object sender, EventArgs e)
-        {
-            LogisticaMetAbrirFormulario(
-                new FrmMantenimientoStock());
-        }
-
-        // ============================================
-        // GESTIÓN DE TRANSPORTE
-        // ============================================
-
-        private void LogisticaBtnTransporte_Click(
-            object sender, EventArgs e)
-        {
-            LogisticaMetAbrirFormulario(
-                new FrmTipoTraslado());
-        }
-
-        // ============================================
-        // TRASLADOS
-        // ============================================
-
-        public void LogisticaBtnTraslado_Click(
-            object sender, EventArgs e)
-        {
-            LogisticaMetAbrirFormulario(
-                new FrmTraslados());
-        }
-
-        // ============================================
-        // AUDITORÍA DE INVENTARIO
-        // ============================================
-
-        public void LogisticaBtnAuditoria_Click(
-            object sender, EventArgs e)
-        {
-            LogisticaMetAbrirFormulario(
-                new FrmAuditoriaInventario());
-        }
-
-        // ============================================
-        // CIERRE DE INVENTARIO
-        // ============================================
-
-        public void LogisticaBtnCierredeInventario_Click(
-            object sender, EventArgs e)
-        {
-            LogisticaMetAbrirFormulario(
-                new FrmCierreInventario());
-        }
-
-        // ============================================
-        // ENLACES
-        // ============================================
-
-        private void LogisticaBtnEnlace_Click(
-            object sender, EventArgs e)
-        {
-            LogisticaMetAbrirFormulario(
-                new Frm_Solicitud_Pago());
-        }
-
-        // ============================================
-        // CERRAR SESIÓN
-        // ============================================
-
-        public void LogisticaBtnCerrarSesion_Click(
-            object sender, EventArgs e)
-        {
-            DialogResult Resultado = MessageBox.Show(
-                "¿Seguro que deseas cerrar sesión?",
-                "Cerrar sesión",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (Resultado == DialogResult.Yes)
-            {
-                this.Close();
-            }
+            metShowSubMenu(
+                LogisticaPnlMenuMantenimientos);
         }
 
         // ============================================
         // BOTÓN HAMBURGUESA
-        // EXPANDIR / CONTRAER MENÚ
         // ============================================
 
         public void LogisticaBtnHamburguesa_Click(
             object sender, EventArgs e)
         {
-            if (LogisticaPnlNavegador.Width == 270)
+            if (LogisticaPnlNavegador.Width > 64)
             {
-                // ====================================
-                // CONTRAER MENÚ LATERAL
-                // ====================================
-
+                // Contraer el menú lateral.
                 LogisticaPnlNavegador.Width = 64;
 
-                // Reubicar panel principal.
                 LogisticaPnlBanner.Location =
                     new Point(73, 34);
 
-                // Reubicar botón hamburguesa.
                 LogisticaBtnHamburguesa.Location =
                     new Point(73, 8);
 
-                // Reubicar información del usuario.
                 LogisticaLblTextoUsuario.Location =
                     new Point(128, 8);
 
                 LogisticaLblUsuario.Location =
                     new Point(228, 9);
 
-                // Reubicar información del rol.
                 LogisticaLblTextoRol.Location =
                     new Point(500, 9);
 
@@ -233,34 +296,37 @@ namespace CapaVista_Logistica.Formularios
             }
             else
             {
-                // ====================================
-                // EXPANDIR MENÚ LATERAL
-                // ====================================
+                // Expandir el menú lateral.
+                LogisticaPnlNavegador.Width = 273;
 
-                LogisticaPnlNavegador.Width = 270;
-
-                // Restaurar panel principal.
                 LogisticaPnlBanner.Location =
                     new Point(279, 34);
 
-                // Restaurar botón hamburguesa.
                 LogisticaBtnHamburguesa.Location =
                     new Point(279, 8);
 
-                // Restaurar información del usuario.
                 LogisticaLblTextoUsuario.Location =
                     new Point(334, 8);
 
                 LogisticaLblUsuario.Location =
                     new Point(434, 9);
 
-                // Restaurar información del rol.
                 LogisticaLblTextoRol.Location =
                     new Point(706, 9);
 
                 LogisticaLblRolUsuario.Location =
                     new Point(752, 9);
             }
+        }
+
+        // ============================================
+        // EVENTO DEL PANEL NAVEGADOR
+        // ============================================
+
+        private void LogisticaPnlNavegador_Paint(
+            object sender, PaintEventArgs e)
+        {
+            // Sin implementación.
         }
     }
 }
