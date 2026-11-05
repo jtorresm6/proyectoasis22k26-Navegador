@@ -84,4 +84,9 @@
       <Link>Presentacion\ClsHerramientasVentas.cs</Link>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Formularios\FrmCotizacionVentas.Ayuda.cs"><DependentUpon>FrmCotizacionVentas.cs</DependentUpon></Compile>
+    <Compile Include="..\..\VentasYCxC\CapaVista_Ventas\Presentacion\ClsAyudaVentas.cs"><Link>Presentacion\ClsAyudaVentas.cs</Link></Compile>
+    <EmbeddedResource Include="..\..\..\..\..\..\ayuda\modulos\ventas\Cotizaciones.chm"><Link>Ayudas\Cotizaciones.chm</Link><LogicalName>CapaVista_Cotizaciones.Ayudas.Cotizaciones.chm</LogicalName></EmbeddedResource>
+  </ItemGroup>
 </Project>

@@ -49,7 +49,6 @@ set "VENTAS_RESET=%VENTAS_ESC%[0m"
 :COMPILAR
 set "VENTAS_RESULT=2"
 set "VENTAS_DURACION=No iniciada"
-set "VENTAS_LOG=%VENTAS_BUILD%logs\build_ventas_%VENTAS_CONFIG%.log"
 set "VENTAS_SALIDA=%VENTAS_ROOT%Ejecutable_Ventas\Ejecutable_Ventas\bin\%VENTAS_CONFIG%"
 set "VENTAS_EJECUTABLE=%VENTAS_SALIDA%\Ejecucion_Ventas.exe"
 call :ENCABEZADO
@@ -68,8 +67,6 @@ if not exist "%VENTAS_BUILD%build_ventas.proj" goto SIN_PROYECTO
 if not exist "%VENTAS_BUILD%build_componentes_ventas.proj" goto SIN_PROYECTO
 if not exist "%VENTAS_BUILD%build_componentes_ventas.targets" goto SIN_PROYECTO
 if not exist "%VENTAS_BIBLIOTECAS%VentasYCxC\CapaModelo_Ventas\CapaModelo_Ventas.csproj" goto SIN_BIBLIOTECAS
-if not exist "%VENTAS_BUILD%logs" mkdir "%VENTAS_BUILD%logs"
-if not exist "%VENTAS_BUILD%logs" goto SIN_LOGS
 echo         MSBuild disponible.
 echo   %VENTAS_MORADO%[2/2]%VENTAS_RESET% Compilando soluciones y reuniendo las DLL...
 echo         %VENTAS_GRIS%Solo se recompilan los proyectos que cambiaron.%VENTAS_RESET%
@@ -78,7 +75,7 @@ echo.
 set "VENTAS_INICIO=%TIME: =0%"
 pushd "%VENTAS_BUILD%"
 if errorlevel 1 goto SIN_DIRECTORIO
-"%VENTAS_MSBUILD%" "%VENTAS_BUILD%build_ventas.proj" /m /t:Compilar /p:Configuration=%VENTAS_CONFIG% /nologo /v:minimal /clp:Summary /fl "/flp:logfile=%VENTAS_LOG%;verbosity=normal"
+"%VENTAS_MSBUILD%" "%VENTAS_BUILD%build_ventas.proj" /m /t:Compilar /p:Configuration=%VENTAS_CONFIG% /nologo /v:minimal /clp:Summary
 set "VENTAS_RESULT=%ERRORLEVEL%"
 popd
 call :CALCULAR_DURACION
@@ -94,11 +91,6 @@ goto RESUMEN
 :SIN_PROYECTO
 echo.
 echo   %VENTAS_ROJO%[!] Falta un archivo del compilador de Ventas. Copie el repositorio completo.%VENTAS_RESET%
-goto RESUMEN
-
-:SIN_LOGS
-echo.
-echo   %VENTAS_ROJO%[!] No se pudo preparar la carpeta de logs.%VENTAS_RESET%
 goto RESUMEN
 
 :SIN_BIBLIOTECAS
@@ -129,8 +121,7 @@ echo   %VENTAS_DORADO%APLICACION%VENTAS_RESET%
 echo   Ejecutable_Ventas\Ejecutable_Ventas\bin\%VENTAS_CONFIG%\Ejecucion_Ventas.exe
 echo   Inicio: login de Seguridad con seleccion de modulo habilitada.
 echo.
-echo   %VENTAS_DORADO%LOG DE COMPILACION%VENTAS_RESET%
-echo   Compilacion_Ventas\logs\build_ventas_%VENTAS_CONFIG%.log
+echo   Los mensajes de compilacion se muestran solo en esta consola.
 echo   %VENTAS_MORADO%------------------------------------------------------------------------%VENTAS_RESET%
 if "%VENTAS_SINPAUSA%"=="1" goto SALIR
 
@@ -138,12 +129,11 @@ if "%VENTAS_SINPAUSA%"=="1" goto SALIR
 echo.
 echo   %VENTAS_DORADO%[R]%VENTAS_RESET% Repetir compilacion     %VENTAS_DORADO%[C]%VENTAS_RESET% Cambiar Debug / Release
 if "%VENTAS_RESULT%"=="0" echo   %VENTAS_DORADO%[A]%VENTAS_RESET% Abrir Ventas (login de Seguridad)
-echo   %VENTAS_DORADO%[L]%VENTAS_RESET% Ver log                 %VENTAS_DORADO%[S]%VENTAS_RESET% Salir
+echo   %VENTAS_DORADO%[S]%VENTAS_RESET% Salir
 echo.
-choice /c RCALS /n /m "  Elige una opcion: "
+choice /c RCAS /n /m "  Elige una opcion: "
 if errorlevel 255 goto SALIR
-if errorlevel 5 goto SALIR
-if errorlevel 4 goto VER_LOG
+if errorlevel 4 goto SALIR
 if errorlevel 3 goto ABRIR_APLICACION
 if errorlevel 2 goto CAMBIAR_PERFIL
 if errorlevel 1 goto COMPILAR
@@ -174,15 +164,6 @@ if not exist "%VENTAS_EJECUTABLE%" (
     goto MENU
 )
 start "" /d "%VENTAS_SALIDA%" "%VENTAS_EJECUTABLE%"
-goto MENU
-
-:VER_LOG
-if not exist "%VENTAS_LOG%" (
-    echo.
-    echo   %VENTAS_GRIS%Todavia no hay un log para este perfil.%VENTAS_RESET%
-    goto MENU
-)
-start "" notepad.exe "%VENTAS_LOG%"
 goto MENU
 
 :SALIR

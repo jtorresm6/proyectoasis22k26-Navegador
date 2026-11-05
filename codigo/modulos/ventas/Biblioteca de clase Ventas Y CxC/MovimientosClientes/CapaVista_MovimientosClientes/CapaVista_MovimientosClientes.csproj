@@ -89,4 +89,9 @@
       <Link>Presentacion\ClsHerramientasVentas.cs</Link>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Formularios\FrmMovimientosClientesVentas.Ayuda.cs"><DependentUpon>FrmMovimientosClientesVentas.cs</DependentUpon></Compile>
+    <Compile Include="..\..\VentasYCxC\CapaVista_Ventas\Presentacion\ClsAyudaVentas.cs"><Link>Presentacion\ClsAyudaVentas.cs</Link></Compile>
+    <EmbeddedResource Include="..\..\..\..\..\..\ayuda\modulos\ventas\MovimientosClientes.chm"><Link>Ayudas\MovimientosClientes.chm</Link><LogicalName>CapaVista_MovimientosClientes.Ayudas.MovimientosClientes.chm</LogicalName></EmbeddedResource>
+  </ItemGroup>
 </Project>

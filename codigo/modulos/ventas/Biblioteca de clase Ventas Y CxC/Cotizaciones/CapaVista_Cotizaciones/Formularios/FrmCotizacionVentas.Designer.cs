@@ -1,4 +1,4 @@
-﻿/*
+/*
  * INICIO DEL CÓDIGO — Ventas y cuentas por cobrar
  * Jose Javier Torres Martínez | Carné: 0901-23-1091
  * Asignación: Matthew, Jose y Natali | Encargado: Matthew Andreé Juárez Xoy
@@ -116,6 +116,7 @@ namespace CapaVista_Cotizaciones
             this.VentasLblAccionQuitarProducto.Font = new System.Drawing.Font("Tahoma", 8F);
             this.VentasLblAccionQuitarProducto.ForeColor = System.Drawing.Color.FromArgb(59,29,74);
             this.Controls.Add(this.VentasLblAccionQuitarProducto);
+            this.VentasBtnAyuda = new System.Windows.Forms.Button();
             this.SuspendLayout();
             this.VentasLblCotTipoCambio = new System.Windows.Forms.Label();
             this.VentasNudCotTipoCambio = new System.Windows.Forms.NumericUpDown();
@@ -767,6 +768,22 @@ namespace CapaVista_Cotizaciones
             ((System.ComponentModel.ISupportInitialize)(this.VentasNudCotCantidad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasNudCotDescuento)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasDgvCotProductos)).EndInit();
+            this.VentasBtnAyuda.Name = "VentasBtnAyuda";
+            this.VentasBtnAyuda.Location = new System.Drawing.Point(928, 582);
+            this.VentasBtnAyuda.Size = new System.Drawing.Size(64, 64);
+            this.VentasBtnAyuda.BackgroundImage = global::CapaVista_Cotizaciones.Properties.Resources.BotonOriginalAyudaVentas;
+            this.VentasBtnAyuda.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VentasBtnAyuda.BackColor = System.Drawing.Color.FromArgb(123, 63, 147);
+            this.VentasBtnAyuda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnAyuda.FlatAppearance.BorderSize = 0;
+            this.VentasBtnAyuda.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.VentasBtnAyuda.AccessibleName = "Ayuda";
+            this.VentasBtnAyuda.AccessibleDescription = "Ayuda de Cotizaciones (F1)";
+            this.VentasBtnAyuda.TabIndex = 200;
+            this.VentasBtnAyuda.UseVisualStyleBackColor = false;
+            this.VentasBtnAyuda.Click += new System.EventHandler(this.VentasMetAyudaClick);
+            this.VentasTtpAcciones.SetToolTip(this.VentasBtnAyuda, "Ayuda de Cotizaciones (F1)");
+            this.Controls.Add(this.VentasBtnAyuda);
             this.ResumeLayout(false);
         }
         #endregion
@@ -849,5 +866,6 @@ namespace CapaVista_Cotizaciones
         internal System.Windows.Forms.Button VentasBtnCotCerrar;
         internal System.Windows.Forms.Label VentasLblAccionAnularCotizacion;
         internal System.Windows.Forms.Label VentasLblAccionQuitarProducto;
+        internal System.Windows.Forms.Button VentasBtnAyuda;
     }
 }

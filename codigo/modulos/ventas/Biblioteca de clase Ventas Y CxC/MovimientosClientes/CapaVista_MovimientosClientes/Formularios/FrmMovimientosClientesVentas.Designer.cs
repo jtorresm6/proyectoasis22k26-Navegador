@@ -232,6 +232,7 @@ namespace CapaVista_MovimientosClientes
             this.VentasBtnImprimir = new System.Windows.Forms.Button();
             this.VentasBtnCerrar = new System.Windows.Forms.Button();
             this.VentasLblEtapaBancos = new System.Windows.Forms.Label();
+            this.VentasBtnAyuda = new System.Windows.Forms.Button();
             this.SuspendLayout();
             this.VentasLblUsuarioRegistro = new System.Windows.Forms.Label();
             this.VentasCboUsuarioRegistro = new System.Windows.Forms.ComboBox();
@@ -1357,8 +1358,8 @@ namespace CapaVista_MovimientosClientes
             this.VentasTtpAcciones.SetToolTip(this.VentasBtnCerrar, "Salir");
             this.VentasBtnCerrar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CancelButton = this.VentasBtnCerrar;
-            this.VentasLblEtapaBancos.Location = new System.Drawing.Point(664, 610);
-            this.VentasLblEtapaBancos.Size = new System.Drawing.Size(350, 52);
+            this.VentasLblEtapaBancos.Location = new System.Drawing.Point(744, 610);
+            this.VentasLblEtapaBancos.Size = new System.Drawing.Size(270, 52);
             this.VentasLblEtapaBancos.Name = "VentasLblEtapaBancos";
             this.VentasLblEtapaBancos.Text = "Los depósitos se preparan después de registrar y aplicar los recibos.";
             this.VentasLblEtapaBancos.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular);
@@ -1541,6 +1542,22 @@ namespace CapaVista_MovimientosClientes
             ((System.ComponentModel.ISupportInitialize)(this.VentasDgvRecibosDeposito)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasDgvConsultaRecibos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasDgvConsultaAplicaciones)).EndInit();
+            this.VentasBtnAyuda.Name = "VentasBtnAyuda";
+            this.VentasBtnAyuda.Location = new System.Drawing.Point(656, 604);
+            this.VentasBtnAyuda.Size = new System.Drawing.Size(64, 64);
+            this.VentasBtnAyuda.BackgroundImage = global::CapaVista_MovimientosClientes.Properties.Resources.BotonOriginalAyudaVentas;
+            this.VentasBtnAyuda.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VentasBtnAyuda.BackColor = System.Drawing.Color.FromArgb(123, 63, 147);
+            this.VentasBtnAyuda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnAyuda.FlatAppearance.BorderSize = 0;
+            this.VentasBtnAyuda.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.VentasBtnAyuda.AccessibleName = "Ayuda";
+            this.VentasBtnAyuda.AccessibleDescription = "Ayuda de esta pantalla (F1)";
+            this.VentasBtnAyuda.TabIndex = 200;
+            this.VentasBtnAyuda.UseVisualStyleBackColor = false;
+            this.VentasBtnAyuda.Click += new System.EventHandler(this.VentasMetAyudaClick);
+            this.VentasTtpAcciones.SetToolTip(this.VentasBtnAyuda, "Ayuda de esta pantalla (F1)");
+            this.Controls.Add(this.VentasBtnAyuda);
             this.ResumeLayout(false);
         }
         #endregion
@@ -1725,5 +1742,6 @@ namespace CapaVista_MovimientosClientes
         internal System.Windows.Forms.Button VentasBtnImprimir;
         internal System.Windows.Forms.Button VentasBtnCerrar;
         internal System.Windows.Forms.Label VentasLblEtapaBancos;
+        internal System.Windows.Forms.Button VentasBtnAyuda;
     }
 }

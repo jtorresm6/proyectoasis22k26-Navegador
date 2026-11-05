@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root xmlns:ns1="urn:schemas-microsoft-com:xml-msdata" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:schema id="root">
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" />
@@ -88,4 +88,5 @@
   <data name="BotonOriginalRefrescarVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\RefrescarVentas.png;System.Drawing.Bitmap, System.Drawing</value>
   </data>
+  <data name="BotonOriginalAyudaVentas" type="System.Resources.ResXFileRef, System.Windows.Forms"><value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\AyudaVentas.png;System.Drawing.Bitmap, System.Drawing</value></data>
 </root>

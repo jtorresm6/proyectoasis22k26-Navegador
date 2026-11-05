@@ -24,7 +24,7 @@ Revise que la descarga incluya los componentes y que corresponda a la version
 actualizada del repositorio. No use las carpetas `bin`, `obj` ni paquetes ignorados
 de otra computadora para corregir la descarga.
 
-Los registros de compilacion quedan en `Compilacion_Ventas/logs`.
+Los mensajes de compilacion se muestran en la consola; el BAT no guarda archivos de log.
 
 ## Compilar desde Visual Studio
 

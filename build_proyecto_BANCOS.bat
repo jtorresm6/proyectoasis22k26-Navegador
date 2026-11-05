@@ -9,7 +9,7 @@ set "COMP=%ROOT%codigo\componentes"
 set "BANCOS=%ROOT%codigo\modulos\bancos"
 set "BIBLIOTECAS=%BANCOS%\Bibliotecas de Bancos"
 set "LOGISTICA=%ROOT%codigo\modulos\Logistica"
-set "LOG_DIR=%ROOT%logs\build_proyecto"
+set "LOG_DIR=%TEMP%\asis_bancos_%RANDOM%_%RANDOM%"
 set "LOG=%LOG_DIR%\build_log.txt"
 set "FAILED=%LOG_DIR%\fallidos.txt"
 if not exist "%LOG_DIR%\" mkdir "%LOG_DIR%"
@@ -56,26 +56,24 @@ if %FAIL% GTR 0 set "EXIT_CODE=1"
 if %TOTAL% EQU 0 set "EXIT_CODE=1"
 echo ===== RESUMEN DE LA ULTIMA RONDA =====
 echo Total: %TOTAL% - Correctos: %OK% - Errores: %FAIL%
-echo Log: "%LOG%"
+echo Los archivos auxiliares se eliminan al terminar.
 >> "%LOG%" echo Total: %TOTAL% - Correctos: %OK% - Errores: %FAIL%
 if %FAIL% GTR 0 type "%FAILED%"
 if "%EXIT_CODE%"=="0" echo [OK] Compilacion completa.
 if not "%EXIT_CODE%"=="0" echo [ERROR] La compilacion no se completo correctamente.
 if "%AUTO%"=="1" goto FIN
 :MENU
-choice /c RVS /n /m "[R] Recompilar  [V] Ver log  [S] Salir: "
-if errorlevel 3 goto FIN
-if errorlevel 2 (
-    start "" notepad.exe "%LOG%"
-    goto MENU
-)
+choice /c RS /n /m "[R] Recompilar  [S] Salir: "
+if errorlevel 2 goto FIN
 if errorlevel 1 goto INICIO
 goto MENU
 :FIN
+call :LimpiarTemporales
 endlocal & exit /b %EXIT_CODE%
 :ERROR_INICIO
+call :LimpiarTemporales
 echo [ERROR] Comprueba las carpetas del repositorio y Visual Studio con desarrollo de escritorio .NET.
-echo Log: "%LOG%"
+echo Los archivos auxiliares se eliminan al terminar.
 if "%AUTO%"=="0" pause
 endlocal & exit /b 1
 :DetectarMSBuild
@@ -151,7 +149,7 @@ echo [OK] %~n1
 exit /b 0
 :BUILD_ERROR
 set /a FAIL+=1 >nul
-echo [ERROR] %~n1 - revisar "%STEP_LOG%"
+echo [ERROR] %~n1 - revise los errores siguientes
 >> "%FAILED%" echo "%~1"
 >> "%LOG%" echo [ERROR] "%~1"
 if exist "%STEP_LOG%" findstr /i /c:": error " /c:"error MSB" /c:"error NU" "%STEP_LOG%"
@@ -168,3 +166,10 @@ echo [ERROR] Seguridad requiere las fuentes de Logistica y no se encontraron.
 >> "%FAILED%" echo Falta "%LOGISTICA%\Logistica\CapaVista_Logistica\CapaVista_Logistica.csproj"
 set /a FAIL+=1 >nul
 exit /b 1
+
+:LimpiarTemporales
+if defined LOG_DIR if exist "%LOG_DIR%\" (
+    del /q "%LOG_DIR%\*" >nul 2>&1
+    rd "%LOG_DIR%" >nul 2>&1
+)
+exit /b 0
