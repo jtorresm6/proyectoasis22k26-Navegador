@@ -116,6 +116,11 @@
       <DependentUpon>FrmMantenimientoTransporte.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CapaControlador_TransporteInterno_Logistica\CapaControlador_TransporteInterno_Logistica.csproj">
@@ -161,6 +166,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmMantenimientoTransporte.resx">
       <DependentUpon>FrmMantenimientoTransporte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
