@@ -16,5 +16,20 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
         {
             InitializeComponent();
         }
+
+        private void LogisticaBtnConsultar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogisticaBtnEliminar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogisticaBtnRefrescar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
