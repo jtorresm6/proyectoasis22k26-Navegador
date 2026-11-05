@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BCABA2F4-5AC8-4AFD-AECA-E5E032A94E78}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <!-- Inicio de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026 -->
+    <RootNamespace>CapaControlador_Contabilidad</RootNamespace>
+    <!-- Fin de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026 -->
+    <AssemblyName>CapaControlador_CierreContable_Contabilidad</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <UseSharedCompilation>false</UseSharedCompilation>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CapaModelo_Contabilidad">
+      <HintPath>..\..\Contabilidad\CapaModelo_Contabilidad\bin\$(Configuration)\CapaModelo_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapaControlador_Contabilidad">
+      <HintPath>..\..\Contabilidad\CapaControlador_Contabilidad\bin\$(Configuration)\CapaControlador_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapaModelo_CierreContable_Contabilidad">
+      <HintPath>..\CapaModelo_CierreContable_Contabilidad\bin\$(Configuration)\CapaModelo_CierreContable_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapaModelo_PolizasCuentas_Contabilidad">
+      <HintPath>..\..\PolizasCuentas_Contabilidad\CapaModelo_PolizasCuentas_Contabilidad\bin\$(Configuration)\CapaModelo_PolizasCuentas_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapaControlador_PolizasCuentas_Contabilidad">
+      <HintPath>..\..\PolizasCuentas_Contabilidad\CapaControlador_PolizasCuentas_Contabilidad\bin\$(Configuration)\CapaControlador_PolizasCuentas_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClsControladorCierreContabilidad.cs" />
+    <!-- Inicio de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026 -->
+    <Compile Include="Modelos\ClsModeloResumenCierreContabilidad.cs" />
+    <!-- Fin de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026 -->
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,6 +1,8 @@
 ﻿using CapaControlador_Seguridad.Objetos_de_valor;
 //using CapaVista_Bancos.Formularios;
 //using CapaVista_Rrhh.Formularios;
+
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaVista_Logistica;
+//using CapaVista_Ventas;
+//using CapaVista_Logistica.Formularios;
 
 /*
  * ============================================================
@@ -76,13 +79,13 @@ namespace CapaVista_Seguridad
                         principal = new FrmMDISeguridad();
                         break;
                     
-                    case "Logistica":
-                        var MDILogistica = new FrmMDILogistica();
-                        MDILogistica.LogisticaMetActualizarInfoUsuario(
-                        ClsSesionSeguridad.NombreEmpleado,
-                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                        principal = MDILogistica;
-                        break;
+                  //case "Logistica":
+                    //var MDILogistica = new CapaVista_Logistica.Formularios.FrmMDILogistica();
+                      //MDILogistica.LogisticaMetActualizarInfoUsuario(
+                     // ClsSesionSeguridad.NombreEmpleado,
+                     // ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                     //  principal = MDILogistica;
+                     //  break;
 
                     //case "Compras":
                         //var MDICompras = new FrmMDICompras();
@@ -92,13 +95,12 @@ namespace CapaVista_Seguridad
                         //principal = MDICompras;
                         //break;
 
-                    //case "Ventas":
-                        //var MDIVentas = new FrmMDIVentas();
-                        //MDIVentas.VentasMetActualizarInfoUsuario(
-                        //ClsSesionSeguridad.NombreEmpleado,
-                        //ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                        //principal = MDIVentas;
-                        //break;
+                 // case "Ventas":
+                   //  var mdiVentas = new CapaVista_Ventas.FrmMdiVentas(
+                     //     ClsSesionSeguridad.NombreEmpleado,
+                       //     ClsSesionSeguridad.SeguridadMetRolesComoTexto(), ClsSesionSeguridad.IdUsuario);
+                      //     principal = mdiVentas;
+                       // break;
 
                     //case "Bancos":
                         //var MdiBancos = new FrmMDIBancos();

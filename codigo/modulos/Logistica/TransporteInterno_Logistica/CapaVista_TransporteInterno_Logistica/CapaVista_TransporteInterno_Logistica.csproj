@@ -34,6 +34,9 @@
     <Reference Include="CapaVista_Navegador">
       <HintPath>..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
     </Reference>
+    <Reference Include="CapaVista_TransporteExterno_Logistica">
+      <HintPath>..\..\TransporteExterno_Logistica\CapaVista_TransporteExterno_Logistica\bin\Debug\CapaVista_TransporteExterno_Logistica.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -46,29 +49,71 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formularios\FrmConsultaTransporte.cs">
+    <Compile Include="Formularios\FrmAlertaCadenaFrio.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\FrmConsultaTransporte.Designer.cs">
-      <DependentUpon>FrmConsultaTransporte.cs</DependentUpon>
+    <Compile Include="Formularios\FrmAlertaCadenaFrio.Designer.cs">
+      <DependentUpon>FrmAlertaCadenaFrio.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\FrmControlTransporte.cs">
+    <Compile Include="Formularios\FrmDetalleViaje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\FrmControlTransporte.Designer.cs">
-      <DependentUpon>FrmControlTransporte.cs</DependentUpon>
+    <Compile Include="Formularios\FrmDetalleViaje.Designer.cs">
+      <DependentUpon>FrmDetalleViaje.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\FrmGestionViajes.cs">
+    <Compile Include="Formularios\FrmDetalleViajeProducto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\FrmGestionViajes.Designer.cs">
-      <DependentUpon>FrmGestionViajes.cs</DependentUpon>
+    <Compile Include="Formularios\FrmDetalleViajeProducto.Designer.cs">
+      <DependentUpon>FrmDetalleViajeProducto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\FrmTransporteInterno.cs">
+    <Compile Include="Formularios\FrmEncabezadoViaje.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\FrmTransporteInterno.Designer.cs">
-      <DependentUpon>FrmTransporteInterno.cs</DependentUpon>
+    <Compile Include="Formularios\FrmEncabezadoViaje.Designer.cs">
+      <DependentUpon>FrmEncabezadoViaje.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoCamaraRefrigeracion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoCamaraRefrigeracion.Designer.cs">
+      <DependentUpon>FrmMantenimientoCamaraRefrigeracion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoEstadoTransporte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoEstadoTransporte.Designer.cs">
+      <DependentUpon>FrmMantenimientoEstadoTransporte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoTipoTransporte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoTipoTransporte.Designer.cs">
+      <DependentUpon>FrmMantenimientoTipoTransporte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoConductor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoConductor.Designer.cs">
+      <DependentUpon>FrmMantenimientoConductor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmTelemetriaTemperatura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmTelemetriaTemperatura.Designer.cs">
+      <DependentUpon>FrmTelemetriaTemperatura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmTipoTraslado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmTipoTraslado.Designer.cs">
+      <DependentUpon>FrmTipoTraslado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoTransporte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoTransporte.Designer.cs">
+      <DependentUpon>FrmMantenimientoTransporte.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -84,17 +129,38 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Formularios\FrmConsultaTransporte.resx">
-      <DependentUpon>FrmConsultaTransporte.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmAlertaCadenaFrio.resx">
+      <DependentUpon>FrmAlertaCadenaFrio.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmControlTransporte.resx">
-      <DependentUpon>FrmControlTransporte.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmDetalleViaje.resx">
+      <DependentUpon>FrmDetalleViaje.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmGestionViajes.resx">
-      <DependentUpon>FrmGestionViajes.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmDetalleViajeProducto.resx">
+      <DependentUpon>FrmDetalleViajeProducto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmTransporteInterno.resx">
-      <DependentUpon>FrmTransporteInterno.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmEncabezadoViaje.resx">
+      <DependentUpon>FrmEncabezadoViaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmMantenimientoCamaraRefrigeracion.resx">
+      <DependentUpon>FrmMantenimientoCamaraRefrigeracion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmMantenimientoEstadoTransporte.resx">
+      <DependentUpon>FrmMantenimientoEstadoTransporte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmMantenimientoTipoTransporte.resx">
+      <DependentUpon>FrmMantenimientoTipoTransporte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmMantenimientoConductor.resx">
+      <DependentUpon>FrmMantenimientoConductor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmTelemetriaTemperatura.resx">
+      <DependentUpon>FrmTelemetriaTemperatura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmTipoTraslado.resx">
+      <DependentUpon>FrmTipoTraslado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmMantenimientoTransporte.resx">
+      <DependentUpon>FrmMantenimientoTransporte.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

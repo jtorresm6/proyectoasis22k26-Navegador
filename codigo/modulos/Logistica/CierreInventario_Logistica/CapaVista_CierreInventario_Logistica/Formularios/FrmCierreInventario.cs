@@ -30,13 +30,12 @@ namespace CapaVista_CierreInventario_Logistica.Formularios
             InitializeComponent();
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
 
+        private void LogisticaBtnConsultarCierre_Click_1(object sender, EventArgs e)
+        {
             FrmConsultaCierres frmConsulta = new FrmConsultaCierres();
-            frmConsulta.Show();
-            this.Hide(); // Oculta FrmCierreInventario
-        
-    }
+            frmConsulta.ShowDialog();
+
+        }
     }
 }

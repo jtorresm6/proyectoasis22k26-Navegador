@@ -46,9 +46,9 @@
     <Reference Include="CapaVista_MuestreoAuditoria_Logistica">
       <HintPath>..\..\MuestreoAuditoria_Logistica\CapaVista_MuestreoAuditoria_Logistica\bin\Debug\CapaVista_MuestreoAuditoria_Logistica.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_TransporteExterno_Logistica, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CapaVista_TransporteInterno_Logistica, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\TransporteExterno_Logistica\CapaVista_TransporteExterno_Logistica\bin\Debug\CapaVista_TransporteExterno_Logistica.dll</HintPath>
+      <HintPath>..\..\TransporteInterno_Logistica\CapaVista_TransporteInterno_Logistica\bin\Debug\CapaVista_TransporteInterno_Logistica.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Traslados_Logistica">
       <HintPath>..\..\Traslados_Logistica\CapaVista_Traslados_Logistica\bin\Debug\CapaVista_Traslados_Logistica.dll</HintPath>

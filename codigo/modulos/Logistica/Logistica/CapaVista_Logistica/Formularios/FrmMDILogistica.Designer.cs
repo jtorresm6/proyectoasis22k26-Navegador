@@ -1,5 +1,5 @@
 ﻿
-namespace CapaVista_Logistica
+namespace CapaVista_Logistica.Formularios
 {
     partial class FrmMDILogistica
     {
@@ -11,13 +11,13 @@ namespace CapaVista_Logistica
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -35,12 +35,12 @@ namespace CapaVista_Logistica
             this.LogisticaLblRolUsuario = new System.Windows.Forms.Label();
             this.LogisticaLblUsuario = new System.Windows.Forms.Label();
             this.LogisticaPnlNavegador = new System.Windows.Forms.Panel();
+            this.LogisticaBtnTransporte = new System.Windows.Forms.Button();
             this.LogisticaBtnCerrarSesion = new System.Windows.Forms.Button();
             this.LogisticaBtnEnlace = new System.Windows.Forms.Button();
             this.LogisticaBtnCierredeInventario = new System.Windows.Forms.Button();
             this.LogisticaBtnAuditoria = new System.Windows.Forms.Button();
             this.LogisticaBtnTraslado = new System.Windows.Forms.Button();
-            this.LogisticaBtnGestionTransporte = new System.Windows.Forms.Button();
             this.LogisticaBtnInventario = new System.Windows.Forms.Button();
             this.LogisticaBtnCatalogo = new System.Windows.Forms.Button();
             this.LogisticaBtnUbicaciones = new System.Windows.Forms.Button();
@@ -155,12 +155,12 @@ namespace CapaVista_Logistica
             this.LogisticaPnlNavegador.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaPnlNavegador.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("LogisticaPnlNavegador.BackgroundImage")));
             this.LogisticaPnlNavegador.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnTransporte);
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnCerrarSesion);
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnEnlace);
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnCierredeInventario);
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnAuditoria);
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnTraslado);
-            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnGestionTransporte);
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnInventario);
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnCatalogo);
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnUbicaciones);
@@ -169,6 +169,21 @@ namespace CapaVista_Logistica
             this.LogisticaPnlNavegador.Name = "LogisticaPnlNavegador";
             this.LogisticaPnlNavegador.Size = new System.Drawing.Size(270, 745);
             this.LogisticaPnlNavegador.TabIndex = 1;
+            // 
+            // LogisticaBtnTransporte
+            // 
+            this.LogisticaBtnTransporte.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnTransporte.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LogisticaBtnTransporte.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnTransporte.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnTransporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnTransporte.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnTransporte.Image")));
+            this.LogisticaBtnTransporte.Location = new System.Drawing.Point(3, 315);
+            this.LogisticaBtnTransporte.Name = "LogisticaBtnTransporte";
+            this.LogisticaBtnTransporte.Size = new System.Drawing.Size(264, 42);
+            this.LogisticaBtnTransporte.TabIndex = 10;
+            this.LogisticaBtnTransporte.UseVisualStyleBackColor = false;
+            this.LogisticaBtnTransporte.Click += new System.EventHandler(this.LogisticaBtnTransporte_Click);
             // 
             // LogisticaBtnCerrarSesion
             // 
@@ -244,21 +259,6 @@ namespace CapaVista_Logistica
             this.LogisticaBtnTraslado.TabIndex = 5;
             this.LogisticaBtnTraslado.UseVisualStyleBackColor = false;
             this.LogisticaBtnTraslado.Click += new System.EventHandler(this.LogisticaBtnTraslado_Click);
-            // 
-            // LogisticaBtnGestionTransporte
-            // 
-            this.LogisticaBtnGestionTransporte.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaBtnGestionTransporte.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LogisticaBtnGestionTransporte.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnGestionTransporte.FlatAppearance.BorderSize = 0;
-            this.LogisticaBtnGestionTransporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnGestionTransporte.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnGestionTransporte.Image")));
-            this.LogisticaBtnGestionTransporte.Location = new System.Drawing.Point(3, 310);
-            this.LogisticaBtnGestionTransporte.Name = "LogisticaBtnGestionTransporte";
-            this.LogisticaBtnGestionTransporte.Size = new System.Drawing.Size(264, 42);
-            this.LogisticaBtnGestionTransporte.TabIndex = 4;
-            this.LogisticaBtnGestionTransporte.UseVisualStyleBackColor = false;
-            this.LogisticaBtnGestionTransporte.Click += new System.EventHandler(this.LogisticaBtnGestionTransporte_Click);
             // 
             // LogisticaBtnInventario
             // 
@@ -670,6 +670,10 @@ namespace CapaVista_Logistica
 
         #endregion
 
+        // ============================================
+        // DECLARACIÓN DE CONTROLES
+        // ============================================
+
         private System.Windows.Forms.Panel LogisticaPnlMDI;
         private System.Windows.Forms.Panel LogisticaPnlNavegador;
 
@@ -678,10 +682,10 @@ namespace CapaVista_Logistica
         private System.Windows.Forms.Button LogisticaBtnCierredeInventario;
         private System.Windows.Forms.Button LogisticaBtnAuditoria;
         private System.Windows.Forms.Button LogisticaBtnTraslado;
-        private System.Windows.Forms.Button LogisticaBtnGestionTransporte;
         private System.Windows.Forms.Button LogisticaBtnInventario;
         private System.Windows.Forms.Button LogisticaBtnCatalogo;
         private System.Windows.Forms.Button LogisticaBtnUbicaciones;
+        private System.Windows.Forms.Button LogisticaBtnTransporte;
 
         private System.Windows.Forms.PictureBox LogisticaPbLogo;
         private System.Windows.Forms.Panel LogisticaPnlBanner;
@@ -719,6 +723,7 @@ namespace CapaVista_Logistica
         private System.Windows.Forms.Label LogisticaLblResumenInventario;
         private System.Windows.Forms.Label LogisticaLblResumenCatalogo;
         private System.Windows.Forms.Label LogisticaLblResumenEstructura;
+
         private System.Windows.Forms.Label LogisticaLblTextoRol;
         private System.Windows.Forms.Label LogisticaLblTextoUsuario;
     }

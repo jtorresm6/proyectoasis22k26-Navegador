@@ -47,47 +47,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formularios\CostosYPagosDelServicio.cs">
+    <Compile Include="Formularios\FrmCostosYPagosDelServicio.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\CostosYPagosDelServicio.Designer.cs">
-      <DependentUpon>CostosYPagosDelServicio.cs</DependentUpon>
+    <Compile Include="Formularios\FrmCostosYPagosDelServicio.Designer.cs">
+      <DependentUpon>FrmCostosYPagosDelServicio.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\IncidenciasEHistorial.cs">
+    <Compile Include="Formularios\FrmIncidenciasEHistorial.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\IncidenciasEHistorial.Designer.cs">
-      <DependentUpon>IncidenciasEHistorial.cs</DependentUpon>
+    <Compile Include="Formularios\FrmIncidenciasEHistorial.Designer.cs">
+      <DependentUpon>FrmIncidenciasEHistorial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\ListadoTransporteExterno.cs">
+    <Compile Include="Formularios\FrmListadoTransporteExterno.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\ListadoTransporteExterno.Designer.cs">
-      <DependentUpon>ListadoTransporteExterno.cs</DependentUpon>
+    <Compile Include="Formularios\FrmListadoTransporteExterno.Designer.cs">
+      <DependentUpon>FrmListadoTransporteExterno.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\ProductosATrasladar.cs">
+    <Compile Include="Formularios\FrmProductosATrasladar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\ProductosATrasladar.Designer.cs">
-      <DependentUpon>ProductosATrasladar.cs</DependentUpon>
+    <Compile Include="Formularios\FrmProductosATrasladar.Designer.cs">
+      <DependentUpon>FrmProductosATrasladar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\RegistroTransporteExterno.cs">
+    <Compile Include="Formularios\FrmRegistroTransporteExterno.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\RegistroTransporteExterno.Designer.cs">
-      <DependentUpon>RegistroTransporteExterno.cs</DependentUpon>
+    <Compile Include="Formularios\FrmRegistroTransporteExterno.Designer.cs">
+      <DependentUpon>FrmRegistroTransporteExterno.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\RutaYSeguimiento.cs">
+    <Compile Include="Formularios\FrmRutaYSeguimiento.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\RutaYSeguimiento.Designer.cs">
-      <DependentUpon>RutaYSeguimiento.cs</DependentUpon>
+    <Compile Include="Formularios\FrmRutaYSeguimiento.Designer.cs">
+      <DependentUpon>FrmRutaYSeguimiento.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\TransporteExterno.cs">
+    <Compile Include="Formularios\FrmTransporteExterno.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\TransporteExterno.Designer.cs">
-      <DependentUpon>TransporteExterno.cs</DependentUpon>
+    <Compile Include="Formularios\FrmTransporteExterno.Designer.cs">
+      <DependentUpon>FrmTransporteExterno.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -97,26 +97,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Formularios\CostosYPagosDelServicio.resx">
-      <DependentUpon>CostosYPagosDelServicio.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmCostosYPagosDelServicio.resx">
+      <DependentUpon>FrmCostosYPagosDelServicio.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\IncidenciasEHistorial.resx">
-      <DependentUpon>IncidenciasEHistorial.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmIncidenciasEHistorial.resx">
+      <DependentUpon>FrmIncidenciasEHistorial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\ListadoTransporteExterno.resx">
-      <DependentUpon>ListadoTransporteExterno.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmListadoTransporteExterno.resx">
+      <DependentUpon>FrmListadoTransporteExterno.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\ProductosATrasladar.resx">
-      <DependentUpon>ProductosATrasladar.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmProductosATrasladar.resx">
+      <DependentUpon>FrmProductosATrasladar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\RegistroTransporteExterno.resx">
-      <DependentUpon>RegistroTransporteExterno.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmRegistroTransporteExterno.resx">
+      <DependentUpon>FrmRegistroTransporteExterno.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\RutaYSeguimiento.resx">
-      <DependentUpon>RutaYSeguimiento.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmRutaYSeguimiento.resx">
+      <DependentUpon>FrmRutaYSeguimiento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\TransporteExterno.resx">
-      <DependentUpon>TransporteExterno.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmTransporteExterno.resx">
+      <DependentUpon>FrmTransporteExterno.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

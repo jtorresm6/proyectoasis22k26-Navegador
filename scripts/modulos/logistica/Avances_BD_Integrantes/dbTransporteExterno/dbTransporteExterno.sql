@@ -1,11 +1,4 @@
 -- ============================================================
--- Submódulo: Transporte Externo (Módulo de Logística)
--- Depende de tablas de otros submódulos:
---   tblbodega (idBodega) - Consulta de direcciones de origen y destino
---   tblproducto (idProducto) - Identificación de productos transportados
--- ============================================================
-
--- ============================================================
 -- 1. EMPRESA TRANSPORTISTA
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblEmpresaTransportista (
@@ -13,10 +6,13 @@ CREATE TABLE IF NOT EXISTS tblEmpresaTransportista (
  nombreEmpresaTransportista VARCHAR(100) NOT NULL,
  contactoEmpresaTransportista VARCHAR(100),
  telefonoEmpresaTransportista VARCHAR(30),
+ Fk_Proveedor_IdProveedor INT NULL, 
  is_active BOOLEAN NOT NULL DEFAULT TRUE,
  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT uqEmpresaTransportistaNombre UNIQUE (nombreEmpresaTransportista)
+ CONSTRAINT uqEmpresaTransportistaNombre UNIQUE (nombreEmpresaTransportista),
+ CONSTRAINT uqEmpresaTransportistaProveedor UNIQUE (Fk_Proveedor_IdProveedor), 
+ CONSTRAINT fkEmpresaProveedor FOREIGN KEY (Fk_Proveedor_IdProveedor) REFERENCES tblProveedor(idProveedor) 
 ) ENGINE=InnoDB;
 
 -- ============================================================
@@ -186,7 +182,33 @@ CREATE TABLE IF NOT EXISTS tblHistorialTransporte (
 ) ENGINE=InnoDB;
 
 -- ============================================================
--- 12. SOLICITUD PAGO TRANSPORTE - relacion con bancos
+-- 12. FACTURA TRANSPORTE - factura emitida por la transportista
+-- Una factura por servicio. Al registrarla se crea la cuenta por pagar
+-- ============================================================
+CREATE TABLE IF NOT EXISTS tblFacturaTransporte (
+ Pk_FacturaTransporte INT AUTO_INCREMENT PRIMARY KEY,
+ Fk_ServicioTransporteExterno_Codigo INT NOT NULL,
+ Fk_Plazo_IdPlazo INT NOT NULL,                 
+ Fk_CuentaPorPagar_IdCuentaPorPagar INT NULL,   -- cuenta por pagar generada con esta factura
+ serieFacturaTransporte VARCHAR(20) NOT NULL,
+ numeroFacturaTransporte VARCHAR(30) NOT NULL,
+ fechaEmisionFacturaTransporte DATE NOT NULL,
+ montoFacturaTransporte DECIMAL(12,4) NOT NULL,
+ estadoFacturaTransporte VARCHAR(30) NOT NULL DEFAULT 'Registrada',
+ created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ CONSTRAINT uqFacturaServicio UNIQUE (Fk_ServicioTransporteExterno_Codigo),
+ CONSTRAINT uqFacturaCuentaPorPagar UNIQUE (Fk_CuentaPorPagar_IdCuentaPorPagar),
+ CONSTRAINT uqFacturaDocumento UNIQUE (serieFacturaTransporte, numeroFacturaTransporte),
+ CONSTRAINT ckFacturaMonto CHECK (montoFacturaTransporte > 0),
+ CONSTRAINT ckFacturaEstado CHECK (estadoFacturaTransporte IN ('Registrada','Anulada')),
+ CONSTRAINT fkFacturaServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(Pk_ServicioTransporteExterno),
+ CONSTRAINT fkFacturaPlazo FOREIGN KEY (Fk_Plazo_IdPlazo) REFERENCES tblPlazo(idPlazo),
+ CONSTRAINT fkFacturaCuentaPorPagar FOREIGN KEY (Fk_CuentaPorPagar_IdCuentaPorPagar) REFERENCES tblCuentaPorPagar(idCuentaPorPagar)
+) ENGINE=InnoDB;
+
+-- ============================================================
+-- 13. SOLICITUD PAGO TRANSPORTE - relacion con bancos
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblSolicitudPagoTransporte (
  Pk_SolicitudPagoTransporte INT AUTO_INCREMENT PRIMARY KEY,

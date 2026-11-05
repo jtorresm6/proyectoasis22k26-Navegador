@@ -24,21 +24,24 @@ using System.Drawing;
 using System.Windows.Forms;
 
 // Formularios del módulo de Inventario.
-// Namespace actualizado de Formas a Formularios.
 using CapaVista_Inventario_Logistica.Formularios;
 
 // Formularios del módulo de Traslados.
 using CapaVista_Traslados_Logistica.Formularios;
 
 // Formularios del módulo de Muestreo y Auditoría.
-using CapaVista_MuestreoAuditoria_Logistica;
+using CapaVista_MuestreoAuditoria_Logistica.Formularios;
 
 // Formularios del módulo de Cierre de Inventario.
 using CapaVista_CierreInventario_Logistica.Formularios;
 
+// Formularios del módulo de Enlaces.
 using CapaVista_Enlace_Logistica.Formas;
 
-namespace CapaVista_Logistica
+// Formularios del módulo de Transporte Interno.
+using CapaVista_TransporteInterno_Logistica.Formularios;
+
+namespace CapaVista_Logistica.Formularios
 {
     public partial class FrmMDILogistica : Form
     {
@@ -68,7 +71,7 @@ namespace CapaVista_Logistica
         }
 
         // Procedimiento para abrir formularios secundarios.
-        private void LogisticaMetAbrirFormulario(Form Formulario)
+        public void LogisticaMetAbrirFormulario(Form Formulario)
         {
             using (Formulario)
             {
@@ -87,7 +90,7 @@ namespace CapaVista_Logistica
         // UBICACIONES / SUCURSALES
         // ============================================
 
-        private void LogisticaBtnUbicaciones_Click(
+        public void LogisticaBtnUbicaciones_Click(
             object sender, EventArgs e)
         {
             LogisticaMetAbrirFormulario(
@@ -98,7 +101,7 @@ namespace CapaVista_Logistica
         // CATÁLOGO DE PRODUCTOS
         // ============================================
 
-        private void LogisticaBtnCatalogo_Click(
+        public void LogisticaBtnCatalogo_Click(
             object sender, EventArgs e)
         {
             LogisticaMetAbrirFormulario(
@@ -109,7 +112,7 @@ namespace CapaVista_Logistica
         // INVENTARIO / STOCK
         // ============================================
 
-        private void LogisticaBtnInventario_Click(
+        public void LogisticaBtnInventario_Click(
             object sender, EventArgs e)
         {
             LogisticaMetAbrirFormulario(
@@ -120,18 +123,18 @@ namespace CapaVista_Logistica
         // GESTIÓN DE TRANSPORTE
         // ============================================
 
-        private void LogisticaBtnGestionTransporte_Click(
+        private void LogisticaBtnTransporte_Click(
             object sender, EventArgs e)
         {
-            // Pendiente de integrar el formulario
-            // principal de Gestión de Transporte.
+            LogisticaMetAbrirFormulario(
+                new FrmTipoTraslado());
         }
 
         // ============================================
         // TRASLADOS
         // ============================================
 
-        private void LogisticaBtnTraslado_Click(
+        public void LogisticaBtnTraslado_Click(
             object sender, EventArgs e)
         {
             LogisticaMetAbrirFormulario(
@@ -142,7 +145,7 @@ namespace CapaVista_Logistica
         // AUDITORÍA DE INVENTARIO
         // ============================================
 
-        private void LogisticaBtnAuditoria_Click(
+        public void LogisticaBtnAuditoria_Click(
             object sender, EventArgs e)
         {
             LogisticaMetAbrirFormulario(
@@ -153,7 +156,7 @@ namespace CapaVista_Logistica
         // CIERRE DE INVENTARIO
         // ============================================
 
-        private void LogisticaBtnCierredeInventario_Click(
+        public void LogisticaBtnCierredeInventario_Click(
             object sender, EventArgs e)
         {
             LogisticaMetAbrirFormulario(
@@ -161,10 +164,21 @@ namespace CapaVista_Logistica
         }
 
         // ============================================
+        // ENLACES
+        // ============================================
+
+        private void LogisticaBtnEnlace_Click(
+            object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(
+                new Frm_Solicitud_Pago());
+        }
+
+        // ============================================
         // CERRAR SESIÓN
         // ============================================
 
-        private void LogisticaBtnCerrarSesion_Click(
+        public void LogisticaBtnCerrarSesion_Click(
             object sender, EventArgs e)
         {
             DialogResult Resultado = MessageBox.Show(
@@ -184,7 +198,7 @@ namespace CapaVista_Logistica
         // EXPANDIR / CONTRAER MENÚ
         // ============================================
 
-        private void LogisticaBtnHamburguesa_Click(
+        public void LogisticaBtnHamburguesa_Click(
             object sender, EventArgs e)
         {
             if (LogisticaPnlNavegador.Width == 270)
@@ -247,12 +261,6 @@ namespace CapaVista_Logistica
                 LogisticaLblRolUsuario.Location =
                     new Point(752, 9);
             }
-        }
-
-        private void LogisticaBtnEnlace_Click(object sender, EventArgs e)
-        {
-            LogisticaMetAbrirFormulario(
-               new Frm_Solicitud_Pago());
         }
     }
 }

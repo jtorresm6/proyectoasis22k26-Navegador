@@ -40,6 +40,29 @@
       <HintPath>..\CapaControlador_Contabilidad\bin\$(Configuration)\CapaControlador_Contabilidad.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CapaVista_Navegador">
+      <HintPath>..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_PolizasCuentas_Contabilidad">
+      <HintPath>..\..\PolizasCuentas_Contabilidad\CapaVista_PolizasCuentas_Contabilidad\bin\$(Configuration)\CapaVista_PolizasCuentas_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapaVista_Presupuestos_Contabilidad">
+      <HintPath>..\..\Presupuestos_Contabilidad\CapaVista_Presupuestos_Contabilidad\bin\$(Configuration)\CapaVista_Presupuestos_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapaVista_ActivosFijos_Contabilidad">
+      <HintPath>..\..\ActivosFijos_Contabilidad\CapaVista_ActivosFijos_Contabilidad\bin\$(Configuration)\CapaVista_ActivosFijos_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapaVista_CierreContable_Contabilidad">
+      <HintPath>..\..\CierreContable_Contabilidad\CapaVista_CierreContable_Contabilidad\bin\$(Configuration)\CapaVista_CierreContable_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapaVista_EstadosFinancieros_Contabilidad">
+      <HintPath>..\..\EstadosFinancieros_Contabilidad\CapaVista_EstadosFinancieros_Contabilidad\bin\$(Configuration)\CapaVista_EstadosFinancieros_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -52,41 +75,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmActivosFijos.cs">
-      <SubType>Form</SubType>
+    <None Include="Resources\*.png" />
+    <None Include="Resources\Icono-Contabilidad.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClsPermisosMenuContabilidad.cs" />
+    <Compile Include="ClsPresentacionContabilidad.cs" />
+    <Compile Include="FrmAsignacionCuentaModulo.Designer.cs">
+      <DependentUpon>FrmAsignacionCuentaModulo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmActivosFijos.Designer.cs">
-      <DependentUpon>FrmActivosFijos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmCierreContable.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmCierreContable.Designer.cs">
-      <DependentUpon>FrmCierreContable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmEstadosFinancieros.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmEstadosFinancieros.Designer.cs">
-      <DependentUpon>FrmEstadosFinancieros.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmMDIContabilidad.cs">
+    <Compile Include="FrmAsignacionCuentaModulo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmMDIContabilidad.Designer.cs">
       <DependentUpon>FrmMDIContabilidad.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmPolizasLocales.cs">
+    <Compile Include="FrmMDIContabilidad.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmPolizasLocales.Designer.cs">
-      <DependentUpon>FrmPolizasLocales.cs</DependentUpon>
+    <Compile Include="FrmMantenimientoCuenta.Designer.cs">
+      <DependentUpon>FrmMantenimientoCuenta.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmPresupuestos.cs">
+    <Compile Include="FrmMantenimientoCuenta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmPresupuestos.Designer.cs">
-      <DependentUpon>FrmPresupuestos.cs</DependentUpon>
+    <Compile Include="FrmMantenimientoModuloContable.Designer.cs">
+      <DependentUpon>FrmMantenimientoModuloContable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMantenimientoModuloContable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMantenimientoPais.Designer.cs">
+      <DependentUpon>FrmMantenimientoPais.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMantenimientoPais.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMantenimientoVidaUtil.Designer.cs">
+      <DependentUpon>FrmMantenimientoVidaUtil.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMantenimientoVidaUtil.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -102,10 +131,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\*.png" />
-    <None Include="Resources\Icono-Contabilidad.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

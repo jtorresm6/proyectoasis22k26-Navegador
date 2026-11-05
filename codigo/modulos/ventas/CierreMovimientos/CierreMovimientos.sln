@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37502.11
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_CierreMovimientos", "CapaModelo_CierreMovimientos\CapaModelo_CierreMovimientos.csproj", "{DE7DB32A-4F3E-5073-B7D5-D99B96F19474}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_CierreMovimientos", "CapaControlador_CierreMovimientos\CapaControlador_CierreMovimientos.csproj", "{4D5C0141-5F3B-5AC3-AFEE-66B90E26F647}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_CierreMovimientos", "CapaVista_CierreMovimientos\CapaVista_CierreMovimientos.csproj", "{2AC893AF-20AB-5159-BF28-32D0AA59D794}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE7DB32A-4F3E-5073-B7D5-D99B96F19474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE7DB32A-4F3E-5073-B7D5-D99B96F19474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE7DB32A-4F3E-5073-B7D5-D99B96F19474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE7DB32A-4F3E-5073-B7D5-D99B96F19474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D5C0141-5F3B-5AC3-AFEE-66B90E26F647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D5C0141-5F3B-5AC3-AFEE-66B90E26F647}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D5C0141-5F3B-5AC3-AFEE-66B90E26F647}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D5C0141-5F3B-5AC3-AFEE-66B90E26F647}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AC893AF-20AB-5159-BF28-32D0AA59D794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AC893AF-20AB-5159-BF28-32D0AA59D794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AC893AF-20AB-5159-BF28-32D0AA59D794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AC893AF-20AB-5159-BF28-32D0AA59D794}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
