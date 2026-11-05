@@ -47,16 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formas\FrmDetalleTraslados.cs">
+    <Compile Include="Formularios\FrmDetalleTraslados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmDetalleTraslados.Designer.cs">
+    <Compile Include="Formularios\FrmDetalleTraslados.Designer.cs">
       <DependentUpon>FrmDetalleTraslados.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmTraslados.cs">
+    <Compile Include="Formularios\FrmTraslados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmTraslados.Designer.cs">
+    <Compile Include="Formularios\FrmTraslados.Designer.cs">
       <DependentUpon>FrmTraslados.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,10 +70,10 @@
     <Folder Include="Reportes\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Formas\FrmDetalleTraslados.resx">
+    <EmbeddedResource Include="Formularios\FrmDetalleTraslados.resx">
       <DependentUpon>FrmDetalleTraslados.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmTraslados.resx">
+    <EmbeddedResource Include="Formularios\FrmTraslados.resx">
       <DependentUpon>FrmTraslados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -86,31 +86,7 @@
     <None Include="Resources\6.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Logistica.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\panel_fondo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\panel1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\btn_ayuda_logistica.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\btn_buscar_logistica.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\btn_cancelar_logistica.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\btn_guardar_logistica.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\btn_nuevo_logistica.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\7.png" />

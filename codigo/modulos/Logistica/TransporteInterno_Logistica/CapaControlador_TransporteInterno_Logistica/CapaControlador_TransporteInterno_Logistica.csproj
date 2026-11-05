@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F609F5AA-795E-4721-BBD7-96366F1A170B}</ProjectGuid>
+    <ProjectGuid>{D9FC395A-6524-48E4-9D58-C8CBEFE95E2C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CapaControlador_TransporteInterno_Logistica</RootNamespace>
@@ -42,6 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CapaModelo_TransporteInterno_Logistica\CapaModelo_TransporteInterno_Logistica.csproj">
+      <Project>{b3ad6f94-1905-48f6-be16-931eb7a5e4e9}</Project>
+      <Name>CapaModelo_TransporteInterno_Logistica</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
