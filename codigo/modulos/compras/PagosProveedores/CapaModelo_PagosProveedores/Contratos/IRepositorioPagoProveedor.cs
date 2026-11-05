@@ -6,24 +6,29 @@ using CapaModelo_PagosProveedores.Entidades;
 /*
  * ==================================================================
  * Área : Compras
- * Autor : Diana Mishel Loeiza Ramírez
- * Carné : 9959-23-3457
- * Fecha : 20/10/2026
- * ==================================================================
  * Propósito :
- *  Define las consultas de pagos a proveedores y la obtención de
- *  proveedores y cuentas pendientes, además de las operaciones comunes.
+ *  Contrato del repositorio de pagos a proveedores (encabezado + detalle).
+
  * ===================================================================
 */
 
 namespace CapaModelo_PagosProveedores.Contratos
 {
-
-    public interface IRepositorioPagoProveedor : IRepositorioGenerico<ClsPagoProveedor>
+    public interface IRepositorioPagoProveedor
     {
-        IEnumerable<ClsPagoProveedor> ComprasMetConsultar(int? IdProveedor, string Estado, DateTime? Desde, DateTime? Hasta);
-        ClsPagoProveedor ComprasMetObtenerPorId(int IdPago);
+        int ComprasMetAgregar(ClsEncabezadoPagoProveedor Pago);
+        void ComprasMetEditar(ClsEncabezadoPagoProveedor Pago);
+        void ComprasMetRemover(ClsEncabezadoPagoProveedor Pago);
+
+        List<ClsEncabezadoPagoProveedor> ComprasMetConsultar(int? IdProveedor, string Estado, DateTime? Desde, DateTime? Hasta);
+        ClsEncabezadoPagoProveedor ComprasMetObtenerPorId(int IdPago);
+
         DataTable ComprasMetObtenerProveedores();
         DataTable ComprasMetObtenerCuentasPendientes(int IdProveedor);
+        DataTable ComprasMetObtenerMetodosPago();
+        DataTable ComprasMetObtenerMonedas();
+
+        // Busca el tipo de cambio de la moneda a GTQ vigente a la fecha indicada.
+        void ComprasMetResolverTipoCambio(long IdMoneda, DateTime Fecha, out long? IdTipoCambio, out decimal Valor);
     }
 }
