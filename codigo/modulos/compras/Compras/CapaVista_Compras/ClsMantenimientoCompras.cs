@@ -4,30 +4,42 @@ using CapaControlador_Compras;
 using CapaControlador_Seguridad.Objetos_de_valor;
 using CapaVista_Navegador;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 24/10/2026
+ * ==================================================================
+ * Propósito :
+ *  Configura el navegador de mantenimiento con la tabla, el módulo y la aplicación utilizados para los permisos de la sesión.
+ * ===================================================================
+*/
+
 namespace CapaVista_Compras
 {
     internal static class ClsMantenimientoCompras
     {
-        internal static void ComprasProcConfigurar(Form Formulario, Navegador Navegador, string Tabla, int CodigoAplicacion)
+        internal static void ComprasProcConfigurar(Form Formulario, Navegador Navegador, string Tabla, int CodigoAplicacion, int? CodigoModulo = null)
         {
             Navegador.Enabled = false;
             Formulario.Load += (Remitente, Evento) =>
             {
                 string Mensaje;
                 if (!ClsSesionSeguridad.HaySesionActiva)
-                    Mensaje = "Este formulario no está habilitado para el prototipo no funcional.";
+                    Mensaje = "Inicie sesión desde Seguridad para habilitar el mantenimiento de proveedores.";
                 else
                 {
                     try
                     {
-                        int CodigoModulo = ClsAplicacionesCompras.ComprasFuncObtenerIdModulo();
-                        Navegador.NavegadorMetConfigurar(Tabla, CodigoModulo, CodigoAplicacion);
+                        int Modulo = CodigoModulo ?? ClsAplicacionesCompras.ComprasFuncObtenerIdModulo();
+                        Navegador.NavegadorMetConfigurar(Tabla, Modulo, CodigoAplicacion);
                         Navegador.Enabled = true;
                         return;
                     }
-                    catch (InvalidOperationException)
+                    catch (InvalidOperationException Error)
                     {
-                        Mensaje = "Este formulario no está habilitado para el prototipo no funcional.";
+                        Mensaje = Error.Message;
                     }
                 }
                 Formulario.Controls.Add(new Label

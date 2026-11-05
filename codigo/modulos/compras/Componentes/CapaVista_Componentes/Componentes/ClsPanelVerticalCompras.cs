@@ -1,4 +1,16 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 24/10/2026
+ * ==================================================================
+ * Propósito :
+ *  Permite desplazar el contenido verticalmente y ajusta su ancho para evitar desplazamiento horizontal.
+ * ===================================================================
+*/
 
 namespace CapaVista_Componentes.Componentes
 {

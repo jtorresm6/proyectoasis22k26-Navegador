@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaControlador_Componentes">
+      <HintPath>..\..\Componentes\CapaControlador_Componentes\bin\$(Configuration)\CapaControlador_Componentes.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
     <Reference Include="CapaVista_Consultas">
@@ -47,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmEncabezados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEncabezados.Designer.cs">
+      <DependentUpon>FrmEncabezados.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -71,6 +80,9 @@
     <Compile Include="FrmOrdenesCompra.Designer.cs">
       <DependentUpon>FrmOrdenesCompra.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FrmEncabezados.resx">
+      <DependentUpon>FrmEncabezados.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmOrdenesCompra.resx">
       <DependentUpon>FrmOrdenesCompra.cs</DependentUpon>
     </EmbeddedResource>
