@@ -38,7 +38,11 @@
       <HintPath>..\..\Bibliotecas de Bancos\Bancos\CapaVista_Bancos\bin\Debug\CapaVista_Bancos.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Seguridad">
+<<<<<<< Updated upstream
       <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
+=======
+      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Release\CapaVista_Seguridad.dll</HintPath>
+>>>>>>> Stashed changes
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,6 +80,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Bibliotecas de Bancos\Tipo_CambioBancos\CapaVista_TipoCambioBancos\Resouces\Banderas\LICENSE-circle-flags.txt">
+      <Link>Resouces\Banderas\LICENSE-circle-flags.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
