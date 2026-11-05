@@ -46,7 +46,7 @@ namespace CapaVista_Herramientas.Controles
             ComprasProcConsultar();
         }
 
-        private static void ComprasProcCargarMonedas(CapaVista_Componentes.Componentes.UsrComboBoxCompras Selector,
+        private static void ComprasProcCargarMonedas(CapaVista_Componentes.Componentes.ComprasUsrComboBox Selector,
             List<ClsMonedaCompras> Monedas)
         {
             Selector.DisplayMember = nameof(ClsMonedaCompras.Descripcion);

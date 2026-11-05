@@ -24,24 +24,24 @@ namespace CapaModelo_Herramientas.Repositorios
     public class ClsRepositorioMoneda : ClsRepositorioMaestroCompras
     {
         private const string _SelectMonedas =
-            "SELECT Pk_Moneda AS idMoneda, codigoMoneda, nombreMoneda, simboloMoneda " +
-            "FROM tblMoneda WHERE is_active = 1 ORDER BY codigoMoneda";
+            "SELECT idMoneda, codigoMoneda, nombreMoneda, simboloMoneda " +
+            "FROM tblMoneda WHERE activoMoneda = 1 ORDER BY codigoMoneda";
 
         // Último tipo de cambio registrado por cada par de monedas hasta la fecha indicada.
         // Si en un mismo día hay varias versiones, se toma la versión más reciente.
         private const string _SelectVigentes =
-            "SELECT tc.Pk_TipoCambio AS idTipoCambio, o.codigoMoneda AS codigoOrigen, o.simboloMoneda AS simboloOrigen, " +
+            "SELECT tc.idTipoCambio, o.codigoMoneda AS codigoOrigen, o.simboloMoneda AS simboloOrigen, " +
             "       d.codigoMoneda AS codigoDestino, d.simboloMoneda AS simboloDestino, tc.valorTipoCambio, " +
             "       tc.fechaTipoCambio, tc.fuenteTipoCambio, tc.metodoTipoCambio, tc.versionTipoCambio " +
             "FROM tblTipoCambio tc " +
-            "INNER JOIN tblMoneda o ON o.Pk_Moneda = tc.Fk_Moneda_Origen_Codigo " +
-            "INNER JOIN tblMoneda d ON d.Pk_Moneda = tc.Fk_Moneda_Destino_Codigo " +
-            "WHERE o.is_active = 1 AND d.is_active = 1 " +
-            "  AND tc.Pk_TipoCambio = (SELECT t2.Pk_TipoCambio FROM tblTipoCambio t2 " +
+            "INNER JOIN tblMoneda o ON o.idMoneda = tc.Fk_Moneda_Origen_Codigo " +
+            "INNER JOIN tblMoneda d ON d.idMoneda = tc.Fk_Moneda_Destino_Codigo " +
+            "WHERE o.activoMoneda = 1 AND d.activoMoneda = 1 " +
+            "  AND tc.idTipoCambio = (SELECT t2.idTipoCambio FROM tblTipoCambio t2 " +
             "                          WHERE t2.Fk_Moneda_Origen_Codigo = tc.Fk_Moneda_Origen_Codigo " +
             "                            AND t2.Fk_Moneda_Destino_Codigo = tc.Fk_Moneda_Destino_Codigo " +
             "                            AND t2.fechaTipoCambio <= ? " +
-            "                          ORDER BY t2.fechaTipoCambio DESC, t2.versionTipoCambio DESC, t2.Pk_TipoCambio DESC " +
+            "                          ORDER BY t2.fechaTipoCambio DESC, t2.versionTipoCambio DESC, t2.idTipoCambio DESC " +
             "                          LIMIT 1) " +
             "ORDER BY o.codigoMoneda, d.codigoMoneda";
 
@@ -49,14 +49,14 @@ namespace CapaModelo_Herramientas.Repositorios
             "SELECT valorTipoCambio, fechaTipoCambio, fuenteTipoCambio " +
             "FROM tblTipoCambio " +
             "WHERE Fk_Moneda_Origen_Codigo = ? AND Fk_Moneda_Destino_Codigo = ? AND fechaTipoCambio <= ? " +
-            "ORDER BY fechaTipoCambio DESC, versionTipoCambio DESC, Pk_TipoCambio DESC LIMIT 1";
+            "ORDER BY fechaTipoCambio DESC, versionTipoCambio DESC, idTipoCambio DESC LIMIT 1";
 
         private const string _SelectHistorial =
             "SELECT fechaTipoCambio, valorTipoCambio, versionTipoCambio, fuenteTipoCambio " +
             "FROM tblTipoCambio " +
             "WHERE Fk_Moneda_Origen_Codigo = ? AND Fk_Moneda_Destino_Codigo = ? " +
             "  AND fechaTipoCambio BETWEEN ? AND ? " +
-            "ORDER BY fechaTipoCambio, versionTipoCambio, Pk_TipoCambio";
+            "ORDER BY fechaTipoCambio, versionTipoCambio, idTipoCambio";
 
         public DataTable ComprasFuncObtenerMonedasActivas()
         {
