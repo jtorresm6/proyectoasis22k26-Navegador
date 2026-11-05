@@ -1,4 +1,4 @@
-namespace CapaVista_Herramientas.Controles
+﻿namespace CapaVista_Herramientas.Controles
 {
     partial class UsrTipoCambioVigente
     {
@@ -19,11 +19,11 @@ namespace CapaVista_Herramientas.Controles
         {
             this.ComprasTlpPrincipal = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasTlpFiltro = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
-            this.ComprasLblFecha = new CapaVista_Componentes.Componentes.UsrLabelCompras();
+            this.ComprasLblFecha = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasDtpFecha = new CapaVista_Componentes.Componentes.ClsDatePickerCompras();
             this.ComprasBtnConsultar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
-            this.ComprasDgvTiposCambio = new CapaVista_Componentes.Componentes.UsrDataGridViewCompras();
-            this.ComprasLblNota = new CapaVista_Componentes.Componentes.UsrLabelCompras();
+            this.ComprasDgvTiposCambio = new CapaVista_Componentes.Componentes.ComprasUsrDataGridView();
+            this.ComprasLblNota = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasTlpPrincipal.SuspendLayout();
             this.ComprasTlpFiltro.SuspendLayout();
             this.SuspendLayout();
@@ -123,10 +123,10 @@ namespace CapaVista_Herramientas.Controles
 
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras ComprasTlpPrincipal;
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras ComprasTlpFiltro;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblFecha;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblFecha;
         private CapaVista_Componentes.Componentes.ClsDatePickerCompras ComprasDtpFecha;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnConsultar;
-        private CapaVista_Componentes.Componentes.UsrDataGridViewCompras ComprasDgvTiposCambio;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblNota;
+        private CapaVista_Componentes.Componentes.ComprasUsrDataGridView ComprasDgvTiposCambio;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblNota;
     }
 }

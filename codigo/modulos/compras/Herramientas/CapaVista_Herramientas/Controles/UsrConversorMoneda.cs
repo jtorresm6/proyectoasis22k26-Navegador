@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -46,7 +46,7 @@ namespace CapaVista_Herramientas.Controles
             ComprasProcLimpiarResultado();
         }
 
-        private static void ComprasProcCargarMonedas(CapaVista_Componentes.Componentes.UsrComboBoxCompras Selector,
+        private static void ComprasProcCargarMonedas(CapaVista_Componentes.Componentes.ComprasUsrComboBox Selector,
             List<ClsMonedaCompras> Monedas)
         {
             // Cada selector recibe su propia lista para que elegir en uno no cambie el otro.

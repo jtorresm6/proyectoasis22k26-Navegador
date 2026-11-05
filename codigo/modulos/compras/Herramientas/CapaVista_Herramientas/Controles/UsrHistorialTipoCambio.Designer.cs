@@ -1,4 +1,4 @@
-namespace CapaVista_Herramientas.Controles
+﻿namespace CapaVista_Herramientas.Controles
 {
     partial class UsrHistorialTipoCambio
     {
@@ -19,19 +19,19 @@ namespace CapaVista_Herramientas.Controles
         {
             this.ComprasTlpPrincipal = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasTlpFiltro = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
-            this.ComprasLblOrigen = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasCboOrigen = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasLblDestino = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasCboDestino = new CapaVista_Componentes.Componentes.UsrComboBoxCompras();
-            this.ComprasRngFechas = new CapaVista_Componentes.Componentes.UsrRangoFechasCompras();
+            this.ComprasLblOrigen = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasCboOrigen = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasLblDestino = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasCboDestino = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
+            this.ComprasRngFechas = new CapaVista_Componentes.Componentes.ComprasUsrRangoFechas();
             this.ComprasBtnConsultar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasGrfHistorial = new CapaVista_Herramientas.Controles.ClsGraficaLineaCompras();
             this.ComprasTlpResumen = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
-            this.ComprasLblPar = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblMinimo = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblMaximo = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblPromedio = new CapaVista_Componentes.Componentes.UsrLabelCompras();
-            this.ComprasLblVariacion = new CapaVista_Componentes.Componentes.UsrLabelCompras();
+            this.ComprasLblPar = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblMinimo = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblMaximo = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblPromedio = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasLblVariacion = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasTlpPrincipal.SuspendLayout();
             this.ComprasTlpFiltro.SuspendLayout();
             this.ComprasTlpResumen.SuspendLayout();
@@ -215,18 +215,18 @@ namespace CapaVista_Herramientas.Controles
 
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras ComprasTlpPrincipal;
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras ComprasTlpFiltro;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblOrigen;
-        private CapaVista_Componentes.Componentes.UsrComboBoxCompras ComprasCboOrigen;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblDestino;
-        private CapaVista_Componentes.Componentes.UsrComboBoxCompras ComprasCboDestino;
-        private CapaVista_Componentes.Componentes.UsrRangoFechasCompras ComprasRngFechas;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblOrigen;
+        private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboOrigen;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblDestino;
+        private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboDestino;
+        private CapaVista_Componentes.Componentes.ComprasUsrRangoFechas ComprasRngFechas;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnConsultar;
         private CapaVista_Herramientas.Controles.ClsGraficaLineaCompras ComprasGrfHistorial;
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras ComprasTlpResumen;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblPar;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblMinimo;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblMaximo;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblPromedio;
-        private CapaVista_Componentes.Componentes.UsrLabelCompras ComprasLblVariacion;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblPar;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblMinimo;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblMaximo;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblPromedio;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblVariacion;
     }
 }

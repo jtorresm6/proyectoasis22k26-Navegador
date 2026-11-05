@@ -1,4 +1,4 @@
-namespace CapaVista_Herramientas
+﻿namespace CapaVista_Herramientas
 {
     partial class FrmHerramientasMoneda
     {
@@ -18,7 +18,7 @@ namespace CapaVista_Herramientas
         private void InitializeComponent()
         {
             this.ComprasTlpFormulario = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
-            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.UsrEncabezadoCompras();
+            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
             this.ComprasTlpPestanas = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasBtnTipoCambio = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnConversor = new CapaVista_Componentes.Componentes.ClsButtonCompras();
@@ -212,7 +212,7 @@ namespace CapaVista_Herramientas
         #endregion
 
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras ComprasTlpFormulario;
-        private CapaVista_Componentes.Componentes.UsrEncabezadoCompras ComprasUsrEncabezadoFormulario;
+        private CapaVista_Componentes.Componentes.ComprasUsrEncabezado ComprasUsrEncabezadoFormulario;
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras ComprasTlpPestanas;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnTipoCambio;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnConversor;

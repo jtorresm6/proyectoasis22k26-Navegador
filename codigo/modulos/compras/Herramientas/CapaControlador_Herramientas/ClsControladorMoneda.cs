@@ -228,7 +228,14 @@ namespace CapaControlador_Herramientas
         {
             Monto = 0;
             if (string.IsNullOrWhiteSpace(Texto)) return false;
-            string Limpio = Texto.Trim().Replace(",", string.Empty);
+            string Limpio = Texto.Trim();
+            string Entero = @"(?:[0-9]+|[0-9]{1,3}(?:,[0-9]{3})+)";
+            if (System.Text.RegularExpressions.Regex.IsMatch(Limpio, "^" + Entero + @"(?:\.[0-9]{1,2})?$"))
+                Limpio = Limpio.Replace(",", string.Empty);
+            else if (System.Text.RegularExpressions.Regex.IsMatch(Limpio, @"^(?:[0-9]+|[0-9]{1,3}(?:\.[0-9]{3})+),[0-9]{1,2}$"))
+                Limpio = Limpio.Replace(".", string.Empty).Replace(',', '.');
+            else
+                return false;
             return decimal.TryParse(Limpio, NumberStyles.Number, CultureInfo.InvariantCulture, out Monto)
                    && Monto > 0 && Monto <= _MontoMaximo;
         }
