@@ -49,64 +49,64 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formas\FrmMantenimientoBodegas.cs">
+    <Compile Include="Formularios\FrmMantenimientoBodegas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoBodegas.Designer.cs">
+    <Compile Include="Formularios\FrmMantenimientoBodegas.Designer.cs">
       <DependentUpon>FrmMantenimientoBodegas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoCategoria.cs">
+    <Compile Include="Formularios\FrmMantenimientoCategoria.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoCategoria.Designer.cs">
+    <Compile Include="Formularios\FrmMantenimientoCategoria.Designer.cs">
       <DependentUpon>FrmMantenimientoCategoria.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoDetalleMovimiento.cs">
+    <Compile Include="Formularios\FrmMantenimientoDetalleMovimiento.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoDetalleMovimiento.Designer.cs">
+    <Compile Include="Formularios\FrmMantenimientoDetalleMovimiento.Designer.cs">
       <DependentUpon>FrmMantenimientoDetalleMovimiento.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoLinea.cs">
+    <Compile Include="Formularios\FrmMantenimientoLinea.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoLinea.Designer.cs">
+    <Compile Include="Formularios\FrmMantenimientoLinea.Designer.cs">
       <DependentUpon>FrmMantenimientoLinea.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoMarca.cs">
+    <Compile Include="Formularios\FrmMantenimientoMarca.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoMarca.Designer.cs">
+    <Compile Include="Formularios\FrmMantenimientoMarca.Designer.cs">
       <DependentUpon>FrmMantenimientoMarca.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoMovimientoInventario.cs">
+    <Compile Include="Formularios\FrmMantenimientoMovimientoInventario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoMovimientoInventario.Designer.cs">
+    <Compile Include="Formularios\FrmMantenimientoMovimientoInventario.Designer.cs">
       <DependentUpon>FrmMantenimientoMovimientoInventario.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoProducto.cs">
+    <Compile Include="Formularios\FrmMantenimientoProducto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoProducto.Designer.cs">
+    <Compile Include="Formularios\FrmMantenimientoProducto.Designer.cs">
       <DependentUpon>FrmMantenimientoProducto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoStock.cs">
+    <Compile Include="Formularios\FrmMantenimientoStock.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoStock.Designer.cs">
+    <Compile Include="Formularios\FrmMantenimientoStock.Designer.cs">
       <DependentUpon>FrmMantenimientoStock.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoSucursales.cs">
+    <Compile Include="Formularios\FrmMantenimientoSucursales.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoSucursales.Designer.cs">
+    <Compile Include="Formularios\FrmMantenimientoSucursales.Designer.cs">
       <DependentUpon>FrmMantenimientoSucursales.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoTipoMovimiento.cs">
+    <Compile Include="Formularios\FrmMantenimientoTipoMovimiento.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmMantenimientoTipoMovimiento.Designer.cs">
+    <Compile Include="Formularios\FrmMantenimientoTipoMovimiento.Designer.cs">
       <DependentUpon>FrmMantenimientoTipoMovimiento.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,42 +117,46 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Formas\FrmMantenimientoBodegas.resx">
+    <EmbeddedResource Include="Formularios\FrmMantenimientoBodegas.resx">
       <DependentUpon>FrmMantenimientoBodegas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmMantenimientoCategoria.resx">
+    <EmbeddedResource Include="Formularios\FrmMantenimientoCategoria.resx">
       <DependentUpon>FrmMantenimientoCategoria.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmMantenimientoDetalleMovimiento.resx">
+    <EmbeddedResource Include="Formularios\FrmMantenimientoDetalleMovimiento.resx">
       <DependentUpon>FrmMantenimientoDetalleMovimiento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmMantenimientoLinea.resx">
+    <EmbeddedResource Include="Formularios\FrmMantenimientoLinea.resx">
       <DependentUpon>FrmMantenimientoLinea.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmMantenimientoMarca.resx">
+    <EmbeddedResource Include="Formularios\FrmMantenimientoMarca.resx">
       <DependentUpon>FrmMantenimientoMarca.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmMantenimientoMovimientoInventario.resx">
+    <EmbeddedResource Include="Formularios\FrmMantenimientoMovimientoInventario.resx">
       <DependentUpon>FrmMantenimientoMovimientoInventario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmMantenimientoProducto.resx">
+    <EmbeddedResource Include="Formularios\FrmMantenimientoProducto.resx">
       <DependentUpon>FrmMantenimientoProducto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmMantenimientoStock.resx">
+    <EmbeddedResource Include="Formularios\FrmMantenimientoStock.resx">
       <DependentUpon>FrmMantenimientoStock.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmMantenimientoSucursales.resx">
+    <EmbeddedResource Include="Formularios\FrmMantenimientoSucursales.resx">
       <DependentUpon>FrmMantenimientoSucursales.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmMantenimientoTipoMovimiento.resx">
+    <EmbeddedResource Include="Formularios\FrmMantenimientoTipoMovimiento.resx">
       <DependentUpon>FrmMantenimientoTipoMovimiento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpReporteDetalleMovimiento.rdlc" />
+    <EmbeddedResource Include="Reportes\RpReporteTipoMovimiento.rdlc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\CapaControlador_Inventario_Logistica.Modelos_de_Controladores.ClsModelosDetalleMovimiento.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Inventario_Logistica.Modelos_de_Controladores.ClsModelosTipoMovimiento.datasource" />
     <None Include="Resources\btn_guardar.png" />
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +230,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\btn_bodega.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Ayudas\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ImgStock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgMovimientoInventario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgdetalleMovimiento.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgtipoMovimiento.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

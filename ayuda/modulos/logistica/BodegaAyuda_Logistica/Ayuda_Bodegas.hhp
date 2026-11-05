@@ -1,0 +1,19 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=Ayuda_Bodegas.chm
+Contents file=Ayuda_Bodegas.hhc
+Index file=Ayuda_Bodegas.hhk
+Default topic=bodegas.html
+Display compile progress=Yes
+Full-text search=Yes
+Language=0xC0A Spanish (Modern Sort)
+Title=Manual de Usuario - Bodegas
+[FILES]
+bodegas.html
+imagenes\portada.png
+imagenes\Bodega1.png
+imagenes\Bodega2.png
+imagenes\Bodega3.png
+imagenes\Bodega4.png
+imagenes\Bodega5.png
+imagenes\Bodega6.png

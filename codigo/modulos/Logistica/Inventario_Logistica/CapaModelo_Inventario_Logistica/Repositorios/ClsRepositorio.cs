@@ -11,9 +11,9 @@ namespace CapaModelo_Inventario_Logistica.Repositorios
     {
         private readonly string _CadenaConexion;
 
-        protected ClsRepositorio(string cadenaConexion)
+        protected ClsRepositorio()
         {
-            _CadenaConexion = "Dns=EmbutidosS.A";
+            _CadenaConexion = "Dsn=EmbutidosS.A";
         }
 
         protected OdbcConnection LogisticaMetObtenerConexion()

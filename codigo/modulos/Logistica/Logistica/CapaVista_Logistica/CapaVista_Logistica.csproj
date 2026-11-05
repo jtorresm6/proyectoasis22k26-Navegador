@@ -34,8 +34,11 @@
     <Reference Include="CapaControlador_Logistica">
       <HintPath>..\CapaControlador_Logistica\bin\Debug\CapaControlador_Logistica.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_CierreInventario">
-      <HintPath>..\..\Cierre_Inventario\CapaVista_CierreInventario\bin\Debug\CapaVista_CierreInventario.dll</HintPath>
+    <Reference Include="CapaVista_CierreInventario_Logistica">
+      <HintPath>..\..\CierreInventario_Logistica\CapaVista_CierreInventario_Logistica\bin\Debug\CapaVista_CierreInventario_Logistica.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Enlace_Logistica">
+      <HintPath>..\..\Enlace_OtrosModulos_Logistica\CapaVista_Enlace_Logistica\bin\Debug\CapaVista_Enlace_Logistica.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Inventario_Logistica">
       <HintPath>..\..\Inventario_Logistica\CapaVista_Inventario_Logistica\bin\Debug\CapaVista_Inventario_Logistica.dll</HintPath>
@@ -43,11 +46,8 @@
     <Reference Include="CapaVista_MuestreoAuditoria_Logistica">
       <HintPath>..\..\MuestreoAuditoria_Logistica\CapaVista_MuestreoAuditoria_Logistica\bin\Debug\CapaVista_MuestreoAuditoria_Logistica.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_TransporteExterno_Logistica, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CapaVista_TransporteInterno_Logistica, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\TransporteExterno_Logistica\CapaVista_TransporteExterno_Logistica\bin\Debug\CapaVista_TransporteExterno_Logistica.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaVista_TransporteInterno_Logistica">
       <HintPath>..\..\TransporteInterno_Logistica\CapaVista_TransporteInterno_Logistica\bin\Debug\CapaVista_TransporteInterno_Logistica.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Traslados_Logistica">
@@ -65,10 +65,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmMDILogistica.cs">
+    <Compile Include="Formularios\FrmMDILogistica.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmMDILogistica.Designer.cs">
+    <Compile Include="Formularios\FrmMDILogistica.Designer.cs">
       <DependentUpon>FrmMDILogistica.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,7 +84,7 @@
     <Folder Include="Reportes\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FrmMDILogistica.resx">
+    <EmbeddedResource Include="Formularios\FrmMDILogistica.resx">
       <DependentUpon>FrmMDILogistica.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
