@@ -13,7 +13,7 @@ using System.Threading.Tasks;
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
- * Fecha : 28/10/2026
+ * Fecha : 4/11/2026
  * ==================================================================
  * Propósito :
  *  La clase Repositorio de Autorización de Orden de Compra se encarga de
@@ -29,33 +29,37 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
     public class ClsRepositorioAutorizacionOrdenCompra : ClsSentencias, IRepositorioAutorizacionOrdenCompra
     {
         private string _SelectAll;
-        private string _InsertEncabezado, _InsertEvidencia, _InsertDetalle, _UpdateOrden, _InsertBitacora, _UltimoId;
-
+        private string _InsertEncabezado, _InsertEvidencia, _InsertDetalle, _UpdateOrden, _InsertBitacora, _UltimoId, _UpdateDisponibilidad;
         public ClsRepositorioAutorizacionOrdenCompra()
         {
-            _SelectAll = "SELECT Pk_AutOrdenCompra, Fk_OrdenCompraRecibida_Codigo, identificadorEmpresaAutOrdenCompra, " +
-                         "estadoAutOrdenCompra, identificadorUsuarioAutoriza, fechaDecisionAutOrdenCompra, " +
-                         "comentarioAutOrdenCompra, motivoRechazoAutOrdenCompra, created_at, updated_at " +
-                         "FROM tblAutOrdenCompra";
+         _SelectAll = "SELECT Pk_AutOrdenCompra, Fk_OrdenCompraRecibida_Codigo, identificadorEmpresaAutOrdenCompra, " +
+                      "estadoAutOrdenCompra, identificadorUsuarioAutoriza, fechaDecisionAutOrdenCompra, " +
+                      "comentarioAutOrdenCompra, motivoRechazoAutOrdenCompra, created_at, updated_at " +
+                      "FROM tblAutOrdenCompra";
 
-            _InsertEncabezado = "INSERT INTO tblAutOrdenCompra (Fk_OrdenCompraRecibida_Codigo, identificadorEmpresaAutOrdenCompra, estadoAutOrdenCompra, " +
-                                "identificadorUsuarioAutoriza, fechaDecisionAutOrdenCompra, comentarioAutOrdenCompra, motivoRechazoAutOrdenCompra) " +
-                                "VALUES (?, ?, ?, ?, NOW(), ?, ?)";
+         _InsertEncabezado = "INSERT INTO tblAutOrdenCompra (Fk_OrdenCompraRecibida_Codigo, identificadorEmpresaAutOrdenCompra, estadoAutOrdenCompra, " +
+                             "identificadorUsuarioAutoriza, fechaDecisionAutOrdenCompra, comentarioAutOrdenCompra, motivoRechazoAutOrdenCompra) " +
+                             "VALUES (?, ?, ?, ?, NOW(), ?, ?)";
 
-            _InsertEvidencia = "INSERT INTO tblAutDisponibilidadFondos (Fk_AutOrdenCompra_Codigo, Fk_CuentaBancaria_Codigo, fechaCorteAutDisponibilidadFondos, " +
-                               "saldoDisponibleAutDisponibilidadFondos, Fk_Moneda_Origen, Fk_Moneda_Destino, tipoCambioAutDisponibilidadFondos, " +
-                               "Fk_TipoCambio_Codigo, fuenteAutDisponibilidadFondos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+         _InsertEvidencia = "INSERT INTO tblAutDisponibilidadFondos (Fk_AutOrdenCompra_Codigo, Fk_CuentaBancaria_Codigo, fechaCorteAutDisponibilidadFondos, " +
+                             "saldoDisponibleAutDisponibilidadFondos, Fk_Moneda_Origen, Fk_Moneda_Destino, tipoCambioAutDisponibilidadFondos, " +
+                             "Fk_TipoCambio_Codigo, fuenteAutDisponibilidadFondos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            _InsertDetalle = "INSERT INTO tblAutPagoOrden (Fk_AutOrdenCompra_Codigo, Fk_CuentaBancaria_Codigo, Fk_AutDisponibilidadFondos_Codigo, " +
-                             "montoAsignadoAutPagoOrden, estadoAutPagoOrden, fechaReservaAutPagoOrden) VALUES (?, ?, ?, ?, 'RESERVADA', NOW())";
+         _InsertDetalle = "INSERT INTO tblAutPagoOrden (Fk_AutOrdenCompra_Codigo, Fk_CuentaBancaria_Codigo, Fk_AutDisponibilidadFondos_Codigo, " +                             "montoAsignadoAutPagoOrden, estadoAutPagoOrden, fechaReservaAutPagoOrden) VALUES (?, ?, ?, ?, 'RESERVADA', NOW())";
 
-            _UpdateOrden = "UPDATE tblOrdenCompraRecibida SET estadoOrdenCompra = ? " +
-                           "WHERE Pk_OrdenCompraRecibida = ? AND estadoOrdenCompra = 'PENDIENTE'";
+         _UpdateOrden = "UPDATE tblEncabezadoOrdenCompra SET estadoOrdenCompra = ? WHERE idOrdenCompra = ? AND estadoOrdenCompra = 'Pendiente'";
 
-            _InsertBitacora = "INSERT INTO tblBitacora (idUsuario, accionBitacora, tablaBitacora, idRegistroBitacora, detallesBitacora, ipBitacora, fechaHoraBitacora) " +
-                              "VALUES (?, ?, ?, ?, ?, ?, ?)";
+         _UpdateDisponibilidad = "UPDATE tblDisponibilidadDiaria " +
+                                 "SET comprometidoDisponibilidadDiaria = comprometidoDisponibilidadDiaria + ?, " +
+                                 "saldoDisponibleDisponibilidadDiaria = saldoDisponibleDisponibilidadDiaria - ?, " +
+                                 "saldoDisponibleGTQDisponibilidadDiaria = saldoDisponibleGTQDisponibilidadDiaria - (? * tipoCambioAplicadoDisponibilidadDiaria) " +
+                                 "WHERE Fk_CuentaBancaria_Codigo = ? AND fechaDisponibilidadDiaria = ? " +
+                                 "AND saldoDisponibleDisponibilidadDiaria >= ?";
 
-            _UltimoId = "SELECT LAST_INSERT_ID()";
+         _InsertBitacora = "INSERT INTO tblBitacora (idUsuario, accionBitacora, tablaBitacora, idRegistroBitacora, detallesBitacora, ipBitacora, fechaHoraBitacora) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+         _UltimoId = "SELECT LAST_INSERT_ID()";
         }
 
         public int BancosMetAgregar(ClsAutorizacionOrdenCompra Entidad)
@@ -68,7 +72,7 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
                 {
                     try
                     {
-                        //ENCABEZADO
+                        //encabezado 
                         var ParametroEncabezado = new List<OdbcParameter>();
                         ParametroEncabezado.Add(new OdbcParameter("p_IdOrdenCompra", Entidad.IdOrdenCompra));
                         ParametroEncabezado.Add(new OdbcParameter("p_IdEmpresa", Entidad.IdEmpresaAutorizacionOrden));
@@ -80,7 +84,7 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
 
                         long IdAutorizacion = Convert.ToInt64(BancosMetEjecucionEscalar(_UltimoId, new List<OdbcParameter>(), CommandType.Text, Conexion, Transaccion));
 
-                        //EVIDENCIA POR CUENTA
+                        //Evidencia
                         if (Autoriza)
                         {
                             foreach (var Evidencia in Entidad.Evidencias)
@@ -88,11 +92,11 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
                                 var ParametroEvidencia = new List<OdbcParameter>();
                                 ParametroEvidencia.Add(new OdbcParameter("p_IdAutorizacion", IdAutorizacion));
                                 ParametroEvidencia.Add(new OdbcParameter("p_IdCuenta", Evidencia.IdCuenta));
-                                ParametroEvidencia.Add(new OdbcParameter("p_FechaCorte", Evidencia.FechaCorteDisponibilidadFondos.ToString("yyyy-MM-dd")));
-                                ParametroEvidencia.Add(new OdbcParameter("p_Saldo", Evidencia.SaldoDisponibleDisponibilidadFondos.ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture)));
+                                ParametroEvidencia.Add(new OdbcParameter("p_FechaCorte", Evidencia.FechaCorteDisponibilidadFondos));
+                                ParametroEvidencia.Add(new OdbcParameter("p_Saldo", Evidencia.SaldoDisponibleDisponibilidadFondos));
                                 ParametroEvidencia.Add(new OdbcParameter("p_IdMonedaOrigen", Evidencia.IdMonedaOrigen));
                                 ParametroEvidencia.Add(new OdbcParameter("p_IdMonedaDestino", Evidencia.IdMonedaDestino));
-                                ParametroEvidencia.Add(new OdbcParameter("p_TipoCambio", Evidencia.TipoCambioDisponibilidadFondos.ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture)));
+                                ParametroEvidencia.Add(new OdbcParameter("p_TipoCambio", Evidencia.TipoCambioDisponibilidadFondos));
                                 ParametroEvidencia.Add(new OdbcParameter("p_IdTipoCambio", Evidencia.IdTipoCambio.HasValue ? (object)Evidencia.IdTipoCambio.Value : DBNull.Value));
                                 ParametroEvidencia.Add(new OdbcParameter("p_Fuente", Evidencia.FuenteDisponibilidadFondos));
                                 BancosMetEjecucionNonQuery(_InsertEvidencia, ParametroEvidencia, CommandType.Text, Conexion, Transaccion);
@@ -104,15 +108,28 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
                                 ParametroDetalle.Add(new OdbcParameter("p_IdAutorizacion", IdAutorizacion));
                                 ParametroDetalle.Add(new OdbcParameter("p_IdCuenta", Detalle.IdCuenta));
                                 ParametroDetalle.Add(new OdbcParameter("p_IdEvidencia", IdEvidencia));
-                                ParametroDetalle.Add(new OdbcParameter("p_Monto", Detalle.MontoAsignadoPagoOrden.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)));
+                                ParametroDetalle.Add(new OdbcParameter("p_Monto", Detalle.MontoAsignadoPagoOrden));
                                 BancosMetEjecucionNonQuery(_InsertDetalle, ParametroDetalle, CommandType.Text, Conexion, Transaccion);
+
+                                decimal Monto = Detalle.MontoAsignadoPagoOrden;
+                                var ParametroReserva = new List<OdbcParameter>();
+                                ParametroReserva.Add(new OdbcParameter("p_MontoComprometido", Monto));
+                                ParametroReserva.Add(new OdbcParameter("p_MontoSaldo", Monto));
+                                ParametroReserva.Add(new OdbcParameter("p_MontoGTQ", Monto));
+                                ParametroReserva.Add(new OdbcParameter("p_IdCuenta", Detalle.IdCuenta));
+                                ParametroReserva.Add(new OdbcParameter("p_Fecha", Evidencia.FechaCorteDisponibilidadFondos));
+                                ParametroReserva.Add(new OdbcParameter("p_MontoMinimo", Monto));
+
+                                int FilasReserva = BancosMetEjecucionNonQuery(_UpdateDisponibilidad, ParametroReserva, CommandType.Text, Conexion, Transaccion);
+                                if (FilasReserva != 1)
+                                    throw new InvalidOperationException("La cuenta ya no tiene saldo disponible suficiente.");
                             }
                         }
 
 
                         //ACTUALIZAR ORDEN
                         var ParametroOrden = new List<OdbcParameter>();
-                        ParametroOrden.Add(new OdbcParameter("p_Estado", Autoriza ? "APROBADA" : "RECHAZADA"));
+                        ParametroOrden.Add(new OdbcParameter("p_Estado", Autoriza ? "Autorizada" : "Rechazada"));
                         ParametroOrden.Add(new OdbcParameter("p_IdOrdenCompra", Entidad.IdOrdenCompra));
                         int Filas = BancosMetEjecucionNonQuery(_UpdateOrden, ParametroOrden, CommandType.Text, Conexion, Transaccion);
                         if (Filas != 1)

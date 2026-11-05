@@ -12,8 +12,9 @@ using System.Threading.Tasks;
  * Fecha : 28/10/2026
  * ==================================================================
  * Propósito :
- *  La entidad ClsCuentaDisponible representa una cuenta bancaria con su saldo
- *  disponible del día, su moneda y el tipo de cambio aplicado.
+ * La entidad ClsCuentaDisponible representa una cuenta bancaria con 
+ * su saldo disponible del día, su moneda y el tipo de cambio 
+ * aplicado.
  * ===================================================================
 */
 
@@ -29,5 +30,6 @@ namespace CapaModelo_AutorizacionOrdenes.Entidades
         public decimal SaldoDisponible { get; set; }
         public long? IdTipoCambio { get; set; }
         public decimal TipoCambio { get; set; }
+        public decimal MontoComprometido { get; set; }
     }
 }

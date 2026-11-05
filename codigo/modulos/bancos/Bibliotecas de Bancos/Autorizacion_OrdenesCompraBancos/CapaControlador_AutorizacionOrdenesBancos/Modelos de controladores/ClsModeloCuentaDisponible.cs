@@ -33,6 +33,8 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
         private decimal _SaldoDisponible;
         private long? _IdTipoCambio;
         private decimal _TipoCambio;
+        private decimal _MontoComprometido;
+
         private ClsRepositorioCuentaDisponible _RepositorioCuentaDisponible;
 
         public long IdCuenta { get => _IdCuenta; private set => _IdCuenta = value; }
@@ -51,6 +53,7 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
         public long? IdTipoCambio { get => _IdTipoCambio; private set => _IdTipoCambio = value; }
 
         public decimal TipoCambio { get => _TipoCambio; private set => _TipoCambio = value; }
+        public decimal MontoComprometido { get => _MontoComprometido; private set => _MontoComprometido = value; }
 
         private List<ClsModeloCuentaDisponible> _ListaCuentaDisponible;
         public ClsModeloCuentaDisponible()
@@ -74,6 +77,7 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
                     _SaldoDisponible = Item.SaldoDisponible,
                     _IdTipoCambio = Item.IdTipoCambio,
                     _TipoCambio = Item.TipoCambio,
+                    _MontoComprometido = Item.MontoComprometido,
                 });
             }
             return _ListaCuentaDisponible;

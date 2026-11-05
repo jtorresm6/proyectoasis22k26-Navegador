@@ -129,6 +129,7 @@
     <None Include="Resources\FondoAutorizacionModulo.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Refrescar_Iconodeactualización.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
