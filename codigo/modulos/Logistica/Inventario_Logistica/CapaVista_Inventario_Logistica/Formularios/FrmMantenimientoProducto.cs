@@ -26,9 +26,6 @@ namespace CapaVista_Inventario_Logistica.Formularios
         {
             InitializeComponent();
 
-            // Configuración del navegador para productos.
-            LogisticaNavProducto.NavegadorMetConfigurar(
-                "tblProducto", 4, 6);
         }
 
         // Procedimiento para abrir mantenimiento de categorías.

@@ -35,15 +35,61 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaLblRolUsuario = new System.Windows.Forms.Label();
             this.LogisticaLblUsuario = new System.Windows.Forms.Label();
             this.LogisticaPnlNavegador = new System.Windows.Forms.Panel();
-            this.LogisticaBtnTransporte = new System.Windows.Forms.Button();
             this.LogisticaBtnCerrarSesion = new System.Windows.Forms.Button();
-            this.LogisticaBtnEnlace = new System.Windows.Forms.Button();
-            this.LogisticaBtnCierredeInventario = new System.Windows.Forms.Button();
-            this.LogisticaBtnAuditoria = new System.Windows.Forms.Button();
+            this.LogistincaPnlMenuFin = new System.Windows.Forms.Panel();
+            this.LogisticaPnlMenuAdministracionCostos = new System.Windows.Forms.Panel();
+            this.LogisticaBtnEnlaceAOtrosModulos = new System.Windows.Forms.Button();
+            this.LogisticaBtnEnlaces = new System.Windows.Forms.Button();
+            this.LogisticaBtnIndecencia = new System.Windows.Forms.Button();
+            this.LogisticaBtnCostoyPago = new System.Windows.Forms.Button();
+            this.LogisticaPnlMenuTransporteExterno = new System.Windows.Forms.Panel();
+            this.LogisticaBtnAlertaCadenaFrio = new System.Windows.Forms.Button();
+            this.LogisticaBtnTelemetriaTransporte = new System.Windows.Forms.Button();
+            this.LogisticaBtnRutaSeguimiento = new System.Windows.Forms.Button();
+            this.LogisticaBtnRuta = new System.Windows.Forms.Button();
+            this.LogisticaBtnRegistroTransporteExterno = new System.Windows.Forms.Button();
+            this.LogisticaBtnTransporteExterno = new System.Windows.Forms.Button();
+            this.LogisticaPnlMenuGesionViajes = new System.Windows.Forms.Panel();
+            this.LogisticaBtnDetalleViajeProducto = new System.Windows.Forms.Button();
+            this.LogisticaBtnHistorico = new System.Windows.Forms.Button();
+            this.LogisticaBtnDetalleViaje = new System.Windows.Forms.Button();
+            this.LogisticaBtnEncabezadoViaje = new System.Windows.Forms.Button();
+            this.LogisticaBtnMenuGestionViajes = new System.Windows.Forms.Button();
+            this.LogisticaBtnMenuTraslados = new System.Windows.Forms.Panel();
+            this.LogisticaBtnProductoTraslado = new System.Windows.Forms.Button();
+            this.LogisticaBtnTipodeTraslado = new System.Windows.Forms.Button();
+            this.LogisticaBtnDetalleTraslado = new System.Windows.Forms.Button();
             this.LogisticaBtnTraslado = new System.Windows.Forms.Button();
-            this.LogisticaBtnInventario = new System.Windows.Forms.Button();
-            this.LogisticaBtnCatalogo = new System.Windows.Forms.Button();
-            this.LogisticaBtnUbicaciones = new System.Windows.Forms.Button();
+            this.LogisticaPnlMenuCierreInventario = new System.Windows.Forms.Panel();
+            this.LogisticaBtnDetalleMuestreo = new System.Windows.Forms.Button();
+            this.LogisticaBtnMuestreoyAuditoria = new System.Windows.Forms.Button();
+            this.LogisticaBtnConsultaCierre = new System.Windows.Forms.Button();
+            this.LogisticaBtnCierreInventario = new System.Windows.Forms.Button();
+            this.LogisticaPnlMenuGestionInventario = new System.Windows.Forms.Panel();
+            this.LogisticaBtnHistoricoInventario = new System.Windows.Forms.Button();
+            this.LogisticaBtnMovimientoInventario = new System.Windows.Forms.Button();
+            this.LogisticaBtnSaldos = new System.Windows.Forms.Button();
+            this.LogisticaBtnStock = new System.Windows.Forms.Button();
+            this.LogisticaBtnProducto = new System.Windows.Forms.Button();
+            this.LogisticaBtnMenuAdministracion = new System.Windows.Forms.Button();
+            this.LogisticaBtnMenuTransporteExterno = new System.Windows.Forms.Button();
+            this.LogisticaBtnMenuCierreInventario = new System.Windows.Forms.Button();
+            this.LogisticaBtnMenuGestionTraslados = new System.Windows.Forms.Button();
+            this.LogisticaBtnMenuGestionInventario = new System.Windows.Forms.Button();
+            this.LogisticaPnlMenuMantenimientos = new System.Windows.Forms.Panel();
+            this.LogisticaBtnTransporte = new System.Windows.Forms.Button();
+            this.LogisticaBtnTipoTransporte = new System.Windows.Forms.Button();
+            this.LogisticaBtnEstadoTransporte = new System.Windows.Forms.Button();
+            this.LogisticaBtnConductor = new System.Windows.Forms.Button();
+            this.LogisticaBtnCamaraRefrigeración = new System.Windows.Forms.Button();
+            this.LogisticaTipoMovimiento = new System.Windows.Forms.Button();
+            this.LogisticaBtnDetalleMovimiento = new System.Windows.Forms.Button();
+            this.LogisticaBtnMarca = new System.Windows.Forms.Button();
+            this.LogisticaBtnLinea = new System.Windows.Forms.Button();
+            this.LogisticaBtnCategoria = new System.Windows.Forms.Button();
+            this.LogisticaBtnSucursales = new System.Windows.Forms.Button();
+            this.LogisticaBtnBodegas = new System.Windows.Forms.Button();
+            this.LogisticaBtnMenuMantenimientos = new System.Windows.Forms.Button();
             this.LogisticaPbLogo = new System.Windows.Forms.PictureBox();
             this.LogisticaPnlBanner = new System.Windows.Forms.Panel();
             this.LogisticaLblResumenEnlaces = new System.Windows.Forms.Label();
@@ -73,6 +119,13 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnHamburguesa = new System.Windows.Forms.Button();
             this.LogisticaPnlMDI.SuspendLayout();
             this.LogisticaPnlNavegador.SuspendLayout();
+            this.LogisticaPnlMenuAdministracionCostos.SuspendLayout();
+            this.LogisticaPnlMenuTransporteExterno.SuspendLayout();
+            this.LogisticaPnlMenuGesionViajes.SuspendLayout();
+            this.LogisticaBtnMenuTraslados.SuspendLayout();
+            this.LogisticaPnlMenuCierreInventario.SuspendLayout();
+            this.LogisticaPnlMenuGestionInventario.SuspendLayout();
+            this.LogisticaPnlMenuMantenimientos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaPbLogo)).BeginInit();
             this.LogisticaPnlBanner.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaPbInformacion)).BeginInit();
@@ -98,6 +151,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaPnlMDI.Controls.Add(this.LogisticaPnlBanner);
             this.LogisticaPnlMDI.Controls.Add(this.LogisticaBtnHamburguesa);
             this.LogisticaPnlMDI.Location = new System.Drawing.Point(3, 1);
+            this.LogisticaPnlMDI.MaximumSize = new System.Drawing.Size(1554, 1061);
             this.LogisticaPnlMDI.Name = "LogisticaPnlMDI";
             this.LogisticaPnlMDI.Size = new System.Drawing.Size(1554, 1061);
             this.LogisticaPnlMDI.TabIndex = 0;
@@ -152,166 +206,705 @@ namespace CapaVista_Logistica.Formularios
             // 
             // LogisticaPnlNavegador
             // 
+            this.LogisticaPnlNavegador.AutoScroll = true;
+            this.LogisticaPnlNavegador.AutoScrollMargin = new System.Drawing.Size(0, 100);
+            this.LogisticaPnlNavegador.AutoScrollMinSize = new System.Drawing.Size(0, 2400);
             this.LogisticaPnlNavegador.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaPnlNavegador.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("LogisticaPnlNavegador.BackgroundImage")));
             this.LogisticaPnlNavegador.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnTransporte);
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnCerrarSesion);
-            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnEnlace);
-            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnCierredeInventario);
-            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnAuditoria);
-            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnTraslado);
-            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnInventario);
-            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnCatalogo);
-            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnUbicaciones);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogistincaPnlMenuFin);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaPnlMenuAdministracionCostos);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaPnlMenuTransporteExterno);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaPnlMenuGesionViajes);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnMenuGestionViajes);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnMenuTraslados);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaPnlMenuCierreInventario);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaPnlMenuGestionInventario);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnMenuAdministracion);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnMenuTransporteExterno);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnMenuCierreInventario);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnMenuGestionTraslados);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnMenuGestionInventario);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaPnlMenuMantenimientos);
+            this.LogisticaPnlNavegador.Controls.Add(this.LogisticaBtnMenuMantenimientos);
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaPbLogo);
-            this.LogisticaPnlNavegador.Location = new System.Drawing.Point(3, 0);
+            this.LogisticaPnlNavegador.Dock = System.Windows.Forms.DockStyle.Left;
+            this.LogisticaPnlNavegador.Location = new System.Drawing.Point(0, 0);
             this.LogisticaPnlNavegador.Name = "LogisticaPnlNavegador";
-            this.LogisticaPnlNavegador.Size = new System.Drawing.Size(270, 745);
+            this.LogisticaPnlNavegador.Size = new System.Drawing.Size(300, 1061);
             this.LogisticaPnlNavegador.TabIndex = 1;
-            // 
-            // LogisticaBtnTransporte
-            // 
-            this.LogisticaBtnTransporte.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaBtnTransporte.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LogisticaBtnTransporte.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnTransporte.FlatAppearance.BorderSize = 0;
-            this.LogisticaBtnTransporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnTransporte.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnTransporte.Image")));
-            this.LogisticaBtnTransporte.Location = new System.Drawing.Point(3, 315);
-            this.LogisticaBtnTransporte.Name = "LogisticaBtnTransporte";
-            this.LogisticaBtnTransporte.Size = new System.Drawing.Size(264, 42);
-            this.LogisticaBtnTransporte.TabIndex = 10;
-            this.LogisticaBtnTransporte.UseVisualStyleBackColor = false;
-            this.LogisticaBtnTransporte.Click += new System.EventHandler(this.LogisticaBtnTransporte_Click);
+            this.LogisticaPnlNavegador.Paint += new System.Windows.Forms.PaintEventHandler(this.LogisticaPnlNavegador_Paint);
             // 
             // LogisticaBtnCerrarSesion
             // 
-            this.LogisticaBtnCerrarSesion.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnCerrarSesion.BackColor = System.Drawing.Color.OldLace;
             this.LogisticaBtnCerrarSesion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.LogisticaBtnCerrarSesion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LogisticaBtnCerrarSesion.FlatAppearance.BorderSize = 0;
             this.LogisticaBtnCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnCerrarSesion.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnCerrarSesion.Image")));
-            this.LogisticaBtnCerrarSesion.Location = new System.Drawing.Point(3, 575);
+            this.LogisticaBtnCerrarSesion.ForeColor = System.Drawing.Color.Tomato;
+            this.LogisticaBtnCerrarSesion.Location = new System.Drawing.Point(7, 2039);
             this.LogisticaBtnCerrarSesion.Name = "LogisticaBtnCerrarSesion";
+            this.LogisticaBtnCerrarSesion.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.LogisticaBtnCerrarSesion.Size = new System.Drawing.Size(264, 42);
-            this.LogisticaBtnCerrarSesion.TabIndex = 9;
+            this.LogisticaBtnCerrarSesion.TabIndex = 26;
+            this.LogisticaBtnCerrarSesion.Text = "Cerrar Sesión";
+            this.LogisticaBtnCerrarSesion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnCerrarSesion.UseVisualStyleBackColor = false;
-            this.LogisticaBtnCerrarSesion.Click += new System.EventHandler(this.LogisticaBtnCerrarSesion_Click);
             // 
-            // LogisticaBtnEnlace
+            // LogistincaPnlMenuFin
             // 
-            this.LogisticaBtnEnlace.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaBtnEnlace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LogisticaBtnEnlace.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnEnlace.FlatAppearance.BorderSize = 0;
-            this.LogisticaBtnEnlace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnEnlace.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnEnlace.Image")));
-            this.LogisticaBtnEnlace.Location = new System.Drawing.Point(3, 522);
-            this.LogisticaBtnEnlace.Name = "LogisticaBtnEnlace";
-            this.LogisticaBtnEnlace.Size = new System.Drawing.Size(264, 42);
-            this.LogisticaBtnEnlace.TabIndex = 8;
-            this.LogisticaBtnEnlace.UseVisualStyleBackColor = false;
-            this.LogisticaBtnEnlace.Click += new System.EventHandler(this.LogisticaBtnEnlace_Click);
+            this.LogistincaPnlMenuFin.BackColor = System.Drawing.Color.Transparent;
+            this.LogistincaPnlMenuFin.Location = new System.Drawing.Point(7, 2087);
+            this.LogistincaPnlMenuFin.Name = "LogistincaPnlMenuFin";
+            this.LogistincaPnlMenuFin.Size = new System.Drawing.Size(264, 105);
+            this.LogistincaPnlMenuFin.TabIndex = 25;
             // 
-            // LogisticaBtnCierredeInventario
+            // LogisticaPnlMenuAdministracionCostos
             // 
-            this.LogisticaBtnCierredeInventario.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaBtnCierredeInventario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LogisticaBtnCierredeInventario.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnCierredeInventario.FlatAppearance.BorderSize = 0;
-            this.LogisticaBtnCierredeInventario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnCierredeInventario.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnCierredeInventario.Image")));
-            this.LogisticaBtnCierredeInventario.Location = new System.Drawing.Point(3, 470);
-            this.LogisticaBtnCierredeInventario.Name = "LogisticaBtnCierredeInventario";
-            this.LogisticaBtnCierredeInventario.Size = new System.Drawing.Size(264, 42);
-            this.LogisticaBtnCierredeInventario.TabIndex = 7;
-            this.LogisticaBtnCierredeInventario.UseVisualStyleBackColor = false;
-            this.LogisticaBtnCierredeInventario.Click += new System.EventHandler(this.LogisticaBtnCierredeInventario_Click);
+            this.LogisticaPnlMenuAdministracionCostos.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaPnlMenuAdministracionCostos.Controls.Add(this.LogisticaBtnEnlaceAOtrosModulos);
+            this.LogisticaPnlMenuAdministracionCostos.Controls.Add(this.LogisticaBtnEnlaces);
+            this.LogisticaPnlMenuAdministracionCostos.Controls.Add(this.LogisticaBtnIndecencia);
+            this.LogisticaPnlMenuAdministracionCostos.Controls.Add(this.LogisticaBtnCostoyPago);
+            this.LogisticaPnlMenuAdministracionCostos.Location = new System.Drawing.Point(6, 1905);
+            this.LogisticaPnlMenuAdministracionCostos.Name = "LogisticaPnlMenuAdministracionCostos";
+            this.LogisticaPnlMenuAdministracionCostos.Size = new System.Drawing.Size(264, 128);
+            this.LogisticaPnlMenuAdministracionCostos.TabIndex = 24;
             // 
-            // LogisticaBtnAuditoria
+            // LogisticaBtnEnlaceAOtrosModulos
             // 
-            this.LogisticaBtnAuditoria.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaBtnAuditoria.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LogisticaBtnAuditoria.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnAuditoria.FlatAppearance.BorderSize = 0;
-            this.LogisticaBtnAuditoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnAuditoria.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnAuditoria.Image")));
-            this.LogisticaBtnAuditoria.Location = new System.Drawing.Point(3, 416);
-            this.LogisticaBtnAuditoria.Name = "LogisticaBtnAuditoria";
-            this.LogisticaBtnAuditoria.Size = new System.Drawing.Size(264, 42);
-            this.LogisticaBtnAuditoria.TabIndex = 6;
-            this.LogisticaBtnAuditoria.UseVisualStyleBackColor = false;
-            this.LogisticaBtnAuditoria.Click += new System.EventHandler(this.LogisticaBtnAuditoria_Click);
+            this.LogisticaBtnEnlaceAOtrosModulos.Location = new System.Drawing.Point(0, 84);
+            this.LogisticaBtnEnlaceAOtrosModulos.Name = "LogisticaBtnEnlaceAOtrosModulos";
+            this.LogisticaBtnEnlaceAOtrosModulos.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnEnlaceAOtrosModulos.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnEnlaceAOtrosModulos.TabIndex = 20;
+            this.LogisticaBtnEnlaceAOtrosModulos.Text = "Enlaces y otros modulos";
+            this.LogisticaBtnEnlaceAOtrosModulos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnEnlaceAOtrosModulos.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnEnlaces
+            // 
+            this.LogisticaBtnEnlaces.Location = new System.Drawing.Point(0, 85);
+            this.LogisticaBtnEnlaces.Name = "LogisticaBtnEnlaces";
+            this.LogisticaBtnEnlaces.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnEnlaces.TabIndex = 19;
+            this.LogisticaBtnEnlaces.Text = "Historico de Inventario";
+            this.LogisticaBtnEnlaces.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnIndecencia
+            // 
+            this.LogisticaBtnIndecencia.Location = new System.Drawing.Point(0, 44);
+            this.LogisticaBtnIndecencia.Name = "LogisticaBtnIndecencia";
+            this.LogisticaBtnIndecencia.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnIndecencia.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnIndecencia.TabIndex = 18;
+            this.LogisticaBtnIndecencia.Text = "Indecencia e Historial";
+            this.LogisticaBtnIndecencia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnIndecencia.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnCostoyPago
+            // 
+            this.LogisticaBtnCostoyPago.Location = new System.Drawing.Point(0, 3);
+            this.LogisticaBtnCostoyPago.Name = "LogisticaBtnCostoyPago";
+            this.LogisticaBtnCostoyPago.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnCostoyPago.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnCostoyPago.TabIndex = 17;
+            this.LogisticaBtnCostoyPago.Text = "Costo y Pago del Servicio";
+            this.LogisticaBtnCostoyPago.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnCostoyPago.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaPnlMenuTransporteExterno
+            // 
+            this.LogisticaPnlMenuTransporteExterno.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaPnlMenuTransporteExterno.Controls.Add(this.LogisticaBtnAlertaCadenaFrio);
+            this.LogisticaPnlMenuTransporteExterno.Controls.Add(this.LogisticaBtnTelemetriaTransporte);
+            this.LogisticaPnlMenuTransporteExterno.Controls.Add(this.LogisticaBtnRutaSeguimiento);
+            this.LogisticaPnlMenuTransporteExterno.Controls.Add(this.LogisticaBtnRuta);
+            this.LogisticaPnlMenuTransporteExterno.Controls.Add(this.LogisticaBtnRegistroTransporteExterno);
+            this.LogisticaPnlMenuTransporteExterno.Controls.Add(this.LogisticaBtnTransporteExterno);
+            this.LogisticaPnlMenuTransporteExterno.Location = new System.Drawing.Point(6, 1642);
+            this.LogisticaPnlMenuTransporteExterno.Name = "LogisticaPnlMenuTransporteExterno";
+            this.LogisticaPnlMenuTransporteExterno.Size = new System.Drawing.Size(264, 209);
+            this.LogisticaPnlMenuTransporteExterno.TabIndex = 24;
+            // 
+            // LogisticaBtnAlertaCadenaFrio
+            // 
+            this.LogisticaBtnAlertaCadenaFrio.Location = new System.Drawing.Point(0, 165);
+            this.LogisticaBtnAlertaCadenaFrio.Name = "LogisticaBtnAlertaCadenaFrio";
+            this.LogisticaBtnAlertaCadenaFrio.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnAlertaCadenaFrio.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnAlertaCadenaFrio.TabIndex = 22;
+            this.LogisticaBtnAlertaCadenaFrio.Text = "Alerta Cadena Frio";
+            this.LogisticaBtnAlertaCadenaFrio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnAlertaCadenaFrio.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnTelemetriaTransporte
+            // 
+            this.LogisticaBtnTelemetriaTransporte.Location = new System.Drawing.Point(0, 125);
+            this.LogisticaBtnTelemetriaTransporte.Name = "LogisticaBtnTelemetriaTransporte";
+            this.LogisticaBtnTelemetriaTransporte.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnTelemetriaTransporte.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnTelemetriaTransporte.TabIndex = 21;
+            this.LogisticaBtnTelemetriaTransporte.Text = "Telemetría del Transporte";
+            this.LogisticaBtnTelemetriaTransporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnTelemetriaTransporte.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnRutaSeguimiento
+            // 
+            this.LogisticaBtnRutaSeguimiento.Location = new System.Drawing.Point(0, 84);
+            this.LogisticaBtnRutaSeguimiento.Name = "LogisticaBtnRutaSeguimiento";
+            this.LogisticaBtnRutaSeguimiento.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnRutaSeguimiento.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnRutaSeguimiento.TabIndex = 20;
+            this.LogisticaBtnRutaSeguimiento.Text = "Ruta y Seguimiento";
+            this.LogisticaBtnRutaSeguimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnRutaSeguimiento.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnRuta
+            // 
+            this.LogisticaBtnRuta.Location = new System.Drawing.Point(0, 85);
+            this.LogisticaBtnRuta.Name = "LogisticaBtnRuta";
+            this.LogisticaBtnRuta.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnRuta.TabIndex = 19;
+            this.LogisticaBtnRuta.Text = "Historico de Inventario";
+            this.LogisticaBtnRuta.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnRegistroTransporteExterno
+            // 
+            this.LogisticaBtnRegistroTransporteExterno.Location = new System.Drawing.Point(0, 44);
+            this.LogisticaBtnRegistroTransporteExterno.Name = "LogisticaBtnRegistroTransporteExterno";
+            this.LogisticaBtnRegistroTransporteExterno.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnRegistroTransporteExterno.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnRegistroTransporteExterno.TabIndex = 18;
+            this.LogisticaBtnRegistroTransporteExterno.Text = "Registro Transporte Externo";
+            this.LogisticaBtnRegistroTransporteExterno.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnRegistroTransporteExterno.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnTransporteExterno
+            // 
+            this.LogisticaBtnTransporteExterno.Location = new System.Drawing.Point(0, 3);
+            this.LogisticaBtnTransporteExterno.Name = "LogisticaBtnTransporteExterno";
+            this.LogisticaBtnTransporteExterno.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnTransporteExterno.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnTransporteExterno.TabIndex = 17;
+            this.LogisticaBtnTransporteExterno.Text = "Transporte Externo";
+            this.LogisticaBtnTransporteExterno.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnTransporteExterno.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaPnlMenuGesionViajes
+            // 
+            this.LogisticaPnlMenuGesionViajes.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaPnlMenuGesionViajes.Controls.Add(this.LogisticaBtnDetalleViajeProducto);
+            this.LogisticaPnlMenuGesionViajes.Controls.Add(this.LogisticaBtnHistorico);
+            this.LogisticaPnlMenuGesionViajes.Controls.Add(this.LogisticaBtnDetalleViaje);
+            this.LogisticaPnlMenuGesionViajes.Controls.Add(this.LogisticaBtnEncabezadoViaje);
+            this.LogisticaPnlMenuGesionViajes.Location = new System.Drawing.Point(6, 1460);
+            this.LogisticaPnlMenuGesionViajes.Name = "LogisticaPnlMenuGesionViajes";
+            this.LogisticaPnlMenuGesionViajes.Size = new System.Drawing.Size(264, 128);
+            this.LogisticaPnlMenuGesionViajes.TabIndex = 23;
+            // 
+            // LogisticaBtnDetalleViajeProducto
+            // 
+            this.LogisticaBtnDetalleViajeProducto.Location = new System.Drawing.Point(0, 84);
+            this.LogisticaBtnDetalleViajeProducto.Name = "LogisticaBtnDetalleViajeProducto";
+            this.LogisticaBtnDetalleViajeProducto.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnDetalleViajeProducto.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnDetalleViajeProducto.TabIndex = 20;
+            this.LogisticaBtnDetalleViajeProducto.Text = "Detalle Viaje Producto";
+            this.LogisticaBtnDetalleViajeProducto.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnDetalleViajeProducto.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnHistorico
+            // 
+            this.LogisticaBtnHistorico.Location = new System.Drawing.Point(0, 85);
+            this.LogisticaBtnHistorico.Name = "LogisticaBtnHistorico";
+            this.LogisticaBtnHistorico.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnHistorico.TabIndex = 19;
+            this.LogisticaBtnHistorico.Text = "Historico de Inventario";
+            this.LogisticaBtnHistorico.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnDetalleViaje
+            // 
+            this.LogisticaBtnDetalleViaje.Location = new System.Drawing.Point(0, 44);
+            this.LogisticaBtnDetalleViaje.Name = "LogisticaBtnDetalleViaje";
+            this.LogisticaBtnDetalleViaje.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnDetalleViaje.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnDetalleViaje.TabIndex = 18;
+            this.LogisticaBtnDetalleViaje.Text = "Detalle de Viaje";
+            this.LogisticaBtnDetalleViaje.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnDetalleViaje.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnEncabezadoViaje
+            // 
+            this.LogisticaBtnEncabezadoViaje.Location = new System.Drawing.Point(0, 3);
+            this.LogisticaBtnEncabezadoViaje.Name = "LogisticaBtnEncabezadoViaje";
+            this.LogisticaBtnEncabezadoViaje.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnEncabezadoViaje.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnEncabezadoViaje.TabIndex = 17;
+            this.LogisticaBtnEncabezadoViaje.Text = "Encabezado Viaje";
+            this.LogisticaBtnEncabezadoViaje.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnEncabezadoViaje.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnMenuGestionViajes
+            // 
+            this.LogisticaBtnMenuGestionViajes.BackColor = System.Drawing.Color.OldLace;
+            this.LogisticaBtnMenuGestionViajes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LogisticaBtnMenuGestionViajes.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnMenuGestionViajes.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnMenuGestionViajes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnMenuGestionViajes.ForeColor = System.Drawing.Color.Tomato;
+            this.LogisticaBtnMenuGestionViajes.Location = new System.Drawing.Point(6, 1397);
+            this.LogisticaBtnMenuGestionViajes.Name = "LogisticaBtnMenuGestionViajes";
+            this.LogisticaBtnMenuGestionViajes.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnMenuGestionViajes.Size = new System.Drawing.Size(264, 53);
+            this.LogisticaBtnMenuGestionViajes.TabIndex = 23;
+            this.LogisticaBtnMenuGestionViajes.Text = "Gestiòn de Viajes y Despacho";
+            this.LogisticaBtnMenuGestionViajes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnMenuGestionViajes.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnMenuTraslados
+            // 
+            this.LogisticaBtnMenuTraslados.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnMenuTraslados.Controls.Add(this.LogisticaBtnProductoTraslado);
+            this.LogisticaBtnMenuTraslados.Controls.Add(this.LogisticaBtnTipodeTraslado);
+            this.LogisticaBtnMenuTraslados.Controls.Add(this.LogisticaBtnDetalleTraslado);
+            this.LogisticaBtnMenuTraslados.Controls.Add(this.LogisticaBtnTraslado);
+            this.LogisticaBtnMenuTraslados.Location = new System.Drawing.Point(6, 1230);
+            this.LogisticaBtnMenuTraslados.Name = "LogisticaBtnMenuTraslados";
+            this.LogisticaBtnMenuTraslados.Size = new System.Drawing.Size(264, 165);
+            this.LogisticaBtnMenuTraslados.TabIndex = 22;
+            // 
+            // LogisticaBtnProductoTraslado
+            // 
+            this.LogisticaBtnProductoTraslado.Location = new System.Drawing.Point(1, 126);
+            this.LogisticaBtnProductoTraslado.Name = "LogisticaBtnProductoTraslado";
+            this.LogisticaBtnProductoTraslado.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnProductoTraslado.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnProductoTraslado.TabIndex = 21;
+            this.LogisticaBtnProductoTraslado.Text = "Productos de Traslado";
+            this.LogisticaBtnProductoTraslado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnProductoTraslado.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnTipodeTraslado
+            // 
+            this.LogisticaBtnTipodeTraslado.Location = new System.Drawing.Point(0, 85);
+            this.LogisticaBtnTipodeTraslado.Name = "LogisticaBtnTipodeTraslado";
+            this.LogisticaBtnTipodeTraslado.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnTipodeTraslado.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnTipodeTraslado.TabIndex = 19;
+            this.LogisticaBtnTipodeTraslado.Text = "Tipo de Traslado";
+            this.LogisticaBtnTipodeTraslado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnTipodeTraslado.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnDetalleTraslado
+            // 
+            this.LogisticaBtnDetalleTraslado.Location = new System.Drawing.Point(0, 44);
+            this.LogisticaBtnDetalleTraslado.Name = "LogisticaBtnDetalleTraslado";
+            this.LogisticaBtnDetalleTraslado.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnDetalleTraslado.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnDetalleTraslado.TabIndex = 18;
+            this.LogisticaBtnDetalleTraslado.Text = "Detalle Traslado";
+            this.LogisticaBtnDetalleTraslado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnDetalleTraslado.UseVisualStyleBackColor = true;
             // 
             // LogisticaBtnTraslado
             // 
-            this.LogisticaBtnTraslado.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaBtnTraslado.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LogisticaBtnTraslado.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnTraslado.FlatAppearance.BorderSize = 0;
-            this.LogisticaBtnTraslado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnTraslado.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnTraslado.Image")));
-            this.LogisticaBtnTraslado.Location = new System.Drawing.Point(3, 363);
+            this.LogisticaBtnTraslado.Location = new System.Drawing.Point(0, 3);
             this.LogisticaBtnTraslado.Name = "LogisticaBtnTraslado";
-            this.LogisticaBtnTraslado.Size = new System.Drawing.Size(264, 42);
-            this.LogisticaBtnTraslado.TabIndex = 5;
-            this.LogisticaBtnTraslado.UseVisualStyleBackColor = false;
-            this.LogisticaBtnTraslado.Click += new System.EventHandler(this.LogisticaBtnTraslado_Click);
+            this.LogisticaBtnTraslado.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnTraslado.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnTraslado.TabIndex = 17;
+            this.LogisticaBtnTraslado.Text = "Traslado";
+            this.LogisticaBtnTraslado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnTraslado.UseVisualStyleBackColor = true;
             // 
-            // LogisticaBtnInventario
+            // LogisticaPnlMenuCierreInventario
             // 
-            this.LogisticaBtnInventario.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaBtnInventario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LogisticaBtnInventario.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnInventario.FlatAppearance.BorderSize = 0;
-            this.LogisticaBtnInventario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnInventario.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnInventario.Image")));
-            this.LogisticaBtnInventario.Location = new System.Drawing.Point(3, 257);
-            this.LogisticaBtnInventario.Name = "LogisticaBtnInventario";
-            this.LogisticaBtnInventario.Size = new System.Drawing.Size(264, 42);
-            this.LogisticaBtnInventario.TabIndex = 3;
-            this.LogisticaBtnInventario.UseVisualStyleBackColor = false;
-            this.LogisticaBtnInventario.Click += new System.EventHandler(this.LogisticaBtnInventario_Click);
+            this.LogisticaPnlMenuCierreInventario.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaPnlMenuCierreInventario.Controls.Add(this.LogisticaBtnDetalleMuestreo);
+            this.LogisticaPnlMenuCierreInventario.Controls.Add(this.LogisticaBtnMuestreoyAuditoria);
+            this.LogisticaPnlMenuCierreInventario.Controls.Add(this.LogisticaBtnConsultaCierre);
+            this.LogisticaPnlMenuCierreInventario.Controls.Add(this.LogisticaBtnCierreInventario);
+            this.LogisticaPnlMenuCierreInventario.Location = new System.Drawing.Point(6, 1011);
+            this.LogisticaPnlMenuCierreInventario.Name = "LogisticaPnlMenuCierreInventario";
+            this.LogisticaPnlMenuCierreInventario.Size = new System.Drawing.Size(265, 165);
+            this.LogisticaPnlMenuCierreInventario.TabIndex = 19;
             // 
-            // LogisticaBtnCatalogo
+            // LogisticaBtnDetalleMuestreo
             // 
-            this.LogisticaBtnCatalogo.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaBtnCatalogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LogisticaBtnCatalogo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnCatalogo.FlatAppearance.BorderSize = 0;
-            this.LogisticaBtnCatalogo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnCatalogo.ForeColor = System.Drawing.Color.Transparent;
-            this.LogisticaBtnCatalogo.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnCatalogo.Image")));
-            this.LogisticaBtnCatalogo.Location = new System.Drawing.Point(3, 204);
-            this.LogisticaBtnCatalogo.Name = "LogisticaBtnCatalogo";
-            this.LogisticaBtnCatalogo.Size = new System.Drawing.Size(264, 42);
-            this.LogisticaBtnCatalogo.TabIndex = 2;
-            this.LogisticaBtnCatalogo.UseVisualStyleBackColor = false;
-            this.LogisticaBtnCatalogo.Click += new System.EventHandler(this.LogisticaBtnCatalogo_Click);
+            this.LogisticaBtnDetalleMuestreo.Location = new System.Drawing.Point(1, 126);
+            this.LogisticaBtnDetalleMuestreo.Name = "LogisticaBtnDetalleMuestreo";
+            this.LogisticaBtnDetalleMuestreo.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnDetalleMuestreo.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnDetalleMuestreo.TabIndex = 21;
+            this.LogisticaBtnDetalleMuestreo.Text = "Detalle de Muestreo";
+            this.LogisticaBtnDetalleMuestreo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnDetalleMuestreo.UseVisualStyleBackColor = true;
             // 
-            // LogisticaBtnUbicaciones
+            // LogisticaBtnMuestreoyAuditoria
             // 
-            this.LogisticaBtnUbicaciones.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaBtnUbicaciones.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.LogisticaBtnUbicaciones.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnUbicaciones.FlatAppearance.BorderSize = 0;
-            this.LogisticaBtnUbicaciones.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnUbicaciones.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnUbicaciones.Image")));
-            this.LogisticaBtnUbicaciones.Location = new System.Drawing.Point(3, 151);
-            this.LogisticaBtnUbicaciones.Name = "LogisticaBtnUbicaciones";
-            this.LogisticaBtnUbicaciones.Size = new System.Drawing.Size(264, 42);
-            this.LogisticaBtnUbicaciones.TabIndex = 1;
-            this.LogisticaBtnUbicaciones.UseVisualStyleBackColor = false;
-            this.LogisticaBtnUbicaciones.Click += new System.EventHandler(this.LogisticaBtnUbicaciones_Click);
+            this.LogisticaBtnMuestreoyAuditoria.Location = new System.Drawing.Point(0, 84);
+            this.LogisticaBtnMuestreoyAuditoria.Name = "LogisticaBtnMuestreoyAuditoria";
+            this.LogisticaBtnMuestreoyAuditoria.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnMuestreoyAuditoria.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnMuestreoyAuditoria.TabIndex = 20;
+            this.LogisticaBtnMuestreoyAuditoria.Text = "Muestreo y Auditoria";
+            this.LogisticaBtnMuestreoyAuditoria.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnMuestreoyAuditoria.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnConsultaCierre
+            // 
+            this.LogisticaBtnConsultaCierre.Location = new System.Drawing.Point(0, 44);
+            this.LogisticaBtnConsultaCierre.Name = "LogisticaBtnConsultaCierre";
+            this.LogisticaBtnConsultaCierre.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnConsultaCierre.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnConsultaCierre.TabIndex = 18;
+            this.LogisticaBtnConsultaCierre.Text = "Consulta Cierres";
+            this.LogisticaBtnConsultaCierre.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnConsultaCierre.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnCierreInventario
+            // 
+            this.LogisticaBtnCierreInventario.Location = new System.Drawing.Point(0, 3);
+            this.LogisticaBtnCierreInventario.Name = "LogisticaBtnCierreInventario";
+            this.LogisticaBtnCierreInventario.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnCierreInventario.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnCierreInventario.TabIndex = 17;
+            this.LogisticaBtnCierreInventario.Text = "Cierre de Inventario";
+            this.LogisticaBtnCierreInventario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnCierreInventario.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaPnlMenuGestionInventario
+            // 
+            this.LogisticaPnlMenuGestionInventario.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaPnlMenuGestionInventario.Controls.Add(this.LogisticaBtnHistoricoInventario);
+            this.LogisticaPnlMenuGestionInventario.Controls.Add(this.LogisticaBtnMovimientoInventario);
+            this.LogisticaPnlMenuGestionInventario.Controls.Add(this.LogisticaBtnSaldos);
+            this.LogisticaPnlMenuGestionInventario.Controls.Add(this.LogisticaBtnStock);
+            this.LogisticaPnlMenuGestionInventario.Controls.Add(this.LogisticaBtnProducto);
+            this.LogisticaPnlMenuGestionInventario.Location = new System.Drawing.Point(9, 740);
+            this.LogisticaPnlMenuGestionInventario.Name = "LogisticaPnlMenuGestionInventario";
+            this.LogisticaPnlMenuGestionInventario.Size = new System.Drawing.Size(264, 214);
+            this.LogisticaPnlMenuGestionInventario.TabIndex = 14;
+            // 
+            // LogisticaBtnHistoricoInventario
+            // 
+            this.LogisticaBtnHistoricoInventario.Location = new System.Drawing.Point(0, 176);
+            this.LogisticaBtnHistoricoInventario.Name = "LogisticaBtnHistoricoInventario";
+            this.LogisticaBtnHistoricoInventario.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnHistoricoInventario.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnHistoricoInventario.TabIndex = 16;
+            this.LogisticaBtnHistoricoInventario.Text = "Historico de Inventario";
+            this.LogisticaBtnHistoricoInventario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnHistoricoInventario.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnMovimientoInventario
+            // 
+            this.LogisticaBtnMovimientoInventario.Location = new System.Drawing.Point(0, 94);
+            this.LogisticaBtnMovimientoInventario.Name = "LogisticaBtnMovimientoInventario";
+            this.LogisticaBtnMovimientoInventario.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnMovimientoInventario.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnMovimientoInventario.TabIndex = 15;
+            this.LogisticaBtnMovimientoInventario.Text = "Movimiento de Inventario";
+            this.LogisticaBtnMovimientoInventario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnMovimientoInventario.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnSaldos
+            // 
+            this.LogisticaBtnSaldos.Location = new System.Drawing.Point(0, 135);
+            this.LogisticaBtnSaldos.Name = "LogisticaBtnSaldos";
+            this.LogisticaBtnSaldos.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnSaldos.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnSaldos.TabIndex = 14;
+            this.LogisticaBtnSaldos.Text = "Saldos";
+            this.LogisticaBtnSaldos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnSaldos.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnStock
+            // 
+            this.LogisticaBtnStock.Location = new System.Drawing.Point(0, 53);
+            this.LogisticaBtnStock.Name = "LogisticaBtnStock";
+            this.LogisticaBtnStock.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnStock.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnStock.TabIndex = 13;
+            this.LogisticaBtnStock.Text = "Stock";
+            this.LogisticaBtnStock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnStock.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnProducto
+            // 
+            this.LogisticaBtnProducto.Location = new System.Drawing.Point(0, 12);
+            this.LogisticaBtnProducto.Name = "LogisticaBtnProducto";
+            this.LogisticaBtnProducto.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnProducto.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnProducto.TabIndex = 12;
+            this.LogisticaBtnProducto.Text = "Producto";
+            this.LogisticaBtnProducto.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnProducto.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnMenuAdministracion
+            // 
+            this.LogisticaBtnMenuAdministracion.BackColor = System.Drawing.Color.OldLace;
+            this.LogisticaBtnMenuAdministracion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LogisticaBtnMenuAdministracion.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnMenuAdministracion.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnMenuAdministracion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnMenuAdministracion.ForeColor = System.Drawing.Color.Tomato;
+            this.LogisticaBtnMenuAdministracion.Location = new System.Drawing.Point(7, 1857);
+            this.LogisticaBtnMenuAdministracion.Name = "LogisticaBtnMenuAdministracion";
+            this.LogisticaBtnMenuAdministracion.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnMenuAdministracion.Size = new System.Drawing.Size(264, 42);
+            this.LogisticaBtnMenuAdministracion.TabIndex = 18;
+            this.LogisticaBtnMenuAdministracion.Text = "Administración, Costos e Incidencias";
+            this.LogisticaBtnMenuAdministracion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnMenuAdministracion.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnMenuTransporteExterno
+            // 
+            this.LogisticaBtnMenuTransporteExterno.BackColor = System.Drawing.Color.OldLace;
+            this.LogisticaBtnMenuTransporteExterno.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LogisticaBtnMenuTransporteExterno.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnMenuTransporteExterno.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnMenuTransporteExterno.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnMenuTransporteExterno.ForeColor = System.Drawing.Color.Tomato;
+            this.LogisticaBtnMenuTransporteExterno.Location = new System.Drawing.Point(7, 1594);
+            this.LogisticaBtnMenuTransporteExterno.Name = "LogisticaBtnMenuTransporteExterno";
+            this.LogisticaBtnMenuTransporteExterno.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnMenuTransporteExterno.Size = new System.Drawing.Size(264, 42);
+            this.LogisticaBtnMenuTransporteExterno.TabIndex = 17;
+            this.LogisticaBtnMenuTransporteExterno.Text = "Transporte Externo y Monitoreo\r\n";
+            this.LogisticaBtnMenuTransporteExterno.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnMenuTransporteExterno.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnMenuCierreInventario
+            // 
+            this.LogisticaBtnMenuCierreInventario.BackColor = System.Drawing.Color.OldLace;
+            this.LogisticaBtnMenuCierreInventario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LogisticaBtnMenuCierreInventario.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnMenuCierreInventario.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnMenuCierreInventario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnMenuCierreInventario.ForeColor = System.Drawing.Color.Tomato;
+            this.LogisticaBtnMenuCierreInventario.Location = new System.Drawing.Point(6, 963);
+            this.LogisticaBtnMenuCierreInventario.Name = "LogisticaBtnMenuCierreInventario";
+            this.LogisticaBtnMenuCierreInventario.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnMenuCierreInventario.Size = new System.Drawing.Size(264, 42);
+            this.LogisticaBtnMenuCierreInventario.TabIndex = 16;
+            this.LogisticaBtnMenuCierreInventario.Text = "Cierre y Auditoria de Inventario";
+            this.LogisticaBtnMenuCierreInventario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnMenuCierreInventario.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnMenuGestionTraslados
+            // 
+            this.LogisticaBtnMenuGestionTraslados.BackColor = System.Drawing.Color.OldLace;
+            this.LogisticaBtnMenuGestionTraslados.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LogisticaBtnMenuGestionTraslados.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnMenuGestionTraslados.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnMenuGestionTraslados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnMenuGestionTraslados.ForeColor = System.Drawing.Color.Tomato;
+            this.LogisticaBtnMenuGestionTraslados.Location = new System.Drawing.Point(6, 1182);
+            this.LogisticaBtnMenuGestionTraslados.Name = "LogisticaBtnMenuGestionTraslados";
+            this.LogisticaBtnMenuGestionTraslados.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnMenuGestionTraslados.Size = new System.Drawing.Size(264, 42);
+            this.LogisticaBtnMenuGestionTraslados.TabIndex = 15;
+            this.LogisticaBtnMenuGestionTraslados.Text = "Gestion de Traslados";
+            this.LogisticaBtnMenuGestionTraslados.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnMenuGestionTraslados.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnMenuGestionInventario
+            // 
+            this.LogisticaBtnMenuGestionInventario.BackColor = System.Drawing.Color.OldLace;
+            this.LogisticaBtnMenuGestionInventario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LogisticaBtnMenuGestionInventario.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnMenuGestionInventario.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnMenuGestionInventario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnMenuGestionInventario.ForeColor = System.Drawing.Color.Tomato;
+            this.LogisticaBtnMenuGestionInventario.Location = new System.Drawing.Point(9, 681);
+            this.LogisticaBtnMenuGestionInventario.Name = "LogisticaBtnMenuGestionInventario";
+            this.LogisticaBtnMenuGestionInventario.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnMenuGestionInventario.Size = new System.Drawing.Size(264, 53);
+            this.LogisticaBtnMenuGestionInventario.TabIndex = 12;
+            this.LogisticaBtnMenuGestionInventario.Text = "Gestion de Inventario y Catalogos";
+            this.LogisticaBtnMenuGestionInventario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnMenuGestionInventario.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaPnlMenuMantenimientos
+            // 
+            this.LogisticaPnlMenuMantenimientos.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnTransporte);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnTipoTransporte);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnEstadoTransporte);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnConductor);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnCamaraRefrigeración);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaTipoMovimiento);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnDetalleMovimiento);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnMarca);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnLinea);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnCategoria);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnSucursales);
+            this.LogisticaPnlMenuMantenimientos.Controls.Add(this.LogisticaBtnBodegas);
+            this.LogisticaPnlMenuMantenimientos.Location = new System.Drawing.Point(9, 197);
+            this.LogisticaPnlMenuMantenimientos.Name = "LogisticaPnlMenuMantenimientos";
+            this.LogisticaPnlMenuMantenimientos.Size = new System.Drawing.Size(264, 480);
+            this.LogisticaPnlMenuMantenimientos.TabIndex = 10;
+            // 
+            // LogisticaBtnTransporte
+            // 
+            this.LogisticaBtnTransporte.Location = new System.Drawing.Point(-3, 443);
+            this.LogisticaBtnTransporte.Name = "LogisticaBtnTransporte";
+            this.LogisticaBtnTransporte.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnTransporte.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnTransporte.TabIndex = 11;
+            this.LogisticaBtnTransporte.Text = "Transporte";
+            this.LogisticaBtnTransporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnTransporte.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnTipoTransporte
+            // 
+            this.LogisticaBtnTipoTransporte.Location = new System.Drawing.Point(0, 402);
+            this.LogisticaBtnTipoTransporte.Name = "LogisticaBtnTipoTransporte";
+            this.LogisticaBtnTipoTransporte.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnTipoTransporte.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnTipoTransporte.TabIndex = 10;
+            this.LogisticaBtnTipoTransporte.Text = "Tipo de Transporte";
+            this.LogisticaBtnTipoTransporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnTipoTransporte.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnEstadoTransporte
+            // 
+            this.LogisticaBtnEstadoTransporte.Location = new System.Drawing.Point(-3, 365);
+            this.LogisticaBtnEstadoTransporte.Name = "LogisticaBtnEstadoTransporte";
+            this.LogisticaBtnEstadoTransporte.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnEstadoTransporte.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnEstadoTransporte.TabIndex = 9;
+            this.LogisticaBtnEstadoTransporte.Text = "Estado de Transporte";
+            this.LogisticaBtnEstadoTransporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnEstadoTransporte.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnConductor
+            // 
+            this.LogisticaBtnConductor.Location = new System.Drawing.Point(-3, 326);
+            this.LogisticaBtnConductor.Name = "LogisticaBtnConductor";
+            this.LogisticaBtnConductor.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnConductor.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnConductor.TabIndex = 8;
+            this.LogisticaBtnConductor.Text = "Conductor";
+            this.LogisticaBtnConductor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnConductor.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnCamaraRefrigeración
+            // 
+            this.LogisticaBtnCamaraRefrigeración.Location = new System.Drawing.Point(-3, 285);
+            this.LogisticaBtnCamaraRefrigeración.Name = "LogisticaBtnCamaraRefrigeración";
+            this.LogisticaBtnCamaraRefrigeración.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnCamaraRefrigeración.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnCamaraRefrigeración.TabIndex = 7;
+            this.LogisticaBtnCamaraRefrigeración.Text = "Camara de Refrigeracion";
+            this.LogisticaBtnCamaraRefrigeración.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnCamaraRefrigeración.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaTipoMovimiento
+            // 
+            this.LogisticaTipoMovimiento.Location = new System.Drawing.Point(0, 244);
+            this.LogisticaTipoMovimiento.Name = "LogisticaTipoMovimiento";
+            this.LogisticaTipoMovimiento.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaTipoMovimiento.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaTipoMovimiento.TabIndex = 6;
+            this.LogisticaTipoMovimiento.Text = "Tipo de Movimiento";
+            this.LogisticaTipoMovimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaTipoMovimiento.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnDetalleMovimiento
+            // 
+            this.LogisticaBtnDetalleMovimiento.Location = new System.Drawing.Point(0, 203);
+            this.LogisticaBtnDetalleMovimiento.Name = "LogisticaBtnDetalleMovimiento";
+            this.LogisticaBtnDetalleMovimiento.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnDetalleMovimiento.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnDetalleMovimiento.TabIndex = 5;
+            this.LogisticaBtnDetalleMovimiento.Text = "Detalle de Movimiento";
+            this.LogisticaBtnDetalleMovimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnDetalleMovimiento.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnMarca
+            // 
+            this.LogisticaBtnMarca.Location = new System.Drawing.Point(0, 167);
+            this.LogisticaBtnMarca.Name = "LogisticaBtnMarca";
+            this.LogisticaBtnMarca.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnMarca.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnMarca.TabIndex = 4;
+            this.LogisticaBtnMarca.Text = "Marca";
+            this.LogisticaBtnMarca.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnMarca.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnLinea
+            // 
+            this.LogisticaBtnLinea.Location = new System.Drawing.Point(-3, 126);
+            this.LogisticaBtnLinea.Name = "LogisticaBtnLinea";
+            this.LogisticaBtnLinea.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnLinea.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnLinea.TabIndex = 3;
+            this.LogisticaBtnLinea.Text = "Linea";
+            this.LogisticaBtnLinea.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnLinea.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnCategoria
+            // 
+            this.LogisticaBtnCategoria.Location = new System.Drawing.Point(-3, 85);
+            this.LogisticaBtnCategoria.Name = "LogisticaBtnCategoria";
+            this.LogisticaBtnCategoria.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnCategoria.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnCategoria.TabIndex = 2;
+            this.LogisticaBtnCategoria.Text = "Categoria";
+            this.LogisticaBtnCategoria.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnCategoria.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnSucursales
+            // 
+            this.LogisticaBtnSucursales.Location = new System.Drawing.Point(0, 44);
+            this.LogisticaBtnSucursales.Name = "LogisticaBtnSucursales";
+            this.LogisticaBtnSucursales.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnSucursales.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnSucursales.TabIndex = 1;
+            this.LogisticaBtnSucursales.Text = "Sucursales";
+            this.LogisticaBtnSucursales.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnSucursales.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnBodegas
+            // 
+            this.LogisticaBtnBodegas.Location = new System.Drawing.Point(0, 3);
+            this.LogisticaBtnBodegas.Name = "LogisticaBtnBodegas";
+            this.LogisticaBtnBodegas.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.LogisticaBtnBodegas.Size = new System.Drawing.Size(264, 35);
+            this.LogisticaBtnBodegas.TabIndex = 0;
+            this.LogisticaBtnBodegas.Text = "Bodegas";
+            this.LogisticaBtnBodegas.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnBodegas.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaBtnMenuMantenimientos
+            // 
+            this.LogisticaBtnMenuMantenimientos.BackColor = System.Drawing.Color.OldLace;
+            this.LogisticaBtnMenuMantenimientos.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LogisticaBtnMenuMantenimientos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnMenuMantenimientos.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnMenuMantenimientos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnMenuMantenimientos.ForeColor = System.Drawing.Color.Tomato;
+            this.LogisticaBtnMenuMantenimientos.Location = new System.Drawing.Point(9, 144);
+            this.LogisticaBtnMenuMantenimientos.Name = "LogisticaBtnMenuMantenimientos";
+            this.LogisticaBtnMenuMantenimientos.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.LogisticaBtnMenuMantenimientos.Size = new System.Drawing.Size(264, 53);
+            this.LogisticaBtnMenuMantenimientos.TabIndex = 2;
+            this.LogisticaBtnMenuMantenimientos.Text = "MANTENIMIENTOS";
+            this.LogisticaBtnMenuMantenimientos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LogisticaBtnMenuMantenimientos.UseVisualStyleBackColor = false;
+            this.LogisticaBtnMenuMantenimientos.Click += new System.EventHandler(this.LogisticaBtnCatalogo_Click);
             // 
             // LogisticaPbLogo
             // 
             this.LogisticaPbLogo.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaPbLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.LogisticaPbLogo.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaPbLogo.Image")));
-            this.LogisticaPbLogo.Location = new System.Drawing.Point(70, 9);
+            this.LogisticaPbLogo.Location = new System.Drawing.Point(77, 11);
             this.LogisticaPbLogo.Name = "LogisticaPbLogo";
             this.LogisticaPbLogo.Size = new System.Drawing.Size(133, 127);
             this.LogisticaPbLogo.TabIndex = 0;
@@ -347,9 +940,9 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaPnlBanner.Controls.Add(this.LogisticaLblBienvenida);
             this.LogisticaPnlBanner.Controls.Add(this.LogisticaPbDonButti);
             this.LogisticaPnlBanner.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
-            this.LogisticaPnlBanner.Location = new System.Drawing.Point(279, 34);
+            this.LogisticaPnlBanner.Location = new System.Drawing.Point(305, 34);
             this.LogisticaPnlBanner.Name = "LogisticaPnlBanner";
-            this.LogisticaPnlBanner.Size = new System.Drawing.Size(1086, 711);
+            this.LogisticaPnlBanner.Size = new System.Drawing.Size(1060, 711);
             this.LogisticaPnlBanner.TabIndex = 2;
             // 
             // LogisticaLblResumenEnlaces
@@ -628,7 +1221,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnHamburguesa.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LogisticaBtnHamburguesa.FlatAppearance.BorderSize = 0;
             this.LogisticaBtnHamburguesa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnHamburguesa.Location = new System.Drawing.Point(279, 8);
+            this.LogisticaBtnHamburguesa.Location = new System.Drawing.Point(308, 3);
             this.LogisticaBtnHamburguesa.Name = "LogisticaBtnHamburguesa";
             this.LogisticaBtnHamburguesa.Size = new System.Drawing.Size(20, 25);
             this.LogisticaBtnHamburguesa.TabIndex = 10;
@@ -639,18 +1232,26 @@ namespace CapaVista_Logistica.Formularios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.ClientSize = new System.Drawing.Size(1064, 749);
             this.Controls.Add(this.LogisticaPnlMDI);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(1386, 788);
-            this.MinimumSize = new System.Drawing.Size(1044, 718);
+            this.MinimumSize = new System.Drawing.Size(1080, 766);
             this.Name = "FrmMDILogistica";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "5000 - Principal";
             this.LogisticaPnlMDI.ResumeLayout(false);
             this.LogisticaPnlMDI.PerformLayout();
             this.LogisticaPnlNavegador.ResumeLayout(false);
+            this.LogisticaPnlMenuAdministracionCostos.ResumeLayout(false);
+            this.LogisticaPnlMenuTransporteExterno.ResumeLayout(false);
+            this.LogisticaPnlMenuGesionViajes.ResumeLayout(false);
+            this.LogisticaBtnMenuTraslados.ResumeLayout(false);
+            this.LogisticaPnlMenuCierreInventario.ResumeLayout(false);
+            this.LogisticaPnlMenuGestionInventario.ResumeLayout(false);
+            this.LogisticaPnlMenuMantenimientos.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaPbLogo)).EndInit();
             this.LogisticaPnlBanner.ResumeLayout(false);
             this.LogisticaPnlBanner.PerformLayout();
@@ -676,16 +1277,7 @@ namespace CapaVista_Logistica.Formularios
 
         private System.Windows.Forms.Panel LogisticaPnlMDI;
         private System.Windows.Forms.Panel LogisticaPnlNavegador;
-
-        private System.Windows.Forms.Button LogisticaBtnCerrarSesion;
-        private System.Windows.Forms.Button LogisticaBtnEnlace;
-        private System.Windows.Forms.Button LogisticaBtnCierredeInventario;
-        private System.Windows.Forms.Button LogisticaBtnAuditoria;
-        private System.Windows.Forms.Button LogisticaBtnTraslado;
-        private System.Windows.Forms.Button LogisticaBtnInventario;
-        private System.Windows.Forms.Button LogisticaBtnCatalogo;
-        private System.Windows.Forms.Button LogisticaBtnUbicaciones;
-        private System.Windows.Forms.Button LogisticaBtnTransporte;
+        private System.Windows.Forms.Button LogisticaBtnMenuMantenimientos;
 
         private System.Windows.Forms.PictureBox LogisticaPbLogo;
         private System.Windows.Forms.Panel LogisticaPnlBanner;
@@ -726,5 +1318,59 @@ namespace CapaVista_Logistica.Formularios
 
         private System.Windows.Forms.Label LogisticaLblTextoRol;
         private System.Windows.Forms.Label LogisticaLblTextoUsuario;
+        private System.Windows.Forms.Button LogisticaBtnMenuGestionInventario;
+        private System.Windows.Forms.Panel LogisticaPnlMenuMantenimientos;
+        private System.Windows.Forms.Button LogisticaBtnTransporte;
+        private System.Windows.Forms.Button LogisticaBtnTipoTransporte;
+        private System.Windows.Forms.Button LogisticaBtnEstadoTransporte;
+        private System.Windows.Forms.Button LogisticaBtnConductor;
+        private System.Windows.Forms.Button LogisticaBtnCamaraRefrigeración;
+        private System.Windows.Forms.Button LogisticaTipoMovimiento;
+        private System.Windows.Forms.Button LogisticaBtnDetalleMovimiento;
+        private System.Windows.Forms.Button LogisticaBtnMarca;
+        private System.Windows.Forms.Button LogisticaBtnLinea;
+        private System.Windows.Forms.Button LogisticaBtnCategoria;
+        private System.Windows.Forms.Button LogisticaBtnSucursales;
+        private System.Windows.Forms.Button LogisticaBtnBodegas;
+        private System.Windows.Forms.Button LogisticaBtnMenuCierreInventario;
+        private System.Windows.Forms.Button LogisticaBtnMenuGestionTraslados;
+        private System.Windows.Forms.Button LogisticaBtnMenuAdministracion;
+        private System.Windows.Forms.Button LogisticaBtnMenuTransporteExterno;
+        private System.Windows.Forms.Panel LogisticaPnlMenuGestionInventario;
+        private System.Windows.Forms.Button LogisticaBtnMovimientoInventario;
+        private System.Windows.Forms.Button LogisticaBtnSaldos;
+        private System.Windows.Forms.Button LogisticaBtnStock;
+        private System.Windows.Forms.Button LogisticaBtnProducto;
+        private System.Windows.Forms.Button LogisticaBtnHistoricoInventario;
+        private System.Windows.Forms.Panel LogisticaPnlMenuCierreInventario;
+        private System.Windows.Forms.Button LogisticaBtnDetalleMuestreo;
+        private System.Windows.Forms.Button LogisticaBtnMuestreoyAuditoria;
+        private System.Windows.Forms.Button LogisticaBtnConsultaCierre;
+        private System.Windows.Forms.Button LogisticaBtnCierreInventario;
+        private System.Windows.Forms.Panel LogisticaPnlMenuGesionViajes;
+        private System.Windows.Forms.Button LogisticaBtnDetalleViajeProducto;
+        private System.Windows.Forms.Button LogisticaBtnHistorico;
+        private System.Windows.Forms.Button LogisticaBtnDetalleViaje;
+        private System.Windows.Forms.Button LogisticaBtnEncabezadoViaje;
+        private System.Windows.Forms.Button LogisticaBtnMenuGestionViajes;
+        private System.Windows.Forms.Panel LogisticaBtnMenuTraslados;
+        private System.Windows.Forms.Button LogisticaBtnProductoTraslado;
+        private System.Windows.Forms.Button LogisticaBtnTipodeTraslado;
+        private System.Windows.Forms.Button LogisticaBtnDetalleTraslado;
+        private System.Windows.Forms.Button LogisticaBtnTraslado;
+        private System.Windows.Forms.Panel LogisticaPnlMenuTransporteExterno;
+        private System.Windows.Forms.Button LogisticaBtnRutaSeguimiento;
+        private System.Windows.Forms.Button LogisticaBtnRuta;
+        private System.Windows.Forms.Button LogisticaBtnRegistroTransporteExterno;
+        private System.Windows.Forms.Button LogisticaBtnTransporteExterno;
+        private System.Windows.Forms.Button LogisticaBtnCerrarSesion;
+        private System.Windows.Forms.Panel LogistincaPnlMenuFin;
+        private System.Windows.Forms.Panel LogisticaPnlMenuAdministracionCostos;
+        private System.Windows.Forms.Button LogisticaBtnEnlaceAOtrosModulos;
+        private System.Windows.Forms.Button LogisticaBtnEnlaces;
+        private System.Windows.Forms.Button LogisticaBtnIndecencia;
+        private System.Windows.Forms.Button LogisticaBtnCostoyPago;
+        private System.Windows.Forms.Button LogisticaBtnAlertaCadenaFrio;
+        private System.Windows.Forms.Button LogisticaBtnTelemetriaTransporte;
     }
 }
