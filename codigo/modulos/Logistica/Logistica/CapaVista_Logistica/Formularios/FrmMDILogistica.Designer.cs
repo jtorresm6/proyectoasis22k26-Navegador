@@ -252,6 +252,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnCerrarSesion.Text = "Cerrar Sesión";
             this.LogisticaBtnCerrarSesion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnCerrarSesion.UseVisualStyleBackColor = false;
+            this.LogisticaBtnCerrarSesion.Click += new System.EventHandler(this.LogisticaBtnCerrarSesion_Click);
             // 
             // LogistincaPnlMenuFin
             // 
@@ -643,6 +644,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnProducto.Text = "Producto";
             this.LogisticaBtnProducto.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnProducto.UseVisualStyleBackColor = true;
+            this.LogisticaBtnProducto.Click += new System.EventHandler(this.LogisticaBtnProducto_Click);
             // 
             // LogisticaBtnMenuAdministracion
             // 
@@ -759,6 +761,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnTransporte.Text = "Transporte";
             this.LogisticaBtnTransporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnTransporte.UseVisualStyleBackColor = true;
+            this.LogisticaBtnTransporte.Click += new System.EventHandler(this.LogisticaBtnTransporte_Click);
             // 
             // LogisticaBtnTipoTransporte
             // 
@@ -770,6 +773,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnTipoTransporte.Text = "Tipo de Transporte";
             this.LogisticaBtnTipoTransporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnTipoTransporte.UseVisualStyleBackColor = true;
+            this.LogisticaBtnTipoTransporte.Click += new System.EventHandler(this.LogisticaBtnTipoTransporte_Click);
             // 
             // LogisticaBtnEstadoTransporte
             // 
@@ -781,6 +785,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnEstadoTransporte.Text = "Estado de Transporte";
             this.LogisticaBtnEstadoTransporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnEstadoTransporte.UseVisualStyleBackColor = true;
+            this.LogisticaBtnEstadoTransporte.Click += new System.EventHandler(this.LogisticaBtnEstadoTransporte_Click);
             // 
             // LogisticaBtnConductor
             // 
@@ -792,6 +797,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnConductor.Text = "Conductor";
             this.LogisticaBtnConductor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnConductor.UseVisualStyleBackColor = true;
+            this.LogisticaBtnConductor.Click += new System.EventHandler(this.LogisticaBtnConductor_Click);
             // 
             // LogisticaBtnCamaraRefrigeración
             // 
@@ -803,6 +809,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnCamaraRefrigeración.Text = "Camara de Refrigeracion";
             this.LogisticaBtnCamaraRefrigeración.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnCamaraRefrigeración.UseVisualStyleBackColor = true;
+            this.LogisticaBtnCamaraRefrigeración.Click += new System.EventHandler(this.LogisticaBtnCamaraRefrigeración_Click);
             // 
             // LogisticaTipoMovimiento
             // 
@@ -814,6 +821,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaTipoMovimiento.Text = "Tipo de Movimiento";
             this.LogisticaTipoMovimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaTipoMovimiento.UseVisualStyleBackColor = true;
+            this.LogisticaTipoMovimiento.Click += new System.EventHandler(this.LogisticaTipoMovimiento_Click);
             // 
             // LogisticaBtnDetalleMovimiento
             // 
@@ -825,6 +833,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnDetalleMovimiento.Text = "Detalle de Movimiento";
             this.LogisticaBtnDetalleMovimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnDetalleMovimiento.UseVisualStyleBackColor = true;
+            this.LogisticaBtnDetalleMovimiento.Click += new System.EventHandler(this.LogisticaBtnDetalleMovimiento_Click);
             // 
             // LogisticaBtnMarca
             // 
@@ -836,6 +845,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnMarca.Text = "Marca";
             this.LogisticaBtnMarca.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnMarca.UseVisualStyleBackColor = true;
+            this.LogisticaBtnMarca.Click += new System.EventHandler(this.LogisticaBtnMarca_Click);
             // 
             // LogisticaBtnLinea
             // 
@@ -847,6 +857,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnLinea.Text = "Linea";
             this.LogisticaBtnLinea.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnLinea.UseVisualStyleBackColor = true;
+            this.LogisticaBtnLinea.Click += new System.EventHandler(this.LogisticaBtnLinea_Click);
             // 
             // LogisticaBtnCategoria
             // 
@@ -858,6 +869,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnCategoria.Text = "Categoria";
             this.LogisticaBtnCategoria.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnCategoria.UseVisualStyleBackColor = true;
+            this.LogisticaBtnCategoria.Click += new System.EventHandler(this.LogisticaBtnCategoria_Click);
             // 
             // LogisticaBtnSucursales
             // 
@@ -869,6 +881,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnSucursales.Text = "Sucursales";
             this.LogisticaBtnSucursales.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnSucursales.UseVisualStyleBackColor = true;
+            this.LogisticaBtnSucursales.Click += new System.EventHandler(this.LogisticaBtnSucursales_Click);
             // 
             // LogisticaBtnBodegas
             // 
@@ -880,6 +893,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnBodegas.Text = "Bodegas";
             this.LogisticaBtnBodegas.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnBodegas.UseVisualStyleBackColor = true;
+            this.LogisticaBtnBodegas.Click += new System.EventHandler(this.LogisticaBtnBodegas_Click);
             // 
             // LogisticaBtnMenuMantenimientos
             // 
@@ -1242,6 +1256,7 @@ namespace CapaVista_Logistica.Formularios
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "5000 - Principal";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.LogisticaPnlMDI.ResumeLayout(false);
             this.LogisticaPnlMDI.PerformLayout();
             this.LogisticaPnlNavegador.ResumeLayout(false);

@@ -328,5 +328,96 @@ namespace CapaVista_Logistica.Formularios
         {
             // Sin implementación.
         }
+
+        // Procedimiento para abrir formularios secundarios.
+        public void LogisticaMetAbrirFormulario(Form Formulario)
+        {
+            using (Formulario)
+            {
+                Formulario.StartPosition = FormStartPosition.CenterParent;
+
+                Formulario.ShowDialog(this);
+            }
+        }
+
+        private void LogisticaBtnBodegas_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoBodegas());
+        }
+
+        private void LogisticaBtnSucursales_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoSucursales());
+        }
+
+        private void LogisticaBtnCategoria_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoCategoria());
+        }
+
+        private void LogisticaBtnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            DialogResult Resultado = MessageBox.Show(
+                "¿Seguro que deseas cerrar sesión?",
+                "Cerrar sesión",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (Resultado == DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
+
+        private void LogisticaBtnLinea_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoLinea());
+        }
+
+        private void LogisticaBtnMarca_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoMarca());
+
+        }
+
+        private void LogisticaBtnDetalleMovimiento_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario( new FrmMantenimientoDetalleMovimiento());
+        }
+
+        private void LogisticaTipoMovimiento_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoTipoMovimiento());
+        }
+
+        private void LogisticaBtnCamaraRefrigeración_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoCamaraRefrigeracion());
+        }
+
+        private void LogisticaBtnConductor_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoConductor());
+        }
+
+        private void LogisticaBtnEstadoTransporte_Click(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void LogisticaBtnTipoTransporte_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoTipoTransporte());
+        }
+
+        private void LogisticaBtnTransporte_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoTransporte());
+        }
+
+        private void LogisticaBtnProducto_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoProducto());
+        }
     }
 }
