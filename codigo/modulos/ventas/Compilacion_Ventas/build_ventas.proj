@@ -3,6 +3,7 @@
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
     <SalidaVentas>$(MSBuildThisFileDirectory)..\Ejecutable_Ventas\Ejecutable_Ventas\bin\$(Configuration)\</SalidaVentas>
+    <BCryptSeguridad>$(MSBuildThisFileDirectory)..\..\..\componentes\seguridad\Seguridad\packages\BCrypt.Net-Next.4.2.0\lib\net48\BCrypt-Net-Next.dll</BCryptSeguridad>
     <OpcionesReferenciasVentas>PlatformTarget=AnyCPU;BuildProjectReferences=false;VentasDependenciasPreparadas=true;CustomBeforeMicrosoftCommonTargets=$(MSBuildThisFileDirectory)build_componentes_ventas.targets</OpcionesReferenciasVentas>
   </PropertyGroup>
   <ItemGroup>
@@ -94,6 +95,7 @@
     <Error Condition="'$(Configuration)' != 'Debug' and '$(Configuration)' != 'Release'" Text="Configuración no válida. Use Debug o Release." />
   </Target>
   <Target Name="ReunirBibliotecas">
+    <Error Condition="!Exists('$(BCryptSeguridad)')" Text="Falta BCrypt-Net-Next.dll (4.2.0), requerida para el inicio de sesión. Revise el paquete de Seguridad en: $(BCryptSeguridad)" />
     <MakeDir Directories="$(SalidaVentas)" />
     <Error Condition="!Exists('%(BibliotecaVentas.Identity)')" Text="Falta la biblioteca compilada: %(BibliotecaVentas.Identity)" />
     <Copy SourceFiles="@(BibliotecaVentas)" DestinationFolder="$(SalidaVentas)" SkipUnchangedFiles="true" />
@@ -138,6 +140,7 @@
     </ItemGroup>
     <Error Condition="!Exists('%(BibliotecaComponenteVentas.Identity)')" Text="Falta la biblioteca del componente: %(BibliotecaComponenteVentas.Identity)" />
     <Copy SourceFiles="@(DependenciaComponenteVentas)" DestinationFolder="$(SalidaVentas)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(BCryptSeguridad)" DestinationFolder="$(SalidaVentas)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(BibliotecaComponenteVentas)" DestinationFolder="$(SalidaVentas)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(NativoComponenteX64)" DestinationFolder="$(SalidaVentas)x64\" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(NativoComponenteX86)" DestinationFolder="$(SalidaVentas)x86\" SkipUnchangedFiles="true" />
