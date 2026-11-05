@@ -32,7 +32,8 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
         {
             _SelectAll = "SELECT c.Pk_CuentaBancaria, b.nombreBanco, c.numeroCuentaBancaria, " +
                          "c.Fk_Moneda_Codigo, m.codigoMoneda, d.saldoDisponibleDisponibilidadDiaria, " +
-                         "d.Fk_TipoCambio_Codigo, d.tipoCambioAplicadoDisponibilidadDiaria " +
+                         "d.Fk_TipoCambio_Codigo, d.tipoCambioAplicadoDisponibilidadDiaria, " +
+                         "d.comprometidoDisponibilidadDiaria " +
                          "FROM tblCuentaBancaria c " +
                          "INNER JOIN tblBanco b ON b.Pk_Banco = c.Fk_Banco_Codigo " +
                          "INNER JOIN tblMoneda m ON m.Pk_Moneda = c.Fk_Moneda_Codigo " +
@@ -70,6 +71,7 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
                 Cuenta.SaldoDisponible = Convert.ToDecimal(Row[5]);
                 Cuenta.IdTipoCambio = Row[6] == DBNull.Value ? (long?)null : Convert.ToInt64(Row[6]);
                 Cuenta.TipoCambio = Convert.ToDecimal(Row[7]);
+                Cuenta.MontoComprometido = Convert.ToDecimal(Row[8]);
                 Lista.Add(Cuenta);
             }
             TablaDatos.Clear();

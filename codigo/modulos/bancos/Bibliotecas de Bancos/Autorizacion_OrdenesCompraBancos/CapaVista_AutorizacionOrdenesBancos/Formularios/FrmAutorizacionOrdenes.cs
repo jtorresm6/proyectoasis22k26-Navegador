@@ -15,7 +15,7 @@ using System.Windows.Forms;
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
- * Fecha : 28/10/2026
+ * Fecha : 4/11/2026
  * ==================================================================
  * Propósito :
  *  El formulario Autorización de Órdenes de Compra (proceso 8011) permite al
@@ -41,7 +41,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             InitializeComponent();
             this.Load += FrmAutorizacionOrdenes_Load;
             BancosDgvOrdenesPendientes.CellClick += BancosDgvOrdenesPendientes_CellClick;
-            BancosCboBanco.SelectionChangeCommitted += BancosCboBanco_SelectionChangeCommitted;
+            BancosCboBanco.SelectionChangeCommitted += BancosCboBanco_CambioSeleccion;
             BancosMetReinicio();
         }
 
@@ -114,6 +114,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
         {
             BancosLblValorNoAutorizacion.Text = "0";
             BancosLblValorTotalAsignado.Text = "Q 0.00";
+            BancosLblMontoReservadoValor.Text = "Q 0.00";
             BancosLblValorDiferencia.Text = "Q 0.00";
             BancosLblSaldoValor.Text = "Q 0.00";
             BancosLblMonedaValor.Text = "GTQ";
@@ -127,7 +128,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             BancosPnlDisponibilidadAsignacion.Enabled = false;
         }
 
-        private void BancosCboBanco_SelectionChangeCommitted(object sender, EventArgs e)
+        private void BancosCboBanco_CambioSeleccion(object sender, EventArgs e)
         {
             try
             {
@@ -144,6 +145,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
                 {
                     long IdMonedaOrden = Convert.ToInt64(BancosDgvOrdenesPendientes.CurrentRow.Cells[7].Value);
                     BancosLblSaldoValor.Text = Cuenta.SaldoDisponible.ToString("N2");
+                    BancosLblMontoReservadoValor.Text = Cuenta.MontoComprometido.ToString("N2");
                     BancosLblMonedaValor.Text = Cuenta.CodigoMoneda;
 
                     if (Cuenta.IdMoneda == IdMonedaOrden)
@@ -333,6 +335,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
 
                 if (Mensaje == "Autorizacion Exitosa" || Mensaje == "Rechazo Exitoso")
                 {
+                    BancosMetCargarCombos();
                     BancosMetReinicio();
                     BancosMetListaOrdenesPendientes();
                 }
@@ -342,7 +345,6 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
                 MessageBox.Show(Ex.ToString());
             }
         }
-
         private void BancosBtnAutorizar_Click(object sender, EventArgs e)
         {
             if (!BancosMetValidarDesbloqueo())
@@ -473,6 +475,13 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
         private void BancosMetEstablecerFuente(DataGridView Grid)
         {
             Grid.AlternatingRowsDefaultCellStyle.Font = null;
+        }
+
+        private void BancosBtnRefrescar_Click(object sender, EventArgs e)
+        {
+            BancosMetCargarCombos();
+            BancosMetListaOrdenesPendientes();
+            BancosMetReinicio();
         }
     }
 }
