@@ -2,172 +2,440 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
+using CapaModelo_Componentes.Repositorios;
 using CapaModelo_PagosProveedores.Contratos;
 using CapaModelo_PagosProveedores.Entidades;
 
 /*
  * ==================================================================
  * Área : Compras
- * Autor : Diana Mishel Loeiza Ramírez
- * Carné : 9959-23-3457
- * Fecha : 20/10/2026
- * ==================================================================
  * Propósito :
- *  Ejecuta los procedimientos almacenados de pagos a proveedores y
- *  convierte sus resultados en entidades y datos para las consultas.
+ *  Repositorio de pagos a proveedores (encabezado + detalle) sobre ODBC.
+ *  Cada operación de escritura corre en una sola transacción.
  * ===================================================================
 */
 
 namespace CapaModelo_PagosProveedores.Repositorios
 {
-   
-    public class ClsRepositorioPagoProveedor : ClsSentenciasCompras, IRepositorioPagoProveedor
+    public class ClsRepositorioPagoProveedor : ClsConexionCompras, IRepositorioPagoProveedor
     {
-        private readonly string _Insert;
-        private readonly string _Update;
-        private readonly string _Delete;
-        private readonly string _SelectFiltro;
-        private readonly string _SelectUno;
-        private readonly string _SelectProveedores;
-        private readonly string _SelectCuentas;
+        private const string MonedaBase = "GTQ";
 
-        public ClsRepositorioPagoProveedor()
+        // ==================== CONEXIÓN / UTILIDADES ====================
+        private OdbcConnection ComprasFuncAbrirConexion()
         {
-            _Insert = "{call spInsertarPagoProveedor(?,?,?,?,?,?)}";
-            _Update = "{call spActualizarPagoProveedor(?,?,?,?,?,?)}";
-            _Delete = "{call spEliminarPagoProveedor(?)}";
-            _SelectFiltro = "{call spConsultarPagoProveedor(?,?,?,?)}";
-            _SelectUno = "{call spObtenerPagoProveedor(?)}";
-            _SelectProveedores = "{call spObtenerProveedor()}";
-            _SelectCuentas = "{call spObtenerCuentaPorPagarPendiente(?)}";
+            // El repositorio hereda de ClsConexionCompras y usa su método protegido.
+            OdbcConnection cn = (OdbcConnection)ComprasMetObtenerConexion();
+            if (cn.State != ConnectionState.Open) cn.Open();
+            return cn;
         }
 
-        
-        private static OdbcParameter ComprasFuncInt(string Nombre, int? Valor)
+        // Crea un comando con parámetros posicionales, en el mismo orden de los "?"
+        private static OdbcCommand ComprasFuncComando(OdbcConnection cn, OdbcTransaction tx, string sql, params object[] valores)
         {
-            return new OdbcParameter(Nombre, OdbcType.Int) { Value = (object)Valor ?? DBNull.Value };
-        }
-        private static OdbcParameter ComprasFuncFecha(string Nombre, DateTime? Valor)
-        {
-            return new OdbcParameter(Nombre, OdbcType.Date) { Value = Valor.HasValue ? (object)Valor.Value.Date : DBNull.Value };
-        }
-        private static OdbcParameter ComprasFuncDecimal(string Nombre, decimal Valor)
-        {
-            return new OdbcParameter(Nombre, OdbcType.Decimal) { Value = Valor };
-        }
-        private static OdbcParameter ComprasFuncTexto(string Nombre, string Valor)
-        {
-            return new OdbcParameter(Nombre, OdbcType.VarChar, 30)
-            { Value = string.IsNullOrWhiteSpace(Valor) ? (object)DBNull.Value : Valor };
+            var cmd = new OdbcCommand(sql, cn, tx);
+            foreach (var v in valores)
+                cmd.Parameters.AddWithValue("p" + cmd.Parameters.Count, v ?? DBNull.Value);
+            return cmd;
         }
 
-        
-
-        
-        public int ComprasMetAgregar(ClsPagoProveedor Entidad)
+        private static bool ComprasFuncEsEstadoEfectivo(string estado)
         {
-            var Parametros = new List<OdbcParameter>();
-            Parametros.Add(ComprasFuncInt("p_cuentaPorPagar", Entidad.IdCuentaPorPagar));
-            Parametros.Add(ComprasFuncFecha("p_fecha", Entidad.FechaPagoProveedor));
-            Parametros.Add(ComprasFuncDecimal("p_monto", Entidad.MontoPagoProveedor));
-            Parametros.Add(ComprasFuncTexto("p_metodo", Entidad.MetodoPagoProveedor));
-            Parametros.Add(ComprasFuncTexto("p_referencia", Entidad.ReferenciaPagoProveedor));
-            Parametros.Add(ComprasFuncTexto("p_estado", Entidad.EstadoPagoProveedor));
-
-            return Convert.ToInt32(ComprasMetEjecucionEscalar(_Insert, Parametros, CommandType.Text));
+            return estado == "Pagado" || estado == "Programado";
         }
 
-        public int ComprasMetEditar(ClsPagoProveedor Entidad)
+        private static object[] ComprasFuncValoresEncabezado(ClsEncabezadoPagoProveedor p)
         {
-            var Parametros = new List<OdbcParameter>();
-            Parametros.Add(ComprasFuncInt("p_idPago", Entidad.IdPagoProveedor));
-            Parametros.Add(ComprasFuncFecha("p_fecha", Entidad.FechaPagoProveedor));
-            Parametros.Add(ComprasFuncDecimal("p_monto", Entidad.MontoPagoProveedor));
-            Parametros.Add(ComprasFuncTexto("p_metodo", Entidad.MetodoPagoProveedor));
-            Parametros.Add(ComprasFuncTexto("p_referencia", Entidad.ReferenciaPagoProveedor));
-            Parametros.Add(ComprasFuncTexto("p_estado", Entidad.EstadoPagoProveedor));
-
-            ComprasMetEjecucionNonQuery(_Update, Parametros, CommandType.Text);
-            return 1; 
-        }
-
-        public int ComprasMetRemover(ClsPagoProveedor Entidad)
-        {
-            var Parametros = new List<OdbcParameter>();
-            Parametros.Add(ComprasFuncInt("p_idPago", Entidad.IdPagoProveedor));
-
-            ComprasMetEjecucionNonQuery(_Delete, Parametros, CommandType.Text);
-            return 1;
-        }
-
-        public IEnumerable<ClsPagoProveedor> ComprasMetObtenerTodos()
-        {
-            return ComprasMetConsultar(null, null, null, null);
-        }
-
-        
-
-        public IEnumerable<ClsPagoProveedor> ComprasMetConsultar(int? IdProveedor, string Estado, DateTime? Desde, DateTime? Hasta)
-        {
-            var Parametros = new List<OdbcParameter>();
-            Parametros.Add(ComprasFuncInt("p_proveedor", IdProveedor));
-            Parametros.Add(ComprasFuncTexto("p_estado", Estado));
-            Parametros.Add(ComprasFuncFecha("p_desde", Desde));
-            Parametros.Add(ComprasFuncFecha("p_hasta", Hasta));
-
-            var Lista = new List<ClsPagoProveedor>();
-            var TablaDatos = ComprasMetEjecucionConsulta(_SelectFiltro, CommandType.Text, Parametros);
-            foreach (DataRow Fila in TablaDatos.Rows)
+            return new object[]
             {
-                var Pago = new ClsPagoProveedor();
-                Pago.IdPagoProveedor = Convert.ToInt32(Fila["idPago"]);
-                Pago.NoPagoProveedor = Fila["noPago"].ToString();
-                Pago.NombreProveedor = Fila["proveedor"].ToString();
-                Pago.FacturaCuentaPorPagar = Fila["factura"].ToString();
-                Pago.FechaPagoProveedor = Convert.ToDateTime(Fila["fecha"]);
-                Pago.MontoPagoProveedor = Convert.ToDecimal(Fila["monto"]);
-                Pago.EstadoPagoProveedor = Fila["estado"].ToString();
-                Lista.Add(Pago);
-            }
-            TablaDatos.Clear();
-            TablaDatos = null;
-            return Lista;
+                p.IdProveedor,
+                p.FechaPagoProveedor.Date,
+                p.MontoPagoProveedor,
+                p.IdMetodoPago,
+                p.IdMoneda,
+                p.IdTipoCambio.HasValue ? (object)p.IdTipoCambio.Value : DBNull.Value,
+                p.TipoCambioPagoProveedor,
+                string.IsNullOrWhiteSpace(p.ReferenciaPagoProveedor) ? (object)DBNull.Value : p.ReferenciaPagoProveedor,
+                p.EstadoPagoProveedor
+            };
         }
 
-        public ClsPagoProveedor ComprasMetObtenerPorId(int IdPago)
+        // ==================== AGREGAR ====================
+        public int ComprasMetAgregar(ClsEncabezadoPagoProveedor Pago)
         {
-            var Parametros = new List<OdbcParameter>();
-            Parametros.Add(ComprasFuncInt("p_idPago", IdPago));
+            using (var cn = ComprasFuncAbrirConexion())
+            using (var tx = cn.BeginTransaction())
+            {
+                try
+                {
+                    int idPago;
+                    using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.PagoInsertarEncabezado, ComprasFuncValoresEncabezado(Pago)))
+                        cmd.ExecuteNonQuery();
+                    using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.UltimoIdInsertado))
+                        idPago = Convert.ToInt32(cmd.ExecuteScalar());
 
-            var TablaDatos = ComprasMetEjecucionConsulta(_SelectUno, CommandType.Text, Parametros);
-            if (TablaDatos.Rows.Count == 0) return null;
+                    bool efectivo = ComprasFuncEsEstadoEfectivo(Pago.EstadoPagoProveedor);
+                    foreach (var d in Pago.Detalles)
+                    {
+                        ComprasFuncInsertarDetalle(cn, tx, idPago, d);
+                        if (efectivo)
+                            ComprasFuncAplicarSaldo(cn, tx, Pago.IdProveedor, d, Pago.IdMoneda, Pago.TipoCambioPagoProveedor, true);
+                    }
 
-            DataRow Fila = TablaDatos.Rows[0];
-            var Pago = new ClsPagoProveedor();
-            Pago.IdPagoProveedor = Convert.ToInt32(Fila["idPago"]);
-            Pago.IdProveedor = Convert.ToInt32(Fila["idProveedor"]);
-            Pago.IdCuentaPorPagar = Convert.ToInt32(Fila["idCuentaPorPagar"]);
-            Pago.FacturaCuentaPorPagar = Fila["factura"].ToString();
-            Pago.FechaPagoProveedor = Convert.ToDateTime(Fila["fecha"]);
-            Pago.MontoPagoProveedor = Convert.ToDecimal(Fila["monto"]);
-            Pago.MetodoPagoProveedor = Fila["metodo"].ToString();
-            Pago.ReferenciaPagoProveedor = Fila["referencia"] == DBNull.Value ? null : Fila["referencia"].ToString();
-            Pago.EstadoPagoProveedor = Fila["estado"].ToString();
-            return Pago;
+                    string beneficiario = ComprasFuncEscalarTexto(cn, tx, ClsSentenciasCompras.PagoNombreProveedor, Pago.IdProveedor);
+                    string metodo = ComprasFuncEscalarTexto(cn, tx, ClsSentenciasCompras.PagoNombreMetodo, Pago.IdMetodoPago);
+
+                    using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.PagoInsertarSolicitud,
+                        idPago, beneficiario, Pago.MontoPagoProveedor, metodo))
+                        cmd.ExecuteNonQuery();
+
+                    tx.Commit();
+                    return idPago;
+                }
+                catch (ClsExcepcionDatosCompras) { tx.Rollback(); throw; }
+                catch (OdbcException) { tx.Rollback(); throw new ClsExcepcionDatosCompras("No se pudo registrar el pago. Verifique los datos e intente nuevamente."); }
+                catch { tx.Rollback(); throw; }
+            }
         }
 
-        
+        // ==================== EDITAR ====================
+        public void ComprasMetEditar(ClsEncabezadoPagoProveedor Pago)
+        {
+            using (var cn = ComprasFuncAbrirConexion())
+            using (var tx = cn.BeginTransaction())
+            {
+                try
+                {
+                    int provAnt; string estadoAnt; long monedaAnt; decimal tcAnt;
+                    ComprasFuncLeerEncabezadoBloqueado(cn, tx, Pago.IdPagoProveedor, out provAnt, out estadoAnt, out monedaAnt, out tcAnt);
+
+                    ComprasFuncValidarSolicitudNoProcesada(cn, tx, Pago.IdPagoProveedor, "modificar");
+
+                    // 1. Revertir el efecto anterior
+                    if (ComprasFuncEsEstadoEfectivo(estadoAnt))
+                    {
+                        foreach (var d in ComprasFuncObtenerDetalles(cn, tx, Pago.IdPagoProveedor))
+                            ComprasFuncAplicarSaldo(cn, tx, provAnt, d, monedaAnt, tcAnt, false);
+                    }
+
+                    // 2. Reemplazar detalles y encabezado
+                    ComprasFuncEjecutarPorIdPago(cn, tx, ClsSentenciasCompras.PagoEliminarDetalles, Pago.IdPagoProveedor);
+
+                    var valores = new List<object>(ComprasFuncValoresEncabezado(Pago));
+                    valores.Add(Pago.IdPagoProveedor);
+                    using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.PagoActualizarEncabezado, valores.ToArray()))
+                        cmd.ExecuteNonQuery();
+
+                    // 3. Aplicar el nuevo efecto
+                    bool efectivo = ComprasFuncEsEstadoEfectivo(Pago.EstadoPagoProveedor);
+                    foreach (var d in Pago.Detalles)
+                    {
+                        ComprasFuncInsertarDetalle(cn, tx, Pago.IdPagoProveedor, d);
+                        if (efectivo)
+                            ComprasFuncAplicarSaldo(cn, tx, Pago.IdProveedor, d, Pago.IdMoneda, Pago.TipoCambioPagoProveedor, true);
+                    }
+
+                    // 4. Solicitud de pago
+                    string metodo = ComprasFuncEscalarTexto(cn, tx, ClsSentenciasCompras.PagoNombreMetodo, Pago.IdMetodoPago);
+                    string estadoSolicitud = (Pago.EstadoPagoProveedor == "Rechazado" || Pago.EstadoPagoProveedor == "Anulado") ? "Rechazada" : "Pendiente";
+                    using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.PagoActualizarSolicitud,
+                        Pago.MontoPagoProveedor, metodo, estadoSolicitud, Pago.IdPagoProveedor))
+                        cmd.ExecuteNonQuery();
+
+                    tx.Commit();
+                }
+                catch (ClsExcepcionDatosCompras) { tx.Rollback(); throw; }
+                catch (OdbcException) { tx.Rollback(); throw new ClsExcepcionDatosCompras("No se pudo actualizar el pago. Verifique los datos e intente nuevamente."); }
+                catch { tx.Rollback(); throw; }
+            }
+        }
+
+        // ==================== REMOVER ====================
+        public void ComprasMetRemover(ClsEncabezadoPagoProveedor Pago)
+        {
+            using (var cn = ComprasFuncAbrirConexion())
+            using (var tx = cn.BeginTransaction())
+            {
+                try
+                {
+                    int prov; string estado; long moneda; decimal tc;
+                    ComprasFuncLeerEncabezadoBloqueado(cn, tx, Pago.IdPagoProveedor, out prov, out estado, out moneda, out tc);
+
+                    ComprasFuncValidarSolicitudNoProcesada(cn, tx, Pago.IdPagoProveedor, "eliminar");
+
+                    if (ComprasFuncEsEstadoEfectivo(estado))
+                    {
+                        foreach (var d in ComprasFuncObtenerDetalles(cn, tx, Pago.IdPagoProveedor))
+                            ComprasFuncAplicarSaldo(cn, tx, prov, d, moneda, tc, false);
+                    }
+
+                    ComprasFuncEjecutarPorIdPago(cn, tx, ClsSentenciasCompras.PagoEliminarSolicitud, Pago.IdPagoProveedor);
+                    ComprasFuncEjecutarPorIdPago(cn, tx, ClsSentenciasCompras.PagoEliminarDetalles, Pago.IdPagoProveedor);
+                    ComprasFuncEjecutarPorIdPago(cn, tx, ClsSentenciasCompras.PagoEliminarEncabezado, Pago.IdPagoProveedor);
+
+                    tx.Commit();
+                }
+                catch (ClsExcepcionDatosCompras) { tx.Rollback(); throw; }
+                catch (OdbcException) { tx.Rollback(); throw new ClsExcepcionDatosCompras("No se pudo eliminar el pago."); }
+                catch { tx.Rollback(); throw; }
+            }
+        }
+
+        // ==================== CONSULTAS ====================
+        public List<ClsEncabezadoPagoProveedor> ComprasMetConsultar(int? IdProveedor, string Estado, DateTime? Desde, DateTime? Hasta)
+        {
+            var sql = ClsSentenciasCompras.PagoConsultarBase;
+            var valores = new List<object>();
+            if (IdProveedor.HasValue) { sql += ClsSentenciasCompras.PagoConsultarFiltroProveedor; valores.Add(IdProveedor.Value); }
+            if (!string.IsNullOrEmpty(Estado)) { sql += ClsSentenciasCompras.PagoConsultarFiltroEstado; valores.Add(Estado); }
+            if (Desde.HasValue) { sql += ClsSentenciasCompras.PagoConsultarFiltroDesde; valores.Add(Desde.Value.Date); }
+            if (Hasta.HasValue) { sql += ClsSentenciasCompras.PagoConsultarFiltroHasta; valores.Add(Hasta.Value.Date); }
+            sql += ClsSentenciasCompras.PagoConsultarOrden;
+
+            var lista = new List<ClsEncabezadoPagoProveedor>();
+            using (var cn = ComprasFuncAbrirConexion())
+            using (var cmd = ComprasFuncComando(cn, null, sql, valores.ToArray()))
+            using (var rd = cmd.ExecuteReader())
+            {
+                while (rd.Read()) lista.Add(ComprasFuncLeerEncabezado(rd));
+            }
+            return lista;
+        }
+
+        public ClsEncabezadoPagoProveedor ComprasMetObtenerPorId(int IdPago)
+        {
+            ClsEncabezadoPagoProveedor pago = null;
+            using (var cn = ComprasFuncAbrirConexion())
+            {
+                using (var cmd = ComprasFuncComando(cn, null, ClsSentenciasCompras.PagoObtenerPorId, IdPago))
+                using (var rd = cmd.ExecuteReader())
+                {
+                    if (rd.Read()) pago = ComprasFuncLeerEncabezado(rd);
+                }
+                if (pago != null)
+                    pago.Detalles = ComprasFuncObtenerDetalles(cn, null, IdPago);
+            }
+            return pago;
+        }
+
         public DataTable ComprasMetObtenerProveedores()
         {
-            return ComprasMetEjecucionConsulta(_SelectProveedores, CommandType.Text);
+            return ComprasFuncTabla(ClsSentenciasCompras.PagoProveedores);
         }
 
-        
         public DataTable ComprasMetObtenerCuentasPendientes(int IdProveedor)
         {
-            var Parametros = new List<OdbcParameter>();
-            Parametros.Add(ComprasFuncInt("p_proveedor", IdProveedor));
-            return ComprasMetEjecucionConsulta(_SelectCuentas, CommandType.Text, Parametros);
+            return ComprasFuncTabla(ClsSentenciasCompras.PagoCuentasPendientes, IdProveedor);
+        }
+
+        public DataTable ComprasMetObtenerMetodosPago()
+        {
+            return ComprasFuncTabla(ClsSentenciasCompras.PagoMetodos);
+        }
+
+        public DataTable ComprasMetObtenerMonedas()
+        {
+            return ComprasFuncTabla(ClsSentenciasCompras.PagoMonedas);
+        }
+
+        // ==================== TIPO DE CAMBIO ====================
+        public void ComprasMetResolverTipoCambio(long IdMoneda, DateTime Fecha, out long? IdTipoCambio, out decimal Valor)
+        {
+            IdTipoCambio = null;
+            Valor = 1;
+
+            using (var cn = ComprasFuncAbrirConexion())
+            {
+                long idBase;
+                using (var cmd = ComprasFuncComando(cn, null, ClsSentenciasCompras.PagoIdMonedaPorCodigo, MonedaBase))
+                {
+                    object r = cmd.ExecuteScalar();
+                    if (r == null) throw new ClsExcepcionDatosCompras("No existe la moneda base (" + MonedaBase + ") en el catálogo de monedas.");
+                    idBase = Convert.ToInt64(r);
+                }
+
+                if (IdMoneda == idBase) return; // moneda base: sin referencia, valor 1
+
+                // Directo: moneda -> base
+                long? idDirecto; decimal valorDirecto;
+                if (ComprasFuncBuscarTipoCambio(cn, IdMoneda, idBase, Fecha, out idDirecto, out valorDirecto))
+                {
+                    IdTipoCambio = idDirecto;
+                    Valor = valorDirecto;
+                    return;
+                }
+
+                // Inverso: base -> moneda (se usa 1/valor)
+                long? idInverso; decimal valorInverso;
+                if (ComprasFuncBuscarTipoCambio(cn, idBase, IdMoneda, Fecha, out idInverso, out valorInverso) && valorInverso > 0)
+                {
+                    IdTipoCambio = idInverso;
+                    Valor = Math.Round(1m / valorInverso, 6);
+                    return;
+                }
+            }
+            throw new ClsExcepcionDatosCompras("No existe un tipo de cambio registrado para la moneda y la fecha del pago.");
+        }
+
+        private bool ComprasFuncBuscarTipoCambio(OdbcConnection cn, long origen, long destino, DateTime fecha, out long? id, out decimal valor)
+        {
+            id = null; valor = 0;
+            using (var cmd = ComprasFuncComando(cn, null, ClsSentenciasCompras.PagoTipoCambioVigente, origen, destino, fecha.Date))
+            using (var rd = cmd.ExecuteReader())
+            {
+                if (!rd.Read()) return false;
+                id = Convert.ToInt64(rd[0]);
+                valor = Convert.ToDecimal(rd[1]);
+                return true;
+            }
+        }
+
+        // ==================== SALDO DE LA CUENTA ====================
+        // descontar = true  -> aplica el pago (resta saldo)
+        // descontar = false -> revierte el pago (suma saldo)
+        private void ComprasFuncAplicarSaldo(OdbcConnection cn, OdbcTransaction tx, int idProveedor,
+            ClsDetallePagoProveedor d, long idMonedaPago, decimal tcPago, bool descontar)
+        {
+            decimal saldo, total, tcDoc;
+            long idMonedaDoc;
+            string estadoCuenta;
+
+            using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.PagoBloquearCuenta,
+                d.SerieDocumento, d.NumeroDocumento, d.IdConcepto, idProveedor))
+            using (var rd = cmd.ExecuteReader())
+            {
+                if (!rd.Read())
+                    throw new ClsExcepcionDatosCompras("El documento " + d.SerieDocumento + "-" + d.NumeroDocumento + " no existe o no pertenece al proveedor.");
+                saldo = Convert.ToDecimal(rd[0]);
+                total = Convert.ToDecimal(rd[1]);
+                estadoCuenta = Convert.ToString(rd[2]);
+                idMonedaDoc = Convert.ToInt64(rd[3]);
+                tcDoc = Convert.ToDecimal(rd[4]);
+            }
+
+            if (descontar && estadoCuenta == "Anulada")
+                throw new ClsExcepcionDatosCompras("El documento " + d.SerieDocumento + "-" + d.NumeroDocumento + " está anulado.");
+
+            // Monto expresado en la moneda del documento
+            decimal montoDoc = (idMonedaDoc == idMonedaPago || tcDoc <= 0)
+                ? d.MontoAplicado
+                : Math.Round(d.MontoAplicado * tcPago / tcDoc, 4);
+
+            decimal nuevoSaldo = descontar ? saldo - montoDoc : saldo + montoDoc;
+
+            if (nuevoSaldo < 0 && nuevoSaldo > -0.0001m) nuevoSaldo = 0;   // tolerancia de redondeo
+            if (nuevoSaldo < 0)
+                throw new ClsExcepcionDatosCompras("El monto excede el saldo pendiente del documento " + d.SerieDocumento + "-" + d.NumeroDocumento + ".");
+            if (nuevoSaldo > total) nuevoSaldo = total;
+
+            string nuevoEstado = estadoCuenta == "Anulada" ? "Anulada"
+                               : nuevoSaldo <= 0 ? "Pagada"
+                               : nuevoSaldo >= total ? "Pendiente"
+                               : "Parcial";
+
+            using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.PagoActualizarSaldoCuenta,
+                nuevoSaldo, nuevoEstado, d.SerieDocumento, d.NumeroDocumento, d.IdConcepto))
+                cmd.ExecuteNonQuery();
+        }
+
+        // ==================== AUXILIARES ====================
+        private static void ComprasFuncInsertarDetalle(OdbcConnection cn, OdbcTransaction tx, int idPago, ClsDetallePagoProveedor d)
+        {
+            using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.PagoInsertarDetalle,
+                idPago, d.SerieDocumento, d.NumeroDocumento, d.IdConcepto, d.MontoAplicado))
+                cmd.ExecuteNonQuery();
+        }
+
+        private static List<ClsDetallePagoProveedor> ComprasFuncObtenerDetalles(OdbcConnection cn, OdbcTransaction tx, int idPago)
+        {
+            var lista = new List<ClsDetallePagoProveedor>();
+            using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.PagoObtenerDetalles, idPago))
+            using (var rd = cmd.ExecuteReader())
+            {
+                while (rd.Read())
+                {
+                    lista.Add(new ClsDetallePagoProveedor
+                    {
+                        SerieDocumento = Convert.ToString(rd[0]),
+                        NumeroDocumento = Convert.ToString(rd[1]),
+                        IdConcepto = Convert.ToInt32(rd[2]),
+                        NombreConcepto = Convert.ToString(rd[3]),
+                        MontoAplicado = Convert.ToDecimal(rd[4])
+                    });
+                }
+            }
+            return lista;
+        }
+
+        private static void ComprasFuncLeerEncabezadoBloqueado(OdbcConnection cn, OdbcTransaction tx, int idPago,
+            out int idProveedor, out string estado, out long idMoneda, out decimal tipoCambio)
+        {
+            using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.PagoBloquearEncabezado, idPago))
+            using (var rd = cmd.ExecuteReader())
+            {
+                if (!rd.Read()) throw new ClsExcepcionDatosCompras("El pago no existe.");
+                idProveedor = Convert.ToInt32(rd[0]);
+                estado = Convert.ToString(rd[1]);
+                idMoneda = Convert.ToInt64(rd[2]);
+                tipoCambio = Convert.ToDecimal(rd[3]);
+            }
+        }
+
+        private static void ComprasFuncValidarSolicitudNoProcesada(OdbcConnection cn, OdbcTransaction tx, int idPago, string accion)
+        {
+            using (var cmd = ComprasFuncComando(cn, tx, ClsSentenciasCompras.PagoEstadoSolicitud, idPago))
+            {
+                object r = cmd.ExecuteScalar();
+                if (r != null && Convert.ToString(r) == "Procesada")
+                    throw new ClsExcepcionDatosCompras("Bancos ya procesó este pago, no se puede " + accion + ".");
+            }
+        }
+
+        private static void ComprasFuncEjecutarPorIdPago(OdbcConnection cn, OdbcTransaction tx, string sql, int idPago)
+        {
+            using (var cmd = ComprasFuncComando(cn, tx, sql, idPago))
+                cmd.ExecuteNonQuery();
+        }
+
+        private static string ComprasFuncEscalarTexto(OdbcConnection cn, OdbcTransaction tx, string sql, int id)
+        {
+            using (var cmd = ComprasFuncComando(cn, tx, sql, id))
+            {
+                object r = cmd.ExecuteScalar();
+                if (r == null) throw new ClsExcepcionDatosCompras("No se encontró el registro relacionado (proveedor o método de pago).");
+                return Convert.ToString(r);
+            }
+        }
+
+        private static ClsEncabezadoPagoProveedor ComprasFuncLeerEncabezado(IDataRecord rd)
+        {
+            int oTc = rd.GetOrdinal("idTipoCambio");
+            int oRef = rd.GetOrdinal("referenciaPagoProveedor");
+            return new ClsEncabezadoPagoProveedor
+            {
+                IdPagoProveedor = Convert.ToInt32(rd["idPagoProveedor"]),
+                IdProveedor = Convert.ToInt32(rd["idProveedor"]),
+                NombreProveedor = Convert.ToString(rd["nombreProveedor"]),
+                FechaPagoProveedor = Convert.ToDateTime(rd["fechaPagoProveedor"]),
+                MontoPagoProveedor = Convert.ToDecimal(rd["montoPagoProveedor"]),
+                IdMetodoPago = Convert.ToInt32(rd["idMetodoPago"]),
+                NombreMetodoPago = Convert.ToString(rd["nombreMetodoPago"]),
+                IdMoneda = Convert.ToInt64(rd["idMoneda"]),
+                IdTipoCambio = rd.IsDBNull(oTc) ? (long?)null : Convert.ToInt64(rd.GetValue(oTc)),
+                TipoCambioPagoProveedor = Convert.ToDecimal(rd["tipoCambioPagoProveedor"]),
+                ReferenciaPagoProveedor = rd.IsDBNull(oRef) ? null : Convert.ToString(rd.GetValue(oRef)),
+                EstadoPagoProveedor = Convert.ToString(rd["estadoPagoProveedor"])
+            };
+        }
+
+        private DataTable ComprasFuncTabla(string sql, params object[] valores)
+        {
+            var tabla = new DataTable();
+            using (var cn = ComprasFuncAbrirConexion())
+            using (var cmd = ComprasFuncComando(cn, null, sql, valores))
+            using (var da = new OdbcDataAdapter(cmd))
+                da.Fill(tabla);
+            return tabla;
         }
     }
 }
