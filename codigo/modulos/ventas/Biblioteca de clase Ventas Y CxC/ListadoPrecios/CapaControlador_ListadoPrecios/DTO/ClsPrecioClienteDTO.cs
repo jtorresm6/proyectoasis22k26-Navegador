@@ -1,9 +1,12 @@
-using System;
+﻿using System;
 
 namespace CapaControlador_ListadoPrecios
 {
     public class ClsPrecioClienteDTO
     {
+        public int IdTipoCliente { get; set; }
+        public int IdProducto { get; set; }
+        public int IdProveedor { get; set; }
         public string TipoCliente { get; set; }
         public string Marca { get; set; }
         public string Linea { get; set; }

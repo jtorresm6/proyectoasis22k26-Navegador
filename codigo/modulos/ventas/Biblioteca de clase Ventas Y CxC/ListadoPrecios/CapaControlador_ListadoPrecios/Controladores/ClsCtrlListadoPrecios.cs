@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CapaControlador_ListadoPrecios.Contratos.CapaControlador_ListadoPrecios;
+using CapaControlador_ListadoPrecios.Contratos;
 using CapaModelo_ListadoPrecios;
 using CapaModelo_ListadoPrecios.Entidades;
 
@@ -19,41 +19,79 @@ namespace CapaControlador_ListadoPrecios
             _Modelo = new ClsModeloListadoPrecios();
         }
 
-        public List<ClsPrecioCliente> VentasFuncConsultarListado(string tipoCliente, string marca, string linea, string categoria, string proveedor, string producto)
+        public List<ClsPrecioCliente> VentasFuncConsultarListado(
+            string tipoCliente, string marca, string linea,
+            string categoria, string proveedor, string producto)
         {
-            return _Modelo.VentasFuncObtenerListado()
-                .OrderBy(x => x.TipoCliente)
-                .ThenBy(x => x.Producto)
-                .ToList();
+            IEnumerable<ClsPrecioCliente> consulta = _Modelo.VentasFuncObtenerListado();
+
+            if (!string.IsNullOrWhiteSpace(tipoCliente) && tipoCliente != "Todos")
+                consulta = consulta.Where(x => string.Equals(x.TipoCliente, tipoCliente, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrWhiteSpace(marca) && marca != "Todos")
+                consulta = consulta.Where(x => string.Equals(x.Marca, marca, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrWhiteSpace(linea) && linea != "Todos")
+                consulta = consulta.Where(x => string.Equals(x.Linea, linea, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrWhiteSpace(categoria) && categoria != "Todos")
+                consulta = consulta.Where(x => string.Equals(x.Categoria, categoria, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrWhiteSpace(proveedor) && proveedor != "Todos")
+                consulta = consulta.Where(x => string.Equals(x.Proveedor, proveedor, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrWhiteSpace(producto) && producto != "Todos")
+                consulta = consulta.Where(x => string.Equals(x.Producto, producto, StringComparison.OrdinalIgnoreCase));
+
+            return consulta.OrderBy(x => x.TipoCliente).ThenBy(x => x.Producto).ToList();
         }
 
-        public decimal VentasFuncCalcularPrecioFinal(decimal precioBase, decimal valor, string tipoModificacion)
+        public List<string> VentasFuncObtenerProveedores()
         {
-            return ClsModeloListadoPrecios.VentasFuncCalcularPrecioFinal(precioBase, valor, tipoModificacion);
+            return _Modelo.VentasFuncObtenerProveedores();
         }
 
-        // Mantiene la firma existente para no romper otras llamadas del proyecto.
-        public bool VentasFuncGuardar(string tipoCliente, string producto, decimal porcentaje, decimal precioBase, string tipoModificacion, decimal valor, string alcance, out string mensaje)
+        public decimal VentasFuncCalcularPrecioFinal(
+            decimal precioBase, decimal valor, string tipoModificacion)
+        {
+            return ClsModeloListadoPrecios.VentasFuncCalcularPrecioFinal(
+                precioBase, valor, tipoModificacion);
+        }
+
+        // Mantiene la firma anterior para no romper llamadas existentes del proyecto.
+        public bool VentasFuncGuardar(
+            string tipoCliente, string producto, decimal porcentaje,
+            decimal precioBase, string tipoModificacion, decimal valor,
+            string alcance, out string mensaje)
         {
             ClsPrecioCliente existente = _Modelo.VentasFuncObtenerListado()
                 .FirstOrDefault(x => x.TipoCliente == tipoCliente && x.Producto == producto);
+
             if (existente == null)
             {
-                mensaje = "No se encontró la lista de precios y el producto seleccionados.";
+                mensaje = "No se encontró el tipo de cliente y producto seleccionados.";
                 return false;
             }
 
-            existente.PrecioFinal = VentasFuncCalcularPrecioFinal(precioBase, valor, tipoModificacion);
-            existente.PrecioBase = precioBase;
+            decimal nuevoPrecioBase = precioBase;
+            decimal nuevoPorcentaje = existente.PorcentajeDescuento;
+
+            if (tipoModificacion == "AumentoBase")
+                nuevoPrecioBase = precioBase + valor;
+            else if (tipoModificacion == "AumentoPorcentaje")
+                nuevoPrecioBase = precioBase + (precioBase * valor / 100m);
+            else if (tipoModificacion == "Descuento")
+                nuevoPorcentaje = porcentaje;
+
+            existente.PrecioBase = nuevoPrecioBase;
+            existente.PorcentajeDescuento = nuevoPorcentaje;
+            existente.PrecioFinal = nuevoPrecioBase -
+                (nuevoPrecioBase * nuevoPorcentaje / 100m);
             existente.TipoModificacion = tipoModificacion;
             existente.Valor = valor;
             existente.AlcanceModificacion = alcance;
-            existente.PorcentajeDescuento = tipoModificacion == "Descuento" ? valor : 0m;
-            return VentasFuncGuardarVarios(new List<ClsPrecioCliente> { existente }, out mensaje);
+
+            return _Modelo.VentasFuncGuardar(existente, out mensaje);
         }
 
         // Recibe las filas reales seleccionadas en el formulario y las guarda juntas.
-        public bool VentasFuncGuardarVarios(IList<ClsPrecioCliente> registros, out string mensaje)
+        public bool VentasFuncGuardarVarios(
+            IList<ClsPrecioCliente> registros, out string mensaje)
         {
             if (registros == null || registros.Count == 0)
             {
@@ -63,14 +101,14 @@ namespace CapaControlador_ListadoPrecios
 
             foreach (ClsPrecioCliente registro in registros)
             {
-                if (registro == null || registro.IdProducto <= 0)
+                if (registro == null || registro.IdProducto <= 0 || registro.IdTipoCliente <= 0)
                 {
-                    mensaje = "Una de las filas no contiene un identificador de producto válido.";
+                    mensaje = "Una de las filas no contiene un identificador válido de producto o tipo de cliente.";
                     return false;
                 }
-                if (registro.PrecioFinal < 0m)
+                if (registro.PrecioBase < 0m || registro.PrecioFinal < 0m)
                 {
-                    mensaje = "El precio final no puede ser negativo.";
+                    mensaje = "El precio base y el precio final no pueden ser negativos.";
                     return false;
                 }
             }
