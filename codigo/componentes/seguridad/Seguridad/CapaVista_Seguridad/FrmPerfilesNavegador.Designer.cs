@@ -39,6 +39,7 @@
             this.navegador1.Name = "navegador1";
             this.navegador1.Size = new System.Drawing.Size(1437, 111);
             this.navegador1.TabIndex = 0;
+
             // 
             // FrmPerfilesNavegador
             // 
