@@ -34,46 +34,52 @@ namespace CapaVista_Inventario_Logistica.Formularios
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMantenimientoProducto));
             this.LogisticaPnlProducto = new System.Windows.Forms.Panel();
-            this.LogisticaBtnLinea = new System.Windows.Forms.Button();
-            this.LogisticaBtnMarca = new System.Windows.Forms.Button();
-            this.LogisticaBtnCategoria = new System.Windows.Forms.Button();
+            this.LogisticaBtnAyudaProducto = new System.Windows.Forms.Button();
+            this.LogisticaBtnEliminarProducto = new System.Windows.Forms.Button();
+            this.LogisticaBtnImprimirProducto = new System.Windows.Forms.Button();
+            this.LogisticaBtnRefrescarProducto = new System.Windows.Forms.Button();
+            this.LogisticaBtnGuardarProducto = new System.Windows.Forms.Button();
+            this.LogisticaBtnModificarProducto = new System.Windows.Forms.Button();
+            this.LogisticaBtnConsultarProducto = new System.Windows.Forms.Button();
+            this.LogisticaBtnIngresarProducto = new System.Windows.Forms.Button();
+            this.LogisticaPnlDatosProducto = new System.Windows.Forms.Panel();
+            this.LogisticaBtnSeleccionarImagen = new System.Windows.Forms.Button();
+            this.LogisticaCboProveedor = new System.Windows.Forms.ComboBox();
+            this.LogisticaCboLinea = new System.Windows.Forms.ComboBox();
+            this.LogisticaCboMarca = new System.Windows.Forms.ComboBox();
+            this.LogisticaTxtComisionProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtPrecioCostoProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtPesoProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtStockMaximoProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtStockMinimoProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtPrecioVentaProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtCategoriaProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtDescripcionProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtPaisProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtClasificacionProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtNombreProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtSKUProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaTxtIdProducto = new System.Windows.Forms.TextBox();
+            this.LogisticaPbImagenProducto = new System.Windows.Forms.PictureBox();
+            this.LogisticaPnlPesoProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblStockMaximoProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblStockMinimoProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblPorcentajeComisionProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblPrecioVentaProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblPrecioCostoProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblPaisProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblImagenProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblDescripcion = new System.Windows.Forms.Label();
+            this.LogisticaLblLineaProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblCategoriaProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblMarcaProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblProveedor = new System.Windows.Forms.Label();
+            this.LogisticaLblNombreProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblClasificacionProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblSKUProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblIdProducto = new System.Windows.Forms.Label();
             this.LogisticaLblDescripcionProducto = new System.Windows.Forms.Label();
             this.LogisticaLblTituloProducto = new System.Windows.Forms.Label();
-            this.LogisticaPnlDatosProducto = new System.Windows.Forms.Panel();
-            this.LogisticaLblIdProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblSKUProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblClasificacionProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblNombreProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblProveedor = new System.Windows.Forms.Label();
-            this.LogisticaLblMarcaProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblCategoriaProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblLineaProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblDescripcion = new System.Windows.Forms.Label();
-            this.LogisticaLblImagenProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblPaisProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblPrecioCostoProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblPrecioVentaProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblPorcentajeComisionProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblStockMinimoProducto = new System.Windows.Forms.Label();
-            this.LogisticaLblStockMaximoProducto = new System.Windows.Forms.Label();
-            this.LogisticaPnlPesoProducto = new System.Windows.Forms.Label();
-            this.LogisticaPbImagenProducto = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.LogisticaPnlProducto.SuspendLayout();
             this.LogisticaPnlDatosProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaPbImagenProducto)).BeginInit();
@@ -82,10 +88,15 @@ namespace CapaVista_Inventario_Logistica.Formularios
             // LogisticaPnlProducto
             // 
             this.LogisticaPnlProducto.BackgroundImage = global::CapaVista_Inventario_Logistica.Properties.Resources.FondoLogica2;
+            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnAyudaProducto);
+            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnEliminarProducto);
+            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnImprimirProducto);
+            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnRefrescarProducto);
+            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnGuardarProducto);
+            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnModificarProducto);
+            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnConsultarProducto);
+            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnIngresarProducto);
             this.LogisticaPnlProducto.Controls.Add(this.LogisticaPnlDatosProducto);
-            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnLinea);
-            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnMarca);
-            this.LogisticaPnlProducto.Controls.Add(this.LogisticaBtnCategoria);
             this.LogisticaPnlProducto.Controls.Add(this.LogisticaLblDescripcionProducto);
             this.LogisticaPnlProducto.Controls.Add(this.LogisticaLblTituloProducto);
             this.LogisticaPnlProducto.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -95,56 +106,510 @@ namespace CapaVista_Inventario_Logistica.Formularios
             this.LogisticaPnlProducto.Size = new System.Drawing.Size(1144, 741);
             this.LogisticaPnlProducto.TabIndex = 0;
             // 
-            // LogisticaBtnLinea
+            // LogisticaBtnAyudaProducto
             // 
-            this.LogisticaBtnLinea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(216)))), ((int)(((byte)(197)))));
-            this.LogisticaBtnLinea.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnLinea.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(99)))), ((int)(((byte)(46)))));
-            this.LogisticaBtnLinea.FlatAppearance.BorderSize = 2;
-            this.LogisticaBtnLinea.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnLinea.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaBtnLinea.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
-            this.LogisticaBtnLinea.Location = new System.Drawing.Point(1020, 30);
-            this.LogisticaBtnLinea.Name = "LogisticaBtnLinea";
-            this.LogisticaBtnLinea.Size = new System.Drawing.Size(95, 52);
-            this.LogisticaBtnLinea.TabIndex = 5;
-            this.LogisticaBtnLinea.Text = "Línea";
-            this.LogisticaBtnLinea.UseVisualStyleBackColor = false;
-            this.LogisticaBtnLinea.Click += new System.EventHandler(this.LogisticaBtnLinea_Click);
+            this.LogisticaBtnAyudaProducto.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnAyudaProducto.BackgroundImage = global::CapaVista_Inventario_Logistica.Properties.Resources.btn_ayuda;
+            this.LogisticaBtnAyudaProducto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnAyudaProducto.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnAyudaProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnAyudaProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaBtnAyudaProducto.ForeColor = System.Drawing.Color.Black;
+            this.LogisticaBtnAyudaProducto.Location = new System.Drawing.Point(1055, 38);
+            this.LogisticaBtnAyudaProducto.Name = "LogisticaBtnAyudaProducto";
+            this.LogisticaBtnAyudaProducto.Size = new System.Drawing.Size(60, 66);
+            this.LogisticaBtnAyudaProducto.TabIndex = 14;
+            this.LogisticaBtnAyudaProducto.UseVisualStyleBackColor = false;
             // 
-            // LogisticaBtnMarca
+            // LogisticaBtnEliminarProducto
             // 
-            this.LogisticaBtnMarca.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(216)))), ((int)(((byte)(197)))));
-            this.LogisticaBtnMarca.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnMarca.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(99)))), ((int)(((byte)(46)))));
-            this.LogisticaBtnMarca.FlatAppearance.BorderSize = 2;
-            this.LogisticaBtnMarca.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnMarca.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaBtnMarca.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
-            this.LogisticaBtnMarca.Location = new System.Drawing.Point(909, 30);
-            this.LogisticaBtnMarca.Name = "LogisticaBtnMarca";
-            this.LogisticaBtnMarca.Size = new System.Drawing.Size(95, 52);
-            this.LogisticaBtnMarca.TabIndex = 4;
-            this.LogisticaBtnMarca.Text = "Marca";
-            this.LogisticaBtnMarca.UseVisualStyleBackColor = false;
-            this.LogisticaBtnMarca.Click += new System.EventHandler(this.LogisticaBtnMarca_Click);
+            this.LogisticaBtnEliminarProducto.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnEliminarProducto.BackgroundImage = global::CapaVista_Inventario_Logistica.Properties.Resources.btn_eliminar;
+            this.LogisticaBtnEliminarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnEliminarProducto.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnEliminarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnEliminarProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaBtnEliminarProducto.ForeColor = System.Drawing.Color.Black;
+            this.LogisticaBtnEliminarProducto.Location = new System.Drawing.Point(857, 38);
+            this.LogisticaBtnEliminarProducto.Name = "LogisticaBtnEliminarProducto";
+            this.LogisticaBtnEliminarProducto.Size = new System.Drawing.Size(60, 66);
+            this.LogisticaBtnEliminarProducto.TabIndex = 13;
+            this.LogisticaBtnEliminarProducto.UseVisualStyleBackColor = false;
             // 
-            // LogisticaBtnCategoria
+            // LogisticaBtnImprimirProducto
             // 
-            this.LogisticaBtnCategoria.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(216)))), ((int)(((byte)(197)))));
-            this.LogisticaBtnCategoria.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnCategoria.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(99)))), ((int)(((byte)(46)))));
-            this.LogisticaBtnCategoria.FlatAppearance.BorderSize = 2;
-            this.LogisticaBtnCategoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnCategoria.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaBtnCategoria.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
-            this.LogisticaBtnCategoria.Location = new System.Drawing.Point(795, 30);
-            this.LogisticaBtnCategoria.Name = "LogisticaBtnCategoria";
-            this.LogisticaBtnCategoria.Size = new System.Drawing.Size(95, 52);
-            this.LogisticaBtnCategoria.TabIndex = 3;
-            this.LogisticaBtnCategoria.Text = "Categoría";
-            this.LogisticaBtnCategoria.UseVisualStyleBackColor = false;
-            this.LogisticaBtnCategoria.Click += new System.EventHandler(this.LogisticaBtnCategoria_Click);
+            this.LogisticaBtnImprimirProducto.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnImprimirProducto.BackgroundImage = global::CapaVista_Inventario_Logistica.Properties.Resources.btn_imprimir;
+            this.LogisticaBtnImprimirProducto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnImprimirProducto.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnImprimirProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnImprimirProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaBtnImprimirProducto.ForeColor = System.Drawing.Color.Black;
+            this.LogisticaBtnImprimirProducto.Location = new System.Drawing.Point(989, 38);
+            this.LogisticaBtnImprimirProducto.Name = "LogisticaBtnImprimirProducto";
+            this.LogisticaBtnImprimirProducto.Size = new System.Drawing.Size(60, 66);
+            this.LogisticaBtnImprimirProducto.TabIndex = 12;
+            this.LogisticaBtnImprimirProducto.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnRefrescarProducto
+            // 
+            this.LogisticaBtnRefrescarProducto.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnRefrescarProducto.BackgroundImage = global::CapaVista_Inventario_Logistica.Properties.Resources.btn_refrescar;
+            this.LogisticaBtnRefrescarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnRefrescarProducto.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnRefrescarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnRefrescarProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaBtnRefrescarProducto.ForeColor = System.Drawing.Color.Black;
+            this.LogisticaBtnRefrescarProducto.Location = new System.Drawing.Point(923, 38);
+            this.LogisticaBtnRefrescarProducto.Name = "LogisticaBtnRefrescarProducto";
+            this.LogisticaBtnRefrescarProducto.Size = new System.Drawing.Size(60, 66);
+            this.LogisticaBtnRefrescarProducto.TabIndex = 11;
+            this.LogisticaBtnRefrescarProducto.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnGuardarProducto
+            // 
+            this.LogisticaBtnGuardarProducto.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnGuardarProducto.BackgroundImage = global::CapaVista_Inventario_Logistica.Properties.Resources.btn_guardar;
+            this.LogisticaBtnGuardarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnGuardarProducto.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnGuardarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnGuardarProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaBtnGuardarProducto.ForeColor = System.Drawing.Color.Black;
+            this.LogisticaBtnGuardarProducto.Location = new System.Drawing.Point(791, 38);
+            this.LogisticaBtnGuardarProducto.Name = "LogisticaBtnGuardarProducto";
+            this.LogisticaBtnGuardarProducto.Size = new System.Drawing.Size(60, 66);
+            this.LogisticaBtnGuardarProducto.TabIndex = 10;
+            this.LogisticaBtnGuardarProducto.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnModificarProducto
+            // 
+            this.LogisticaBtnModificarProducto.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnModificarProducto.BackgroundImage = global::CapaVista_Inventario_Logistica.Properties.Resources.btn_modificar;
+            this.LogisticaBtnModificarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnModificarProducto.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnModificarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnModificarProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaBtnModificarProducto.ForeColor = System.Drawing.Color.Black;
+            this.LogisticaBtnModificarProducto.Location = new System.Drawing.Point(725, 38);
+            this.LogisticaBtnModificarProducto.Name = "LogisticaBtnModificarProducto";
+            this.LogisticaBtnModificarProducto.Size = new System.Drawing.Size(60, 66);
+            this.LogisticaBtnModificarProducto.TabIndex = 9;
+            this.LogisticaBtnModificarProducto.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnConsultarProducto
+            // 
+            this.LogisticaBtnConsultarProducto.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnConsultarProducto.BackgroundImage = global::CapaVista_Inventario_Logistica.Properties.Resources.btn_consultar;
+            this.LogisticaBtnConsultarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnConsultarProducto.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnConsultarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnConsultarProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaBtnConsultarProducto.ForeColor = System.Drawing.Color.Black;
+            this.LogisticaBtnConsultarProducto.Location = new System.Drawing.Point(657, 38);
+            this.LogisticaBtnConsultarProducto.Name = "LogisticaBtnConsultarProducto";
+            this.LogisticaBtnConsultarProducto.Size = new System.Drawing.Size(60, 66);
+            this.LogisticaBtnConsultarProducto.TabIndex = 8;
+            this.LogisticaBtnConsultarProducto.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnIngresarProducto
+            // 
+            this.LogisticaBtnIngresarProducto.BackColor = System.Drawing.Color.Transparent;
+            this.LogisticaBtnIngresarProducto.BackgroundImage = global::CapaVista_Inventario_Logistica.Properties.Resources.btn_ingresar;
+            this.LogisticaBtnIngresarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnIngresarProducto.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnIngresarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnIngresarProducto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaBtnIngresarProducto.ForeColor = System.Drawing.Color.Black;
+            this.LogisticaBtnIngresarProducto.Location = new System.Drawing.Point(591, 38);
+            this.LogisticaBtnIngresarProducto.Name = "LogisticaBtnIngresarProducto";
+            this.LogisticaBtnIngresarProducto.Size = new System.Drawing.Size(60, 66);
+            this.LogisticaBtnIngresarProducto.TabIndex = 7;
+            this.LogisticaBtnIngresarProducto.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaPnlDatosProducto
+            // 
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaBtnSeleccionarImagen);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaCboProveedor);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaCboLinea);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaCboMarca);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtComisionProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtPrecioCostoProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtPesoProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtStockMaximoProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtStockMinimoProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtPrecioVentaProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtCategoriaProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtDescripcionProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtPaisProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtClasificacionProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtNombreProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtSKUProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaTxtIdProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaPbImagenProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaPnlPesoProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblStockMaximoProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblStockMinimoProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblPorcentajeComisionProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblPrecioVentaProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblPrecioCostoProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblPaisProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblImagenProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblDescripcion);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblLineaProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblCategoriaProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblMarcaProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblProveedor);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblNombreProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblClasificacionProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblSKUProducto);
+            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblIdProducto);
+            this.LogisticaPnlDatosProducto.Location = new System.Drawing.Point(37, 123);
+            this.LogisticaPnlDatosProducto.Name = "LogisticaPnlDatosProducto";
+            this.LogisticaPnlDatosProducto.Size = new System.Drawing.Size(1078, 349);
+            this.LogisticaPnlDatosProducto.TabIndex = 6;
+            // 
+            // LogisticaBtnSeleccionarImagen
+            // 
+            this.LogisticaBtnSeleccionarImagen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(216)))), ((int)(((byte)(197)))));
+            this.LogisticaBtnSeleccionarImagen.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnSeleccionarImagen.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(99)))), ((int)(((byte)(46)))));
+            this.LogisticaBtnSeleccionarImagen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnSeleccionarImagen.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaBtnSeleccionarImagen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaBtnSeleccionarImagen.Location = new System.Drawing.Point(899, 220);
+            this.LogisticaBtnSeleccionarImagen.Name = "LogisticaBtnSeleccionarImagen";
+            this.LogisticaBtnSeleccionarImagen.Size = new System.Drawing.Size(121, 35);
+            this.LogisticaBtnSeleccionarImagen.TabIndex = 34;
+            this.LogisticaBtnSeleccionarImagen.Text = "Agregar Imagen";
+            this.LogisticaBtnSeleccionarImagen.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaCboProveedor
+            // 
+            this.LogisticaCboProveedor.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaCboProveedor.FormattingEnabled = true;
+            this.LogisticaCboProveedor.Location = new System.Drawing.Point(417, 153);
+            this.LogisticaCboProveedor.Name = "LogisticaCboProveedor";
+            this.LogisticaCboProveedor.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaCboProveedor.TabIndex = 33;
+            // 
+            // LogisticaCboLinea
+            // 
+            this.LogisticaCboLinea.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaCboLinea.FormattingEnabled = true;
+            this.LogisticaCboLinea.Location = new System.Drawing.Point(417, 114);
+            this.LogisticaCboLinea.Name = "LogisticaCboLinea";
+            this.LogisticaCboLinea.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaCboLinea.TabIndex = 32;
+            // 
+            // LogisticaCboMarca
+            // 
+            this.LogisticaCboMarca.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaCboMarca.FormattingEnabled = true;
+            this.LogisticaCboMarca.Location = new System.Drawing.Point(417, 75);
+            this.LogisticaCboMarca.Name = "LogisticaCboMarca";
+            this.LogisticaCboMarca.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaCboMarca.TabIndex = 31;
+            // 
+            // LogisticaTxtComisionProducto
+            // 
+            this.LogisticaTxtComisionProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtComisionProducto.Location = new System.Drawing.Point(729, 197);
+            this.LogisticaTxtComisionProducto.Name = "LogisticaTxtComisionProducto";
+            this.LogisticaTxtComisionProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtComisionProducto.TabIndex = 30;
+            // 
+            // LogisticaTxtPrecioCostoProducto
+            // 
+            this.LogisticaTxtPrecioCostoProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtPrecioCostoProducto.Location = new System.Drawing.Point(729, 37);
+            this.LogisticaTxtPrecioCostoProducto.Name = "LogisticaTxtPrecioCostoProducto";
+            this.LogisticaTxtPrecioCostoProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtPrecioCostoProducto.TabIndex = 29;
+            // 
+            // LogisticaTxtPesoProducto
+            // 
+            this.LogisticaTxtPesoProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtPesoProducto.Location = new System.Drawing.Point(417, 195);
+            this.LogisticaTxtPesoProducto.Name = "LogisticaTxtPesoProducto";
+            this.LogisticaTxtPesoProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtPesoProducto.TabIndex = 28;
+            // 
+            // LogisticaTxtStockMaximoProducto
+            // 
+            this.LogisticaTxtStockMaximoProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtStockMaximoProducto.Location = new System.Drawing.Point(729, 158);
+            this.LogisticaTxtStockMaximoProducto.Name = "LogisticaTxtStockMaximoProducto";
+            this.LogisticaTxtStockMaximoProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtStockMaximoProducto.TabIndex = 27;
+            // 
+            // LogisticaTxtStockMinimoProducto
+            // 
+            this.LogisticaTxtStockMinimoProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtStockMinimoProducto.Location = new System.Drawing.Point(730, 114);
+            this.LogisticaTxtStockMinimoProducto.Name = "LogisticaTxtStockMinimoProducto";
+            this.LogisticaTxtStockMinimoProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtStockMinimoProducto.TabIndex = 26;
+            // 
+            // LogisticaTxtPrecioVentaProducto
+            // 
+            this.LogisticaTxtPrecioVentaProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtPrecioVentaProducto.Location = new System.Drawing.Point(730, 76);
+            this.LogisticaTxtPrecioVentaProducto.Name = "LogisticaTxtPrecioVentaProducto";
+            this.LogisticaTxtPrecioVentaProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtPrecioVentaProducto.TabIndex = 25;
+            // 
+            // LogisticaTxtCategoriaProducto
+            // 
+            this.LogisticaTxtCategoriaProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtCategoriaProducto.Location = new System.Drawing.Point(417, 37);
+            this.LogisticaTxtCategoriaProducto.Name = "LogisticaTxtCategoriaProducto";
+            this.LogisticaTxtCategoriaProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtCategoriaProducto.TabIndex = 24;
+            // 
+            // LogisticaTxtDescripcionProducto
+            // 
+            this.LogisticaTxtDescripcionProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtDescripcionProducto.Location = new System.Drawing.Point(122, 261);
+            this.LogisticaTxtDescripcionProducto.Multiline = true;
+            this.LogisticaTxtDescripcionProducto.Name = "LogisticaTxtDescripcionProducto";
+            this.LogisticaTxtDescripcionProducto.Size = new System.Drawing.Size(494, 50);
+            this.LogisticaTxtDescripcionProducto.TabIndex = 23;
+            // 
+            // LogisticaTxtPaisProducto
+            // 
+            this.LogisticaTxtPaisProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtPaisProducto.Location = new System.Drawing.Point(134, 192);
+            this.LogisticaTxtPaisProducto.Name = "LogisticaTxtPaisProducto";
+            this.LogisticaTxtPaisProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtPaisProducto.TabIndex = 22;
+            // 
+            // LogisticaTxtClasificacionProducto
+            // 
+            this.LogisticaTxtClasificacionProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtClasificacionProducto.Location = new System.Drawing.Point(134, 153);
+            this.LogisticaTxtClasificacionProducto.Name = "LogisticaTxtClasificacionProducto";
+            this.LogisticaTxtClasificacionProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtClasificacionProducto.TabIndex = 21;
+            // 
+            // LogisticaTxtNombreProducto
+            // 
+            this.LogisticaTxtNombreProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtNombreProducto.Location = new System.Drawing.Point(134, 114);
+            this.LogisticaTxtNombreProducto.Name = "LogisticaTxtNombreProducto";
+            this.LogisticaTxtNombreProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtNombreProducto.TabIndex = 20;
+            // 
+            // LogisticaTxtSKUProducto
+            // 
+            this.LogisticaTxtSKUProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtSKUProducto.Location = new System.Drawing.Point(134, 75);
+            this.LogisticaTxtSKUProducto.Name = "LogisticaTxtSKUProducto";
+            this.LogisticaTxtSKUProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtSKUProducto.TabIndex = 19;
+            // 
+            // LogisticaTxtIdProducto
+            // 
+            this.LogisticaTxtIdProducto.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaTxtIdProducto.Location = new System.Drawing.Point(134, 37);
+            this.LogisticaTxtIdProducto.Name = "LogisticaTxtIdProducto";
+            this.LogisticaTxtIdProducto.Size = new System.Drawing.Size(136, 33);
+            this.LogisticaTxtIdProducto.TabIndex = 18;
+            // 
+            // LogisticaPbImagenProducto
+            // 
+            this.LogisticaPbImagenProducto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LogisticaPbImagenProducto.Location = new System.Drawing.Point(899, 68);
+            this.LogisticaPbImagenProducto.Name = "LogisticaPbImagenProducto";
+            this.LogisticaPbImagenProducto.Size = new System.Drawing.Size(121, 136);
+            this.LogisticaPbImagenProducto.TabIndex = 17;
+            this.LogisticaPbImagenProducto.TabStop = false;
+            // 
+            // LogisticaPnlPesoProducto
+            // 
+            this.LogisticaPnlPesoProducto.AutoSize = true;
+            this.LogisticaPnlPesoProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaPnlPesoProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaPnlPesoProducto.Location = new System.Drawing.Point(313, 207);
+            this.LogisticaPnlPesoProducto.Name = "LogisticaPnlPesoProducto";
+            this.LogisticaPnlPesoProducto.Size = new System.Drawing.Size(51, 21);
+            this.LogisticaPnlPesoProducto.TabIndex = 16;
+            this.LogisticaPnlPesoProducto.Text = "Peso:";
+            // 
+            // LogisticaLblStockMaximoProducto
+            // 
+            this.LogisticaLblStockMaximoProducto.AutoSize = true;
+            this.LogisticaLblStockMaximoProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblStockMaximoProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblStockMaximoProducto.Location = new System.Drawing.Point(592, 170);
+            this.LogisticaLblStockMaximoProducto.Name = "LogisticaLblStockMaximoProducto";
+            this.LogisticaLblStockMaximoProducto.Size = new System.Drawing.Size(118, 21);
+            this.LogisticaLblStockMaximoProducto.TabIndex = 15;
+            this.LogisticaLblStockMaximoProducto.Text = "Stock Maximo:";
+            // 
+            // LogisticaLblStockMinimoProducto
+            // 
+            this.LogisticaLblStockMinimoProducto.AutoSize = true;
+            this.LogisticaLblStockMinimoProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblStockMinimoProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblStockMinimoProducto.Location = new System.Drawing.Point(592, 127);
+            this.LogisticaLblStockMinimoProducto.Name = "LogisticaLblStockMinimoProducto";
+            this.LogisticaLblStockMinimoProducto.Size = new System.Drawing.Size(114, 21);
+            this.LogisticaLblStockMinimoProducto.TabIndex = 14;
+            this.LogisticaLblStockMinimoProducto.Text = "Stock Minimo:";
+            // 
+            // LogisticaLblPorcentajeComisionProducto
+            // 
+            this.LogisticaLblPorcentajeComisionProducto.AutoSize = true;
+            this.LogisticaLblPorcentajeComisionProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblPorcentajeComisionProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblPorcentajeComisionProducto.Location = new System.Drawing.Point(592, 207);
+            this.LogisticaLblPorcentajeComisionProducto.Name = "LogisticaLblPorcentajeComisionProducto";
+            this.LogisticaLblPorcentajeComisionProducto.Size = new System.Drawing.Size(83, 21);
+            this.LogisticaLblPorcentajeComisionProducto.TabIndex = 13;
+            this.LogisticaLblPorcentajeComisionProducto.Text = "Comision:";
+            // 
+            // LogisticaLblPrecioVentaProducto
+            // 
+            this.LogisticaLblPrecioVentaProducto.AutoSize = true;
+            this.LogisticaLblPrecioVentaProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblPrecioVentaProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblPrecioVentaProducto.Location = new System.Drawing.Point(592, 87);
+            this.LogisticaLblPrecioVentaProducto.Name = "LogisticaLblPrecioVentaProducto";
+            this.LogisticaLblPrecioVentaProducto.Size = new System.Drawing.Size(132, 21);
+            this.LogisticaLblPrecioVentaProducto.TabIndex = 12;
+            this.LogisticaLblPrecioVentaProducto.Text = "Precio de Venta:";
+            // 
+            // LogisticaLblPrecioCostoProducto
+            // 
+            this.LogisticaLblPrecioCostoProducto.AutoSize = true;
+            this.LogisticaLblPrecioCostoProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblPrecioCostoProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblPrecioCostoProducto.Location = new System.Drawing.Point(592, 49);
+            this.LogisticaLblPrecioCostoProducto.Name = "LogisticaLblPrecioCostoProducto";
+            this.LogisticaLblPrecioCostoProducto.Size = new System.Drawing.Size(131, 21);
+            this.LogisticaLblPrecioCostoProducto.TabIndex = 11;
+            this.LogisticaLblPrecioCostoProducto.Text = "Precio de Costo:";
+            // 
+            // LogisticaLblPaisProducto
+            // 
+            this.LogisticaLblPaisProducto.AutoSize = true;
+            this.LogisticaLblPaisProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblPaisProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblPaisProducto.Location = new System.Drawing.Point(21, 207);
+            this.LogisticaLblPaisProducto.Name = "LogisticaLblPaisProducto";
+            this.LogisticaLblPaisProducto.Size = new System.Drawing.Size(46, 21);
+            this.LogisticaLblPaisProducto.TabIndex = 10;
+            this.LogisticaLblPaisProducto.Text = "Pais:";
+            // 
+            // LogisticaLblImagenProducto
+            // 
+            this.LogisticaLblImagenProducto.AutoSize = true;
+            this.LogisticaLblImagenProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblImagenProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblImagenProducto.Location = new System.Drawing.Point(895, 44);
+            this.LogisticaLblImagenProducto.Name = "LogisticaLblImagenProducto";
+            this.LogisticaLblImagenProducto.Size = new System.Drawing.Size(72, 21);
+            this.LogisticaLblImagenProducto.TabIndex = 9;
+            this.LogisticaLblImagenProducto.Text = "Imagen:";
+            // 
+            // LogisticaLblDescripcion
+            // 
+            this.LogisticaLblDescripcion.AutoSize = true;
+            this.LogisticaLblDescripcion.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblDescripcion.Location = new System.Drawing.Point(21, 258);
+            this.LogisticaLblDescripcion.Name = "LogisticaLblDescripcion";
+            this.LogisticaLblDescripcion.Size = new System.Drawing.Size(102, 21);
+            this.LogisticaLblDescripcion.TabIndex = 8;
+            this.LogisticaLblDescripcion.Text = "Descripcion:";
+            // 
+            // LogisticaLblLineaProducto
+            // 
+            this.LogisticaLblLineaProducto.AutoSize = true;
+            this.LogisticaLblLineaProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblLineaProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblLineaProducto.Location = new System.Drawing.Point(313, 127);
+            this.LogisticaLblLineaProducto.Name = "LogisticaLblLineaProducto";
+            this.LogisticaLblLineaProducto.Size = new System.Drawing.Size(55, 21);
+            this.LogisticaLblLineaProducto.TabIndex = 7;
+            this.LogisticaLblLineaProducto.Text = "Linea:";
+            // 
+            // LogisticaLblCategoriaProducto
+            // 
+            this.LogisticaLblCategoriaProducto.AutoSize = true;
+            this.LogisticaLblCategoriaProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblCategoriaProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblCategoriaProducto.Location = new System.Drawing.Point(313, 49);
+            this.LogisticaLblCategoriaProducto.Name = "LogisticaLblCategoriaProducto";
+            this.LogisticaLblCategoriaProducto.Size = new System.Drawing.Size(87, 21);
+            this.LogisticaLblCategoriaProducto.TabIndex = 6;
+            this.LogisticaLblCategoriaProducto.Text = "Categoria:";
+            // 
+            // LogisticaLblMarcaProducto
+            // 
+            this.LogisticaLblMarcaProducto.AutoSize = true;
+            this.LogisticaLblMarcaProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblMarcaProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblMarcaProducto.Location = new System.Drawing.Point(313, 87);
+            this.LogisticaLblMarcaProducto.Name = "LogisticaLblMarcaProducto";
+            this.LogisticaLblMarcaProducto.Size = new System.Drawing.Size(61, 21);
+            this.LogisticaLblMarcaProducto.TabIndex = 5;
+            this.LogisticaLblMarcaProducto.Text = "Marca:";
+            // 
+            // LogisticaLblProveedor
+            // 
+            this.LogisticaLblProveedor.AutoSize = true;
+            this.LogisticaLblProveedor.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblProveedor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblProveedor.Location = new System.Drawing.Point(313, 170);
+            this.LogisticaLblProveedor.Name = "LogisticaLblProveedor";
+            this.LogisticaLblProveedor.Size = new System.Drawing.Size(90, 21);
+            this.LogisticaLblProveedor.TabIndex = 4;
+            this.LogisticaLblProveedor.Text = "Proveedor:";
+            // 
+            // LogisticaLblNombreProducto
+            // 
+            this.LogisticaLblNombreProducto.AutoSize = true;
+            this.LogisticaLblNombreProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblNombreProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblNombreProducto.Location = new System.Drawing.Point(21, 127);
+            this.LogisticaLblNombreProducto.Name = "LogisticaLblNombreProducto";
+            this.LogisticaLblNombreProducto.Size = new System.Drawing.Size(74, 21);
+            this.LogisticaLblNombreProducto.TabIndex = 3;
+            this.LogisticaLblNombreProducto.Text = "Nombre:";
+            // 
+            // LogisticaLblClasificacionProducto
+            // 
+            this.LogisticaLblClasificacionProducto.AutoSize = true;
+            this.LogisticaLblClasificacionProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblClasificacionProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblClasificacionProducto.Location = new System.Drawing.Point(21, 170);
+            this.LogisticaLblClasificacionProducto.Name = "LogisticaLblClasificacionProducto";
+            this.LogisticaLblClasificacionProducto.Size = new System.Drawing.Size(107, 21);
+            this.LogisticaLblClasificacionProducto.TabIndex = 2;
+            this.LogisticaLblClasificacionProducto.Text = "Clasificación:";
+            // 
+            // LogisticaLblSKUProducto
+            // 
+            this.LogisticaLblSKUProducto.AutoSize = true;
+            this.LogisticaLblSKUProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblSKUProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblSKUProducto.Location = new System.Drawing.Point(21, 87);
+            this.LogisticaLblSKUProducto.Name = "LogisticaLblSKUProducto";
+            this.LogisticaLblSKUProducto.Size = new System.Drawing.Size(42, 21);
+            this.LogisticaLblSKUProducto.TabIndex = 1;
+            this.LogisticaLblSKUProducto.Text = "Sku:";
+            // 
+            // LogisticaLblIdProducto
+            // 
+            this.LogisticaLblIdProducto.AutoSize = true;
+            this.LogisticaLblIdProducto.Font = new System.Drawing.Font("Tahoma", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblIdProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblIdProducto.Location = new System.Drawing.Point(21, 49);
+            this.LogisticaLblIdProducto.Name = "LogisticaLblIdProducto";
+            this.LogisticaLblIdProducto.Size = new System.Drawing.Size(31, 21);
+            this.LogisticaLblIdProducto.TabIndex = 0;
+            this.LogisticaLblIdProducto.Text = "Id:";
             // 
             // LogisticaLblDescripcionProducto
             // 
@@ -170,324 +635,6 @@ namespace CapaVista_Inventario_Logistica.Formularios
             this.LogisticaLblTituloProducto.Size = new System.Drawing.Size(145, 32);
             this.LogisticaLblTituloProducto.TabIndex = 0;
             this.LogisticaLblTituloProducto.Text = "Producto";
-            // 
-            // LogisticaPnlDatosProducto
-            // 
-            this.LogisticaPnlDatosProducto.Controls.Add(this.comboBox3);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.comboBox2);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.comboBox1);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox13);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox12);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox11);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox10);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox9);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox8);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox7);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox6);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox5);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox4);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox3);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox2);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.textBox1);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaPbImagenProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaPnlPesoProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblStockMaximoProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblStockMinimoProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblPorcentajeComisionProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblPrecioVentaProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblPrecioCostoProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblPaisProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblImagenProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblDescripcion);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblLineaProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblCategoriaProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblMarcaProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblProveedor);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblNombreProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblClasificacionProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblSKUProducto);
-            this.LogisticaPnlDatosProducto.Controls.Add(this.LogisticaLblIdProducto);
-            this.LogisticaPnlDatosProducto.Location = new System.Drawing.Point(37, 123);
-            this.LogisticaPnlDatosProducto.Name = "LogisticaPnlDatosProducto";
-            this.LogisticaPnlDatosProducto.Size = new System.Drawing.Size(1078, 349);
-            this.LogisticaPnlDatosProducto.TabIndex = 6;
-            // 
-            // LogisticaLblIdProducto
-            // 
-            this.LogisticaLblIdProducto.AutoSize = true;
-            this.LogisticaLblIdProducto.Location = new System.Drawing.Point(32, 52);
-            this.LogisticaLblIdProducto.Name = "LogisticaLblIdProducto";
-            this.LogisticaLblIdProducto.Size = new System.Drawing.Size(20, 13);
-            this.LogisticaLblIdProducto.TabIndex = 0;
-            this.LogisticaLblIdProducto.Text = "Id:";
-            // 
-            // LogisticaLblSKUProducto
-            // 
-            this.LogisticaLblSKUProducto.AutoSize = true;
-            this.LogisticaLblSKUProducto.Location = new System.Drawing.Point(32, 90);
-            this.LogisticaLblSKUProducto.Name = "LogisticaLblSKUProducto";
-            this.LogisticaLblSKUProducto.Size = new System.Drawing.Size(29, 13);
-            this.LogisticaLblSKUProducto.TabIndex = 1;
-            this.LogisticaLblSKUProducto.Text = "Sku:";
-            // 
-            // LogisticaLblClasificacionProducto
-            // 
-            this.LogisticaLblClasificacionProducto.AutoSize = true;
-            this.LogisticaLblClasificacionProducto.Location = new System.Drawing.Point(32, 173);
-            this.LogisticaLblClasificacionProducto.Name = "LogisticaLblClasificacionProducto";
-            this.LogisticaLblClasificacionProducto.Size = new System.Drawing.Size(74, 13);
-            this.LogisticaLblClasificacionProducto.TabIndex = 2;
-            this.LogisticaLblClasificacionProducto.Text = "Clasificación:";
-            // 
-            // LogisticaLblNombreProducto
-            // 
-            this.LogisticaLblNombreProducto.AutoSize = true;
-            this.LogisticaLblNombreProducto.Location = new System.Drawing.Point(32, 130);
-            this.LogisticaLblNombreProducto.Name = "LogisticaLblNombreProducto";
-            this.LogisticaLblNombreProducto.Size = new System.Drawing.Size(51, 13);
-            this.LogisticaLblNombreProducto.TabIndex = 3;
-            this.LogisticaLblNombreProducto.Text = "Nombre:";
-            // 
-            // LogisticaLblProveedor
-            // 
-            this.LogisticaLblProveedor.AutoSize = true;
-            this.LogisticaLblProveedor.Location = new System.Drawing.Point(291, 173);
-            this.LogisticaLblProveedor.Name = "LogisticaLblProveedor";
-            this.LogisticaLblProveedor.Size = new System.Drawing.Size(62, 13);
-            this.LogisticaLblProveedor.TabIndex = 4;
-            this.LogisticaLblProveedor.Text = "Proveedor:";
-            // 
-            // LogisticaLblMarcaProducto
-            // 
-            this.LogisticaLblMarcaProducto.AutoSize = true;
-            this.LogisticaLblMarcaProducto.Location = new System.Drawing.Point(291, 90);
-            this.LogisticaLblMarcaProducto.Name = "LogisticaLblMarcaProducto";
-            this.LogisticaLblMarcaProducto.Size = new System.Drawing.Size(41, 13);
-            this.LogisticaLblMarcaProducto.TabIndex = 5;
-            this.LogisticaLblMarcaProducto.Text = "Marca:";
-            // 
-            // LogisticaLblCategoriaProducto
-            // 
-            this.LogisticaLblCategoriaProducto.AutoSize = true;
-            this.LogisticaLblCategoriaProducto.Location = new System.Drawing.Point(291, 52);
-            this.LogisticaLblCategoriaProducto.Name = "LogisticaLblCategoriaProducto";
-            this.LogisticaLblCategoriaProducto.Size = new System.Drawing.Size(60, 13);
-            this.LogisticaLblCategoriaProducto.TabIndex = 6;
-            this.LogisticaLblCategoriaProducto.Text = "Categoria:";
-            // 
-            // LogisticaLblLineaProducto
-            // 
-            this.LogisticaLblLineaProducto.AutoSize = true;
-            this.LogisticaLblLineaProducto.Location = new System.Drawing.Point(291, 130);
-            this.LogisticaLblLineaProducto.Name = "LogisticaLblLineaProducto";
-            this.LogisticaLblLineaProducto.Size = new System.Drawing.Size(37, 13);
-            this.LogisticaLblLineaProducto.TabIndex = 7;
-            this.LogisticaLblLineaProducto.Text = "Linea:";
-            // 
-            // LogisticaLblDescripcion
-            // 
-            this.LogisticaLblDescripcion.AutoSize = true;
-            this.LogisticaLblDescripcion.Location = new System.Drawing.Point(32, 275);
-            this.LogisticaLblDescripcion.Name = "LogisticaLblDescripcion";
-            this.LogisticaLblDescripcion.Size = new System.Drawing.Size(70, 13);
-            this.LogisticaLblDescripcion.TabIndex = 8;
-            this.LogisticaLblDescripcion.Text = "Descripcion:";
-            // 
-            // LogisticaLblImagenProducto
-            // 
-            this.LogisticaLblImagenProducto.AutoSize = true;
-            this.LogisticaLblImagenProducto.Location = new System.Drawing.Point(894, 189);
-            this.LogisticaLblImagenProducto.Name = "LogisticaLblImagenProducto";
-            this.LogisticaLblImagenProducto.Size = new System.Drawing.Size(48, 13);
-            this.LogisticaLblImagenProducto.TabIndex = 9;
-            this.LogisticaLblImagenProducto.Text = "Imagen:";
-            // 
-            // LogisticaLblPaisProducto
-            // 
-            this.LogisticaLblPaisProducto.AutoSize = true;
-            this.LogisticaLblPaisProducto.Location = new System.Drawing.Point(32, 210);
-            this.LogisticaLblPaisProducto.Name = "LogisticaLblPaisProducto";
-            this.LogisticaLblPaisProducto.Size = new System.Drawing.Size(30, 13);
-            this.LogisticaLblPaisProducto.TabIndex = 10;
-            this.LogisticaLblPaisProducto.Text = "Pais:";
-            // 
-            // LogisticaLblPrecioCostoProducto
-            // 
-            this.LogisticaLblPrecioCostoProducto.AutoSize = true;
-            this.LogisticaLblPrecioCostoProducto.Location = new System.Drawing.Point(575, 52);
-            this.LogisticaLblPrecioCostoProducto.Name = "LogisticaLblPrecioCostoProducto";
-            this.LogisticaLblPrecioCostoProducto.Size = new System.Drawing.Size(90, 13);
-            this.LogisticaLblPrecioCostoProducto.TabIndex = 11;
-            this.LogisticaLblPrecioCostoProducto.Text = "Precio de Costo:";
-            // 
-            // LogisticaLblPrecioVentaProducto
-            // 
-            this.LogisticaLblPrecioVentaProducto.AutoSize = true;
-            this.LogisticaLblPrecioVentaProducto.Location = new System.Drawing.Point(575, 90);
-            this.LogisticaLblPrecioVentaProducto.Name = "LogisticaLblPrecioVentaProducto";
-            this.LogisticaLblPrecioVentaProducto.Size = new System.Drawing.Size(89, 13);
-            this.LogisticaLblPrecioVentaProducto.TabIndex = 12;
-            this.LogisticaLblPrecioVentaProducto.Text = "Precio de Venta:";
-            // 
-            // LogisticaLblPorcentajeComisionProducto
-            // 
-            this.LogisticaLblPorcentajeComisionProducto.AutoSize = true;
-            this.LogisticaLblPorcentajeComisionProducto.Location = new System.Drawing.Point(575, 210);
-            this.LogisticaLblPorcentajeComisionProducto.Name = "LogisticaLblPorcentajeComisionProducto";
-            this.LogisticaLblPorcentajeComisionProducto.Size = new System.Drawing.Size(58, 13);
-            this.LogisticaLblPorcentajeComisionProducto.TabIndex = 13;
-            this.LogisticaLblPorcentajeComisionProducto.Text = "Comision:";
-            // 
-            // LogisticaLblStockMinimoProducto
-            // 
-            this.LogisticaLblStockMinimoProducto.AutoSize = true;
-            this.LogisticaLblStockMinimoProducto.Location = new System.Drawing.Point(575, 130);
-            this.LogisticaLblStockMinimoProducto.Name = "LogisticaLblStockMinimoProducto";
-            this.LogisticaLblStockMinimoProducto.Size = new System.Drawing.Size(80, 13);
-            this.LogisticaLblStockMinimoProducto.TabIndex = 14;
-            this.LogisticaLblStockMinimoProducto.Text = "Stock Minimo:";
-            // 
-            // LogisticaLblStockMaximoProducto
-            // 
-            this.LogisticaLblStockMaximoProducto.AutoSize = true;
-            this.LogisticaLblStockMaximoProducto.Location = new System.Drawing.Point(575, 173);
-            this.LogisticaLblStockMaximoProducto.Name = "LogisticaLblStockMaximoProducto";
-            this.LogisticaLblStockMaximoProducto.Size = new System.Drawing.Size(81, 13);
-            this.LogisticaLblStockMaximoProducto.TabIndex = 15;
-            this.LogisticaLblStockMaximoProducto.Text = "Stock Maximo:";
-            // 
-            // LogisticaPnlPesoProducto
-            // 
-            this.LogisticaPnlPesoProducto.AutoSize = true;
-            this.LogisticaPnlPesoProducto.Location = new System.Drawing.Point(291, 210);
-            this.LogisticaPnlPesoProducto.Name = "LogisticaPnlPesoProducto";
-            this.LogisticaPnlPesoProducto.Size = new System.Drawing.Size(34, 13);
-            this.LogisticaPnlPesoProducto.TabIndex = 16;
-            this.LogisticaPnlPesoProducto.Text = "Peso:";
-            // 
-            // LogisticaPbImagenProducto
-            // 
-            this.LogisticaPbImagenProducto.Location = new System.Drawing.Point(897, 38);
-            this.LogisticaPbImagenProducto.Name = "LogisticaPbImagenProducto";
-            this.LogisticaPbImagenProducto.Size = new System.Drawing.Size(121, 136);
-            this.LogisticaPbImagenProducto.TabIndex = 17;
-            this.LogisticaPbImagenProducto.TabStop = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(122, 43);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(136, 22);
-            this.textBox1.TabIndex = 18;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(122, 81);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(136, 22);
-            this.textBox2.TabIndex = 19;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(122, 121);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(136, 22);
-            this.textBox3.TabIndex = 20;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(122, 164);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(136, 22);
-            this.textBox4.TabIndex = 21;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(122, 201);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(136, 22);
-            this.textBox5.TabIndex = 22;
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(122, 266);
-            this.textBox6.Multiline = true;
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(409, 60);
-            this.textBox6.TabIndex = 23;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(384, 43);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(136, 22);
-            this.textBox7.TabIndex = 24;
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(691, 81);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(136, 22);
-            this.textBox8.TabIndex = 25;
-            // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(691, 121);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(136, 22);
-            this.textBox9.TabIndex = 26;
-            // 
-            // textBox11
-            // 
-            this.textBox11.Location = new System.Drawing.Point(384, 210);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(136, 22);
-            this.textBox11.TabIndex = 28;
-            // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(691, 164);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(136, 22);
-            this.textBox10.TabIndex = 27;
-            // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(691, 38);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(136, 22);
-            this.textBox12.TabIndex = 29;
-            // 
-            // textBox13
-            // 
-            this.textBox13.Location = new System.Drawing.Point(691, 207);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(136, 22);
-            this.textBox13.TabIndex = 30;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(384, 82);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(136, 21);
-            this.comboBox1.TabIndex = 31;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(384, 127);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(136, 21);
-            this.comboBox2.TabIndex = 32;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(384, 173);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(136, 21);
-            this.comboBox3.TabIndex = 33;
             // 
             // FrmMantenimientoProducto
             // 
@@ -521,15 +668,6 @@ namespace CapaVista_Inventario_Logistica.Formularios
 
         private System.Windows.Forms.Label
             LogisticaLblTituloProducto;
-
-        private System.Windows.Forms.Button
-            LogisticaBtnLinea;
-
-        private System.Windows.Forms.Button
-            LogisticaBtnMarca;
-
-        private System.Windows.Forms.Button
-            LogisticaBtnCategoria;
         private System.Windows.Forms.Panel LogisticaPnlDatosProducto;
         private System.Windows.Forms.Label LogisticaLblIdProducto;
         private System.Windows.Forms.Label LogisticaLblPrecioCostoProducto;
@@ -549,21 +687,30 @@ namespace CapaVista_Inventario_Logistica.Formularios
         private System.Windows.Forms.Label LogisticaLblPrecioVentaProducto;
         private System.Windows.Forms.Label LogisticaPnlPesoProducto;
         private System.Windows.Forms.PictureBox LogisticaPbImagenProducto;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox13;
-        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox LogisticaTxtPesoProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtStockMaximoProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtStockMinimoProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtPrecioVentaProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtCategoriaProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtDescripcionProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtPaisProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtClasificacionProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtNombreProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtSKUProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtIdProducto;
+        private System.Windows.Forms.ComboBox LogisticaCboProveedor;
+        private System.Windows.Forms.ComboBox LogisticaCboLinea;
+        private System.Windows.Forms.ComboBox LogisticaCboMarca;
+        private System.Windows.Forms.TextBox LogisticaTxtComisionProducto;
+        private System.Windows.Forms.TextBox LogisticaTxtPrecioCostoProducto;
+        private System.Windows.Forms.Button LogisticaBtnSeleccionarImagen;
+        private System.Windows.Forms.Button LogisticaBtnEliminarProducto;
+        private System.Windows.Forms.Button LogisticaBtnImprimirProducto;
+        private System.Windows.Forms.Button LogisticaBtnRefrescarProducto;
+        private System.Windows.Forms.Button LogisticaBtnGuardarProducto;
+        private System.Windows.Forms.Button LogisticaBtnModificarProducto;
+        private System.Windows.Forms.Button LogisticaBtnConsultarProducto;
+        private System.Windows.Forms.Button LogisticaBtnIngresarProducto;
+        private System.Windows.Forms.Button LogisticaBtnAyudaProducto;
     }
 }
