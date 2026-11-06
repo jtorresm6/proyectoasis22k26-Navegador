@@ -134,9 +134,7 @@
     <Compile Include="FrmMantenimientoAplicacionNavegador.Designer.cs">
       <DependentUpon>FrmMantenimientoAplicacionNavegador.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmMantenimientoEmpleado.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FrmMantenimientoEmpleado.cs" />
     <Compile Include="FrmMantenimientoEmpleado.Designer.cs">
       <DependentUpon>FrmMantenimientoEmpleado.cs</DependentUpon>
     </Compile>

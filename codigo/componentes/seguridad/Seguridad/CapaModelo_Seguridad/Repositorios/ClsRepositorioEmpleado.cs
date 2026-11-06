@@ -34,9 +34,20 @@ namespace CapaModelo_Seguridad.Repositorios
 
         public ClsRepositorioEmpleado()
         {
-            _SelectAll = "SELECT * FROM tblEmpleado";
-            _Insert = "INSERT INTO tblEmpleado VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT)";
-            _Update = "UPDATE tblEmpleado SET codigoEmpleado=?, dpiEmpleado=?, nitEmpleado=?, nombresEmpleado=?, apellidosEmpleado=?, puestoEmpleado=?, generoEmpleado=?, fechaNacimientoEmpleado=?, fechaContratacionEmpleado=?, telefonoEmpleado=?, correoEmpleado=? WHERE idEmpleado=?";
+            _SelectAll = "SELECT idEmpleado, codigoEmpleado, dpiEmpleado, nitEmpleado, nombresEmpleado, apellidosEmpleado, " +
+                         "idDepartamento, idJornada, salarioEmpleado, generoEmpleado, fechaNacimientoEmpleado, " +
+                         "fechaContratacionEmpleado, telefonoEmpleado, correoEmpleado, is_active, created_at, updated_at " +
+                         "FROM tblEmpleado";
+
+            _Insert = "INSERT INTO tblEmpleado (codigoEmpleado, dpiEmpleado, nitEmpleado, nombresEmpleado, apellidosEmpleado, " +
+                      "idDepartamento, idJornada, salarioEmpleado, generoEmpleado, fechaNacimientoEmpleado, " +
+                      "fechaContratacionEmpleado, telefonoEmpleado, correoEmpleado) " +
+                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            _Update = "UPDATE tblEmpleado SET codigoEmpleado=?, dpiEmpleado=?, nitEmpleado=?, nombresEmpleado=?, apellidosEmpleado=?, " +
+                      "idDepartamento=?, idJornada=?, salarioEmpleado=?, generoEmpleado=?, fechaNacimientoEmpleado=?, " +
+                      "fechaContratacionEmpleado=?, telefonoEmpleado=?, correoEmpleado=? WHERE idEmpleado=?";
+
             _Delete = "DELETE FROM tblEmpleado WHERE idEmpleado=?";
         }
 
@@ -45,15 +56,17 @@ namespace CapaModelo_Seguridad.Repositorios
             var Parametros = new List<OdbcParameter>();
             Parametros.Add(new OdbcParameter("p_codigoEmpleado", Entidad.CodigoEmpleado));
             Parametros.Add(new OdbcParameter("p_dpiEmpleado", Entidad.DpiEmpleado));
-            Parametros.Add(new OdbcParameter("p_nitEmpleado", Entidad.NitEmpleado));
+            Parametros.Add(new OdbcParameter("p_nitEmpleado", (object)Entidad.NitEmpleado ?? DBNull.Value));
             Parametros.Add(new OdbcParameter("p_nombresEmpleado", Entidad.NombresEmpleado));
             Parametros.Add(new OdbcParameter("p_apellidosEmpleado", Entidad.ApellidosEmpleado));
-            Parametros.Add(new OdbcParameter("p_puestoEmpleado", Entidad.PuestoEmpleado));
+            Parametros.Add(new OdbcParameter("p_idDepartamento", Entidad.IdDepartamento));
+            Parametros.Add(new OdbcParameter("p_idJornada", Entidad.IdJornada));
+            Parametros.Add(new OdbcParameter("p_salarioEmpleado", Entidad.SalarioEmpleado));
             Parametros.Add(new OdbcParameter("p_generoEmpleado", Entidad.GeneroEmpleado));
             Parametros.Add(new OdbcParameter("p_fechaNacimientoEmpleado", Entidad.FechaNacimientoEmpleado));
             Parametros.Add(new OdbcParameter("p_fechaContratacionEmpleado", Entidad.FechaContratacionEmpleado));
-            Parametros.Add(new OdbcParameter("p_telefonoEmpleado", Entidad.TelefonoEmpleado));
-            Parametros.Add(new OdbcParameter("p_correoEmpleado", Entidad.CorreoEmpleado));
+            Parametros.Add(new OdbcParameter("p_telefonoEmpleado", (object)Entidad.TelefonoEmpleado ?? DBNull.Value));
+            Parametros.Add(new OdbcParameter("p_correoEmpleado", (object)Entidad.CorreoEmpleado ?? DBNull.Value));
 
             return SeguridadMetEjecucionNonQuery(_Insert, Parametros, CommandType.Text);
         }
@@ -63,15 +76,17 @@ namespace CapaModelo_Seguridad.Repositorios
             var Parametros = new List<OdbcParameter>();
             Parametros.Add(new OdbcParameter("p_codigoEmpleado", Entidad.CodigoEmpleado));
             Parametros.Add(new OdbcParameter("p_dpiEmpleado", Entidad.DpiEmpleado));
-            Parametros.Add(new OdbcParameter("p_nitEmpleado", Entidad.NitEmpleado));
+            Parametros.Add(new OdbcParameter("p_nitEmpleado", (object)Entidad.NitEmpleado ?? DBNull.Value));
             Parametros.Add(new OdbcParameter("p_nombresEmpleado", Entidad.NombresEmpleado));
             Parametros.Add(new OdbcParameter("p_apellidosEmpleado", Entidad.ApellidosEmpleado));
-            Parametros.Add(new OdbcParameter("p_puestoEmpleado", Entidad.PuestoEmpleado));
+            Parametros.Add(new OdbcParameter("p_idDepartamento", Entidad.IdDepartamento));
+            Parametros.Add(new OdbcParameter("p_idJornada", Entidad.IdJornada));
+            Parametros.Add(new OdbcParameter("p_salarioEmpleado", Entidad.SalarioEmpleado));
             Parametros.Add(new OdbcParameter("p_generoEmpleado", Entidad.GeneroEmpleado));
             Parametros.Add(new OdbcParameter("p_fechaNacimientoEmpleado", Entidad.FechaNacimientoEmpleado));
             Parametros.Add(new OdbcParameter("p_fechaContratacionEmpleado", Entidad.FechaContratacionEmpleado));
-            Parametros.Add(new OdbcParameter("p_telefonoEmpleado", Entidad.TelefonoEmpleado));
-            Parametros.Add(new OdbcParameter("p_correoEmpleado", Entidad.CorreoEmpleado));
+            Parametros.Add(new OdbcParameter("p_telefonoEmpleado", (object)Entidad.TelefonoEmpleado ?? DBNull.Value));
+            Parametros.Add(new OdbcParameter("p_correoEmpleado", (object)Entidad.CorreoEmpleado ?? DBNull.Value));
             Parametros.Add(new OdbcParameter("p_idEmpleado", Entidad.IdEmpleado));
 
             return SeguridadMetEjecucionNonQuery(_Update, Parametros, CommandType.Text);
@@ -98,15 +113,17 @@ namespace CapaModelo_Seguridad.Repositorios
                 Empleado.NitEmpleado = Fila[3] == DBNull.Value ? null : Fila[3].ToString();
                 Empleado.NombresEmpleado = Fila[4].ToString();
                 Empleado.ApellidosEmpleado = Fila[5].ToString();
-                Empleado.PuestoEmpleado = Fila[6].ToString();
-                Empleado.GeneroEmpleado = Fila[7].ToString();
-                Empleado.FechaNacimientoEmpleado = Convert.ToDateTime(Fila[8]);
-                Empleado.FechaContratacionEmpleado = Convert.ToDateTime(Fila[9]);
-                Empleado.TelefonoEmpleado = Fila[10] == DBNull.Value ? null : Fila[10].ToString();
-                Empleado.CorreoEmpleado = Fila[11] == DBNull.Value ? null : Fila[11].ToString();
-                Empleado.IsActive = Convert.ToBoolean(Fila[12]);
-                Empleado.CreatedAt = Convert.ToDateTime(Fila[13]);
-                Empleado.UpdatedAt = Convert.ToDateTime(Fila[14]);
+                Empleado.IdDepartamento = Convert.ToInt32(Fila[6]);
+                Empleado.IdJornada = Convert.ToInt32(Fila[7]);
+                Empleado.SalarioEmpleado = Convert.ToDecimal(Fila[8]);
+                Empleado.GeneroEmpleado = Fila[9].ToString();
+                Empleado.FechaNacimientoEmpleado = Convert.ToDateTime(Fila[10]);
+                Empleado.FechaContratacionEmpleado = Convert.ToDateTime(Fila[11]);
+                Empleado.TelefonoEmpleado = Fila[12] == DBNull.Value ? null : Fila[12].ToString();
+                Empleado.CorreoEmpleado = Fila[13] == DBNull.Value ? null : Fila[13].ToString();
+                Empleado.IsActive = Convert.ToBoolean(Fila[14]);
+                Empleado.CreatedAt = Convert.ToDateTime(Fila[15]);
+                Empleado.UpdatedAt = Convert.ToDateTime(Fila[16]);
                 ListaEmpleados.Add(Empleado);
             }
             TablaDatos.Clear();
