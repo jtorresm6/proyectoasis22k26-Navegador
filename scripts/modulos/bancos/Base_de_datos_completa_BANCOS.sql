@@ -446,7 +446,8 @@ DROP TABLE IF EXISTS tblMoneda;
 SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE tblMoneda (
-    Pk_Moneda BIGINT NOT NULL AUTO_INCREMENT,
+    -- Identificador oficial de Banguat; se carga desde la API, no se autonumera.
+    Pk_Moneda BIGINT NOT NULL,
     codigoMoneda CHAR(3) NOT NULL,
     nombreMoneda VARCHAR(255) NOT NULL,
     simboloMoneda VARCHAR(8) NOT NULL,
@@ -517,18 +518,11 @@ CREATE TABLE tblCuentaBancaria (
 
 USE dbsistemaembutidos;
 
--- Monedas
-INSERT INTO tblMoneda (
-    codigoMoneda,
-    nombreMoneda,
-    simboloMoneda
-) VALUES
-('GTQ', 'Quetzal guatemalteco', 'Q'),
-('USD', 'Dólar estadounidense', 'US$'),
-('EUR', 'Euro', '€'),
-('MXN', 'Peso mexicano', 'MX$'),
-('GBP', 'Libra esterlina', '£'),
-('CAD', 'Dólar canadiense', 'C$');
+-- Monedas: el catálogo se obtiene de VariablesDisponibles de Banguat desde
+-- la aplicación 8001. No se insertan monedas de demostración ni IDs locales.
+-- Después de crear la estructura, utiliza «Sincronizar con Banguat».
+-- En una base existente, utiliza la sincronización que migra las referencias
+-- por código de moneda; no ejecutes nuevamente los DROP de este script.
 
 -- Bancos
 INSERT INTO tblBanco (
@@ -570,22 +564,6 @@ SET @bancoBAC = (
     WHERE codigoBanco = 'BAC'
 );
 
--- Obtener los IDs de las monedas
-SET @monedaGTQ = (
-    SELECT Pk_Moneda FROM tblMoneda
-    WHERE codigoMoneda = 'GTQ'
-);
-
-SET @monedaUSD = (
-    SELECT Pk_Moneda FROM tblMoneda
-    WHERE codigoMoneda = 'USD'
-);
-
-SET @monedaEUR = (
-    SELECT Pk_Moneda FROM tblMoneda
-    WHERE codigoMoneda = 'EUR'
-);
-
 -- Obtener los IDs de los tipos de cuenta
 SET @tipoMonetaria = (
     SELECT Pk_TipoCuentaBancaria FROM tblTipoCuentaBancaria
@@ -602,7 +580,13 @@ SET @tipoPlazoFijo = (
     WHERE codigoTipoCuentaBancaria = 'PLAZO_FIJO'
 );
 
--- Cuentas bancarias
+-- Cuentas bancarias de ejemplo (opcionales).
+-- En una instalacion nueva, tblMoneda queda vacia hasta sincronizar la API;
+-- por eso esta seccion omite las cuentas cuya moneda todavia no existe.
+-- Si se desean estos ejemplos, despues de sincronizar desde la aplicacion
+-- 8001, reejecutar desde «Obtener los IDs de los bancos» hasta este INSERT.
+-- La moneda siempre se resuelve por codigo; EUR conserva el ID oficial 24.
+-- Las cuentas reales se registran en la aplicacion 8005.
 INSERT INTO tblCuentaBancaria (
     numeroCuentaBancaria,
     nombreCuentaBancaria,
@@ -611,78 +595,34 @@ INSERT INTO tblCuentaBancaria (
     Fk_Banco_Codigo,
     Fk_Moneda_Codigo,
     Fk_TipoCuentaBancaria_Codigo
-) VALUES
-(
-    'PRUEBA-BI-001',
-    'Cuenta operativa principal en quetzales',
-    '1.1.02.001',
-    15000.0000,
-    @bancoBI,
-    @monedaGTQ,
-    @tipoMonetaria
-),
-(
-    'PRUEBA-BI-002',
-    'Cuenta de pagos en dólares',
-    '1.1.02.002',
-    0.0000,
-    @bancoBI,
-    @monedaUSD,
-    @tipoMonetaria
-),
-(
-    'PRUEBA-BANRURAL-001',
-    'Cuenta para pago de nómina',
-    '1.1.02.003',
-    0.0000,
-    @bancoBanrural,
-    @monedaGTQ,
-    @tipoMonetaria
-),
-(
-    'PRUEBA-BANRURAL-002',
-    'Cuenta de ahorro para contingencias',
-    '1.1.02.004',
-    0.0000,
-    @bancoBanrural,
-    @monedaGTQ,
-    @tipoAhorro
-),
-(
-    'PRUEBA-GYT-001',
-    'Cuenta para pago a proveedores',
-    '1.1.02.005',
-    10000.0000,
-    @bancoGYT,
-    @monedaGTQ,
-    @tipoMonetaria
-),
-(
-    'PRUEBA-GYT-002',
-    'Cuenta de operaciones en euros',
-    '1.1.02.006',
-    0.0000,
-    @bancoGYT,
-    @monedaEUR,
-    @tipoMonetaria
-),
-(
-    'PRUEBA-BAC-001',
-    'Cuenta de cobros y operaciones',
-    '1.1.02.007',
-    5000.0000,
-    @bancoBAC,
-    @monedaGTQ,
-    @tipoMonetaria
-),
-(
-    'PRUEBA-BI-003',
-    'Depósito de inversión a plazo fijo',
-    '1.1.02.008',
-    0.0000,
-    @bancoBI,
-    @monedaGTQ,
-    @tipoPlazoFijo
+)
+SELECT cuentas.numero, cuentas.nombre, cuentas.codigoContable, cuentas.limite,
+       cuentas.banco, moneda.Pk_Moneda, cuentas.tipo
+FROM (
+    SELECT 'PRUEBA-BI-001' AS numero,
+           'Cuenta operativa principal en quetzales' AS nombre,
+           '1.1.02.001' AS codigoContable, 15000.0000 AS limite,
+           @bancoBI AS banco, 'GTQ' AS codigoMoneda, @tipoMonetaria AS tipo
+    UNION ALL SELECT 'PRUEBA-BI-002', 'Cuenta de pagos en dólares',
+           '1.1.02.002', 0.0000, @bancoBI, 'USD', @tipoMonetaria
+    UNION ALL SELECT 'PRUEBA-BANRURAL-001', 'Cuenta para pago de nómina',
+           '1.1.02.003', 0.0000, @bancoBanrural, 'GTQ', @tipoMonetaria
+    UNION ALL SELECT 'PRUEBA-BANRURAL-002', 'Cuenta de ahorro para contingencias',
+           '1.1.02.004', 0.0000, @bancoBanrural, 'GTQ', @tipoAhorro
+    UNION ALL SELECT 'PRUEBA-GYT-001', 'Cuenta para pago a proveedores',
+           '1.1.02.005', 10000.0000, @bancoGYT, 'GTQ', @tipoMonetaria
+    UNION ALL SELECT 'PRUEBA-GYT-002', 'Cuenta de operaciones en euros',
+           '1.1.02.006', 0.0000, @bancoGYT, 'EUR', @tipoMonetaria
+    UNION ALL SELECT 'PRUEBA-BAC-001', 'Cuenta de cobros y operaciones',
+           '1.1.02.007', 5000.0000, @bancoBAC, 'GTQ', @tipoMonetaria
+    UNION ALL SELECT 'PRUEBA-BI-003', 'Depósito de inversión a plazo fijo',
+           '1.1.02.008', 0.0000, @bancoBI, 'GTQ', @tipoPlazoFijo
+) AS cuentas
+JOIN tblMoneda AS moneda ON moneda.codigoMoneda = cuentas.codigoMoneda
+WHERE NOT EXISTS (
+    SELECT 1 FROM tblCuentaBancaria AS existente
+    WHERE existente.Fk_Banco_Codigo = cuentas.banco
+      AND existente.numeroCuentaBancaria = cuentas.numero
 );
 
 

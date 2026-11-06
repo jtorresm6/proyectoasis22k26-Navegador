@@ -1,4 +1,4 @@
-namespace CapaVista_TipoCambio.Formularios
+﻿namespace CapaVista_TipoCambio.Formularios
 {
     partial class FrmTipoCambio
     {
@@ -43,7 +43,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblFuente = new System.Windows.Forms.Label();
             this.BancosLblUltimaCarga = new System.Windows.Forms.Label();
             this.BancosBtnActualizarBanguat = new System.Windows.Forms.Button();
-            this.BancosLblModoDemo = new System.Windows.Forms.Label();
+            this.BancosLblEstadoConexion = new System.Windows.Forms.Label();
             this.BancosLblTituloActualizacion = new System.Windows.Forms.Label();
             this.BancosTabControl = new System.Windows.Forms.TabControl();
             this.BancosTabTasasActuales = new System.Windows.Forms.TabPage();
@@ -290,7 +290,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosPnlActualizacion.Controls.Add(this.BancosLblFuente);
             this.BancosPnlActualizacion.Controls.Add(this.BancosLblUltimaCarga);
             this.BancosPnlActualizacion.Controls.Add(this.BancosBtnActualizarBanguat);
-            this.BancosPnlActualizacion.Controls.Add(this.BancosLblModoDemo);
+            this.BancosPnlActualizacion.Controls.Add(this.BancosLblEstadoConexion);
             this.BancosPnlActualizacion.Controls.Add(this.BancosLblTituloActualizacion);
             this.BancosPnlActualizacion.Location = new System.Drawing.Point(764, 102);
             this.BancosPnlActualizacion.Name = "BancosPnlActualizacion";
@@ -306,7 +306,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblFuente.Name = "BancosLblFuente";
             this.BancosLblFuente.Size = new System.Drawing.Size(141, 13);
             this.BancosLblFuente.TabIndex = 4;
-            this.BancosLblFuente.Text = "Fuente:        Demostración";
+            this.BancosLblFuente.Text = "Fuente: Banco de Guatemala";
             // 
             // BancosLblUltimaCarga
             // 
@@ -317,7 +317,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblUltimaCarga.Name = "BancosLblUltimaCarga";
             this.BancosLblUltimaCarga.Size = new System.Drawing.Size(166, 13);
             this.BancosLblUltimaCarga.TabIndex = 3;
-            this.BancosLblUltimaCarga.Text = "Última carga:  13/10/2026 09:30";
+            this.BancosLblUltimaCarga.Text = "Última consulta: pendiente";
             // 
             // BancosBtnActualizarBanguat
             // 
@@ -336,16 +336,16 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosBtnActualizarBanguat.UseVisualStyleBackColor = false;
             this.BancosBtnActualizarBanguat.Click += new System.EventHandler(this.BancosBtnActualizarBanguat_Click);
             // 
-            // BancosLblModoDemo
+            // BancosLblEstadoConexion
             // 
-            this.BancosLblModoDemo.AutoSize = true;
-            this.BancosLblModoDemo.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.BancosLblModoDemo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(100)))), ((int)(((byte)(0)))));
-            this.BancosLblModoDemo.Location = new System.Drawing.Point(14, 34);
-            this.BancosLblModoDemo.Name = "BancosLblModoDemo";
-            this.BancosLblModoDemo.Size = new System.Drawing.Size(131, 15);
-            this.BancosLblModoDemo.TabIndex = 1;
-            this.BancosLblModoDemo.Text = "●  Modo demostración";
+            this.BancosLblEstadoConexion.AutoSize = true;
+            this.BancosLblEstadoConexion.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.BancosLblEstadoConexion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(100)))), ((int)(((byte)(0)))));
+            this.BancosLblEstadoConexion.Location = new System.Drawing.Point(14, 34);
+            this.BancosLblEstadoConexion.Name = "BancosLblEstadoConexion";
+            this.BancosLblEstadoConexion.Size = new System.Drawing.Size(131, 15);
+            this.BancosLblEstadoConexion.TabIndex = 1;
+            this.BancosLblEstadoConexion.Text = "Pendiente de consulta";
             // 
             // BancosLblTituloActualizacion
             // 
@@ -473,7 +473,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblDetalleFechaVal.Name = "BancosLblDetalleFechaVal";
             this.BancosLblDetalleFechaVal.Size = new System.Drawing.Size(163, 12);
             this.BancosLblDetalleFechaVal.TabIndex = 8;
-            this.BancosLblDetalleFechaVal.Text = "13/10/2026  ·  Fuente: Demostración";
+            this.BancosLblDetalleFechaVal.Text = "—";
             // 
             // BancosLblDetalleFechaTit
             // 
@@ -495,7 +495,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblDetalleTasaVal.Name = "BancosLblDetalleTasaVal";
             this.BancosLblDetalleTasaVal.Size = new System.Drawing.Size(121, 13);
             this.BancosLblDetalleTasaVal.TabIndex = 6;
-            this.BancosLblDetalleTasaVal.Text = "1 EUR = 8.421500 GTQ";
+            this.BancosLblDetalleTasaVal.Text = "—";
             // 
             // BancosLblDetalleTasaTit
             // 
@@ -517,7 +517,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblDetalleNomVal.Name = "BancosLblDetalleNomVal";
             this.BancosLblDetalleNomVal.Size = new System.Drawing.Size(31, 13);
             this.BancosLblDetalleNomVal.TabIndex = 4;
-            this.BancosLblDetalleNomVal.Text = "Euro";
+            this.BancosLblDetalleNomVal.Text = "—";
             // 
             // BancosLblDetalleNomTit
             // 
@@ -539,7 +539,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblDetalleCodVal.Name = "BancosLblDetalleCodVal";
             this.BancosLblDetalleCodVal.Size = new System.Drawing.Size(28, 13);
             this.BancosLblDetalleCodVal.TabIndex = 2;
-            this.BancosLblDetalleCodVal.Text = "EUR";
+            this.BancosLblDetalleCodVal.Text = "—";
             // 
             // BancosLblDetalleCodTit
             // 
@@ -572,7 +572,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblTasasRefStatusDer.Name = "BancosLblTasasRefStatusDer";
             this.BancosLblTasasRefStatusDer.Size = new System.Drawing.Size(200, 18);
             this.BancosLblTasasRefStatusDer.TabIndex = 8;
-            this.BancosLblTasasRefStatusDer.Text = "Datos de demostración";
+            this.BancosLblTasasRefStatusDer.Text = "Consulta pendiente";
             this.BancosLblTasasRefStatusDer.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // BancosLblTasasRefStatusIzq
@@ -585,7 +585,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblTasasRefStatusIzq.Name = "BancosLblTasasRefStatusIzq";
             this.BancosLblTasasRefStatusIzq.Size = new System.Drawing.Size(145, 13);
             this.BancosLblTasasRefStatusIzq.TabIndex = 7;
-            this.BancosLblTasasRefStatusIzq.Text = "29 monedas en el catálogo";
+            this.BancosLblTasasRefStatusIzq.Text = "0 registros";
             // 
             // BancosDgvTasasActuales
             // 
@@ -651,7 +651,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblTituloTasasRef.Name = "BancosLblTituloTasasRef";
             this.BancosLblTituloTasasRef.Size = new System.Drawing.Size(125, 17);
             this.BancosLblTituloTasasRef.TabIndex = 4;
-            this.BancosLblTituloTasasRef.Text = "Tasas de referencia";
+            this.BancosLblTituloTasasRef.Text = "Tasas de cambio en GTQ";
             // 
             // BancosPnlKpi3
             // 
@@ -674,7 +674,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblKpi3Valor.Name = "BancosLblKpi3Valor";
             this.BancosLblKpi3Valor.Size = new System.Drawing.Size(108, 25);
             this.BancosLblKpi3Valor.TabIndex = 1;
-            this.BancosLblKpi3Valor.Text = "13/10/2026";
+            this.BancosLblKpi3Valor.Text = "—";
             // 
             // BancosLblKpi3Titulo
             // 
@@ -754,7 +754,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblKpi1Sub.Name = "BancosLblKpi1Sub";
             this.BancosLblKpi1Sub.Size = new System.Drawing.Size(91, 12);
             this.BancosLblKpi1Sub.TabIndex = 2;
-            this.BancosLblKpi1Sub.Text = "Divisas consultables";
+            this.BancosLblKpi1Sub.Text = "Catálogo de Banguat";
             // 
             // BancosLblKpi1Valor
             // 
@@ -765,7 +765,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblKpi1Valor.Name = "BancosLblKpi1Valor";
             this.BancosLblKpi1Valor.Size = new System.Drawing.Size(32, 25);
             this.BancosLblKpi1Valor.TabIndex = 1;
-            this.BancosLblKpi1Valor.Text = "29";
+            this.BancosLblKpi1Valor.Text = "—";
             // 
             // BancosLblKpi1Titulo
             // 
@@ -897,7 +897,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosDtpFechaActuales.Name = "BancosDtpFechaActuales";
             this.BancosDtpFechaActuales.Size = new System.Drawing.Size(130, 23);
             this.BancosDtpFechaActuales.TabIndex = 1;
-            this.BancosDtpFechaActuales.Value = new System.DateTime(2026, 10, 13, 0, 0, 0, 0);
+            this.BancosDtpFechaActuales.Value = System.DateTime.Today;
             // 
             // BancosLblFechaActuales
             // 
@@ -963,7 +963,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblHistStatusDer.Name = "BancosLblHistStatusDer";
             this.BancosLblHistStatusDer.Size = new System.Drawing.Size(200, 18);
             this.BancosLblHistStatusDer.TabIndex = 8;
-            this.BancosLblHistStatusDer.Text = "GTQ por 1 USD";
+            this.BancosLblHistStatusDer.Text = "Consulta pendiente";
             this.BancosLblHistStatusDer.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // BancosLblHistStatusIzq
@@ -976,7 +976,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblHistStatusIzq.Name = "BancosLblHistStatusIzq";
             this.BancosLblHistStatusIzq.Size = new System.Drawing.Size(129, 13);
             this.BancosLblHistStatusIzq.TabIndex = 7;
-            this.BancosLblHistStatusIzq.Text = "5 registros encontrados";
+            this.BancosLblHistStatusIzq.Text = "0 registros";
             // 
             // BancosDgvHistorico
             // 
@@ -1029,7 +1029,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblHistParDer.Name = "BancosLblHistParDer";
             this.BancosLblHistParDer.Size = new System.Drawing.Size(200, 20);
             this.BancosLblHistParDer.TabIndex = 5;
-            this.BancosLblHistParDer.Text = "USD → GTQ";
+            this.BancosLblHistParDer.Text = "—";
             this.BancosLblHistParDer.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // BancosLblHistTituloGrilla
@@ -1076,7 +1076,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblKpiVarValor.Name = "BancosLblKpiVarValor";
             this.BancosLblKpiVarValor.Size = new System.Drawing.Size(100, 25);
             this.BancosLblKpiVarValor.TabIndex = 1;
-            this.BancosLblKpiVarValor.Text = "+0.006000";
+            this.BancosLblKpiVarValor.Text = "—";
             // 
             // BancosLblKpiVarTitulo
             // 
@@ -1122,7 +1122,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblKpiMaxValor.Name = "BancosLblKpiMaxValor";
             this.BancosLblKpiMaxValor.Size = new System.Drawing.Size(87, 25);
             this.BancosLblKpiMaxValor.TabIndex = 1;
-            this.BancosLblKpiMaxValor.Text = "7.753200";
+            this.BancosLblKpiMaxValor.Text = "—";
             // 
             // BancosLblKpiMaxTitulo
             // 
@@ -1167,7 +1167,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblKpiMinValor.Name = "BancosLblKpiMinValor";
             this.BancosLblKpiMinValor.Size = new System.Drawing.Size(87, 25);
             this.BancosLblKpiMinValor.TabIndex = 1;
-            this.BancosLblKpiMinValor.Text = "7.747200";
+            this.BancosLblKpiMinValor.Text = "—";
             // 
             // BancosLblKpiMinTitulo
             // 
@@ -1300,7 +1300,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosDtpHasta.Name = "BancosDtpHasta";
             this.BancosDtpHasta.Size = new System.Drawing.Size(110, 23);
             this.BancosDtpHasta.TabIndex = 3;
-            this.BancosDtpHasta.Value = new System.DateTime(2026, 10, 13, 0, 0, 0, 0);
+            this.BancosDtpHasta.Value = System.DateTime.Today;
             // 
             // BancosLblHasta
             // 
@@ -1322,7 +1322,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosDtpDesde.Name = "BancosDtpDesde";
             this.BancosDtpDesde.Size = new System.Drawing.Size(110, 23);
             this.BancosDtpDesde.TabIndex = 1;
-            this.BancosDtpDesde.Value = new System.DateTime(2026, 10, 9, 0, 0, 0, 0);
+            this.BancosDtpDesde.Value = System.DateTime.Today;
             // 
             // BancosLblDesde
             // 
@@ -1403,7 +1403,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblConvDispVal.Name = "BancosLblConvDispVal";
             this.BancosLblConvDispVal.Size = new System.Drawing.Size(68, 13);
             this.BancosLblConvDispVal.TabIndex = 10;
-            this.BancosLblConvDispVal.Text = "🟢 Con tasa";
+            this.BancosLblConvDispVal.Text = "Pendiente";
             // 
             // BancosLblConvDispTit
             // 
@@ -1425,7 +1425,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblConvFuenteVal.Name = "BancosLblConvFuenteVal";
             this.BancosLblConvFuenteVal.Size = new System.Drawing.Size(78, 13);
             this.BancosLblConvFuenteVal.TabIndex = 8;
-            this.BancosLblConvFuenteVal.Text = "Demostración";
+            this.BancosLblConvFuenteVal.Text = "—";
             // 
             // BancosLblConvFuenteTit
             // 
@@ -1447,7 +1447,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblConvFechaVal.Name = "BancosLblConvFechaVal";
             this.BancosLblConvFechaVal.Size = new System.Drawing.Size(63, 13);
             this.BancosLblConvFechaVal.TabIndex = 6;
-            this.BancosLblConvFechaVal.Text = "13/10/2026";
+            this.BancosLblConvFechaVal.Text = "—";
             // 
             // BancosLblConvFechaTit
             // 
@@ -1469,7 +1469,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblConvParVal.Name = "BancosLblConvParVal";
             this.BancosLblConvParVal.Size = new System.Drawing.Size(65, 13);
             this.BancosLblConvParVal.TabIndex = 4;
-            this.BancosLblConvParVal.Text = "EUR → GTQ";
+            this.BancosLblConvParVal.Text = "—";
             // 
             // BancosLblConvParTit
             // 
@@ -1491,7 +1491,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblConvTasaDetalle.Name = "BancosLblConvTasaDetalle";
             this.BancosLblConvTasaDetalle.Size = new System.Drawing.Size(210, 15);
             this.BancosLblConvTasaDetalle.TabIndex = 2;
-            this.BancosLblConvTasaDetalle.Text = "Tasa aplicada: 1 EUR = 8.421500 GTQ";
+            this.BancosLblConvTasaDetalle.Text = "Tasa pendiente de consulta";
             // 
             // BancosPnlConvDisplay
             // 
@@ -1516,7 +1516,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblConvCalculoDetalle.Name = "BancosLblConvCalculoDetalle";
             this.BancosLblConvCalculoDetalle.Size = new System.Drawing.Size(132, 15);
             this.BancosLblConvCalculoDetalle.TabIndex = 2;
-            this.BancosLblConvCalculoDetalle.Text = "1,000.00 EUR × 8.421500";
+            this.BancosLblConvCalculoDetalle.Text = "Selecciona monedas y fecha";
             // 
             // BancosLblConvResultadoGrande
             // 
@@ -1527,7 +1527,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblConvResultadoGrande.Name = "BancosLblConvResultadoGrande";
             this.BancosLblConvResultadoGrande.Size = new System.Drawing.Size(167, 41);
             this.BancosLblConvResultadoGrande.TabIndex = 1;
-            this.BancosLblConvResultadoGrande.Text = "Q 8,421.50";
+            this.BancosLblConvResultadoGrande.Text = "—";
             // 
             // BancosLblConvDisplayTitulo
             // 
@@ -1600,11 +1600,11 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosLblSubFechaConv.AutoSize = true;
             this.BancosLblSubFechaConv.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.BancosLblSubFechaConv.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(145)))), ((int)(((byte)(135)))));
-            this.BancosLblSubFechaConv.Location = new System.Drawing.Point(14, 408);
+            this.BancosLblSubFechaConv.Location = new System.Drawing.Point(14, 445);
             this.BancosLblSubFechaConv.Name = "BancosLblSubFechaConv";
             this.BancosLblSubFechaConv.Size = new System.Drawing.Size(79, 12);
             this.BancosLblSubFechaConv.TabIndex = 14;
-            this.BancosLblSubFechaConv.Text = "29 divisas + GTQ";
+            this.BancosLblSubFechaConv.Text = "Cotizaciones de la fecha elegida";
             // 
             // BancosDtpFechaConv
             // 
@@ -1615,7 +1615,7 @@ namespace CapaVista_TipoCambio.Formularios
             this.BancosDtpFechaConv.Name = "BancosDtpFechaConv";
             this.BancosDtpFechaConv.Size = new System.Drawing.Size(320, 23);
             this.BancosDtpFechaConv.TabIndex = 13;
-            this.BancosDtpFechaConv.Value = new System.DateTime(2026, 10, 13, 0, 0, 0, 0);
+            this.BancosDtpFechaConv.Value = System.DateTime.Today;
             // 
             // BancosLblFechaConv
             // 
@@ -1893,7 +1893,7 @@ namespace CapaVista_TipoCambio.Formularios
         private System.Windows.Forms.TabPage BancosTabConversor;
         private System.Windows.Forms.Panel BancosPnlActualizacion;
         private System.Windows.Forms.Label BancosLblTituloActualizacion;
-        private System.Windows.Forms.Label BancosLblModoDemo;
+        private System.Windows.Forms.Label BancosLblEstadoConexion;
         private System.Windows.Forms.Button BancosBtnActualizarBanguat;
         private System.Windows.Forms.Label BancosLblUltimaCarga;
         private System.Windows.Forms.Label BancosLblFuente;

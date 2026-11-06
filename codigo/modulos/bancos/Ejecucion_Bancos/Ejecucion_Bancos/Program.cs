@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaVista_Seguridad;
 using CapaVista_Bancos.Formularios;
 using CapaVista_Seguridad;
 
