@@ -1,4 +1,4 @@
-using CapaControlador_ListadoPrecios;
+﻿using CapaControlador_ListadoPrecios;
 using CapaModelo_ListadoPrecios.Entidades;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -190,7 +190,7 @@ namespace TestListadoPrecios
 
             // Assert
             Assert.IsFalse(Resultado);
-            Assert.AreEqual("Una de las filas no contiene un identificador de producto válido.", Mensaje);
+            Assert.AreEqual("Una de las filas no contiene un identificador de producto o tipo de cliente válido.", Mensaje);
         }
 
         [TestMethod]
@@ -201,7 +201,7 @@ namespace TestListadoPrecios
             string Mensaje;
             var Registros = new List<ClsPrecioCliente>
             {
-                new ClsPrecioCliente { IdProducto = 0, PrecioFinal = 50m }
+                new ClsPrecioCliente { IdProducto = 0, IdTipoCliente = 1, PrecioFinal = 50m }
             };
 
             // Act
@@ -209,7 +209,7 @@ namespace TestListadoPrecios
 
             // Assert
             Assert.IsFalse(Resultado);
-            Assert.AreEqual("Una de las filas no contiene un identificador de producto válido.", Mensaje);
+            Assert.AreEqual("Una de las filas no contiene un identificador de producto o tipo de cliente válido.", Mensaje);
         }
 
         [TestMethod]
@@ -220,7 +220,7 @@ namespace TestListadoPrecios
             string Mensaje;
             var Registros = new List<ClsPrecioCliente>
             {
-                new ClsPrecioCliente { IdProducto = 1, PrecioFinal = -1m }
+                new ClsPrecioCliente { IdProducto = 1, IdTipoCliente = 1, PrecioBase = 50m, PrecioFinal = -1m }
             };
 
             // Act
@@ -228,7 +228,7 @@ namespace TestListadoPrecios
 
             // Assert
             Assert.IsFalse(Resultado);
-            Assert.AreEqual("El precio final no puede ser negativo.", Mensaje);
+            Assert.AreEqual("El precio base y el precio final no pueden ser negativos.", Mensaje);
         }
     }
 }

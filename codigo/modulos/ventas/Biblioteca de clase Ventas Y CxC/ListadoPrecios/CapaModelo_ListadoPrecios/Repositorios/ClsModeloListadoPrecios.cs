@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
 using System.Globalization;
+using System.Linq;
 using CapaModelo_ListadoPrecios.Contratos;
 using CapaModelo_ListadoPrecios.Entidades;
 
@@ -15,6 +16,9 @@ namespace CapaModelo_ListadoPrecios
         private static string CadenaConexion { get { return CapaModelo_Ventas.ClsConexion.CadenaConexion; } }
 
         public bool UsaBaseDeDatos { get; private set; }
+
+        // True cuando tblproducto tiene la columna Fk_Proveedor_Codigo (relación con tblproveedor).
+        public bool ProveedorRelacionado { get; private set; }
         public string MensajeEstado { get; private set; }
 
         public ClsModeloListadoPrecios()
@@ -26,70 +30,89 @@ namespace CapaModelo_ListadoPrecios
         {
             var resultado = new List<ClsPrecioCliente>();
 
-            // LEFT JOIN con listas vigentes: si aún no hay listas, se muestra el precio de venta del producto.
-            const string sql = @"
+            // tbltipocliente contiene el nombre y el descuento del cliente.
+            // No se filtra por estadoTipoCliente porque esa columna no existe en la tabla real.
+            // Tampoco se relaciona con tbllistaprecioencabezado: el respaldo no contiene una FK entre ambas tablas.
+            // El proveedor se obtiene de tblproveedor mediante tblproducto.Fk_Proveedor_Codigo
+            // (columna creada con SQL/01_Relacion_Producto_Proveedor.sql). Esa columna NO existe en el
+            // esquema original, por eso se comprueba antes de consultarla: si falta, el listado carga
+            // igual y el proveedor se muestra como "Sin proveedor".
+            const string sqlBase = @"
                 SELECT
-                    COALESCE(l.Pk_ListaPrecioEncabezado, 0) AS IdLista,
-                    CASE WHEN l.Pk_ListaPrecioEncabezado IS NULL
-                         THEN 'Precio de venta'
-                         ELSE CONCAT(l.codigoListaPrecioEncabezado, ' - ', l.nombreListaPrecioEncabezado)
-                    END AS ListaPrecio,
-                    p.idProducto,
-                    p.nombreProducto,
+                    tc.Pk_TipoCliente AS IdTipoCliente,
+                    tc.nombreTipoCliente AS TipoCliente,
+                    tc.porcentajeDescuento AS DescuentoCliente,
+                    p.Pk_Producto AS IdProducto,
+                    p.nombreProducto AS Producto,
                     COALESCE(m.nombreMarca, 'Sin marca') AS Marca,
                     COALESCE(li.nombreLinea, 'Sin línea') AS Linea,
                     COALESCE(c.nombreCategoria, 'Sin categoría') AS Categoria,
-                    'No disponible en BD' AS Proveedor,
+                    {PROVEEDOR}
                     p.precioVentaProducto AS PrecioBase,
-                    COALESCE(d.precioUnitarioListaPrecioDetalle, p.precioVentaProducto) AS PrecioFinal
+                    ROUND(
+                        p.precioVentaProducto *
+                        (1 - (tc.porcentajeDescuento / 100)),
+                        2
+                    ) AS PrecioFinal
                 FROM tblproducto p
-                LEFT JOIN tblmarca m ON m.idMarca = p.fkMarcaIdMarca
-                LEFT JOIN tbllinea li ON li.idLinea = p.fkLineaIdLinea
-                LEFT JOIN tblcategoria c ON c.idCategoria = p.fkCategoriaIdCategoria
-                LEFT JOIN (
-                    SELECT Pk_ListaPrecioEncabezado, codigoListaPrecioEncabezado,
-                           nombreListaPrecioEncabezado
-                    FROM tbllistaprecioencabezado
-                    WHERE activoListaPrecioEncabezado = 1
-                      AND vigenteDesdeListaPrecioEncabezado <= CURDATE()
-                      AND (vigenteHastaListaPrecioEncabezado IS NULL
-                           OR vigenteHastaListaPrecioEncabezado >= CURDATE())
-                ) l ON 1 = 1
-                LEFT JOIN tbllistapreciodetalle d
-                    ON d.Fk_ListaPrecioEncabezado_Codigo = l.Pk_ListaPrecioEncabezado
-                   AND d.Fk_Producto_Codigo = p.idProducto
-                   AND d.activoListaPrecioDetalle = 1
-                WHERE p.estadoProducto = 1
-                ORDER BY ListaPrecio, p.nombreProducto;";
+                CROSS JOIN tbltipocliente tc
+                LEFT JOIN tblmarca m ON m.Pk_Marca = p.Fk_Marca_Codigo
+                LEFT JOIN tbllinea li ON li.Pk_Linea = p.Fk_Linea_Codigo
+                LEFT JOIN tblcategoria c ON c.Pk_Categoria = p.Fk_Categoria_Codigo
+                {JOIN_PROVEEDOR}
+                ORDER BY tc.nombreTipoCliente, p.nombreProducto;";
 
             try
             {
                 using (var conexion = new OdbcConnection(CadenaConexion))
                 {
                     conexion.Open();
+
+                    ProveedorRelacionado = ExisteColumnaProveedorProducto(conexion);
+
+                    string sql = sqlBase
+                        .Replace("{PROVEEDOR}", ProveedorRelacionado
+                            ? "COALESCE(pv.nombreProveedor, 'Sin proveedor') AS Proveedor, COALESCE(pv.idProveedor, 0) AS IdProveedor,"
+                            : "'Sin proveedor' AS Proveedor, 0 AS IdProveedor,")
+                        .Replace("{JOIN_PROVEEDOR}", ProveedorRelacionado
+                            ? "LEFT JOIN tblproveedor pv ON pv.idProveedor = p.Fk_Proveedor_Codigo"
+                            : string.Empty);
+
                     using (var comando = new OdbcCommand(sql, conexion))
                     using (var lector = comando.ExecuteReader())
                     {
                         while (lector.Read())
                         {
-                            decimal precioBase = Convert.ToDecimal(lector["PrecioBase"], CultureInfo.InvariantCulture);
-                            decimal precioFinal = Convert.ToDecimal(lector["PrecioFinal"], CultureInfo.InvariantCulture);
+                            decimal precioBase = Convert.ToDecimal(
+                                lector["PrecioBase"], CultureInfo.InvariantCulture);
+                            decimal precioFinal = Convert.ToDecimal(
+                                lector["PrecioFinal"], CultureInfo.InvariantCulture);
 
                             resultado.Add(new ClsPrecioCliente
                             {
-                                IdListaPrecio = Convert.ToInt32(lector["IdLista"], CultureInfo.InvariantCulture),
-                                IdProducto = Convert.ToInt32(lector["idProducto"], CultureInfo.InvariantCulture),
-                                TipoCliente = Convert.ToString(lector["ListaPrecio"], CultureInfo.InvariantCulture),
-                                Producto = Convert.ToString(lector["nombreProducto"], CultureInfo.InvariantCulture),
-                                Marca = Convert.ToString(lector["Marca"], CultureInfo.InvariantCulture),
-                                Linea = Convert.ToString(lector["Linea"], CultureInfo.InvariantCulture),
-                                Categoria = Convert.ToString(lector["Categoria"], CultureInfo.InvariantCulture),
-                                Proveedor = Convert.ToString(lector["Proveedor"], CultureInfo.InvariantCulture),
+                                IdListaPrecio = 0,
+                                IdTipoCliente = Convert.ToInt32(
+                                    lector["IdTipoCliente"], CultureInfo.InvariantCulture),
+                                IdProducto = Convert.ToInt32(
+                                    lector["IdProducto"], CultureInfo.InvariantCulture),
+                                IdProveedor = Convert.ToInt32(
+                                    lector["IdProveedor"], CultureInfo.InvariantCulture),
+                                TipoCliente = Convert.ToString(
+                                    lector["TipoCliente"], CultureInfo.InvariantCulture),
+                                Producto = Convert.ToString(
+                                    lector["Producto"], CultureInfo.InvariantCulture),
+                                Marca = Convert.ToString(
+                                    lector["Marca"], CultureInfo.InvariantCulture),
+                                Linea = Convert.ToString(
+                                    lector["Linea"], CultureInfo.InvariantCulture),
+                                Categoria = Convert.ToString(
+                                    lector["Categoria"], CultureInfo.InvariantCulture),
+                                Proveedor = Convert.ToString(
+                                    lector["Proveedor"], CultureInfo.InvariantCulture),
                                 PrecioBase = precioBase,
                                 PrecioFinal = precioFinal,
-                                PorcentajeDescuento = precioBase > 0m
-                                    ? Math.Round((precioBase - precioFinal) / precioBase * 100m, 2)
-                                    : 0m
+                                PorcentajeDescuento = Convert.ToDecimal(
+                                    lector["DescuentoCliente"], CultureInfo.InvariantCulture)
                             });
                         }
                     }
@@ -97,8 +120,10 @@ namespace CapaModelo_ListadoPrecios
 
                 UsaBaseDeDatos = true;
                 MensajeEstado = resultado.Count == 0
-                    ? "La conexión funciona, pero no hay productos activos en tblproducto."
-                    : "Datos cargados desde dbsistemaembutidos.";
+                    ? "La conexión funciona, pero no hay productos o tipos de cliente registrados."
+                    : (ProveedorRelacionado
+                        ? "Datos cargados desde tblproducto, tbltipocliente y tblproveedor."
+                        : "Datos cargados desde tblproducto y tbltipocliente. tblproducto aún no tiene la columna Fk_Proveedor_Codigo: ejecute SQL/01_Relacion_Producto_Proveedor.sql para asociar proveedores.");
                 return resultado;
             }
             catch (Exception error)
@@ -109,6 +134,39 @@ namespace CapaModelo_ListadoPrecios
             }
         }
 
+        private static bool ExisteColumnaProveedorProducto(OdbcConnection conexion)
+        {
+            const string sqlColumna = @"
+                SELECT COUNT(*)
+                FROM information_schema.COLUMNS
+                WHERE TABLE_SCHEMA = DATABASE()
+                  AND TABLE_NAME = 'tblproducto'
+                  AND COLUMN_NAME = 'Fk_Proveedor_Codigo';";
+
+            using (var comando = new OdbcCommand(sqlColumna, conexion))
+                return Convert.ToInt32(comando.ExecuteScalar(), CultureInfo.InvariantCulture) > 0;
+        }
+
+        // Obtiene los proveedores activos de tblproveedor para llenar el filtro del formulario.
+        public List<string> VentasFuncObtenerProveedores()
+        {
+            var proveedores = new List<string>();
+            const string sql = "SELECT nombreProveedor FROM tblproveedor WHERE estadoProveedor = 1 ORDER BY nombreProveedor;";
+
+            using (var conexion = new OdbcConnection(CadenaConexion))
+            {
+                conexion.Open();
+                using (var comando = new OdbcCommand(sql, conexion))
+                using (var lector = comando.ExecuteReader())
+                {
+                    while (lector.Read())
+                        proveedores.Add(Convert.ToString(lector[0], CultureInfo.InvariantCulture));
+                }
+            }
+
+            return proveedores;
+        }
+
         public bool VentasFuncGuardar(ClsPrecioCliente registro, out string mensaje)
         {
             var registros = new List<ClsPrecioCliente>();
@@ -116,7 +174,9 @@ namespace CapaModelo_ListadoPrecios
             return VentasFuncGuardarVarios(registros, out mensaje);
         }
 
-        // Guarda el conjunto completo en una sola transacción: todos se aplican o ninguno.
+        // Guarda los cambios según las columnas que realmente existen en la base de datos.
+        // El descuento pertenece al tipo de cliente y afecta a todos sus productos.
+        // Los aumentos modifican precioVentaProducto y, por tanto, afectan a todos los tipos de cliente.
         public bool VentasFuncGuardarVarios(IList<ClsPrecioCliente> registros, out string mensaje)
         {
             if (registros == null || registros.Count == 0)
@@ -127,30 +187,40 @@ namespace CapaModelo_ListadoPrecios
 
             foreach (ClsPrecioCliente registro in registros)
             {
-                if (registro == null || registro.IdProducto <= 0 || registro.PrecioFinal < 0m)
+                if (registro == null || registro.IdProducto <= 0 || registro.IdTipoCliente <= 0)
                 {
-                    mensaje = "Hay un registro sin identificador de producto válido o con precio negativo.";
+                    mensaje = "Hay un registro sin identificador de producto o tipo de cliente válido.";
                     return false;
                 }
-                if (registro.IdListaPrecio < 0)
+                if (registro.PrecioBase < 0m || registro.PrecioFinal < 0m)
                 {
-                    mensaje = "El identificador de lista de precios no es válido.";
+                    mensaje = "El precio base y el precio final no pueden ser negativos.";
+                    return false;
+                }
+                if (registro.PorcentajeDescuento < 0m || registro.PorcentajeDescuento > 100m)
+                {
+                    mensaje = "El descuento debe estar entre 0 y 100 por ciento.";
                     return false;
                 }
             }
 
-            const string guardarDetalle = @"
-                INSERT INTO tbllistapreciodetalle
-                    (Fk_ListaPrecioEncabezado_Codigo, Fk_Producto_Codigo,
-                     precioUnitarioListaPrecioDetalle, activoListaPrecioDetalle)
-                VALUES (?, ?, ?, 1)
-                ON DUPLICATE KEY UPDATE
-                    precioUnitarioListaPrecioDetalle = VALUES(precioUnitarioListaPrecioDetalle),
-                    activoListaPrecioDetalle = 1;";
-            const string actualizarProducto = @"
+            string tipoModificacion = registros[0].TipoModificacion ?? string.Empty;
+            if (registros.Any(x => !string.Equals(
+                x.TipoModificacion, tipoModificacion, StringComparison.OrdinalIgnoreCase)))
+            {
+                mensaje = "No se pueden mezclar tipos de modificación en una misma operación.";
+                return false;
+            }
+
+            const string actualizarDescuentoCliente = @"
+                UPDATE tbltipocliente
+                SET porcentajeDescuento = ?
+                WHERE Pk_TipoCliente = ?;";
+
+            const string actualizarPrecioProducto = @"
                 UPDATE tblproducto
                 SET precioVentaProducto = ?
-                WHERE idProducto = ? AND estadoProducto = 1;";
+                WHERE Pk_Producto = ?;";
 
             try
             {
@@ -161,37 +231,50 @@ namespace CapaModelo_ListadoPrecios
                     {
                         try
                         {
-                            foreach (ClsPrecioCliente registro in registros)
+                            if (string.Equals(tipoModificacion, "Descuento", StringComparison.OrdinalIgnoreCase))
                             {
-                                bool esAumentoBase = string.Equals(registro.TipoModificacion, "AumentoBase", StringComparison.OrdinalIgnoreCase);
-
-                                // El aumento por base modifica el precio de venta del producto, no el porcentaje.
-                                if (esAumentoBase)
+                                // Un tipo de cliente tiene un único porcentajeDescuento en la base de datos.
+                                foreach (ClsPrecioCliente registro in registros
+                                    .GroupBy(x => x.IdTipoCliente)
+                                    .Select(g => g.First()))
                                 {
-                                    using (var comando = new OdbcCommand(actualizarProducto, conexion, transaccion))
+                                    using (var comando = new OdbcCommand(
+                                        actualizarDescuentoCliente, conexion, transaccion))
                                     {
-                                        comando.Parameters.Add("precio", OdbcType.Decimal).Value = registro.PrecioBase;
-                                        comando.Parameters.Add("producto", OdbcType.Int).Value = registro.IdProducto;
-                                        if (comando.ExecuteNonQuery() == 0)
-                                            throw new InvalidOperationException("No se pudo actualizar el precio base del producto " + registro.Producto + ". Puede que ya no esté activo.");
-                                    }
-                                }
+                                        comando.Parameters.Add("porcentajeDescuento", OdbcType.Decimal).Value =
+                                            registro.PorcentajeDescuento;
+                                        comando.Parameters.Add("idTipoCliente", OdbcType.Int).Value =
+                                            registro.IdTipoCliente;
 
-                                if (registro.IdListaPrecio > 0)
-                                {
-                                    using (var comando = new OdbcCommand(guardarDetalle, conexion, transaccion))
-                                    {
-                                        comando.Parameters.Add("lista", OdbcType.Int).Value = registro.IdListaPrecio;
-                                        comando.Parameters.Add("producto", OdbcType.Int).Value = registro.IdProducto;
-                                        comando.Parameters.Add("precio", OdbcType.Decimal).Value = registro.PrecioFinal;
                                         comando.ExecuteNonQuery();
                                     }
                                 }
-                                else if (!esAumentoBase)
+                            }
+                            else if (string.Equals(tipoModificacion, "AumentoBase", StringComparison.OrdinalIgnoreCase) ||
+                                     string.Equals(tipoModificacion, "AumentoPorcentaje", StringComparison.OrdinalIgnoreCase))
+                            {
+                                // El precio de venta pertenece al producto, no al tipo de cliente.
+                                foreach (ClsPrecioCliente registro in registros
+                                    .GroupBy(x => x.IdProducto)
+                                    .Select(g => g.First()))
                                 {
-                                    throw new InvalidOperationException("No hay una lista de precios activa para guardar el descuento o aumento porcentual. El precio base no se modificó.");
+                                    using (var comando = new OdbcCommand(
+                                        actualizarPrecioProducto, conexion, transaccion))
+                                    {
+                                        comando.Parameters.Add("precioVentaProducto", OdbcType.Decimal).Value =
+                                            registro.PrecioBase;
+                                        comando.Parameters.Add("idProducto", OdbcType.Int).Value =
+                                            registro.IdProducto;
+
+                                        comando.ExecuteNonQuery();
+                                    }
                                 }
                             }
+                            else
+                            {
+                                throw new InvalidOperationException("Tipo de modificación no reconocido.");
+                            }
+
                             transaccion.Commit();
                         }
                         catch
@@ -203,7 +286,11 @@ namespace CapaModelo_ListadoPrecios
                 }
 
                 UsaBaseDeDatos = true;
-                mensaje = "Se guardaron correctamente " + registros.Count + " registro(s) en dbsistemaembutidos.";
+                mensaje = string.Equals(tipoModificacion, "Descuento", StringComparison.OrdinalIgnoreCase)
+                    ? "Se actualizó el descuento de " + registros.Select(x => x.IdTipoCliente).Distinct().Count() +
+                      " tipo(s) de cliente. El porcentaje aplica a todos los productos de cada tipo."
+                    : "Se actualizó el precio base de " + registros.Select(x => x.IdProducto).Distinct().Count() +
+                      " producto(s). El cambio aplica a todos los tipos de cliente.";
                 return true;
             }
             catch (Exception error)
@@ -214,12 +301,15 @@ namespace CapaModelo_ListadoPrecios
             }
         }
 
-        public static decimal VentasFuncCalcularPrecioFinal(decimal precioBase, decimal valorModificacion, string tipoModificacion)
+        public static decimal VentasFuncCalcularPrecioFinal(
+            decimal precioBase, decimal valorModificacion, string tipoModificacion)
         {
-            if (precioBase < 0m) throw new ArgumentOutOfRangeException("precioBase", "El precio base no puede ser negativo.");
-            if (valorModificacion < 0m) throw new ArgumentOutOfRangeException("valorModificacion", "El valor no puede ser negativo.");
+            if (precioBase < 0m)
+                throw new ArgumentOutOfRangeException("precioBase", "El precio base no puede ser negativo.");
+            if (valorModificacion < 0m)
+                throw new ArgumentOutOfRangeException("valorModificacion", "El valor no puede ser negativo.");
 
-            decimal precioFinal = precioBase;
+            decimal precioFinal;
             if (tipoModificacion == "Descuento" || tipoModificacion == "Descuento (%)")
                 precioFinal = precioBase - (precioBase * (valorModificacion / 100m));
             else if (tipoModificacion == "AumentoPorcentaje" || tipoModificacion == "Aumento por porcentaje (%)")
