@@ -1,22 +1,22 @@
 /*
  * ================================================================
- * Área   : Bancos
+ * ï¿½rea   : Bancos
  * Autor  : Oscar Emilio Morales Lemus
- * Carné  : 9959-23-3070
- * Autor  : Evelyn Sofía Andrade Luna
- * Carné  : 9959-23-1224
+ * Carnï¿½  : 9959-23-3070
+ * Autor  : Evelyn Sofï¿½a Andrade Luna
+ * Carnï¿½  : 9959-23-1224
  * Fecha  : 23/10/2026
  * ================================================================
- * Propósito :
- *  Formulario MDI principal del módulo Bancos. Contiene el panel
- *  de navegación colapsable (botón burger) y centraliza el acceso
- *  a todos los subformularios del módulo: Mantenimientos (Moneda,
- *  Bancos, Tipo de Cuenta Bancaria, Tipo de Transacción, Cuenta
- *  Bancaria) y Procesos (Movimientos Bancarios, Autorización de
- *  Órdenes, Conciliación Bancaria, Disponibilidad Diaria, Tipo de
- *  Cambio, Generación de Pagos, Cierre Bancario, Enlace a Otros
- *  Módulos). Muestra el usuario y rol activo, incluye acceso a la
- *  ayuda del módulo y permite cerrar la sesión.
+ * Propï¿½sito :
+ *  Formulario MDI principal del mï¿½dulo Bancos. Contiene el panel
+ *  de navegaciï¿½n colapsable (botï¿½n burger) y centraliza el acceso
+ *  a todos los subformularios del mï¿½dulo: Mantenimientos (Moneda,
+ *  Bancos, Tipo de Cuenta Bancaria, Tipo de Transacciï¿½n, Cuenta
+ *  Bancaria) y Procesos (Movimientos Bancarios, Autorizaciï¿½n de
+ *  ï¿½rdenes, Conciliaciï¿½n Bancaria, Disponibilidad Diaria, Tipo de
+ *  Cambio, Generaciï¿½n de Pagos, Cierre Bancario, Enlace a Otros
+ *  Mï¿½dulos). Muestra el usuario y rol activo, incluye acceso a la
+ *  ayuda del mï¿½dulo y permite cerrar la sesiï¿½n.
  * ================================================================
  */
 
@@ -164,8 +164,8 @@ namespace CapaVista_Bancos.Formularios
         private void BancosBtnCerrarP_Click(object sender, EventArgs e)
         {
             DialogResult Resultado = MessageBox.Show(
-                 "¿Seguro que deseas cerrar sesión?",
-                 "Cerrar sesión",
+                 "ï¿½Seguro que deseas cerrar sesiï¿½n?",
+                 "Cerrar sesiï¿½n",
                  MessageBoxButtons.YesNo,
                  MessageBoxIcon.Question);
 
