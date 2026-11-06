@@ -43,6 +43,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             BancosDgvOrdenesPendientes.CellClick += BancosDgvOrdenesPendientes_CellClick;
             BancosCboBanco.SelectionChangeCommitted += BancosCboBanco_CambioSeleccion;
             BancosMetReinicio();
+            BancosTxtMotivoRechazo.MaxLength = 100;
         }
 
         private void FrmAutorizacionOrdenes_Load(object sender, EventArgs e)
@@ -65,7 +66,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             }
             catch (Exception Ex)
             {
-                MessageBox.Show(Ex.ToString());
+                MessageBox.Show(Ex.Message);
             }
         }
 
@@ -106,13 +107,12 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             }
             catch (Exception Ex)
             {
-                MessageBox.Show(Ex.ToString());
+                MessageBox.Show(Ex.Message);
             }
         }
 
         private void BancosMetReinicio()
         {
-            BancosLblValorNoAutorizacion.Text = "0";
             BancosLblValorTotalAsignado.Text = "Q 0.00";
             BancosLblMontoReservadoValor.Text = "Q 0.00";
             BancosLblValorDiferencia.Text = "Q 0.00";
@@ -154,13 +154,13 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
                     }
                     else
                     {
-                        BancosLblTipoCambioValor.Text = Cuenta.TipoCambio.ToString("N4");
+                        BancosLblTipoCambioValor.Text = "No disponible";
                     }
                 }
             }
             catch (Exception Ex)
             {
-                MessageBox.Show(Ex.ToString());
+                MessageBox.Show(Ex.Message);
             }
         }
 
@@ -195,10 +195,24 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
                 }
 
                 decimal Asignado = BancosMetTotalAsignado();
+
                 var Cuenta = _ModeloCuentaDisponible.BancosMetBuscarPorId(IdCuenta);
+                
+                if (Cuenta == null)
+                {
+                    MessageBox.Show("No se encontró la cuenta seleccionada");
+                    return;
+                }
+
                 decimal Importe = BancosMetImporteOrdenSeleccionada();
                 long IdMonedaOrden = Convert.ToInt64(BancosDgvOrdenesPendientes.CurrentRow.Cells[7].Value);
-                decimal TipoCambio = (Cuenta.IdMoneda == IdMonedaOrden) ? 1m : Cuenta.TipoCambio;
+
+                if (Cuenta.IdMoneda != IdMonedaOrden)
+                {
+                    MessageBox.Show("En esta entrega solo se permiten cuentas de la misma moneda que la orden");
+                    return;
+                }
+                decimal TipoCambio = 1m;
 
                 if (Asignado + Monto > Importe)
                 {
@@ -221,7 +235,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             }
             catch (Exception Ex)
             {
-                MessageBox.Show(Ex.ToString());
+                MessageBox.Show(Ex.Message);
             }
         }
 
@@ -321,6 +335,13 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
                     foreach (DataGridViewRow Item in BancosDgvAsignacionCuenta.Rows)
                     {
                         var Cuenta = _ModeloCuentaDisponible.BancosMetBuscarPorId(Convert.ToInt64(Item.Tag));
+
+                        if (Cuenta == null)
+                        {
+                            MessageBox.Show("No se encontró una de las cuentas asignadas");
+                            return;
+                        }
+
                         decimal Monto = Convert.ToDecimal(Item.Cells[5].Value);
                         _ModeloAutorizacionOrdenCompra.BancosMetAgregarCuenta(Cuenta, IdMonedaOrden, Monto);
                     }
@@ -342,11 +363,12 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             }
             catch (Exception Ex)
             {
-                MessageBox.Show(Ex.ToString());
+                MessageBox.Show(Ex.Message);
             }
         }
         private void BancosBtnAutorizar_Click(object sender, EventArgs e)
         {
+
             if (!BancosMetValidarDesbloqueo())
             {
                 return;
@@ -445,6 +467,11 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
 
         private void BancosDgvOrdenesPendientes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
             if (!BancosMetValidarDesbloqueo())
             {
                 return;

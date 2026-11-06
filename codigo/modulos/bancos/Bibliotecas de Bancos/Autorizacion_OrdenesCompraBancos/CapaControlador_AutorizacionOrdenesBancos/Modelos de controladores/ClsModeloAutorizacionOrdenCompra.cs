@@ -134,8 +134,9 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
             }
             catch (Exception Ex)
             {
-                Mensaje = Ex.ToString();
+                Mensaje = "No se pudo grabar: " + Ex.Message;
             }
+
             return Mensaje;
         }
         public ClsModeloAutorizacionOrdenCompra()
