@@ -118,7 +118,7 @@
             this.RrhhLblRealizarPercepcionDeduccionTitulo.Location = new System.Drawing.Point(14, 159);
             this.RrhhLblRealizarPercepcionDeduccionTitulo.Name = "RrhhLblRealizarPercepcionDeduccionTitulo";
             this.RrhhLblRealizarPercepcionDeduccionTitulo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.RrhhLblRealizarPercepcionDeduccionTitulo.Size = new System.Drawing.Size(322, 33);
+            this.RrhhLblRealizarPercepcionDeduccionTitulo.Size = new System.Drawing.Size(359, 64);
             this.RrhhLblRealizarPercepcionDeduccionTitulo.TabIndex = 1;
             this.RrhhLblRealizarPercepcionDeduccionTitulo.Text = "Percepciones y deducciones";
             // 

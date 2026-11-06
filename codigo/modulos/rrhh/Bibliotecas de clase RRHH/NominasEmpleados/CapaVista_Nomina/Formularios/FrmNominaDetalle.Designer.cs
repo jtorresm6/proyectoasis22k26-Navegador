@@ -558,7 +558,10 @@
             this.Controls.Add(this.RrhhPnlInfoConfiCalculo);
             this.Controls.Add(this.RrhhPnlConceptoRegistrados);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmNominaDetalle";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "9506 - NominaDetalle";
             this.Load += new System.EventHandler(this.FrmNominaDetalle_Load);
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconoConsultas)).EndInit();
