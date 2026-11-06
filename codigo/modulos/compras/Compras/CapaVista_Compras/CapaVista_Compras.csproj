@@ -104,6 +104,9 @@
     <Compile Include="FrmMDICompras.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FrmMDICompras.Dashboard.cs">
+      <DependentUpon>FrmMDICompras.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMDICompras.Designer.cs">
       <DependentUpon>FrmMDICompras.cs</DependentUpon>
     </Compile>

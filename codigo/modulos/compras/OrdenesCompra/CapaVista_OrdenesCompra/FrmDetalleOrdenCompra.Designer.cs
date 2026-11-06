@@ -1326,6 +1326,7 @@
             this.ComprasTxtDescuento.SelectionStart = 0;
             this.ComprasTxtDescuento.Size = new System.Drawing.Size(156, 36);
             this.ComprasTxtDescuento.TabIndex = 6;
+            this.ComprasTxtDescuento.TipoEntrada = CapaVista_Componentes.Componentes.ComprasEnumTipoEntrada.Moneda;
             // 
             // ComprasLblDescuento
             // 
@@ -1361,6 +1362,7 @@
             this.ComprasTxtCantidad.Size = new System.Drawing.Size(156, 36);
             this.ComprasTxtCantidad.SoloEnteros = true;
             this.ComprasTxtCantidad.TabIndex = 5;
+            this.ComprasTxtCantidad.TipoEntrada = CapaVista_Componentes.Componentes.ComprasEnumTipoEntrada.Enteros;
             // 
             // ComprasLblCantidad
             // 

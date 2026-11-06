@@ -1,0 +1,7605 @@
+USE dbsistemaembutidos;
+
+SET NAMES utf8mb4;
+
+START TRANSACTION;
+
+SET @lote = LEFT(REPLACE(UUID(), '-', ''), 12);
+
+INSERT INTO tblPlazo (nombrePlazo, diasPlazo) VALUES ('Contado', 0) ON DUPLICATE KEY UPDATE idPlazo = LAST_INSERT_ID(idPlazo);
+
+SET @pl0 = LAST_INSERT_ID();
+
+INSERT INTO tblPlazo (nombrePlazo, diasPlazo) VALUES ('15 dias', 15) ON DUPLICATE KEY UPDATE idPlazo = LAST_INSERT_ID(idPlazo);
+
+SET @pl1 = LAST_INSERT_ID();
+
+INSERT INTO tblPlazo (nombrePlazo, diasPlazo) VALUES ('30 dias', 30) ON DUPLICATE KEY UPDATE idPlazo = LAST_INSERT_ID(idPlazo);
+
+SET @pl2 = LAST_INSERT_ID();
+
+INSERT INTO tblPlazo (nombrePlazo, diasPlazo) VALUES ('60 dias', 60) ON DUPLICATE KEY UPDATE idPlazo = LAST_INSERT_ID(idPlazo);
+
+SET @pl3 = LAST_INSERT_ID();
+
+INSERT INTO tblPlazo (nombrePlazo, diasPlazo) VALUES ('90 dias', 90) ON DUPLICATE KEY UPDATE idPlazo = LAST_INSERT_ID(idPlazo);
+
+SET @pl4 = LAST_INSERT_ID();
+
+INSERT INTO tblMetodoPago (nombreMetodoPago, descripcionMetodoPago) VALUES ('Transferencia bancaria', 'Pago mediante transferencia bancaria') ON DUPLICATE KEY UPDATE idMetodoPago = LAST_INSERT_ID(idMetodoPago);
+
+SET @mp0 = LAST_INSERT_ID();
+
+INSERT INTO tblMetodoPago (nombreMetodoPago, descripcionMetodoPago) VALUES ('Cheque', 'Pago mediante cheque') ON DUPLICATE KEY UPDATE idMetodoPago = LAST_INSERT_ID(idMetodoPago);
+
+SET @mp1 = LAST_INSERT_ID();
+
+INSERT INTO tblMetodoPago (nombreMetodoPago, descripcionMetodoPago) VALUES ('Efectivo', 'Pago mediante efectivo') ON DUPLICATE KEY UPDATE idMetodoPago = LAST_INSERT_ID(idMetodoPago);
+
+SET @mp2 = LAST_INSERT_ID();
+
+INSERT INTO tblMetodoPago (nombreMetodoPago, descripcionMetodoPago) VALUES ('Tarjeta empresarial', 'Pago mediante tarjeta empresarial') ON DUPLICATE KEY UPDATE idMetodoPago = LAST_INSERT_ID(idMetodoPago);
+
+SET @mp3 = LAST_INSERT_ID();
+
+INSERT INTO tblMoneda (codigoMoneda, nombreMoneda, simboloMoneda) VALUES ('GTQ', 'Quetzal', 'Q') ON DUPLICATE KEY UPDATE idMoneda = LAST_INSERT_ID(idMoneda);
+
+SET @GTQ = LAST_INSERT_ID();
+
+INSERT INTO tblMoneda (codigoMoneda, nombreMoneda, simboloMoneda) VALUES ('USD', 'Dolar estadounidense', '$') ON DUPLICATE KEY UPDATE idMoneda = LAST_INSERT_ID(idMoneda);
+
+SET @USD = LAST_INSERT_ID();
+
+INSERT INTO tblConceptoProveedor (nombreConceptoProveedor, naturalezaConceptoProveedor) VALUES ('Factura de compra', 'Cargo') ON DUPLICATE KEY UPDATE idConceptoProveedor = LAST_INSERT_ID(idConceptoProveedor);
+
+SET @factura = LAST_INSERT_ID();
+
+INSERT INTO tblConceptoProveedor (nombreConceptoProveedor, naturalezaConceptoProveedor) VALUES ('Nota de credito', 'Abono') ON DUPLICATE KEY UPDATE idConceptoProveedor = LAST_INSERT_ID(idConceptoProveedor);
+
+SET @credito = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-01-01', 7.65, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc0 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-02-01', 7.66, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc1 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-03-01', 7.67, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc2 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-04-01', 7.68, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc3 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-05-01', 7.69, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc4 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-06-01', 7.65, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc5 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-07-01', 7.66, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc6 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-08-01', 7.67, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc7 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-09-01', 7.68, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc8 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-10-01', 7.69, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc9 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-11-01', 7.65, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc10 = LAST_INSERT_ID();
+
+INSERT INTO tblTipoCambio (fechaTipoCambio, valorTipoCambio, fuenteTipoCambio, Fk_Moneda_Origen_Codigo, Fk_Moneda_Destino_Codigo) VALUES ('2026-12-01', 7.66, 'Escenario sintetico v1.6', @USD, @GTQ) ON DUPLICATE KEY UPDATE idTipoCambio = LAST_INSERT_ID(idTipoCambio);
+
+SET @tc11 = LAST_INSERT_ID();
+
+INSERT INTO tblSucursal (nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal) VALUES (CONCAT('Prueba ', 'Guatemala ', @lote), 'Centro de distribucion y procesamiento', 'Zona industrial, Guatemala', 'Guatemala');
+
+SET @s0 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Camara refrigerada', @s0, 'Guatemala');
+
+SET @b0 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Almacen seco', @s0, 'Guatemala');
+
+SET @b1 = LAST_INSERT_ID();
+
+INSERT INTO tblSucursal (nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal) VALUES (CONCAT('Prueba ', 'Mixco ', @lote), 'Centro de distribucion y procesamiento', 'Zona industrial, Mixco', 'Guatemala');
+
+SET @s1 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Camara refrigerada', @s1, 'Guatemala');
+
+SET @b2 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Almacen seco', @s1, 'Guatemala');
+
+SET @b3 = LAST_INSERT_ID();
+
+INSERT INTO tblSucursal (nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal) VALUES (CONCAT('Prueba ', 'Villa Nueva ', @lote), 'Centro de distribucion y procesamiento', 'Zona industrial, Villa Nueva', 'Guatemala');
+
+SET @s2 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Camara refrigerada', @s2, 'Guatemala');
+
+SET @b4 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Almacen seco', @s2, 'Guatemala');
+
+SET @b5 = LAST_INSERT_ID();
+
+INSERT INTO tblSucursal (nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal) VALUES (CONCAT('Prueba ', 'Escuintla ', @lote), 'Centro de distribucion y procesamiento', 'Zona industrial, Escuintla', 'Guatemala');
+
+SET @s3 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Camara refrigerada', @s3, 'Guatemala');
+
+SET @b6 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Almacen seco', @s3, 'Guatemala');
+
+SET @b7 = LAST_INSERT_ID();
+
+INSERT INTO tblSucursal (nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal) VALUES (CONCAT('Prueba ', 'Quetzaltenango ', @lote), 'Centro de distribucion y procesamiento', 'Zona industrial, Quetzaltenango', 'Guatemala');
+
+SET @s4 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Camara refrigerada', @s4, 'Guatemala');
+
+SET @b8 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Almacen seco', @s4, 'Guatemala');
+
+SET @b9 = LAST_INSERT_ID();
+
+INSERT INTO tblSucursal (nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal) VALUES (CONCAT('Prueba ', 'Zacapa ', @lote), 'Centro de distribucion y procesamiento', 'Zona industrial, Zacapa', 'Guatemala');
+
+SET @s5 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Camara refrigerada', @s5, 'Guatemala');
+
+SET @b10 = LAST_INSERT_ID();
+
+INSERT INTO tblBodega (nombreBodega, Fk_Sucursal_Codigo, paisBodega) VALUES ('Almacen seco', @s5, 'Guatemala');
+
+SET @b11 = LAST_INSERT_ID();
+
+INSERT INTO tblCategoria (nombreCategoria, porcentajeComisionCategoria) VALUES ('Carnes', 0.03) ON DUPLICATE KEY UPDATE idCategoria = LAST_INSERT_ID(idCategoria);
+
+SET @cat0 = LAST_INSERT_ID();
+
+INSERT INTO tblCategoria (nombreCategoria, porcentajeComisionCategoria) VALUES ('Condimentos', 0.03) ON DUPLICATE KEY UPDATE idCategoria = LAST_INSERT_ID(idCategoria);
+
+SET @cat1 = LAST_INSERT_ID();
+
+INSERT INTO tblCategoria (nombreCategoria, porcentajeComisionCategoria) VALUES ('Empaques', 0.03) ON DUPLICATE KEY UPDATE idCategoria = LAST_INSERT_ID(idCategoria);
+
+SET @cat2 = LAST_INSERT_ID();
+
+INSERT INTO tblCategoria (nombreCategoria, porcentajeComisionCategoria) VALUES ('Limpieza', 0.03) ON DUPLICATE KEY UPDATE idCategoria = LAST_INSERT_ID(idCategoria);
+
+SET @cat3 = LAST_INSERT_ID();
+
+INSERT INTO tblCategoria (nombreCategoria, porcentajeComisionCategoria) VALUES ('Repuestos', 0.03) ON DUPLICATE KEY UPDATE idCategoria = LAST_INSERT_ID(idCategoria);
+
+SET @cat4 = LAST_INSERT_ID();
+
+INSERT INTO tblLinea (nombreLinea, porcentajeComisionLinea) VALUES ('Materia prima', 0.03) ON DUPLICATE KEY UPDATE idLinea = LAST_INSERT_ID(idLinea);
+
+SET @lin0 = LAST_INSERT_ID();
+
+INSERT INTO tblLinea (nombreLinea, porcentajeComisionLinea) VALUES ('Insumos de produccion', 0.03) ON DUPLICATE KEY UPDATE idLinea = LAST_INSERT_ID(idLinea);
+
+SET @lin1 = LAST_INSERT_ID();
+
+INSERT INTO tblLinea (nombreLinea, porcentajeComisionLinea) VALUES ('Material auxiliar', 0.03) ON DUPLICATE KEY UPDATE idLinea = LAST_INSERT_ID(idLinea);
+
+SET @lin2 = LAST_INSERT_ID();
+
+INSERT INTO tblLinea (nombreLinea, porcentajeComisionLinea) VALUES ('Mantenimiento', 0.03) ON DUPLICATE KEY UPDATE idLinea = LAST_INSERT_ID(idLinea);
+
+SET @lin3 = LAST_INSERT_ID();
+
+INSERT INTO tblMarca (nombreMarca, porcentajeComisionMarca) VALUES ('Cumbre Test', 0.03) ON DUPLICATE KEY UPDATE idMarca = LAST_INSERT_ID(idMarca);
+
+SET @mar0 = LAST_INSERT_ID();
+
+INSERT INTO tblMarca (nombreMarca, porcentajeComisionMarca) VALUES ('Valle Test', 0.03) ON DUPLICATE KEY UPDATE idMarca = LAST_INSERT_ID(idMarca);
+
+SET @mar1 = LAST_INSERT_ID();
+
+INSERT INTO tblMarca (nombreMarca, porcentajeComisionMarca) VALUES ('AgroNorte Test', 0.03) ON DUPLICATE KEY UPDATE idMarca = LAST_INSERT_ID(idMarca);
+
+SET @mar2 = LAST_INSERT_ID();
+
+INSERT INTO tblMarca (nombreMarca, porcentajeComisionMarca) VALUES ('Empaca Test', 0.03) ON DUPLICATE KEY UPDATE idMarca = LAST_INSERT_ID(idMarca);
+
+SET @mar3 = LAST_INSERT_ID();
+
+INSERT INTO tblMarca (nombreMarca, porcentajeComisionMarca) VALUES ('Higiene Test', 0.03) ON DUPLICATE KEY UPDATE idMarca = LAST_INSERT_ID(idMarca);
+
+SET @mar4 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Carnes del Valle (Prueba)', '9901600000', 'compras01@proveedor.example', '+502 2210-1100', '1 avenida 10-25, zona 1, Guatemala', 1, @pl0) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p0 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Porcicola La Cumbre (Prueba)', '9901600001', 'compras02@proveedor.example', '+502 2211-1101', '2 avenida 11-25, zona 2, Guatemala', 1, @pl1) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p1 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Avicola Los Pinos (Prueba)', '9901600002', 'compras03@proveedor.example', '+502 2212-1102', '3 avenida 12-25, zona 3, Guatemala', 1, @pl2) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p2 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Frigorificos del Norte (Prueba)', '9901600003', 'compras04@proveedor.example', '+502 2213-1103', '4 avenida 13-25, zona 4, Guatemala', 1, @pl3) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p3 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Agropecuaria Santa Elena (Prueba)', '9901600004', 'compras05@proveedor.example', '+502 2214-1104', '5 avenida 14-25, zona 5, Guatemala', 1, @pl4) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p4 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Proteinas de Oriente (Prueba)', '9901600005', 'compras06@proveedor.example', '+502 2215-1105', '6 avenida 15-25, zona 6, Guatemala', 1, @pl0) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p5 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Carnes Selectas del Sur (Prueba)', '9901600006', 'compras07@proveedor.example', '+502 2216-1106', '7 avenida 16-25, zona 7, Guatemala', 1, @pl1) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p6 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Distribuidora Pecuaria Central (Prueba)', '9901600007', 'compras08@proveedor.example', '+502 2217-1107', '8 avenida 17-25, zona 8, Guatemala', 1, @pl2) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p7 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Especias del Altiplano (Prueba)', '9901600008', 'compras09@proveedor.example', '+502 2218-1108', '9 avenida 18-25, zona 9, Guatemala', 1, @pl3) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p8 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Condimentos La Huerta (Prueba)', '9901600009', 'compras10@proveedor.example', '+502 2219-1109', '10 avenida 19-25, zona 10, Guatemala', 1, @pl4) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p9 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Ingredientes del Pacifico (Prueba)', '9901600010', 'compras11@proveedor.example', '+502 2220-1110', '11 avenida 20-25, zona 11, Guatemala', 1, @pl0) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p10 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Suministros Alimentarios Maya (Prueba)', '9901600011', 'compras12@proveedor.example', '+502 2221-1111', '12 avenida 21-25, zona 12, Guatemala', 1, @pl1) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p11 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Empaques del Valle (Prueba)', '9901600012', 'compras13@proveedor.example', '+502 2222-1112', '13 avenida 22-25, zona 1, Guatemala', 1, @pl2) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p12 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Plasticos Industriales Centro (Prueba)', '9901600013', 'compras14@proveedor.example', '+502 2223-1113', '14 avenida 23-25, zona 2, Guatemala', 1, @pl3) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p13 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Cartones y Cajas del Sur (Prueba)', '9901600014', 'compras15@proveedor.example', '+502 2224-1114', '15 avenida 24-25, zona 3, Guatemala', 1, @pl4) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p14 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Etiquetas del Istmo (Prueba)', '9901600015', 'compras16@proveedor.example', '+502 2225-1115', '16 avenida 25-25, zona 4, Guatemala', 1, @pl0) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p15 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Higiene Industrial del Norte (Prueba)', '9901600016', 'compras17@proveedor.example', '+502 2226-1116', '17 avenida 26-25, zona 5, Guatemala', 1, @pl1) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p16 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Soluciones Sanitarias del Sur (Prueba)', '9901600017', 'compras18@proveedor.example', '+502 2227-1117', '18 avenida 27-25, zona 6, Guatemala', 1, @pl2) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p17 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Repuestos Frio Industrial (Prueba)', '9901600018', 'compras19@proveedor.example', '+502 2228-1118', '19 avenida 28-25, zona 7, Guatemala', 1, @pl3) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p18 = LAST_INSERT_ID();
+
+INSERT INTO tblProveedor (nombreProveedor, nitProveedor, correoProveedor, telefonoProveedor, direccionProveedor, estadoProveedor, idPlazo) VALUES ('Mecanica Alimentaria Central (Prueba)', '9901600019', 'compras20@proveedor.example', '+502 2229-1119', '20 avenida 29-25, zona 8, Guatemala', 0, @pl4) ON DUPLICATE KEY UPDATE idProveedor = LAST_INSERT_ID(idProveedor);
+
+SET @p19 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-000'), 'MP001', 'Pierna de cerdo deshuesada - presentacion 1', @p0, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 24.5000, 31.8500, 0.04, 20, 2000, 1.00);
+
+SET @pr0 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-001'), 'MP001', 'Pierna de cerdo deshuesada - presentacion 2', @p0, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 29.4000, 38.2200, 0.04, 20, 2000, 1.00);
+
+SET @pr1 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-002'), 'MP001', 'Recorte de cerdo 80/20 - presentacion 1', @p1, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 19.7500, 25.6750, 0.04, 20, 2000, 1.00);
+
+SET @pr2 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-003'), 'MP001', 'Recorte de cerdo 80/20 - presentacion 2', @p1, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 23.7000, 30.8100, 0.04, 20, 2000, 1.00);
+
+SET @pr3 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-004'), 'MP001', 'Grasa dorsal de cerdo - presentacion 1', @p2, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 12.2500, 15.9250, 0.04, 20, 2000, 1.00);
+
+SET @pr4 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-005'), 'MP001', 'Grasa dorsal de cerdo - presentacion 2', @p2, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 14.7000, 19.1100, 0.04, 20, 2000, 1.00);
+
+SET @pr5 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-006'), 'MP001', 'Carne de res industrial - presentacion 1', @p3, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 34.8000, 45.2400, 0.04, 20, 2000, 1.00);
+
+SET @pr6 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-007'), 'MP001', 'Carne de res industrial - presentacion 2', @p3, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 41.7600, 54.2880, 0.04, 20, 2000, 1.00);
+
+SET @pr7 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-008'), 'MP001', 'Pechuga de pollo - presentacion 1', @p4, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 23.4000, 30.4200, 0.04, 20, 2000, 1.00);
+
+SET @pr8 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-009'), 'MP001', 'Pechuga de pollo - presentacion 2', @p4, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 28.0800, 36.5040, 0.04, 20, 2000, 1.00);
+
+SET @pr9 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-010'), 'MP001', 'Muslo de pollo deshuesado - presentacion 1', @p5, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 18.6000, 24.1800, 0.04, 20, 2000, 1.00);
+
+SET @pr10 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-011'), 'MP001', 'Muslo de pollo deshuesado - presentacion 2', @p5, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 22.3200, 29.0160, 0.04, 20, 2000, 1.00);
+
+SET @pr11 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-012'), 'MP001', 'Panceta fresca - presentacion 1', @p6, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 28.9000, 37.5700, 0.04, 20, 2000, 1.00);
+
+SET @pr12 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-013'), 'MP001', 'Panceta fresca - presentacion 2', @p6, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 34.6800, 45.0840, 0.04, 20, 2000, 1.00);
+
+SET @pr13 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-014'), 'MP001', 'Carne de pavo - presentacion 1', @p7, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 39.5000, 51.3500, 0.04, 20, 2000, 1.00);
+
+SET @pr14 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-015'), 'MP001', 'Carne de pavo - presentacion 2', @p7, @mar0, @cat0, @lin0, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 47.4000, 61.6200, 0.04, 20, 2000, 1.00);
+
+SET @pr15 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-016'), 'IN001', 'Sal refinada - presentacion 1', @p8, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 3.2000, 4.1600, 0.04, 20, 2000, 1.00);
+
+SET @pr16 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-017'), 'IN001', 'Sal refinada - presentacion 2', @p8, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 3.8400, 4.9920, 0.04, 20, 2000, 1.00);
+
+SET @pr17 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-018'), 'IN001', 'Pimienta negra molida - presentacion 1', @p9, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 68.0000, 88.4000, 0.04, 20, 2000, 1.00);
+
+SET @pr18 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-019'), 'IN001', 'Pimienta negra molida - presentacion 2', @p9, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 81.6000, 106.0800, 0.04, 20, 2000, 1.00);
+
+SET @pr19 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-020'), 'IN001', 'Ajo en polvo - presentacion 1', @p10, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 42.5000, 55.2500, 0.04, 20, 2000, 1.00);
+
+SET @pr20 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-021'), 'IN001', 'Ajo en polvo - presentacion 2', @p10, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 51.0000, 66.3000, 0.04, 20, 2000, 1.00);
+
+SET @pr21 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-022'), 'IN001', 'Paprika dulce - presentacion 1', @p11, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 49.8000, 64.7400, 0.04, 20, 2000, 1.00);
+
+SET @pr22 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-023'), 'IN001', 'Paprika dulce - presentacion 2', @p11, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 59.7600, 77.6880, 0.04, 20, 2000, 1.00);
+
+SET @pr23 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-024'), 'IN001', 'Mezcla para chorizo - presentacion 1', @p8, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 36.2500, 47.1250, 0.04, 20, 2000, 1.00);
+
+SET @pr24 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-025'), 'IN001', 'Mezcla para chorizo - presentacion 2', @p8, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 43.5000, 56.5500, 0.04, 20, 2000, 1.00);
+
+SET @pr25 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-026'), 'IN001', 'Proteina de soya - presentacion 1', @p9, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 18.7500, 24.3750, 0.04, 20, 2000, 1.00);
+
+SET @pr26 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-027'), 'IN001', 'Proteina de soya - presentacion 2', @p9, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 22.5000, 29.2500, 0.04, 20, 2000, 1.00);
+
+SET @pr27 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-028'), 'IN001', 'Almidon de maiz - presentacion 1', @p10, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 8.5000, 11.0500, 0.04, 20, 2000, 1.00);
+
+SET @pr28 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-029'), 'IN001', 'Almidon de maiz - presentacion 2', @p10, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 10.2000, 13.2600, 0.04, 20, 2000, 1.00);
+
+SET @pr29 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-030'), 'IN001', 'Humo liquido - presentacion 1', @p11, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 52.0000, 67.6000, 0.04, 20, 2000, 1.00);
+
+SET @pr30 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-031'), 'IN001', 'Humo liquido - presentacion 2', @p11, @mar1, @cat1, @lin1, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 62.4000, 81.1200, 0.04, 20, 2000, 1.00);
+
+SET @pr31 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-032'), 'EM001', 'Bolsa al vacio - presentacion 1', @p12, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 0.8500, 1.1050, 0.04, 20, 2000, 1.00);
+
+SET @pr32 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-033'), 'EM001', 'Bolsa al vacio - presentacion 2', @p12, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 1.0200, 1.3260, 0.04, 20, 2000, 1.00);
+
+SET @pr33 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-034'), 'EM001', 'Tripa de colageno - presentacion 1', @p13, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 3.4000, 4.4200, 0.04, 20, 2000, 1.00);
+
+SET @pr34 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-035'), 'EM001', 'Tripa de colageno - presentacion 2', @p13, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 4.0800, 5.3040, 0.04, 20, 2000, 1.00);
+
+SET @pr35 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-036'), 'EM001', 'Bandeja alimentaria - presentacion 1', @p14, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 1.2500, 1.6250, 0.04, 20, 2000, 1.00);
+
+SET @pr36 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-037'), 'EM001', 'Bandeja alimentaria - presentacion 2', @p14, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 1.5000, 1.9500, 0.04, 20, 2000, 1.00);
+
+SET @pr37 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-038'), 'EM001', 'Caja corrugada - presentacion 1', @p15, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 6.8000, 8.8400, 0.04, 20, 2000, 1.00);
+
+SET @pr38 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-039'), 'EM001', 'Caja corrugada - presentacion 2', @p15, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 8.1600, 10.6080, 0.04, 20, 2000, 1.00);
+
+SET @pr39 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-040'), 'EM001', 'Etiqueta termica - presentacion 1', @p12, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 0.1800, 0.2340, 0.04, 20, 2000, 1.00);
+
+SET @pr40 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-041'), 'EM001', 'Etiqueta termica - presentacion 2', @p12, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 0.2160, 0.2808, 0.04, 20, 2000, 1.00);
+
+SET @pr41 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-042'), 'EM001', 'Pelicula stretch - presentacion 1', @p13, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 24.5000, 31.8500, 0.04, 20, 2000, 1.00);
+
+SET @pr42 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-043'), 'EM001', 'Pelicula stretch - presentacion 2', @p13, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 29.4000, 38.2200, 0.04, 20, 2000, 1.00);
+
+SET @pr43 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-044'), 'EM001', 'Bolsa grado alimenticio - presentacion 1', @p14, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 0.6500, 0.8450, 0.04, 20, 2000, 1.00);
+
+SET @pr44 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-045'), 'EM001', 'Bolsa grado alimenticio - presentacion 2', @p14, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 0.7800, 1.0140, 0.04, 20, 2000, 1.00);
+
+SET @pr45 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-046'), 'EM001', 'Cinta de empaque - presentacion 1', @p15, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 9.2500, 12.0250, 0.04, 20, 2000, 1.00);
+
+SET @pr46 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-047'), 'EM001', 'Cinta de empaque - presentacion 2', @p15, @mar2, @cat2, @lin2, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 11.1000, 14.4300, 0.04, 20, 2000, 1.00);
+
+SET @pr47 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-048'), 'LI001', 'Detergente alcalino - presentacion 1', @p16, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 22.5000, 29.2500, 0.04, 20, 2000, 1.00);
+
+SET @pr48 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-049'), 'LI001', 'Detergente alcalino - presentacion 2', @p16, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 27.0000, 35.1000, 0.04, 20, 2000, 1.00);
+
+SET @pr49 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-050'), 'LI001', 'Sanitizante alimentario - presentacion 1', @p17, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 31.7500, 41.2750, 0.04, 20, 2000, 1.00);
+
+SET @pr50 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-051'), 'LI001', 'Sanitizante alimentario - presentacion 2', @p17, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 38.1000, 49.5300, 0.04, 20, 2000, 1.00);
+
+SET @pr51 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-052'), 'LI001', 'Desengrasante industrial - presentacion 1', @p18, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 26.4000, 34.3200, 0.04, 20, 2000, 1.00);
+
+SET @pr52 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-053'), 'LI001', 'Desengrasante industrial - presentacion 2', @p18, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 31.6800, 41.1840, 0.04, 20, 2000, 1.00);
+
+SET @pr53 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-054'), 'LI001', 'Jabon para manos - presentacion 1', @p18, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 18.5000, 24.0500, 0.04, 20, 2000, 1.00);
+
+SET @pr54 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-055'), 'LI001', 'Jabon para manos - presentacion 2', @p18, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 22.2000, 28.8600, 0.04, 20, 2000, 1.00);
+
+SET @pr55 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-056'), 'LI001', 'Guantes de nitrilo - presentacion 1', @p16, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 38.0000, 49.4000, 0.04, 20, 2000, 1.00);
+
+SET @pr56 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-057'), 'LI001', 'Guantes de nitrilo - presentacion 2', @p16, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 45.6000, 59.2800, 0.04, 20, 2000, 1.00);
+
+SET @pr57 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-058'), 'LI001', 'Cofia desechable - presentacion 1', @p17, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 0.4500, 0.5850, 0.04, 20, 2000, 1.00);
+
+SET @pr58 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-059'), 'LI001', 'Cofia desechable - presentacion 2', @p17, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 0.5400, 0.7020, 0.04, 20, 2000, 1.00);
+
+SET @pr59 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-060'), 'LI001', 'Cepillo sanitario - presentacion 1', @p18, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 45.0000, 58.5000, 0.04, 20, 2000, 1.00);
+
+SET @pr60 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-061'), 'LI001', 'Cepillo sanitario - presentacion 2', @p18, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 54.0000, 70.2000, 0.04, 20, 2000, 1.00);
+
+SET @pr61 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-062'), 'LI001', 'Papel industrial - presentacion 1', @p18, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 32.5000, 42.2500, 0.04, 20, 2000, 1.00);
+
+SET @pr62 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-063'), 'LI001', 'Papel industrial - presentacion 2', @p18, @mar3, @cat3, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 39.0000, 50.7000, 0.04, 20, 2000, 1.00);
+
+SET @pr63 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-064'), 'RE001', 'Sello para empacadora - presentacion 1', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 185.0000, 240.5000, 0.04, 2, 40, 1.00);
+
+SET @pr64 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-065'), 'RE001', 'Sello para empacadora - presentacion 2', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 222.0000, 288.6000, 0.04, 2, 40, 1.00);
+
+SET @pr65 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-066'), 'RE001', 'Cuchilla de molino - presentacion 1', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 320.0000, 416.0000, 0.04, 2, 40, 1.00);
+
+SET @pr66 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-067'), 'RE001', 'Cuchilla de molino - presentacion 2', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 384.0000, 499.2000, 0.04, 2, 40, 1.00);
+
+SET @pr67 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-068'), 'RE001', 'Rodamiento inoxidable - presentacion 1', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 145.0000, 188.5000, 0.04, 2, 40, 1.00);
+
+SET @pr68 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-069'), 'RE001', 'Rodamiento inoxidable - presentacion 2', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 174.0000, 226.2000, 0.04, 2, 40, 1.00);
+
+SET @pr69 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-070'), 'RE001', 'Banda transportadora - presentacion 1', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 475.0000, 617.5000, 0.04, 2, 40, 1.00);
+
+SET @pr70 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-071'), 'RE001', 'Banda transportadora - presentacion 2', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 570.0000, 741.0000, 0.04, 2, 40, 1.00);
+
+SET @pr71 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-072'), 'RE001', 'Sensor de temperatura - presentacion 1', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 225.0000, 292.5000, 0.04, 2, 40, 1.00);
+
+SET @pr72 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-073'), 'RE001', 'Sensor de temperatura - presentacion 2', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 270.0000, 351.0000, 0.04, 2, 40, 1.00);
+
+SET @pr73 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-074'), 'RE001', 'Empaque de silicona - presentacion 1', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 78.5000, 102.0500, 0.04, 2, 40, 1.00);
+
+SET @pr74 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-075'), 'RE001', 'Empaque de silicona - presentacion 2', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 94.2000, 122.4600, 0.04, 2, 40, 1.00);
+
+SET @pr75 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-076'), 'RE001', 'Filtro de refrigeracion - presentacion 1', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 165.0000, 214.5000, 0.04, 2, 40, 1.00);
+
+SET @pr76 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-077'), 'RE001', 'Filtro de refrigeracion - presentacion 2', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 198.0000, 257.4000, 0.04, 2, 40, 1.00);
+
+SET @pr77 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-078'), 'RE001', 'Lubricante alimentario - presentacion 1', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 95.0000, 123.5000, 0.04, 2, 40, 1.00);
+
+SET @pr78 = LAST_INSERT_ID();
+
+INSERT INTO tblProducto (skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto) VALUES (CONCAT('T16-', @lote, '-079'), 'RE001', 'Lubricante alimentario - presentacion 2', @p18, @mar4, @cat4, @lin3, 'Producto sintetico para pruebas de compras', UNHEX('89504E470D0A1A0A0000000D4948445200000001000000010804000000B51C0C020000000B4944415478DA6364F80F00010501012718E3660000000049454E44AE426082'), 'Guatemala', 114.0000, 148.2000, 0.04, 2, 40, 1.00);
+
+SET @pr79 = LAST_INSERT_ID();
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-01-05', '2026-01-05', @GTQ, NULL, 1, 23970.8000, 0.0000, 2876.4960, 26847.2960, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr0, @b0, 478, 24.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr1, @b0, 417, 29.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0000'), '2026-01-07', @mp0, @GTQ, NULL, 1, 23970.8000, 0.0000, 2876.4960, 26847.2960, 'Anulada', 1);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr0, @b0, 478, 24.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr1, @b0, 417, 29.4000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0000'), '2026-01-07', '2026-01-07', @GTQ, NULL, 1, 26847.2960, 0, 'Anulada', 1);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-01-06', '2026-01-21', @GTQ, NULL, 1, 10100.1500, 361.8595, 1168.5949, 10906.8854, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr3, @b2, 302, 23.7000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr2, @b2, 149, 19.7500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p1, 'T16-FAC', CONCAT(@lote, '-0001'), '2026-01-08', @mp0, @GTQ, NULL, 1, 10100.1500, 361.8595, 1168.5949, 10906.8854, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr3, @b2, 302, 23.7000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr2, @b2, 149, 19.7500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p1, @factura, 'T16-FAC', CONCAT(@lote, '-0001'), '2026-01-08', '2026-01-23', @GTQ, NULL, 1, 10906.8854, 5453.4427, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p1, '2026-01-23', 5453.4427, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0001'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0001'), @factura, 5453.4427);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Porcicola La Cumbre (Prueba)', 5453.4427, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-01-07', '2026-02-06', @GTQ, NULL, 1, 8793.0500, 182.6475, 1033.2483, 9643.6508, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr5, @b4, 184, 14.7000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr4, @b4, 497, 12.2500, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p2, 'T16-FAC', CONCAT(@lote, '-0002'), '2026-01-09', @mp0, @GTQ, NULL, 1, 8793.0500, 182.6475, 1033.2483, 9643.6508, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr5, @b4, 184, 14.7000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr4, @b4, 497, 12.2500, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p2, @factura, 'T16-FAC', CONCAT(@lote, '-0002'), '2026-01-09', '2026-02-08', @GTQ, NULL, 1, 9643.6508, 9643.6508, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p2, '2026-02-08', 9643.6508, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0002'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0002'), @factura, 9643.6508);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Avicola Los Pinos (Prueba)', 9643.6508, 'Efectivo', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-01-08', '2026-03-09', @GTQ, NULL, 1, 35154.9600, 1368.5448, 4054.3698, 37840.7850, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr6, @b6, 451, 34.8000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr7, @b6, 466, 41.7600, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0003'), '2026-01-10', @mp0, @GTQ, NULL, 1, 35154.9600, 1368.5448, 4054.3698, 37840.7850, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr6, @b6, 451, 34.8000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr7, @b6, 466, 41.7600, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0003'), '2026-01-10', '2026-03-11', @GTQ, NULL, 1, 37840.7850, 37840.7850, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-03-11', 18920.3925, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0003'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0003'), @factura, 18920.3925);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 18920.3925, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-01-09', '2026-04-09', @GTQ, NULL, 1, 11517.4800, 87.7500, 1371.5676, 12801.2976, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr9, @b8, 306, 28.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr8, @b8, 125, 23.4000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0004'), '2026-01-11', @mp0, @GTQ, NULL, 1, 11517.4800, 87.7500, 1371.5676, 12801.2976, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr9, @b8, 306, 28.0800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr8, @b8, 125, 23.4000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0004'), '2026-01-11', '2026-04-11', @GTQ, NULL, 1, 12801.2976, 12801.2976, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2026-04-11', 12801.2976, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0004'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0004'), @factura, 12801.2976);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 12801.2976, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-01-10', '2026-01-10', @GTQ, NULL, 1, 14753.5200, 313.5960, 1732.7909, 16172.7149, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr10, @b10, 456, 18.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr11, @b10, 281, 22.3200, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0005'), '2026-01-12', @mp0, @GTQ, NULL, 1, 14753.5200, 313.5960, 1732.7909, 16172.7149, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr10, @b10, 456, 18.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr11, @b10, 281, 22.3200, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0005'), '2026-01-12', '2026-01-12', @GTQ, NULL, 1, 16172.7149, 8086.3574, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-01-15', 8086.3575, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0005'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0005'), @factura, 8086.3575);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 8086.3575, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-01-11', '2026-01-26', @GTQ, NULL, 1, 27564.8200, 451.5336, 3253.5944, 30366.8808, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b0, 434, 34.6800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b0, 433, 28.9000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0006'), '2026-01-13', @mp0, @GTQ, NULL, 1, 27564.8200, 451.5336, 3253.5944, 30366.8808, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr13, @b0, 434, 34.6800, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr12, @b0, 433, 28.9000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0006'), '2026-01-13', '2026-01-28', @GTQ, NULL, 1, 30366.8808, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-01-28', 30366.8808, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0006'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0006'), @factura, 30366.8808);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 30366.8808, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-01-12', '2026-02-11', @GTQ, NULL, 1, 15807.9000, 385.1250, 1850.7330, 17273.5080, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr14, @b2, 195, 39.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr15, @b2, 171, 47.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0007'), '2026-01-14', @mp0, @GTQ, NULL, 1, 15807.9000, 385.1250, 1850.7330, 17273.5080, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr14, @b2, 195, 39.5000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr15, @b2, 171, 47.4000, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-01-16', 'Empaque danado durante el transporte', 'T16-NC', CONCAT(@lote, '-0007'), 798.5320);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr14, @b2, 19, 39.5000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p7, @credito, 'T16-NC', CONCAT(@lote, '-0007'), '2026-01-16', '2026-01-16', @GTQ, NULL, 1, -798.5320, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0007'), '2026-01-14', '2026-02-13', @GTQ, NULL, 1, 17273.5080, 16474.9760, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-02-13', 8237.4880, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0007'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0007'), @factura, 8237.4880);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 8237.4880, 'Tarjeta empresarial', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-01-13', '2026-03-14', @GTQ, NULL, 1, 1893.7600, 84.2880, 217.1366, 2026.6086, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr16, @b5, 65, 3.2000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr17, @b5, 439, 3.8400, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-01-14', '2026-04-14', @GTQ, NULL, 1, 38845.1000, 776.1250, 4568.2770, 42637.2520, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr27, @b7, 362, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr26, @b7, 30, 18.7500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr18, @b7, 220, 68.0000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr19, @b7, 186, 81.6000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-01-15', '2026-01-15', @USD, @tc0, 7.65, 1224.2226, 11.5001, 145.5267, 1358.2492, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr29, @b9, 34, 1.3333, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr28, @b9, 332, 1.1111, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr21, @b9, 64, 6.6667, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr20, @b9, 69, 5.5556, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-01-16', '2026-01-31', @GTQ, NULL, 1, 58237.4800, 1013.5524, 6866.8713, 64090.7989, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr23, @b11, 183, 59.7600, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr22, @b11, 51, 49.8000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr31, @b11, 419, 62.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr30, @b11, 358, 52.0000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-01-17', '2026-02-16', @GTQ, NULL, 1, 499.0100, 0.5130, 59.8196, 558.3166, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr33, @b1, 275, 1.0200, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr40, @b1, 57, 0.1800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr32, @b1, 245, 0.8500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0012'), '2026-01-19', @mp0, @GTQ, NULL, 1, 499.0100, 0.5130, 59.8196, 558.3166, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr33, @b1, 275, 1.0200, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr40, @b1, 57, 0.1800, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr32, @b1, 245, 0.8500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0012'), '2026-01-19', '2026-02-18', @GTQ, NULL, 1, 558.3166, 558.3166, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p12, '2026-02-18', 558.3166, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0012'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0012'), @factura, 558.3166);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Empaques del Valle (Prueba)', 558.3166, 'Transferencia bancaria', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-01-18', '2026-03-19', @GTQ, NULL, 1, 11410.4000, 542.2320, 1304.1802, 12172.3482, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr42, @b3, 408, 24.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr34, @b3, 416, 3.4000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p13, 'T16-FAC', CONCAT(@lote, '-0013'), '2026-01-20', @mp0, @GTQ, NULL, 1, 11410.4000, 542.2320, 1304.1802, 12172.3482, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr42, @b3, 408, 24.5000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr34, @b3, 416, 3.4000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p13, @factura, 'T16-FAC', CONCAT(@lote, '-0013'), '2026-01-20', '2026-03-21', @GTQ, NULL, 1, 12172.3482, 12172.3482, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p13, '2026-03-21', 6086.1741, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0013'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0013'), @factura, 6086.1741);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Plasticos Industriales Centro (Prueba)', 6086.1741, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-01-19', '2026-04-19', @GTQ, NULL, 1, 588.4800, 2.7144, 70.2919, 656.0575, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr37, @b5, 49, 1.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr45, @b5, 116, 0.7800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr36, @b5, 324, 1.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr44, @b5, 30, 0.6500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p14, 'T16-FAC', CONCAT(@lote, '-0014'), '2026-01-21', @mp0, @GTQ, NULL, 1, 588.4800, 2.7144, 70.2919, 656.0575, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr37, @b5, 49, 1.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr45, @b5, 116, 0.7800, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr36, @b5, 324, 1.2500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr44, @b5, 30, 0.6500, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-01-23', 'Empaque danado durante el transporte', 'T16-NC', CONCAT(@lote, '-0014'), 6.7200);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr37, @b5, 4, 1.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p14, @credito, 'T16-NC', CONCAT(@lote, '-0014'), '2026-01-23', '2026-01-23', @GTQ, NULL, 1, -6.7200, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p14, @factura, 'T16-FAC', CONCAT(@lote, '-0014'), '2026-01-21', '2026-04-21', @GTQ, NULL, 1, 656.0575, 649.3375, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p14, '2026-04-21', 649.3375, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0014'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0014'), @factura, 649.3375);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Cartones y Cajas del Sur (Prueba)', 649.3375, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-01-20', '2026-01-20', @GTQ, NULL, 1, 13203.7500, 197.8800, 1560.7044, 14566.5744, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr38, @b7, 139, 6.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr39, @b7, 485, 8.1600, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr47, @b7, 447, 11.1000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr46, @b7, 361, 9.2500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p15, 'T16-FAC', CONCAT(@lote, '-0015'), '2026-01-22', @mp0, @GTQ, NULL, 1, 13203.7500, 197.8800, 1560.7044, 14566.5744, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr38, @b7, 139, 6.8000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr39, @b7, 485, 8.1600, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr47, @b7, 447, 11.1000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr46, @b7, 361, 9.2500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p15, @factura, 'T16-FAC', CONCAT(@lote, '-0015'), '2026-01-22', '2026-01-22', @GTQ, NULL, 1, 14566.5744, 7283.2872, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p15, '2026-01-25', 7283.2872, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0015'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0015'), @factura, 7283.2872);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Etiquetas del Istmo (Prueba)', 7283.2872, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-01-21', '2026-02-05', @GTQ, NULL, 1, 17341.6000, 492.7080, 2021.8670, 18870.7590, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr57, @b9, 56, 45.6000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr49, @b9, 34, 27.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr56, @b9, 365, 38.0000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p16, 'T16-FAC', CONCAT(@lote, '-0016'), '2026-01-23', @mp0, @GTQ, NULL, 1, 17341.6000, 492.7080, 2021.8670, 18870.7590, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr57, @b9, 56, 45.6000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr49, @b9, 34, 27.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr56, @b9, 365, 38.0000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p16, @factura, 'T16-FAC', CONCAT(@lote, '-0016'), '2026-01-23', '2026-02-07', @GTQ, NULL, 1, 18870.7590, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p16, '2026-02-07', 18870.7590, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0016'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0016'), @factura, 18870.7590);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Higiene Industrial del Norte (Prueba)', 18870.7590, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-01-22', '2026-02-21', @GTQ, NULL, 1, 19544.5500, 191.0340, 2322.4219, 21675.9379, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr58, @b11, 210, 0.4500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr51, @b11, 163, 38.1000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr50, @b11, 417, 31.7500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0017'), '2026-01-24', @mp0, @GTQ, NULL, 1, 19544.5500, 191.0340, 2322.4219, 21675.9379, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr58, @b11, 210, 0.4500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr51, @b11, 163, 38.1000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr50, @b11, 417, 31.7500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0017'), '2026-01-24', '2026-02-23', @GTQ, NULL, 1, 21675.9379, 21675.9379, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p17, '2026-02-23', 10837.9690, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0017'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0017'), @factura, 10837.9690);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Soluciones Sanitarias del Sur (Prueba)', 10837.9690, 'Cheque', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-01-23', '2026-03-24', @USD, @tc0, 7.65, 1979.7381, 7.1176, 236.7145, 2209.3350, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr70, @b1, 23, 62.0915, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr76, @b1, 11, 21.5686, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr64, @b1, 13, 24.1830, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p18, 'T16-FAC', CONCAT(@lote, '-0018'), '2026-01-25', @mp0, @USD, @tc0, 7.65, 1979.7381, 7.1176, 236.7145, 2209.3350, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr70, @b1, 23, 62.0915, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr76, @b1, 11, 21.5686, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr64, @b1, 13, 24.1830, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p18, @factura, 'T16-FAC', CONCAT(@lote, '-0018'), '2026-01-25', '2026-03-26', @USD, @tc0, 7.65, 2209.3350, 2209.3350, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p18, '2026-03-26', 2209.3350, @mp2, @USD, @tc0, 7.65, CONCAT(@lote, '-0018'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0018'), @factura, 2209.3350);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Repuestos Frio Industrial (Prueba)', 2209.3350, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-01-24', '2026-01-24', @GTQ, NULL, 1, 16243.5000, 0.0000, 1949.2200, 18192.7200, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr0, @b2, 495, 24.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr1, @b2, 140, 29.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0019'), '2026-01-26', @mp0, @GTQ, NULL, 1, 16243.5000, 0.0000, 1949.2200, 18192.7200, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr0, @b2, 495, 24.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr1, @b2, 140, 29.4000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0019'), '2026-01-26', '2026-01-26', @GTQ, NULL, 1, 18192.7200, 18192.7200, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p0, '2026-01-29', 9096.3600, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0019'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0019'), @factura, 9096.3600);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes del Valle (Prueba)', 9096.3600, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-01-25', '2026-02-09', @GTQ, NULL, 1, 7295.6500, 0.0000, 875.4780, 8171.1280, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr2, @b4, 247, 19.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr3, @b4, 102, 23.7000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-01-26', '2026-02-25', @GTQ, NULL, 1, 10449.2500, 0.0000, 1253.9100, 11703.1600, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr4, @b6, 271, 12.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr5, @b6, 485, 14.7000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-01-27', '2026-03-28', @GTQ, NULL, 1, 10307.7600, 0.0000, 1236.9312, 11544.6912, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr7, @b8, 141, 41.7600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr6, @b8, 127, 34.8000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-01-28', '2026-04-28', @GTQ, NULL, 1, 20643.4800, 218.3220, 2451.0190, 22876.1770, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr9, @b10, 476, 28.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr8, @b10, 311, 23.4000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-01-29', '2026-01-29', @GTQ, NULL, 1, 8604.3600, 0.0000, 1032.5232, 9636.8832, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr11, @b0, 253, 22.3200, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr10, @b0, 159, 18.6000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0024'), '2026-01-31', @mp0, @GTQ, NULL, 1, 8604.3600, 0.0000, 1032.5232, 9636.8832, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr11, @b0, 253, 22.3200, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr10, @b0, 159, 18.6000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0024'), '2026-01-31', '2026-01-31', @GTQ, NULL, 1, 9636.8832, 9636.8832, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-02-03', 9636.8832, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0024'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0024'), @factura, 9636.8832);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 9636.8832, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-01-30', '2026-02-14', @GTQ, NULL, 1, 18761.8800, 0.0000, 2251.4256, 21013.3056, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr12, @b2, 174, 28.9000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr13, @b2, 396, 34.6800, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0025'), '2026-02-01', @mp0, @GTQ, NULL, 1, 18761.8800, 0.0000, 2251.4256, 21013.3056, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr12, @b2, 174, 28.9000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr13, @b2, 396, 34.6800, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0025'), '2026-02-01', '2026-02-16', @GTQ, NULL, 1, 21013.3056, 10506.6528, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-02-16', 10506.6528, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0025'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0025'), @factura, 10506.6528);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 10506.6528, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-01-31', '2026-03-02', @GTQ, NULL, 1, 36640.2000, 1156.5600, 4258.0368, 39741.6768, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr14, @b4, 342, 39.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr15, @b4, 488, 47.4000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0026'), '2026-02-02', @mp0, @GTQ, NULL, 1, 36640.2000, 1156.5600, 4258.0368, 39741.6768, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr14, @b4, 342, 39.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr15, @b4, 488, 47.4000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0026'), '2026-02-02', '2026-03-04', @GTQ, NULL, 1, 39741.6768, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-03-04', 39741.6768, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0026'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0026'), @factura, 39741.6768);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 39741.6768, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-02-01', '2026-04-02', @GTQ, NULL, 1, 26975.4800, 409.7844, 3187.8835, 29753.5791, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr17, @b7, 272, 3.8400, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr25, @b7, 290, 43.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr24, @b7, 336, 36.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr16, @b7, 355, 3.2000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p8, 'T16-FAC', CONCAT(@lote, '-0027'), '2026-02-03', @mp0, @GTQ, NULL, 1, 26975.4800, 409.7844, 3187.8835, 29753.5791, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr17, @b7, 272, 3.8400, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr25, @b7, 290, 43.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr24, @b7, 336, 36.2500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr16, @b7, 355, 3.2000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p8, @factura, 'T16-FAC', CONCAT(@lote, '-0027'), '2026-02-03', '2026-04-04', @GTQ, NULL, 1, 29753.5791, 29753.5791, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p8, '2026-04-04', 14876.7896, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0027'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0027'), @factura, 14876.7896);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Especias del Altiplano (Prueba)', 14876.7896, 'Tarjeta empresarial', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-02-02', '2026-05-03', @GTQ, NULL, 1, 29333.0000, 666.4000, 3439.9920, 32106.5920, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr26, @b9, 370, 18.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr27, @b9, 403, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr18, @b9, 196, 68.0000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p9, 'T16-FAC', CONCAT(@lote, '-0028'), '2026-02-04', @mp0, @GTQ, NULL, 1, 29333.0000, 666.4000, 3439.9920, 32106.5920, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr26, @b9, 370, 18.7500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr27, @b9, 403, 22.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr18, @b9, 196, 68.0000, 0.05);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-02-06', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0028'), 777.0000);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr26, @b9, 37, 18.7500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p9, @credito, 'T16-NC', CONCAT(@lote, '-0028'), '2026-02-06', '2026-02-06', @GTQ, NULL, 1, -777.0000, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p9, @factura, 'T16-FAC', CONCAT(@lote, '-0028'), '2026-02-04', '2026-05-05', @GTQ, NULL, 1, 32106.5920, 31329.5920, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p9, '2026-05-05', 31329.5920, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0028'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0028'), @factura, 31329.5920);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Condimentos La Huerta (Prueba)', 31329.5920, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-02-03', '2026-02-03', @USD, @tc1, 7.66, 695.7637, 4.4943, 82.9523, 774.2217, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr21, @b11, 91, 6.6580, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr28, @b11, 81, 1.1097, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0029'), '2026-02-05', @mp0, @USD, @tc1, 7.66, 695.7637, 4.4943, 82.9523, 774.2217, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr21, @b11, 91, 6.6580, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr28, @b11, 81, 1.1097, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0029'), '2026-02-05', '2026-02-05', @USD, @tc1, 7.66, 774.2217, 774.2217, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-02-08', 387.1109, @mp1, @USD, @tc1, 7.66, CONCAT(@lote, '-0029'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0029'), @factura, 387.1109);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 387.1109, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-02-04', '2026-02-19', @GTQ, NULL, 1, 58508.3200, 1358.2440, 6858.0091, 64008.0851, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr31, @b1, 87, 62.4000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr23, @b1, 327, 59.7600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr22, @b1, 190, 49.8000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr30, @b1, 463, 52.0000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p11, 'T16-FAC', CONCAT(@lote, '-0030'), '2026-02-06', @mp0, @GTQ, NULL, 1, 58508.3200, 1358.2440, 6858.0091, 64008.0851, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr31, @b1, 87, 62.4000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr23, @b1, 327, 59.7600, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr22, @b1, 190, 49.8000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr30, @b1, 463, 52.0000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p11, @factura, 'T16-FAC', CONCAT(@lote, '-0030'), '2026-02-06', '2026-02-21', @GTQ, NULL, 1, 64008.0851, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p11, '2026-02-21', 64008.0851, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0030'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0030'), @factura, 64008.0851);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Suministros Alimentarios Maya (Prueba)', 64008.0851, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-02-05', '2026-03-07', @GTQ, NULL, 1, 551.4760, 25.8998, 63.0691, 588.6453, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr33, @b3, 308, 1.0200, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr32, @b3, 190, 0.8500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr41, @b3, 196, 0.2160, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr40, @b3, 186, 0.1800, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0031'), '2026-02-07', @mp0, @GTQ, NULL, 1, 551.4760, 25.8998, 63.0691, 588.6453, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr33, @b3, 308, 1.0200, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr32, @b3, 190, 0.8500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr41, @b3, 196, 0.2160, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr40, @b3, 186, 0.1800, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0031'), '2026-02-07', '2026-03-09', @GTQ, NULL, 1, 588.6453, 294.3226, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p12, '2026-03-09', 294.3227, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0031'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0031'), @factura, 294.3227);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Empaques del Valle (Prueba)', 294.3227, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-02-06', '2026-04-07', @GTQ, NULL, 1, 6715.2400, 102.6732, 793.5080, 7406.0748, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr35, @b5, 473, 4.0800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr43, @b5, 112, 29.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr34, @b5, 439, 3.4000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-02-07', '2026-05-08', @GTQ, NULL, 1, 388.8000, 5.5800, 45.9864, 429.2064, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr44, @b7, 312, 0.6500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr37, @b7, 124, 1.5000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-02-08', '2026-02-08', @GTQ, NULL, 1, 10218.3000, 360.9750, 1182.8790, 11040.2040, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr39, @b9, 410, 8.1600, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr38, @b9, 441, 6.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr47, @b9, 349, 11.1000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-02-09', '2026-02-24', @GTQ, NULL, 1, 25693.2000, 723.9000, 2996.3160, 27965.6160, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr48, @b11, 308, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr56, @b11, 381, 38.0000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr57, @b11, 62, 45.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr49, @b11, 54, 27.0000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-02-10', '2026-03-12', @GTQ, NULL, 1, 11630.1100, 3.7800, 1395.1596, 13021.4896, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr59, @b1, 94, 0.5400, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr58, @b1, 92, 0.4500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr51, @b1, 207, 38.1000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr50, @b1, 115, 31.7500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0036'), '2026-02-12', @mp0, @GTQ, NULL, 1, 11630.1100, 3.7800, 1395.1596, 13021.4896, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr59, @b1, 94, 0.5400, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr58, @b1, 92, 0.4500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr51, @b1, 207, 38.1000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr50, @b1, 115, 31.7500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0036'), '2026-02-12', '2026-03-14', @GTQ, NULL, 1, 13021.4896, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p17, '2026-03-14', 13021.4896, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0036'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0036'), @factura, 13021.4896);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Soluciones Sanitarias del Sur (Prueba)', 13021.4896, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-02-11', '2026-04-12', @USD, @tc1, 7.66, 2407.9692, 17.2168, 286.8903, 2677.6427, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr66, @b3, 4, 41.7755, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr62, @b3, 447, 4.2428, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr75, @b3, 28, 12.2977, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p18, 'T16-FAC', CONCAT(@lote, '-0037'), '2026-02-13', @mp0, @USD, @tc1, 7.66, 2407.9692, 17.2168, 286.8903, 2677.6427, 'Anulada', 1);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr66, @b3, 4, 41.7755, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr62, @b3, 447, 4.2428, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr75, @b3, 28, 12.2977, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p18, @factura, 'T16-FAC', CONCAT(@lote, '-0037'), '2026-02-13', '2026-04-14', @USD, @tc1, 7.66, 2677.6427, 0, 'Anulada', 1);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-02-12', '2026-02-12', @GTQ, NULL, 1, 16856.0000, 705.6000, 1938.0480, 18088.4480, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr1, @b4, 480, 29.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr0, @b4, 112, 24.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0038'), '2026-02-14', @mp0, @GTQ, NULL, 1, 16856.0000, 705.6000, 1938.0480, 18088.4480, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr1, @b4, 480, 29.4000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr0, @b4, 112, 24.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0038'), '2026-02-14', '2026-02-14', @GTQ, NULL, 1, 18088.4480, 18088.4480, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p0, '2026-02-17', 18088.4480, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0038'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0038'), @factura, 18088.4480);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes del Valle (Prueba)', 18088.4480, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-02-13', '2026-02-28', @GTQ, NULL, 1, 12857.2500, 435.4875, 1490.6115, 13912.3740, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr2, @b6, 441, 19.7500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr3, @b6, 175, 23.7000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p1, 'T16-FAC', CONCAT(@lote, '-0039'), '2026-02-15', @mp0, @GTQ, NULL, 1, 12857.2500, 435.4875, 1490.6115, 13912.3740, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr2, @b6, 441, 19.7500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr3, @b6, 175, 23.7000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p1, @factura, 'T16-FAC', CONCAT(@lote, '-0039'), '2026-02-15', '2026-03-02', @GTQ, NULL, 1, 13912.3740, 13912.3740, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p1, '2026-03-02', 6956.1870, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0039'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0039'), @factura, 6956.1870);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Porcicola La Cumbre (Prueba)', 6956.1870, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-02-14', '2026-03-16', @GTQ, NULL, 1, 9341.8500, 467.0925, 1064.9709, 9939.7284, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr5, @b8, 493, 14.7000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr4, @b8, 171, 12.2500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p2, 'T16-FAC', CONCAT(@lote, '-0040'), '2026-02-16', @mp0, @GTQ, NULL, 1, 9341.8500, 467.0925, 1064.9709, 9939.7284, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr5, @b8, 493, 14.7000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr4, @b8, 171, 12.2500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p2, @factura, 'T16-FAC', CONCAT(@lote, '-0040'), '2026-02-16', '2026-03-18', @GTQ, NULL, 1, 9939.7284, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p2, '2026-03-18', 9939.7284, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0040'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0040'), @factura, 9939.7284);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Avicola Los Pinos (Prueba)', 9939.7284, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-02-15', '2026-04-16', @GTQ, NULL, 1, 22237.2000, 72.0360, 2659.8197, 24824.9837, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr7, @b10, 475, 41.7600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr6, @b10, 69, 34.8000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0041'), '2026-02-17', @mp0, @GTQ, NULL, 1, 22237.2000, 72.0360, 2659.8197, 24824.9837, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr7, @b10, 475, 41.7600, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr6, @b10, 69, 34.8000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0041'), '2026-02-17', '2026-04-18', @GTQ, NULL, 1, 24824.9837, 12412.4918, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-04-18', 12412.4919, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0041'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0041'), @factura, 12412.4919);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 12412.4919, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-02-16', '2026-05-17', @GTQ, NULL, 1, 12341.1600, 270.2700, 1448.5068, 13519.3968, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr8, @b0, 231, 23.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr9, @b0, 247, 28.0800, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0042'), '2026-02-18', @mp0, @GTQ, NULL, 1, 12341.1600, 270.2700, 1448.5068, 13519.3968, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr8, @b0, 231, 23.4000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr9, @b0, 247, 28.0800, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-02-20', 'Empaque danado durante el transporte', 'T16-NC', CONCAT(@lote, '-0042'), 572.6448);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr8, @b0, 23, 23.4000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p4, @credito, 'T16-NC', CONCAT(@lote, '-0042'), '2026-02-20', '2026-02-20', @GTQ, NULL, 1, -572.6448, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0042'), '2026-02-18', '2026-05-19', @GTQ, NULL, 1, 13519.3968, 12946.7520, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2026-05-19', 12946.7520, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0042'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0042'), @factura, 12946.7520);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 12946.7520, 'Efectivo', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-02-17', '2026-02-17', @GTQ, NULL, 1, 7998.0000, 0.0000, 959.7600, 8957.7600, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr10, @b2, 58, 18.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr11, @b2, 310, 22.3200, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0043'), '2026-02-19', @mp0, @GTQ, NULL, 1, 7998.0000, 0.0000, 959.7600, 8957.7600, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr10, @b2, 58, 18.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr11, @b2, 310, 22.3200, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0043'), '2026-02-19', '2026-02-19', @GTQ, NULL, 1, 8957.7600, 8957.7600, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-02-22', 4478.8800, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0043'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0043'), @factura, 4478.8800);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 4478.8800, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-02-18', '2026-03-05', @GTQ, NULL, 1, 20334.0400, 0.0000, 2440.0848, 22774.1248, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b4, 393, 34.6800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b4, 232, 28.9000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-02-19', '2026-03-21', @GTQ, NULL, 1, 10333.2000, 341.2800, 1199.0304, 11190.9504, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr15, @b6, 33, 47.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr14, @b6, 222, 39.5000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-02-20', '2026-04-21', @GTQ, NULL, 1, 39074.6100, 1912.9753, 4459.3962, 41621.0309, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr16, @b9, 188, 3.2000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr17, @b9, 139, 3.8400, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr25, @b9, 483, 43.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr24, @b9, 467, 36.2500, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-02-21', '2026-05-22', @GTQ, NULL, 1, 55318.8500, 0.0000, 6638.2620, 61957.1120, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr26, @b11, 255, 18.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr19, @b11, 396, 81.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr18, @b11, 268, 68.0000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-02-22', '2026-02-22', @USD, @tc1, 7.66, 4537.4271, 190.7850, 521.5971, 4868.2392, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr20, @b1, 347, 5.5483, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr29, @b1, 315, 1.3316, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr28, @b1, 350, 1.1097, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr21, @b1, 271, 6.6580, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0048'), '2026-02-24', @mp0, @USD, @tc1, 7.66, 4537.4271, 190.7850, 521.5971, 4868.2392, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr20, @b1, 347, 5.5483, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr29, @b1, 315, 1.3316, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr28, @b1, 350, 1.1097, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr21, @b1, 271, 6.6580, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0048'), '2026-02-24', '2026-02-24', @USD, @tc1, 7.66, 4868.2392, 4868.2392, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-02-27', 4868.2392, @mp0, @USD, @tc1, 7.66, CONCAT(@lote, '-0048'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0048'), @factura, 4868.2392);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 4868.2392, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-02-23', '2026-03-10', @GTQ, NULL, 1, 53858.2000, 637.9380, 6386.4314, 59606.6934, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr30, @b3, 154, 52.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr22, @b3, 427, 49.8000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr31, @b3, 394, 62.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p11, 'T16-FAC', CONCAT(@lote, '-0049'), '2026-02-25', @mp0, @GTQ, NULL, 1, 53858.2000, 637.9380, 6386.4314, 59606.6934, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr30, @b3, 154, 52.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr22, @b3, 427, 49.8000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr31, @b3, 394, 62.4000, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-02-27', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0049'), 873.6000);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr30, @b3, 15, 52.0000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p11, @credito, 'T16-NC', CONCAT(@lote, '-0049'), '2026-02-27', '2026-02-27', @GTQ, NULL, 1, -873.6000, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p11, @factura, 'T16-FAC', CONCAT(@lote, '-0049'), '2026-02-25', '2026-03-12', @GTQ, NULL, 1, 59606.6934, 58733.0934, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p11, '2026-03-12', 29366.5467, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0049'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0049'), @factura, 29366.5467);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Suministros Alimentarios Maya (Prueba)', 29366.5467, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-02-24', '2026-03-26', @GTQ, NULL, 1, 651.4120, 2.7216, 77.8428, 726.5332, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr40, @b5, 453, 0.1800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr41, @b5, 252, 0.2160, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr32, @b5, 442, 0.8500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr33, @b5, 137, 1.0200, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0050'), '2026-02-26', @mp0, @GTQ, NULL, 1, 651.4120, 2.7216, 77.8428, 726.5332, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr40, @b5, 453, 0.1800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr41, @b5, 252, 0.2160, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr32, @b5, 442, 0.8500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr33, @b5, 137, 1.0200, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0050'), '2026-02-26', '2026-03-28', @GTQ, NULL, 1, 726.5332, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p12, '2026-03-28', 726.5332, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0050'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0050'), @factura, 726.5332);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Empaques del Valle (Prueba)', 726.5332, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-02-25', '2026-04-26', @GTQ, NULL, 1, 18434.9400, 0.0000, 2212.1928, 20647.1328, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr34, @b7, 259, 3.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr35, @b7, 463, 4.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr42, @b7, 343, 24.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr43, @b7, 247, 29.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p13, 'T16-FAC', CONCAT(@lote, '-0051'), '2026-02-27', @mp0, @GTQ, NULL, 1, 18434.9400, 0.0000, 2212.1928, 20647.1328, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr34, @b7, 259, 3.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr35, @b7, 463, 4.0800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr42, @b7, 343, 24.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr43, @b7, 247, 29.4000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p13, @factura, 'T16-FAC', CONCAT(@lote, '-0051'), '2026-02-27', '2026-04-28', @GTQ, NULL, 1, 20647.1328, 10323.5664, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p13, '2026-04-28', 10323.5664, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0051'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0051'), @factura, 10323.5664);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Plasticos Industriales Centro (Prueba)', 10323.5664, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-02-26', '2026-05-27', @GTQ, NULL, 1, 459.9800, 19.2454, 52.8882, 493.6228, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr37, @b9, 83, 1.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr44, @b9, 117, 0.6500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr45, @b9, 81, 0.7800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr36, @b9, 157, 1.2500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p14, 'T16-FAC', CONCAT(@lote, '-0052'), '2026-02-28', @mp0, @GTQ, NULL, 1, 459.9800, 19.2454, 52.8882, 493.6228, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr37, @b9, 83, 1.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr44, @b9, 117, 0.6500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr45, @b9, 81, 0.7800, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr36, @b9, 157, 1.2500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p14, @factura, 'T16-FAC', CONCAT(@lote, '-0052'), '2026-02-28', '2026-05-29', @GTQ, NULL, 1, 493.6228, 493.6228, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p14, '2026-05-29', 493.6228, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0052'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0052'), @factura, 493.6228);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Cartones y Cajas del Sur (Prueba)', 493.6228, 'Transferencia bancaria', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-02-27', '2026-02-27', @GTQ, NULL, 1, 6146.2000, 213.6260, 711.9089, 6644.4829, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr38, @b11, 215, 6.8000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr47, @b11, 422, 11.1000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p15, 'T16-FAC', CONCAT(@lote, '-0053'), '2026-03-01', @mp0, @GTQ, NULL, 1, 6146.2000, 213.6260, 711.9089, 6644.4829, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr38, @b11, 215, 6.8000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr47, @b11, 422, 11.1000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p15, @factura, 'T16-FAC', CONCAT(@lote, '-0053'), '2026-03-01', '2026-03-01', @GTQ, NULL, 1, 6644.4829, 6644.4829, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p15, '2026-03-04', 3322.2415, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0053'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0053'), @factura, 3322.2415);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Etiquetas del Istmo (Prueba)', 3322.2415, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-02-28', '2026-03-15', @GTQ, NULL, 1, 23054.1000, 596.4480, 2694.9182, 25152.5702, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr57, @b1, 436, 45.6000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr48, @b1, 141, 22.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p16, 'T16-FAC', CONCAT(@lote, '-0054'), '2026-03-02', @mp0, @GTQ, NULL, 1, 23054.1000, 596.4480, 2694.9182, 25152.5702, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr57, @b1, 436, 45.6000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr48, @b1, 141, 22.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p16, @factura, 'T16-FAC', CONCAT(@lote, '-0054'), '2026-03-02', '2026-03-17', @GTQ, NULL, 1, 25152.5702, 25152.5702, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p16, '2026-03-17', 25152.5702, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0054'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0054'), @factura, 25152.5702);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Higiene Industrial del Norte (Prueba)', 25152.5702, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-03-01', '2026-03-31', @GTQ, NULL, 1, 16012.8800, 7.5654, 1920.6378, 17925.9524, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr51, @b3, 127, 38.1000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr59, @b3, 467, 0.5400, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr50, @b3, 344, 31.7500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0055'), '2026-03-03', @mp0, @GTQ, NULL, 1, 16012.8800, 7.5654, 1920.6378, 17925.9524, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr51, @b3, 127, 38.1000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr59, @b3, 467, 0.5400, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr50, @b3, 344, 31.7500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0055'), '2026-03-03', '2026-04-02', @GTQ, NULL, 1, 17925.9524, 8962.9762, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p17, '2026-04-02', 8962.9762, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0055'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0055'), @factura, 8962.9762);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Soluciones Sanitarias del Sur (Prueba)', 8962.9762, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-03-02', '2026-05-01', @USD, @tc2, 7.67, 3262.9048, 139.7280, 374.7812, 3497.9580, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr63, @b5, 324, 5.0847, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr65, @b5, 30, 28.9439, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr77, @b5, 18, 25.8149, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr75, @b5, 23, 12.2816, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-03-03', '2026-03-03', @GTQ, NULL, 1, 24112.9000, 973.8750, 2776.6830, 25915.7080, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr0, @b6, 473, 24.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr1, @b6, 426, 29.4000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-03-04', '2026-03-19', @GTQ, NULL, 1, 13141.6500, 508.9575, 1515.9231, 14148.6156, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr2, @b8, 375, 19.7500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr3, @b8, 242, 23.7000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-03-05', '2026-04-04', @GTQ, NULL, 1, 4618.2500, 116.4975, 540.2103, 5041.9628, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr4, @b10, 317, 12.2500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr5, @b10, 50, 14.7000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-03-06', '2026-05-05', @GTQ, NULL, 1, 32865.1200, 1643.2560, 3746.6237, 34968.4877, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr7, @b0, 397, 41.7600, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr6, @b0, 468, 34.8000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0060'), '2026-03-08', @mp0, @GTQ, NULL, 1, 32865.1200, 1643.2560, 3746.6237, 34968.4877, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr7, @b0, 397, 41.7600, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr6, @b0, 468, 34.8000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0060'), '2026-03-08', '2026-05-07', @GTQ, NULL, 1, 34968.4877, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-05-07', 34968.4877, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0060'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0060'), @factura, 34968.4877);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 34968.4877, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-03-07', '2026-06-05', @GTQ, NULL, 1, 17475.1200, 672.5160, 2016.3125, 18818.9165, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr9, @b2, 264, 28.0800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr8, @b2, 430, 23.4000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0061'), '2026-03-09', @mp0, @GTQ, NULL, 1, 17475.1200, 672.5160, 2016.3125, 18818.9165, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr9, @b2, 264, 28.0800, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr8, @b2, 430, 23.4000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0061'), '2026-03-09', '2026-06-07', @GTQ, NULL, 1, 18818.9165, 9409.4582, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2026-06-07', 9409.4583, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0061'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0061'), @factura, 9409.4583);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 9409.4583, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-03-08', '2026-03-08', @GTQ, NULL, 1, 7183.3200, 0.0000, 861.9984, 8045.3184, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr10, @b4, 211, 18.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr11, @b4, 146, 22.3200, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0062'), '2026-03-10', @mp0, @GTQ, NULL, 1, 7183.3200, 0.0000, 861.9984, 8045.3184, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr10, @b4, 211, 18.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr11, @b4, 146, 22.3200, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0062'), '2026-03-10', '2026-03-10', @GTQ, NULL, 1, 8045.3184, 8045.3184, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-03-13', 8045.3184, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0062'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0062'), @factura, 8045.3184);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 8045.3184, 'Efectivo', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-03-09', '2026-03-24', @GTQ, NULL, 1, 7248.1200, 0.0000, 869.7744, 8117.8944, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr12, @b6, 144, 28.9000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr13, @b6, 89, 34.6800, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0063'), '2026-03-11', @mp0, @GTQ, NULL, 1, 7248.1200, 0.0000, 869.7744, 8117.8944, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr12, @b6, 144, 28.9000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr13, @b6, 89, 34.6800, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-03-13', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0063'), 453.1520);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr12, @b6, 14, 28.9000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p6, @credito, 'T16-NC', CONCAT(@lote, '-0063'), '2026-03-13', '2026-03-13', @GTQ, NULL, 1, -453.1520, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0063'), '2026-03-11', '2026-03-26', @GTQ, NULL, 1, 8117.8944, 7664.7424, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-03-26', 3832.3712, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0063'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0063'), @factura, 3832.3712);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 3832.3712, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-03-10', '2026-04-09', @GTQ, NULL, 1, 34760.0000, 754.4500, 4080.6660, 38086.2160, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr14, @b8, 382, 39.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr15, @b8, 415, 47.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0064'), '2026-03-12', @mp0, @GTQ, NULL, 1, 34760.0000, 754.4500, 4080.6660, 38086.2160, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr14, @b8, 382, 39.5000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr15, @b8, 415, 47.4000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0064'), '2026-03-12', '2026-04-11', @GTQ, NULL, 1, 38086.2160, 38086.2160, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-04-11', 38086.2160, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0064'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0064'), @factura, 38086.2160);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 38086.2160, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-03-11', '2026-05-10', @GTQ, NULL, 1, 25871.1700, 775.9085, 3011.4314, 28106.6929, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr25, @b11, 238, 43.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr17, @b11, 73, 3.8400, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr24, @b11, 417, 36.2500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr16, @b11, 38, 3.2000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p8, 'T16-FAC', CONCAT(@lote, '-0065'), '2026-03-13', @mp0, @GTQ, NULL, 1, 25871.1700, 775.9085, 3011.4314, 28106.6929, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr25, @b11, 238, 43.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr17, @b11, 73, 3.8400, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr24, @b11, 417, 36.2500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr16, @b11, 38, 3.2000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p8, @factura, 'T16-FAC', CONCAT(@lote, '-0065'), '2026-03-13', '2026-05-12', @GTQ, NULL, 1, 28106.6929, 14053.3464, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p8, '2026-05-12', 14053.3465, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0065'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0065'), @factura, 14053.3465);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Especias del Altiplano (Prueba)', 14053.3465, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-03-12', '2026-06-10', @GTQ, NULL, 1, 60910.8500, 0.0000, 7309.3020, 68220.1520, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr18, @b1, 487, 68.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr26, @b1, 109, 18.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr19, @b1, 296, 81.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr27, @b1, 71, 22.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p9, 'T16-FAC', CONCAT(@lote, '-0066'), '2026-03-14', @mp0, @GTQ, NULL, 1, 60910.8500, 0.0000, 7309.3020, 68220.1520, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr18, @b1, 487, 68.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr26, @b1, 109, 18.7500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr19, @b1, 296, 81.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr27, @b1, 71, 22.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p9, @factura, 'T16-FAC', CONCAT(@lote, '-0066'), '2026-03-14', '2026-06-12', @GTQ, NULL, 1, 68220.1520, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p9, '2026-06-12', 68220.1520, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0066'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0066'), @factura, 68220.1520);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Condimentos La Huerta (Prueba)', 68220.1520, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-03-13', '2026-03-13', @USD, @tc2, 7.67, 1988.8158, 59.6645, 231.4982, 2160.6495, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr21, @b3, 162, 6.6493, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr28, @b3, 345, 1.1082, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr29, @b3, 398, 1.3299, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0067'), '2026-03-15', @mp0, @USD, @tc2, 7.67, 1988.8158, 59.6645, 231.4982, 2160.6495, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr21, @b3, 162, 6.6493, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr28, @b3, 345, 1.1082, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr29, @b3, 398, 1.3299, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0067'), '2026-03-15', '2026-03-15', @USD, @tc2, 7.67, 2160.6495, 2160.6495, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-03-18', 1080.3248, @mp3, @USD, @tc2, 7.67, CONCAT(@lote, '-0067'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0067'), @factura, 1080.3248);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 1080.3248, 'Tarjeta empresarial', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-03-14', '2026-03-29', @GTQ, NULL, 1, 45091.4000, 387.4000, 5364.4800, 50068.4800, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr30, @b5, 149, 52.0000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr22, @b5, 285, 49.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr31, @b5, 371, 62.4000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-03-15', '2026-04-14', @GTQ, NULL, 1, 780.1040, 0.0000, 93.6125, 873.7165, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr33, @b7, 477, 1.0200, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr32, @b7, 284, 0.8500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr40, @b7, 225, 0.1800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr41, @b7, 54, 0.2160, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-03-16', '2026-05-15', @GTQ, NULL, 1, 13210.4000, 344.8620, 1543.8646, 14409.4026, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr43, @b9, 391, 29.4000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr42, @b9, 70, 24.5000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-03-17', '2026-06-15', @GTQ, NULL, 1, 1368.0600, 30.0588, 160.5601, 1498.5613, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr36, @b11, 93, 1.2500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr37, @b11, 411, 1.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr45, @b11, 482, 0.7800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr44, @b11, 399, 0.6500, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-03-18', '2026-03-18', @GTQ, NULL, 1, 4880.6500, 0.0000, 585.6780, 5466.3280, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr38, @b1, 58, 6.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr46, @b1, 485, 9.2500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p15, 'T16-FAC', CONCAT(@lote, '-0072'), '2026-03-20', @mp0, @GTQ, NULL, 1, 4880.6500, 0.0000, 585.6780, 5466.3280, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr38, @b1, 58, 6.8000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr46, @b1, 485, 9.2500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p15, @factura, 'T16-FAC', CONCAT(@lote, '-0072'), '2026-03-20', '2026-03-20', @GTQ, NULL, 1, 5466.3280, 5466.3280, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p15, '2026-03-23', 5466.3280, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0072'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0072'), @factura, 5466.3280);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Etiquetas del Istmo (Prueba)', 5466.3280, 'Transferencia bancaria', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-03-19', '2026-04-03', @GTQ, NULL, 1, 26698.8000, 325.5840, 3164.7859, 29538.0019, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr56, @b3, 417, 38.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr57, @b3, 238, 45.6000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p16, 'T16-FAC', CONCAT(@lote, '-0073'), '2026-03-21', @mp0, @GTQ, NULL, 1, 26698.8000, 325.5840, 3164.7859, 29538.0019, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr56, @b3, 417, 38.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr57, @b3, 238, 45.6000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p16, @factura, 'T16-FAC', CONCAT(@lote, '-0073'), '2026-03-21', '2026-04-05', @GTQ, NULL, 1, 29538.0019, 29538.0019, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p16, '2026-04-05', 14769.0010, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0073'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0073'), @factura, 14769.0010);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Higiene Industrial del Norte (Prueba)', 14769.0010, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-03-20', '2026-04-19', @GTQ, NULL, 1, 25344.7200, 7.6761, 3040.4453, 28377.4892, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr58, @b5, 205, 0.4500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr50, @b5, 453, 31.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr59, @b5, 303, 0.5400, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr51, @b5, 281, 38.1000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0074'), '2026-03-22', @mp0, @GTQ, NULL, 1, 25344.7200, 7.6761, 3040.4453, 28377.4892, 'Anulada', 1);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr58, @b5, 205, 0.4500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr50, @b5, 453, 31.7500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr59, @b5, 303, 0.5400, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr51, @b5, 281, 38.1000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0074'), '2026-03-22', '2026-04-21', @GTQ, NULL, 1, 28377.4892, 0, 'Anulada', 1);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-03-21', '2026-05-20', @USD, @tc2, 7.67, 4047.7224, 24.2666, 482.8147, 4506.2705, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr64, @b7, 18, 24.1199, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr74, @b7, 5, 10.2347, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr71, @b7, 20, 74.3155, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr69, @b7, 14, 22.6858, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 5, @pr62, @b7, 415, 4.2373, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p18, 'T16-FAC', CONCAT(@lote, '-0075'), '2026-03-23', @mp0, @USD, @tc2, 7.67, 4047.7224, 24.2666, 482.8147, 4506.2705, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr64, @b7, 18, 24.1199, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr74, @b7, 5, 10.2347, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr71, @b7, 20, 74.3155, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr69, @b7, 14, 22.6858, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 5, @pr62, @b7, 415, 4.2373, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p18, @factura, 'T16-FAC', CONCAT(@lote, '-0075'), '2026-03-23', '2026-05-22', @USD, @tc2, 7.67, 4506.2705, 2253.1352, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p18, '2026-05-22', 2253.1353, @mp3, @USD, @tc2, 7.67, CONCAT(@lote, '-0075'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0075'), @factura, 2253.1353);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Repuestos Frio Industrial (Prueba)', 2253.1353, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-03-22', '2026-03-22', @GTQ, NULL, 1, 16096.5000, 572.5650, 1862.8722, 17386.8072, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr0, @b8, 183, 24.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr1, @b8, 395, 29.4000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0076'), '2026-03-24', @mp0, @GTQ, NULL, 1, 16096.5000, 572.5650, 1862.8722, 17386.8072, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr0, @b8, 183, 24.5000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr1, @b8, 395, 29.4000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0076'), '2026-03-24', '2026-03-24', @GTQ, NULL, 1, 17386.8072, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p0, '2026-03-27', 17386.8072, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0076'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0076'), @factura, 17386.8072);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes del Valle (Prueba)', 17386.8072, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-03-23', '2026-04-07', @GTQ, NULL, 1, 6675.5000, 43.8450, 795.7986, 7427.4536, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr3, @b10, 220, 23.7000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr2, @b10, 74, 19.7500, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p1, 'T16-FAC', CONCAT(@lote, '-0077'), '2026-03-25', @mp0, @GTQ, NULL, 1, 6675.5000, 43.8450, 795.7986, 7427.4536, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr3, @b10, 220, 23.7000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr2, @b10, 74, 19.7500, 0.03);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-03-27', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0077'), 583.9680);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr3, @b10, 22, 23.7000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p1, @credito, 'T16-NC', CONCAT(@lote, '-0077'), '2026-03-27', '2026-03-27', @GTQ, NULL, 1, -583.9680, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p1, @factura, 'T16-FAC', CONCAT(@lote, '-0077'), '2026-03-25', '2026-04-09', @GTQ, NULL, 1, 7427.4536, 6843.4856, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p1, '2026-04-09', 3421.7428, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0077'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0077'), @factura, 3421.7428);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Porcicola La Cumbre (Prueba)', 3421.7428, 'Cheque', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-03-24', '2026-04-23', @GTQ, NULL, 1, 8298.1500, 119.4375, 981.4455, 9160.1580, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr5, @b0, 402, 14.7000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr4, @b0, 195, 12.2500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p2, 'T16-FAC', CONCAT(@lote, '-0078'), '2026-03-26', @mp0, @GTQ, NULL, 1, 8298.1500, 119.4375, 981.4455, 9160.1580, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr5, @b0, 402, 14.7000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr4, @b0, 195, 12.2500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p2, @factura, 'T16-FAC', CONCAT(@lote, '-0078'), '2026-03-26', '2026-04-25', @GTQ, NULL, 1, 9160.1580, 9160.1580, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p2, '2026-04-25', 9160.1580, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0078'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0078'), @factura, 9160.1580);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Avicola Los Pinos (Prueba)', 9160.1580, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-03-25', '2026-05-24', @GTQ, NULL, 1, 14616.0000, 505.2960, 1693.2845, 15803.9885, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr7, @b2, 270, 41.7600, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr6, @b2, 96, 34.8000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0079'), '2026-03-27', @mp0, @GTQ, NULL, 1, 14616.0000, 505.2960, 1693.2845, 15803.9885, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr7, @b2, 270, 41.7600, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr6, @b2, 96, 34.8000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0079'), '2026-03-27', '2026-05-26', @GTQ, NULL, 1, 15803.9885, 15803.9885, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-05-26', 7901.9943, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0079'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0079'), @factura, 7901.9943);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 7901.9943, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-03-26', '2026-06-24', @GTQ, NULL, 1, 20030.4000, 575.6400, 2334.5712, 21789.3312, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr8, @b4, 364, 23.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr9, @b4, 410, 28.0800, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-03-27', '2026-03-27', @GTQ, NULL, 1, 14958.1200, 531.2160, 1731.2285, 16158.1325, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr10, @b6, 233, 18.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr11, @b6, 476, 22.3200, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-03-28', '2026-04-12', @GTQ, NULL, 1, 5999.6400, 65.5452, 712.0914, 6646.1862, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b8, 63, 34.6800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b8, 132, 28.9000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-03-29', '2026-04-28', @GTQ, NULL, 1, 17956.7000, 153.5760, 2136.3749, 19939.4989, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr14, @b10, 325, 39.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr15, @b10, 108, 47.4000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-03-30', '2026-05-29', @GTQ, NULL, 1, 24517.0300, 632.9040, 2866.0951, 26750.2211, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr25, @b1, 456, 43.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr24, @b1, 47, 36.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr17, @b1, 447, 3.8400, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr16, @b1, 394, 3.2000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p8, 'T16-FAC', CONCAT(@lote, '-0084'), '2026-04-01', @mp0, @GTQ, NULL, 1, 24517.0300, 632.9040, 2866.0951, 26750.2211, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr25, @b1, 456, 43.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr24, @b1, 47, 36.2500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr17, @b1, 447, 3.8400, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr16, @b1, 394, 3.2000, 0.03);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-04-03', 'Empaque danado durante el transporte', 'T16-NC', CONCAT(@lote, '-0084'), 2126.6280);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr25, @b1, 45, 43.5000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p8, @credito, 'T16-NC', CONCAT(@lote, '-0084'), '2026-04-03', '2026-04-03', @GTQ, NULL, 1, -2126.6280, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p8, @factura, 'T16-FAC', CONCAT(@lote, '-0084'), '2026-04-01', '2026-05-31', @GTQ, NULL, 1, 26750.2211, 24623.5931, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p8, '2026-05-31', 24623.5931, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0084'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0084'), @factura, 24623.5931);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Especias del Altiplano (Prueba)', 24623.5931, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-03-31', '2026-06-29', @GTQ, NULL, 1, 37414.8000, 634.5000, 4413.6360, 41193.9360, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr26, @b3, 342, 18.7500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr19, @b3, 303, 81.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr27, @b3, 279, 22.5000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p9, 'T16-FAC', CONCAT(@lote, '-0085'), '2026-04-02', @mp0, @GTQ, NULL, 1, 37414.8000, 634.5000, 4413.6360, 41193.9360, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr26, @b3, 342, 18.7500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr19, @b3, 303, 81.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr27, @b3, 279, 22.5000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p9, @factura, 'T16-FAC', CONCAT(@lote, '-0085'), '2026-04-02', '2026-07-01', @GTQ, NULL, 1, 41193.9360, 20596.9680, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p9, '2026-07-01', 20596.9680, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0085'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0085'), @factura, 20596.9680);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Condimentos La Huerta (Prueba)', 20596.9680, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-04-01', '2026-04-01', @USD, @tc3, 7.68, 2883.5906, 18.2622, 343.8394, 3209.1678, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr29, @b5, 317, 1.3281, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr28, @b5, 330, 1.1068, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr21, @b5, 115, 6.6406, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr20, @b5, 241, 5.5339, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0086'), '2026-04-03', @mp0, @USD, @tc3, 7.68, 2883.5906, 18.2622, 343.8394, 3209.1678, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr29, @b5, 317, 1.3281, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr28, @b5, 330, 1.1068, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr21, @b5, 115, 6.6406, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr20, @b5, 241, 5.5339, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0086'), '2026-04-03', '2026-04-03', @USD, @tc3, 7.68, 3209.1678, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-04-06', 3209.1678, @mp2, @USD, @tc3, 7.68, CONCAT(@lote, '-0086'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0086'), @factura, 3209.1678);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 3209.1678, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-04-02', '2026-04-17', @GTQ, NULL, 1, 71794.6400, 789.2280, 8520.6494, 79526.0614, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr30, @b7, 353, 52.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr23, @b7, 454, 59.7600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr22, @b7, 418, 49.8000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr31, @b7, 88, 62.4000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p11, 'T16-FAC', CONCAT(@lote, '-0087'), '2026-04-04', @mp0, @GTQ, NULL, 1, 71794.6400, 789.2280, 8520.6494, 79526.0614, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr30, @b7, 353, 52.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr23, @b7, 454, 59.7600, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr22, @b7, 418, 49.8000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr31, @b7, 88, 62.4000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p11, @factura, 'T16-FAC', CONCAT(@lote, '-0087'), '2026-04-04', '2026-04-19', @GTQ, NULL, 1, 79526.0614, 79526.0614, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p11, '2026-04-19', 39763.0307, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0087'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0087'), @factura, 39763.0307);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Suministros Alimentarios Maya (Prueba)', 39763.0307, 'Tarjeta empresarial', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-04-03', '2026-05-03', @GTQ, NULL, 1, 69.3720, 0.0000, 8.3246, 77.6966, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr40, @b9, 239, 0.1800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr41, @b9, 122, 0.2160, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0088'), '2026-04-05', @mp0, @GTQ, NULL, 1, 69.3720, 0.0000, 8.3246, 77.6966, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr40, @b9, 239, 0.1800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr41, @b9, 122, 0.2160, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0088'), '2026-04-05', '2026-05-05', @GTQ, NULL, 1, 77.6966, 77.6966, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p12, '2026-05-05', 77.6966, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0088'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0088'), @factura, 77.6966);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Empaques del Valle (Prueba)', 77.6966, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-04-04', '2026-06-03', @GTQ, NULL, 1, 18389.7000, 320.4600, 2168.3088, 20237.5488, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr42, @b11, 489, 24.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr43, @b11, 218, 29.4000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p13, 'T16-FAC', CONCAT(@lote, '-0089'), '2026-04-06', @mp0, @GTQ, NULL, 1, 18389.7000, 320.4600, 2168.3088, 20237.5488, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr42, @b11, 489, 24.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr43, @b11, 218, 29.4000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p13, @factura, 'T16-FAC', CONCAT(@lote, '-0089'), '2026-04-06', '2026-06-05', @GTQ, NULL, 1, 20237.5488, 20237.5488, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p13, '2026-06-05', 10118.7744, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0089'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0089'), @factura, 10118.7744);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Plasticos Industriales Centro (Prueba)', 10118.7744, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-04-05', '2026-07-04', @GTQ, NULL, 1, 1009.7900, 36.3037, 116.8184, 1090.3047, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr37, @b1, 149, 1.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr36, @b1, 441, 1.2500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr44, @b1, 130, 0.6500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr45, @b1, 193, 0.7800, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p14, 'T16-FAC', CONCAT(@lote, '-0090'), '2026-04-07', @mp0, @GTQ, NULL, 1, 1009.7900, 36.3037, 116.8184, 1090.3047, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr37, @b1, 149, 1.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr36, @b1, 441, 1.2500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr44, @b1, 130, 0.6500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr45, @b1, 193, 0.7800, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p14, @factura, 'T16-FAC', CONCAT(@lote, '-0090'), '2026-04-07', '2026-07-06', @GTQ, NULL, 1, 1090.3047, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p14, '2026-07-06', 1090.3047, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0090'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0090'), @factura, 1090.3047);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Cartones y Cajas del Sur (Prueba)', 1090.3047, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-04-06', '2026-04-06', @GTQ, NULL, 1, 5143.7400, 44.4000, 611.9208, 5711.2608, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr47, @b3, 329, 11.1000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr46, @b3, 96, 9.2500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr39, @b3, 74, 8.1600, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p15, 'T16-FAC', CONCAT(@lote, '-0091'), '2026-04-08', @mp0, @GTQ, NULL, 1, 5143.7400, 44.4000, 611.9208, 5711.2608, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr47, @b3, 329, 11.1000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr46, @b3, 96, 9.2500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr39, @b3, 74, 8.1600, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-04-10', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0091'), 397.8240);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr47, @b3, 32, 11.1000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p15, @credito, 'T16-NC', CONCAT(@lote, '-0091'), '2026-04-10', '2026-04-10', @GTQ, NULL, 1, -397.8240, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p15, @factura, 'T16-FAC', CONCAT(@lote, '-0091'), '2026-04-08', '2026-04-08', @GTQ, NULL, 1, 5711.2608, 2656.7184, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p15, '2026-04-11', 2656.7184, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0091'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0091'), @factura, 2656.7184);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Etiquetas del Istmo (Prueba)', 2656.7184, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-04-07', '2026-04-22', @GTQ, NULL, 1, 26782.0000, 625.6200, 3138.7656, 29295.1456, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr49, @b5, 474, 27.0000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr56, @b5, 212, 38.0000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr57, @b5, 130, 45.6000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-04-08', '2026-05-08', @GTQ, NULL, 1, 11589.7400, 257.3100, 1359.8916, 12692.3216, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr59, @b7, 386, 0.5400, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr50, @b7, 95, 31.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr51, @b7, 216, 38.1000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr58, @b7, 301, 0.4500, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-04-09', '2026-06-08', @USD, @tc3, 7.68, 2252.9344, 12.7768, 268.8189, 2508.9765, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr68, @b9, 19, 18.8802, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr78, @b9, 30, 12.3698, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr74, @b9, 25, 10.2214, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr76, @b9, 29, 21.4844, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 5, @pr60, @b9, 110, 5.8594, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-04-10', '2026-04-10', @GTQ, NULL, 1, 20026.3000, 210.9450, 2377.8426, 22193.1976, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr1, @b10, 442, 29.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr0, @b10, 287, 24.5000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-04-11', '2026-04-26', @GTQ, NULL, 1, 17909.3000, 228.7050, 2121.6714, 19802.2664, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr3, @b0, 434, 23.7000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr2, @b0, 386, 19.7500, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p1, 'T16-FAC', CONCAT(@lote, '-0096'), '2026-04-13', @mp0, @GTQ, NULL, 1, 17909.3000, 228.7050, 2121.6714, 19802.2664, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr3, @b0, 434, 23.7000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr2, @b0, 386, 19.7500, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p1, @factura, 'T16-FAC', CONCAT(@lote, '-0096'), '2026-04-13', '2026-04-28', @GTQ, NULL, 1, 19802.2664, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p1, '2026-04-28', 19802.2664, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0096'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0096'), @factura, 19802.2664);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Porcicola La Cumbre (Prueba)', 19802.2664, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-04-12', '2026-05-12', @GTQ, NULL, 1, 6078.4500, 292.8975, 694.2663, 6479.8188, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr5, @b2, 376, 14.7000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr4, @b2, 45, 12.2500, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p2, 'T16-FAC', CONCAT(@lote, '-0097'), '2026-04-14', @mp0, @GTQ, NULL, 1, 6078.4500, 292.8975, 694.2663, 6479.8188, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr5, @b2, 376, 14.7000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr4, @b2, 45, 12.2500, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p2, @factura, 'T16-FAC', CONCAT(@lote, '-0097'), '2026-04-14', '2026-05-14', @GTQ, NULL, 1, 6479.8188, 6479.8188, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p2, '2026-05-14', 3239.9094, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0097'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0097'), @factura, 3239.9094);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Avicola Los Pinos (Prueba)', 3239.9094, 'Cheque', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-04-13', '2026-06-12', @GTQ, NULL, 1, 6403.2000, 106.4880, 755.6054, 7052.3174, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr6, @b4, 82, 34.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr7, @b4, 85, 41.7600, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0098'), '2026-04-15', @mp0, @GTQ, NULL, 1, 6403.2000, 106.4880, 755.6054, 7052.3174, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr6, @b4, 82, 34.8000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr7, @b4, 85, 41.7600, 0.03);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-04-17', 'Diferencia de calidad en inspeccion de recepcion', 'T16-NC', CONCAT(@lote, '-0098'), 311.8080);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr6, @b4, 8, 34.8000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p3, @credito, 'T16-NC', CONCAT(@lote, '-0098'), '2026-04-17', '2026-04-17', @GTQ, NULL, 1, -311.8080, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0098'), '2026-04-15', '2026-06-14', @GTQ, NULL, 1, 7052.3174, 6740.5094, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-06-14', 6740.5094, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0098'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0098'), @factura, 6740.5094);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 6740.5094, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-04-14', '2026-07-13', @GTQ, NULL, 1, 10530.0000, 526.5000, 1200.4200, 11203.9200, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr8, @b6, 90, 23.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr9, @b6, 300, 28.0800, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0099'), '2026-04-16', @mp0, @GTQ, NULL, 1, 10530.0000, 526.5000, 1200.4200, 11203.9200, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr8, @b6, 90, 23.4000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr9, @b6, 300, 28.0800, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0099'), '2026-04-16', '2026-07-15', @GTQ, NULL, 1, 11203.9200, 11203.9200, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2026-07-15', 5601.9600, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0099'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0099'), @factura, 5601.9600);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 5601.9600, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-04-15', '2026-04-15', @GTQ, NULL, 1, 11811.0000, 223.2000, 1390.5360, 12978.3360, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr10, @b8, 395, 18.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr11, @b8, 200, 22.3200, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0100'), '2026-04-17', @mp0, @GTQ, NULL, 1, 11811.0000, 223.2000, 1390.5360, 12978.3360, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr10, @b8, 395, 18.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr11, @b8, 200, 22.3200, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0100'), '2026-04-17', '2026-04-17', @GTQ, NULL, 1, 12978.3360, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-04-20', 12978.3360, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0100'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0100'), @factura, 12978.3360);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 12978.3360, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-04-16', '2026-05-01', @GTQ, NULL, 1, 28998.2600, 475.4628, 3422.7357, 31945.5329, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b10, 457, 34.6800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b10, 455, 28.9000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0101'), '2026-04-18', @mp0, @GTQ, NULL, 1, 28998.2600, 475.4628, 3422.7357, 31945.5329, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr13, @b10, 457, 34.6800, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr12, @b10, 455, 28.9000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0101'), '2026-04-18', '2026-05-03', @GTQ, NULL, 1, 31945.5329, 15972.7664, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-05-03', 15972.7665, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0101'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0101'), @factura, 15972.7665);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 15972.7665, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-04-17', '2026-05-17', @GTQ, NULL, 1, 9954.0000, 336.5400, 1154.0952, 10771.5552, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr15, @b0, 40, 47.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr14, @b0, 204, 39.5000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0102'), '2026-04-19', @mp0, @GTQ, NULL, 1, 9954.0000, 336.5400, 1154.0952, 10771.5552, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr15, @b0, 40, 47.4000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr14, @b0, 204, 39.5000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0102'), '2026-04-19', '2026-05-19', @GTQ, NULL, 1, 10771.5552, 10771.5552, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-05-19', 10771.5552, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0102'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0102'), @factura, 10771.5552);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 10771.5552, 'Efectivo', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-04-18', '2026-06-17', @GTQ, NULL, 1, 33433.9500, 619.0830, 3937.7840, 36752.6510, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr24, @b3, 321, 36.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr16, @b3, 363, 3.2000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr17, @b3, 265, 3.8400, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr25, @b3, 451, 43.5000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p8, 'T16-FAC', CONCAT(@lote, '-0103'), '2026-04-20', @mp0, @GTQ, NULL, 1, 33433.9500, 619.0830, 3937.7840, 36752.6510, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr24, @b3, 321, 36.2500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr16, @b3, 363, 3.2000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr17, @b3, 265, 3.8400, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr25, @b3, 451, 43.5000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p8, @factura, 'T16-FAC', CONCAT(@lote, '-0103'), '2026-04-20', '2026-06-19', @GTQ, NULL, 1, 36752.6510, 36752.6510, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p8, '2026-06-19', 18376.3255, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0103'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0103'), @factura, 18376.3255);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Especias del Altiplano (Prueba)', 18376.3255, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-04-19', '2026-07-18', @GTQ, NULL, 1, 7486.0000, 0.0000, 898.3200, 8384.3200, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr26, @b5, 120, 18.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr18, @b5, 77, 68.0000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-04-20', '2026-04-20', @USD, @tc3, 7.68, 2048.6460, 44.9909, 240.4386, 2244.0937, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr20, @b7, 186, 5.5339, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr21, @b7, 111, 6.6406, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr28, @b7, 255, 1.1068, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-04-21', '2026-05-06', @GTQ, NULL, 1, 36800.0000, 815.8800, 4318.0944, 40302.2144, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr31, @b9, 157, 62.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr30, @b9, 209, 52.0000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr23, @b9, 270, 59.7600, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-04-22', '2026-05-22', @GTQ, NULL, 1, 271.8500, 8.6445, 31.5847, 294.7902, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr33, @b11, 83, 1.0200, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr41, @b11, 110, 0.2160, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr40, @b11, 91, 0.1800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr32, @b11, 173, 0.8500, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-04-23', '2026-06-22', @GTQ, NULL, 1, 11757.0200, 100.6056, 1398.7697, 13055.1841, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr42, @b1, 343, 24.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr35, @b1, 404, 4.0800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr43, @b1, 58, 29.4000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p13, 'T16-FAC', CONCAT(@lote, '-0108'), '2026-04-25', @mp0, @GTQ, NULL, 1, 11757.0200, 100.6056, 1398.7697, 13055.1841, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr42, @b1, 343, 24.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr35, @b1, 404, 4.0800, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr43, @b1, 58, 29.4000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p13, @factura, 'T16-FAC', CONCAT(@lote, '-0108'), '2026-04-25', '2026-06-24', @GTQ, NULL, 1, 13055.1841, 13055.1841, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p13, '2026-06-24', 13055.1841, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0108'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0108'), @factura, 13055.1841);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Plasticos Industriales Centro (Prueba)', 13055.1841, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-04-24', '2026-07-23', @GTQ, NULL, 1, 724.5000, 6.4350, 86.1678, 804.2328, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr44, @b3, 330, 0.6500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr37, @b3, 270, 1.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr36, @b3, 84, 1.2500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p14, 'T16-FAC', CONCAT(@lote, '-0109'), '2026-04-26', @mp0, @GTQ, NULL, 1, 724.5000, 6.4350, 86.1678, 804.2328, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr44, @b3, 330, 0.6500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr37, @b3, 270, 1.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr36, @b3, 84, 1.2500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p14, @factura, 'T16-FAC', CONCAT(@lote, '-0109'), '2026-04-26', '2026-07-25', @GTQ, NULL, 1, 804.2328, 804.2328, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p14, '2026-07-25', 402.1164, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0109'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0109'), @factura, 402.1164);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Cartones y Cajas del Sur (Prueba)', 402.1164, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-04-25', '2026-04-25', @GTQ, NULL, 1, 9687.8300, 383.7515, 1116.4894, 10420.5679, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr38, @b5, 296, 6.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr47, @b5, 448, 11.1000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr39, @b5, 228, 8.1600, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr46, @b5, 91, 9.2500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p15, 'T16-FAC', CONCAT(@lote, '-0110'), '2026-04-27', @mp0, @GTQ, NULL, 1, 9687.8300, 383.7515, 1116.4894, 10420.5679, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr38, @b5, 296, 6.8000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr47, @b5, 448, 11.1000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr39, @b5, 228, 8.1600, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr46, @b5, 91, 9.2500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p15, @factura, 'T16-FAC', CONCAT(@lote, '-0110'), '2026-04-27', '2026-04-27', @GTQ, NULL, 1, 10420.5679, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p15, '2026-04-30', 10420.5679, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0110'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0110'), @factura, 10420.5679);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Etiquetas del Istmo (Prueba)', 10420.5679, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-04-26', '2026-05-11', @GTQ, NULL, 1, 19956.6000, 355.6800, 2352.1104, 21953.0304, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr49, @b7, 394, 27.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr57, @b7, 156, 45.6000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr48, @b7, 98, 22.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p16, 'T16-FAC', CONCAT(@lote, '-0111'), '2026-04-28', @mp0, @GTQ, NULL, 1, 19956.6000, 355.6800, 2352.1104, 21953.0304, 'Anulada', 1);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr49, @b7, 394, 27.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr57, @b7, 156, 45.6000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr48, @b7, 98, 22.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p16, @factura, 'T16-FAC', CONCAT(@lote, '-0111'), '2026-04-28', '2026-05-13', @GTQ, NULL, 1, 21953.0304, 0, 'Anulada', 1);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-04-27', '2026-05-27', @GTQ, NULL, 1, 10416.7000, 308.9910, 1212.9251, 11320.6341, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr51, @b9, 72, 38.1000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr50, @b9, 238, 31.7500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr58, @b9, 260, 0.4500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0112'), '2026-04-29', @mp0, @GTQ, NULL, 1, 10416.7000, 308.9910, 1212.9251, 11320.6341, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr51, @b9, 72, 38.1000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr50, @b9, 238, 31.7500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr58, @b9, 260, 0.4500, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-05-01', 'Diferencia de calidad en inspeccion de recepcion', 'T16-NC', CONCAT(@lote, '-0112'), 289.7429);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr51, @b9, 7, 38.1000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p17, @credito, 'T16-NC', CONCAT(@lote, '-0112'), '2026-05-01', '2026-05-01', @GTQ, NULL, 1, -289.7429, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0112'), '2026-04-29', '2026-05-29', @GTQ, NULL, 1, 11320.6341, 11030.8912, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p17, '2026-05-29', 11030.8912, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0112'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0112'), @factura, 11030.8912);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Soluciones Sanitarias del Sur (Prueba)', 11030.8912, 'Transferencia bancaria', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-04-28', '2026-06-27', @USD, @tc3, 7.68, 1864.6502, 93.2325, 212.5701, 1983.9878, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr74, @b11, 13, 10.2214, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr70, @b11, 28, 61.8490, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p18, 'T16-FAC', CONCAT(@lote, '-0113'), '2026-04-30', @mp0, @USD, @tc3, 7.68, 1864.6502, 93.2325, 212.5701, 1983.9878, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr74, @b11, 13, 10.2214, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr70, @b11, 28, 61.8490, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p18, @factura, 'T16-FAC', CONCAT(@lote, '-0113'), '2026-04-30', '2026-06-29', @USD, @tc3, 7.68, 1983.9878, 1983.9878, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p18, '2026-06-29', 991.9939, @mp1, @USD, @tc3, 7.68, CONCAT(@lote, '-0113'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0113'), @factura, 991.9939);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Repuestos Frio Industrial (Prueba)', 991.9939, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-04-29', '2026-04-29', @GTQ, NULL, 1, 12578.3000, 163.9050, 1489.7274, 13904.1224, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr0, @b0, 223, 24.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr1, @b0, 242, 29.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0114'), '2026-05-01', @mp0, @GTQ, NULL, 1, 12578.3000, 163.9050, 1489.7274, 13904.1224, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr0, @b0, 223, 24.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr1, @b0, 242, 29.4000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0114'), '2026-05-01', '2026-05-01', @GTQ, NULL, 1, 13904.1224, 13904.1224, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p0, '2026-05-04', 13904.1224, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0114'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0114'), @factura, 13904.1224);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes del Valle (Prueba)', 13904.1224, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-04-30', '2026-05-15', @GTQ, NULL, 1, 10510.9500, 337.1325, 1220.8581, 11394.6756, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr3, @b2, 46, 23.7000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr2, @b2, 477, 19.7500, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p1, 'T16-FAC', CONCAT(@lote, '-0115'), '2026-05-02', @mp0, @GTQ, NULL, 1, 10510.9500, 337.1325, 1220.8581, 11394.6756, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr3, @b2, 46, 23.7000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr2, @b2, 477, 19.7500, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p1, @factura, 'T16-FAC', CONCAT(@lote, '-0115'), '2026-05-02', '2026-05-17', @GTQ, NULL, 1, 11394.6756, 5697.3378, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p1, '2026-05-17', 5697.3378, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0115'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0115'), @factura, 5697.3378);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Porcicola La Cumbre (Prueba)', 5697.3378, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-05-01', '2026-05-31', @GTQ, NULL, 1, 1915.9000, 52.9200, 223.5576, 2086.5376, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr5, @b4, 72, 14.7000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr4, @b4, 70, 12.2500, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-05-02', '2026-07-01', @GTQ, NULL, 1, 18993.8400, 0.0000, 2279.2608, 21273.1008, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr6, @b6, 427, 34.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr7, @b6, 99, 41.7600, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-05-03', '2026-08-01', @GTQ, NULL, 1, 6481.8000, 138.9960, 761.1365, 7103.9405, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr8, @b8, 79, 23.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr9, @b8, 165, 28.0800, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-05-04', '2026-05-04', @GTQ, NULL, 1, 8262.1200, 222.2700, 964.7820, 9004.6320, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr10, @b10, 239, 18.6000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr11, @b10, 171, 22.3200, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-05-05', '2026-05-20', @GTQ, NULL, 1, 14080.0800, 348.5340, 1647.7855, 15379.3315, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b0, 201, 34.6800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b0, 246, 28.9000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0120'), '2026-05-07', @mp0, @GTQ, NULL, 1, 14080.0800, 348.5340, 1647.7855, 15379.3315, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr13, @b0, 201, 34.6800, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr12, @b0, 246, 28.9000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0120'), '2026-05-07', '2026-05-22', @GTQ, NULL, 1, 15379.3315, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-05-22', 15379.3315, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0120'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0120'), @factura, 15379.3315);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 15379.3315, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-05-06', '2026-06-05', @GTQ, NULL, 1, 4092.2000, 0.0000, 491.0640, 4583.2640, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr14, @b2, 52, 39.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr15, @b2, 43, 47.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0121'), '2026-05-08', @mp0, @GTQ, NULL, 1, 4092.2000, 0.0000, 491.0640, 4583.2640, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr14, @b2, 52, 39.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr15, @b2, 43, 47.4000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0121'), '2026-05-08', '2026-06-07', @GTQ, NULL, 1, 4583.2640, 2291.6320, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-06-07', 2291.6320, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0121'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0121'), @factura, 2291.6320);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 2291.6320, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-05-07', '2026-07-06', @GTQ, NULL, 1, 16369.4000, 491.0820, 1905.3982, 17783.7162, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr16, @b5, 412, 3.2000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr25, @b5, 346, 43.5000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p8, 'T16-FAC', CONCAT(@lote, '-0122'), '2026-05-09', @mp0, @GTQ, NULL, 1, 16369.4000, 491.0820, 1905.3982, 17783.7162, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr16, @b5, 412, 3.2000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr25, @b5, 346, 43.5000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p8, @factura, 'T16-FAC', CONCAT(@lote, '-0122'), '2026-05-09', '2026-07-08', @GTQ, NULL, 1, 17783.7162, 17783.7162, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p8, '2026-07-08', 17783.7162, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0122'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0122'), @factura, 17783.7162);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Especias del Altiplano (Prueba)', 17783.7162, 'Efectivo', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-05-08', '2026-08-06', @GTQ, NULL, 1, 7796.2500, 222.1875, 908.8875, 8482.9500, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr26, @b7, 237, 18.7500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr27, @b7, 149, 22.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p9, 'T16-FAC', CONCAT(@lote, '-0123'), '2026-05-10', @mp0, @GTQ, NULL, 1, 7796.2500, 222.1875, 908.8875, 8482.9500, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr26, @b7, 237, 18.7500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr27, @b7, 149, 22.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p9, @factura, 'T16-FAC', CONCAT(@lote, '-0123'), '2026-05-10', '2026-08-08', @GTQ, NULL, 1, 8482.9500, 8482.9500, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p9, '2026-08-08', 4241.4750, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0123'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0123'), @factura, 4241.4750);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Condimentos La Huerta (Prueba)', 4241.4750, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-05-09', '2026-05-09', @USD, @tc4, 7.69, 4391.7040, 100.4081, 514.9555, 4806.2514, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr28, @b9, 370, 1.1053, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr21, @b9, 443, 6.6320, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr20, @b9, 178, 5.5267, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr29, @b9, 46, 1.3264, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0124'), '2026-05-11', @mp0, @USD, @tc4, 7.69, 4391.7040, 100.4081, 514.9555, 4806.2514, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr28, @b9, 370, 1.1053, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr21, @b9, 443, 6.6320, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr20, @b9, 178, 5.5267, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr29, @b9, 46, 1.3264, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0124'), '2026-05-11', '2026-05-11', @USD, @tc4, 7.69, 4806.2514, 4806.2514, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-05-14', 4806.2514, @mp0, @USD, @tc4, 7.69, CONCAT(@lote, '-0124'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0124'), @factura, 4806.2514);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 4806.2514, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-05-10', '2026-05-25', @GTQ, NULL, 1, 43053.0000, 530.3700, 5102.7156, 47625.3456, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr31, @b11, 89, 62.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr23, @b11, 450, 59.7600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr22, @b11, 213, 49.8000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p11, 'T16-FAC', CONCAT(@lote, '-0125'), '2026-05-12', @mp0, @GTQ, NULL, 1, 43053.0000, 530.3700, 5102.7156, 47625.3456, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr31, @b11, 89, 62.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr23, @b11, 450, 59.7600, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr22, @b11, 213, 49.8000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p11, @factura, 'T16-FAC', CONCAT(@lote, '-0125'), '2026-05-12', '2026-05-27', @GTQ, NULL, 1, 47625.3456, 23812.6728, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p11, '2026-05-27', 23812.6728, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0125'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0125'), @factura, 23812.6728);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Suministros Alimentarios Maya (Prueba)', 23812.6728, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-05-11', '2026-06-10', @GTQ, NULL, 1, 299.3280, 2.4890, 35.6207, 332.4597, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr41, @b1, 173, 0.2160, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr32, @b1, 276, 0.8500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr40, @b1, 152, 0.1800, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0126'), '2026-05-13', @mp0, @GTQ, NULL, 1, 299.3280, 2.4890, 35.6207, 332.4597, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr41, @b1, 173, 0.2160, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr32, @b1, 276, 0.8500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr40, @b1, 152, 0.1800, 0.05);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-05-15', 'Empaque danado durante el transporte', 'T16-NC', CONCAT(@lote, '-0126'), 3.9892);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr41, @b1, 17, 0.2160, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p12, @credito, 'T16-NC', CONCAT(@lote, '-0126'), '2026-05-15', '2026-05-15', @GTQ, NULL, 1, -3.9892, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0126'), '2026-05-13', '2026-06-12', @GTQ, NULL, 1, 332.4597, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p12, '2026-06-12', 328.4705, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0126'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0126'), @factura, 328.4705);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Empaques del Valle (Prueba)', 328.4705, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-05-12', '2026-07-11', @GTQ, NULL, 1, 15698.8400, 18.9720, 1881.5842, 17561.4522, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr35, @b3, 93, 4.0800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr34, @b3, 309, 3.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr43, @b3, 107, 29.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr42, @b3, 454, 24.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p13, 'T16-FAC', CONCAT(@lote, '-0127'), '2026-05-14', @mp0, @GTQ, NULL, 1, 15698.8400, 18.9720, 1881.5842, 17561.4522, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr35, @b3, 93, 4.0800, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr34, @b3, 309, 3.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr43, @b3, 107, 29.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr42, @b3, 454, 24.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p13, @factura, 'T16-FAC', CONCAT(@lote, '-0127'), '2026-05-14', '2026-07-13', @GTQ, NULL, 1, 17561.4522, 17561.4522, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p13, '2026-07-13', 8780.7261, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0127'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0127'), @factura, 8780.7261);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Plasticos Industriales Centro (Prueba)', 8780.7261, 'Tarjeta empresarial', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-05-13', '2026-08-11', @GTQ, NULL, 1, 697.9000, 7.7145, 82.8223, 773.0078, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr44, @b5, 211, 0.6500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr37, @b5, 48, 1.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr36, @b5, 391, 1.2500, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-05-14', '2026-05-14', @GTQ, NULL, 1, 4850.5500, 119.7875, 567.6915, 5298.4540, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr38, @b7, 361, 6.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr46, @b7, 259, 9.2500, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-05-15', '2026-05-30', @GTQ, NULL, 1, 17468.0000, 0.0000, 2096.1600, 19564.1600, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr49, @b9, 274, 27.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr56, @b9, 265, 38.0000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-05-16', '2026-06-15', @GTQ, NULL, 1, 25210.8700, 1067.1975, 2897.2407, 27040.9132, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr59, @b11, 223, 0.5400, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr51, @b11, 409, 38.1000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr58, @b11, 314, 0.4500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr50, @b11, 295, 31.7500, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-05-17', '2026-07-16', @USD, @tc4, 7.69, 1027.5685, 32.4578, 119.4133, 1114.5240, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr79, @b1, 8, 14.8244, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr65, @b1, 9, 28.8687, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr67, @b1, 13, 49.9350, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p18, 'T16-FAC', CONCAT(@lote, '-0132'), '2026-05-19', @mp0, @USD, @tc4, 7.69, 1027.5685, 32.4578, 119.4133, 1114.5240, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr79, @b1, 8, 14.8244, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr65, @b1, 9, 28.8687, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr67, @b1, 13, 49.9350, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p18, @factura, 'T16-FAC', CONCAT(@lote, '-0132'), '2026-05-19', '2026-07-18', @USD, @tc4, 7.69, 1114.5240, 1114.5240, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p18, '2026-07-18', 1114.5240, @mp0, @USD, @tc4, 7.69, CONCAT(@lote, '-0132'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0132'), @factura, 1114.5240);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Repuestos Frio Industrial (Prueba)', 1114.5240, 'Transferencia bancaria', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-05-18', '2026-05-18', @GTQ, NULL, 1, 23250.5000, 353.5350, 2747.6358, 25644.6008, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr0, @b2, 481, 24.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr1, @b2, 390, 29.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0133'), '2026-05-20', @mp0, @GTQ, NULL, 1, 23250.5000, 353.5350, 2747.6358, 25644.6008, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr0, @b2, 481, 24.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr1, @b2, 390, 29.4000, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-05-22', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0133'), 1277.6064);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr0, @b2, 48, 24.5000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p0, @credito, 'T16-NC', CONCAT(@lote, '-0133'), '2026-05-22', '2026-05-22', @GTQ, NULL, 1, -1277.6064, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0133'), '2026-05-20', '2026-05-20', @GTQ, NULL, 1, 25644.6008, 24366.9944, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p0, '2026-05-23', 12183.4972, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0133'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0133'), @factura, 12183.4972);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes del Valle (Prueba)', 12183.4972, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-05-19', '2026-06-03', @GTQ, NULL, 1, 11534.0000, 576.7000, 1314.8760, 12272.1760, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr3, @b4, 110, 23.7000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr2, @b4, 452, 19.7500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p1, 'T16-FAC', CONCAT(@lote, '-0134'), '2026-05-21', @mp0, @GTQ, NULL, 1, 11534.0000, 576.7000, 1314.8760, 12272.1760, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr3, @b4, 110, 23.7000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr2, @b4, 452, 19.7500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p1, @factura, 'T16-FAC', CONCAT(@lote, '-0134'), '2026-05-21', '2026-06-05', @GTQ, NULL, 1, 12272.1760, 12272.1760, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p1, '2026-06-05', 12272.1760, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0134'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0134'), @factura, 12272.1760);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Porcicola La Cumbre (Prueba)', 12272.1760, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-05-20', '2026-06-19', @GTQ, NULL, 1, 8185.4500, 0.0000, 982.2540, 9167.7040, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr5, @b6, 286, 14.7000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr4, @b6, 325, 12.2500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p2, 'T16-FAC', CONCAT(@lote, '-0135'), '2026-05-22', @mp0, @GTQ, NULL, 1, 8185.4500, 0.0000, 982.2540, 9167.7040, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr5, @b6, 286, 14.7000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr4, @b6, 325, 12.2500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p2, @factura, 'T16-FAC', CONCAT(@lote, '-0135'), '2026-05-22', '2026-06-21', @GTQ, NULL, 1, 9167.7040, 4583.8520, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p2, '2026-06-21', 4583.8520, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0135'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0135'), @factura, 4583.8520);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Avicola Los Pinos (Prueba)', 4583.8520, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-05-21', '2026-07-20', @GTQ, NULL, 1, 12743.7600, 120.2688, 1514.8189, 14138.3101, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr7, @b8, 96, 41.7600, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr6, @b8, 251, 34.8000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0136'), '2026-05-23', @mp0, @GTQ, NULL, 1, 12743.7600, 120.2688, 1514.8189, 14138.3101, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr7, @b8, 96, 41.7600, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr6, @b8, 251, 34.8000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0136'), '2026-05-23', '2026-07-22', @GTQ, NULL, 1, 14138.3101, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-07-22', 14138.3101, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0136'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0136'), @factura, 14138.3101);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 14138.3101, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-05-22', '2026-08-20', @GTQ, NULL, 1, 2503.8000, 0.0000, 300.4560, 2804.2560, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr9, @b10, 40, 28.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr8, @b10, 59, 23.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0137'), '2026-05-24', @mp0, @GTQ, NULL, 1, 2503.8000, 0.0000, 300.4560, 2804.2560, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr9, @b10, 40, 28.0800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr8, @b10, 59, 23.4000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0137'), '2026-05-24', '2026-08-22', @GTQ, NULL, 1, 2804.2560, 2804.2560, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2026-08-22', 1402.1280, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0137'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0137'), @factura, 1402.1280);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 1402.1280, 'Cheque', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-05-23', '2026-05-23', @GTQ, NULL, 1, 8377.4400, 418.8720, 955.0282, 8913.5962, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr11, @b0, 152, 22.3200, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr10, @b0, 268, 18.6000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0138'), '2026-05-25', @mp0, @GTQ, NULL, 1, 8377.4400, 418.8720, 955.0282, 8913.5962, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr11, @b0, 152, 22.3200, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr10, @b0, 268, 18.6000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0138'), '2026-05-25', '2026-05-25', @GTQ, NULL, 1, 8913.5962, 8913.5962, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-05-28', 8913.5962, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0138'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0138'), @factura, 8913.5962);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 8913.5962, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-05-24', '2026-06-08', @GTQ, NULL, 1, 13981.8200, 258.6550, 1646.7798, 15369.9448, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr12, @b2, 179, 28.9000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr13, @b2, 254, 34.6800, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0139'), '2026-05-26', @mp0, @GTQ, NULL, 1, 13981.8200, 258.6550, 1646.7798, 15369.9448, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr12, @b2, 179, 28.9000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr13, @b2, 254, 34.6800, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0139'), '2026-05-26', '2026-06-10', @GTQ, NULL, 1, 15369.9448, 15369.9448, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-06-10', 7684.9724, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0139'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0139'), @factura, 7684.9724);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 7684.9724, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-05-25', '2026-06-24', @GTQ, NULL, 1, 29151.0000, 1239.5100, 3349.3788, 31260.8688, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr14, @b4, 462, 39.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr15, @b4, 230, 47.4000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-05-26', '2026-07-25', @GTQ, NULL, 1, 17523.2500, 743.8500, 2013.5280, 18792.9280, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr25, @b7, 342, 43.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr24, @b7, 73, 36.2500, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-05-27', '2026-08-25', @GTQ, NULL, 1, 46186.7000, 1837.2460, 5321.9345, 49671.3885, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr19, @b9, 102, 81.6000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr26, @b9, 302, 18.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr18, @b9, 457, 68.0000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr27, @b9, 50, 22.5000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-05-28', '2026-05-28', @USD, @tc4, 7.69, 4037.5578, 16.4137, 482.5373, 4503.6814, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr21, @b11, 198, 6.6320, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr20, @b11, 381, 5.5267, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr28, @b11, 495, 1.1053, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr29, @b11, 54, 1.3264, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-05-29', '2026-06-13', @GTQ, NULL, 1, 46385.7600, 1033.7688, 5442.2389, 50794.2301, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr22, @b1, 86, 49.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr30, @b1, 147, 52.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr23, @b1, 491, 59.7600, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr31, @b1, 82, 62.4000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p11, 'T16-FAC', CONCAT(@lote, '-0144'), '2026-05-31', @mp0, @GTQ, NULL, 1, 46385.7600, 1033.7688, 5442.2389, 50794.2301, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr22, @b1, 86, 49.8000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr30, @b1, 147, 52.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr23, @b1, 491, 59.7600, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr31, @b1, 82, 62.4000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p11, @factura, 'T16-FAC', CONCAT(@lote, '-0144'), '2026-05-31', '2026-06-15', @GTQ, NULL, 1, 50794.2301, 50794.2301, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p11, '2026-06-15', 50794.2301, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0144'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0144'), @factura, 50794.2301);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Suministros Alimentarios Maya (Prueba)', 50794.2301, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-05-30', '2026-06-29', @GTQ, NULL, 1, 66.8880, 0.0000, 8.0266, 74.9146, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr40, @b3, 236, 0.1800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr41, @b3, 113, 0.2160, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0145'), '2026-06-01', @mp0, @GTQ, NULL, 1, 66.8880, 0.0000, 8.0266, 74.9146, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr40, @b3, 236, 0.1800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr41, @b3, 113, 0.2160, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0145'), '2026-06-01', '2026-07-01', @GTQ, NULL, 1, 74.9146, 37.4573, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p12, '2026-07-01', 37.4573, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0145'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0145'), @factura, 37.4573);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Empaques del Valle (Prueba)', 37.4573, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-05-31', '2026-07-30', @GTQ, NULL, 1, 9660.0400, 41.3712, 1154.2403, 10772.9091, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr42, @b5, 338, 24.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr35, @b5, 338, 4.0800, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p13, 'T16-FAC', CONCAT(@lote, '-0146'), '2026-06-02', @mp0, @GTQ, NULL, 1, 9660.0400, 41.3712, 1154.2403, 10772.9091, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr42, @b5, 338, 24.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr35, @b5, 338, 4.0800, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p13, @factura, 'T16-FAC', CONCAT(@lote, '-0146'), '2026-06-02', '2026-08-01', @GTQ, NULL, 1, 10772.9091, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p13, '2026-08-01', 10772.9091, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0146'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0146'), @factura, 10772.9091);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Plasticos Industriales Centro (Prueba)', 10772.9091, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-06-01', '2026-08-30', @GTQ, NULL, 1, 844.6200, 3.6036, 100.9220, 941.9384, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr45, @b7, 154, 0.7800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr37, @b7, 405, 1.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr44, @b7, 180, 0.6500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p14, 'T16-FAC', CONCAT(@lote, '-0147'), '2026-06-03', @mp0, @GTQ, NULL, 1, 844.6200, 3.6036, 100.9220, 941.9384, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr45, @b7, 154, 0.7800, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr37, @b7, 405, 1.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr44, @b7, 180, 0.6500, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-06-05', 'Diferencia de calidad en inspeccion de recepcion', 'T16-NC', CONCAT(@lote, '-0147'), 12.7109);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr45, @b7, 15, 0.7800, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p14, @credito, 'T16-NC', CONCAT(@lote, '-0147'), '2026-06-05', '2026-06-05', @GTQ, NULL, 1, -12.7109, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p14, @factura, 'T16-FAC', CONCAT(@lote, '-0147'), '2026-06-03', '2026-09-01', @GTQ, NULL, 1, 941.9384, 929.2275, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p14, '2026-09-01', 464.6138, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0147'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0147'), @factura, 464.6138);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Cartones y Cajas del Sur (Prueba)', 464.6138, 'Tarjeta empresarial', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-06-02', '2026-06-02', @GTQ, NULL, 1, 2648.9000, 0.0000, 317.8680, 2966.7680, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr47, @b9, 159, 11.1000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr38, @b9, 130, 6.8000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p15, 'T16-FAC', CONCAT(@lote, '-0148'), '2026-06-04', @mp0, @GTQ, NULL, 1, 2648.9000, 0.0000, 317.8680, 2966.7680, 'Anulada', 1);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr47, @b9, 159, 11.1000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr38, @b9, 130, 6.8000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p15, @factura, 'T16-FAC', CONCAT(@lote, '-0148'), '2026-06-04', '2026-06-04', @GTQ, NULL, 1, 2966.7680, 0, 'Anulada', 1);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-06-03', '2026-06-18', @GTQ, NULL, 1, 27444.4000, 0.0000, 3293.3280, 30737.7280, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr57, @b11, 294, 45.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr49, @b11, 122, 27.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr48, @b11, 388, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr56, @b11, 53, 38.0000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p16, 'T16-FAC', CONCAT(@lote, '-0149'), '2026-06-05', @mp0, @GTQ, NULL, 1, 27444.4000, 0.0000, 3293.3280, 30737.7280, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr57, @b11, 294, 45.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr49, @b11, 122, 27.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr48, @b11, 388, 22.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr56, @b11, 53, 38.0000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p16, @factura, 'T16-FAC', CONCAT(@lote, '-0149'), '2026-06-05', '2026-06-20', @GTQ, NULL, 1, 30737.7280, 30737.7280, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p16, '2026-06-20', 15368.8640, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0149'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0149'), @factura, 15368.8640);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Higiene Industrial del Norte (Prueba)', 15368.8640, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-06-04', '2026-07-04', @GTQ, NULL, 1, 17183.1000, 686.9430, 1979.5388, 18475.6958, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr51, @b1, 226, 38.1000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr50, @b1, 270, 31.7500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0150'), '2026-06-06', @mp0, @GTQ, NULL, 1, 17183.1000, 686.9430, 1979.5388, 18475.6958, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr51, @b1, 226, 38.1000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr50, @b1, 270, 31.7500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0150'), '2026-06-06', '2026-07-06', @GTQ, NULL, 1, 18475.6958, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p17, '2026-07-06', 18475.6958, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0150'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0150'), @factura, 18475.6958);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Soluciones Sanitarias del Sur (Prueba)', 18475.6958, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-06-05', '2026-08-04', @USD, @tc5, 7.65, 1015.6855, 14.9020, 120.0940, 1120.8775, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr71, @b3, 4, 74.5098, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr69, @b3, 5, 22.7451, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr76, @b3, 28, 21.5686, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p18, 'T16-FAC', CONCAT(@lote, '-0151'), '2026-06-07', @mp0, @USD, @tc5, 7.65, 1015.6855, 14.9020, 120.0940, 1120.8775, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr71, @b3, 4, 74.5098, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr69, @b3, 5, 22.7451, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr76, @b3, 28, 21.5686, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p18, @factura, 'T16-FAC', CONCAT(@lote, '-0151'), '2026-06-07', '2026-08-06', @USD, @tc5, 7.65, 1120.8775, 560.4387, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p18, '2026-08-06', 560.4388, @mp3, @USD, @tc5, 7.65, CONCAT(@lote, '-0151'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0151'), @factura, 560.4388);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Repuestos Frio Industrial (Prueba)', 560.4388, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-06-06', '2026-06-06', @GTQ, NULL, 1, 22148.0000, 0.0000, 2657.7600, 24805.7600, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr1, @b4, 420, 29.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr0, @b4, 400, 24.5000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-06-07', '2026-06-22', @GTQ, NULL, 1, 19098.2500, 0.0000, 2291.7900, 21390.0400, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr2, @b6, 385, 19.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr3, @b6, 485, 23.7000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-06-08', '2026-07-08', @GTQ, NULL, 1, 6889.4000, 27.3420, 823.4470, 7685.5050, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr4, @b8, 488, 12.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr5, @b8, 62, 14.7000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-06-09', '2026-08-08', @GTQ, NULL, 1, 18812.8800, 372.7080, 2212.8206, 20652.9926, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr6, @b10, 357, 34.8000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr7, @b10, 153, 41.7600, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-06-10', '2026-09-08', @GTQ, NULL, 1, 11868.4800, 127.7640, 1408.8859, 13149.6019, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr9, @b0, 91, 28.0800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr8, @b0, 398, 23.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0156'), '2026-06-12', @mp0, @GTQ, NULL, 1, 11868.4800, 127.7640, 1408.8859, 13149.6019, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr9, @b0, 91, 28.0800, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr8, @b0, 398, 23.4000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0156'), '2026-06-12', '2026-09-10', @GTQ, NULL, 1, 13149.6019, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2026-09-10', 13149.6019, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0156'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0156'), @factura, 13149.6019);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 13149.6019, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-06-11', '2026-06-11', @GTQ, NULL, 1, 5408.8800, 216.5040, 623.0851, 5815.4611, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr11, @b2, 194, 22.3200, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr10, @b2, 58, 18.6000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0157'), '2026-06-13', @mp0, @GTQ, NULL, 1, 5408.8800, 216.5040, 623.0851, 5815.4611, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr11, @b2, 194, 22.3200, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr10, @b2, 58, 18.6000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0157'), '2026-06-13', '2026-06-13', @GTQ, NULL, 1, 5815.4611, 5815.4611, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-06-16', 2907.7306, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0157'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0157'), @factura, 2907.7306);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 2907.7306, 'Cheque', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-06-12', '2026-06-27', @GTQ, NULL, 1, 13178.4000, 156.0600, 1562.6808, 14585.0208, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b4, 150, 34.6800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b4, 276, 28.9000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0158'), '2026-06-14', @mp0, @GTQ, NULL, 1, 13178.4000, 156.0600, 1562.6808, 14585.0208, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr13, @b4, 150, 34.6800, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr12, @b4, 276, 28.9000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0158'), '2026-06-14', '2026-06-29', @GTQ, NULL, 1, 14585.0208, 14585.0208, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-06-29', 14585.0208, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0158'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0158'), @factura, 14585.0208);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 14585.0208, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-06-13', '2026-07-13', @GTQ, NULL, 1, 24284.6000, 595.8180, 2842.6538, 26531.4358, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr14, @b6, 112, 39.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr15, @b6, 419, 47.4000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0159'), '2026-06-15', @mp0, @GTQ, NULL, 1, 24284.6000, 595.8180, 2842.6538, 26531.4358, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr14, @b6, 112, 39.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr15, @b6, 419, 47.4000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0159'), '2026-06-15', '2026-07-15', @GTQ, NULL, 1, 26531.4358, 26531.4358, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-07-15', 13265.7179, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0159'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0159'), @factura, 13265.7179);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 13265.7179, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-06-14', '2026-08-13', @GTQ, NULL, 1, 9763.1100, 307.7625, 1134.6417, 10589.9892, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr24, @b9, 133, 36.2500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr16, @b9, 40, 3.2000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr17, @b9, 404, 3.8400, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr25, @b9, 75, 43.5000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p8, 'T16-FAC', CONCAT(@lote, '-0160'), '2026-06-16', @mp0, @GTQ, NULL, 1, 9763.1100, 307.7625, 1134.6417, 10589.9892, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr24, @b9, 133, 36.2500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr16, @b9, 40, 3.2000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr17, @b9, 404, 3.8400, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr25, @b9, 75, 43.5000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p8, @factura, 'T16-FAC', CONCAT(@lote, '-0160'), '2026-06-16', '2026-08-15', @GTQ, NULL, 1, 10589.9892, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p8, '2026-08-15', 10589.9892, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0160'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0160'), @factura, 10589.9892);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Especias del Altiplano (Prueba)', 10589.9892, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-06-15', '2026-09-13', @GTQ, NULL, 1, 13990.8000, 699.5400, 1594.9512, 14886.2112, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr27, @b11, 172, 22.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr19, @b11, 113, 81.6000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr26, @b11, 48, 18.7500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p9, 'T16-FAC', CONCAT(@lote, '-0161'), '2026-06-17', @mp0, @GTQ, NULL, 1, 13990.8000, 699.5400, 1594.9512, 14886.2112, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr27, @b11, 172, 22.5000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr19, @b11, 113, 81.6000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr26, @b11, 48, 18.7500, 0.05);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-06-19', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0161'), 406.9800);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr27, @b11, 17, 22.5000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p9, @credito, 'T16-NC', CONCAT(@lote, '-0161'), '2026-06-19', '2026-06-19', @GTQ, NULL, 1, -406.9800, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p9, @factura, 'T16-FAC', CONCAT(@lote, '-0161'), '2026-06-17', '2026-09-15', @GTQ, NULL, 1, 14886.2112, 7239.6156, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p9, '2026-09-15', 7239.6156, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0161'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0161'), @factura, 7239.6156);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Condimentos La Huerta (Prueba)', 7239.6156, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-06-16', '2026-06-16', @USD, @tc5, 7.65, 2668.2302, 0.0000, 320.1876, 2988.4178, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr29, @b1, 112, 1.3333, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr28, @b1, 422, 1.1111, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr20, @b1, 369, 5.5556, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0162'), '2026-06-18', @mp0, @USD, @tc5, 7.65, 2668.2302, 0.0000, 320.1876, 2988.4178, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr29, @b1, 112, 1.3333, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr28, @b1, 422, 1.1111, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr20, @b1, 369, 5.5556, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0162'), '2026-06-18', '2026-06-18', @USD, @tc5, 7.65, 2988.4178, 2988.4178, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-06-21', 2988.4178, @mp2, @USD, @tc5, 7.65, CONCAT(@lote, '-0162'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0162'), @factura, 2988.4178);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 2988.4178, 'Efectivo', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-06-17', '2026-07-02', @GTQ, NULL, 1, 47887.6000, 104.5200, 5733.9696, 53517.0496, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr23, @b3, 330, 59.7600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr31, @b3, 129, 62.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr30, @b3, 67, 52.0000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr22, @b3, 334, 49.8000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p11, 'T16-FAC', CONCAT(@lote, '-0163'), '2026-06-19', @mp0, @GTQ, NULL, 1, 47887.6000, 104.5200, 5733.9696, 53517.0496, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr23, @b3, 330, 59.7600, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr31, @b3, 129, 62.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr30, @b3, 67, 52.0000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr22, @b3, 334, 49.8000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p11, @factura, 'T16-FAC', CONCAT(@lote, '-0163'), '2026-06-19', '2026-07-04', @GTQ, NULL, 1, 53517.0496, 53517.0496, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p11, '2026-07-04', 26758.5248, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0163'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0163'), @factura, 26758.5248);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Suministros Alimentarios Maya (Prueba)', 26758.5248, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-06-18', '2026-07-18', @GTQ, NULL, 1, 859.0900, 23.8805, 100.2251, 935.4346, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr33, @b5, 374, 1.0200, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr40, @b5, 448, 0.1800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr41, @b5, 370, 0.2160, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr32, @b5, 373, 0.8500, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-06-19', '2026-08-18', @GTQ, NULL, 1, 15708.6800, 424.8300, 1834.0620, 17117.9120, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr42, @b7, 140, 24.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr34, @b7, 148, 3.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr35, @b7, 256, 4.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr43, @b7, 365, 29.4000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-06-20', '2026-09-18', @GTQ, NULL, 1, 674.5200, 8.5356, 79.9181, 745.9025, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr36, @b9, 312, 1.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr45, @b9, 59, 0.7800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr37, @b9, 159, 1.5000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-06-21', '2026-06-21', @GTQ, NULL, 1, 4904.1000, 174.0120, 567.6106, 5297.6986, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr38, @b11, 303, 6.8000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr47, @b11, 43, 11.1000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr39, @b11, 290, 8.1600, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-06-22', '2026-07-07', @GTQ, NULL, 1, 38827.5000, 560.2500, 4592.0700, 42859.3200, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr57, @b1, 475, 45.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr48, @b1, 265, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr56, @b1, 162, 38.0000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr49, @b1, 187, 27.0000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p16, 'T16-FAC', CONCAT(@lote, '-0168'), '2026-06-24', @mp0, @GTQ, NULL, 1, 38827.5000, 560.2500, 4592.0700, 42859.3200, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr57, @b1, 475, 45.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr48, @b1, 265, 22.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr56, @b1, 162, 38.0000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr49, @b1, 187, 27.0000, 0.05);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-06-26', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0168'), 2400.3840);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr57, @b1, 47, 45.6000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p16, @credito, 'T16-NC', CONCAT(@lote, '-0168'), '2026-06-26', '2026-06-26', @GTQ, NULL, 1, -2400.3840, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p16, @factura, 'T16-FAC', CONCAT(@lote, '-0168'), '2026-06-24', '2026-07-09', @GTQ, NULL, 1, 42859.3200, 40458.9360, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p16, '2026-07-09', 40458.9360, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0168'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0168'), @factura, 40458.9360);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Higiene Industrial del Norte (Prueba)', 40458.9360, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-06-23', '2026-07-23', @GTQ, NULL, 1, 2462.9000, 6.0615, 294.8206, 2751.6591, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr59, @b3, 365, 0.5400, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr58, @b3, 449, 0.4500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr50, @b3, 65, 31.7500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0169'), '2026-06-25', @mp0, @GTQ, NULL, 1, 2462.9000, 6.0615, 294.8206, 2751.6591, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr59, @b3, 365, 0.5400, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr58, @b3, 449, 0.4500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr50, @b3, 65, 31.7500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0169'), '2026-06-25', '2026-07-25', @GTQ, NULL, 1, 2751.6591, 2751.6591, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p17, '2026-07-25', 1375.8296, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0169'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0169'), @factura, 1375.8296);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Soluciones Sanitarias del Sur (Prueba)', 1375.8296, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-06-24', '2026-08-23', @USD, @tc5, 7.65, 2069.4382, 19.2358, 246.0243, 2296.2267, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr60, @b5, 180, 5.8824, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr76, @b5, 4, 21.5686, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr53, @b5, 134, 4.1412, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr75, @b5, 30, 12.3137, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p18, 'T16-FAC', CONCAT(@lote, '-0170'), '2026-06-26', @mp0, @USD, @tc5, 7.65, 2069.4382, 19.2358, 246.0243, 2296.2267, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr60, @b5, 180, 5.8824, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr76, @b5, 4, 21.5686, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr53, @b5, 134, 4.1412, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr75, @b5, 30, 12.3137, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p18, @factura, 'T16-FAC', CONCAT(@lote, '-0170'), '2026-06-26', '2026-08-25', @USD, @tc5, 7.65, 2296.2267, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p18, '2026-08-25', 2296.2267, @mp2, @USD, @tc5, 7.65, CONCAT(@lote, '-0170'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0170'), @factura, 2296.2267);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Repuestos Frio Industrial (Prueba)', 2296.2267, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-06-25', '2026-06-25', @GTQ, NULL, 1, 20482.0000, 301.3500, 2421.6780, 22602.3280, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr1, @b6, 355, 29.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr0, @b6, 410, 24.5000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0171'), '2026-06-27', @mp0, @GTQ, NULL, 1, 20482.0000, 301.3500, 2421.6780, 22602.3280, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr1, @b6, 355, 29.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr0, @b6, 410, 24.5000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0171'), '2026-06-27', '2026-06-27', @GTQ, NULL, 1, 22602.3280, 11301.1640, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p0, '2026-06-30', 11301.1640, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0171'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0171'), @factura, 11301.1640);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes del Valle (Prueba)', 11301.1640, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-06-26', '2026-07-11', @GTQ, NULL, 1, 10194.9500, 383.6635, 1177.3544, 10988.6409, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr3, @b8, 266, 23.7000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr2, @b8, 197, 19.7500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p1, 'T16-FAC', CONCAT(@lote, '-0172'), '2026-06-28', @mp0, @GTQ, NULL, 1, 10194.9500, 383.6635, 1177.3544, 10988.6409, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr3, @b8, 266, 23.7000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr2, @b8, 197, 19.7500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p1, @factura, 'T16-FAC', CONCAT(@lote, '-0172'), '2026-06-28', '2026-07-13', @GTQ, NULL, 1, 10988.6409, 10988.6409, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p1, '2026-07-13', 10988.6409, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0172'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0172'), @factura, 10988.6409);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Porcicola La Cumbre (Prueba)', 10988.6409, 'Transferencia bancaria', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-06-27', '2026-07-27', @GTQ, NULL, 1, 5960.8500, 0.0000, 715.3020, 6676.1520, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr5, @b10, 373, 14.7000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr4, @b10, 39, 12.2500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p2, 'T16-FAC', CONCAT(@lote, '-0173'), '2026-06-29', @mp0, @GTQ, NULL, 1, 5960.8500, 0.0000, 715.3020, 6676.1520, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr5, @b10, 373, 14.7000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr4, @b10, 39, 12.2500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p2, @factura, 'T16-FAC', CONCAT(@lote, '-0173'), '2026-06-29', '2026-07-29', @GTQ, NULL, 1, 6676.1520, 6676.1520, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p2, '2026-07-29', 3338.0760, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0173'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0173'), @factura, 3338.0760);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Avicola Los Pinos (Prueba)', 3338.0760, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-06-28', '2026-08-27', @GTQ, NULL, 1, 22258.0800, 369.5760, 2626.6205, 24515.1245, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr6, @b0, 354, 34.8000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr7, @b0, 238, 41.7600, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0174'), '2026-06-30', @mp0, @GTQ, NULL, 1, 22258.0800, 369.5760, 2626.6205, 24515.1245, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr6, @b0, 354, 34.8000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr7, @b0, 238, 41.7600, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0174'), '2026-06-30', '2026-08-29', @GTQ, NULL, 1, 24515.1245, 24515.1245, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-08-29', 24515.1245, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0174'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0174'), @factura, 24515.1245);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 24515.1245, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-06-29', '2026-09-27', @GTQ, NULL, 1, 10183.6800, 0.0000, 1222.0416, 11405.7216, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr9, @b2, 221, 28.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr8, @b2, 170, 23.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0175'), '2026-07-01', @mp0, @GTQ, NULL, 1, 10183.6800, 0.0000, 1222.0416, 11405.7216, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr9, @b2, 221, 28.0800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr8, @b2, 170, 23.4000, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-07-03', 'Empaque danado durante el transporte', 'T16-NC', CONCAT(@lote, '-0175'), 691.8912);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr9, @b2, 22, 28.0800, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p4, @credito, 'T16-NC', CONCAT(@lote, '-0175'), '2026-07-03', '2026-07-03', @GTQ, NULL, 1, -691.8912, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0175'), '2026-07-01', '2026-09-29', @GTQ, NULL, 1, 11405.7216, 5356.9152, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2026-09-29', 5356.9152, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0175'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0175'), @factura, 5356.9152);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 5356.9152, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-06-30', '2026-06-30', @GTQ, NULL, 1, 5152.2000, 0.0000, 618.2640, 5770.4640, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr11, @b4, 125, 22.3200, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr10, @b4, 127, 18.6000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-07-01', '2026-07-16', @GTQ, NULL, 1, 2757.0600, 65.0250, 323.0442, 3015.0792, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b6, 42, 34.6800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b6, 45, 28.9000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-07-02', '2026-08-01', @GTQ, NULL, 1, 20113.4000, 836.6100, 2313.2148, 21590.0048, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr15, @b8, 246, 47.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr14, @b8, 214, 39.5000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-07-03', '2026-09-01', @GTQ, NULL, 1, 40813.8600, 726.4980, 4810.4834, 44897.8454, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr24, @b11, 478, 36.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr16, @b11, 91, 3.2000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr17, @b11, 399, 3.8400, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr25, @b11, 498, 43.5000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-07-04', '2026-10-02', @GTQ, NULL, 1, 39619.2500, 789.1875, 4659.6075, 43489.6700, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr19, @b1, 70, 81.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr26, @b1, 449, 18.7500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr18, @b1, 217, 68.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr27, @b1, 477, 22.5000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p9, 'T16-FAC', CONCAT(@lote, '-0180'), '2026-07-06', @mp0, @GTQ, NULL, 1, 39619.2500, 789.1875, 4659.6075, 43489.6700, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr19, @b1, 70, 81.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr26, @b1, 449, 18.7500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr18, @b1, 217, 68.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr27, @b1, 477, 22.5000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p9, @factura, 'T16-FAC', CONCAT(@lote, '-0180'), '2026-07-06', '2026-10-04', @GTQ, NULL, 1, 43489.6700, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p9, '2026-10-04', 43489.6700, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0180'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0180'), @factura, 43489.6700);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Condimentos La Huerta (Prueba)', 43489.6700, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-07-05', '2026-07-05', @USD, @tc6, 7.66, 2814.1070, 96.5404, 326.1080, 3043.6746, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr28, @b3, 118, 1.1097, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr20, @b3, 348, 5.5483, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr21, @b3, 113, 6.6580, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0181'), '2026-07-07', @mp0, @USD, @tc6, 7.66, 2814.1070, 96.5404, 326.1080, 3043.6746, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr28, @b3, 118, 1.1097, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr20, @b3, 348, 5.5483, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr21, @b3, 113, 6.6580, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0181'), '2026-07-07', '2026-07-07', @USD, @tc6, 7.66, 3043.6746, 1521.8373, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-07-10', 1521.8373, @mp1, @USD, @tc6, 7.66, CONCAT(@lote, '-0181'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0181'), @factura, 1521.8373);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 1521.8373, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-07-06', '2026-07-21', @GTQ, NULL, 1, 45680.7200, 0.0000, 5481.6864, 51162.4064, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr30, @b5, 68, 52.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr22, @b5, 254, 49.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr31, @b5, 375, 62.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr23, @b5, 102, 59.7600, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p11, 'T16-FAC', CONCAT(@lote, '-0182'), '2026-07-08', @mp0, @GTQ, NULL, 1, 45680.7200, 0.0000, 5481.6864, 51162.4064, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr30, @b5, 68, 52.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr22, @b5, 254, 49.8000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr31, @b5, 375, 62.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr23, @b5, 102, 59.7600, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-07-10', 'Diferencia de calidad en inspeccion de recepcion', 'T16-NC', CONCAT(@lote, '-0182'), 349.4400);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr30, @b5, 6, 52.0000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p11, @credito, 'T16-NC', CONCAT(@lote, '-0182'), '2026-07-10', '2026-07-10', @GTQ, NULL, 1, -349.4400, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p11, @factura, 'T16-FAC', CONCAT(@lote, '-0182'), '2026-07-08', '2026-07-23', @GTQ, NULL, 1, 51162.4064, 50812.9664, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p11, '2026-07-23', 50812.9664, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0182'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0182'), @factura, 50812.9664);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Suministros Alimentarios Maya (Prueba)', 50812.9664, 'Efectivo', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-07-07', '2026-08-06', @GTQ, NULL, 1, 161.0400, 7.4256, 18.4337, 172.0481, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr40, @b7, 494, 0.1800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr32, @b7, 48, 0.8500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr41, @b7, 145, 0.2160, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0183'), '2026-07-09', @mp0, @GTQ, NULL, 1, 161.0400, 7.4256, 18.4337, 172.0481, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr40, @b7, 494, 0.1800, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr32, @b7, 48, 0.8500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr41, @b7, 145, 0.2160, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0183'), '2026-07-09', '2026-08-08', @GTQ, NULL, 1, 172.0481, 172.0481, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p12, '2026-08-08', 86.0241, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0183'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0183'), @factura, 86.0241);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Empaques del Valle (Prueba)', 86.0241, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-07-08', '2026-09-06', @GTQ, NULL, 1, 6892.7200, 344.6360, 785.7701, 7333.8541, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr34, @b9, 477, 3.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr42, @b9, 182, 24.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr35, @b9, 199, 4.0800, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p13, 'T16-FAC', CONCAT(@lote, '-0184'), '2026-07-10', @mp0, @GTQ, NULL, 1, 6892.7200, 344.6360, 785.7701, 7333.8541, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr34, @b9, 477, 3.4000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr42, @b9, 182, 24.5000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr35, @b9, 199, 4.0800, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p13, @factura, 'T16-FAC', CONCAT(@lote, '-0184'), '2026-07-10', '2026-09-08', @GTQ, NULL, 1, 7333.8541, 7333.8541, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p13, '2026-09-08', 7333.8541, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0184'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0184'), @factura, 7333.8541);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Plasticos Industriales Centro (Prueba)', 7333.8541, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-07-09', '2026-10-07', @GTQ, NULL, 1, 744.1400, 16.2150, 87.3510, 815.2760, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr37, @b11, 161, 1.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr36, @b11, 108, 1.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr45, @b11, 88, 0.7800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr44, @b11, 460, 0.6500, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p14, 'T16-FAC', CONCAT(@lote, '-0185'), '2026-07-11', @mp0, @GTQ, NULL, 1, 744.1400, 16.2150, 87.3510, 815.2760, 'Anulada', 1);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr37, @b11, 161, 1.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr36, @b11, 108, 1.2500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr45, @b11, 88, 0.7800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr44, @b11, 460, 0.6500, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p14, @factura, 'T16-FAC', CONCAT(@lote, '-0185'), '2026-07-11', '2026-10-09', @GTQ, NULL, 1, 815.2760, 0, 'Anulada', 1);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-07-10', '2026-07-10', @GTQ, NULL, 1, 12212.2800, 149.2600, 1447.5624, 13510.5824, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr39, @b1, 408, 8.1600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr38, @b1, 439, 6.8000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr46, @b1, 232, 9.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr47, @b1, 338, 11.1000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p15, 'T16-FAC', CONCAT(@lote, '-0186'), '2026-07-12', @mp0, @GTQ, NULL, 1, 12212.2800, 149.2600, 1447.5624, 13510.5824, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr39, @b1, 408, 8.1600, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr38, @b1, 439, 6.8000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr46, @b1, 232, 9.2500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr47, @b1, 338, 11.1000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p15, @factura, 'T16-FAC', CONCAT(@lote, '-0186'), '2026-07-12', '2026-07-12', @GTQ, NULL, 1, 13510.5824, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p15, '2026-07-15', 13510.5824, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0186'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0186'), @factura, 13510.5824);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Etiquetas del Istmo (Prueba)', 13510.5824, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-07-11', '2026-07-26', @GTQ, NULL, 1, 29058.9000, 1119.6000, 3352.7160, 31292.0160, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr49, @b3, 424, 27.0000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr57, @b3, 124, 45.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr56, @b3, 288, 38.0000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr48, @b3, 45, 22.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p16, 'T16-FAC', CONCAT(@lote, '-0187'), '2026-07-13', @mp0, @GTQ, NULL, 1, 29058.9000, 1119.6000, 3352.7160, 31292.0160, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr49, @b3, 424, 27.0000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr57, @b3, 124, 45.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr56, @b3, 288, 38.0000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr48, @b3, 45, 22.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p16, @factura, 'T16-FAC', CONCAT(@lote, '-0187'), '2026-07-13', '2026-07-28', @GTQ, NULL, 1, 31292.0160, 31292.0160, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p16, '2026-07-28', 15646.0080, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0187'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0187'), @factura, 15646.0080);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Higiene Industrial del Norte (Prueba)', 15646.0080, 'Tarjeta empresarial', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-07-12', '2026-08-11', @GTQ, NULL, 1, 23454.9200, 630.5550, 2738.9238, 25563.2888, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr58, @b5, 78, 0.4500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr59, @b5, 143, 0.5400, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr50, @b5, 338, 31.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr51, @b5, 331, 38.1000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-07-13', '2026-09-11', @USD, @tc6, 7.66, 2490.6023, 8.8120, 297.8148, 2779.6051, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr63, @b7, 173, 5.0914, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr61, @b7, 105, 7.0496, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr54, @b7, 56, 2.4151, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr60, @b7, 75, 5.8747, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 5, @pr72, @b7, 10, 29.3734, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-07-14', '2026-07-14', @GTQ, NULL, 1, 13009.5000, 529.2000, 1497.6360, 13977.9360, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr0, @b8, 99, 24.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr1, @b8, 360, 29.4000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-07-15', '2026-07-30', @GTQ, NULL, 1, 13655.1500, 353.3670, 1596.2140, 14897.9970, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr2, @b10, 95, 19.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr3, @b10, 497, 23.7000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-07-16', '2026-08-15', @GTQ, NULL, 1, 10020.5000, 297.6750, 1166.7390, 10889.5640, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr4, @b0, 332, 12.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr5, @b0, 405, 14.7000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p2, 'T16-FAC', CONCAT(@lote, '-0192'), '2026-07-18', @mp0, @GTQ, NULL, 1, 10020.5000, 297.6750, 1166.7390, 10889.5640, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr4, @b0, 332, 12.2500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr5, @b0, 405, 14.7000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p2, @factura, 'T16-FAC', CONCAT(@lote, '-0192'), '2026-07-18', '2026-08-17', @GTQ, NULL, 1, 10889.5640, 10889.5640, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p2, '2026-08-17', 10889.5640, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0192'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0192'), @factura, 10889.5640);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Avicola Los Pinos (Prueba)', 10889.5640, 'Transferencia bancaria', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-07-17', '2026-09-15', @GTQ, NULL, 1, 22682.6400, 680.4792, 2640.2593, 24642.4201, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr7, @b2, 139, 41.7600, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr6, @b2, 485, 34.8000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0193'), '2026-07-19', @mp0, @GTQ, NULL, 1, 22682.6400, 680.4792, 2640.2593, 24642.4201, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr7, @b2, 139, 41.7600, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr6, @b2, 485, 34.8000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0193'), '2026-07-19', '2026-09-17', @GTQ, NULL, 1, 24642.4201, 24642.4201, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-09-17', 12321.2101, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0193'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0193'), @factura, 12321.2101);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 12321.2101, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-07-18', '2026-10-16', @GTQ, NULL, 1, 11072.8800, 183.9240, 1306.6747, 12195.6307, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr9, @b4, 176, 28.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr8, @b4, 262, 23.4000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0194'), '2026-07-20', @mp0, @GTQ, NULL, 1, 11072.8800, 183.9240, 1306.6747, 12195.6307, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr9, @b4, 176, 28.0800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr8, @b4, 262, 23.4000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0194'), '2026-07-20', '2026-10-18', @GTQ, NULL, 1, 12195.6307, 12195.6307, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2026-10-18', 12195.6307, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0194'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0194'), @factura, 12195.6307);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 12195.6307, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-07-19', '2026-07-19', @GTQ, NULL, 1, 14470.8000, 0.0000, 1736.4960, 16207.2960, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr11, @b6, 310, 22.3200, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr10, @b6, 406, 18.6000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0195'), '2026-07-21', @mp0, @GTQ, NULL, 1, 14470.8000, 0.0000, 1736.4960, 16207.2960, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr11, @b6, 310, 22.3200, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr10, @b6, 406, 18.6000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0195'), '2026-07-21', '2026-07-21', @GTQ, NULL, 1, 16207.2960, 8103.6480, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-07-24', 8103.6480, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0195'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0195'), @factura, 8103.6480);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 8103.6480, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-07-20', '2026-08-04', @GTQ, NULL, 1, 15819.8600, 440.7250, 1845.4962, 17224.6312, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr12, @b8, 305, 28.9000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr13, @b8, 202, 34.6800, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0196'), '2026-07-22', @mp0, @GTQ, NULL, 1, 15819.8600, 440.7250, 1845.4962, 17224.6312, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr12, @b8, 305, 28.9000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr13, @b8, 202, 34.6800, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-07-24', 'Empaque danado durante el transporte', 'T16-NC', CONCAT(@lote, '-0196'), 922.4880);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr12, @b8, 30, 28.9000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p6, @credito, 'T16-NC', CONCAT(@lote, '-0196'), '2026-07-24', '2026-07-24', @GTQ, NULL, 1, -922.4880, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0196'), '2026-07-22', '2026-08-06', @GTQ, NULL, 1, 17224.6312, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-08-06', 16302.1432, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0196'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0196'), @factura, 16302.1432);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 16302.1432, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-07-21', '2026-08-20', @GTQ, NULL, 1, 23391.9000, 488.2200, 2748.4416, 25652.1216, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr15, @b10, 206, 47.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr14, @b10, 345, 39.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0197'), '2026-07-23', @mp0, @GTQ, NULL, 1, 23391.9000, 488.2200, 2748.4416, 25652.1216, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr15, @b10, 206, 47.4000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr14, @b10, 345, 39.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0197'), '2026-07-23', '2026-08-22', @GTQ, NULL, 1, 25652.1216, 25652.1216, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-08-22', 12826.0608, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0197'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0197'), @factura, 12826.0608);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 12826.0608, 'Cheque', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-07-22', '2026-09-20', @GTQ, NULL, 1, 40748.9800, 1095.9100, 4758.3684, 44411.4384, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr17, @b1, 467, 3.8400, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr16, @b1, 406, 3.2000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr25, @b1, 474, 43.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr24, @b1, 470, 36.2500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p8, 'T16-FAC', CONCAT(@lote, '-0198'), '2026-07-24', @mp0, @GTQ, NULL, 1, 40748.9800, 1095.9100, 4758.3684, 44411.4384, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr17, @b1, 467, 3.8400, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr16, @b1, 406, 3.2000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr25, @b1, 474, 43.5000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr24, @b1, 470, 36.2500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p8, @factura, 'T16-FAC', CONCAT(@lote, '-0198'), '2026-07-24', '2026-09-22', @GTQ, NULL, 1, 44411.4384, 44411.4384, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p8, '2026-09-22', 44411.4384, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0198'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0198'), @factura, 44411.4384);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Especias del Altiplano (Prueba)', 44411.4384, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-07-23', '2026-10-21', @GTQ, NULL, 1, 30381.8000, 155.0400, 3627.2112, 33853.9712, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr27, @b3, 310, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr19, @b3, 38, 81.6000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr18, @b3, 217, 68.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr26, @b3, 296, 18.7500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p9, 'T16-FAC', CONCAT(@lote, '-0199'), '2026-07-25', @mp0, @GTQ, NULL, 1, 30381.8000, 155.0400, 3627.2112, 33853.9712, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr27, @b3, 310, 22.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr19, @b3, 38, 81.6000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr18, @b3, 217, 68.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr26, @b3, 296, 18.7500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p9, @factura, 'T16-FAC', CONCAT(@lote, '-0199'), '2026-07-25', '2026-10-23', @GTQ, NULL, 1, 33853.9712, 33853.9712, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p9, '2026-10-23', 16926.9856, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0199'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0199'), @factura, 16926.9856);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Condimentos La Huerta (Prueba)', 16926.9856, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-07-24', '2026-07-24', @USD, @tc6, 7.66, 1460.3304, 14.8478, 173.4579, 1618.9405, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr20, @b5, 174, 5.5483, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr28, @b5, 446, 1.1097, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-07-25', '2026-08-09', @GTQ, NULL, 1, 44321.2400, 737.4112, 5230.0595, 48813.8883, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr31, @b7, 304, 62.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr22, @b7, 67, 49.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr30, @b7, 74, 52.0000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr23, @b7, 304, 59.7600, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-07-26', '2026-08-25', @GTQ, NULL, 1, 282.8420, 5.9325, 33.2291, 310.1386, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr32, @b9, 83, 0.8500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr33, @b9, 117, 1.0200, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr41, @b9, 77, 0.2160, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr40, @b9, 424, 0.1800, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-07-27', '2026-09-25', @GTQ, NULL, 1, 19041.2000, 351.6780, 2242.7426, 20932.2646, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr34, @b11, 74, 3.4000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr35, @b11, 325, 4.0800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr43, @b11, 279, 29.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr42, @b11, 378, 24.5000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-07-28', '2026-10-26', @GTQ, NULL, 1, 598.0000, 24.7260, 68.7929, 642.0669, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr44, @b1, 398, 0.6500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr45, @b1, 435, 0.7800, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p14, 'T16-FAC', CONCAT(@lote, '-0204'), '2026-07-30', @mp0, @GTQ, NULL, 1, 598.0000, 24.7260, 68.7929, 642.0669, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr44, @b1, 398, 0.6500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr45, @b1, 435, 0.7800, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p14, @factura, 'T16-FAC', CONCAT(@lote, '-0204'), '2026-07-30', '2026-10-28', @GTQ, NULL, 1, 642.0669, 642.0669, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p14, '2026-10-28', 642.0669, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0204'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0204'), @factura, 642.0669);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Cartones y Cajas del Sur (Prueba)', 642.0669, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-07-29', '2026-07-29', @GTQ, NULL, 1, 12000.7500, 336.6815, 1399.6882, 13063.7567, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr47, @b3, 468, 11.1000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr38, @b3, 469, 6.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr46, @b3, 391, 9.2500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p15, 'T16-FAC', CONCAT(@lote, '-0205'), '2026-07-31', @mp0, @GTQ, NULL, 1, 12000.7500, 336.6815, 1399.6882, 13063.7567, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr47, @b3, 468, 11.1000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr38, @b3, 469, 6.8000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr46, @b3, 391, 9.2500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p15, @factura, 'T16-FAC', CONCAT(@lote, '-0205'), '2026-07-31', '2026-07-31', @GTQ, NULL, 1, 13063.7567, 6531.8783, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p15, '2026-08-03', 6531.8784, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0205'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0205'), @factura, 6531.8784);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Etiquetas del Istmo (Prueba)', 6531.8784, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-07-30', '2026-08-14', @GTQ, NULL, 1, 34021.4000, 886.1220, 3976.2334, 37111.5114, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr56, @b5, 118, 38.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr57, @b5, 344, 45.6000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr49, @b5, 443, 27.0000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr48, @b5, 84, 22.5000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p16, 'T16-FAC', CONCAT(@lote, '-0206'), '2026-08-01', @mp0, @GTQ, NULL, 1, 34021.4000, 886.1220, 3976.2334, 37111.5114, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr56, @b5, 118, 38.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr57, @b5, 344, 45.6000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr49, @b5, 443, 27.0000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr48, @b5, 84, 22.5000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p16, @factura, 'T16-FAC', CONCAT(@lote, '-0206'), '2026-08-01', '2026-08-16', @GTQ, NULL, 1, 37111.5114, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p16, '2026-08-16', 37111.5114, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0206'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0206'), @factura, 37111.5114);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Higiene Industrial del Norte (Prueba)', 37111.5114, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-07-31', '2026-08-30', @GTQ, NULL, 1, 15098.7900, 407.2437, 1762.9856, 16454.5319, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr58, @b7, 351, 0.4500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr51, @b7, 351, 38.1000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr50, @b7, 48, 31.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr59, @b7, 81, 0.5400, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0207'), '2026-08-02', @mp0, @GTQ, NULL, 1, 15098.7900, 407.2437, 1762.9856, 16454.5319, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr58, @b7, 351, 0.4500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr51, @b7, 351, 38.1000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr50, @b7, 48, 31.7500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr59, @b7, 81, 0.5400, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0207'), '2026-08-02', '2026-09-01', @GTQ, NULL, 1, 16454.5319, 16454.5319, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p17, '2026-09-01', 8227.2660, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0207'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0207'), @factura, 8227.2660);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Soluciones Sanitarias del Sur (Prueba)', 8227.2660, 'Tarjeta empresarial', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-08-01', '2026-09-30', @USD, @tc7, 7.67, 2744.7907, 20.4368, 326.9225, 3051.2764, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr70, @b9, 11, 61.9296, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr62, @b9, 487, 4.2373, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p18, 'T16-FAC', CONCAT(@lote, '-0208'), '2026-08-03', @mp0, @USD, @tc7, 7.67, 2744.7907, 20.4368, 326.9225, 3051.2764, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr70, @b9, 11, 61.9296, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr62, @b9, 487, 4.2373, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p18, @factura, 'T16-FAC', CONCAT(@lote, '-0208'), '2026-08-03', '2026-10-02', @USD, @tc7, 7.67, 3051.2764, 3051.2764, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p18, '2026-10-02', 3051.2764, @mp0, @USD, @tc7, 7.67, CONCAT(@lote, '-0208'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0208'), @factura, 3051.2764);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Repuestos Frio Industrial (Prueba)', 3051.2764, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-08-02', '2026-08-02', @GTQ, NULL, 1, 7854.7000, 0.0000, 942.5640, 8797.2640, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr1, @b10, 158, 29.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr0, @b10, 131, 24.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0209'), '2026-08-04', @mp0, @GTQ, NULL, 1, 7854.7000, 0.0000, 942.5640, 8797.2640, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr1, @b10, 158, 29.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr0, @b10, 131, 24.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0209'), '2026-08-04', '2026-08-04', @GTQ, NULL, 1, 8797.2640, 8797.2640, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p0, '2026-08-07', 4398.6320, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0209'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0209'), @factura, 4398.6320);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes del Valle (Prueba)', 4398.6320, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-08-03', '2026-08-18', @GTQ, NULL, 1, 14204.2000, 317.1060, 1666.4513, 15553.5453, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr3, @b0, 446, 23.7000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr2, @b0, 184, 19.7500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p1, 'T16-FAC', CONCAT(@lote, '-0210'), '2026-08-05', @mp0, @GTQ, NULL, 1, 14204.2000, 317.1060, 1666.4513, 15553.5453, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr3, @b0, 446, 23.7000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr2, @b0, 184, 19.7500, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-08-07', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0210'), 1132.8979);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr3, @b0, 44, 23.7000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p1, @credito, 'T16-NC', CONCAT(@lote, '-0210'), '2026-08-07', '2026-08-07', @GTQ, NULL, 1, -1132.8979, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p1, @factura, 'T16-FAC', CONCAT(@lote, '-0210'), '2026-08-05', '2026-08-20', @GTQ, NULL, 1, 15553.5453, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p1, '2026-08-20', 14420.6474, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0210'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0210'), @factura, 14420.6474);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Porcicola La Cumbre (Prueba)', 14420.6474, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-08-04', '2026-09-03', @GTQ, NULL, 1, 9052.7500, 268.8875, 1054.0635, 9837.9260, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr4, @b2, 439, 12.2500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr5, @b2, 250, 14.7000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p2, 'T16-FAC', CONCAT(@lote, '-0211'), '2026-08-06', @mp0, @GTQ, NULL, 1, 9052.7500, 268.8875, 1054.0635, 9837.9260, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr4, @b2, 439, 12.2500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr5, @b2, 250, 14.7000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p2, @factura, 'T16-FAC', CONCAT(@lote, '-0211'), '2026-08-06', '2026-09-05', @GTQ, NULL, 1, 9837.9260, 4918.9630, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p2, '2026-09-05', 4918.9630, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0211'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0211'), @factura, 4918.9630);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Avicola Los Pinos (Prueba)', 4918.9630, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-08-05', '2026-10-04', @GTQ, NULL, 1, 15381.6000, 60.5520, 1838.5258, 17159.5738, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr6, @b4, 58, 34.8000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr7, @b4, 320, 41.7600, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-08-06', '2026-11-04', @GTQ, NULL, 1, 18270.7200, 0.0000, 2192.4864, 20463.2064, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr9, @b6, 314, 28.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr8, @b6, 404, 23.4000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-08-07', '2026-08-07', @GTQ, NULL, 1, 9255.3600, 0.0000, 1110.6432, 10366.0032, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr11, @b8, 68, 22.3200, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr10, @b8, 416, 18.6000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-08-08', '2026-08-23', @GTQ, NULL, 1, 24391.6000, 332.9280, 2887.0406, 26945.7126, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b10, 320, 34.6800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b10, 460, 28.9000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-08-09', '2026-09-08', @GTQ, NULL, 1, 26978.5000, 436.4750, 3185.0430, 29727.0680, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr15, @b0, 385, 47.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr14, @b0, 221, 39.5000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0216'), '2026-08-11', @mp0, @GTQ, NULL, 1, 26978.5000, 436.4750, 3185.0430, 29727.0680, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr15, @b0, 385, 47.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr14, @b0, 221, 39.5000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0216'), '2026-08-11', '2026-09-10', @GTQ, NULL, 1, 29727.0680, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-09-10', 29727.0680, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0216'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0216'), @factura, 29727.0680);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 29727.0680, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-08-10', '2026-10-09', @GTQ, NULL, 1, 28718.1600, 0.0000, 3446.1792, 32164.3392, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr24, @b3, 262, 36.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr17, @b3, 349, 3.8400, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr25, @b3, 407, 43.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr16, @b3, 55, 3.2000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p8, 'T16-FAC', CONCAT(@lote, '-0217'), '2026-08-12', @mp0, @GTQ, NULL, 1, 28718.1600, 0.0000, 3446.1792, 32164.3392, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr24, @b3, 262, 36.2500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr17, @b3, 349, 3.8400, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr25, @b3, 407, 43.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr16, @b3, 55, 3.2000, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-08-14', 'Diferencia de calidad en inspeccion de recepcion', 'T16-NC', CONCAT(@lote, '-0217'), 1055.6000);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr24, @b3, 26, 36.2500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p8, @credito, 'T16-NC', CONCAT(@lote, '-0217'), '2026-08-14', '2026-08-14', @GTQ, NULL, 1, -1055.6000, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p8, @factura, 'T16-FAC', CONCAT(@lote, '-0217'), '2026-08-12', '2026-10-11', @GTQ, NULL, 1, 32164.3392, 31108.7392, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p8, '2026-10-11', 15554.3696, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0217'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0217'), @factura, 15554.3696);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Especias del Altiplano (Prueba)', 15554.3696, 'Cheque', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-08-11', '2026-11-09', @GTQ, NULL, 1, 48998.8500, 74.2500, 5870.9520, 54795.5520, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr26, @b5, 475, 18.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr18, @b5, 222, 68.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr27, @b5, 110, 22.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr19, @b5, 276, 81.6000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p9, 'T16-FAC', CONCAT(@lote, '-0218'), '2026-08-13', @mp0, @GTQ, NULL, 1, 48998.8500, 74.2500, 5870.9520, 54795.5520, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr26, @b5, 475, 18.7500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr18, @b5, 222, 68.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr27, @b5, 110, 22.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr19, @b5, 276, 81.6000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p9, @factura, 'T16-FAC', CONCAT(@lote, '-0218'), '2026-08-13', '2026-11-11', @GTQ, NULL, 1, 54795.5520, 54795.5520, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p9, '2026-11-11', 54795.5520, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0218'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0218'), @factura, 54795.5520);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Condimentos La Huerta (Prueba)', 54795.5520, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-08-12', '2026-08-12', @USD, @tc7, 7.67, 832.2751, 27.9823, 96.5151, 900.8079, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr28, @b7, 229, 1.1082, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr29, @b7, 205, 1.3299, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr21, @b7, 46, 6.6493, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0219'), '2026-08-14', @mp0, @USD, @tc7, 7.67, 832.2751, 27.9823, 96.5151, 900.8079, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr28, @b7, 229, 1.1082, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr29, @b7, 205, 1.3299, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr21, @b7, 46, 6.6493, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0219'), '2026-08-14', '2026-08-14', @USD, @tc7, 7.67, 900.8079, 900.8079, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-08-17', 450.4040, @mp3, @USD, @tc7, 7.67, CONCAT(@lote, '-0219'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0219'), @factura, 450.4040);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 450.4040, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-08-13', '2026-08-28', @GTQ, NULL, 1, 39722.1200, 419.6400, 4716.2976, 44018.7776, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr23, @b9, 107, 59.7600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr31, @b9, 282, 62.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr22, @b9, 35, 49.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr30, @b9, 269, 52.0000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p11, 'T16-FAC', CONCAT(@lote, '-0220'), '2026-08-15', @mp0, @GTQ, NULL, 1, 39722.1200, 419.6400, 4716.2976, 44018.7776, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr23, @b9, 107, 59.7600, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr31, @b9, 282, 62.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr22, @b9, 35, 49.8000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr30, @b9, 269, 52.0000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p11, @factura, 'T16-FAC', CONCAT(@lote, '-0220'), '2026-08-15', '2026-08-30', @GTQ, NULL, 1, 44018.7776, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p11, '2026-08-30', 44018.7776, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0220'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0220'), @factura, 44018.7776);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Suministros Alimentarios Maya (Prueba)', 44018.7776, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-08-14', '2026-09-13', @GTQ, NULL, 1, 694.1880, 23.5212, 80.4800, 751.1468, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr32, @b11, 336, 0.8500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr40, @b11, 429, 0.1800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr33, @b11, 302, 1.0200, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr41, @b11, 108, 0.2160, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0221'), '2026-08-16', @mp0, @GTQ, NULL, 1, 694.1880, 23.5212, 80.4800, 751.1468, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr32, @b11, 336, 0.8500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr40, @b11, 429, 0.1800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr33, @b11, 302, 1.0200, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr41, @b11, 108, 0.2160, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0221'), '2026-08-16', '2026-09-15', @GTQ, NULL, 1, 751.1468, 375.5734, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p12, '2026-09-15', 375.5734, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0221'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0221'), @factura, 375.5734);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Empaques del Valle (Prueba)', 375.5734, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-08-15', '2026-10-14', @GTQ, NULL, 1, 1708.1600, 25.2960, 201.9437, 1884.8077, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr34, @b1, 248, 3.4000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr35, @b1, 212, 4.0800, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p13, 'T16-FAC', CONCAT(@lote, '-0222'), '2026-08-17', @mp0, @GTQ, NULL, 1, 1708.1600, 25.2960, 201.9437, 1884.8077, 'Anulada', 1);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr34, @b1, 248, 3.4000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr35, @b1, 212, 4.0800, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p13, @factura, 'T16-FAC', CONCAT(@lote, '-0222'), '2026-08-17', '2026-10-16', @GTQ, NULL, 1, 1884.8077, 0, 'Anulada', 1);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-08-16', '2026-11-14', @GTQ, NULL, 1, 644.2000, 27.4275, 74.0127, 690.7852, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr45, @b3, 285, 0.7800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr44, @b3, 41, 0.6500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr36, @b3, 261, 1.2500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr37, @b3, 46, 1.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p14, 'T16-FAC', CONCAT(@lote, '-0223'), '2026-08-18', @mp0, @GTQ, NULL, 1, 644.2000, 27.4275, 74.0127, 690.7852, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr45, @b3, 285, 0.7800, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr44, @b3, 41, 0.6500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr36, @b3, 261, 1.2500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr37, @b3, 46, 1.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p14, @factura, 'T16-FAC', CONCAT(@lote, '-0223'), '2026-08-18', '2026-11-16', @GTQ, NULL, 1, 690.7852, 690.7852, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p14, '2026-11-16', 345.3926, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0223'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0223'), @factura, 345.3926);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Cartones y Cajas del Sur (Prueba)', 345.3926, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-08-17', '2026-08-17', @GTQ, NULL, 1, 11120.1000, 54.5750, 1327.8630, 12393.3880, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr47, @b5, 414, 11.1000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr46, @b5, 118, 9.2500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr39, @b5, 465, 8.1600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr38, @b5, 241, 6.8000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-08-18', '2026-09-02', @GTQ, NULL, 1, 18906.0000, 450.3000, 2214.6840, 20670.3840, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr48, @b7, 326, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr49, @b7, 95, 27.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr56, @b7, 237, 38.0000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-08-19', '2026-09-18', @GTQ, NULL, 1, 28860.6300, 413.2449, 3413.6862, 31861.0713, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr59, @b9, 277, 0.5400, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr51, @b9, 397, 38.1000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr58, @b9, 133, 0.4500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr50, @b9, 426, 31.7500, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-08-20', '2026-10-19', @USD, @tc7, 7.67, 2387.8781, 14.2438, 284.8361, 2658.4704, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr60, @b11, 71, 5.8670, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr62, @b11, 398, 4.2373, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr78, @b11, 23, 12.3859, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-08-21', '2026-08-21', @GTQ, NULL, 1, 13190.8000, 238.1400, 1554.3192, 14506.9792, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr0, @b0, 344, 24.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr1, @b0, 162, 29.4000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0228'), '2026-08-23', @mp0, @GTQ, NULL, 1, 13190.8000, 238.1400, 1554.3192, 14506.9792, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr0, @b0, 344, 24.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr1, @b0, 162, 29.4000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0228'), '2026-08-23', '2026-08-23', @GTQ, NULL, 1, 14506.9792, 14506.9792, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p0, '2026-08-26', 14506.9792, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0228'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0228'), @factura, 14506.9792);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes del Valle (Prueba)', 14506.9792, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-08-22', '2026-09-06', @GTQ, NULL, 1, 15914.5500, 245.8875, 1880.2395, 17548.9020, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr3, @b2, 464, 23.7000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr2, @b2, 249, 19.7500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p1, 'T16-FAC', CONCAT(@lote, '-0229'), '2026-08-24', @mp0, @GTQ, NULL, 1, 15914.5500, 245.8875, 1880.2395, 17548.9020, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr3, @b2, 464, 23.7000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr2, @b2, 249, 19.7500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p1, @factura, 'T16-FAC', CONCAT(@lote, '-0229'), '2026-08-24', '2026-09-08', @GTQ, NULL, 1, 17548.9020, 17548.9020, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p1, '2026-09-08', 8774.4510, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0229'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0229'), @factura, 8774.4510);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Porcicola La Cumbre (Prueba)', 8774.4510, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-08-23', '2026-09-22', @GTQ, NULL, 1, 5620.3000, 116.8650, 660.4122, 6163.8472, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr4, @b4, 268, 12.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr5, @b4, 159, 14.7000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p2, 'T16-FAC', CONCAT(@lote, '-0230'), '2026-08-25', @mp0, @GTQ, NULL, 1, 5620.3000, 116.8650, 660.4122, 6163.8472, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr4, @b4, 268, 12.2500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr5, @b4, 159, 14.7000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p2, @factura, 'T16-FAC', CONCAT(@lote, '-0230'), '2026-08-25', '2026-09-24', @GTQ, NULL, 1, 6163.8472, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p2, '2026-09-24', 6163.8472, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0230'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0230'), @factura, 6163.8472);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Avicola Los Pinos (Prueba)', 6163.8472, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-08-24', '2026-10-23', @GTQ, NULL, 1, 21374.1600, 641.2248, 2487.9522, 23220.8874, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr7, @b6, 96, 41.7600, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr6, @b6, 499, 34.8000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0231'), '2026-08-26', @mp0, @GTQ, NULL, 1, 21374.1600, 641.2248, 2487.9522, 23220.8874, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr7, @b6, 96, 41.7600, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr6, @b6, 499, 34.8000, 0.03);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-08-28', 'Empaque danado durante el transporte', 'T16-NC', CONCAT(@lote, '-0231'), 408.3126);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr7, @b6, 9, 41.7600, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p3, @credito, 'T16-NC', CONCAT(@lote, '-0231'), '2026-08-28', '2026-08-28', @GTQ, NULL, 1, -408.3126, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0231'), '2026-08-26', '2026-10-25', @GTQ, NULL, 1, 23220.8874, 11406.2874, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-10-25', 11406.2874, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0231'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0231'), @factura, 11406.2874);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 11406.2874, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-08-25', '2026-11-23', @GTQ, NULL, 1, 3332.1600, 114.6600, 386.1000, 3603.6000, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr9, @b8, 37, 28.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr8, @b8, 98, 23.4000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0232'), '2026-08-27', @mp0, @GTQ, NULL, 1, 3332.1600, 114.6600, 386.1000, 3603.6000, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr9, @b8, 37, 28.0800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr8, @b8, 98, 23.4000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0232'), '2026-08-27', '2026-11-25', @GTQ, NULL, 1, 3603.6000, 3603.6000, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2026-11-25', 3603.6000, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0232'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0232'), @factura, 3603.6000);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 3603.6000, 'Transferencia bancaria', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-08-26', '2026-08-26', @GTQ, NULL, 1, 10966.5600, 0.0000, 1315.9872, 12282.5472, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr10, @b10, 364, 18.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr11, @b10, 188, 22.3200, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0233'), '2026-08-28', @mp0, @GTQ, NULL, 1, 10966.5600, 0.0000, 1315.9872, 12282.5472, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr10, @b10, 364, 18.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr11, @b10, 188, 22.3200, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0233'), '2026-08-28', '2026-08-28', @GTQ, NULL, 1, 12282.5472, 12282.5472, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-08-31', 6141.2736, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0233'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0233'), @factura, 6141.2736);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 6141.2736, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-08-27', '2026-09-11', @GTQ, NULL, 1, 24333.8000, 410.3800, 2870.8104, 26794.2304, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b0, 465, 34.6800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b0, 284, 28.9000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0234'), '2026-08-29', @mp0, @GTQ, NULL, 1, 24333.8000, 410.3800, 2870.8104, 26794.2304, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr13, @b0, 465, 34.6800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr12, @b0, 284, 28.9000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0234'), '2026-08-29', '2026-09-13', @GTQ, NULL, 1, 26794.2304, 26794.2304, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-09-13', 26794.2304, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0234'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0234'), @factura, 26794.2304);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 26794.2304, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-08-28', '2026-09-27', @GTQ, NULL, 1, 24995.6000, 749.8680, 2909.4878, 27155.2198, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr14, @b2, 136, 39.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr15, @b2, 414, 47.4000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0235'), '2026-08-30', @mp0, @GTQ, NULL, 1, 24995.6000, 749.8680, 2909.4878, 27155.2198, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr14, @b2, 136, 39.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr15, @b2, 414, 47.4000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0235'), '2026-08-30', '2026-09-29', @GTQ, NULL, 1, 27155.2198, 13577.6099, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-09-29', 13577.6099, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0235'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0235'), @factura, 13577.6099);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 13577.6099, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-08-29', '2026-10-28', @GTQ, NULL, 1, 10662.7200, 6.6816, 1278.7246, 11934.7630, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr25, @b5, 240, 43.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr17, @b5, 58, 3.8400, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-08-30', '2026-11-28', @GTQ, NULL, 1, 20888.1000, 403.8750, 2458.1070, 22942.3320, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr19, @b7, 91, 81.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr26, @b7, 178, 18.7500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr27, @b7, 450, 22.5000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-08-31', '2026-08-31', @USD, @tc7, 7.67, 821.8532, 0.0000, 98.6224, 920.4756, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr20, @b9, 50, 5.5411, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr29, @b9, 118, 1.3299, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr28, @b9, 350, 1.1082, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-09-01', '2026-09-16', @GTQ, NULL, 1, 36693.2000, 807.5160, 4306.2821, 40191.9661, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr31, @b11, 85, 62.4000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr22, @b11, 434, 49.8000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr30, @b11, 188, 52.0000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-09-02', '2026-10-02', @GTQ, NULL, 1, 388.6220, 8.1306, 45.6590, 426.1504, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr33, @b1, 115, 1.0200, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr32, @b1, 191, 0.8500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr41, @b1, 427, 0.2160, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr40, @b1, 93, 0.1800, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0240'), '2026-09-04', @mp0, @GTQ, NULL, 1, 388.6220, 8.1306, 45.6590, 426.1504, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr33, @b1, 115, 1.0200, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr32, @b1, 191, 0.8500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr41, @b1, 427, 0.2160, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr40, @b1, 93, 0.1800, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0240'), '2026-09-04', '2026-10-04', @GTQ, NULL, 1, 426.1504, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p12, '2026-10-04', 426.1504, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0240'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0240'), @factura, 426.1504);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Empaques del Valle (Prueba)', 426.1504, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-09-03', '2026-11-02', @GTQ, NULL, 1, 15830.4800, 78.5740, 1890.2287, 17642.1347, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr43, @b3, 375, 29.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr35, @b3, 131, 4.0800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr34, @b3, 305, 3.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr42, @b3, 132, 24.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p13, 'T16-FAC', CONCAT(@lote, '-0241'), '2026-09-05', @mp0, @GTQ, NULL, 1, 15830.4800, 78.5740, 1890.2287, 17642.1347, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr43, @b3, 375, 29.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr35, @b3, 131, 4.0800, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr34, @b3, 305, 3.4000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr42, @b3, 132, 24.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p13, @factura, 'T16-FAC', CONCAT(@lote, '-0241'), '2026-09-05', '2026-11-04', @GTQ, NULL, 1, 17642.1347, 8821.0673, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p13, '2026-11-04', 8821.0674, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0241'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0241'), @factura, 8821.0674);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Plasticos Industriales Centro (Prueba)', 8821.0674, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-09-04', '2026-12-03', @GTQ, NULL, 1, 1558.5500, 55.2925, 180.3909, 1683.6484, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr36, @b5, 278, 1.2500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr37, @b5, 488, 1.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr45, @b5, 205, 0.7800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr44, @b5, 491, 0.6500, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p14, 'T16-FAC', CONCAT(@lote, '-0242'), '2026-09-06', @mp0, @GTQ, NULL, 1, 1558.5500, 55.2925, 180.3909, 1683.6484, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr36, @b5, 278, 1.2500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr37, @b5, 488, 1.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr45, @b5, 205, 0.7800, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr44, @b5, 491, 0.6500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p14, @factura, 'T16-FAC', CONCAT(@lote, '-0242'), '2026-09-06', '2026-12-05', @GTQ, NULL, 1, 1683.6484, 1683.6484, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p14, '2026-12-05', 1683.6484, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0242'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0242'), @factura, 1683.6484);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Cartones y Cajas del Sur (Prueba)', 1683.6484, 'Efectivo', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-09-05', '2026-09-05', @GTQ, NULL, 1, 10653.6400, 0.0000, 1278.4368, 11932.0768, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr47, @b7, 359, 11.1000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr39, @b7, 289, 8.1600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr46, @b7, 466, 9.2500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p15, 'T16-FAC', CONCAT(@lote, '-0243'), '2026-09-07', @mp0, @GTQ, NULL, 1, 10653.6400, 0.0000, 1278.4368, 11932.0768, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr47, @b7, 359, 11.1000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr39, @b7, 289, 8.1600, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr46, @b7, 466, 9.2500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p15, @factura, 'T16-FAC', CONCAT(@lote, '-0243'), '2026-09-07', '2026-09-07', @GTQ, NULL, 1, 11932.0768, 11932.0768, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p15, '2026-09-10', 5966.0384, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0243'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0243'), @factura, 5966.0384);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Etiquetas del Istmo (Prueba)', 5966.0384, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-09-06', '2026-09-21', @GTQ, NULL, 1, 23515.0000, 699.2000, 2737.8960, 25553.6960, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr57, @b9, 60, 45.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr56, @b9, 368, 38.0000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr48, @b9, 218, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr49, @b9, 70, 27.0000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p16, 'T16-FAC', CONCAT(@lote, '-0244'), '2026-09-08', @mp0, @GTQ, NULL, 1, 23515.0000, 699.2000, 2737.8960, 25553.6960, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr57, @b9, 60, 45.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr56, @b9, 368, 38.0000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr48, @b9, 218, 22.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr49, @b9, 70, 27.0000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p16, @factura, 'T16-FAC', CONCAT(@lote, '-0244'), '2026-09-08', '2026-09-23', @GTQ, NULL, 1, 25553.6960, 25553.6960, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p16, '2026-09-23', 25553.6960, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0244'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0244'), @factura, 25553.6960);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Higiene Industrial del Norte (Prueba)', 25553.6960, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-09-07', '2026-10-07', @GTQ, NULL, 1, 8264.2500, 413.2125, 942.1245, 8793.1620, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr58, @b11, 331, 0.4500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr51, @b11, 213, 38.1000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0245'), '2026-09-09', @mp0, @GTQ, NULL, 1, 8264.2500, 413.2125, 942.1245, 8793.1620, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr58, @b11, 331, 0.4500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr51, @b11, 213, 38.1000, 0.05);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-09-11', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0245'), 15.8004);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr58, @b11, 33, 0.4500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p17, @credito, 'T16-NC', CONCAT(@lote, '-0245'), '2026-09-11', '2026-09-11', @GTQ, NULL, 1, -15.8004, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0245'), '2026-09-09', '2026-10-09', @GTQ, NULL, 1, 8793.1620, 4388.6808, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p17, '2026-10-09', 4388.6808, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0245'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0245'), @factura, 4388.6808);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Soluciones Sanitarias del Sur (Prueba)', 4388.6808, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-09-08', '2026-11-07', @USD, @tc8, 7.68, 3190.4390, 101.2991, 370.6968, 3459.8367, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr71, @b1, 24, 74.2188, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr62, @b1, 267, 4.2318, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr76, @b1, 13, 21.4844, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p18, 'T16-FAC', CONCAT(@lote, '-0246'), '2026-09-10', @mp0, @USD, @tc8, 7.68, 3190.4390, 101.2991, 370.6968, 3459.8367, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr71, @b1, 24, 74.2188, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr62, @b1, 267, 4.2318, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr76, @b1, 13, 21.4844, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p18, @factura, 'T16-FAC', CONCAT(@lote, '-0246'), '2026-09-10', '2026-11-09', @USD, @tc8, 7.68, 3459.8367, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p18, '2026-11-09', 3459.8367, @mp2, @USD, @tc8, 7.68, CONCAT(@lote, '-0246'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0246'), @factura, 3459.8367);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Repuestos Frio Industrial (Prueba)', 3459.8367, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-09-09', '2026-09-09', @GTQ, NULL, 1, 19805.8000, 0.0000, 2376.6960, 22182.4960, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr1, @b2, 317, 29.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr0, @b2, 428, 24.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0247'), '2026-09-11', @mp0, @GTQ, NULL, 1, 19805.8000, 0.0000, 2376.6960, 22182.4960, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr1, @b2, 317, 29.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr0, @b2, 428, 24.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0247'), '2026-09-11', '2026-09-11', @GTQ, NULL, 1, 22182.4960, 22182.4960, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p0, '2026-09-14', 11091.2480, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0247'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0247'), @factura, 11091.2480);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes del Valle (Prueba)', 11091.2480, 'Tarjeta empresarial', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-09-10', '2026-09-25', @GTQ, NULL, 1, 17854.0000, 219.2250, 2116.1730, 19750.9480, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr2, @b4, 370, 19.7500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr3, @b4, 445, 23.7000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-09-11', '2026-10-11', @GTQ, NULL, 1, 6563.5500, 196.9065, 763.9972, 7130.6407, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr5, @b6, 314, 14.7000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr4, @b6, 159, 12.2500, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-09-12', '2026-11-11', @GTQ, NULL, 1, 12166.0800, 528.9600, 1396.4544, 13033.5744, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr6, @b8, 304, 34.8000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr7, @b8, 38, 41.7600, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-09-13', '2026-12-12', @GTQ, NULL, 1, 14774.7600, 132.2100, 1757.1060, 16399.6560, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr8, @b10, 113, 23.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr9, @b10, 432, 28.0800, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-09-14', '2026-09-14', @GTQ, NULL, 1, 17007.8400, 249.0912, 2011.0499, 18769.7987, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr11, @b0, 372, 22.3200, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr10, @b0, 468, 18.6000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0252'), '2026-09-16', @mp0, @GTQ, NULL, 1, 17007.8400, 249.0912, 2011.0499, 18769.7987, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr11, @b0, 372, 22.3200, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr10, @b0, 468, 18.6000, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-09-18', 'Empaque danado durante el transporte', 'T16-NC', CONCAT(@lote, '-0252'), 897.1926);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr11, @b0, 37, 22.3200, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p5, @credito, 'T16-NC', CONCAT(@lote, '-0252'), '2026-09-18', '2026-09-18', @GTQ, NULL, 1, -897.1926, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0252'), '2026-09-16', '2026-09-16', @GTQ, NULL, 1, 18769.7987, 17872.6061, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-09-19', 17872.6061, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0252'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0252'), @factura, 17872.6061);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 17872.6061, 'Transferencia bancaria', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-09-15', '2026-09-30', @GTQ, NULL, 1, 18149.2000, 305.1840, 2141.2819, 19985.2979, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr12, @b2, 352, 28.9000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr13, @b2, 230, 34.6800, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0253'), '2026-09-17', @mp0, @GTQ, NULL, 1, 18149.2000, 305.1840, 2141.2819, 19985.2979, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr12, @b2, 352, 28.9000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr13, @b2, 230, 34.6800, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0253'), '2026-09-17', '2026-10-02', @GTQ, NULL, 1, 19985.2979, 19985.2979, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-10-02', 9992.6490, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0253'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0253'), @factura, 9992.6490);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 9992.6490, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-09-16', '2026-10-16', @GTQ, NULL, 1, 31631.6000, 1279.8000, 3642.2160, 33994.0160, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr14, @b4, 382, 39.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr15, @b4, 349, 47.4000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0254'), '2026-09-18', @mp0, @GTQ, NULL, 1, 31631.6000, 1279.8000, 3642.2160, 33994.0160, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr14, @b4, 382, 39.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr15, @b4, 349, 47.4000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0254'), '2026-09-18', '2026-10-18', @GTQ, NULL, 1, 33994.0160, 33994.0160, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-10-18', 33994.0160, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0254'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0254'), @factura, 33994.0160);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 33994.0160, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-09-17', '2026-11-16', @GTQ, NULL, 1, 21967.7800, 288.4050, 2601.5250, 24280.9000, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr25, @b7, 221, 43.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr16, @b7, 56, 3.2000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr17, @b7, 112, 3.8400, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr24, @b7, 324, 36.2500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p8, 'T16-FAC', CONCAT(@lote, '-0255'), '2026-09-19', @mp0, @GTQ, NULL, 1, 21967.7800, 288.4050, 2601.5250, 24280.9000, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr25, @b7, 221, 43.5000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr16, @b7, 56, 3.2000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr17, @b7, 112, 3.8400, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr24, @b7, 324, 36.2500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p8, @factura, 'T16-FAC', CONCAT(@lote, '-0255'), '2026-09-19', '2026-11-18', @GTQ, NULL, 1, 24280.9000, 12140.4500, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p8, '2026-11-18', 12140.4500, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0255'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0255'), @factura, 12140.4500);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Especias del Altiplano (Prueba)', 12140.4500, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-09-18', '2026-12-17', @GTQ, NULL, 1, 52050.2000, 395.7600, 6198.5328, 57852.9728, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr26, @b9, 390, 18.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr27, @b9, 201, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr18, @b9, 475, 68.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr19, @b9, 97, 81.6000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p9, 'T16-FAC', CONCAT(@lote, '-0256'), '2026-09-20', @mp0, @GTQ, NULL, 1, 52050.2000, 395.7600, 6198.5328, 57852.9728, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr26, @b9, 390, 18.7500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr27, @b9, 201, 22.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr18, @b9, 475, 68.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr19, @b9, 97, 81.6000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p9, @factura, 'T16-FAC', CONCAT(@lote, '-0256'), '2026-09-20', '2026-12-19', @GTQ, NULL, 1, 57852.9728, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p9, '2026-12-19', 57852.9728, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0256'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0256'), @factura, 57852.9728);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Condimentos La Huerta (Prueba)', 57852.9728, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-09-19', '2026-09-19', @USD, @tc8, 7.68, 2306.2989, 52.0962, 270.5043, 2524.7070, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr29, @b11, 244, 1.3281, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr28, @b11, 124, 1.1068, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr21, @b11, 37, 6.6406, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr20, @b11, 289, 5.5339, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0257'), '2026-09-21', @mp0, @USD, @tc8, 7.68, 2306.2989, 52.0962, 270.5043, 2524.7070, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr29, @b11, 244, 1.3281, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr28, @b11, 124, 1.1068, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr21, @b11, 37, 6.6406, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr20, @b11, 289, 5.5339, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0257'), '2026-09-21', '2026-09-21', @USD, @tc8, 7.68, 2524.7070, 2524.7070, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-09-24', 1262.3535, @mp1, @USD, @tc8, 7.68, CONCAT(@lote, '-0257'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0257'), @factura, 1262.3535);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 1262.3535, 'Cheque', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-09-20', '2026-10-05', @GTQ, NULL, 1, 19944.2400, 482.2632, 2335.4372, 21797.4140, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr31, @b1, 62, 62.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr23, @b1, 269, 59.7600, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p11, 'T16-FAC', CONCAT(@lote, '-0258'), '2026-09-22', @mp0, @GTQ, NULL, 1, 19944.2400, 482.2632, 2335.4372, 21797.4140, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr31, @b1, 62, 62.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr23, @b1, 269, 59.7600, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p11, @factura, 'T16-FAC', CONCAT(@lote, '-0258'), '2026-09-22', '2026-10-07', @GTQ, NULL, 1, 21797.4140, 21797.4140, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p11, '2026-10-07', 21797.4140, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0258'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0258'), @factura, 21797.4140);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Suministros Alimentarios Maya (Prueba)', 21797.4140, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-09-21', '2026-10-21', @GTQ, NULL, 1, 485.8720, 13.2042, 56.7201, 529.3879, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr41, @b3, 442, 0.2160, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr33, @b3, 180, 1.0200, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr32, @b3, 148, 0.8500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr40, @b3, 450, 0.1800, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0259'), '2026-09-23', @mp0, @GTQ, NULL, 1, 485.8720, 13.2042, 56.7201, 529.3879, 'Anulada', 1);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr41, @b3, 442, 0.2160, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr33, @b3, 180, 1.0200, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr32, @b3, 148, 0.8500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr40, @b3, 450, 0.1800, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0259'), '2026-09-23', '2026-10-23', @GTQ, NULL, 1, 529.3879, 0, 'Anulada', 1);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-09-22', '2026-11-21', @GTQ, NULL, 1, 12495.1400, 134.3800, 1483.2912, 13844.0512, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr34, @b5, 263, 3.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr43, @b5, 61, 29.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr35, @b5, 188, 4.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr42, @b5, 369, 24.5000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-09-23', '2026-12-22', @GTQ, NULL, 1, 1238.1500, 15.9575, 146.6631, 1368.8556, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr44, @b7, 491, 0.6500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr36, @b7, 470, 1.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr37, @b7, 221, 1.5000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-09-24', '2026-09-24', @GTQ, NULL, 1, 4853.2000, 23.0520, 579.6178, 5409.7658, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr38, @b9, 113, 6.8000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr47, @b9, 368, 11.1000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-09-25', '2026-10-10', @GTQ, NULL, 1, 10495.9000, 111.7200, 1246.1016, 11630.2816, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr56, @b11, 128, 38.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr48, @b11, 151, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr57, @b11, 49, 45.6000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-09-26', '2026-10-26', @GTQ, NULL, 1, 12864.9000, 557.1420, 1476.9310, 13784.6890, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr58, @b1, 277, 0.4500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr59, @b1, 345, 0.5400, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr50, @b1, 117, 31.7500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr51, @b1, 232, 38.1000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0264'), '2026-09-28', @mp0, @GTQ, NULL, 1, 12864.9000, 557.1420, 1476.9310, 13784.6890, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr58, @b1, 277, 0.4500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr59, @b1, 345, 0.5400, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr50, @b1, 117, 31.7500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr51, @b1, 232, 38.1000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0264'), '2026-09-28', '2026-10-28', @GTQ, NULL, 1, 13784.6890, 13784.6890, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p17, '2026-10-28', 13784.6890, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0264'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0264'), @factura, 13784.6890);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Soluciones Sanitarias del Sur (Prueba)', 13784.6890, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-09-27', '2026-11-26', @USD, @tc8, 7.68, 5844.3003, 83.8937, 691.2488, 6451.6554, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr70, @b3, 12, 61.8490, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr69, @b3, 24, 22.6563, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr61, @b3, 387, 7.0313, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr72, @b3, 24, 29.2969, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 5, @pr62, @b3, 268, 4.2318, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p18, 'T16-FAC', CONCAT(@lote, '-0265'), '2026-09-29', @mp0, @USD, @tc8, 7.68, 5844.3003, 83.8937, 691.2488, 6451.6554, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr70, @b3, 12, 61.8490, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr69, @b3, 24, 22.6563, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr61, @b3, 387, 7.0313, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr72, @b3, 24, 29.2969, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 5, @pr62, @b3, 268, 4.2318, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p18, @factura, 'T16-FAC', CONCAT(@lote, '-0265'), '2026-09-29', '2026-11-28', @USD, @tc8, 7.68, 6451.6554, 3225.8277, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p18, '2026-11-28', 3225.8277, @mp1, @USD, @tc8, 7.68, CONCAT(@lote, '-0265'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0265'), @factura, 3225.8277);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Repuestos Frio Industrial (Prueba)', 3225.8277, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-09-28', '2026-09-28', @GTQ, NULL, 1, 17968.3000, 0.0000, 2156.1960, 20124.4960, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr0, @b4, 437, 24.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr1, @b4, 247, 29.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p0, 'T16-FAC', CONCAT(@lote, '-0266'), '2026-09-30', @mp0, @GTQ, NULL, 1, 17968.3000, 0.0000, 2156.1960, 20124.4960, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr0, @b4, 437, 24.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr1, @b4, 247, 29.4000, 0);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-10-02', 'Empaque danado durante el transporte', 'T16-NC', CONCAT(@lote, '-0266'), 1179.9200);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr0, @b4, 43, 24.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p0, @credito, 'T16-NC', CONCAT(@lote, '-0266'), '2026-10-02', '2026-10-02', @GTQ, NULL, 1, -1179.9200, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p0, @factura, 'T16-FAC', CONCAT(@lote, '-0266'), '2026-09-30', '2026-09-30', @GTQ, NULL, 1, 20124.4960, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p0, '2026-10-03', 18944.5760, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0266'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0266'), @factura, 18944.5760);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes del Valle (Prueba)', 18944.5760, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-09-29', '2026-10-14', @GTQ, NULL, 1, 15527.4500, 657.3985, 1784.4062, 16654.4577, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr2, @b6, 485, 19.7500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr3, @b6, 251, 23.7000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p1, 'T16-FAC', CONCAT(@lote, '-0267'), '2026-10-01', @mp0, @GTQ, NULL, 1, 15527.4500, 657.3985, 1784.4062, 16654.4577, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr2, @b6, 485, 19.7500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr3, @b6, 251, 23.7000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p1, @factura, 'T16-FAC', CONCAT(@lote, '-0267'), '2026-10-01', '2026-10-16', @GTQ, NULL, 1, 16654.4577, 16654.4577, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p1, '2026-10-16', 8327.2289, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0267'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0267'), @factura, 8327.2289);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Porcicola La Cumbre (Prueba)', 8327.2289, 'Tarjeta empresarial', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-09-30', '2026-10-30', @GTQ, NULL, 1, 7629.3000, 305.3190, 878.8777, 8202.8587, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr4, @b8, 312, 12.2500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr5, @b8, 259, 14.7000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p2, 'T16-FAC', CONCAT(@lote, '-0268'), '2026-10-02', @mp0, @GTQ, NULL, 1, 7629.3000, 305.3190, 878.8777, 8202.8587, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr4, @b8, 312, 12.2500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr5, @b8, 259, 14.7000, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p2, @factura, 'T16-FAC', CONCAT(@lote, '-0268'), '2026-10-02', '2026-11-01', @GTQ, NULL, 1, 8202.8587, 8202.8587, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p2, '2026-11-01', 8202.8587, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0268'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0268'), @factura, 8202.8587);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Avicola Los Pinos (Prueba)', 8202.8587, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-10-01', '2026-11-30', @GTQ, NULL, 1, 24791.5200, 0.0000, 2974.9824, 27766.5024, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr6, @b10, 176, 34.8000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr7, @b10, 447, 41.7600, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0269'), '2026-10-03', @mp0, @GTQ, NULL, 1, 24791.5200, 0.0000, 2974.9824, 27766.5024, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr6, @b10, 176, 34.8000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr7, @b10, 447, 41.7600, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0269'), '2026-10-03', '2026-12-02', @GTQ, NULL, 1, 27766.5024, 27766.5024, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-12-02', 13883.2512, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0269'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0269'), @factura, 13883.2512);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 13883.2512, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-10-02', '2026-12-31', @GTQ, NULL, 1, 17287.9200, 342.5760, 2033.4413, 18978.7853, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr8, @b0, 488, 23.4000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr9, @b0, 209, 28.0800, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0270'), '2026-10-04', @mp0, @GTQ, NULL, 1, 17287.9200, 342.5760, 2033.4413, 18978.7853, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr8, @b0, 488, 23.4000, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr9, @b0, 209, 28.0800, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0270'), '2026-10-04', '2027-01-02', @GTQ, NULL, 1, 18978.7853, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2027-01-02', 18978.7853, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0270'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0270'), @factura, 18978.7853);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 18978.7853, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-10-03', '2026-10-03', @GTQ, NULL, 1, 13849.5600, 692.4780, 1578.8498, 14735.9318, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr10, @b2, 339, 18.6000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr11, @b2, 338, 22.3200, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0271'), '2026-10-05', @mp0, @GTQ, NULL, 1, 13849.5600, 692.4780, 1578.8498, 14735.9318, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr10, @b2, 339, 18.6000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr11, @b2, 338, 22.3200, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0271'), '2026-10-05', '2026-10-05', @GTQ, NULL, 1, 14735.9318, 7367.9659, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-10-08', 7367.9659, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0271'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0271'), @factura, 7367.9659);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 7367.9659, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-10-04', '2026-10-19', @GTQ, NULL, 1, 15253.4200, 365.5850, 1786.5402, 16674.3752, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b4, 229, 34.6800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b4, 253, 28.9000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-10-05', '2026-11-04', @GTQ, NULL, 1, 27768.5000, 1269.1350, 3179.9238, 29679.2888, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr14, @b6, 151, 39.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr15, @b6, 460, 47.4000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-10-06', '2026-12-05', @GTQ, NULL, 1, 11565.8300, 458.9115, 1332.8302, 12439.7487, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr25, @b9, 94, 43.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr17, @b9, 137, 3.8400, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr16, @b9, 235, 3.2000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr24, @b9, 171, 36.2500, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-10-07', '2027-01-05', @GTQ, NULL, 1, 62797.9500, 1528.7760, 7352.3009, 68621.4749, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr19, @b11, 262, 81.6000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr18, @b11, 435, 68.0000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr27, @b11, 252, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr26, @b11, 329, 18.7500, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-10-08', '2026-10-08', @USD, @tc9, 7.69, 3225.3526, 28.5173, 383.6202, 3580.4555, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr20, @b1, 74, 5.5267, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr28, @b1, 376, 1.1053, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr29, @b1, 95, 1.3264, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr21, @b1, 343, 6.6320, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0276'), '2026-10-10', @mp0, @USD, @tc9, 7.69, 3225.3526, 28.5173, 383.6202, 3580.4555, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr20, @b1, 74, 5.5267, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr28, @b1, 376, 1.1053, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr29, @b1, 95, 1.3264, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr21, @b1, 343, 6.6320, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0276'), '2026-10-10', '2026-10-10', @USD, @tc9, 7.69, 3580.4555, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-10-13', 3580.4555, @mp0, @USD, @tc9, 7.69, CONCAT(@lote, '-0276'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0276'), @factura, 3580.4555);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 3580.4555, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-10-09', '2026-10-24', @GTQ, NULL, 1, 9734.8000, 0.0000, 1168.1760, 10902.9760, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr30, @b3, 124, 52.0000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr22, @b3, 66, 49.8000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p11, 'T16-FAC', CONCAT(@lote, '-0277'), '2026-10-11', @mp0, @GTQ, NULL, 1, 9734.8000, 0.0000, 1168.1760, 10902.9760, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr30, @b3, 124, 52.0000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr22, @b3, 66, 49.8000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p11, @factura, 'T16-FAC', CONCAT(@lote, '-0277'), '2026-10-11', '2026-10-26', @GTQ, NULL, 1, 10902.9760, 10902.9760, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p11, '2026-10-26', 5451.4880, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0277'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0277'), @factura, 5451.4880);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Suministros Alimentarios Maya (Prueba)', 5451.4880, 'Cheque', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-10-10', '2026-11-09', @GTQ, NULL, 1, 318.5540, 10.1391, 37.0098, 345.4247, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr41, @b5, 184, 0.2160, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr32, @b5, 173, 0.8500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr33, @b5, 87, 1.0200, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr40, @b5, 239, 0.1800, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p12, 'T16-FAC', CONCAT(@lote, '-0278'), '2026-10-12', @mp0, @GTQ, NULL, 1, 318.5540, 10.1391, 37.0098, 345.4247, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr41, @b5, 184, 0.2160, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr32, @b5, 173, 0.8500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr33, @b5, 87, 1.0200, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr40, @b5, 239, 0.1800, 0.03);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p12, @factura, 'T16-FAC', CONCAT(@lote, '-0278'), '2026-10-12', '2026-11-11', @GTQ, NULL, 1, 345.4247, 345.4247, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p12, '2026-11-11', 345.4247, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0278'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0278'), @factura, 345.4247);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Empaques del Valle (Prueba)', 345.4247, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-10-11', '2026-12-10', @GTQ, NULL, 1, 4819.2800, 10.5264, 577.0504, 5385.8040, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr43, @b7, 124, 29.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr35, @b7, 86, 4.0800, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr34, @b7, 242, 3.4000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p13, 'T16-FAC', CONCAT(@lote, '-0279'), '2026-10-13', @mp0, @GTQ, NULL, 1, 4819.2800, 10.5264, 577.0504, 5385.8040, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr43, @b7, 124, 29.4000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr35, @b7, 86, 4.0800, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr34, @b7, 242, 3.4000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p13, @factura, 'T16-FAC', CONCAT(@lote, '-0279'), '2026-10-13', '2026-12-12', @GTQ, NULL, 1, 5385.8040, 5385.8040, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p13, '2026-12-12', 2692.9020, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0279'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0279'), @factura, 2692.9020);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Plasticos Industriales Centro (Prueba)', 2692.9020, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-10-12', '2027-01-10', @GTQ, NULL, 1, 585.7900, 25.9145, 67.1851, 627.0606, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr44, @b9, 68, 0.6500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr36, @b9, 135, 1.2500, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr45, @b9, 478, 0.7800, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p14, 'T16-FAC', CONCAT(@lote, '-0280'), '2026-10-14', @mp0, @GTQ, NULL, 1, 585.7900, 25.9145, 67.1851, 627.0606, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr44, @b9, 68, 0.6500, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr36, @b9, 135, 1.2500, 0.03);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr45, @b9, 478, 0.7800, 0.05);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-10-16', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0280'), 4.1496);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr44, @b9, 6, 0.6500, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p14, @credito, 'T16-NC', CONCAT(@lote, '-0280'), '2026-10-16', '2026-10-16', @GTQ, NULL, 1, -4.1496, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p14, @factura, 'T16-FAC', CONCAT(@lote, '-0280'), '2026-10-14', '2027-01-12', @GTQ, NULL, 1, 627.0606, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p14, '2027-01-12', 622.9110, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0280'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0280'), @factura, 622.9110);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Cartones y Cajas del Sur (Prueba)', 622.9110, 'Transferencia bancaria', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p15, @pl0, '2026-10-13', '2026-10-13', @GTQ, NULL, 1, 8322.6000, 114.2400, 985.0032, 9193.3632, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr46, @b11, 380, 9.2500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr39, @b11, 280, 8.1600, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr38, @b11, 371, 6.8000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p15, 'T16-FAC', CONCAT(@lote, '-0281'), '2026-10-15', @mp0, @GTQ, NULL, 1, 8322.6000, 114.2400, 985.0032, 9193.3632, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr46, @b11, 380, 9.2500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr39, @b11, 280, 8.1600, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr38, @b11, 371, 6.8000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p15, @factura, 'T16-FAC', CONCAT(@lote, '-0281'), '2026-10-15', '2026-10-15', @GTQ, NULL, 1, 9193.3632, 4596.6816, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p15, '2026-10-18', 4596.6816, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0281'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0281'), @factura, 4596.6816);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Etiquetas del Istmo (Prueba)', 4596.6816, 'Cheque', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p16, @pl1, '2026-10-14', '2026-10-29', @GTQ, NULL, 1, 18940.8000, 947.0400, 2159.2512, 20153.0112, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr48, @b1, 400, 22.5000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr57, @b1, 218, 45.6000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p16, 'T16-FAC', CONCAT(@lote, '-0282'), '2026-10-16', @mp0, @GTQ, NULL, 1, 18940.8000, 947.0400, 2159.2512, 20153.0112, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr48, @b1, 400, 22.5000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr57, @b1, 218, 45.6000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p16, @factura, 'T16-FAC', CONCAT(@lote, '-0282'), '2026-10-16', '2026-10-31', @GTQ, NULL, 1, 20153.0112, 20153.0112, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p16, '2026-10-31', 20153.0112, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0282'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0282'), @factura, 20153.0112);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Higiene Industrial del Norte (Prueba)', 20153.0112, 'Efectivo', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p17, @pl2, '2026-10-15', '2026-11-14', @GTQ, NULL, 1, 7218.1500, 0.0000, 866.1780, 8084.3280, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr58, @b3, 377, 0.4500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr51, @b3, 185, 38.1000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p17, 'T16-FAC', CONCAT(@lote, '-0283'), '2026-10-17', @mp0, @GTQ, NULL, 1, 7218.1500, 0.0000, 866.1780, 8084.3280, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr58, @b3, 377, 0.4500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr51, @b3, 185, 38.1000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p17, @factura, 'T16-FAC', CONCAT(@lote, '-0283'), '2026-10-17', '2026-11-16', @GTQ, NULL, 1, 8084.3280, 8084.3280, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p17, '2026-11-16', 4042.1640, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0283'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0283'), @factura, 4042.1640);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Soluciones Sanitarias del Sur (Prueba)', 4042.1640, 'Tarjeta empresarial', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p18, @pl3, '2026-10-16', '2026-12-15', @USD, @tc9, 7.69, 590.3772, 11.5865, 69.4549, 648.2456, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr74, @b5, 20, 10.2081, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr76, @b5, 18, 21.4564, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p0, @pl0, '2026-10-17', '2026-10-17', @GTQ, NULL, 1, 16238.6000, 674.7300, 1867.6644, 17431.5344, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr1, @b6, 319, 29.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr0, @b6, 280, 24.5000, 3.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p1, @pl1, '2026-10-18', '2026-11-02', @GTQ, NULL, 1, 14812.5000, 462.1500, 1722.0420, 16072.3920, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr2, @b8, 468, 19.7500, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr3, @b8, 235, 23.7000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p2, @pl2, '2026-10-19', '2026-11-18', @GTQ, NULL, 1, 9199.7500, 459.9875, 1048.7715, 9788.5340, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr5, @b10, 320, 14.7000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr4, @b10, 367, 12.2500, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p3, @pl3, '2026-10-20', '2026-12-19', @GTQ, NULL, 1, 27164.8800, 642.0600, 3182.7384, 29705.5584, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr7, @b0, 343, 41.7600, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr6, @b0, 369, 34.8000, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p3, 'T16-FAC', CONCAT(@lote, '-0288'), '2026-10-22', @mp0, @GTQ, NULL, 1, 27164.8800, 642.0600, 3182.7384, 29705.5584, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr7, @b0, 343, 41.7600, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr6, @b0, 369, 34.8000, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p3, @factura, 'T16-FAC', CONCAT(@lote, '-0288'), '2026-10-22', '2026-12-21', @GTQ, NULL, 1, 29705.5584, 29705.5584, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p3, '2026-12-21', 29705.5584, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0288'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0288'), @factura, 29705.5584);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Frigorificos del Norte (Prueba)', 29705.5584, 'Transferencia bancaria', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p4, @pl4, '2026-10-21', '2027-01-19', @GTQ, NULL, 1, 19613.8800, 980.6940, 2235.9823, 20869.1683, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr8, @b2, 459, 23.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr9, @b2, 316, 28.0800, 5.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p4, 'T16-FAC', CONCAT(@lote, '-0289'), '2026-10-23', @mp0, @GTQ, NULL, 1, 19613.8800, 980.6940, 2235.9823, 20869.1683, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr8, @b2, 459, 23.4000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr9, @b2, 316, 28.0800, 0.05);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p4, @factura, 'T16-FAC', CONCAT(@lote, '-0289'), '2026-10-23', '2027-01-21', @GTQ, NULL, 1, 20869.1683, 20869.1683, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p4, '2027-01-21', 10434.5842, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0289'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0289'), @factura, 10434.5842);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Agropecuaria Santa Elena (Prueba)', 10434.5842, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p5, @pl0, '2026-10-22', '2026-10-22', @GTQ, NULL, 1, 13127.8800, 0.0000, 1575.3456, 14703.2256, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr10, @b4, 131, 18.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr11, @b4, 479, 22.3200, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p5, 'T16-FAC', CONCAT(@lote, '-0290'), '2026-10-24', @mp0, @GTQ, NULL, 1, 13127.8800, 0.0000, 1575.3456, 14703.2256, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr10, @b4, 131, 18.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr11, @b4, 479, 22.3200, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p5, @factura, 'T16-FAC', CONCAT(@lote, '-0290'), '2026-10-24', '2026-10-24', @GTQ, NULL, 1, 14703.2256, 0.0000, 'Pagada', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p5, '2026-10-27', 14703.2256, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0290'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0290'), @factura, 14703.2256);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Proteinas de Oriente (Prueba)', 14703.2256, 'Efectivo', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p6, @pl1, '2026-10-23', '2026-11-07', @GTQ, NULL, 1, 9669.9400, 126.5820, 1145.2030, 10688.5610, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr13, @b6, 73, 34.6800, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr12, @b6, 247, 28.9000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p6, 'T16-FAC', CONCAT(@lote, '-0291'), '2026-10-25', @mp0, @GTQ, NULL, 1, 9669.9400, 126.5820, 1145.2030, 10688.5610, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr13, @b6, 73, 34.6800, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr12, @b6, 247, 28.9000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p6, @factura, 'T16-FAC', CONCAT(@lote, '-0291'), '2026-10-25', '2026-11-09', @GTQ, NULL, 1, 10688.5610, 5344.2805, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p6, '2026-11-09', 5344.2805, @mp3, @GTQ, NULL, 1, CONCAT(@lote, '-0291'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0291'), @factura, 5344.2805);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Carnes Selectas del Sur (Prueba)', 5344.2805, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p7, @pl2, '2026-10-24', '2026-11-23', @GTQ, NULL, 1, 19505.1000, 80.5800, 2330.9424, 21755.4624, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr15, @b8, 34, 47.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr14, @b8, 453, 39.5000, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p7, 'T16-FAC', CONCAT(@lote, '-0292'), '2026-10-26', @mp0, @GTQ, NULL, 1, 19505.1000, 80.5800, 2330.9424, 21755.4624, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr15, @b8, 34, 47.4000, 0.05);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr14, @b8, 453, 39.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p7, @factura, 'T16-FAC', CONCAT(@lote, '-0292'), '2026-10-26', '2026-11-25', @GTQ, NULL, 1, 21755.4624, 21755.4624, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p7, '2026-11-25', 21755.4624, @mp0, @GTQ, NULL, 1, CONCAT(@lote, '-0292'), 'Programado', 0);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0292'), @factura, 21755.4624);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Distribuidora Pecuaria Central (Prueba)', 21755.4624, 'Transferencia bancaria', 'Pendiente');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p8, @pl3, '2026-10-25', '2026-12-24', @GTQ, NULL, 1, 11215.8400, 0.0000, 1345.9008, 12561.7408, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr17, @b11, 51, 3.8400, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr24, @b11, 304, 36.2500, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p8, 'T16-FAC', CONCAT(@lote, '-0293'), '2026-10-27', @mp0, @GTQ, NULL, 1, 11215.8400, 0.0000, 1345.9008, 12561.7408, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr17, @b11, 51, 3.8400, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr24, @b11, 304, 36.2500, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p8, @factura, 'T16-FAC', CONCAT(@lote, '-0293'), '2026-10-27', '2026-12-26', @GTQ, NULL, 1, 12561.7408, 12561.7408, 'Pendiente', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p8, '2026-12-26', 6280.8704, @mp1, @GTQ, NULL, 1, CONCAT(@lote, '-0293'), 'Rechazado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0293'), @factura, 6280.8704);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Especias del Altiplano (Prueba)', 6280.8704, 'Cheque', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p9, @pl4, '2026-10-26', '2027-01-24', @GTQ, NULL, 1, 66394.6000, 609.9600, 7894.1568, 73678.7968, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr27, @b1, 399, 22.5000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr19, @b1, 386, 81.6000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr26, @b1, 298, 18.7500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr18, @b1, 299, 68.0000, 3.00);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p9, 'T16-FAC', CONCAT(@lote, '-0294'), '2026-10-28', @mp0, @GTQ, NULL, 1, 66394.6000, 609.9600, 7894.1568, 73678.7968, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr27, @b1, 399, 22.5000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr19, @b1, 386, 81.6000, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 3, @pr26, @b1, 298, 18.7500, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 4, @pr18, @b1, 299, 68.0000, 0.03);
+
+INSERT INTO tblDevolucionCompra (idCompra, fechaDevolucionCompra, motivoDevolucionCompra, serieNotaCreditoDevolucionCompra, numeroNotaCreditoDevolucionCompra, totalDevolucionCompra) VALUES (@compra, '2026-10-30', 'Producto fuera de especificacion', 'T16-NC', CONCAT(@lote, '-0294'), 982.8000);
+
+SET @dev = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleDevolucionCompra (idDevolucionCompra, ordenDetalleDevolucionCompra, idProducto, idBodega, cantidadDetalleDevolucionCompra, costoUnitarioDetalleDevolucionCompra, descuentoPorcentajeDetalleDevolucionCompra) VALUES (@dev, 1, @pr27, @b1, 39, 22.5000, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar) VALUES (@p9, @credito, 'T16-NC', CONCAT(@lote, '-0294'), '2026-10-30', '2026-10-30', @GTQ, NULL, 1, -982.8000, 0, 'Pagada');
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p9, @factura, 'T16-FAC', CONCAT(@lote, '-0294'), '2026-10-28', '2027-01-26', @GTQ, NULL, 1, 73678.7968, 72695.9968, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p9, '2027-01-26', 72695.9968, @mp2, @GTQ, NULL, 1, CONCAT(@lote, '-0294'), 'Anulado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0294'), @factura, 72695.9968);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Condimentos La Huerta (Prueba)', 72695.9968, 'Efectivo', 'Rechazada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p10, @pl0, '2026-10-27', '2026-10-27', @USD, @tc9, 7.69, 2923.6211, 0.0000, 350.8345, 3274.4556, 'Abastecimiento programado de planta; datos sinteticos', 'Recibida', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr21, @b3, 80, 6.6320, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr20, @b3, 433, 5.5267, 0);
+
+INSERT INTO tblEncabezadoCompra (idOrdenCompra, idProveedor, serieFacturaCompra, numeroFacturaCompra, fechaCompra, idMetodoPago, idMoneda, idTipoCambio, tipoCambioCompra, subtotalCompra, descuentoCompra, impuestoCompra, totalCompra, estadoCompra, bloqueadoCompra) VALUES (@oc, @p10, 'T16-FAC', CONCAT(@lote, '-0295'), '2026-10-29', @mp0, @USD, @tc9, 7.69, 2923.6211, 0.0000, 350.8345, 3274.4556, 'Registrada', 0);
+
+SET @compra = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 1, @pr21, @b3, 80, 6.6320, 0);
+
+INSERT INTO tblDetalleCompra (idCompra, ordenDetalleCompra, idProducto, idBodega, cantidadDetalleCompra, costoUnitarioDetalleCompra, descuentoPorcentualDetalleCompra) VALUES (@compra, 2, @pr20, @b3, 433, 5.5267, 0);
+
+INSERT INTO tblCuentaPorPagar (idProveedor, idConceptoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, fechaEmisionCuentaPorPagar, fechaVencimientoCuentaPorPagar, idMoneda, idTipoCambio, tipoCambioCuentaPorPagar, montoTotalCuentaPorPagar, saldoActualCuentaPorPagar, estadoCuentaPorPagar, bloqueadoCuentaPorPagar) VALUES (@p10, @factura, 'T16-FAC', CONCAT(@lote, '-0295'), '2026-10-29', '2026-10-29', @USD, @tc9, 7.69, 3274.4556, 1637.2278, 'Parcial', 0);
+
+INSERT INTO tblEncabezadoPagoProveedor (idProveedor, fechaPagoProveedor, montoPagoProveedor, idMetodoPago, idMoneda, idTipoCambio, tipoCambioPagoProveedor, referenciaPagoProveedor, estadoPagoProveedor, bloqueadoPagoProveedor) VALUES (@p10, '2026-11-01', 1637.2278, @mp3, @USD, @tc9, 7.69, CONCAT(@lote, '-0295'), 'Pagado', 1);
+
+SET @pago = LAST_INSERT_ID();
+
+INSERT INTO tblDetallePagoProveedor (idPagoProveedor, serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor, montoAplicadoDetallePago) VALUES (@pago, 'T16-FAC', CONCAT(@lote, '-0295'), @factura, 1637.2278);
+
+INSERT INTO tblSolicitudPago (moduloOrigenSolicitudPago, idOrigenSolicitudPago, beneficiarioSolicitudPago, montoSolicitudPago, metodoSolicitudPago, estadoSolicitudPago) VALUES ('Compras', @pago, 'Ingredientes del Pacifico (Prueba)', 1637.2278, 'Tarjeta empresarial', 'Procesada');
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p11, @pl1, '2026-10-28', '2026-11-12', @GTQ, NULL, 1, 42937.6800, 812.1384, 5055.0650, 47180.6066, 'Abastecimiento programado de planta; datos sinteticos', 'Pendiente', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr23, @b5, 378, 59.7600, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr31, @b5, 283, 62.4000, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr22, @b5, 54, 49.8000, 5.00);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p12, @pl2, '2026-10-29', '2026-11-28', @GTQ, NULL, 1, 224.4500, 0.0000, 26.9340, 251.3840, 'Abastecimiento programado de planta; datos sinteticos', 'Autorizada', 0);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr32, @b7, 137, 0.8500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr41, @b7, 500, 0.2160, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p13, @pl3, '2026-10-30', '2026-12-29', @GTQ, NULL, 1, 14369.4000, 427.7700, 1672.9956, 15614.6256, 'Abastecimiento programado de planta; datos sinteticos', 'Rechazada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr43, @b9, 104, 29.4000, 5.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr35, @b9, 310, 4.0800, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 3, @pr42, @b9, 374, 24.5000, 3.00);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 4, @pr34, @b9, 260, 3.4000, 0);
+
+INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, idMoneda, idTipoCambio, tipoCambioOrdenCompra, subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra, estadoOrdenCompra, bloqueadoOrdenCompra) VALUES (@p14, @pl4, '2026-10-31', '2027-01-29', @GTQ, NULL, 1, 222.6900, 0.0000, 26.7228, 249.4128, 'Abastecimiento programado de planta; datos sinteticos', 'Anulada', 1);
+
+SET @oc = LAST_INSERT_ID();
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 1, @pr44, @b11, 171, 0.6500, 0);
+
+INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (@oc, 2, @pr45, @b11, 143, 0.7800, 0);
+
+SET @fecha_corte = CURRENT_DATE();
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p0;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p0;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p1;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p1;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p2;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p2;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p3;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p3;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p4;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p4;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p5;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p5;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p6;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p6;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p7;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p7;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p8;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p8;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p9;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p9;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p10;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p10;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p11;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p11;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p12;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p12;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p13;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p13;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p14;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p14;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p15;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p15;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p16;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p16;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p17;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p17;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p18;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p18;
+
+UPDATE tblProveedor p SET saldoActualProveedor = (SELECT COALESCE(SUM(c.saldoActualCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.estadoCuentaPorPagar <> 'Anulada'), cargosAcumuladosProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), abonosAcumuladosProveedor = (SELECT COALESCE(SUM((c.montoTotalCuentaPorPagar - c.saldoActualCuentaPorPagar) * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada'), cargosMesProveedor = (SELECT COALESCE(SUM(c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @factura AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')), abonosMesProveedor = (SELECT COALESCE(SUM(h.montoPagoProveedor * h.tipoCambioPagoProveedor), 0) FROM tblEncabezadoPagoProveedor h WHERE h.idProveedor = p.idProveedor AND h.estadoPagoProveedor = 'Pagado' AND DATE_FORMAT(h.fechaPagoProveedor, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) + (SELECT COALESCE(SUM(-c.montoTotalCuentaPorPagar * c.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar c WHERE c.idProveedor = p.idProveedor AND c.idConceptoProveedor = @credito AND c.estadoCuentaPorPagar <> 'Anulada' AND DATE_FORMAT(c.fechaEmisionCuentaPorPagar, '%Y-%m') = DATE_FORMAT(@fecha_corte, '%Y-%m')) WHERE p.idProveedor = @p19;
+
+UPDATE tblProveedor SET saldoAnteriorProveedor = saldoActualProveedor - cargosMesProveedor + abonosMesProveedor WHERE idProveedor = @p19;
+
+COMMIT;
+
+SELECT @lote AS loteDatosPrueba, 'Carga completada' AS resultado;

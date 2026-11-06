@@ -24,7 +24,7 @@
             this.ComprasBtnIconoAprobacionFinanciera = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasLblAprobacionFinanciera = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasTlpPrincipal = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasTlpNavegador = new System.Windows.Forms.TableLayoutPanel();
+            this.ComprasTlpNavegador = new ClsTablaNavegadorFluida();
             this.ComprasPbMarca = new System.Windows.Forms.PictureBox();
             this.ComprasTlpMovimientosProveedores = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasBtnIconoMovimientosProveedores = new CapaVista_Componentes.Componentes.ClsButtonCompras();
@@ -516,7 +516,7 @@
             this.ComprasLblMantenimiento2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ComprasLblMantenimiento2.Texto = "Plazos";
             this.ComprasLblMantenimiento2.Click += new System.EventHandler(this.ComprasMetAbrirPlazos);
-            this.ComprasTlpMantenimiento2.Enabled = false;
+            this.ComprasTlpMantenimiento2.Enabled = true;
             this.ComprasTlpMantenimiento3.BackColor = System.Drawing.Color.Transparent;
             this.ComprasTlpMantenimiento3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasTlpProveedores.BackgroundImage")));
             this.ComprasTlpMantenimiento3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -580,7 +580,7 @@
             this.ComprasLblMantenimiento3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ComprasLblMantenimiento3.Texto = "Conceptos de proveedor";
             this.ComprasLblMantenimiento3.Click += new System.EventHandler(this.ComprasMetAbrirConceptosProveedor);
-            this.ComprasTlpMantenimiento3.Enabled = false;
+            this.ComprasTlpMantenimiento3.Enabled = true;
             this.ComprasTlpProveedores.BackColor = System.Drawing.Color.Transparent;
             this.ComprasTlpProveedores.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasTlpProveedores.BackgroundImage")));
             this.ComprasTlpProveedores.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;

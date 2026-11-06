@@ -76,7 +76,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmOrdenesCompra.Productos.cs" />
+    <Compile Include="FrmOrdenesCompra.Productos.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FrmOrdenesCompra.cs">
       <SubType>Form</SubType>
     </Compile>
