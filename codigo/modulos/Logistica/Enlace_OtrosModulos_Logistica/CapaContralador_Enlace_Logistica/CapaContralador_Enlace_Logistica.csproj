@@ -41,7 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClsSolicitudPagoControlador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CapaModelo_Enlace_Logistica\CapaModelo_Enlace_Logistica.csproj">
+      <Project>{73dc6472-efe8-4171-b645-509db7adc8c1}</Project>
+      <Name>CapaModelo_Enlace_Logistica</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
