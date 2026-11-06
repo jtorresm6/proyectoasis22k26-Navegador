@@ -1,6 +1,8 @@
 ﻿using CapaControlador_Seguridad.Objetos_de_valor;
 //using CapaVista_Bancos.Formularios;
-using CapaVista_Rrhh.Formularios; // comentar
+//using CapaVista_Rrhh.Formularios;
+
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,8 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaVista_Logistica;
 //using CapaVista_Ventas;
+//using CapaVista_Logistica.Formularios;
 
 /*
  * ============================================================
@@ -77,13 +79,13 @@ namespace CapaVista_Seguridad
                         principal = new FrmMDISeguridad();
                         break;
                     
-                    case "Logistica":
-                        var MDILogistica = new FrmMDILogistica();
-                        MDILogistica.LogisticaMetActualizarInfoUsuario(
-                        ClsSesionSeguridad.NombreEmpleado,
-                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                        principal = MDILogistica;
-                        break;
+                  //case "Logistica":
+                    //var MDILogistica = new CapaVista_Logistica.Formularios.FrmMDILogistica();
+                      //MDILogistica.LogisticaMetActualizarInfoUsuario(
+                     // ClsSesionSeguridad.NombreEmpleado,
+                     // ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                     //  principal = MDILogistica;
+                     //  break;
 
                     //case "Compras":
                         //var MDICompras = new FrmMDICompras();
@@ -115,14 +117,14 @@ namespace CapaVista_Seguridad
                         //ClsSesionSeguridad.SeguridadMetRolesComoTexto());
                         //principal = MDIContabilidad;
                         //break;
-                        //comentar
-                    case "RRHH":
-                        var MdiRrhh = new FrmMDIRrhh();
-                        MdiRrhh.RrhhMetActualizarInfoUsuario(
-                        ClsSesionSeguridad.NombreEmpleado,
-                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                        principal = MdiRrhh;
-                        break;
+
+                    //case "RRHH":
+                        //var MdiRrhh = new FrmMDIRrhh();
+                        //MdiRrhh.RrhhMetActualizarInfoUsuario(
+                        //ClsSesionSeguridad.NombreEmpleado,
+                        //ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                        //principal = MdiRrhh;
+                        //break;
 
                     default:
                         principal = new FrmMDISeguridad();

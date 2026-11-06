@@ -1,0 +1,20 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=Ayuda_Sucursales.chm
+Contents file=Ayuda_Sucursales.hhc
+Index file=Ayuda_Sucursales.hhk
+Default topic=sucursales.html
+Display compile progress=Yes
+Full-text search=Yes
+Language=0x0C0A Spanish (International Sort)
+Title=Manual de Usuario - Sucursales
+
+[FILES]
+sucursales.html
+imagenes/01_ingresar.png
+imagenes/02_modificar.png
+imagenes/03_consultar.png
+imagenes/04_ventana_consulta.png
+imagenes/05_buscar.png
+imagenes/06_botones.png
+imagenes/portada.png

@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaVista_Logistica">
-      <HintPath>..\..\Logistica\CapaVista_Logistica\bin\Debug\CapaVista_Logistica.dll</HintPath>
+    <Reference Include="CapaVista_Seguridad">
+      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

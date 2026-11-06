@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37516.0 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_CierreInventario_Logistica", "CapaVista_CierreInventario_Logistica\CapaVista_CierreInventario_Logistica.csproj", "{11124D88-DC55-43D2-8DAF-4F76AE8318CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_CierreInventario_Logistica", "CapaModelo_CierreInventario_Logistica\CapaModelo_CierreInventario_Logistica.csproj", "{31ED0BDB-CAC3-4291-874F-1CD7B30DF5EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_CierreInventario_Logistica", "CapaControlador_CierreInventario_Logistica\CapaControlador_CierreInventario_Logistica.csproj", "{075F2539-5C3F-4981-9A72-F918030D1D80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11124D88-DC55-43D2-8DAF-4F76AE8318CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11124D88-DC55-43D2-8DAF-4F76AE8318CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11124D88-DC55-43D2-8DAF-4F76AE8318CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11124D88-DC55-43D2-8DAF-4F76AE8318CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31ED0BDB-CAC3-4291-874F-1CD7B30DF5EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31ED0BDB-CAC3-4291-874F-1CD7B30DF5EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31ED0BDB-CAC3-4291-874F-1CD7B30DF5EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31ED0BDB-CAC3-4291-874F-1CD7B30DF5EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{075F2539-5C3F-4981-9A72-F918030D1D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{075F2539-5C3F-4981-9A72-F918030D1D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{075F2539-5C3F-4981-9A72-F918030D1D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{075F2539-5C3F-4981-9A72-F918030D1D80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1313088F-5FC0-4176-9459-68AA145DEFA9}
+	EndGlobalSection
+EndGlobal

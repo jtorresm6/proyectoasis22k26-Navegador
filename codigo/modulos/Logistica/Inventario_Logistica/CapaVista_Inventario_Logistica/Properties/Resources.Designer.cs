@@ -63,6 +63,26 @@ namespace CapaVista_Inventario_Logistica.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _6 {
+            get {
+                object obj = ResourceManager.GetObject("6", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _7 {
+            get {
+                object obj = ResourceManager.GetObject("7", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_anterior {
             get {
                 object obj = ResourceManager.GetObject("btn_anterior", resourceCulture);
@@ -286,6 +306,46 @@ namespace CapaVista_Inventario_Logistica.Properties {
         internal static System.Drawing.Bitmap FondoLogistica1 {
             get {
                 object obj = ResourceManager.GetObject("FondoLogistica1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap imgdetalleMovimiento {
+            get {
+                object obj = ResourceManager.GetObject("imgdetalleMovimiento", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap imgMovimientoInventario {
+            get {
+                object obj = ResourceManager.GetObject("imgMovimientoInventario", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ImgStock {
+            get {
+                object obj = ResourceManager.GetObject("ImgStock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap imgtipoMovimiento {
+            get {
+                object obj = ResourceManager.GetObject("imgtipoMovimiento", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

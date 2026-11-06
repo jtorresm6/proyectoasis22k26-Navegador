@@ -146,7 +146,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadPnlSeparador
             // 
-            this.SeguridadPnlSeparador.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadPnlSeparador.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadPnlSeparador.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(109)))), ((int)(((byte)(119)))));
             this.SeguridadPnlSeparador.Location = new System.Drawing.Point(97, 75);
@@ -415,8 +415,8 @@ namespace CapaVista_Seguridad
             // 
             // LblSeguridadContadorEmpleados
             // 
-            this.LblSeguridadContadorEmpleados.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.LblSeguridadContadorEmpleados.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LblSeguridadContadorEmpleados.AutoSize = true;
             this.LblSeguridadContadorEmpleados.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -483,7 +483,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadTxtIdEmpleado
             // 
-            this.SeguridadTxtIdEmpleado.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadTxtIdEmpleado.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadTxtIdEmpleado.Enabled = false;
             this.SeguridadTxtIdEmpleado.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -518,7 +518,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadTxtCodigo
             // 
-            this.SeguridadTxtCodigo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadTxtCodigo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadTxtCodigo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SeguridadTxtCodigo.Location = new System.Drawing.Point(2, 18);
@@ -557,7 +557,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadTxtNombres
             // 
-            this.SeguridadTxtNombres.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadTxtNombres.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadTxtNombres.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SeguridadTxtNombres.Location = new System.Drawing.Point(2, 18);
@@ -591,7 +591,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadTxtApellidos
             // 
-            this.SeguridadTxtApellidos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadTxtApellidos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadTxtApellidos.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SeguridadTxtApellidos.Location = new System.Drawing.Point(2, 18);
@@ -625,7 +625,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadTxtDpi
             // 
-            this.SeguridadTxtDpi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadTxtDpi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadTxtDpi.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SeguridadTxtDpi.Location = new System.Drawing.Point(2, 18);
@@ -661,7 +661,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadTxtNit
             // 
-            this.SeguridadTxtNit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadTxtNit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadTxtNit.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SeguridadTxtNit.Location = new System.Drawing.Point(2, 18);
@@ -698,7 +698,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadTxtPuesto
             // 
-            this.SeguridadTxtPuesto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadTxtPuesto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadTxtPuesto.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SeguridadTxtPuesto.Location = new System.Drawing.Point(2, 18);
@@ -732,7 +732,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadTxtCorreo
             // 
-            this.SeguridadTxtCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadTxtCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadTxtCorreo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SeguridadTxtCorreo.Location = new System.Drawing.Point(2, 18);
@@ -766,7 +766,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadTxtTelefono
             // 
-            this.SeguridadTxtTelefono.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadTxtTelefono.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadTxtTelefono.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SeguridadTxtTelefono.Location = new System.Drawing.Point(2, 18);
@@ -802,7 +802,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadCboGenero
             // 
-            this.SeguridadCboGenero.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadCboGenero.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadCboGenero.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SeguridadCboGenero.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -840,7 +840,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadDtpFechaNacimiento
             // 
-            this.SeguridadDtpFechaNacimiento.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadDtpFechaNacimiento.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadDtpFechaNacimiento.CustomFormat = "dd/MM/yyyy";
             this.SeguridadDtpFechaNacimiento.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -876,7 +876,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadDtpFechaContratacion
             // 
-            this.SeguridadDtpFechaContratacion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadDtpFechaContratacion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadDtpFechaContratacion.CustomFormat = "dd/MM/yyyy";
             this.SeguridadDtpFechaContratacion.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -939,7 +939,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadBtnBuscar
             // 
-            this.SeguridadBtnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadBtnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadBtnBuscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(109)))), ((int)(((byte)(119)))));
             this.SeguridadBtnBuscar.BackgroundImage = global::CapaVista_Seguridad.Properties.Resources.Buscar;
@@ -957,7 +957,7 @@ namespace CapaVista_Seguridad
             // 
             // SeguridadBtnLimpiar
             // 
-            this.SeguridadBtnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.SeguridadBtnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SeguridadBtnLimpiar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(131)))), ((int)(((byte)(197)))), ((int)(((byte)(190)))));
             this.SeguridadBtnLimpiar.FlatAppearance.BorderSize = 0;
