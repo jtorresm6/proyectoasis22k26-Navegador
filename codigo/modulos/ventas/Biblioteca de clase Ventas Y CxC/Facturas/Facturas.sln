@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_Facturas", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_Facturas", "CapaVista_Facturas\CapaVista_Facturas.csproj", "{056F52B0-306E-4338-87F2-2A87316D176F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFacturas", "TestFacturas\TestFacturas.csproj", "{6A7C61D3-A3F6-4DA5-976C-36282C82D97A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,8 +28,15 @@ Global
 		{056F52B0-306E-4338-87F2-2A87316D176F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{056F52B0-306E-4338-87F2-2A87316D176F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{056F52B0-306E-4338-87F2-2A87316D176F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A7C61D3-A3F6-4DA5-976C-36282C82D97A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A7C61D3-A3F6-4DA5-976C-36282C82D97A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A7C61D3-A3F6-4DA5-976C-36282C82D97A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A7C61D3-A3F6-4DA5-976C-36282C82D97A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2744065-75C9-44E6-A25F-7E5A181C3FE3}
 	EndGlobalSection
 EndGlobal

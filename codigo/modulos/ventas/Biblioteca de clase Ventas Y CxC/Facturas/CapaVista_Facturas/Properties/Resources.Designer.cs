@@ -59,17 +59,45 @@ namespace CapaVista_Facturas.Properties {
                 resourceCulture = value;
             }
         }
-        internal static System.Drawing.Icon IconoVentas
-        {
-            get { return (System.Drawing.Icon)ResourceManager.GetObject("IconoVentas", resourceCulture); }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BotonOriginalImprimirVentas {
+            get {
+                object obj = ResourceManager.GetObject("BotonOriginalImprimirVentas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
         }
-        internal static System.Drawing.Bitmap BotonOriginalIngresarVentas
-        {
-            get { return (System.Drawing.Bitmap)ResourceManager.GetObject("BotonOriginalIngresarVentas", resourceCulture); }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BotonOriginalIngresarVentas {
+            get {
+                object obj = ResourceManager.GetObject("BotonOriginalIngresarVentas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
         }
-        internal static System.Drawing.Bitmap BotonOriginalImprimirVentas
-        {
-            get { return (System.Drawing.Bitmap)ResourceManager.GetObject("BotonOriginalImprimirVentas", resourceCulture); }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GuardarVentas {
+            get {
+                object obj = ResourceManager.GetObject("GuardarVentas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+        /// </summary>
+        internal static System.Drawing.Icon IconoVentas {
+            get {
+                object obj = ResourceManager.GetObject("IconoVentas", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
         }
     }
 }
