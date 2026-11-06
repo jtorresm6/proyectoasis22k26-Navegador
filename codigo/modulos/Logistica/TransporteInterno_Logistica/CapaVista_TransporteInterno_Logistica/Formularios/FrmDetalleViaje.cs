@@ -16,5 +16,15 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
         {
             InitializeComponent();
         }
+
+        private void FrmDetalleViaje_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogisticaPnlDatosDetalle_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

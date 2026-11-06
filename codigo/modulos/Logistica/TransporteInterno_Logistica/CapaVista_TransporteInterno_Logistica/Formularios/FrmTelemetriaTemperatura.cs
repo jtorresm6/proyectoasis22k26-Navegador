@@ -16,5 +16,10 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
         {
             InitializeComponent();
         }
+
+        private void LogisticaPnlHistorialTelemetria_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

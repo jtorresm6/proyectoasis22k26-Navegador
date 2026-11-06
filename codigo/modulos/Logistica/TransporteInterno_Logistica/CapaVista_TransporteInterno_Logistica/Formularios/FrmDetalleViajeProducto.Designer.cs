@@ -38,6 +38,32 @@
             this.LogisticaBtnConsultar = new System.Windows.Forms.Button();
             this.LogisticaLblDescripcion = new System.Windows.Forms.Label();
             this.LogisticaLblTitulo = new System.Windows.Forms.Label();
+            this.LogisticaPnlDatosDetalle = new System.Windows.Forms.Panel();
+            this.LogisticaCboLoteProducto = new System.Windows.Forms.ComboBox();
+            this.LogisticaNudPesoTotal = new System.Windows.Forms.NumericUpDown();
+            this.LogisticaNudCantidadCajas = new System.Windows.Forms.NumericUpDown();
+            this.LogisticaCboDetalleViaje = new System.Windows.Forms.ComboBox();
+            this.LogisticaLblPesoTotal = new System.Windows.Forms.Label();
+            this.LogisticaLblCantidadCajas = new System.Windows.Forms.Label();
+            this.LogisticaLblLoteProducto = new System.Windows.Forms.Label();
+            this.LogisticaLblDetalleViaje = new System.Windows.Forms.Label();
+            this.LogisticaPnlEncabezadoDetalle = new System.Windows.Forms.Panel();
+            this.LogisticaLblDatosDetalle = new System.Windows.Forms.Label();
+            this.LogisticaPnlHistorialLotes = new System.Windows.Forms.Panel();
+            this.LogisticaPnlTituloHistorial = new System.Windows.Forms.Panel();
+            this.LogisticaLblHistorialLotes = new System.Windows.Forms.Label();
+            this.logisticadvgloteasignado = new System.Windows.Forms.DataGridView();
+            this.ColDetalleViaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColLoteProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColCantidadCajas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPesoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaPnlDatosDetalle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudPesoTotal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudCantidadCajas)).BeginInit();
+            this.LogisticaPnlEncabezadoDetalle.SuspendLayout();
+            this.LogisticaPnlHistorialLotes.SuspendLayout();
+            this.LogisticaPnlTituloHistorial.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logisticadvgloteasignado)).BeginInit();
             this.SuspendLayout();
             // 
             // LogisticaBtnRefrescar
@@ -143,12 +169,208 @@
             this.LogisticaLblTitulo.TabIndex = 20;
             this.LogisticaLblTitulo.Text = "Detalle de Viaje Producto";
             // 
+            // LogisticaPnlDatosDetalle
+            // 
+            this.LogisticaPnlDatosDetalle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaCboLoteProducto);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaNudPesoTotal);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaNudCantidadCajas);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaCboDetalleViaje);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaLblPesoTotal);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaLblCantidadCajas);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaLblLoteProducto);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaLblDetalleViaje);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaPnlEncabezadoDetalle);
+            this.LogisticaPnlDatosDetalle.Location = new System.Drawing.Point(139, 266);
+            this.LogisticaPnlDatosDetalle.Name = "LogisticaPnlDatosDetalle";
+            this.LogisticaPnlDatosDetalle.Size = new System.Drawing.Size(1200, 260);
+            this.LogisticaPnlDatosDetalle.TabIndex = 29;
+            // 
+            // LogisticaCboLoteProducto
+            // 
+            this.LogisticaCboLoteProducto.FormattingEnabled = true;
+            this.LogisticaCboLoteProducto.Location = new System.Drawing.Point(234, 117);
+            this.LogisticaCboLoteProducto.Name = "LogisticaCboLoteProducto";
+            this.LogisticaCboLoteProducto.Size = new System.Drawing.Size(204, 24);
+            this.LogisticaCboLoteProducto.TabIndex = 13;
+            // 
+            // LogisticaNudPesoTotal
+            // 
+            this.LogisticaNudPesoTotal.Location = new System.Drawing.Point(899, 119);
+            this.LogisticaNudPesoTotal.Name = "LogisticaNudPesoTotal";
+            this.LogisticaNudPesoTotal.Size = new System.Drawing.Size(201, 22);
+            this.LogisticaNudPesoTotal.TabIndex = 12;
+            // 
+            // LogisticaNudCantidadCajas
+            // 
+            this.LogisticaNudCantidadCajas.Location = new System.Drawing.Point(899, 71);
+            this.LogisticaNudCantidadCajas.Name = "LogisticaNudCantidadCajas";
+            this.LogisticaNudCantidadCajas.Size = new System.Drawing.Size(201, 22);
+            this.LogisticaNudCantidadCajas.TabIndex = 11;
+            // 
+            // LogisticaCboDetalleViaje
+            // 
+            this.LogisticaCboDetalleViaje.FormattingEnabled = true;
+            this.LogisticaCboDetalleViaje.Location = new System.Drawing.Point(234, 69);
+            this.LogisticaCboDetalleViaje.Name = "LogisticaCboDetalleViaje";
+            this.LogisticaCboDetalleViaje.Size = new System.Drawing.Size(204, 24);
+            this.LogisticaCboDetalleViaje.TabIndex = 8;
+            // 
+            // LogisticaLblPesoTotal
+            // 
+            this.LogisticaLblPesoTotal.AutoSize = true;
+            this.LogisticaLblPesoTotal.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblPesoTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblPesoTotal.Location = new System.Drawing.Point(659, 120);
+            this.LogisticaLblPesoTotal.Name = "LogisticaLblPesoTotal";
+            this.LogisticaLblPesoTotal.Size = new System.Drawing.Size(171, 24);
+            this.LogisticaLblPesoTotal.TabIndex = 6;
+            this.LogisticaLblPesoTotal.Text = "Peso Total (kg): *";
+            // 
+            // LogisticaLblCantidadCajas
+            // 
+            this.LogisticaLblCantidadCajas.AutoSize = true;
+            this.LogisticaLblCantidadCajas.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblCantidadCajas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblCantidadCajas.Location = new System.Drawing.Point(659, 65);
+            this.LogisticaLblCantidadCajas.Name = "LogisticaLblCantidadCajas";
+            this.LogisticaLblCantidadCajas.Size = new System.Drawing.Size(196, 24);
+            this.LogisticaLblCantidadCajas.TabIndex = 5;
+            this.LogisticaLblCantidadCajas.Text = "Cantidad de Cajas: *";
+            // 
+            // LogisticaLblLoteProducto
+            // 
+            this.LogisticaLblLoteProducto.AutoSize = true;
+            this.LogisticaLblLoteProducto.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblLoteProducto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblLoteProducto.Location = new System.Drawing.Point(25, 120);
+            this.LogisticaLblLoteProducto.Name = "LogisticaLblLoteProducto";
+            this.LogisticaLblLoteProducto.Size = new System.Drawing.Size(185, 24);
+            this.LogisticaLblLoteProducto.TabIndex = 2;
+            this.LogisticaLblLoteProducto.Text = "Lote de Producto: *";
+            // 
+            // LogisticaLblDetalleViaje
+            // 
+            this.LogisticaLblDetalleViaje.AutoSize = true;
+            this.LogisticaLblDetalleViaje.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblDetalleViaje.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblDetalleViaje.Location = new System.Drawing.Point(25, 65);
+            this.LogisticaLblDetalleViaje.Name = "LogisticaLblDetalleViaje";
+            this.LogisticaLblDetalleViaje.Size = new System.Drawing.Size(177, 24);
+            this.LogisticaLblDetalleViaje.TabIndex = 1;
+            this.LogisticaLblDetalleViaje.Text = "Detalle de Viaje: *";
+            // 
+            // LogisticaPnlEncabezadoDetalle
+            // 
+            this.LogisticaPnlEncabezadoDetalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaPnlEncabezadoDetalle.Controls.Add(this.LogisticaLblDatosDetalle);
+            this.LogisticaPnlEncabezadoDetalle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LogisticaPnlEncabezadoDetalle.Location = new System.Drawing.Point(0, 0);
+            this.LogisticaPnlEncabezadoDetalle.Name = "LogisticaPnlEncabezadoDetalle";
+            this.LogisticaPnlEncabezadoDetalle.Size = new System.Drawing.Size(1198, 53);
+            this.LogisticaPnlEncabezadoDetalle.TabIndex = 0;
+            // 
+            // LogisticaLblDatosDetalle
+            // 
+            this.LogisticaLblDatosDetalle.AutoSize = true;
+            this.LogisticaLblDatosDetalle.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblDatosDetalle.ForeColor = System.Drawing.Color.White;
+            this.LogisticaLblDatosDetalle.Location = new System.Drawing.Point(20, 9);
+            this.LogisticaLblDatosDetalle.Name = "LogisticaLblDatosDetalle";
+            this.LogisticaLblDatosDetalle.Size = new System.Drawing.Size(290, 28);
+            this.LogisticaLblDatosDetalle.TabIndex = 0;
+            this.LogisticaLblDatosDetalle.Text = "Datos del Lote Producto";
+            // 
+            // LogisticaPnlHistorialLotes
+            // 
+            this.LogisticaPnlHistorialLotes.Controls.Add(this.logisticadvgloteasignado);
+            this.LogisticaPnlHistorialLotes.Controls.Add(this.LogisticaPnlTituloHistorial);
+            this.LogisticaPnlHistorialLotes.Location = new System.Drawing.Point(140, 580);
+            this.LogisticaPnlHistorialLotes.Name = "LogisticaPnlHistorialLotes";
+            this.LogisticaPnlHistorialLotes.Size = new System.Drawing.Size(1200, 270);
+            this.LogisticaPnlHistorialLotes.TabIndex = 30;
+            // 
+            // LogisticaPnlTituloHistorial
+            // 
+            this.LogisticaPnlTituloHistorial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaPnlTituloHistorial.Controls.Add(this.LogisticaLblHistorialLotes);
+            this.LogisticaPnlTituloHistorial.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LogisticaPnlTituloHistorial.Location = new System.Drawing.Point(0, 0);
+            this.LogisticaPnlTituloHistorial.Name = "LogisticaPnlTituloHistorial";
+            this.LogisticaPnlTituloHistorial.Size = new System.Drawing.Size(1200, 45);
+            this.LogisticaPnlTituloHistorial.TabIndex = 1;
+            // 
+            // LogisticaLblHistorialLotes
+            // 
+            this.LogisticaLblHistorialLotes.AutoSize = true;
+            this.LogisticaLblHistorialLotes.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblHistorialLotes.ForeColor = System.Drawing.Color.White;
+            this.LogisticaLblHistorialLotes.Location = new System.Drawing.Point(25, 12);
+            this.LogisticaLblHistorialLotes.Name = "LogisticaLblHistorialLotes";
+            this.LogisticaLblHistorialLotes.Size = new System.Drawing.Size(262, 24);
+            this.LogisticaLblHistorialLotes.TabIndex = 0;
+            this.LogisticaLblHistorialLotes.Text = "Historial de Lotes Asignados";
+            // 
+            // logisticadvgloteasignado
+            // 
+            this.logisticadvgloteasignado.AllowUserToAddRows = false;
+            this.logisticadvgloteasignado.AllowUserToDeleteRows = false;
+            this.logisticadvgloteasignado.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.logisticadvgloteasignado.BackgroundColor = System.Drawing.Color.White;
+            this.logisticadvgloteasignado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.logisticadvgloteasignado.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColDetalleViaje,
+            this.ColLoteProducto,
+            this.ColCantidadCajas,
+            this.ColPesoTotal});
+            this.logisticadvgloteasignado.GridColor = System.Drawing.Color.DimGray;
+            this.logisticadvgloteasignado.Location = new System.Drawing.Point(15, 60);
+            this.logisticadvgloteasignado.MultiSelect = false;
+            this.logisticadvgloteasignado.Name = "logisticadvgloteasignado";
+            this.logisticadvgloteasignado.ReadOnly = true;
+            this.logisticadvgloteasignado.RowHeadersVisible = false;
+            this.logisticadvgloteasignado.RowHeadersWidth = 51;
+            this.logisticadvgloteasignado.RowTemplate.Height = 24;
+            this.logisticadvgloteasignado.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.logisticadvgloteasignado.Size = new System.Drawing.Size(1165, 190);
+            this.logisticadvgloteasignado.TabIndex = 2;
+            // 
+            // ColDetalleViaje
+            // 
+            this.ColDetalleViaje.HeaderText = "Detalle de Viaje";
+            this.ColDetalleViaje.MinimumWidth = 6;
+            this.ColDetalleViaje.Name = "ColDetalleViaje";
+            this.ColDetalleViaje.ReadOnly = true;
+            // 
+            // ColLoteProducto
+            // 
+            this.ColLoteProducto.HeaderText = "Lote de Producto";
+            this.ColLoteProducto.MinimumWidth = 6;
+            this.ColLoteProducto.Name = "ColLoteProducto";
+            this.ColLoteProducto.ReadOnly = true;
+            // 
+            // ColCantidadCajas
+            // 
+            this.ColCantidadCajas.HeaderText = "Cantidad de Cajas";
+            this.ColCantidadCajas.MinimumWidth = 6;
+            this.ColCantidadCajas.Name = "ColCantidadCajas";
+            this.ColCantidadCajas.ReadOnly = true;
+            // 
+            // ColPesoTotal
+            // 
+            this.ColPesoTotal.HeaderText = "Peso (kg)";
+            this.ColPesoTotal.MinimumWidth = 6;
+            this.ColPesoTotal.Name = "ColPesoTotal";
+            this.ColPesoTotal.ReadOnly = true;
+            // 
             // FrmDetalleViajeProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
             this.ClientSize = new System.Drawing.Size(1525, 912);
+            this.Controls.Add(this.LogisticaPnlHistorialLotes);
+            this.Controls.Add(this.LogisticaPnlDatosDetalle);
             this.Controls.Add(this.LogisticaBtnRefrescar);
             this.Controls.Add(this.LogisticaBtnCancelar);
             this.Controls.Add(this.LogisticaBtnGuardar);
@@ -162,6 +384,16 @@
             this.Name = "FrmDetalleViajeProducto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmDetalleViajeProducto";
+            this.LogisticaPnlDatosDetalle.ResumeLayout(false);
+            this.LogisticaPnlDatosDetalle.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudPesoTotal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudCantidadCajas)).EndInit();
+            this.LogisticaPnlEncabezadoDetalle.ResumeLayout(false);
+            this.LogisticaPnlEncabezadoDetalle.PerformLayout();
+            this.LogisticaPnlHistorialLotes.ResumeLayout(false);
+            this.LogisticaPnlTituloHistorial.ResumeLayout(false);
+            this.LogisticaPnlTituloHistorial.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logisticadvgloteasignado)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,5 +410,24 @@
         private System.Windows.Forms.Button LogisticaBtnConsultar;
         private System.Windows.Forms.Label LogisticaLblDescripcion;
         private System.Windows.Forms.Label LogisticaLblTitulo;
+        private System.Windows.Forms.Panel LogisticaPnlDatosDetalle;
+        private System.Windows.Forms.NumericUpDown LogisticaNudPesoTotal;
+        private System.Windows.Forms.NumericUpDown LogisticaNudCantidadCajas;
+        private System.Windows.Forms.ComboBox LogisticaCboDetalleViaje;
+        private System.Windows.Forms.Label LogisticaLblPesoTotal;
+        private System.Windows.Forms.Label LogisticaLblCantidadCajas;
+        private System.Windows.Forms.Label LogisticaLblLoteProducto;
+        private System.Windows.Forms.Label LogisticaLblDetalleViaje;
+        private System.Windows.Forms.Panel LogisticaPnlEncabezadoDetalle;
+        private System.Windows.Forms.Label LogisticaLblDatosDetalle;
+        private System.Windows.Forms.ComboBox LogisticaCboLoteProducto;
+        private System.Windows.Forms.Panel LogisticaPnlHistorialLotes;
+        private System.Windows.Forms.Panel LogisticaPnlTituloHistorial;
+        private System.Windows.Forms.Label LogisticaLblHistorialLotes;
+        private System.Windows.Forms.DataGridView logisticadvgloteasignado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColDetalleViaje;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColLoteProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColCantidadCajas;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColPesoTotal;
     }
 }
