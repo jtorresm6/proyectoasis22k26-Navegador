@@ -118,79 +118,97 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btn_modificar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_modificar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_siguiente" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_siguiente.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_consultar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_consultar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_eliminar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_eliminar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FondoLogica2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FondoLogica2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_ayuda" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_ayuda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_cancelar1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_cancelar1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FondoLogistica" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FondoLogistica.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="imgtipoMovimiento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgtipoMovimiento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_fin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btn_fin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_salir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_salir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_ingresar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_ingresar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_consultar1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_consultar1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_guardar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_guardar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_refrescar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_refrescar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_siguiente" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_siguiente.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_estructuraN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_estructuraN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="panelestandarizado" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\panelestandarizado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_estructuraN_sintexto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_estructuraN_sintexto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PanelTabla" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PanelTabla.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FondoDatagriedview" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FondoDatagriedview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_inicio" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_inicio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_eliminar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_eliminar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_cancelar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btn_cancelar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_imprimir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_imprimir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PanelTabla" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PanelTabla.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_anterior" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_anterior.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_cancelar1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_cancelar1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_refrescar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_refrescar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_ingresar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_ingresar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_bodega" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_bodega.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ImgStock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImgStock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="panelestandarizado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\panelestandarizado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_consultar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_consultar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FondoDatagriedview" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FondoDatagriedview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_estructuraN_sintexto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_estructuraN_sintexto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FondoLogistica1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FondoLogistica1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_bodega" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_bodega.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_guardar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_guardar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgdetalleMovimiento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgdetalleMovimiento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_anterior" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_anterior.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FondoLogica2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FondoLogica2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_consultar1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_consultar1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_modificar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_modificar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_imprimir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_imprimir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_salir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_salir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_estructuraN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_estructuraN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FondoLogistica" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FondoLogistica.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_ayuda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_ayuda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgMovimientoInventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgMovimientoInventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_inicio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_inicio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
