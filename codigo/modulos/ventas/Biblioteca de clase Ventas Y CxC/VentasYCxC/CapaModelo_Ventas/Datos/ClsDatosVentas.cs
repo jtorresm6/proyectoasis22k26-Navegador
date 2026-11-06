@@ -110,16 +110,16 @@ namespace VentasDatos
             switch (Nombre)
             {
                 case "Clientes":
-                    return this.VentasFuncTabla("SELECT Pk_Cliente Id,CONCAT(codigoCliente,' - ',nombreCliente) Nombre,COALESCE(nitCliente,dpiCliente,identificacionExtranjeraCliente,'CF') numeroIdentificacion,direccionCliente,nombreContactoCliente contactoCliente,diasCreditoCliente diasCredito,limiteCreditoCliente limiteCredito,Fk_Moneda_Credito idMonedaCredito FROM tblCliente WHERE activoCliente=1 ORDER BY nombreCliente");
+                    return this.VentasFuncTabla("SELECT idCliente Id,CONCAT(codigoCliente,' - ',nombreCliente) Nombre,COALESCE(nitCliente,dpiCliente,'CF') numeroIdentificacion,direccionCliente,nombreContactoCliente contactoCliente,diasCreditoCliente diasCredito,limiteCreditoCliente limiteCredito,idMonedaCredito idMonedaCredito FROM tblCliente WHERE activoCliente=1 ORDER BY nombreCliente");
                 case "Monedas":
-                    return this.VentasFuncTabla("SELECT Pk_Moneda Id,CONCAT(codigoMoneda,' - ',nombreMoneda) Nombre,codigoMoneda,simboloMoneda FROM tblMoneda WHERE is_active=1 ORDER BY codigoMoneda");
+                    return this.VentasFuncTabla("SELECT idMoneda Id,CONCAT(codigoMoneda,' - ',nombreMoneda) Nombre,codigoMoneda,simboloMoneda FROM tblMoneda WHERE is_active=1 ORDER BY codigoMoneda");
                 case "Usuarios":
                     return this.VentasFuncTabla("SELECT idUsuario Id,nombreUsuario Nombre FROM tblUsuario WHERE is_active=1 ORDER BY nombreUsuario");
                 case "Vendedores":
-                    return this.VentasFuncTabla("SELECT v.Pk_Vendedor Id,CONCAT(v.codigoVendedor,' - ',e.nombresEmpleado,' ',e.apellidosEmpleado) Nombre FROM tblVendedor v JOIN tblEmpleado e ON e.idEmpleado=v.Fk_Empleado_Codigo WHERE v.activoVendedor=1 ORDER BY v.codigoVendedor");
+                    return this.VentasFuncTabla("SELECT v.idVendedor Id,CONCAT(v.codigoVendedor,' - ',e.nombresEmpleado,' ',e.apellidosEmpleado) Nombre FROM tblVendedor v JOIN tblEmpleado e ON e.idEmpleado=v.idEmpleado WHERE v.activoVendedor=1 ORDER BY v.codigoVendedor");
                 case "Establecimientos":
                     // Las facturas del esquema actual se asignan a una sucursal.
-                    return this.VentasFuncTabla("SELECT Pk_Sucursal Id,nombreSucursal Nombre FROM tblSucursal ORDER BY nombreSucursal");
+                    return this.VentasFuncTabla("SELECT idSucursal Id,nombreSucursal Nombre FROM tblSucursal ORDER BY nombreSucursal");
                 default:
                     throw new ArgumentException("Catalogo no reconocido.");
             }
@@ -152,10 +152,13 @@ namespace VentasDatos
                     Buscar = "SELECT COUNT(*) FROM tblCierreMovimientoCxCEncabezado WHERE numeroCierreMovimientoCxCEncabezado=?";
                     break;
                 case "PCOT":
-                    Buscar = "SELECT COUNT(*) FROM tblPedidoEncabezado WHERE numeroPedidoEncabezado=?";
+                    Buscar = "SELECT COUNT(*) FROM tblPedidoEncabezado WHERE referenciaPedidoEncabezado=?";
                     break;
                 case "FCOT":
                     Buscar = "SELECT COUNT(*) FROM tblFacturaEncabezado WHERE serieFacturaEncabezado='COT' AND numeroFacturaEncabezado=?";
+                    break;
+                case "FVE":
+                    Buscar = "SELECT COUNT(*) FROM tblFacturaEncabezado WHERE serieFacturaEncabezado='VENTAS' AND numeroFacturaEncabezado=?";
                     break;
                 default:
                     throw new ArgumentException("Correlativo no reconocido.");

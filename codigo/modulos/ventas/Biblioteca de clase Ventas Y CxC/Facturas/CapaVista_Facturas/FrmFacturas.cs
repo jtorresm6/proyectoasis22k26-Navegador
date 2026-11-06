@@ -1,4 +1,4 @@
-/*
+﻿/*
  * INICIO DEL CÓDIGO — Ventas y cuentas por cobrar
  * Asignación: Matthew, Jose, Natali
  * Matthew Andreé Juárez Xoy | Carné: 0901-23-4250
@@ -21,11 +21,16 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
+using CapaControlador_Facturas;
 
 namespace CapaVista_Facturas
 {
     public partial class FrmFacturas : Form
     {
+        private readonly ClsFacturaOrigenControlador _FacturasOrigen = new ClsFacturaOrigenControlador();
+        public int VentasIdUsuario { get; set; }
+        private int _IdOrigenCargado;
+
         private DataTable dtDetalleFactura;
         private bool sincronizandoCombos = false;
         private bool facturaEmitidaConExito = false;
@@ -52,7 +57,14 @@ namespace CapaVista_Facturas
             // --- CONEXIÓN DE EVENTOS DE INTERFAZ ---
             this.FormClosing += FrmFacturas_FormClosing;
 
+            VentasCboTipoOrigen.DropDownStyle = ComboBoxStyle.DropDownList;
+            VentasCboDocumentoOrigen.DropDownStyle = ComboBoxStyle.DropDownList;
             VentasCboTipoOrigen.SelectedIndexChanged += VentasCboTipoOrigen_SelectedIndexChanged;
+            VentasCboDocumentoOrigen.SelectedIndexChanged += (Origen, Evento) =>
+            {
+                if (!bloqueandoEventos && _IdOrigenCargado > 0)
+                    LimpiarFormularioCompleto(false);
+            };
             VentasBtnCargarDocumento.Click += VentasBtnCargarDocumento_Click;
 
             VentasTxtNitReceptor.Leave += VentasTxtNitReceptor_Leave;
@@ -210,76 +222,99 @@ namespace CapaVista_Facturas
         private void VentasCboTipoOrigen_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (bloqueandoEventos) return;
-            string tipoSeleccionado = VentasCboTipoOrigen.SelectedItem != null ? VentasCboTipoOrigen.SelectedItem.ToString() : "Manual";
-
             LimpiarFormularioCompleto(false);
+            VentasCboDocumentoOrigen.DataSource = null;
+            VentasBtnCargarDocumento.Enabled = false;
+            VentasCboDocumentoOrigen.Enabled = false;
+            VentasTtpAccionesOriginales.SetToolTip(VentasBtnEmitirFactura,
+                VentasCboTipoOrigen.SelectedIndex > 0 ? "Registrar factura interna" : "Generar factura");
+            if (VentasCboTipoOrigen.SelectedIndex <= 0) return;
 
-            VentasCboDocumentoOrigen.Items.Clear();
-            VentasCboDocumentoOrigen.Text = string.Empty;
-
-            if (tipoSeleccionado == "Cotización")
+            try
             {
-                VentasCboDocumentoOrigen.Enabled = true;
-                VentasBtnCargarDocumento.Enabled = true;
-                VentasCboDocumentoOrigen.Items.Add("COT-2026-001 (Distribuidora El Sol)");
-                VentasCboDocumentoOrigen.Items.Add("COT-2026-002 (Supermercado La Bendición)");
-                VentasCboDocumentoOrigen.SelectedIndex = 0;
+                DataTable Documentos = _FacturasOrigen.VentasFuncOrigenes(VentasCboTipoOrigen.SelectedIndex == 2);
+                VentasCboDocumentoOrigen.DisplayMember = "Nombre";
+                VentasCboDocumentoOrigen.ValueMember = "Id";
+                VentasCboDocumentoOrigen.DataSource = Documentos;
+                VentasCboDocumentoOrigen.SelectedIndex = -1;
+                VentasCboDocumentoOrigen.Enabled = Documentos.Rows.Count > 0;
+                VentasBtnCargarDocumento.Enabled = Documentos.Rows.Count > 0;
+                if (Documentos.Rows.Count == 0)
+                    MessageBox.Show("No hay documentos disponibles para facturar.", "Facturas", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (tipoSeleccionado == "Pedido")
+            catch (Exception Error)
             {
-                VentasCboDocumentoOrigen.Enabled = true;
-                VentasBtnCargarDocumento.Enabled = true;
-                VentasCboDocumentoOrigen.Items.Add("PED-2026-501 (Distribuidora El Sol)");
-                VentasCboDocumentoOrigen.Items.Add("PED-2026-502 (Supermercado La Bendición)");
-                VentasCboDocumentoOrigen.SelectedIndex = 0;
-            }
-            else // Manual
-            {
-                VentasCboDocumentoOrigen.Enabled = false;
-                VentasBtnCargarDocumento.Enabled = false;
-                HabilitarEdicionManualProductos(true);
-                VentasTxtNitReceptor.Enabled = true;
-                origenExternoBloqueado = false;
-                VentasDgvItems.ReadOnly = false;
+                MessageBox.Show(Error.Message, "Consulta de documentos", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void VentasBtnCargarDocumento_Click(object sender, EventArgs e)
         {
-            if (VentasCboDocumentoOrigen.SelectedIndex == -1 || string.IsNullOrWhiteSpace(VentasCboDocumentoOrigen.Text))
+            if (VentasCboDocumentoOrigen.SelectedIndex < 0)
             {
-                MessageBox.Show("Seleccione un documento activo para cargar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione una cotización o pedido para cargar.", "Facturas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string docSeleccionado = VentasCboDocumentoOrigen.SelectedItem.ToString();
-            dtDetalleFactura.Clear();
-
-            if (docSeleccionado.Contains("El Sol"))
+            try
             {
-                VentasTxtNitReceptor.Text = "12345678";
-                BuscarYAutocompletarCliente();
-
-                dtDetalleFactura.Rows.Add(101, "Salchicha Jamonada 1lb", 10.00m, 20.00m, 0.00m, 200.00m, 24.00m, 200.00m, DBNull.Value, DBNull.Value, DBNull.Value);
-                dtDetalleFactura.Rows.Add(103, "Chorizo Tradicional 1lb", 5.00m, 28.00m, 0.00m, 140.00m, 16.80m, 140.00m, DBNull.Value, DBNull.Value, DBNull.Value);
+                int Id = Convert.ToInt32(VentasCboDocumentoOrigen.SelectedValue);
+                DataSet Documento = _FacturasOrigen.VentasFuncCargar(VentasCboTipoOrigen.SelectedIndex == 2, Id);
+                VentasMetMostrarOrigen(Documento);
+                _IdOrigenCargado = Id;
             }
-            else
+            catch (Exception Error)
             {
-                VentasTxtNitReceptor.Text = "87654321";
-                BuscarYAutocompletarCliente();
-
-                dtDetalleFactura.Rows.Add(102, "Jamón de Pavo Premium 250g", 8.00m, 35.50m, 0.00m, 284.00m, 34.08m, 284.00m, DBNull.Value, DBNull.Value, DBNull.Value);
+                LimpiarFormularioCompleto(false);
+                MessageBox.Show(Error.Message, "Carga de documento", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
 
-            HabilitarEdicionManualProductos(false);
-
-            VentasTxtNitReceptor.Enabled = false;
+        private void VentasMetMostrarOrigen(DataSet Documento)
+        {
+            DataRow Cabecera = Documento.Tables[0].Rows[0];
             origenExternoBloqueado = true;
+            VentasTxtNitReceptor.Enabled = false;
+            VentasTxtNitReceptor.Text = Convert.ToString(Cabecera["Identificacion"]);
+            VentasTxtNombreComprador.Text = Convert.ToString(Cabecera["Cliente"]);
+            VentasTxtDireccionComprador.Text = Convert.ToString(Cabecera["Direccion"]);
+            VentasCboMoneda.Items.Clear();
+            VentasCboMoneda.Items.Add(Convert.ToString(Cabecera["Moneda"]));
+            VentasCboMoneda.SelectedIndex = 0;
+            VentasCboMoneda.Enabled = false;
+            if (VentasCboCondicionPago.SelectedIndex < 0)
+                VentasCboCondicionPago.SelectedItem = Convert.ToInt32(Cabecera["DiasCredito"]) > 0 ? "CREDITO" : "CONTADO";
+
+            dtDetalleFactura.Clear();
+            foreach (DataRow Linea in Documento.Tables[1].Rows)
+                dtDetalleFactura.Rows.Add(Linea["ProductoId"], Linea["Producto"], Linea["Cantidad"], Linea["Precio"],
+                    Linea["Descuento"], Linea["Subtotal"], Linea["Impuesto"], Linea["Total"],
+                    DBNull.Value, DBNull.Value, DBNull.Value);
+            HabilitarEdicionManualProductos(false);
             VentasDgvItems.ReadOnly = true;
             VentasDgvItems.ClearSelection();
-
             RecalcularTotalesGenerales();
-            MessageBox.Show($"Datos del documento '{docSeleccionado}' cargados con éxito.", "Carga Completa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private int VentasFuncElegirSucursal()
+        {
+            DataTable Sucursales = _FacturasOrigen.VentasFuncSucursales();
+            if (Sucursales.Rows.Count == 0) throw new InvalidOperationException("Configure una sucursal antes de registrar la factura.");
+            if (Sucursales.Rows.Count == 1) return Convert.ToInt32(Sucursales.Rows[0]["Id"]);
+
+            using (var Dialogo = new Form { Text = "Sucursal emisora", ClientSize = new Size(380, 110),
+                StartPosition = FormStartPosition.CenterParent, FormBorderStyle = FormBorderStyle.FixedDialog,
+                MinimizeBox = false, MaximizeBox = false })
+            {
+                var Selector = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList, Left = 12, Top = 16, Width = 356,
+                    DisplayMember = "Nombre", ValueMember = "Id", DataSource = Sucursales };
+                var Aceptar = new Button { Text = "Registrar", DialogResult = DialogResult.OK, Left = 176, Top = 64, Width = 92 };
+                var Cancelar = new Button { Text = "Cancelar", DialogResult = DialogResult.Cancel, Left = 276, Top = 64, Width = 92 };
+                Dialogo.Controls.AddRange(new Control[] { Selector, Aceptar, Cancelar });
+                Dialogo.AcceptButton = Aceptar;
+                Dialogo.CancelButton = Cancelar;
+                return Dialogo.ShowDialog(this) == DialogResult.OK ? Convert.ToInt32(Selector.SelectedValue) : 0;
+            }
         }
 
         private void HabilitarEdicionManualProductos(bool habilitar)
@@ -312,6 +347,9 @@ namespace CapaVista_Facturas
             if (reiniciarOrigen)
             {
                 VentasCboTipoOrigen.SelectedIndex = 0; // Manual
+                VentasCboDocumentoOrigen.DataSource = null;
+                VentasCboDocumentoOrigen.Enabled = false;
+                VentasBtnCargarDocumento.Enabled = false;
             }
 
             if (dtDetalleFactura != null)
@@ -325,9 +363,13 @@ namespace CapaVista_Facturas
             VentasTxtNombreComprador.Clear();
             VentasTxtDireccionComprador.Clear();
 
+            VentasCboMoneda.Items.Clear();
+            VentasCboMoneda.Items.AddRange(new object[] { "GTQ-Quetzal", "USD-Dólar estadounidense" });
             VentasCboMoneda.SelectedIndex = -1;
+            VentasCboMoneda.Enabled = true;
             VentasCboCondicionPago.SelectedIndex = -1;
 
+            _IdOrigenCargado = 0;
             origenExternoBloqueado = false;
             HabilitarEdicionManualProductos(true);
             VentasDgvItems.ReadOnly = false;
@@ -391,6 +433,7 @@ namespace CapaVista_Facturas
 
         private void BuscarYAutocompletarCliente()
         {
+            if (origenExternoBloqueado) return;
             string nitIngresado = VentasTxtNitReceptor.Text.Trim();
 
             if (nitIngresado == "12345678")
@@ -489,7 +532,7 @@ namespace CapaVista_Facturas
             if (VentasCboMoneda.SelectedIndex == -1) return false;
             if (VentasCboCondicionPago.SelectedIndex == -1) return false;
 
-            if (!EsNitValido(VentasTxtNitReceptor.Text)) return false;
+            if (!origenExternoBloqueado && !EsNitValido(VentasTxtNitReceptor.Text)) return false;
             if (string.IsNullOrWhiteSpace(VentasTxtNombreComprador.Text)) return false;
             if (string.IsNullOrWhiteSpace(VentasTxtDireccionComprador.Text)) return false;
 
@@ -514,17 +557,18 @@ namespace CapaVista_Facturas
                 }
             }
 
+            string Moneda = origenExternoBloqueado ? VentasCboMoneda.Text : "Q";
             Control[] foundSub = this.Controls.Find("VentasLblSubtotalResumen", true);
             if (foundSub.Length > 0 && foundSub[0] is Label lblSub)
-                lblSub.Text = string.Format("Subtotal:                              Q {0:N2}", subtotalGeneral);
+                lblSub.Text = string.Format("Subtotal:                              {0} {1:N2}", Moneda, subtotalGeneral);
 
             Control[] foundIva = this.Controls.Find("VentasLblImpuestosResumen", true);
             if (foundIva.Length > 0 && foundIva[0] is Label lblIva)
-                lblIva.Text = string.Format("Impuestos (IVA):                Q {0:N2}", ivaGeneral);
+                lblIva.Text = string.Format("Impuestos (IVA):                {0} {1:N2}", Moneda, ivaGeneral);
 
             Control[] foundTot = this.Controls.Find("VentasLblTotalGeneralResumen", true);
             if (foundTot.Length > 0 && foundTot[0] is Label lblTot)
-                lblTot.Text = string.Format("TOTAL DE LA FACTURA:       Q {0:N2}", totalGeneral);
+                lblTot.Text = string.Format("TOTAL DE LA FACTURA:       {0} {1:N2}", Moneda, totalGeneral);
         }
 
         #endregion
@@ -633,6 +677,12 @@ namespace CapaVista_Facturas
 
         private void VentasBtnEmitirFactura_Click(object sender, EventArgs e)
         {
+            bool DesdeDocumento = VentasCboTipoOrigen.SelectedIndex > 0;
+            if (DesdeDocumento && _IdOrigenCargado == 0)
+            {
+                MessageBox.Show("Cargue primero el documento seleccionado.", "Facturas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (!ValidarFormularioCompleto())
             {
                 MessageBox.Show("Debe de llenar todos los campos para emitir la factura.",
@@ -643,24 +693,41 @@ namespace CapaVista_Facturas
             try
             {
                 int idFacturaGenerada = 7001;
+                if (DesdeDocumento)
+                {
+                    int Sucursal = VentasFuncElegirSucursal();
+                    if (Sucursal == 0) return;
+                    DataSet Registrado;
+                    idFacturaGenerada = _FacturasOrigen.VentasFuncRegistrar(VentasCboTipoOrigen.SelectedIndex == 2,
+                        _IdOrigenCargado, Sucursal, VentasIdUsuario, Convert.ToString(VentasCboCondicionPago.SelectedItem),
+                        out Registrado);
+                    facturaEmitidaConExito = true;
+                    VentasMetMostrarOrigen(Registrado);
+                }
                 facturaEmitidaConExito = true;
-
-                MostrarOpcionesSalidaRdlc(idFacturaGenerada);
+                MostrarOpcionesSalidaRdlc(idFacturaGenerada, DesdeDocumento);
 
                 LimpiarFormularioCompleto(true);
                 facturaEmitidaConExito = false;
             }
             catch (Exception ex)
             {
+                if (DesdeDocumento && facturaEmitidaConExito)
+                {
+                    LimpiarFormularioCompleto(true);
+                    MessageBox.Show("La factura quedó registrada. No se pudo generar la salida: " + ex.Message,
+                        "Factura registrada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                    MessageBox.Show(ex.Message, "Facturas", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 facturaEmitidaConExito = false;
-                MessageBox.Show("Error crítico al procesar el guardado de la factura en la BD: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void MostrarOpcionesSalidaRdlc(int idFactura)
+        private void MostrarOpcionesSalidaRdlc(int idFactura, bool DocumentoInterno)
         {
             Form dlgOpciones = new Form();
-            dlgOpciones.Text = "Emisión Exitosa - DTE";
+            dlgOpciones.Text = DocumentoInterno ? "Factura interna registrada" : "Emisión Exitosa - DTE";
             dlgOpciones.Size = new Size(460, 210);
             dlgOpciones.StartPosition = FormStartPosition.CenterParent;
             dlgOpciones.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -669,7 +736,7 @@ namespace CapaVista_Facturas
             dlgOpciones.BackColor = Color.FromArgb(248, 245, 249);
 
             Label lblMensaje = new Label();
-            lblMensaje.Text = "¡Factura emitida de forma exitosa!";
+            lblMensaje.Text = DocumentoInterno ? "Factura registrada en el ERP" : "¡Factura emitida de forma exitosa!";
             lblMensaje.Location = new Point(20, 25);
             lblMensaje.Size = new Size(410, 30);
             lblMensaje.Font = new Font("Tahoma", 11F, FontStyle.Bold);
@@ -748,7 +815,7 @@ namespace CapaVista_Facturas
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.Filter = "Archivo PDF (*.pdf)|*.pdf";
-                saveFileDialog.Title = "Guardar Factura - DTE";
+                saveFileDialog.Title = DocumentoInterno ? "Guardar factura interna" : "Guardar Factura - DTE";
                 saveFileDialog.FileName = $"Factura_{idFactura}.pdf";
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)

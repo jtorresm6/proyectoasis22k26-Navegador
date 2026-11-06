@@ -59,18 +59,18 @@ namespace CapaModelo_Cotizaciones
 
         public bool VentasFuncMonedaActiva(int Moneda)
         {
-            return Convert.ToInt32(_Datos.VentasFuncEscalar("SELECT COUNT(*) FROM tblMoneda WHERE Pk_Moneda=? AND is_active=1", Moneda)) == 1;
+            return Convert.ToInt32(_Datos.VentasFuncEscalar("SELECT COUNT(*) FROM tblMoneda WHERE idMoneda=? AND is_active=1", Moneda)) == 1;
         }
 
         public void VentasMetAsegurarBloqueoMoneda(int Moneda)
         {
-            _Datos.VentasFuncEjecutar("INSERT INTO tblControlPeriodoCxC(Fk_Moneda_Codigo) VALUES (?) ON DUPLICATE KEY UPDATE Fk_Moneda_Codigo=VALUES(Fk_Moneda_Codigo)", Moneda);
-            _Datos.VentasFuncTabla("SELECT Fk_Moneda_Codigo FROM tblControlPeriodoCxC WHERE Fk_Moneda_Codigo=? FOR UPDATE", Moneda);
+            _Datos.VentasFuncEjecutar("INSERT INTO tblControlPeriodoCxC(idMoneda) VALUES (?) ON DUPLICATE KEY UPDATE idMoneda=VALUES(idMoneda)", Moneda);
+            _Datos.VentasFuncTabla("SELECT idMoneda FROM tblControlPeriodoCxC WHERE idMoneda=? FOR UPDATE", Moneda);
         }
 
         public object VentasFuncUltimoCierre(int Moneda)
         {
-            return _Datos.VentasFuncEscalar("SELECT fechaUltimoCierreControlPeriodoCxC FROM tblControlPeriodoCxC WHERE Fk_Moneda_Codigo=?", Moneda);
+            return _Datos.VentasFuncEscalar("SELECT fechaUltimoCierreControlPeriodoCxC FROM tblControlPeriodoCxC WHERE idMoneda=?", Moneda);
         }
 
         public void VentasMetAuditar(string Entidad, int Id, string Accion, string Detalle, int Usuario)
@@ -88,7 +88,7 @@ namespace CapaModelo_Cotizaciones
         {
             const string Consulta = @"SELECT COUNT(*)
     FROM tblCliente
-    WHERE Pk_Cliente=?
+    WHERE idCliente=?
       AND activoCliente=1";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
@@ -97,7 +97,7 @@ namespace CapaModelo_Cotizaciones
         {
             const string Consulta = @"SELECT COUNT(*)
     FROM tblVendedor
-    WHERE Pk_Vendedor=?
+    WHERE idVendedor=?
       AND activoVendedor=1";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
@@ -106,7 +106,7 @@ namespace CapaModelo_Cotizaciones
         {
             const string Consulta = @"SELECT estadoCotizacionEncabezado estadoCotizacion,numeroCotizacionEncabezado numeroCotizacion,vigenteHastaCotizacionEncabezado vigenteHasta
     FROM tblCotizacionEncabezado
-    WHERE Pk_CotizacionEncabezado=?
+    WHERE idCotizacionEncabezado=?
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
@@ -115,10 +115,10 @@ namespace CapaModelo_Cotizaciones
         {
             const string Consulta = @"SELECT pr.nombreProducto,p.tipoItemProductoVenta tipoItem,p.tasaImpuestoProductoVenta*100 porcentajeImpuesto,d.precioUnitarioListaPrecioDetalle precioUnitario
     FROM tblProductoVenta p
-    JOIN tblProducto pr ON pr.Pk_Producto=p.Pk_ProductoVenta
-    JOIN tblListaPrecioDetalle d ON d.Fk_Producto_Codigo=p.Pk_ProductoVenta
-    WHERE p.Pk_ProductoVenta=?
-      AND d.Fk_ListaPrecioEncabezado_Codigo=?
+    JOIN tblProducto pr ON pr.idProducto=p.idProductoVenta
+    JOIN tblListaPrecioDetalle d ON d.idProducto=p.idProductoVenta
+    WHERE p.idProductoVenta=?
+      AND d.idListaPrecioEncabezado=?
       AND p.activoProductoVenta=1
       AND d.activoListaPrecioDetalle=1";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
@@ -126,7 +126,7 @@ namespace CapaModelo_Cotizaciones
 
         public int VentasFuncGuardarInsertarCotizacion(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblCotizacionEncabezado(numeroCotizacionEncabezado,Fk_Cliente_Codigo,Fk_Vendedor_Codigo,Fk_Moneda_Codigo,fechaEmisionCotizacionEncabezado,vigenteHastaCotizacionEncabezado,estadoCotizacionEncabezado,Fk_Usuario_Registro,Fk_ListaPrecioEncabezado_Codigo)
+            const string Consulta = @"INSERT INTO tblCotizacionEncabezado(numeroCotizacionEncabezado,idCliente,idVendedor,idMoneda,fechaEmisionCotizacionEncabezado,vigenteHastaCotizacionEncabezado,estadoCotizacionEncabezado,idUsuarioRegistro,idListaPrecioEncabezado)
     VALUES (?,?,?,?,?,?,?,?,?)";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
@@ -134,8 +134,8 @@ namespace CapaModelo_Cotizaciones
         public int VentasFuncGuardarActualizarCotizacion(params object[] Parametros)
         {
             const string Consulta = @"UPDATE tblCotizacionEncabezado
-    SET Fk_Cliente_Codigo=?,Fk_Vendedor_Codigo=?,Fk_Moneda_Codigo=?,fechaEmisionCotizacionEncabezado=?,vigenteHastaCotizacionEncabezado=?,estadoCotizacionEncabezado=?,Fk_ListaPrecioEncabezado_Codigo=?
-    WHERE Pk_CotizacionEncabezado=?";
+    SET idCliente=?,idVendedor=?,idMoneda=?,fechaEmisionCotizacionEncabezado=?,vigenteHastaCotizacionEncabezado=?,estadoCotizacionEncabezado=?,idListaPrecioEncabezado=?
+    WHERE idCotizacionEncabezado=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
@@ -143,13 +143,13 @@ namespace CapaModelo_Cotizaciones
         {
             const string Consulta = @"DELETE
     FROM tblCotizacionDetalle
-    WHERE Fk_CotizacionEncabezado_Codigo=?";
+    WHERE idCotizacionEncabezado=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public int VentasFuncGuardarInsertarCotizaciondetalle(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblCotizacionDetalle(Fk_CotizacionEncabezado_Codigo,numeroLineaCotizacionDetalle,Fk_Producto_Codigo,descripcionItemCotizacionDetalle,cantidadCotizacionDetalle,precioUnitarioCotizacionDetalle,descuentoMontoCotizacionDetalle,tasaImpuestoCotizacionDetalle)
+            const string Consulta = @"INSERT INTO tblCotizacionDetalle(idCotizacionEncabezado,numeroLineaCotizacionDetalle,idProducto,descripcionItemCotizacionDetalle,cantidadCotizacionDetalle,precioUnitarioCotizacionDetalle,descuentoMontoCotizacionDetalle,tasaImpuestoCotizacionDetalle)
     VALUES (?,?,?,?,?,?,?,?)";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
@@ -159,7 +159,7 @@ namespace CapaModelo_Cotizaciones
         {
             const string Consulta = @"SELECT estadoCotizacionEncabezado
     FROM tblCotizacionEncabezado
-    WHERE Pk_CotizacionEncabezado=?
+    WHERE idCotizacionEncabezado=?
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
@@ -168,7 +168,7 @@ namespace CapaModelo_Cotizaciones
         {
             const string Consulta = @"UPDATE tblCotizacionEncabezado
     SET estadoCotizacionEncabezado='ANULADA'
-    WHERE Pk_CotizacionEncabezado=?";
+    WHERE idCotizacionEncabezado=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
     }

@@ -39,11 +39,24 @@ namespace CapaModelo_MovimientosClientes
 
         public DataTable VentasFuncCatalogo(string Nombre)
         {
-            if (Nombre == "BancosDeposito") return _Datos.VentasFuncTabla("SELECT Pk_Banco Id,nombreBanco Nombre FROM tblBanco WHERE is_active=1");
-            if (Nombre == "CuentasDeposito") return _Datos.VentasFuncTabla("SELECT Pk_CuentaBancaria Id,CONCAT(numeroCuentaBancaria,' - ',nombreCuentaBancaria) Nombre,Fk_Banco_Codigo Banco,Fk_Moneda_Codigo Moneda FROM tblCuentaBancaria WHERE is_active=1");
-            if (Nombre == "ConceptosDeposito") return _Datos.VentasFuncTabla("SELECT Pk_TipoTransaccion Id,nombreTipoTransaccion Nombre FROM tblTipoTransaccion WHERE is_active=1 AND naturalezaTipoTransaccion IN ('INGRESO','AMBOS')");
+            if (Nombre == "BancosDeposito") return _Datos.VentasFuncTabla("SELECT idBanco Id,nombreBanco Nombre FROM tblBanco WHERE is_active=1");
+            if (Nombre == "CuentasDeposito") return _Datos.VentasFuncTabla("SELECT idCuentaBancaria Id,CONCAT(numeroCuentaBancaria,' - ',nombreCuentaBancaria) Nombre,Fk_Banco_Codigo Banco,Fk_Moneda_Codigo Moneda FROM tblCuentaBancaria WHERE is_active=1");
+            if (Nombre == "ConceptosDeposito") return _Datos.VentasFuncTabla("SELECT idTipoTransaccion Id,nombreTipoTransaccion Nombre FROM tblTipoTransaccion WHERE is_active=1 AND naturalezaTipoTransaccion IN ('INGRESO','AMBOS')");
             if (Nombre == "TiposDocumentoCxC")
-                return _Datos.VentasFuncTabla("SELECT codigoTipoDocumentoCxC Id, nombreTipoDocumentoCxC Nombre, efectoTipoDocumentoCxC Efecto FROM tblTipoDocumentoCxC WHERE activoTipoDocumentoCxC=1 ORDER BY codigoTipoDocumentoCxC");
+            {
+                // ERP v1.6 guarda el tipo en tblNotaCxC y tblMovimientoCxC.
+                // El orden corresponde al índice que usa el formulario al registrar.
+                var Tipos = new DataTable();
+                Tipos.Columns.Add("Id", typeof(int));
+                Tipos.Columns.Add("Nombre", typeof(string));
+                Tipos.Columns.Add("Efecto", typeof(string));
+                Tipos.Rows.Add(0, "Factura de CxC (sin productos)", "CARGO");
+                Tipos.Rows.Add(1, "Nota de crédito (reduce deuda)", "ABONO");
+                Tipos.Rows.Add(2, "Nota de débito (aumenta deuda)", "CARGO");
+                Tipos.Rows.Add(3, "Ajuste de cargo (aumenta deuda)", "CARGO");
+                Tipos.Rows.Add(4, "Ajuste de abono (reduce deuda)", "ABONO");
+                return Tipos;
+            }
             return _Datos.VentasFuncCatalogo(Nombre);
         }
 
@@ -64,18 +77,18 @@ namespace CapaModelo_MovimientosClientes
 
         public bool VentasFuncMonedaActiva(int Moneda)
         {
-            return Convert.ToInt32(_Datos.VentasFuncEscalar("SELECT COUNT(*) FROM tblMoneda WHERE Pk_Moneda=? AND is_active=1", Moneda)) == 1;
+            return Convert.ToInt32(_Datos.VentasFuncEscalar("SELECT COUNT(*) FROM tblMoneda WHERE idMoneda=? AND is_active=1", Moneda)) == 1;
         }
 
         public void VentasMetAsegurarBloqueoMoneda(int Moneda)
         {
-            _Datos.VentasFuncEjecutar("INSERT INTO tblControlPeriodoCxC(Fk_Moneda_Codigo) VALUES (?) ON DUPLICATE KEY UPDATE Fk_Moneda_Codigo=VALUES(Fk_Moneda_Codigo)", Moneda);
-            _Datos.VentasFuncTabla("SELECT Fk_Moneda_Codigo FROM tblControlPeriodoCxC WHERE Fk_Moneda_Codigo=? FOR UPDATE", Moneda);
+            _Datos.VentasFuncEjecutar("INSERT INTO tblControlPeriodoCxC(idMoneda) VALUES (?) ON DUPLICATE KEY UPDATE idMoneda=VALUES(idMoneda)", Moneda);
+            _Datos.VentasFuncTabla("SELECT idMoneda FROM tblControlPeriodoCxC WHERE idMoneda=? FOR UPDATE", Moneda);
         }
 
         public object VentasFuncUltimoCierre(int Moneda)
         {
-            return _Datos.VentasFuncEscalar("SELECT fechaUltimoCierreControlPeriodoCxC FROM tblControlPeriodoCxC WHERE Fk_Moneda_Codigo=?", Moneda);
+            return _Datos.VentasFuncEscalar("SELECT fechaUltimoCierreControlPeriodoCxC FROM tblControlPeriodoCxC WHERE idMoneda=?", Moneda);
         }
 
         public void VentasMetAuditar(string Entidad, int Id, string Accion, string Detalle, int Usuario)
@@ -92,7 +105,7 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT COALESCE(SUM(cargoMovimientoCxC-abonoMovimientoCxC),0)
     FROM tblMovimientoCxC
-    WHERE Fk_FacturaEncabezado_Codigo=?
+    WHERE idFacturaEncabezado=?
       AND fechaMovimientoCxC<=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
@@ -101,49 +114,49 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT COALESCE(SUM(cargoMovimientoCxC-abonoMovimientoCxC),0)
     FROM tblMovimientoCxC
-    WHERE Fk_FacturaEncabezado_Codigo=?";
+    WHERE idFacturaEncabezado=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public DataTable VentasFuncRegistrarDocumentoConsultarCliente(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Pk_Cliente idCliente,tipoIdentificacionCliente tipoIdentificacion,
-    COALESCE(nitCliente,dpiCliente,identificacionExtranjeraCliente,'CF') numeroIdentificacion,
-    nombreCliente,direccionCliente,diasCreditoCliente diasCredito,nitCliente,dpiCliente,identificacionExtranjeraCliente
+            const string Consulta = @"SELECT idCliente idCliente,tipoIdentificacionCliente tipoIdentificacion,
+    COALESCE(nitCliente,dpiCliente,'CF') numeroIdentificacion,
+    nombreCliente,direccionCliente,diasCreditoCliente diasCredito,nitCliente,dpiCliente
     FROM tblCliente
-    WHERE Pk_Cliente=? AND activoCliente=1 FOR UPDATE";
+    WHERE idCliente=? AND activoCliente=1 FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         public object VentasFuncRegistrarDocumentoConsultarEstablecimientoventas(params object[] Parametros)
         {
-            const string Consulta = @"SELECT COUNT(*) FROM tblSucursal WHERE Pk_Sucursal=?";
+            const string Consulta = @"SELECT COUNT(*) FROM tblSucursal WHERE idSucursal=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public int VentasFuncRegistrarDocumentoInsertarFactura(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblFacturaEncabezado(serieFacturaEncabezado,numeroFacturaEncabezado,Fk_Sucursal_Codigo,Fk_Moneda_Codigo,fechaEmisionFacturaEncabezado,fechaVencimientoFacturaEncabezado,tipoDteFacturaEncabezado,condicionPagoFacturaEncabezado,estadoFacturaEncabezado,observacionesFacturaEncabezado,Fk_Usuario_Registro,Fk_ClienteFacturaVersion_Codigo)
-    VALUES ('CXC',?,?,?,?,?,'INTERNO_CXC',?,'EMITIDA',?,?,?)";
+            const string Consulta = @"INSERT INTO tblFacturaEncabezado(uuidDteFacturaEncabezado,serieFacturaEncabezado,numeroFacturaEncabezado,idSucursal,idMoneda,fechaEmisionFacturaEncabezado,fechaVencimientoFacturaEncabezado,tipoDteFacturaEncabezado,condicionPagoFacturaEncabezado,estadoFacturaEncabezado,observacionesFacturaEncabezado,idUsuarioRegistro,idClienteFacturaVersion)
+    VALUES (UUID(),'CXC',?,?,?,?,?,'INTERNO_CXC',?,'EMITIDA',?,?,?)";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public int VentasFuncCrearVersionCliente(int Cliente)
         {
-            const string Consulta = @"INSERT INTO tblClienteFacturaVersion(Fk_Cliente_Codigo,numeroVersionClienteFacturaVersion,tipoIdentificacionClienteFacturaVersion,nitClienteFacturaVersion,dpiClienteFacturaVersion,identificacionExtranjeraClienteFacturaVersion,nombreClienteFacturaVersion,direccionClienteFacturaVersion)
-    SELECT c.Pk_Cliente,COALESCE((SELECT MAX(v.numeroVersionClienteFacturaVersion)+1 FROM tblClienteFacturaVersion v WHERE v.Fk_Cliente_Codigo=c.Pk_Cliente),1),c.tipoIdentificacionCliente,c.nitCliente,c.dpiCliente,c.identificacionExtranjeraCliente,c.nombreCliente,c.direccionCliente
-    FROM tblCliente c WHERE c.Pk_Cliente=?";
+            const string Consulta = @"INSERT INTO tblClienteFacturaVersion(idCliente,numeroVersionClienteFacturaVersion,tipoIdentificacionClienteFacturaVersion,nitClienteFacturaVersion,dpiClienteFacturaVersion,nombreClienteFacturaVersion,direccionClienteFacturaVersion)
+    SELECT c.idCliente,COALESCE((SELECT MAX(v.numeroVersionClienteFacturaVersion)+1 FROM tblClienteFacturaVersion v WHERE v.idCliente=c.idCliente),1),c.tipoIdentificacionCliente,c.nitCliente,c.dpiCliente,c.nombreCliente,c.direccionCliente
+    FROM tblCliente c WHERE c.idCliente=?";
             _Datos.VentasFuncEjecutar(Consulta, Cliente);
             return _Datos.VentasFuncObtenerId();
         }
 
         public DataTable VentasFuncRegistrarDocumentoConsultarFactura(params object[] Parametros)
         {
-            const string Consulta = @"SELECT f.Pk_FacturaEncabezado idFactura,f.fechaEmisionFacturaEncabezado fechaEmision
+            const string Consulta = @"SELECT f.idFacturaEncabezado idFactura,f.fechaEmisionFacturaEncabezado fechaEmision
     FROM tblFacturaEncabezado f
-    JOIN tblClienteFacturaVersion c ON c.Pk_ClienteFacturaVersion=f.Fk_ClienteFacturaVersion_Codigo
-    WHERE c.Fk_Cliente_Codigo=?
-      AND f.Fk_Moneda_Codigo=?
+    JOIN tblClienteFacturaVersion c ON c.idClienteFacturaVersion=f.idClienteFacturaVersion
+    WHERE c.idCliente=?
+      AND f.idMoneda=?
       AND CONCAT(f.serieFacturaEncabezado,'-',f.numeroFacturaEncabezado)=?
       AND f.estadoFacturaEncabezado='EMITIDA'
     FOR UPDATE";
@@ -152,14 +165,14 @@ namespace CapaModelo_MovimientosClientes
 
         public int VentasFuncRegistrarDocumentoInsertarNotacxc(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblNotaCxC(numeroNotaCxC,Fk_FacturaEncabezado_Codigo,tipoNotaCxC,fechaNotaCxC,montoNotaCxC,motivoNotaCxC,estadoNotaCxC,Fk_Usuario_Registro)
+            const string Consulta = @"INSERT INTO tblNotaCxC(numeroNotaCxC,idFacturaEncabezado,tipoNotaCxC,fechaNotaCxC,montoNotaCxC,motivoNotaCxC,estadoNotaCxC,idUsuarioRegistro)
     VALUES (?,?,?,?,?,?,'APLICADA',?)";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public int VentasFuncMovimientoInsertarMovimientocxc(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblMovimientoCxC(Fk_FacturaEncabezado_Codigo,fechaMovimientoCxC,tipoMovimientoCxC,descripcionMovimientoCxC,cargoMovimientoCxC,abonoMovimientoCxC,Fk_Usuario_Registro,Fk_AplicacionPago_Codigo,Fk_NotaCxC_Codigo,Fk_MovimientoCxC_Revertido)
+            const string Consulta = @"INSERT INTO tblMovimientoCxC(idFacturaEncabezado,fechaMovimientoCxC,tipoMovimientoCxC,descripcionMovimientoCxC,cargoMovimientoCxC,abonoMovimientoCxC,idUsuarioRegistro,idAplicacionPago,idNotaCxC,idMovimientoCxCRevertido)
     VALUES (?,?,?,?,?,?,?,?,?,?)";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
@@ -168,7 +181,7 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"UPDATE tblFacturaEncabezado
     SET observacionesFacturaEncabezado=?,fechaVencimientoFacturaEncabezado=?
-    WHERE Pk_FacturaEncabezado=?";
+    WHERE idFacturaEncabezado=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
@@ -176,61 +189,61 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"UPDATE tblNotaCxC
     SET motivoNotaCxC=?
-    WHERE Pk_NotaCxC=?";
+    WHERE idNotaCxC=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public object VentasFuncDisponibleConsultarMovimientocxc(params object[] Parametros)
         {
             const string Consulta = @"SELECT MIN(Saldo)
-    FROM (SELECT fechaMovimientoCxC,SUM(cargoMovimientoCxC-abonoMovimientoCxC) OVER (ORDER BY fechaMovimientoCxC,Pk_MovimientoCxC ROWS UNBOUNDED PRECEDING) Saldo
+    FROM (SELECT fechaMovimientoCxC,SUM(cargoMovimientoCxC-abonoMovimientoCxC) OVER (ORDER BY fechaMovimientoCxC,idMovimientoCxC ROWS UNBOUNDED PRECEDING) Saldo
     FROM tblMovimientoCxC
-    WHERE Fk_FacturaEncabezado_Codigo=?) s
+    WHERE idFacturaEncabezado=?) s
     WHERE fechaMovimientoCxC>?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public DataTable VentasFuncBloquearDocumentoConsultarFactura(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Pk_FacturaEncabezado idFactura,Fk_Moneda_Codigo idMoneda,fechaEmisionFacturaEncabezado Fecha
+            const string Consulta = @"SELECT idFacturaEncabezado idFactura,idMoneda idMoneda,fechaEmisionFacturaEncabezado Fecha
     FROM tblFacturaEncabezado
-    WHERE Pk_FacturaEncabezado=? AND serieFacturaEncabezado='CXC'";
+    WHERE idFacturaEncabezado=? AND serieFacturaEncabezado='CXC'";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         public DataTable VentasFuncBloquearDocumentoConsultarNotacxc(params object[] Parametros)
         {
-            const string Consulta = @"SELECT f.Pk_FacturaEncabezado idFactura,f.Fk_Moneda_Codigo idMoneda,n.fechaNotaCxC Fecha
+            const string Consulta = @"SELECT f.idFacturaEncabezado idFactura,f.idMoneda idMoneda,n.fechaNotaCxC Fecha
     FROM tblNotaCxC n
-    JOIN tblFacturaEncabezado f ON f.Pk_FacturaEncabezado=n.Fk_FacturaEncabezado_Codigo
-    WHERE n.Pk_NotaCxC=?";
+    JOIN tblFacturaEncabezado f ON f.idFacturaEncabezado=n.idFacturaEncabezado
+    WHERE n.idNotaCxC=?";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         public DataTable VentasFuncBloquearDocumentoConsultarFactura2(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Pk_FacturaEncabezado idFactura,Fk_Moneda_Codigo idMoneda,
+            const string Consulta = @"SELECT idFacturaEncabezado idFactura,idMoneda idMoneda,
     fechaEmisionFacturaEncabezado fechaEmision,estadoFacturaEncabezado estadoFactura
     FROM tblFacturaEncabezado
-    WHERE Pk_FacturaEncabezado=?
+    WHERE idFacturaEncabezado=?
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         public DataTable VentasFuncBloquearDocumentoConsultarNotacxc2(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Pk_NotaCxC idNota,Fk_FacturaEncabezado_Codigo idFactura,estadoNotaCxC estadoNota
+            const string Consulta = @"SELECT idNotaCxC idNota,idFacturaEncabezado idFactura,estadoNotaCxC estadoNota
     FROM tblNotaCxC
-    WHERE Pk_NotaCxC=?
+    WHERE idNotaCxC=?
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         public DataTable VentasFuncAnularDocumentoConsultarFactura(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Fk_Moneda_Codigo idMoneda
+            const string Consulta = @"SELECT idMoneda idMoneda
     FROM tblFacturaEncabezado
-    WHERE Pk_FacturaEncabezado=?";
+    WHERE idFacturaEncabezado=?";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
@@ -238,7 +251,7 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT COUNT(*)
     FROM tblAplicacionPago
-    WHERE Fk_FacturaEncabezado_Codigo=?
+    WHERE idFacturaEncabezado=?
       AND estadoAplicacionPago='APLICADA'";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
@@ -247,16 +260,16 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT COUNT(*)
     FROM tblNotaCxC
-    WHERE Fk_FacturaEncabezado_Codigo=?
+    WHERE idFacturaEncabezado=?
       AND estadoNotaCxC='APLICADA'";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public DataTable VentasFuncAnularDocumentoConsultarMovimientocxc(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Pk_MovimientoCxC idMovimiento,Fk_FacturaEncabezado_Codigo idFactura,cargoMovimientoCxC cargo,abonoMovimientoCxC abono
+            const string Consulta = @"SELECT idMovimientoCxC idMovimiento,idFacturaEncabezado idFactura,cargoMovimientoCxC cargo,abonoMovimientoCxC abono
     FROM tblMovimientoCxC
-    WHERE Fk_FacturaEncabezado_Codigo=?
+    WHERE idFacturaEncabezado=?
       AND tipoMovimientoCxC='FACTURA'
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
@@ -264,9 +277,9 @@ namespace CapaModelo_MovimientosClientes
 
         public DataTable VentasFuncAnularDocumentoConsultarMovimientocxc2(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Pk_MovimientoCxC idMovimiento,Fk_FacturaEncabezado_Codigo idFactura,cargoMovimientoCxC cargo,abonoMovimientoCxC abono
+            const string Consulta = @"SELECT idMovimientoCxC idMovimiento,idFacturaEncabezado idFactura,cargoMovimientoCxC cargo,abonoMovimientoCxC abono
     FROM tblMovimientoCxC
-    WHERE Fk_NotaCxC_Codigo=?
+    WHERE idNotaCxC=?
       AND tipoMovimientoCxC<>'REVERSO'
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
@@ -276,7 +289,7 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT COUNT(*)
     FROM tblMovimientoCxC
-    WHERE Fk_MovimientoCxC_Revertido=?";
+    WHERE idMovimientoCxCRevertido=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
@@ -284,7 +297,7 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"UPDATE tblFacturaEncabezado
     SET estadoFacturaEncabezado='ANULADA'
-    WHERE Pk_FacturaEncabezado=?";
+    WHERE idFacturaEncabezado=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
@@ -292,7 +305,7 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"UPDATE tblNotaCxC
     SET estadoNotaCxC='ANULADA'
-    WHERE Pk_NotaCxC=?";
+    WHERE idNotaCxC=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
     }

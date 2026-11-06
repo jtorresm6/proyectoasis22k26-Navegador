@@ -17,11 +17,11 @@ namespace CapaModelo_Cotizaciones
         // Productos: consultas parametrizadas.
         public DataTable VentasFuncProductosConsultarProductoventas(params object[] Parametros)
         {
-            const string Consulta = @"SELECT p.Pk_ProductoVenta Id,CONCAT(pr.skuProducto,' - ',pr.nombreProducto) Nombre,pr.nombreProducto Descripcion,p.tipoItemProductoVenta Tipo,p.tasaImpuestoProductoVenta*100 Tasa,d.precioUnitarioListaPrecioDetalle Precio
+            const string Consulta = @"SELECT p.idProductoVenta Id,CONCAT(pr.skuProducto,' - ',pr.nombreProducto) Nombre,pr.nombreProducto Descripcion,p.tipoItemProductoVenta Tipo,p.tasaImpuestoProductoVenta*100 Tasa,d.precioUnitarioListaPrecioDetalle Precio
     FROM tblProductoVenta p
-    JOIN tblProducto pr ON pr.Pk_Producto=p.Pk_ProductoVenta
-    JOIN tblListaPrecioDetalle d ON d.Fk_Producto_Codigo=p.Pk_ProductoVenta
-    WHERE d.Fk_ListaPrecioEncabezado_Codigo=?
+    JOIN tblProducto pr ON pr.idProducto=p.idProductoVenta
+    JOIN tblListaPrecioDetalle d ON d.idProducto=p.idProductoVenta
+    WHERE d.idListaPrecioEncabezado=?
       AND d.activoListaPrecioDetalle=1
       AND p.activoProductoVenta=1
     ORDER BY pr.nombreProducto";
@@ -31,24 +31,24 @@ namespace CapaModelo_Cotizaciones
         // Listar: consultas parametrizadas.
         public DataTable VentasFuncListarConsultarCotizacion(params object[] Parametros)
         {
-            const string Consulta = @"SELECT c.Pk_CotizacionEncabezado Id,c.numeroCotizacionEncabezado Numero,cl.nombreCliente Cliente,m.codigoMoneda Moneda,c.fechaEmisionCotizacionEncabezado Fecha,c.vigenteHastaCotizacionEncabezado Vigencia,COALESCE((SELECT SUM(d.totalLineaCotizacionDetalle) FROM tblCotizacionDetalle d WHERE d.Fk_CotizacionEncabezado_Codigo=c.Pk_CotizacionEncabezado),0) Total,CASE WHEN c.estadoCotizacionEncabezado IN ('BORRADOR','EMITIDA','ACEPTADA')
+            const string Consulta = @"SELECT c.idCotizacionEncabezado Id,c.numeroCotizacionEncabezado Numero,cl.nombreCliente Cliente,m.codigoMoneda Moneda,c.fechaEmisionCotizacionEncabezado Fecha,c.vigenteHastaCotizacionEncabezado Vigencia,COALESCE((SELECT SUM(d.totalLineaCotizacionDetalle) FROM tblCotizacionDetalle d WHERE d.idCotizacionEncabezado=c.idCotizacionEncabezado),0) Total,CASE WHEN c.estadoCotizacionEncabezado IN ('BORRADOR','EMITIDA','ACEPTADA')
       AND c.vigenteHastaCotizacionEncabezado<CURRENT_DATE() THEN 'VENCIDA' ELSE c.estadoCotizacionEncabezado END Estado
     FROM tblCotizacionEncabezado c
-    JOIN tblCliente cl ON cl.Pk_Cliente=c.Fk_Cliente_Codigo
-    JOIN tblMoneda m ON m.Pk_Moneda=c.Fk_Moneda_Codigo
+    JOIN tblCliente cl ON cl.idCliente=c.idCliente
+    JOIN tblMoneda m ON m.idMoneda=c.idMoneda
     WHERE (?='' OR c.numeroCotizacionEncabezado LIKE CONCAT('%',?,'%') OR cl.nombreCliente LIKE CONCAT('%',?,'%'))
-    ORDER BY c.Pk_CotizacionEncabezado DESC";
+    ORDER BY c.idCotizacionEncabezado DESC";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         // Lista: consultas parametrizadas.
         public DataTable VentasFuncListaConsultarClientelistaprecios(params object[] Parametros)
         {
-            const string Consulta = @"SELECT l.Pk_ListaPrecioEncabezado idListaPrecio,l.nombreListaPrecioEncabezado nombreListaPrecio
+            const string Consulta = @"SELECT l.idListaPrecioEncabezado idListaPrecio,l.nombreListaPrecioEncabezado nombreListaPrecio
     FROM tblClienteListaPrecio c
-    JOIN tblListaPrecioEncabezado l ON l.Pk_ListaPrecioEncabezado=c.Fk_ListaPrecioEncabezado_Codigo
-    WHERE c.Fk_Cliente_Codigo=?
-      AND l.Fk_Moneda_Codigo=?
+    JOIN tblListaPrecioEncabezado l ON l.idListaPrecioEncabezado=c.idListaPrecioEncabezado
+    WHERE c.idCliente=?
+      AND l.idMoneda=?
       AND l.activoListaPrecioEncabezado=1
       AND l.vigenteDesdeListaPrecioEncabezado<=?
       AND (l.vigenteHastaListaPrecioEncabezado IS NULL OR l.vigenteHastaListaPrecioEncabezado>=?)";
@@ -58,23 +58,23 @@ namespace CapaModelo_Cotizaciones
         // Generales: consultas parametrizadas.
         public DataTable VentasFuncGeneralesConsultarConsultarCotizacion(params object[] Parametros)
         {
-            const string Consulta = @"SELECT c.Pk_CotizacionEncabezado idCotizacion,c.numeroCotizacionEncabezado numeroCotizacion,c.Fk_Cliente_Codigo idCliente,c.Fk_Vendedor_Codigo idVendedor,c.Fk_Moneda_Codigo idMoneda,c.fechaEmisionCotizacionEncabezado fechaEmision,c.vigenteHastaCotizacionEncabezado vigenteHasta,c.estadoCotizacionEncabezado estadoCotizacion,1 tipoCambio,l.nombreListaPrecioEncabezado nombreListaPrecio,c.Fk_ListaPrecioEncabezado_Codigo idListaPrecio,p.Pk_PedidoEncabezado idPedido,f.Pk_FacturaEncabezado idFactura,CASE WHEN c.estadoCotizacionEncabezado IN ('EMITIDA','ACEPTADA','BORRADOR')
+            const string Consulta = @"SELECT c.idCotizacionEncabezado idCotizacion,c.numeroCotizacionEncabezado numeroCotizacion,c.idCliente idCliente,c.idVendedor idVendedor,c.idMoneda idMoneda,c.fechaEmisionCotizacionEncabezado fechaEmision,c.vigenteHastaCotizacionEncabezado vigenteHasta,c.estadoCotizacionEncabezado estadoCotizacion,1 tipoCambio,l.nombreListaPrecioEncabezado nombreListaPrecio,c.idListaPrecioEncabezado idListaPrecio,p.idPedidoEncabezado idPedido,f.idFacturaEncabezado idFactura,CASE WHEN c.estadoCotizacionEncabezado IN ('EMITIDA','ACEPTADA','BORRADOR')
       AND c.vigenteHastaCotizacionEncabezado<CURRENT_DATE() THEN 'VENCIDA' ELSE c.estadoCotizacionEncabezado END EstadoVisual
     FROM tblCotizacionEncabezado c
-    JOIN tblListaPrecioEncabezado l ON l.Pk_ListaPrecioEncabezado=c.Fk_ListaPrecioEncabezado_Codigo
-    LEFT JOIN tblPedidoEncabezado p ON p.Fk_CotizacionEncabezado_Codigo=c.Pk_CotizacionEncabezado
-    LEFT JOIN tblFacturaEncabezado f ON f.Fk_CotizacionEncabezado_Codigo=c.Pk_CotizacionEncabezado
+    JOIN tblListaPrecioEncabezado l ON l.idListaPrecioEncabezado=c.idListaPrecioEncabezado
+    LEFT JOIN tblPedidoEncabezado p ON p.idCotizacionEncabezado=c.idCotizacionEncabezado
+    LEFT JOIN tblFacturaEncabezado f ON f.idCotizacionEncabezado=c.idCotizacionEncabezado
     WHERE c.numeroCotizacionEncabezado=?";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         public DataTable VentasFuncGeneralesConsultarConsultarCotizaciondetalle(params object[] Parametros)
         {
-            const string Consulta = @"SELECT d.Fk_Producto_Codigo idProducto,d.descripcionItemCotizacionDetalle descripcionItem,p.tipoItemProductoVenta tipoItem,d.cantidadCotizacionDetalle cantidad,d.precioUnitarioCotizacionDetalle precioUnitario,d.descuentoMontoCotizacionDetalle descuentoMonto,d.tasaImpuestoCotizacionDetalle*100 porcentajeImpuesto,d.impuestoMontoCotizacionDetalle impuestoMonto,d.totalLineaCotizacionDetalle totalLinea,pr.skuProducto codigoProducto
+            const string Consulta = @"SELECT d.idProducto idProducto,d.descripcionItemCotizacionDetalle descripcionItem,p.tipoItemProductoVenta tipoItem,d.cantidadCotizacionDetalle cantidad,d.precioUnitarioCotizacionDetalle precioUnitario,d.descuentoMontoCotizacionDetalle descuentoMonto,d.tasaImpuestoCotizacionDetalle*100 porcentajeImpuesto,d.impuestoMontoCotizacionDetalle impuestoMonto,d.totalLineaCotizacionDetalle totalLinea,pr.skuProducto codigoProducto
     FROM tblCotizacionDetalle d
-    JOIN tblProductoVenta p ON p.Pk_ProductoVenta=d.Fk_Producto_Codigo
-    JOIN tblProducto pr ON pr.Pk_Producto=d.Fk_Producto_Codigo
-    WHERE d.Fk_CotizacionEncabezado_Codigo=?
+    JOIN tblProductoVenta p ON p.idProductoVenta=d.idProducto
+    JOIN tblProducto pr ON pr.idProducto=d.idProducto
+    WHERE d.idCotizacionEncabezado=?
     ORDER BY d.numeroLineaCotizacionDetalle";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }

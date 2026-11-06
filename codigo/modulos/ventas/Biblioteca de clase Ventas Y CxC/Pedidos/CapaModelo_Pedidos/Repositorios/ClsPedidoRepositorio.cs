@@ -25,11 +25,44 @@ namespace CapaModelo_Pedidos
             using (var Datos = new ClsConexion())
             {
                 Datos.VentasMetIniciar();
+                bool DesdeCotizacion = Convert.ToInt32(Pedido["Id"]) == 0 && Pedido["CotizacionId"] != DBNull.Value;
+                if (DesdeCotizacion)
+                    VentasMetBloquearCotizacion(Datos, Pedido);
                 int Id = VentasFuncEncabezado(Datos, Pedido);
-                VentasMetLineas(Datos, Id, Lineas);
+                if (DesdeCotizacion)
+                {
+                    int Copiadas = Datos.VentasFuncEjecutar(@"INSERT INTO tblPedidoDetalle
+                        (idPedidoEncabezado, OrdenPedido, idProducto, cantidadPedidoDetalle,
+                         precioUnitarioPedidoDetalle, descuentoMontoPedidoDetalle)
+                        SELECT ?, numeroLineaCotizacionDetalle, idProducto, cantidadCotizacionDetalle,
+                               precioUnitarioCotizacionDetalle, descuentoMontoCotizacionDetalle
+                        FROM tblCotizacionDetalle WHERE idCotizacionEncabezado = ?",
+                        Id, Pedido["CotizacionId"]);
+                    if (Copiadas == 0) throw new InvalidOperationException("La cotización no tiene productos.");
+                }
+                else
+                    VentasMetLineas(Datos, Id, Lineas);
                 Datos.VentasMetConfirmar();
                 return Id;
             }
+        }
+
+        private static void VentasMetBloquearCotizacion(ClsConexion Datos, DataRow Pedido)
+        {
+            object Cotizacion = Pedido["CotizacionId"];
+            if (Datos.VentasFuncEscalar(@"SELECT idCotizacionEncabezado FROM tblCotizacionEncabezado
+                WHERE idCotizacionEncabezado = ? AND idCliente = ? AND idVendedor = ? AND idMoneda = ?
+                  AND estadoCotizacionEncabezado IN ('EMITIDA','ACEPTADA')
+                  AND fechaEmisionCotizacionEncabezado <= ? AND vigenteHastaCotizacionEncabezado >= ?
+                FOR UPDATE", Cotizacion, Pedido["ClienteId"], Pedido["VendedorId"], Pedido["MonedaId"],
+                Pedido["Fecha"], Pedido["Fecha"]) == null)
+                throw new InvalidOperationException("La cotización dejó de estar disponible para este pedido.");
+
+            if (Convert.ToInt32(Datos.VentasFuncEscalar(@"SELECT
+                EXISTS(SELECT 1 FROM tblPedidoEncabezado WHERE idCotizacionEncabezado = ?)
+                OR EXISTS(SELECT 1 FROM tblFacturaEncabezado WHERE idCotizacionEncabezado = ?)",
+                Cotizacion, Cotizacion)) != 0)
+                throw new InvalidOperationException("La cotización ya se usó en un pedido o factura.");
         }
 
         private static int VentasFuncEncabezado(ClsConexion Datos, DataRow Pedido)
@@ -38,19 +71,19 @@ namespace CapaModelo_Pedidos
             if (Id > 0)
             {
                 int Cambios = Datos.VentasFuncEjecutar(@"UPDATE tblPedidoEncabezado
-                    SET Fk_Vendedor_Codigo = ?, fechaPedidoEncabezado = ?,
+                    SET idVendedor = ?, fechaPedidoEncabezado = ?,
                         fechaEntregaPedidoEncabezado = ?, fechaVencimientoPedidoEncabezado = ?
-                    WHERE Pk_PedidoEncabezado = ? AND estadoPedidoEncabezado = ?",
+                    WHERE idPedidoEncabezado = ? AND estadoPedidoEncabezado = ?",
                     Pedido["VendedorId"], Pedido["Fecha"], Pedido["Entrega"],
                     Pedido["Vencimiento"], Id, Pedido["Estado"]);
                 if (Cambios != 1) throw new InvalidOperationException("El pedido ya no admite cambios.");
-                Datos.VentasFuncEjecutar("DELETE FROM tblPedidoDetalle WHERE Fk_PedidoEncabezado_Codigo = ?", Id);
+                Datos.VentasFuncEjecutar("DELETE FROM tblPedidoDetalle WHERE idPedidoEncabezado = ?", Id);
                 return Id;
             }
 
             Datos.VentasFuncEjecutar(@"INSERT INTO tblPedidoEncabezado
-                (referenciaPedidoEncabezado, Fk_CotizacionEncabezado_Codigo,
-                 Fk_Cliente_Codigo, Fk_Vendedor_Codigo, Fk_Moneda_Codigo,
+                (referenciaPedidoEncabezado, idCotizacionEncabezado,
+                 idCliente, idVendedor, idMoneda,
                  fechaPedidoEncabezado, fechaEntregaPedidoEncabezado,
                  fechaVencimientoPedidoEncabezado, estadoPedidoEncabezado)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'PENDIENTE')",
@@ -60,7 +93,7 @@ namespace CapaModelo_Pedidos
             Id = Datos.VentasFuncObtenerId();
             Pedido["Numero"] = "PED-" + Id.ToString("D8", CultureInfo.InvariantCulture);
             Datos.VentasFuncEjecutar(@"UPDATE tblPedidoEncabezado
-                SET referenciaPedidoEncabezado = ? WHERE Pk_PedidoEncabezado = ?", Pedido["Numero"], Id);
+                SET referenciaPedidoEncabezado = ? WHERE idPedidoEncabezado = ?", Pedido["Numero"], Id);
             return Id;
         }
 
@@ -69,7 +102,7 @@ namespace CapaModelo_Pedidos
             int Orden = 0;
             foreach (DataRow Linea in Lineas.Rows)
                 Datos.VentasFuncEjecutar(@"INSERT INTO tblPedidoDetalle
-                    (Fk_PedidoEncabezado_Codigo, OrdenPedido, Fk_Producto_Codigo,
+                    (idPedidoEncabezado, OrdenPedido, idProducto,
                      cantidadPedidoDetalle, precioUnitarioPedidoDetalle, descuentoMontoPedidoDetalle)
                     VALUES (?, ?, ?, ?, ?, ?)",
                     Id, ++Orden, Linea["ProductoId"],
@@ -80,7 +113,7 @@ namespace CapaModelo_Pedidos
         {
             using (var Datos = new ClsConexion())
                 if (Datos.VentasFuncEjecutar(@"UPDATE tblPedidoEncabezado SET estadoPedidoEncabezado=?
-                    WHERE Pk_PedidoEncabezado=? AND estadoPedidoEncabezado IN ('PENDIENTE','CONFIRMADO')", Estado, Id) != 1)
+                    WHERE idPedidoEncabezado=? AND estadoPedidoEncabezado IN ('PENDIENTE','CONFIRMADO')", Estado, Id) != 1)
                     throw new InvalidOperationException("El pedido ya no admite cambios de estado.");
         }
     }

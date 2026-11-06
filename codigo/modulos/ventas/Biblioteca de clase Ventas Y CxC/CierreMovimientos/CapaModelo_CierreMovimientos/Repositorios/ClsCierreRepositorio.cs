@@ -59,18 +59,18 @@ namespace CapaModelo_CierreMovimientos
 
         public bool VentasFuncMonedaActiva(int Moneda)
         {
-            return Convert.ToInt32(_Datos.VentasFuncEscalar("SELECT COUNT(*) FROM tblMoneda WHERE Pk_Moneda=? AND is_active=1", Moneda)) == 1;
+            return Convert.ToInt32(_Datos.VentasFuncEscalar("SELECT COUNT(*) FROM tblMoneda WHERE idMoneda=? AND is_active=1", Moneda)) == 1;
         }
 
         public void VentasMetAsegurarBloqueoMoneda(int Moneda)
         {
-            _Datos.VentasFuncEjecutar("INSERT INTO tblControlPeriodoCxC(Fk_Moneda_Codigo) VALUES (?) ON DUPLICATE KEY UPDATE Fk_Moneda_Codigo=VALUES(Fk_Moneda_Codigo)", Moneda);
-            _Datos.VentasFuncTabla("SELECT Fk_Moneda_Codigo FROM tblControlPeriodoCxC WHERE Fk_Moneda_Codigo=? FOR UPDATE", Moneda);
+            _Datos.VentasFuncEjecutar("INSERT INTO tblControlPeriodoCxC(idMoneda) VALUES (?) ON DUPLICATE KEY UPDATE idMoneda=VALUES(idMoneda)", Moneda);
+            _Datos.VentasFuncTabla("SELECT idMoneda FROM tblControlPeriodoCxC WHERE idMoneda=? FOR UPDATE", Moneda);
         }
 
         public object VentasFuncUltimoCierre(int Moneda)
         {
-            return _Datos.VentasFuncEscalar("SELECT fechaUltimoCierreControlPeriodoCxC FROM tblControlPeriodoCxC WHERE Fk_Moneda_Codigo=?", Moneda);
+            return _Datos.VentasFuncEscalar("SELECT fechaUltimoCierreControlPeriodoCxC FROM tblControlPeriodoCxC WHERE idMoneda=?", Moneda);
         }
 
         public void VentasMetAuditar(string Entidad, int Id, string Accion, string Detalle, int Usuario)
@@ -86,136 +86,136 @@ namespace CapaModelo_CierreMovimientos
         // GuardarBorrador: consultas parametrizadas.
         public DataTable VentasFuncGuardarBorradorConsultarCierremovimientos(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Fk_Moneda_Codigo idMoneda,estadoCierreMovimientoCxCEncabezado estadoCierre FROM tblCierreMovimientoCxCEncabezado WHERE Pk_CierreMovimientoCxCEncabezado=? FOR UPDATE";
+            const string Consulta = @"SELECT idMoneda idMoneda,estadoCierreMovimientoCxCEncabezado estadoCierre FROM tblCierreMovimientoCxCEncabezado WHERE idCierreMovimientoCxCEncabezado=? FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         public object VentasFuncGuardarBorradorConsultarCierremovimientos2(params object[] Parametros)
         {
-            const string Consulta = @"SELECT COUNT(*) FROM tblCierreMovimientoCxCEncabezado WHERE Fk_Moneda_Codigo=? AND tipoCierreMovimientoCxCEncabezado=? AND fechaDesdeCierreMovimientoCxCEncabezado=? AND fechaHastaCierreMovimientoCxCEncabezado=? AND estadoCierreMovimientoCxCEncabezado IN ('BORRADOR','CONFIRMADO') AND Pk_CierreMovimientoCxCEncabezado<>?";
+            const string Consulta = @"SELECT COUNT(*) FROM tblCierreMovimientoCxCEncabezado WHERE idMoneda=? AND tipoCierreMovimientoCxCEncabezado=? AND fechaDesdeCierreMovimientoCxCEncabezado=? AND fechaHastaCierreMovimientoCxCEncabezado=? AND estadoCierreMovimientoCxCEncabezado IN ('BORRADOR','CONFIRMADO') AND idCierreMovimientoCxCEncabezado<>?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public int VentasFuncGuardarBorradorInsertarCierremovimientos(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblCierreMovimientoCxCEncabezado(numeroCierreMovimientoCxCEncabezado,fechaDesdeCierreMovimientoCxCEncabezado,fechaHastaCierreMovimientoCxCEncabezado,fechaCorteCierreMovimientoCxCEncabezado,Fk_Moneda_Codigo,tipoCierreMovimientoCxCEncabezado,estadoCierreMovimientoCxCEncabezado,observacionesCierreMovimientoCxCEncabezado,Fk_Usuario_Responsable) VALUES (?,?,?,?,?,?,'BORRADOR',?,?)";
+            const string Consulta = @"INSERT INTO tblCierreMovimientoCxCEncabezado(numeroCierreMovimientoCxCEncabezado,fechaDesdeCierreMovimientoCxCEncabezado,fechaHastaCierreMovimientoCxCEncabezado,fechaCorteCierreMovimientoCxCEncabezado,idMoneda,tipoCierreMovimientoCxCEncabezado,estadoCierreMovimientoCxCEncabezado,observacionesCierreMovimientoCxCEncabezado,idUsuarioResponsable) VALUES (?,?,?,?,?,?,'BORRADOR',?,?)";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public object VentasFuncGuardarBorradorConsultarCierremovimientos3(params object[] Parametros)
         {
-            const string Consulta = @"SELECT numeroCierreMovimientoCxCEncabezado FROM tblCierreMovimientoCxCEncabezado WHERE Pk_CierreMovimientoCxCEncabezado=?";
+            const string Consulta = @"SELECT numeroCierreMovimientoCxCEncabezado FROM tblCierreMovimientoCxCEncabezado WHERE idCierreMovimientoCxCEncabezado=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public int VentasFuncGuardarBorradorActualizarCierremovimientos(params object[] Parametros)
         {
-            const string Consulta = @"UPDATE tblCierreMovimientoCxCEncabezado SET tipoCierreMovimientoCxCEncabezado=?,fechaDesdeCierreMovimientoCxCEncabezado=?,fechaHastaCierreMovimientoCxCEncabezado=?,fechaCorteCierreMovimientoCxCEncabezado=?,observacionesCierreMovimientoCxCEncabezado=? WHERE Pk_CierreMovimientoCxCEncabezado=?";
+            const string Consulta = @"UPDATE tblCierreMovimientoCxCEncabezado SET tipoCierreMovimientoCxCEncabezado=?,fechaDesdeCierreMovimientoCxCEncabezado=?,fechaHastaCierreMovimientoCxCEncabezado=?,fechaCorteCierreMovimientoCxCEncabezado=?,observacionesCierreMovimientoCxCEncabezado=? WHERE idCierreMovimientoCxCEncabezado=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         // Confirmar: consultas parametrizadas.
         public object VentasFuncConfirmarConsultarCierremovimientos(params object[] Parametros)
         {
-            const string Consulta = @"SELECT COUNT(*) FROM tblCierreMovimientoCxCEncabezado WHERE Fk_Moneda_Codigo=? AND tipoCierreMovimientoCxCEncabezado=? AND fechaDesdeCierreMovimientoCxCEncabezado=? AND fechaHastaCierreMovimientoCxCEncabezado=? AND estadoCierreMovimientoCxCEncabezado='CONFIRMADO'";
+            const string Consulta = @"SELECT COUNT(*) FROM tblCierreMovimientoCxCEncabezado WHERE idMoneda=? AND tipoCierreMovimientoCxCEncabezado=? AND fechaDesdeCierreMovimientoCxCEncabezado=? AND fechaHastaCierreMovimientoCxCEncabezado=? AND estadoCierreMovimientoCxCEncabezado='CONFIRMADO'";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public object VentasFuncConfirmarConsultarCierremovimientos2(params object[] Parametros)
         {
-            const string Consulta = @"SELECT MIN(fechaDesdeCierreMovimientoCxCEncabezado) FROM tblCierreMovimientoCxCEncabezado WHERE Fk_Moneda_Codigo=? AND tipoCierreMovimientoCxCEncabezado='MENSUAL' AND estadoCierreMovimientoCxCEncabezado='CONFIRMADO'";
+            const string Consulta = @"SELECT MIN(fechaDesdeCierreMovimientoCxCEncabezado) FROM tblCierreMovimientoCxCEncabezado WHERE idMoneda=? AND tipoCierreMovimientoCxCEncabezado='MENSUAL' AND estadoCierreMovimientoCxCEncabezado='CONFIRMADO'";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public object VentasFuncConfirmarConsultarCierremovimientos3(params object[] Parametros)
         {
-            const string Consulta = @"SELECT COUNT(DISTINCT MONTH(fechaDesdeCierreMovimientoCxCEncabezado)) FROM tblCierreMovimientoCxCEncabezado WHERE Fk_Moneda_Codigo=? AND tipoCierreMovimientoCxCEncabezado='MENSUAL' AND estadoCierreMovimientoCxCEncabezado='CONFIRMADO' AND YEAR(fechaDesdeCierreMovimientoCxCEncabezado)=? AND MONTH(fechaDesdeCierreMovimientoCxCEncabezado)>=?";
+            const string Consulta = @"SELECT COUNT(DISTINCT MONTH(fechaDesdeCierreMovimientoCxCEncabezado)) FROM tblCierreMovimientoCxCEncabezado WHERE idMoneda=? AND tipoCierreMovimientoCxCEncabezado='MENSUAL' AND estadoCierreMovimientoCxCEncabezado='CONFIRMADO' AND YEAR(fechaDesdeCierreMovimientoCxCEncabezado)=? AND MONTH(fechaDesdeCierreMovimientoCxCEncabezado)>=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public object VentasFuncConfirmarConsultarControlperiodocxc(params object[] Parametros)
         {
-            const string Consulta = @"SELECT fechaUltimoCierreControlPeriodoCxC FROM tblControlPeriodoCxC WHERE Fk_Moneda_Codigo=?";
+            const string Consulta = @"SELECT fechaUltimoCierreControlPeriodoCxC FROM tblControlPeriodoCxC WHERE idMoneda=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public object VentasFuncConfirmarConsultarMovimientocxc(params object[] Parametros)
         {
-            const string Consulta = @"SELECT MIN(m.fechaMovimientoCxC) FROM tblMovimientoCxC m JOIN tblFacturaEncabezado f ON f.Pk_FacturaEncabezado=m.Fk_FacturaEncabezado_Codigo WHERE f.Fk_Moneda_Codigo=?";
+            const string Consulta = @"SELECT MIN(m.fechaMovimientoCxC) FROM tblMovimientoCxC m JOIN tblFacturaEncabezado f ON f.idFacturaEncabezado=m.idFacturaEncabezado WHERE f.idMoneda=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public object VentasFuncConfirmarConsultarFactura(params object[] Parametros)
         {
-            const string Consulta = @"SELECT COUNT(*) FROM tblFacturaEncabezado WHERE Fk_Moneda_Codigo=? AND fechaEmisionFacturaEncabezado BETWEEN ? AND ? AND estadoFacturaEncabezado='BORRADOR'";
+            const string Consulta = @"SELECT COUNT(*) FROM tblFacturaEncabezado WHERE idMoneda=? AND fechaEmisionFacturaEncabezado BETWEEN ? AND ? AND estadoFacturaEncabezado='BORRADOR'";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public object VentasFuncConfirmarConsultarPago(params object[] Parametros)
         {
-            const string Consulta = @"SELECT COUNT(*) FROM tblReciboPago WHERE Fk_Moneda_Codigo=? AND fechaReciboPago BETWEEN ? AND ? AND estadoReciboPago='BORRADOR'";
+            const string Consulta = @"SELECT COUNT(*) FROM tblReciboPago WHERE idMoneda=? AND fechaReciboPago BETWEEN ? AND ? AND estadoReciboPago='BORRADOR'";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public DataTable VentasFuncConfirmarConsultarCierremovimientos4(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Pk_CierreMovimientoCxCEncabezado idCierre,numeroCierreMovimientoCxCEncabezado numeroCierre FROM tblCierreMovimientoCxCEncabezado WHERE Fk_Moneda_Codigo=? AND tipoCierreMovimientoCxCEncabezado=? AND fechaDesdeCierreMovimientoCxCEncabezado=? AND fechaHastaCierreMovimientoCxCEncabezado=? AND estadoCierreMovimientoCxCEncabezado='BORRADOR' FOR UPDATE";
+            const string Consulta = @"SELECT idCierreMovimientoCxCEncabezado idCierre,numeroCierreMovimientoCxCEncabezado numeroCierre FROM tblCierreMovimientoCxCEncabezado WHERE idMoneda=? AND tipoCierreMovimientoCxCEncabezado=? AND fechaDesdeCierreMovimientoCxCEncabezado=? AND fechaHastaCierreMovimientoCxCEncabezado=? AND estadoCierreMovimientoCxCEncabezado='BORRADOR' FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         public int VentasFuncConfirmarActualizarCierremovimientos(params object[] Parametros)
         {
-            const string Consulta = @"UPDATE tblCierreMovimientoCxCEncabezado SET documentosRevisadosCierreMovimientoCxCEncabezado=1,Fk_Usuario_Responsable=? WHERE Pk_CierreMovimientoCxCEncabezado=?";
+            const string Consulta = @"UPDATE tblCierreMovimientoCxCEncabezado SET documentosRevisadosCierreMovimientoCxCEncabezado=1,idUsuarioResponsable=? WHERE idCierreMovimientoCxCEncabezado=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public int VentasFuncConfirmarInsertarCierremovimientos(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblCierreMovimientoCxCEncabezado(numeroCierreMovimientoCxCEncabezado,fechaDesdeCierreMovimientoCxCEncabezado,fechaHastaCierreMovimientoCxCEncabezado,fechaCorteCierreMovimientoCxCEncabezado,Fk_Moneda_Codigo,tipoCierreMovimientoCxCEncabezado,estadoCierreMovimientoCxCEncabezado,documentosRevisadosCierreMovimientoCxCEncabezado,pagosConciliadosCierreMovimientoCxCEncabezado,Fk_Usuario_Responsable) VALUES (?,?,?,?,?,?,'BORRADOR',1,0,?)";
+            const string Consulta = @"INSERT INTO tblCierreMovimientoCxCEncabezado(numeroCierreMovimientoCxCEncabezado,fechaDesdeCierreMovimientoCxCEncabezado,fechaHastaCierreMovimientoCxCEncabezado,fechaCorteCierreMovimientoCxCEncabezado,idMoneda,tipoCierreMovimientoCxCEncabezado,estadoCierreMovimientoCxCEncabezado,documentosRevisadosCierreMovimientoCxCEncabezado,pagosConciliadosCierreMovimientoCxCEncabezado,idUsuarioResponsable) VALUES (?,?,?,?,?,?,'BORRADOR',1,0,?)";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public int VentasFuncConfirmarInsertarCierresaldocliente(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblCierreSaldoCliente(Fk_CierreMovimientoCxCEncabezado_Codigo,Fk_Cliente_Codigo,codigoClienteCierreSaldoCliente,nombreClienteCierreSaldoCliente,saldoAnteriorCierreSaldoCliente,cargosPeriodoCierreSaldoCliente,abonosPeriodoCierreSaldoCliente,cargosAcumuladosCierreSaldoCliente,abonosAcumuladosCierreSaldoCliente,saldoActualCierreSaldoCliente) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            const string Consulta = @"INSERT INTO tblCierreSaldoCliente(idCierreMovimientoCxCEncabezado,idCliente,codigoClienteCierreSaldoCliente,nombreClienteCierreSaldoCliente,saldoAnteriorCierreSaldoCliente,cargosPeriodoCierreSaldoCliente,abonosPeriodoCierreSaldoCliente,cargosAcumuladosCierreSaldoCliente,abonosAcumuladosCierreSaldoCliente,saldoActualCierreSaldoCliente) VALUES (?,?,?,?,?,?,?,?,?,?)";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public int VentasFuncConfirmarInsertarCierremovimientosdetalle(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblCierreMovimientoCxCDetalle(Fk_CierreMovimientoCxCEncabezado_Codigo,Fk_FacturaEncabezado_Codigo,saldoInicialCierreMovimientoCxCDetalle,cargosPeriodoCierreMovimientoCxCDetalle,abonosPeriodoCierreMovimientoCxCDetalle,saldoFinalCierreMovimientoCxCDetalle) SELECT ?,m.Fk_FacturaEncabezado_Codigo,SUM(CASE WHEN m.fechaMovimientoCxC<? THEN m.cargoMovimientoCxC-m.abonoMovimientoCxC ELSE 0 END),SUM(CASE WHEN m.fechaMovimientoCxC>=? THEN m.cargoMovimientoCxC ELSE 0 END),SUM(CASE WHEN m.fechaMovimientoCxC>=? THEN m.abonoMovimientoCxC ELSE 0 END),SUM(m.cargoMovimientoCxC-m.abonoMovimientoCxC)
-    FROM tblMovimientoCxC m JOIN tblFacturaEncabezado f ON f.Pk_FacturaEncabezado=m.Fk_FacturaEncabezado_Codigo WHERE f.Fk_Moneda_Codigo=? AND m.fechaMovimientoCxC<=? GROUP BY m.Fk_FacturaEncabezado_Codigo";
+            const string Consulta = @"INSERT INTO tblCierreMovimientoCxCDetalle(idCierreMovimientoCxCEncabezado,idFacturaEncabezado,saldoInicialCierreMovimientoCxCDetalle,cargosPeriodoCierreMovimientoCxCDetalle,abonosPeriodoCierreMovimientoCxCDetalle,saldoFinalCierreMovimientoCxCDetalle) SELECT ?,m.idFacturaEncabezado,SUM(CASE WHEN m.fechaMovimientoCxC<? THEN m.cargoMovimientoCxC-m.abonoMovimientoCxC ELSE 0 END),SUM(CASE WHEN m.fechaMovimientoCxC>=? THEN m.cargoMovimientoCxC ELSE 0 END),SUM(CASE WHEN m.fechaMovimientoCxC>=? THEN m.abonoMovimientoCxC ELSE 0 END),SUM(m.cargoMovimientoCxC-m.abonoMovimientoCxC)
+    FROM tblMovimientoCxC m JOIN tblFacturaEncabezado f ON f.idFacturaEncabezado=m.idFacturaEncabezado WHERE f.idMoneda=? AND m.fechaMovimientoCxC<=? GROUP BY m.idFacturaEncabezado";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public int VentasFuncConfirmarActualizarCierremovimientos2(params object[] Parametros)
         {
-            const string Consulta = @"UPDATE tblCierreMovimientoCxCEncabezado SET estadoCierreMovimientoCxCEncabezado='CONFIRMADO',fechaConfirmacionCierreMovimientoCxCEncabezado=CURRENT_TIMESTAMP WHERE Pk_CierreMovimientoCxCEncabezado=?";
+            const string Consulta = @"UPDATE tblCierreMovimientoCxCEncabezado SET estadoCierreMovimientoCxCEncabezado='CONFIRMADO',fechaConfirmacionCierreMovimientoCxCEncabezado=CURRENT_TIMESTAMP WHERE idCierreMovimientoCxCEncabezado=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public int VentasFuncConfirmarActualizarControlperiodocxc(params object[] Parametros)
         {
-            const string Consulta = @"UPDATE tblControlPeriodoCxC SET fechaUltimoCierreControlPeriodoCxC=? WHERE Fk_Moneda_Codigo=?";
+            const string Consulta = @"UPDATE tblControlPeriodoCxC SET fechaUltimoCierreControlPeriodoCxC=? WHERE idMoneda=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         // Generales: consultas parametrizadas.
         public DataTable VentasFuncGeneralesEliminarBorradorConsultarCierremovimientos(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Fk_Moneda_Codigo idMoneda FROM tblCierreMovimientoCxCEncabezado WHERE Pk_CierreMovimientoCxCEncabezado=?";
+            const string Consulta = @"SELECT idMoneda idMoneda FROM tblCierreMovimientoCxCEncabezado WHERE idCierreMovimientoCxCEncabezado=?";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         public DataTable VentasFuncGeneralesEliminarBorradorConsultarCierremovimientos2(params object[] Parametros)
         {
-            const string Consulta = @"SELECT estadoCierreMovimientoCxCEncabezado estadoCierre FROM tblCierreMovimientoCxCEncabezado WHERE Pk_CierreMovimientoCxCEncabezado=? FOR UPDATE";
+            const string Consulta = @"SELECT estadoCierreMovimientoCxCEncabezado estadoCierre FROM tblCierreMovimientoCxCEncabezado WHERE idCierreMovimientoCxCEncabezado=? FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
         public int VentasFuncGeneralesEliminarBorradorActualizarCierremovimientos(params object[] Parametros)
         {
-            const string Consulta = @"UPDATE tblCierreMovimientoCxCEncabezado SET estadoCierreMovimientoCxCEncabezado='ANULADO',observacionesCierreMovimientoCxCEncabezado=? WHERE Pk_CierreMovimientoCxCEncabezado=?";
+            const string Consulta = @"UPDATE tblCierreMovimientoCxCEncabezado SET estadoCierreMovimientoCxCEncabezado='ANULADO',observacionesCierreMovimientoCxCEncabezado=? WHERE idCierreMovimientoCxCEncabezado=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
     }

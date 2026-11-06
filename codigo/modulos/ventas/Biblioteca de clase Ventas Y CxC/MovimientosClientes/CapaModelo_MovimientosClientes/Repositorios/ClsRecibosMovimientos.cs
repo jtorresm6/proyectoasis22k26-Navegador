@@ -18,7 +18,7 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT COUNT(*)
     FROM tblCliente
-    WHERE Pk_Cliente=?
+    WHERE idCliente=?
       AND activoCliente=1";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
@@ -27,10 +27,10 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT f.fechaEmisionFacturaEncabezado fechaEmision
     FROM tblFacturaEncabezado f
-    JOIN tblClienteFacturaVersion c ON c.Pk_ClienteFacturaVersion=f.Fk_ClienteFacturaVersion_Codigo
-    WHERE f.Pk_FacturaEncabezado=?
-      AND c.Fk_Cliente_Codigo=?
-      AND f.Fk_Moneda_Codigo=?
+    JOIN tblClienteFacturaVersion c ON c.idClienteFacturaVersion=f.idClienteFacturaVersion
+    WHERE f.idFacturaEncabezado=?
+      AND c.idCliente=?
+      AND f.idMoneda=?
       AND f.estadoFacturaEncabezado='EMITIDA'
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
@@ -38,14 +38,14 @@ namespace CapaModelo_MovimientosClientes
 
         public int VentasFuncRegistrarReciboInsertarPago(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblReciboPago(numeroReciboPago,Fk_Cliente_Codigo,Fk_Moneda_Codigo,fechaReciboPago,montoReciboPago,referenciaReciboPago,estadoReciboPago,observacionesReciboPago,Fk_Usuario_Registro,Fk_FormaPagoVenta_Codigo)
-    SELECT ?,?,?,?,?,?,'CONFIRMADO',?,?,fp.Pk_FormaPagoVenta FROM tblFormaPagoVenta fp WHERE fp.codigoFormaPagoVenta=?";
+            const string Consulta = @"INSERT INTO tblReciboPago(numeroReciboPago,idCliente,idMoneda,fechaReciboPago,montoReciboPago,referenciaReciboPago,estadoReciboPago,observacionesReciboPago,idUsuarioRegistro,idFormaPagoVenta)
+    SELECT ?,?,?,?,?,?,'CONFIRMADO',?,?,fp.idFormaPagoVenta FROM tblFormaPagoVenta fp WHERE fp.codigoFormaPagoVenta=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public int VentasFuncRegistrarReciboInsertarAplicacionpago(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblAplicacionPago(Fk_ReciboPago_Codigo,Fk_FacturaEncabezado_Codigo,fechaAplicacionPago,montoAplicadoAplicacionPago,estadoAplicacionPago,Fk_Usuario_Registro)
+            const string Consulta = @"INSERT INTO tblAplicacionPago(idReciboPago,idFacturaEncabezado,fechaAplicacionPago,montoAplicadoAplicacionPago,estadoAplicacionPago,idUsuarioRegistro)
     VALUES (?,?,?,?,'APLICADA',?)";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
@@ -54,8 +54,8 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT montoReciboPago montoPago,fechaReciboPago fechaPago
     FROM tblReciboPago
-    WHERE Pk_ReciboPago=?
-      AND Fk_Moneda_Codigo=?
+    WHERE idReciboPago=?
+      AND idMoneda=?
       AND estadoReciboPago='CONFIRMADO'
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
@@ -65,26 +65,26 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT COALESCE(SUM(importeDepositoVentaDetalle),0)
     FROM tblDepositoVentaDetalle
-    WHERE Fk_ReciboPago_Codigo=?";
+    WHERE idReciboPago=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public int VentasFuncPrepararDepositoInsertarDepositoventas(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblDepositoVentaEncabezado(codigoDepositoVentaEncabezado,fechaDepositoVentaEncabezado,referenciaDepositoVentaEncabezado,Fk_Moneda_Codigo,totalDepositoVentaEncabezado,Fk_Usuario_Registro,Fk_CuentaBancaria_Codigo,Fk_TipoTransaccion_Codigo)
-    SELECT ?,?,?,?,?,?,cb.Pk_CuentaBancaria,t.Pk_TipoTransaccion
-    FROM tblCuentaBancaria cb JOIN tblBanco b ON b.Pk_Banco=cb.Fk_Banco_Codigo
+            const string Consulta = @"INSERT INTO tblDepositoVentaEncabezado(codigoDepositoVentaEncabezado,fechaDepositoVentaEncabezado,referenciaDepositoVentaEncabezado,idMoneda,totalDepositoVentaEncabezado,idUsuarioRegistro,idCuentaBancaria,idTipoTransaccion)
+    SELECT ?,?,?,?,?,?,cb.idCuentaBancaria,t.idTipoTransaccion
+    FROM tblCuentaBancaria cb JOIN tblBanco b ON b.idBanco=cb.Fk_Banco_Codigo
     CROSS JOIN tblTipoTransaccion t
-    WHERE (cb.numeroCuentaBancaria=? OR CAST(cb.Pk_CuentaBancaria AS CHAR)=?)
-      AND (b.nombreBanco=? OR b.codigoBanco=? OR CAST(b.Pk_Banco AS CHAR)=?)
-      AND (t.codigoTipoTransaccion=? OR t.nombreTipoTransaccion=? OR CAST(t.Pk_TipoTransaccion AS CHAR)=?)
+    WHERE (cb.numeroCuentaBancaria=? OR CAST(cb.idCuentaBancaria AS CHAR)=?)
+      AND (b.nombreBanco=? OR b.codigoBanco=? OR CAST(b.idBanco AS CHAR)=?)
+      AND (t.codigoTipoTransaccion=? OR t.nombreTipoTransaccion=? OR CAST(t.idTipoTransaccion AS CHAR)=?)
       AND cb.is_active=1 AND b.is_active=1 AND t.is_active=1 AND cb.Fk_Moneda_Codigo=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public int VentasFuncPrepararDepositoInsertarDepositoventasdetalle(params object[] Parametros)
         {
-            const string Consulta = @"INSERT INTO tblDepositoVentaDetalle(Fk_DepositoVentaEncabezado_Codigo,Fk_ReciboPago_Codigo,importeDepositoVentaDetalle)
+            const string Consulta = @"INSERT INTO tblDepositoVentaDetalle(idDepositoVentaEncabezado,idReciboPago,importeDepositoVentaDetalle)
     VALUES (?,?,?)";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
@@ -103,26 +103,26 @@ namespace CapaModelo_MovimientosClientes
                        CONCAT('Deposito de Ventas ',d.codigoDepositoVentaEncabezado),
                        d.totalDepositoVentaEncabezado,d.totalDepositoVentaEncabezado,1,1,
                        d.fechaDepositoVentaEncabezado,d.fechaDepositoVentaEncabezado,
-                       'MANUAL',d.Fk_CuentaBancaria_Codigo,d.Fk_TipoTransaccion_Codigo
+                       'MANUAL',d.idCuentaBancaria,d.idTipoTransaccion
                 FROM tblDepositoVentaEncabezado d
-                JOIN tblMoneda m ON m.Pk_Moneda=d.Fk_Moneda_Codigo
-                WHERE d.Pk_DepositoVentaEncabezado=? AND m.codigoMoneda='GTQ'
+                JOIN tblMoneda m ON m.idMoneda=d.idMoneda
+                WHERE d.idDepositoVentaEncabezado=? AND m.codigoMoneda='GTQ'
                   AND d.estadoDepositoVentaEncabezado='PREPARADO'
-                  AND d.Fk_MovimientoBancario_Codigo IS NULL";
+                  AND d.idMovimientoBancario IS NULL";
             if (_Datos.VentasFuncEjecutar(Insertar, Deposito) != 1)
                 throw new InvalidOperationException("El deposito no esta disponible para enviarlo a Bancos.");
 
             int Movimiento = _Datos.VentasFuncObtenerId();
             _Datos.VentasFuncEjecutar(@"UPDATE tblDepositoVentaEncabezado
-                SET Fk_MovimientoBancario_Codigo=?,estadoDepositoVentaEncabezado='ENVIADO'
-                WHERE Pk_DepositoVentaEncabezado=?", Movimiento, Deposito);
+                SET idMovimientoBancario=?,estadoDepositoVentaEncabezado='ENVIADO'
+                WHERE idDepositoVentaEncabezado=?", Movimiento, Deposito);
         }
 
         public DataTable VentasFuncModificarReciboConsultarPago(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Fk_Moneda_Codigo idMoneda,fechaReciboPago fechaPago
+            const string Consulta = @"SELECT idMoneda idMoneda,fechaReciboPago fechaPago
     FROM tblReciboPago
-    WHERE Pk_ReciboPago=?";
+    WHERE idReciboPago=?";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 
@@ -130,7 +130,7 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT estadoReciboPago estadoPago
     FROM tblReciboPago
-    WHERE Pk_ReciboPago=?
+    WHERE idReciboPago=?
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
@@ -139,23 +139,23 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"UPDATE tblReciboPago
     SET observacionesReciboPago=?
-    WHERE Pk_ReciboPago=?";
+    WHERE idReciboPago=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
         public object VentasFuncAnularReciboConsultarPago(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Fk_Moneda_Codigo
+            const string Consulta = @"SELECT idMoneda
     FROM tblReciboPago
-    WHERE Pk_ReciboPago=?";
+    WHERE idReciboPago=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public DataTable VentasFuncAnularReciboConsultarPago2(params object[] Parametros)
         {
-            const string Consulta = @"SELECT Pk_ReciboPago idPago,Fk_Moneda_Codigo idMoneda,fechaReciboPago fechaPago,estadoReciboPago estadoPago
+            const string Consulta = @"SELECT idReciboPago idPago,idMoneda idMoneda,fechaReciboPago fechaPago,estadoReciboPago estadoPago
     FROM tblReciboPago
-    WHERE Pk_ReciboPago=?
+    WHERE idReciboPago=?
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
@@ -164,18 +164,18 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"SELECT COUNT(*)
     FROM tblDepositoVentaDetalle
-    WHERE Fk_ReciboPago_Codigo=?";
+    WHERE idReciboPago=?";
             return _Datos.VentasFuncEscalar(Consulta, Parametros);
         }
 
         public DataTable VentasFuncAnularReciboConsultarMovimientocxc(params object[] Parametros)
         {
-            const string Consulta = @"SELECT m.Pk_MovimientoCxC idMovimiento,m.Fk_FacturaEncabezado_Codigo idFactura,m.cargoMovimientoCxC cargo,m.abonoMovimientoCxC abono
+            const string Consulta = @"SELECT m.idMovimientoCxC idMovimiento,m.idFacturaEncabezado idFactura,m.cargoMovimientoCxC cargo,m.abonoMovimientoCxC abono
     FROM tblMovimientoCxC m
-    JOIN tblAplicacionPago a ON a.Pk_AplicacionPago=m.Fk_AplicacionPago_Codigo
-    WHERE a.Fk_ReciboPago_Codigo=?
+    JOIN tblAplicacionPago a ON a.idAplicacionPago=m.idAplicacionPago
+    WHERE a.idReciboPago=?
       AND a.estadoAplicacionPago='APLICADA'
-    ORDER BY m.Fk_FacturaEncabezado_Codigo
+    ORDER BY m.idFacturaEncabezado
     FOR UPDATE";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
@@ -184,7 +184,7 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"UPDATE tblAplicacionPago
     SET estadoAplicacionPago='REVERTIDA'
-    WHERE Fk_ReciboPago_Codigo=?";
+    WHERE idReciboPago=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
 
@@ -192,7 +192,7 @@ namespace CapaModelo_MovimientosClientes
         {
             const string Consulta = @"UPDATE tblReciboPago
     SET estadoReciboPago='ANULADO'
-    WHERE Pk_ReciboPago=?";
+    WHERE idReciboPago=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
         }
     }

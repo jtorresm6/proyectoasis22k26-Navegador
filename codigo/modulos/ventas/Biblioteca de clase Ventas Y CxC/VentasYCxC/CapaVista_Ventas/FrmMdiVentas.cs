@@ -204,7 +204,7 @@ namespace CapaVista_Ventas
         // Abre el formulario independiente de facturas.
         private void VentasMetBtnFacturasClick(object Origen, EventArgs Evento)
         {
-            using (var Formulario = new CapaVista_Facturas.FrmFacturas())
+            using (var Formulario = new CapaVista_Facturas.FrmFacturas() { VentasIdUsuario = _IdUsuario })
                 VentasMetAbrirFormulario(Formulario);
         }
 

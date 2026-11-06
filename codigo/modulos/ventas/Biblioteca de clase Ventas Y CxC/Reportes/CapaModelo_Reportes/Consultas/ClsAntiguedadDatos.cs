@@ -10,13 +10,13 @@ namespace CapaModelo_Reportes
         public DataTable VentasFuncClientes()
         {
             using (var Datos = new ClsDatosVentas())
-                return Datos.VentasFuncTabla("SELECT Pk_Cliente idCliente, CONCAT(codigoCliente,' - ',nombreCliente) Cliente FROM tblCliente ORDER BY nombreCliente");
+                return Datos.VentasFuncTabla("SELECT idCliente idCliente, CONCAT(codigoCliente,' - ',nombreCliente) Cliente FROM tblCliente ORDER BY nombreCliente");
         }
 
         public DataTable VentasFuncVendedores()
         {
             using (var Datos = new ClsDatosVentas())
-                return Datos.VentasFuncTabla("SELECT v.Pk_Vendedor Id, CONCAT(e.nombresEmpleado,' ',e.apellidosEmpleado) Nombre FROM tblVendedor v JOIN tblempleado e ON e.idEmpleado=v.Fk_Empleado_Codigo WHERE v.activoVendedor=1");
+                return Datos.VentasFuncTabla("SELECT v.idVendedor Id, CONCAT(e.nombresEmpleado,' ',e.apellidosEmpleado) Nombre FROM tblVendedor v JOIN tblempleado e ON e.idEmpleado=v.idEmpleado WHERE v.activoVendedor=1");
         }
         public DataTable VentasFuncConsultar(DateTime Corte, int Cliente) { return VentasFuncConsultar(Corte, Cliente, 0, new DateTime(2000,1,1)); }
         public DataTable VentasFuncConsultar(DateTime Corte, int Cliente, int Vendedor, DateTime Desde)
@@ -26,15 +26,15 @@ namespace CapaModelo_Reportes
                 CONCAT(f.serieFacturaEncabezado,'-',f.numeroFacturaEncabezado) Documento,
                 f.fechaEmisionFacturaEncabezado Emision, f.fechaVencimientoFacturaEncabezado Vencimiento, SUM(m.cargoMovimientoCxC-m.abonoMovimientoCxC) Saldo
                 FROM tblMovimientoCxC m
-                JOIN tblFacturaEncabezado f ON f.Pk_FacturaEncabezado=m.Fk_FacturaEncabezado_Codigo
-                JOIN tblClienteFacturaVersion cv ON cv.Pk_ClienteFacturaVersion=f.Fk_ClienteFacturaVersion_Codigo
-                JOIN tblCliente c ON c.Pk_Cliente=cv.Fk_Cliente_Codigo
-                JOIN tblMoneda mo ON mo.Pk_Moneda=f.Fk_Moneda_Codigo
+                JOIN tblFacturaEncabezado f ON f.idFacturaEncabezado=m.idFacturaEncabezado
+                JOIN tblClienteFacturaVersion cv ON cv.idClienteFacturaVersion=f.idClienteFacturaVersion
+                JOIN tblCliente c ON c.idCliente=cv.idCliente
+                JOIN tblMoneda mo ON mo.idMoneda=f.idMoneda
                 WHERE m.fechaMovimientoCxC<=? AND f.fechaEmisionFacturaEncabezado<=?
-                  AND (?=0 OR c.Pk_Cliente=?) AND UPPER(mo.codigoMoneda)='GTQ' AND (?=0 OR f.Fk_Vendedor_Codigo=?) AND f.fechaEmisionFacturaEncabezado>=?
-                GROUP BY f.Pk_FacturaEncabezado,c.nombreCliente,f.serieFacturaEncabezado,f.numeroFacturaEncabezado,f.fechaVencimientoFacturaEncabezado,f.fechaEmisionFacturaEncabezado
+                  AND (?=0 OR c.idCliente=?) AND UPPER(mo.codigoMoneda)='GTQ' AND (?=0 OR f.idVendedor=?) AND f.fechaEmisionFacturaEncabezado>=?
+                GROUP BY f.idFacturaEncabezado,c.nombreCliente,f.serieFacturaEncabezado,f.numeroFacturaEncabezado,f.fechaVencimientoFacturaEncabezado,f.fechaEmisionFacturaEncabezado
                 HAVING Saldo>0
-                ORDER BY c.nombreCliente,f.fechaVencimientoFacturaEncabezado,f.Pk_FacturaEncabezado";
+                ORDER BY c.nombreCliente,f.fechaVencimientoFacturaEncabezado,f.idFacturaEncabezado";
             using (var Datos = new ClsDatosVentas())
                 return Datos.VentasFuncTabla(Consulta, Corte.Date, Corte.Date, Cliente, Cliente, Vendedor, Vendedor, Desde.Date);
         }

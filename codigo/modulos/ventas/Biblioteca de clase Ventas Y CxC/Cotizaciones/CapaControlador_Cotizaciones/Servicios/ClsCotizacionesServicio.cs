@@ -140,7 +140,7 @@ namespace CapaControlador_Cotizaciones.Servicios
                 int Id;
                 if (!AFactura)
                 {
-                    Repositorio.Conversion.VentasFuncConvertirInsertarPedido(Numero, IdCotizacion, CabeceraCotizacion["idCliente"], CabeceraCotizacion["idVendedor"], CabeceraCotizacion["idMoneda"], DateTime.Today, Usuario);
+                    Repositorio.Conversion.VentasFuncConvertirInsertarPedido(Numero, IdCotizacion, CabeceraCotizacion["idCliente"], CabeceraCotizacion["idVendedor"], CabeceraCotizacion["idMoneda"], DateTime.Today);
                     Id = Repositorio.VentasFuncObtenerId();
                     Repositorio.Conversion.VentasFuncConvertirInsertarPedidodetalle(Id, IdCotizacion);
                 }
