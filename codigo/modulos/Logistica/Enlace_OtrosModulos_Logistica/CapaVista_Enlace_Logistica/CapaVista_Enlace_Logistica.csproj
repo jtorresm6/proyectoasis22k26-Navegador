@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaContralador_Enlace_Logistica">
+      <HintPath>..\CapaContralador_Enlace_Logistica\bin\Debug\CapaContralador_Enlace_Logistica.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaModelo_Enlace_Logistica">
+      <HintPath>..\CapaModelo_Enlace_Logistica\bin\Debug\CapaModelo_Enlace_Logistica.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

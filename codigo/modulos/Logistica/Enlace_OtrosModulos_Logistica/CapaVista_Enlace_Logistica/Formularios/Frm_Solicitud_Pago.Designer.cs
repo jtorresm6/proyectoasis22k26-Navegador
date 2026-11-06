@@ -45,7 +45,7 @@
             this.LogisticaLblTextoResumenBanco = new System.Windows.Forms.Label();
             this.LogisticaLblTextoResumenNit = new System.Windows.Forms.Label();
             this.LogisticaLblTextoResumenTransportista = new System.Windows.Forms.Label();
-            this.LogisticaLblDonButti = new System.Windows.Forms.Label();
+            this.LogisticaLblTextoResumenFechaServicio = new System.Windows.Forms.Label();
             this.LogisticaLblTextoResumenNumeroServicio = new System.Windows.Forms.Label();
             this.LogisticaLblResumenConcepto = new System.Windows.Forms.Label();
             this.LogisticaLblResumenMoneda = new System.Windows.Forms.Label();
@@ -142,9 +142,9 @@
             this.LogisticaPnlFondoSolicitudPago.Controls.Add(this.LogisticaLblResumenMonto);
             this.LogisticaPnlFondoSolicitudPago.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LogisticaPnlFondoSolicitudPago.Location = new System.Drawing.Point(0, 0);
-            this.LogisticaPnlFondoSolicitudPago.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaPnlFondoSolicitudPago.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPnlFondoSolicitudPago.Name = "LogisticaPnlFondoSolicitudPago";
-            this.LogisticaPnlFondoSolicitudPago.Size = new System.Drawing.Size(1144, 741);
+            this.LogisticaPnlFondoSolicitudPago.Size = new System.Drawing.Size(1525, 997);
             this.LogisticaPnlFondoSolicitudPago.TabIndex = 0;
             this.LogisticaPnlFondoSolicitudPago.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlFondoSolicitudPago_Paint);
             // 
@@ -158,10 +158,10 @@
             this.LogisticaBtnVistaPrevia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LogisticaBtnVistaPrevia.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaBtnVistaPrevia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaBtnVistaPrevia.Location = new System.Drawing.Point(853, 689);
-            this.LogisticaBtnVistaPrevia.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaBtnVistaPrevia.Location = new System.Drawing.Point(1137, 717);
+            this.LogisticaBtnVistaPrevia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaBtnVistaPrevia.Name = "LogisticaBtnVistaPrevia";
-            this.LogisticaBtnVistaPrevia.Size = new System.Drawing.Size(225, 45);
+            this.LogisticaBtnVistaPrevia.Size = new System.Drawing.Size(300, 55);
             this.LogisticaBtnVistaPrevia.TabIndex = 12;
             this.LogisticaBtnVistaPrevia.Text = "Vista Previa";
             this.LogisticaBtnVistaPrevia.UseVisualStyleBackColor = false;
@@ -176,13 +176,14 @@
             this.LogisticaBtnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LogisticaBtnLimpiar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaBtnLimpiar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaBtnLimpiar.Location = new System.Drawing.Point(853, 636);
-            this.LogisticaBtnLimpiar.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaBtnLimpiar.Location = new System.Drawing.Point(1137, 652);
+            this.LogisticaBtnLimpiar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaBtnLimpiar.Name = "LogisticaBtnLimpiar";
-            this.LogisticaBtnLimpiar.Size = new System.Drawing.Size(225, 45);
+            this.LogisticaBtnLimpiar.Size = new System.Drawing.Size(300, 55);
             this.LogisticaBtnLimpiar.TabIndex = 11;
             this.LogisticaBtnLimpiar.Text = "Limpiar";
             this.LogisticaBtnLimpiar.UseVisualStyleBackColor = false;
+            this.LogisticaBtnLimpiar.Click += new System.EventHandler(this.LogisticaBtnLimpiar_Click_1);
             // 
             // LogisticaBtnGenerarSolicitud
             // 
@@ -192,10 +193,10 @@
             this.LogisticaBtnGenerarSolicitud.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LogisticaBtnGenerarSolicitud.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaBtnGenerarSolicitud.ForeColor = System.Drawing.Color.White;
-            this.LogisticaBtnGenerarSolicitud.Location = new System.Drawing.Point(853, 582);
-            this.LogisticaBtnGenerarSolicitud.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaBtnGenerarSolicitud.Location = new System.Drawing.Point(1137, 585);
+            this.LogisticaBtnGenerarSolicitud.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaBtnGenerarSolicitud.Name = "LogisticaBtnGenerarSolicitud";
-            this.LogisticaBtnGenerarSolicitud.Size = new System.Drawing.Size(225, 45);
+            this.LogisticaBtnGenerarSolicitud.Size = new System.Drawing.Size(300, 55);
             this.LogisticaBtnGenerarSolicitud.TabIndex = 9;
             this.LogisticaBtnGenerarSolicitud.Text = "Generar Solicitud";
             this.LogisticaBtnGenerarSolicitud.UseVisualStyleBackColor = false;
@@ -212,7 +213,7 @@
             this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaLblTextoResumenBanco);
             this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaLblTextoResumenNit);
             this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaLblTextoResumenTransportista);
-            this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaLblDonButti);
+            this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaLblTextoResumenFechaServicio);
             this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaLblTextoResumenNumeroServicio);
             this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaLblResumenConcepto);
             this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaLblResumenMoneda);
@@ -224,10 +225,10 @@
             this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaLblResumenFechaServicio);
             this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaLblResumenNumeroServicio);
             this.LogisticaPnlResumenSolicitud.Controls.Add(this.LogisticaPnlEncabezadoResumen);
-            this.LogisticaPnlResumenSolicitud.Location = new System.Drawing.Point(847, 286);
-            this.LogisticaPnlResumenSolicitud.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaPnlResumenSolicitud.Location = new System.Drawing.Point(1129, 221);
+            this.LogisticaPnlResumenSolicitud.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPnlResumenSolicitud.Name = "LogisticaPnlResumenSolicitud";
-            this.LogisticaPnlResumenSolicitud.Size = new System.Drawing.Size(233, 281);
+            this.LogisticaPnlResumenSolicitud.Size = new System.Drawing.Size(310, 345);
             this.LogisticaPnlResumenSolicitud.TabIndex = 8;
             this.LogisticaPnlResumenSolicitud.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlResumenSolicitud_Paint);
             // 
@@ -236,10 +237,9 @@
             this.LogisticaLblTextoResumenConcepto.AutoEllipsis = true;
             this.LogisticaLblTextoResumenConcepto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTextoResumenConcepto.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblTextoResumenConcepto.Location = new System.Drawing.Point(101, 225);
-            this.LogisticaLblTextoResumenConcepto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTextoResumenConcepto.Location = new System.Drawing.Point(135, 277);
             this.LogisticaLblTextoResumenConcepto.Name = "LogisticaLblTextoResumenConcepto";
-            this.LogisticaLblTextoResumenConcepto.Size = new System.Drawing.Size(120, 45);
+            this.LogisticaLblTextoResumenConcepto.Size = new System.Drawing.Size(160, 55);
             this.LogisticaLblTextoResumenConcepto.TabIndex = 20;
             this.LogisticaLblTextoResumenConcepto.Text = "-";
             // 
@@ -247,10 +247,9 @@
             // 
             this.LogisticaLblTextoResumenMonto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTextoResumenMonto.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblTextoResumenMonto.Location = new System.Drawing.Point(101, 207);
-            this.LogisticaLblTextoResumenMonto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTextoResumenMonto.Location = new System.Drawing.Point(135, 255);
             this.LogisticaLblTextoResumenMonto.Name = "LogisticaLblTextoResumenMonto";
-            this.LogisticaLblTextoResumenMonto.Size = new System.Drawing.Size(120, 18);
+            this.LogisticaLblTextoResumenMonto.Size = new System.Drawing.Size(160, 22);
             this.LogisticaLblTextoResumenMonto.TabIndex = 19;
             this.LogisticaLblTextoResumenMonto.Text = "-";
             this.LogisticaLblTextoResumenMonto.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -259,10 +258,9 @@
             // 
             this.LogisticaLblTextoResumenMoneda.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTextoResumenMoneda.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblTextoResumenMoneda.Location = new System.Drawing.Point(101, 187);
-            this.LogisticaLblTextoResumenMoneda.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTextoResumenMoneda.Location = new System.Drawing.Point(135, 230);
             this.LogisticaLblTextoResumenMoneda.Name = "LogisticaLblTextoResumenMoneda";
-            this.LogisticaLblTextoResumenMoneda.Size = new System.Drawing.Size(120, 18);
+            this.LogisticaLblTextoResumenMoneda.Size = new System.Drawing.Size(160, 22);
             this.LogisticaLblTextoResumenMoneda.TabIndex = 18;
             this.LogisticaLblTextoResumenMoneda.Text = "-";
             this.LogisticaLblTextoResumenMoneda.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -271,10 +269,9 @@
             // 
             this.LogisticaLblTextoResumenNumeroCuenta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTextoResumenNumeroCuenta.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblTextoResumenNumeroCuenta.Location = new System.Drawing.Point(101, 167);
-            this.LogisticaLblTextoResumenNumeroCuenta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTextoResumenNumeroCuenta.Location = new System.Drawing.Point(135, 206);
             this.LogisticaLblTextoResumenNumeroCuenta.Name = "LogisticaLblTextoResumenNumeroCuenta";
-            this.LogisticaLblTextoResumenNumeroCuenta.Size = new System.Drawing.Size(120, 18);
+            this.LogisticaLblTextoResumenNumeroCuenta.Size = new System.Drawing.Size(160, 22);
             this.LogisticaLblTextoResumenNumeroCuenta.TabIndex = 17;
             this.LogisticaLblTextoResumenNumeroCuenta.Text = "-";
             this.LogisticaLblTextoResumenNumeroCuenta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -283,10 +280,9 @@
             // 
             this.LogisticaLblTextoResumenTipoCuenta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTextoResumenTipoCuenta.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblTextoResumenTipoCuenta.Location = new System.Drawing.Point(101, 146);
-            this.LogisticaLblTextoResumenTipoCuenta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTextoResumenTipoCuenta.Location = new System.Drawing.Point(135, 180);
             this.LogisticaLblTextoResumenTipoCuenta.Name = "LogisticaLblTextoResumenTipoCuenta";
-            this.LogisticaLblTextoResumenTipoCuenta.Size = new System.Drawing.Size(120, 18);
+            this.LogisticaLblTextoResumenTipoCuenta.Size = new System.Drawing.Size(160, 22);
             this.LogisticaLblTextoResumenTipoCuenta.TabIndex = 16;
             this.LogisticaLblTextoResumenTipoCuenta.Text = "-";
             this.LogisticaLblTextoResumenTipoCuenta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -295,10 +291,9 @@
             // 
             this.LogisticaLblTextoResumenBanco.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTextoResumenBanco.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblTextoResumenBanco.Location = new System.Drawing.Point(101, 126);
-            this.LogisticaLblTextoResumenBanco.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTextoResumenBanco.Location = new System.Drawing.Point(135, 155);
             this.LogisticaLblTextoResumenBanco.Name = "LogisticaLblTextoResumenBanco";
-            this.LogisticaLblTextoResumenBanco.Size = new System.Drawing.Size(120, 18);
+            this.LogisticaLblTextoResumenBanco.Size = new System.Drawing.Size(160, 22);
             this.LogisticaLblTextoResumenBanco.TabIndex = 15;
             this.LogisticaLblTextoResumenBanco.Text = "-";
             this.LogisticaLblTextoResumenBanco.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -307,10 +302,9 @@
             // 
             this.LogisticaLblTextoResumenNit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTextoResumenNit.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblTextoResumenNit.Location = new System.Drawing.Point(101, 106);
-            this.LogisticaLblTextoResumenNit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTextoResumenNit.Location = new System.Drawing.Point(135, 130);
             this.LogisticaLblTextoResumenNit.Name = "LogisticaLblTextoResumenNit";
-            this.LogisticaLblTextoResumenNit.Size = new System.Drawing.Size(120, 18);
+            this.LogisticaLblTextoResumenNit.Size = new System.Drawing.Size(160, 22);
             this.LogisticaLblTextoResumenNit.TabIndex = 14;
             this.LogisticaLblTextoResumenNit.Text = "-";
             this.LogisticaLblTextoResumenNit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -319,34 +313,31 @@
             // 
             this.LogisticaLblTextoResumenTransportista.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTextoResumenTransportista.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblTextoResumenTransportista.Location = new System.Drawing.Point(101, 85);
-            this.LogisticaLblTextoResumenTransportista.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTextoResumenTransportista.Location = new System.Drawing.Point(135, 105);
             this.LogisticaLblTextoResumenTransportista.Name = "LogisticaLblTextoResumenTransportista";
-            this.LogisticaLblTextoResumenTransportista.Size = new System.Drawing.Size(120, 18);
+            this.LogisticaLblTextoResumenTransportista.Size = new System.Drawing.Size(160, 22);
             this.LogisticaLblTextoResumenTransportista.TabIndex = 13;
             this.LogisticaLblTextoResumenTransportista.Text = "-";
             this.LogisticaLblTextoResumenTransportista.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // LogisticaLblDonButti
+            // LogisticaLblTextoResumenFechaServicio
             // 
-            this.LogisticaLblDonButti.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaLblDonButti.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblDonButti.Location = new System.Drawing.Point(101, 65);
-            this.LogisticaLblDonButti.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.LogisticaLblDonButti.Name = "LogisticaLblDonButti";
-            this.LogisticaLblDonButti.Size = new System.Drawing.Size(120, 18);
-            this.LogisticaLblDonButti.TabIndex = 12;
-            this.LogisticaLblDonButti.Text = "-";
-            this.LogisticaLblDonButti.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LogisticaLblTextoResumenFechaServicio.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblTextoResumenFechaServicio.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.LogisticaLblTextoResumenFechaServicio.Location = new System.Drawing.Point(135, 80);
+            this.LogisticaLblTextoResumenFechaServicio.Name = "LogisticaLblTextoResumenFechaServicio";
+            this.LogisticaLblTextoResumenFechaServicio.Size = new System.Drawing.Size(160, 22);
+            this.LogisticaLblTextoResumenFechaServicio.TabIndex = 12;
+            this.LogisticaLblTextoResumenFechaServicio.Text = "-";
+            this.LogisticaLblTextoResumenFechaServicio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LogisticaLblTextoResumenNumeroServicio
             // 
             this.LogisticaLblTextoResumenNumeroServicio.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTextoResumenNumeroServicio.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblTextoResumenNumeroServicio.Location = new System.Drawing.Point(101, 45);
-            this.LogisticaLblTextoResumenNumeroServicio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTextoResumenNumeroServicio.Location = new System.Drawing.Point(135, 55);
             this.LogisticaLblTextoResumenNumeroServicio.Name = "LogisticaLblTextoResumenNumeroServicio";
-            this.LogisticaLblTextoResumenNumeroServicio.Size = new System.Drawing.Size(120, 18);
+            this.LogisticaLblTextoResumenNumeroServicio.Size = new System.Drawing.Size(160, 22);
             this.LogisticaLblTextoResumenNumeroServicio.TabIndex = 11;
             this.LogisticaLblTextoResumenNumeroServicio.Text = "-";
             this.LogisticaLblTextoResumenNumeroServicio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -356,10 +347,9 @@
             this.LogisticaLblResumenConcepto.AutoSize = true;
             this.LogisticaLblResumenConcepto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblResumenConcepto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblResumenConcepto.Location = new System.Drawing.Point(4, 228);
-            this.LogisticaLblResumenConcepto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblResumenConcepto.Location = new System.Drawing.Point(5, 281);
             this.LogisticaLblResumenConcepto.Name = "LogisticaLblResumenConcepto";
-            this.LogisticaLblResumenConcepto.Size = new System.Drawing.Size(60, 15);
+            this.LogisticaLblResumenConcepto.Size = new System.Drawing.Size(75, 20);
             this.LogisticaLblResumenConcepto.TabIndex = 10;
             this.LogisticaLblResumenConcepto.Text = "Concepto";
             this.LogisticaLblResumenConcepto.Click += new System.EventHandler(this.lblResumenConcepto_Click);
@@ -369,10 +359,9 @@
             this.LogisticaLblResumenMoneda.AutoSize = true;
             this.LogisticaLblResumenMoneda.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblResumenMoneda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblResumenMoneda.Location = new System.Drawing.Point(4, 187);
-            this.LogisticaLblResumenMoneda.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblResumenMoneda.Location = new System.Drawing.Point(5, 230);
             this.LogisticaLblResumenMoneda.Name = "LogisticaLblResumenMoneda";
-            this.LogisticaLblResumenMoneda.Size = new System.Drawing.Size(52, 15);
+            this.LogisticaLblResumenMoneda.Size = new System.Drawing.Size(66, 20);
             this.LogisticaLblResumenMoneda.TabIndex = 8;
             this.LogisticaLblResumenMoneda.Text = "Moneda";
             this.LogisticaLblResumenMoneda.Click += new System.EventHandler(this.lblResumenMoneda_Click);
@@ -382,10 +371,9 @@
             this.LogisticaLblResumenNumeroCuenta.AutoSize = true;
             this.LogisticaLblResumenNumeroCuenta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblResumenNumeroCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblResumenNumeroCuenta.Location = new System.Drawing.Point(4, 167);
-            this.LogisticaLblResumenNumeroCuenta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblResumenNumeroCuenta.Location = new System.Drawing.Point(5, 206);
             this.LogisticaLblResumenNumeroCuenta.Name = "LogisticaLblResumenNumeroCuenta";
-            this.LogisticaLblResumenNumeroCuenta.Size = new System.Drawing.Size(84, 15);
+            this.LogisticaLblResumenNumeroCuenta.Size = new System.Drawing.Size(106, 20);
             this.LogisticaLblResumenNumeroCuenta.TabIndex = 7;
             this.LogisticaLblResumenNumeroCuenta.Text = "No. de cuenta";
             this.LogisticaLblResumenNumeroCuenta.Click += new System.EventHandler(this.lblResumenNumeroCuenta_Click);
@@ -395,10 +383,9 @@
             this.LogisticaLblResumenTipoCuenta.AutoSize = true;
             this.LogisticaLblResumenTipoCuenta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblResumenTipoCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblResumenTipoCuenta.Location = new System.Drawing.Point(4, 146);
-            this.LogisticaLblResumenTipoCuenta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblResumenTipoCuenta.Location = new System.Drawing.Point(5, 180);
             this.LogisticaLblResumenTipoCuenta.Name = "LogisticaLblResumenTipoCuenta";
-            this.LogisticaLblResumenTipoCuenta.Size = new System.Drawing.Size(89, 15);
+            this.LogisticaLblResumenTipoCuenta.Size = new System.Drawing.Size(112, 20);
             this.LogisticaLblResumenTipoCuenta.TabIndex = 6;
             this.LogisticaLblResumenTipoCuenta.Text = "Tipo de cuenta";
             this.LogisticaLblResumenTipoCuenta.Click += new System.EventHandler(this.lblResumenTipoCuenta_Click);
@@ -408,10 +395,9 @@
             this.LogisticaLblResumenBanco.AutoSize = true;
             this.LogisticaLblResumenBanco.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblResumenBanco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblResumenBanco.Location = new System.Drawing.Point(4, 126);
-            this.LogisticaLblResumenBanco.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblResumenBanco.Location = new System.Drawing.Point(5, 155);
             this.LogisticaLblResumenBanco.Name = "LogisticaLblResumenBanco";
-            this.LogisticaLblResumenBanco.Size = new System.Drawing.Size(41, 15);
+            this.LogisticaLblResumenBanco.Size = new System.Drawing.Size(52, 20);
             this.LogisticaLblResumenBanco.TabIndex = 5;
             this.LogisticaLblResumenBanco.Text = "Banco";
             this.LogisticaLblResumenBanco.Click += new System.EventHandler(this.lblResumenBanco_Click);
@@ -421,10 +407,9 @@
             this.LogisticaLblResumenNit.AutoSize = true;
             this.LogisticaLblResumenNit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblResumenNit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblResumenNit.Location = new System.Drawing.Point(4, 106);
-            this.LogisticaLblResumenNit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblResumenNit.Location = new System.Drawing.Point(5, 130);
             this.LogisticaLblResumenNit.Name = "LogisticaLblResumenNit";
-            this.LogisticaLblResumenNit.Size = new System.Drawing.Size(27, 15);
+            this.LogisticaLblResumenNit.Size = new System.Drawing.Size(35, 20);
             this.LogisticaLblResumenNit.TabIndex = 4;
             this.LogisticaLblResumenNit.Text = "NIT";
             this.LogisticaLblResumenNit.Click += new System.EventHandler(this.lblResumenNit_Click);
@@ -434,10 +419,9 @@
             this.LogisticaLblResumenTransportista.AutoSize = true;
             this.LogisticaLblResumenTransportista.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblResumenTransportista.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblResumenTransportista.Location = new System.Drawing.Point(4, 85);
-            this.LogisticaLblResumenTransportista.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblResumenTransportista.Location = new System.Drawing.Point(5, 105);
             this.LogisticaLblResumenTransportista.Name = "LogisticaLblResumenTransportista";
-            this.LogisticaLblResumenTransportista.Size = new System.Drawing.Size(79, 15);
+            this.LogisticaLblResumenTransportista.Size = new System.Drawing.Size(102, 20);
             this.LogisticaLblResumenTransportista.TabIndex = 3;
             this.LogisticaLblResumenTransportista.Text = "Transportista";
             this.LogisticaLblResumenTransportista.Click += new System.EventHandler(this.lblResumenTransportista_Click);
@@ -447,10 +431,9 @@
             this.LogisticaLblResumenFechaServicio.AutoSize = true;
             this.LogisticaLblResumenFechaServicio.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblResumenFechaServicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblResumenFechaServicio.Location = new System.Drawing.Point(4, 65);
-            this.LogisticaLblResumenFechaServicio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblResumenFechaServicio.Location = new System.Drawing.Point(5, 80);
             this.LogisticaLblResumenFechaServicio.Name = "LogisticaLblResumenFechaServicio";
-            this.LogisticaLblResumenFechaServicio.Size = new System.Drawing.Size(102, 15);
+            this.LogisticaLblResumenFechaServicio.Size = new System.Drawing.Size(128, 20);
             this.LogisticaLblResumenFechaServicio.TabIndex = 2;
             this.LogisticaLblResumenFechaServicio.Text = "Fecha de servicio";
             // 
@@ -459,10 +442,9 @@
             this.LogisticaLblResumenNumeroServicio.AutoSize = true;
             this.LogisticaLblResumenNumeroServicio.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblResumenNumeroServicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblResumenNumeroServicio.Location = new System.Drawing.Point(4, 45);
-            this.LogisticaLblResumenNumeroServicio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblResumenNumeroServicio.Location = new System.Drawing.Point(5, 55);
             this.LogisticaLblResumenNumeroServicio.Name = "LogisticaLblResumenNumeroServicio";
-            this.LogisticaLblResumenNumeroServicio.Size = new System.Drawing.Size(89, 15);
+            this.LogisticaLblResumenNumeroServicio.Size = new System.Drawing.Size(113, 20);
             this.LogisticaLblResumenNumeroServicio.TabIndex = 1;
             this.LogisticaLblResumenNumeroServicio.Text = "No. de servicio";
             // 
@@ -471,9 +453,9 @@
             this.LogisticaPnlEncabezadoResumen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
             this.LogisticaPnlEncabezadoResumen.Controls.Add(this.LogisticaLblTituloResumen);
             this.LogisticaPnlEncabezadoResumen.Location = new System.Drawing.Point(0, 0);
-            this.LogisticaPnlEncabezadoResumen.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaPnlEncabezadoResumen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPnlEncabezadoResumen.Name = "LogisticaPnlEncabezadoResumen";
-            this.LogisticaPnlEncabezadoResumen.Size = new System.Drawing.Size(232, 34);
+            this.LogisticaPnlEncabezadoResumen.Size = new System.Drawing.Size(309, 42);
             this.LogisticaPnlEncabezadoResumen.TabIndex = 0;
             // 
             // LogisticaLblTituloResumen
@@ -481,10 +463,9 @@
             this.LogisticaLblTituloResumen.AutoSize = true;
             this.LogisticaLblTituloResumen.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTituloResumen.ForeColor = System.Drawing.Color.White;
-            this.LogisticaLblTituloResumen.Location = new System.Drawing.Point(35, 7);
-            this.LogisticaLblTituloResumen.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTituloResumen.Location = new System.Drawing.Point(47, 9);
             this.LogisticaLblTituloResumen.Name = "LogisticaLblTituloResumen";
-            this.LogisticaLblTituloResumen.Size = new System.Drawing.Size(175, 20);
+            this.LogisticaLblTituloResumen.Size = new System.Drawing.Size(215, 25);
             this.LogisticaLblTituloResumen.TabIndex = 0;
             this.LogisticaLblTituloResumen.Text = "Resumen de la Solicitud";
             // 
@@ -501,10 +482,10 @@
             this.LogisticaPnlInformacionPago.Controls.Add(this.LogisticaLblMontoPagar);
             this.LogisticaPnlInformacionPago.Controls.Add(this.LogisticaLblTituloInformacionPago);
             this.LogisticaPnlInformacionPago.Controls.Add(this.LogisticaLblNumeroSeccionPago);
-            this.LogisticaPnlInformacionPago.Location = new System.Drawing.Point(33, 567);
-            this.LogisticaPnlInformacionPago.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaPnlInformacionPago.Location = new System.Drawing.Point(44, 646);
+            this.LogisticaPnlInformacionPago.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPnlInformacionPago.Name = "LogisticaPnlInformacionPago";
-            this.LogisticaPnlInformacionPago.Size = new System.Drawing.Size(785, 118);
+            this.LogisticaPnlInformacionPago.Size = new System.Drawing.Size(1046, 145);
             this.LogisticaPnlInformacionPago.TabIndex = 7;
             this.LogisticaPnlInformacionPago.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlInformacionPago_Paint);
             // 
@@ -514,10 +495,10 @@
             this.LogisticaBtnSeleccionarDocumentos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LogisticaBtnSeleccionarDocumentos.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaBtnSeleccionarDocumentos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
-            this.LogisticaBtnSeleccionarDocumentos.Location = new System.Drawing.Point(557, 75);
-            this.LogisticaBtnSeleccionarDocumentos.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaBtnSeleccionarDocumentos.Location = new System.Drawing.Point(743, 92);
+            this.LogisticaBtnSeleccionarDocumentos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaBtnSeleccionarDocumentos.Name = "LogisticaBtnSeleccionarDocumentos";
-            this.LogisticaBtnSeleccionarDocumentos.Size = new System.Drawing.Size(206, 32);
+            this.LogisticaBtnSeleccionarDocumentos.Size = new System.Drawing.Size(275, 39);
             this.LogisticaBtnSeleccionarDocumentos.TabIndex = 10;
             this.LogisticaBtnSeleccionarDocumentos.Text = "📎 Seleccionar archivos";
             this.LogisticaBtnSeleccionarDocumentos.UseVisualStyleBackColor = false;
@@ -528,10 +509,9 @@
             this.LogisticaLblDocumentosRespaldo.AutoSize = true;
             this.LogisticaLblDocumentosRespaldo.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblDocumentosRespaldo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblDocumentosRespaldo.Location = new System.Drawing.Point(538, 50);
-            this.LogisticaLblDocumentosRespaldo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblDocumentosRespaldo.Location = new System.Drawing.Point(717, 62);
             this.LogisticaLblDocumentosRespaldo.Name = "LogisticaLblDocumentosRespaldo";
-            this.LogisticaLblDocumentosRespaldo.Size = new System.Drawing.Size(258, 17);
+            this.LogisticaLblDocumentosRespaldo.Size = new System.Drawing.Size(324, 21);
             this.LogisticaLblDocumentosRespaldo.TabIndex = 9;
             this.LogisticaLblDocumentosRespaldo.Text = "Documentos de Respaldo (Opcional)";
             this.LogisticaLblDocumentosRespaldo.Click += new System.EventHandler(this.lblDocumentosRespaldo_Click);
@@ -541,13 +521,13 @@
             this.LogisticaTxtConceptoPago.BackColor = System.Drawing.Color.White;
             this.LogisticaTxtConceptoPago.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LogisticaTxtConceptoPago.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaTxtConceptoPago.Location = new System.Drawing.Point(236, 72);
-            this.LogisticaTxtConceptoPago.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaTxtConceptoPago.Location = new System.Drawing.Point(315, 89);
+            this.LogisticaTxtConceptoPago.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaTxtConceptoPago.MaxLength = 250;
             this.LogisticaTxtConceptoPago.Multiline = true;
             this.LogisticaTxtConceptoPago.Name = "LogisticaTxtConceptoPago";
             this.LogisticaTxtConceptoPago.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.LogisticaTxtConceptoPago.Size = new System.Drawing.Size(300, 37);
+            this.LogisticaTxtConceptoPago.Size = new System.Drawing.Size(399, 45);
             this.LogisticaTxtConceptoPago.TabIndex = 2;
             // 
             // LogisticaLblConceptoPago
@@ -555,10 +535,9 @@
             this.LogisticaLblConceptoPago.AutoSize = true;
             this.LogisticaLblConceptoPago.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblConceptoPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblConceptoPago.Location = new System.Drawing.Point(231, 49);
-            this.LogisticaLblConceptoPago.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblConceptoPago.Location = new System.Drawing.Point(308, 60);
             this.LogisticaLblConceptoPago.Name = "LogisticaLblConceptoPago";
-            this.LogisticaLblConceptoPago.Size = new System.Drawing.Size(148, 17);
+            this.LogisticaLblConceptoPago.Size = new System.Drawing.Size(181, 21);
             this.LogisticaLblConceptoPago.TabIndex = 8;
             this.LogisticaLblConceptoPago.Text = "Concepto de pago *";
             // 
@@ -567,10 +546,9 @@
             this.LogisticaLblMonedaMonto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.LogisticaLblMonedaMonto.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblMonedaMonto.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaLblMonedaMonto.Location = new System.Drawing.Point(179, 68);
-            this.LogisticaLblMonedaMonto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblMonedaMonto.Location = new System.Drawing.Point(239, 84);
             this.LogisticaLblMonedaMonto.Name = "LogisticaLblMonedaMonto";
-            this.LogisticaLblMonedaMonto.Size = new System.Drawing.Size(41, 24);
+            this.LogisticaLblMonedaMonto.Size = new System.Drawing.Size(55, 30);
             this.LogisticaLblMonedaMonto.TabIndex = 7;
             this.LogisticaLblMonedaMonto.Text = "GTQ";
             this.LogisticaLblMonedaMonto.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -581,10 +559,10 @@
             this.LogisticaTxtMontoPagar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LogisticaTxtMontoPagar.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaTxtMontoPagar.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LogisticaTxtMontoPagar.Location = new System.Drawing.Point(26, 68);
-            this.LogisticaTxtMontoPagar.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaTxtMontoPagar.Location = new System.Drawing.Point(35, 84);
+            this.LogisticaTxtMontoPagar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaTxtMontoPagar.Name = "LogisticaTxtMontoPagar";
-            this.LogisticaTxtMontoPagar.Size = new System.Drawing.Size(154, 26);
+            this.LogisticaTxtMontoPagar.Size = new System.Drawing.Size(205, 30);
             this.LogisticaTxtMontoPagar.TabIndex = 6;
             this.LogisticaTxtMontoPagar.TabStop = false;
             this.LogisticaTxtMontoPagar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -594,10 +572,9 @@
             this.LogisticaLblMontoPagar.AutoSize = true;
             this.LogisticaLblMontoPagar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblMontoPagar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblMontoPagar.Location = new System.Drawing.Point(22, 49);
-            this.LogisticaLblMontoPagar.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblMontoPagar.Location = new System.Drawing.Point(29, 60);
             this.LogisticaLblMontoPagar.Name = "LogisticaLblMontoPagar";
-            this.LogisticaLblMontoPagar.Size = new System.Drawing.Size(122, 17);
+            this.LogisticaLblMontoPagar.Size = new System.Drawing.Size(150, 21);
             this.LogisticaLblMontoPagar.TabIndex = 5;
             this.LogisticaLblMontoPagar.Text = "Monto a pagar *";
             // 
@@ -607,10 +584,9 @@
             this.LogisticaLblTituloInformacionPago.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaLblTituloInformacionPago.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTituloInformacionPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblTituloInformacionPago.Location = new System.Drawing.Point(54, 15);
-            this.LogisticaLblTituloInformacionPago.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTituloInformacionPago.Location = new System.Drawing.Point(72, 18);
             this.LogisticaLblTituloInformacionPago.Name = "LogisticaLblTituloInformacionPago";
-            this.LogisticaLblTituloInformacionPago.Size = new System.Drawing.Size(217, 22);
+            this.LogisticaLblTituloInformacionPago.Size = new System.Drawing.Size(262, 26);
             this.LogisticaLblTituloInformacionPago.TabIndex = 4;
             this.LogisticaLblTituloInformacionPago.Text = "Información del Pago";
             // 
@@ -619,10 +595,9 @@
             this.LogisticaLblNumeroSeccionPago.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
             this.LogisticaLblNumeroSeccionPago.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblNumeroSeccionPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
-            this.LogisticaLblNumeroSeccionPago.Location = new System.Drawing.Point(26, 10);
-            this.LogisticaLblNumeroSeccionPago.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblNumeroSeccionPago.Location = new System.Drawing.Point(35, 12);
             this.LogisticaLblNumeroSeccionPago.Name = "LogisticaLblNumeroSeccionPago";
-            this.LogisticaLblNumeroSeccionPago.Size = new System.Drawing.Size(26, 28);
+            this.LogisticaLblNumeroSeccionPago.Size = new System.Drawing.Size(35, 34);
             this.LogisticaLblNumeroSeccionPago.TabIndex = 3;
             this.LogisticaLblNumeroSeccionPago.Text = "4";
             this.LogisticaLblNumeroSeccionPago.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -634,10 +609,10 @@
             this.LogisticaPnlDetalleServicio.Controls.Add(this.LogisticaDgvDetalleServicio);
             this.LogisticaPnlDetalleServicio.Controls.Add(this.LogisticaLblTituloDetalleServicio);
             this.LogisticaPnlDetalleServicio.Controls.Add(this.LogisticaLblNumeroSeccionDetalle);
-            this.LogisticaPnlDetalleServicio.Location = new System.Drawing.Point(33, 427);
-            this.LogisticaPnlDetalleServicio.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaPnlDetalleServicio.Location = new System.Drawing.Point(44, 487);
+            this.LogisticaPnlDetalleServicio.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPnlDetalleServicio.Name = "LogisticaPnlDetalleServicio";
-            this.LogisticaPnlDetalleServicio.Size = new System.Drawing.Size(785, 118);
+            this.LogisticaPnlDetalleServicio.Size = new System.Drawing.Size(1046, 145);
             this.LogisticaPnlDetalleServicio.TabIndex = 6;
             // 
             // LogisticaDgvDetalleServicio
@@ -674,8 +649,8 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.LogisticaDgvDetalleServicio.DefaultCellStyle = dataGridViewCellStyle3;
             this.LogisticaDgvDetalleServicio.EnableHeadersVisualStyles = false;
-            this.LogisticaDgvDetalleServicio.Location = new System.Drawing.Point(26, 46);
-            this.LogisticaDgvDetalleServicio.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaDgvDetalleServicio.Location = new System.Drawing.Point(35, 57);
+            this.LogisticaDgvDetalleServicio.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaDgvDetalleServicio.MultiSelect = false;
             this.LogisticaDgvDetalleServicio.Name = "LogisticaDgvDetalleServicio";
             this.LogisticaDgvDetalleServicio.ReadOnly = true;
@@ -683,7 +658,7 @@
             this.LogisticaDgvDetalleServicio.RowHeadersWidth = 51;
             this.LogisticaDgvDetalleServicio.RowTemplate.Height = 24;
             this.LogisticaDgvDetalleServicio.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.LogisticaDgvDetalleServicio.Size = new System.Drawing.Size(733, 61);
+            this.LogisticaDgvDetalleServicio.Size = new System.Drawing.Size(977, 75);
             this.LogisticaDgvDetalleServicio.TabIndex = 3;
             // 
             // colNumero
@@ -731,10 +706,9 @@
             this.LogisticaLblTituloDetalleServicio.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaLblTituloDetalleServicio.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTituloDetalleServicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblTituloDetalleServicio.Location = new System.Drawing.Point(52, 13);
-            this.LogisticaLblTituloDetalleServicio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTituloDetalleServicio.Location = new System.Drawing.Point(69, 16);
             this.LogisticaLblTituloDetalleServicio.Name = "LogisticaLblTituloDetalleServicio";
-            this.LogisticaLblTituloDetalleServicio.Size = new System.Drawing.Size(274, 22);
+            this.LogisticaLblTituloDetalleServicio.Size = new System.Drawing.Size(328, 26);
             this.LogisticaLblTituloDetalleServicio.TabIndex = 2;
             this.LogisticaLblTituloDetalleServicio.Text = "Detalle del servicio a pagar";
             // 
@@ -743,10 +717,9 @@
             this.LogisticaLblNumeroSeccionDetalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
             this.LogisticaLblNumeroSeccionDetalle.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblNumeroSeccionDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
-            this.LogisticaLblNumeroSeccionDetalle.Location = new System.Drawing.Point(23, 8);
-            this.LogisticaLblNumeroSeccionDetalle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblNumeroSeccionDetalle.Location = new System.Drawing.Point(31, 10);
             this.LogisticaLblNumeroSeccionDetalle.Name = "LogisticaLblNumeroSeccionDetalle";
-            this.LogisticaLblNumeroSeccionDetalle.Size = new System.Drawing.Size(26, 28);
+            this.LogisticaLblNumeroSeccionDetalle.Size = new System.Drawing.Size(35, 34);
             this.LogisticaLblNumeroSeccionDetalle.TabIndex = 1;
             this.LogisticaLblNumeroSeccionDetalle.Text = "3";
             this.LogisticaLblNumeroSeccionDetalle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -755,10 +728,10 @@
             // 
             this.LogisticaPbAyuda.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaPbAyuda.Image = global::CapaVista_Enlace_Logistica.Properties.Resources.btn_ayuda;
-            this.LogisticaPbAyuda.Location = new System.Drawing.Point(1073, 10);
-            this.LogisticaPbAyuda.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaPbAyuda.Location = new System.Drawing.Point(1431, 12);
+            this.LogisticaPbAyuda.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPbAyuda.Name = "LogisticaPbAyuda";
-            this.LogisticaPbAyuda.Size = new System.Drawing.Size(60, 66);
+            this.LogisticaPbAyuda.Size = new System.Drawing.Size(80, 81);
             this.LogisticaPbAyuda.TabIndex = 5;
             this.LogisticaPbAyuda.TabStop = false;
             // 
@@ -783,20 +756,20 @@
             this.LogisticaPnlInformacionTransportista.Controls.Add(this.LogisticaLblNombreTransportista);
             this.LogisticaPnlInformacionTransportista.Controls.Add(this.LogisticaLblTituloInformacionTransportista);
             this.LogisticaPnlInformacionTransportista.Controls.Add(this.LogisticaLblNumeroSeccionTransportista);
-            this.LogisticaPnlInformacionTransportista.Location = new System.Drawing.Point(33, 236);
-            this.LogisticaPnlInformacionTransportista.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaPnlInformacionTransportista.Location = new System.Drawing.Point(44, 269);
+            this.LogisticaPnlInformacionTransportista.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPnlInformacionTransportista.Name = "LogisticaPnlInformacionTransportista";
-            this.LogisticaPnlInformacionTransportista.Size = new System.Drawing.Size(786, 167);
+            this.LogisticaPnlInformacionTransportista.Size = new System.Drawing.Size(1047, 205);
             this.LogisticaPnlInformacionTransportista.TabIndex = 4;
             // 
             // LogisticaRdoDolares
             // 
             this.LogisticaRdoDolares.AutoSize = true;
             this.LogisticaRdoDolares.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaRdoDolares.Location = new System.Drawing.Point(682, 128);
-            this.LogisticaRdoDolares.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaRdoDolares.Location = new System.Drawing.Point(909, 158);
+            this.LogisticaRdoDolares.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaRdoDolares.Name = "LogisticaRdoDolares";
-            this.LogisticaRdoDolares.Size = new System.Drawing.Size(112, 23);
+            this.LogisticaRdoDolares.Size = new System.Drawing.Size(136, 27);
             this.LogisticaRdoDolares.TabIndex = 14;
             this.LogisticaRdoDolares.Text = "Dólares (USD)";
             this.LogisticaRdoDolares.UseVisualStyleBackColor = true;
@@ -806,10 +779,10 @@
             this.LogisticaRdoQuetzales.AutoSize = true;
             this.LogisticaRdoQuetzales.Checked = true;
             this.LogisticaRdoQuetzales.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaRdoQuetzales.Location = new System.Drawing.Point(565, 128);
-            this.LogisticaRdoQuetzales.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaRdoQuetzales.Location = new System.Drawing.Point(753, 158);
+            this.LogisticaRdoQuetzales.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaRdoQuetzales.Name = "LogisticaRdoQuetzales";
-            this.LogisticaRdoQuetzales.Size = new System.Drawing.Size(127, 23);
+            this.LogisticaRdoQuetzales.Size = new System.Drawing.Size(155, 27);
             this.LogisticaRdoQuetzales.TabIndex = 13;
             this.LogisticaRdoQuetzales.TabStop = true;
             this.LogisticaRdoQuetzales.Text = "Quetzales (GTQ)";
@@ -820,10 +793,9 @@
             this.LogisticaLblMoneda.AutoSize = true;
             this.LogisticaLblMoneda.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblMoneda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblMoneda.Location = new System.Drawing.Point(562, 106);
-            this.LogisticaLblMoneda.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblMoneda.Location = new System.Drawing.Point(749, 130);
             this.LogisticaLblMoneda.Name = "LogisticaLblMoneda";
-            this.LogisticaLblMoneda.Size = new System.Drawing.Size(63, 17);
+            this.LogisticaLblMoneda.Size = new System.Drawing.Size(78, 21);
             this.LogisticaLblMoneda.TabIndex = 5;
             this.LogisticaLblMoneda.Text = "Moneda";
             this.LogisticaLblMoneda.Click += new System.EventHandler(this.lblMoneda_Click);
@@ -831,10 +803,10 @@
             // LogisticaTxtNumeroCuenta
             // 
             this.LogisticaTxtNumeroCuenta.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaTxtNumeroCuenta.Location = new System.Drawing.Point(385, 126);
-            this.LogisticaTxtNumeroCuenta.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaTxtNumeroCuenta.Location = new System.Drawing.Point(513, 155);
+            this.LogisticaTxtNumeroCuenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaTxtNumeroCuenta.Name = "LogisticaTxtNumeroCuenta";
-            this.LogisticaTxtNumeroCuenta.Size = new System.Drawing.Size(166, 26);
+            this.LogisticaTxtNumeroCuenta.Size = new System.Drawing.Size(220, 30);
             this.LogisticaTxtNumeroCuenta.TabIndex = 5;
             // 
             // LogisticaLblNumeroCuenta
@@ -842,10 +814,9 @@
             this.LogisticaLblNumeroCuenta.AutoSize = true;
             this.LogisticaLblNumeroCuenta.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblNumeroCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblNumeroCuenta.Location = new System.Drawing.Point(382, 106);
-            this.LogisticaLblNumeroCuenta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblNumeroCuenta.Location = new System.Drawing.Point(509, 130);
             this.LogisticaLblNumeroCuenta.Name = "LogisticaLblNumeroCuenta";
-            this.LogisticaLblNumeroCuenta.Size = new System.Drawing.Size(149, 17);
+            this.LogisticaLblNumeroCuenta.Size = new System.Drawing.Size(183, 21);
             this.LogisticaLblNumeroCuenta.TabIndex = 12;
             this.LogisticaLblNumeroCuenta.Text = "Número de cuenta *";
             // 
@@ -854,10 +825,10 @@
             this.LogisticaCboTipoCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LogisticaCboTipoCuenta.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaCboTipoCuenta.FormattingEnabled = true;
-            this.LogisticaCboTipoCuenta.Location = new System.Drawing.Point(218, 126);
-            this.LogisticaCboTipoCuenta.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaCboTipoCuenta.Location = new System.Drawing.Point(291, 155);
+            this.LogisticaCboTipoCuenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaCboTipoCuenta.Name = "LogisticaCboTipoCuenta";
-            this.LogisticaCboTipoCuenta.Size = new System.Drawing.Size(151, 27);
+            this.LogisticaCboTipoCuenta.Size = new System.Drawing.Size(200, 31);
             this.LogisticaCboTipoCuenta.TabIndex = 11;
             // 
             // LogisticaLblTIpoCuenta
@@ -865,10 +836,9 @@
             this.LogisticaLblTIpoCuenta.AutoSize = true;
             this.LogisticaLblTIpoCuenta.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTIpoCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblTIpoCuenta.Location = new System.Drawing.Point(215, 106);
-            this.LogisticaLblTIpoCuenta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTIpoCuenta.Location = new System.Drawing.Point(287, 130);
             this.LogisticaLblTIpoCuenta.Name = "LogisticaLblTIpoCuenta";
-            this.LogisticaLblTIpoCuenta.Size = new System.Drawing.Size(110, 17);
+            this.LogisticaLblTIpoCuenta.Size = new System.Drawing.Size(136, 21);
             this.LogisticaLblTIpoCuenta.TabIndex = 10;
             this.LogisticaLblTIpoCuenta.Text = "Tipo de cuenta";
             // 
@@ -877,10 +847,10 @@
             this.LogisticaCboBancoBeneficiario.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LogisticaCboBancoBeneficiario.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaCboBancoBeneficiario.FormattingEnabled = true;
-            this.LogisticaCboBancoBeneficiario.Location = new System.Drawing.Point(30, 126);
-            this.LogisticaCboBancoBeneficiario.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaCboBancoBeneficiario.Location = new System.Drawing.Point(40, 155);
+            this.LogisticaCboBancoBeneficiario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaCboBancoBeneficiario.Name = "LogisticaCboBancoBeneficiario";
-            this.LogisticaCboBancoBeneficiario.Size = new System.Drawing.Size(174, 27);
+            this.LogisticaCboBancoBeneficiario.Size = new System.Drawing.Size(231, 31);
             this.LogisticaCboBancoBeneficiario.TabIndex = 9;
             // 
             // LogisticaLblBanco
@@ -888,10 +858,9 @@
             this.LogisticaLblBanco.AutoSize = true;
             this.LogisticaLblBanco.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblBanco.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblBanco.Location = new System.Drawing.Point(27, 106);
-            this.LogisticaLblBanco.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblBanco.Location = new System.Drawing.Point(36, 130);
             this.LogisticaLblBanco.Name = "LogisticaLblBanco";
-            this.LogisticaLblBanco.Size = new System.Drawing.Size(51, 17);
+            this.LogisticaLblBanco.Size = new System.Drawing.Size(63, 21);
             this.LogisticaLblBanco.TabIndex = 8;
             this.LogisticaLblBanco.Text = "Banco";
             // 
@@ -900,11 +869,11 @@
             this.LogisticaTxtDireccionTransportista.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.LogisticaTxtDireccionTransportista.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LogisticaTxtDireccionTransportista.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaTxtDireccionTransportista.Location = new System.Drawing.Point(430, 72);
-            this.LogisticaTxtDireccionTransportista.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaTxtDireccionTransportista.Location = new System.Drawing.Point(573, 89);
+            this.LogisticaTxtDireccionTransportista.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaTxtDireccionTransportista.Name = "LogisticaTxtDireccionTransportista";
             this.LogisticaTxtDireccionTransportista.ReadOnly = true;
-            this.LogisticaTxtDireccionTransportista.Size = new System.Drawing.Size(323, 26);
+            this.LogisticaTxtDireccionTransportista.Size = new System.Drawing.Size(430, 30);
             this.LogisticaTxtDireccionTransportista.TabIndex = 7;
             this.LogisticaTxtDireccionTransportista.TabStop = false;
             this.LogisticaTxtDireccionTransportista.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
@@ -914,11 +883,11 @@
             this.LogisticaTxtNitTransportista.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.LogisticaTxtNitTransportista.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LogisticaTxtNitTransportista.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaTxtNitTransportista.Location = new System.Drawing.Point(270, 72);
-            this.LogisticaTxtNitTransportista.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaTxtNitTransportista.Location = new System.Drawing.Point(360, 89);
+            this.LogisticaTxtNitTransportista.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaTxtNitTransportista.Name = "LogisticaTxtNitTransportista";
             this.LogisticaTxtNitTransportista.ReadOnly = true;
-            this.LogisticaTxtNitTransportista.Size = new System.Drawing.Size(143, 26);
+            this.LogisticaTxtNitTransportista.Size = new System.Drawing.Size(190, 30);
             this.LogisticaTxtNitTransportista.TabIndex = 6;
             this.LogisticaTxtNitTransportista.TabStop = false;
             // 
@@ -927,11 +896,11 @@
             this.LogisticaTxtNombreTransportista.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.LogisticaTxtNombreTransportista.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LogisticaTxtNombreTransportista.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaTxtNombreTransportista.Location = new System.Drawing.Point(27, 72);
-            this.LogisticaTxtNombreTransportista.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaTxtNombreTransportista.Location = new System.Drawing.Point(36, 89);
+            this.LogisticaTxtNombreTransportista.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaTxtNombreTransportista.Name = "LogisticaTxtNombreTransportista";
             this.LogisticaTxtNombreTransportista.ReadOnly = true;
-            this.LogisticaTxtNombreTransportista.Size = new System.Drawing.Size(226, 26);
+            this.LogisticaTxtNombreTransportista.Size = new System.Drawing.Size(301, 30);
             this.LogisticaTxtNombreTransportista.TabIndex = 5;
             this.LogisticaTxtNombreTransportista.TabStop = false;
             // 
@@ -940,10 +909,9 @@
             this.LogisticaLblDireccionTransportista.AutoSize = true;
             this.LogisticaLblDireccionTransportista.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblDireccionTransportista.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblDireccionTransportista.Location = new System.Drawing.Point(428, 54);
-            this.LogisticaLblDireccionTransportista.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblDireccionTransportista.Location = new System.Drawing.Point(571, 66);
             this.LogisticaLblDireccionTransportista.Name = "LogisticaLblDireccionTransportista";
-            this.LogisticaLblDireccionTransportista.Size = new System.Drawing.Size(70, 17);
+            this.LogisticaLblDireccionTransportista.Size = new System.Drawing.Size(90, 21);
             this.LogisticaLblDireccionTransportista.TabIndex = 4;
             this.LogisticaLblDireccionTransportista.Text = "Dirección";
             this.LogisticaLblDireccionTransportista.Click += new System.EventHandler(this.label3_Click);
@@ -953,10 +921,9 @@
             this.LogisticaLblNitTransportista.AutoSize = true;
             this.LogisticaLblNitTransportista.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblNitTransportista.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblNitTransportista.Location = new System.Drawing.Point(268, 54);
-            this.LogisticaLblNitTransportista.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblNitTransportista.Location = new System.Drawing.Point(357, 66);
             this.LogisticaLblNitTransportista.Name = "LogisticaLblNitTransportista";
-            this.LogisticaLblNitTransportista.Size = new System.Drawing.Size(35, 17);
+            this.LogisticaLblNitTransportista.Size = new System.Drawing.Size(41, 21);
             this.LogisticaLblNitTransportista.TabIndex = 3;
             this.LogisticaLblNitTransportista.Text = "NIT";
             // 
@@ -965,10 +932,9 @@
             this.LogisticaLblNombreTransportista.AutoSize = true;
             this.LogisticaLblNombreTransportista.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblNombreTransportista.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblNombreTransportista.Location = new System.Drawing.Point(25, 54);
-            this.LogisticaLblNombreTransportista.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblNombreTransportista.Location = new System.Drawing.Point(33, 66);
             this.LogisticaLblNombreTransportista.Name = "LogisticaLblNombreTransportista";
-            this.LogisticaLblNombreTransportista.Size = new System.Drawing.Size(161, 17);
+            this.LogisticaLblNombreTransportista.Size = new System.Drawing.Size(201, 21);
             this.LogisticaLblNombreTransportista.TabIndex = 2;
             this.LogisticaLblNombreTransportista.Text = "Nombre o razón social";
             // 
@@ -978,10 +944,9 @@
             this.LogisticaLblTituloInformacionTransportista.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaLblTituloInformacionTransportista.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTituloInformacionTransportista.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblTituloInformacionTransportista.Location = new System.Drawing.Point(53, 20);
-            this.LogisticaLblTituloInformacionTransportista.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTituloInformacionTransportista.Location = new System.Drawing.Point(71, 25);
             this.LogisticaLblTituloInformacionTransportista.Name = "LogisticaLblTituloInformacionTransportista";
-            this.LogisticaLblTituloInformacionTransportista.Size = new System.Drawing.Size(295, 22);
+            this.LogisticaLblTituloInformacionTransportista.Size = new System.Drawing.Size(355, 26);
             this.LogisticaLblTituloInformacionTransportista.TabIndex = 1;
             this.LogisticaLblTituloInformacionTransportista.Text = "Información del transportista";
             // 
@@ -990,10 +955,9 @@
             this.LogisticaLblNumeroSeccionTransportista.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
             this.LogisticaLblNumeroSeccionTransportista.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblNumeroSeccionTransportista.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
-            this.LogisticaLblNumeroSeccionTransportista.Location = new System.Drawing.Point(25, 15);
-            this.LogisticaLblNumeroSeccionTransportista.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblNumeroSeccionTransportista.Location = new System.Drawing.Point(33, 18);
             this.LogisticaLblNumeroSeccionTransportista.Name = "LogisticaLblNumeroSeccionTransportista";
-            this.LogisticaLblNumeroSeccionTransportista.Size = new System.Drawing.Size(26, 28);
+            this.LogisticaLblNumeroSeccionTransportista.Size = new System.Drawing.Size(35, 34);
             this.LogisticaLblNumeroSeccionTransportista.TabIndex = 0;
             this.LogisticaLblNumeroSeccionTransportista.Text = "2";
             this.LogisticaLblNumeroSeccionTransportista.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1012,10 +976,10 @@
             this.LogisticaPnlSeleccionServicio.Controls.Add(this.LogisticaLblServicioTransporte);
             this.LogisticaPnlSeleccionServicio.Controls.Add(this.LogisticaLblTituloSeleccionServicio);
             this.LogisticaPnlSeleccionServicio.Controls.Add(this.LogisticaLblNumeroSeccionServicio);
-            this.LogisticaPnlSeleccionServicio.Location = new System.Drawing.Point(33, 85);
-            this.LogisticaPnlSeleccionServicio.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaPnlSeleccionServicio.Location = new System.Drawing.Point(44, 95);
+            this.LogisticaPnlSeleccionServicio.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPnlSeleccionServicio.Name = "LogisticaPnlSeleccionServicio";
-            this.LogisticaPnlSeleccionServicio.Size = new System.Drawing.Size(786, 131);
+            this.LogisticaPnlSeleccionServicio.Size = new System.Drawing.Size(1047, 161);
             this.LogisticaPnlSeleccionServicio.TabIndex = 3;
             // 
             // LogisticaTxtFechaServicio
@@ -1023,10 +987,10 @@
             this.LogisticaTxtFechaServicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.LogisticaTxtFechaServicio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LogisticaTxtFechaServicio.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaTxtFechaServicio.Location = new System.Drawing.Point(620, 71);
-            this.LogisticaTxtFechaServicio.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaTxtFechaServicio.Location = new System.Drawing.Point(827, 87);
+            this.LogisticaTxtFechaServicio.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaTxtFechaServicio.Name = "LogisticaTxtFechaServicio";
-            this.LogisticaTxtFechaServicio.Size = new System.Drawing.Size(102, 26);
+            this.LogisticaTxtFechaServicio.Size = new System.Drawing.Size(135, 30);
             this.LogisticaTxtFechaServicio.TabIndex = 8;
             this.LogisticaTxtFechaServicio.TabStop = false;
             // 
@@ -1035,10 +999,9 @@
             this.LogisticaLblFechaServicio.AutoSize = true;
             this.LogisticaLblFechaServicio.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblFechaServicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblFechaServicio.Location = new System.Drawing.Point(616, 50);
-            this.LogisticaLblFechaServicio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblFechaServicio.Location = new System.Drawing.Point(821, 62);
             this.LogisticaLblFechaServicio.Name = "LogisticaLblFechaServicio";
-            this.LogisticaLblFechaServicio.Size = new System.Drawing.Size(126, 17);
+            this.LogisticaLblFechaServicio.Size = new System.Drawing.Size(159, 21);
             this.LogisticaLblFechaServicio.TabIndex = 7;
             this.LogisticaLblFechaServicio.Text = "Fecha de Servicio";
             // 
@@ -1047,10 +1010,10 @@
             this.LogisticaTxtNumeroGuia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.LogisticaTxtNumeroGuia.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LogisticaTxtNumeroGuia.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaTxtNumeroGuia.Location = new System.Drawing.Point(504, 71);
-            this.LogisticaTxtNumeroGuia.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaTxtNumeroGuia.Location = new System.Drawing.Point(672, 87);
+            this.LogisticaTxtNumeroGuia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaTxtNumeroGuia.Name = "LogisticaTxtNumeroGuia";
-            this.LogisticaTxtNumeroGuia.Size = new System.Drawing.Size(102, 26);
+            this.LogisticaTxtNumeroGuia.Size = new System.Drawing.Size(135, 30);
             this.LogisticaTxtNumeroGuia.TabIndex = 6;
             this.LogisticaTxtNumeroGuia.TabStop = false;
             // 
@@ -1059,10 +1022,9 @@
             this.LogisticaLblNumeroGuia.AutoSize = true;
             this.LogisticaLblNumeroGuia.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblNumeroGuia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblNumeroGuia.Location = new System.Drawing.Point(502, 50);
-            this.LogisticaLblNumeroGuia.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblNumeroGuia.Location = new System.Drawing.Point(669, 62);
             this.LogisticaLblNumeroGuia.Name = "LogisticaLblNumeroGuia";
-            this.LogisticaLblNumeroGuia.Size = new System.Drawing.Size(87, 17);
+            this.LogisticaLblNumeroGuia.Size = new System.Drawing.Size(109, 21);
             this.LogisticaLblNumeroGuia.TabIndex = 5;
             this.LogisticaLblNumeroGuia.Text = "No. de Guía";
             // 
@@ -1071,11 +1033,11 @@
             this.LogisticaTxtNumeroServicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.LogisticaTxtNumeroServicio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LogisticaTxtNumeroServicio.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaTxtNumeroServicio.Location = new System.Drawing.Point(380, 71);
-            this.LogisticaTxtNumeroServicio.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaTxtNumeroServicio.Location = new System.Drawing.Point(507, 87);
+            this.LogisticaTxtNumeroServicio.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaTxtNumeroServicio.Name = "LogisticaTxtNumeroServicio";
             this.LogisticaTxtNumeroServicio.ReadOnly = true;
-            this.LogisticaTxtNumeroServicio.Size = new System.Drawing.Size(109, 26);
+            this.LogisticaTxtNumeroServicio.Size = new System.Drawing.Size(145, 30);
             this.LogisticaTxtNumeroServicio.TabIndex = 4;
             this.LogisticaTxtNumeroServicio.TabStop = false;
             // 
@@ -1084,10 +1046,9 @@
             this.LogisticaLblNumeroServicio.AutoSize = true;
             this.LogisticaLblNumeroServicio.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblNumeroServicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblNumeroServicio.Location = new System.Drawing.Point(378, 51);
-            this.LogisticaLblNumeroServicio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblNumeroServicio.Location = new System.Drawing.Point(504, 63);
             this.LogisticaLblNumeroServicio.Name = "LogisticaLblNumeroServicio";
-            this.LogisticaLblNumeroServicio.Size = new System.Drawing.Size(110, 17);
+            this.LogisticaLblNumeroServicio.Size = new System.Drawing.Size(138, 21);
             this.LogisticaLblNumeroServicio.TabIndex = 3;
             this.LogisticaLblNumeroServicio.Text = "No. de Servicio";
             // 
@@ -1096,10 +1057,10 @@
             this.LogisticaCboServicioTransporte.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LogisticaCboServicioTransporte.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaCboServicioTransporte.FormattingEnabled = true;
-            this.LogisticaCboServicioTransporte.Location = new System.Drawing.Point(27, 69);
-            this.LogisticaCboServicioTransporte.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaCboServicioTransporte.Location = new System.Drawing.Point(36, 85);
+            this.LogisticaCboServicioTransporte.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaCboServicioTransporte.Name = "LogisticaCboServicioTransporte";
-            this.LogisticaCboServicioTransporte.Size = new System.Drawing.Size(338, 27);
+            this.LogisticaCboServicioTransporte.Size = new System.Drawing.Size(449, 31);
             this.LogisticaCboServicioTransporte.TabIndex = 0;
             // 
             // LogisticaLblServicioTransporte
@@ -1107,10 +1068,9 @@
             this.LogisticaLblServicioTransporte.AutoSize = true;
             this.LogisticaLblServicioTransporte.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblServicioTransporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblServicioTransporte.Location = new System.Drawing.Point(24, 50);
-            this.LogisticaLblServicioTransporte.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblServicioTransporte.Location = new System.Drawing.Point(32, 62);
             this.LogisticaLblServicioTransporte.Name = "LogisticaLblServicioTransporte";
-            this.LogisticaLblServicioTransporte.Size = new System.Drawing.Size(173, 17);
+            this.LogisticaLblServicioTransporte.Size = new System.Drawing.Size(215, 21);
             this.LogisticaLblServicioTransporte.TabIndex = 2;
             this.LogisticaLblServicioTransporte.Text = "Servicio de transporte *";
             // 
@@ -1120,10 +1080,9 @@
             this.LogisticaLblTituloSeleccionServicio.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaLblTituloSeleccionServicio.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTituloSeleccionServicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblTituloSeleccionServicio.Location = new System.Drawing.Point(51, 16);
-            this.LogisticaLblTituloSeleccionServicio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTituloSeleccionServicio.Location = new System.Drawing.Point(68, 20);
             this.LogisticaLblTituloSeleccionServicio.Name = "LogisticaLblTituloSeleccionServicio";
-            this.LogisticaLblTituloSeleccionServicio.Size = new System.Drawing.Size(358, 22);
+            this.LogisticaLblTituloSeleccionServicio.Size = new System.Drawing.Size(426, 26);
             this.LogisticaLblTituloSeleccionServicio.TabIndex = 1;
             this.LogisticaLblTituloSeleccionServicio.Text = "Selección del servicio de transporte";
             // 
@@ -1132,10 +1091,9 @@
             this.LogisticaLblNumeroSeccionServicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
             this.LogisticaLblNumeroSeccionServicio.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblNumeroSeccionServicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
-            this.LogisticaLblNumeroSeccionServicio.Location = new System.Drawing.Point(22, 12);
-            this.LogisticaLblNumeroSeccionServicio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblNumeroSeccionServicio.Location = new System.Drawing.Point(29, 15);
             this.LogisticaLblNumeroSeccionServicio.Name = "LogisticaLblNumeroSeccionServicio";
-            this.LogisticaLblNumeroSeccionServicio.Size = new System.Drawing.Size(26, 28);
+            this.LogisticaLblNumeroSeccionServicio.Size = new System.Drawing.Size(35, 34);
             this.LogisticaLblNumeroSeccionServicio.TabIndex = 0;
             this.LogisticaLblNumeroSeccionServicio.Text = "1";
             this.LogisticaLblNumeroSeccionServicio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1146,10 +1104,9 @@
             this.LogisticaLblDescripcionSolicitudPago.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaLblDescripcionSolicitudPago.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblDescripcionSolicitudPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
-            this.LogisticaLblDescripcionSolicitudPago.Location = new System.Drawing.Point(104, 50);
-            this.LogisticaLblDescripcionSolicitudPago.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblDescripcionSolicitudPago.Location = new System.Drawing.Point(139, 62);
             this.LogisticaLblDescripcionSolicitudPago.Name = "LogisticaLblDescripcionSolicitudPago";
-            this.LogisticaLblDescripcionSolicitudPago.Size = new System.Drawing.Size(733, 18);
+            this.LogisticaLblDescripcionSolicitudPago.Size = new System.Drawing.Size(883, 22);
             this.LogisticaLblDescripcionSolicitudPago.TabIndex = 2;
             this.LogisticaLblDescripcionSolicitudPago.Text = "Seleccione un servicio de transporte externo para generar y enviar su solicitud d" +
     "e pago directamente a Bancos.";
@@ -1160,10 +1117,9 @@
             this.LogisticaLblTituloSolicitudPago.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaLblTituloSolicitudPago.Font = new System.Drawing.Font("Lucida Bright", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTituloSolicitudPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblTituloSolicitudPago.Location = new System.Drawing.Point(142, 10);
-            this.LogisticaLblTituloSolicitudPago.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTituloSolicitudPago.Location = new System.Drawing.Point(189, 12);
             this.LogisticaLblTituloSolicitudPago.Name = "LogisticaLblTituloSolicitudPago";
-            this.LogisticaLblTituloSolicitudPago.Size = new System.Drawing.Size(586, 40);
+            this.LogisticaLblTituloSolicitudPago.Size = new System.Drawing.Size(707, 48);
             this.LogisticaLblTituloSolicitudPago.TabIndex = 1;
             this.LogisticaLblTituloSolicitudPago.Text = "Generación de Solicitud de Pago";
             // 
@@ -1171,10 +1127,10 @@
             // 
             this.LogisticaPbDonButti.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaPbDonButti.Image = global::CapaVista_Enlace_Logistica.Properties.Resources._71;
-            this.LogisticaPbDonButti.Location = new System.Drawing.Point(862, 11);
-            this.LogisticaPbDonButti.Margin = new System.Windows.Forms.Padding(2);
+            this.LogisticaPbDonButti.Location = new System.Drawing.Point(1149, 14);
+            this.LogisticaPbDonButti.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPbDonButti.Name = "LogisticaPbDonButti";
-            this.LogisticaPbDonButti.Size = new System.Drawing.Size(201, 232);
+            this.LogisticaPbDonButti.Size = new System.Drawing.Size(268, 286);
             this.LogisticaPbDonButti.TabIndex = 0;
             this.LogisticaPbDonButti.TabStop = false;
             this.LogisticaPbDonButti.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -1182,25 +1138,25 @@
             // LogisticaLblResumenMonto
             // 
             this.LogisticaLblResumenMonto.AutoSize = true;
+            this.LogisticaLblResumenMonto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LogisticaLblResumenMonto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblResumenMonto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
-            this.LogisticaLblResumenMonto.Location = new System.Drawing.Point(845, 270);
-            this.LogisticaLblResumenMonto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblResumenMonto.Location = new System.Drawing.Point(1151, 199);
             this.LogisticaLblResumenMonto.Name = "LogisticaLblResumenMonto";
-            this.LogisticaLblResumenMonto.Size = new System.Drawing.Size(87, 15);
+            this.LogisticaLblResumenMonto.Size = new System.Drawing.Size(112, 20);
             this.LogisticaLblResumenMonto.TabIndex = 9;
             this.LogisticaLblResumenMonto.Text = "Monto a pagar";
             this.LogisticaLblResumenMonto.Click += new System.EventHandler(this.lblResumenMonto_Click);
             // 
             // Frm_Solicitud_Pago
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1144, 741);
+            this.ClientSize = new System.Drawing.Size(1525, 997);
             this.Controls.Add(this.LogisticaPnlFondoSolicitudPago);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "Frm_Solicitud_Pago";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1300,7 +1256,7 @@
         private System.Windows.Forms.Label LogisticaLblTextoResumenBanco;
         private System.Windows.Forms.Label LogisticaLblTextoResumenNit;
         private System.Windows.Forms.Label LogisticaLblTextoResumenTransportista;
-        private System.Windows.Forms.Label LogisticaLblDonButti;
+        private System.Windows.Forms.Label LogisticaLblTextoResumenFechaServicio;
         private System.Windows.Forms.Button LogisticaBtnGenerarSolicitud;
         private System.Windows.Forms.Label LogisticaLblTextoResumenConcepto;
         private System.Windows.Forms.Label LogisticaLblTextoResumenMonto;

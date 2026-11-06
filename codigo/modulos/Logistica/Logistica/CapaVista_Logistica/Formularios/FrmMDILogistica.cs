@@ -22,6 +22,7 @@ using CapaVista_MuestreoAuditoria_Logistica.Formularios;
 using CapaVista_CierreInventario_Logistica.Formularios;
 using CapaVista_Enlace_Logistica.Formas;
 using CapaVista_TransporteInterno_Logistica.Formularios;
+using CapaVista_Enlace_Logistica.Formas;
 
 namespace CapaVista_Logistica.Formularios
 {
@@ -418,6 +419,16 @@ namespace CapaVista_Logistica.Formularios
         private void LogisticaBtnProducto_Click(object sender, EventArgs e)
         {
             LogisticaMetAbrirFormulario(new FrmMantenimientoProducto());
+        }
+
+        private void LogisticaBtnEnlaces_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogisticaBtnEnlaceAOtrosModulos_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new Frm_Solicitud_Pago());
         }
     }
 }
