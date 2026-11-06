@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_Movimientos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_MovimientosProveedores", "CapaModelo_MovimientosProveedores\CapaModelo_MovimientosProveedores.csproj", "{13031F76-2415-43DF-8B94-6E4B41CD103B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_MovimientosProveedores", "PruebaUnitaria_MovimientosProveedores\Test_MovimientosProveedores.csproj", "{6254D789-1F0A-4F85-ABF0-16DB243AF180}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{13031F76-2415-43DF-8B94-6E4B41CD103B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13031F76-2415-43DF-8B94-6E4B41CD103B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13031F76-2415-43DF-8B94-6E4B41CD103B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6254D789-1F0A-4F85-ABF0-16DB243AF180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6254D789-1F0A-4F85-ABF0-16DB243AF180}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6254D789-1F0A-4F85-ABF0-16DB243AF180}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6254D789-1F0A-4F85-ABF0-16DB243AF180}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
