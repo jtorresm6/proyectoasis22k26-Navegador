@@ -1,8 +1,6 @@
 ﻿using CapaControlador_Seguridad.Objetos_de_valor;
-//using CapaVista_Bancos.Formularios;
-//using CapaVista_Rrhh.Formularios;
-
-
+using CapaVista_Bancos.Formularios;
+using CapaVista_Rrhh.Formularios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,8 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using CapaVista_Ventas;
-//using CapaVista_Logistica.Formularios;
+using CapaVista_Ventas;
+using CapaVista_Logistica.Formularios;
+using CapaVista_Consultas;
+using CapaVista_Contabilidad;
+using CapaVista_Compras;
 
 /*
  * ============================================================
@@ -79,52 +80,52 @@ namespace CapaVista_Seguridad
                         principal = new FrmMDISeguridad();
                         break;
                     
-                  //case "Logistica":
-                    //var MDILogistica = new CapaVista_Logistica.Formularios.FrmMDILogistica();
-                      //MDILogistica.LogisticaMetActualizarInfoUsuario(
-                     // ClsSesionSeguridad.NombreEmpleado,
-                     // ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                     //  principal = MDILogistica;
-                     //  break;
+                  case "Logistica":
+                    var MDILogistica = new CapaVista_Logistica.Formularios.FrmMDILogistica();
+                      MDILogistica.LogisticaMetActualizarInfoUsuario(
+                      ClsSesionSeguridad.NombreEmpleado,
+                      ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                       principal = MDILogistica;
+                       break;
 
-                    //case "Compras":
-                        //var MDICompras = new FrmMDICompras();
-                        //MDICompras.ComprasMetActualizarInfoUsuario(
-                        //ClsSesionSeguridad.NombreEmpleado,
-                        //ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                        //principal = MDICompras;
-                        //break;
+                    case "Compras":
+                        var MDICompras = new FrmMDICompras();
+                        MDICompras.ComprasMetActualizarInfoUsuario(
+                        ClsSesionSeguridad.NombreEmpleado,
+                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                        principal = MDICompras;
+                        break;
 
-                 // case "Ventas":
-                   //  var mdiVentas = new CapaVista_Ventas.FrmMdiVentas(
-                     //     ClsSesionSeguridad.NombreEmpleado,
-                       //     ClsSesionSeguridad.SeguridadMetRolesComoTexto(), ClsSesionSeguridad.IdUsuario);
-                      //     principal = mdiVentas;
-                       // break;
+                  case "Ventas":
+                     var mdiVentas = new CapaVista_Ventas.FrmMdiVentas(
+                          ClsSesionSeguridad.NombreEmpleado,
+                            ClsSesionSeguridad.SeguridadMetRolesComoTexto(), ClsSesionSeguridad.IdUsuario);
+                           principal = mdiVentas;
+                        break;
 
-                    //case "Bancos":
-                        //var MdiBancos = new FrmMDIBancos();
-                        //MdiBancos.BancosMetActualizarInfoUsuario(
-                        //ClsSesionSeguridad.NombreEmpleado,
-                        //ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                        //principal = MdiBancos;
-                        //break;
+                    case "Bancos":
+                        var MdiBancos = new FrmMDIBancos();
+                        MdiBancos.BancosMetActualizarInfoUsuario(
+                        ClsSesionSeguridad.NombreEmpleado,
+                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                        principal = MdiBancos;
+                        break;
 
-                    //case "Contabilidad":
-                        //var MDIContabilidad = new FrmMDIContabilidad();
-                        //MDIContabilidad.ContabilidadMetActualizarInfoUsuario(
-                        //ClsSesionSeguridad.NombreEmpleado,
-                        //ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                        //principal = MDIContabilidad;
-                        //break;
+                    case "Contabilidad":
+                        var MDIContabilidad = new FrmMDIContabilidad();
+                        MDIContabilidad.ContabilidadMetActualizarInfoUsuario(
+                        ClsSesionSeguridad.NombreEmpleado,
+                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                        principal = MDIContabilidad;
+                        break;
 
-                    //case "RRHH":
-                        //var MdiRrhh = new FrmMDIRrhh();
-                        //MdiRrhh.RrhhMetActualizarInfoUsuario(
-                        //ClsSesionSeguridad.NombreEmpleado,
-                        //ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                        //principal = MdiRrhh;
-                        //break;
+                    case "RRHH":
+                        var MdiRrhh = new FrmMDIRrhh();
+                        MdiRrhh.RrhhMetActualizarInfoUsuario(
+                        ClsSesionSeguridad.NombreEmpleado,
+                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                        principal = MdiRrhh;
+                        break;
 
                     default:
                         principal = new FrmMDISeguridad();
