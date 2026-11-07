@@ -1,0 +1,30 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=ContabilidadAyudas.chm
+Contents file=ContabilidadAyudas.hhc
+Default Window=ContabilidadAyudas
+Default topic=MDI_Contabilidad.html
+Display compile progress=No
+Full-text search=Yes
+Language=0x100a Espanol (Guatemala)
+Title=Ayudas - Contabilidad
+
+[WINDOWS]
+ContabilidadAyudas="Ayudas del modulo de Contabilidad","ContabilidadAyudas.hhc",,"MDI_Contabilidad.html","MDI_Contabilidad.html",,,,,0x23520,,0x3006,,,,,,,,0
+
+[FILES]
+MDI_Contabilidad.html
+Navegador_Ayuda.html
+MantenimientoPais_Contabilidad.html
+MantenimientoModuloContable_Contabilidad.html
+MantenimientoVidaUtil_Contabilidad.html
+MantenimientoCuenta_Contabilidad.html
+AsignacionCuentaModulo_Contabilidad.html
+Polizas_Contabilidad.html
+PolizasLocales_Contabilidad.html
+Presupuestos_Contabilidad.html
+ActivosFijos_Contabilidad.html
+CierreContable_Contabilidad.html
+EstadosFinancieros_Contabilidad.html
+
+[INFOTYPES]

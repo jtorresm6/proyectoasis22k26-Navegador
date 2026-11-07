@@ -26,6 +26,9 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CapaControlador_Contabilidad;
+// Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
+using CapaControlador_Navegador;
+// Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
 
 namespace CapaVista_Contabilidad
 {
@@ -401,8 +404,30 @@ namespace CapaVista_Contabilidad
 
         private void ContabilidadMetMostrarAyuda(object Remitente, EventArgs Evento)
         {
-            MessageBox.Show("La ayuda del módulo de Contabilidad aún no está disponible.",
-                "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
+            try
+            {
+                ClsDestinoAyuda Destino = new ClsCtrlAyuda().NavegadorFuncObtenerDestino(10000, GetType().Name);
+
+                if (Destino.RutaArchivo == "")
+                {
+                    MessageBox.Show(Destino.Mensaje, "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (Destino.Pagina == "")
+                {
+                    Help.ShowHelp(this, Destino.RutaArchivo);
+                }
+                else
+                {
+                    Help.ShowHelp(this, Destino.RutaArchivo, HelpNavigator.Topic, Destino.Pagina);
+                }
+            }
+            catch (Exception Excepcion)
+            {
+                MessageBox.Show("No se pudo abrir la ayuda de Contabilidad.\n\n" + Excepcion.Message,
+                    "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
         }
     }
 }

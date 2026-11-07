@@ -19,6 +19,9 @@ using System.Windows.Forms;
 using CapaControlador_Contabilidad;
 using CapaVista_Contabilidad.Componentes;
 // Fin de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026
+// Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
+using CapaControlador_Navegador;
+// Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
 
 // Inicio de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026
 namespace CapaVista_Contabilidad
@@ -113,8 +116,11 @@ namespace CapaVista_Contabilidad
             ContabilidadBtnRefrescar.Click += (Remitente, Argumentos) => ContabilidadMetCargarPoliza(_IdPoliza);
             ContabilidadBtnImprimir.Click += (Remitente, Argumentos) => MessageBox.Show(this,
                 "La impresión de pólizas se conectará con el componente Reporteador.", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ContabilidadBtnAyuda.Click += (Remitente, Argumentos) => MessageBox.Show(this,
-                "La ayuda del módulo de Contabilidad aún no está disponible.", "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 28/10/2026
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
+            ContabilidadBtnAyuda.Click += ContabilidadMetMostrarAyuda;
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 28/10/2026
             ContabilidadBtnInicio.Click += (Remitente, Argumentos) => ContabilidadMetIrA(0);
             ContabilidadBtnAnterior.Click += (Remitente, Argumentos) => ContabilidadMetIrA(_Polizas.IndexOf(_IdPoliza) - 1);
             ContabilidadBtnSiguiente.Click += (Remitente, Argumentos) => ContabilidadMetIrA(_Polizas.IndexOf(_IdPoliza) + 1);
@@ -559,5 +565,33 @@ namespace CapaVista_Contabilidad
         {
             ContabilidadMetProcesarPoliza(true);
         }
+
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
+        private void ContabilidadMetMostrarAyuda(object Remitente, EventArgs Argumentos)
+        {
+            try
+            {
+                ClsDestinoAyuda Destino = new ClsCtrlAyuda().NavegadorFuncObtenerDestino(10006, GetType().Name);
+
+                if (Destino.RutaArchivo == "")
+                {
+                    MessageBox.Show(this, Destino.Mensaje, "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (Destino.Pagina == "")
+                {
+                    Help.ShowHelp(this, Destino.RutaArchivo);
+                }
+                else
+                {
+                    Help.ShowHelp(this, Destino.RutaArchivo, HelpNavigator.Topic, Destino.Pagina);
+                }
+            }
+            catch (Exception Excepcion)
+            {
+                MessageBox.Show(this, "No se pudo abrir la ayuda de Contabilidad.\n\n" + Excepcion.Message,
+                    "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
     }
 }
