@@ -154,8 +154,13 @@ namespace CapaVista_MovimientosProveedores
                 : "El equivalente en GTQ requiere un importe válido y una cotización para la fecha de emisión.";
         }
 
-        private void ComprasProcLimpiarFormulario()
+        private void ComprasProcLimpiarFormulario(bool ConservarProveedor = false)
         {
+            if (!ConservarProveedor)
+            {
+                ComprasCboProveedor.SelectedIndex = -1;
+                ComprasCboProveedor.Text = string.Empty;
+            }
             ComprasCboConcepto.SelectedIndex = -1;
             ComprasCboMoneda.SelectedIndex = -1;
             ComprasTxtSerie.Clear();
@@ -209,7 +214,7 @@ namespace CapaVista_MovimientosProveedores
             }
             catch (Exception Error) { ComprasProcMostrarError("No se pudo guardar el documento.", Error, PermitirReintento: true); return; }
             finally { _Guardando = false; ComprasBtnGuardar.Enabled = _CatalogosListos; }
-            ComprasProcLimpiarFormulario();
+            ComprasProcLimpiarFormulario(ConservarProveedor: true);
             MessageBox.Show(this, "El documento se registró en la cuenta por pagar con estado Pendiente.", "Movimientos de proveedores", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
