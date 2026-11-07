@@ -14,7 +14,8 @@ namespace CapaVista_MovimientosProveedores
         private FlowLayoutPanel ComprasFlpTipoNota;
         private TextBox ComprasTxtSerie, ComprasTxtNumero;
         private ClsDatePickerCompras ComprasDtpFechaEmision, ComprasDtpFechaVencimiento;
-        private Label ComprasLblEfecto, ComprasLblEquivalente, ComprasLblEstado;
+        private Label ComprasLblEfecto, ComprasLblEquivalente;
+        private LinkLabel ComprasLblEstado;
         private TableLayoutPanel ComprasTlpPagina, ComprasTlpCampos;
         private FlowLayoutPanel ComprasFlpAcciones;
         private Panel ComprasPnlScroll;
@@ -42,7 +43,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTxtNumero = new System.Windows.Forms.TextBox();
             this.ComprasLblEfecto = new System.Windows.Forms.Label();
             this.ComprasLblEquivalente = new System.Windows.Forms.Label();
-            this.ComprasLblEstado = new System.Windows.Forms.Label();
+            this.ComprasLblEstado = new System.Windows.Forms.LinkLabel();
             this.ComprasTlpPagina = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasFlpAcciones = new System.Windows.Forms.FlowLayoutPanel();
             this.ComprasBtnNueva = new CapaVista_Componentes.Componentes.ClsButtonCompras();
