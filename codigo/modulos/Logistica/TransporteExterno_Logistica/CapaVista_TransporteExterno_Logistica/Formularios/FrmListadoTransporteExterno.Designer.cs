@@ -44,11 +44,11 @@
             // 
             this.LogisticaPnlListadoDeTransportes.Controls.Add(this.LogisticaDvglListadoTransportes);
             this.LogisticaPnlListadoDeTransportes.Controls.Add(this.LogisticaPnlListadoTransportes);
-            this.LogisticaPnlListadoDeTransportes.Location = new System.Drawing.Point(19, 67);
-            this.LogisticaPnlListadoDeTransportes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LogisticaPnlListadoDeTransportes.Location = new System.Drawing.Point(25, 83);
+            this.LogisticaPnlListadoDeTransportes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPnlListadoDeTransportes.Name = "LogisticaPnlListadoDeTransportes";
-            this.LogisticaPnlListadoDeTransportes.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.LogisticaPnlListadoDeTransportes.Size = new System.Drawing.Size(794, 397);
+            this.LogisticaPnlListadoDeTransportes.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.LogisticaPnlListadoDeTransportes.Size = new System.Drawing.Size(1058, 489);
             this.LogisticaPnlListadoDeTransportes.TabIndex = 24;
             this.LogisticaPnlListadoDeTransportes.TabStop = false;
             // 
@@ -56,22 +56,21 @@
             // 
             this.LogisticaDvglListadoTransportes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.LogisticaDvglListadoTransportes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.LogisticaDvglListadoTransportes.Location = new System.Drawing.Point(5, 41);
-            this.LogisticaDvglListadoTransportes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LogisticaDvglListadoTransportes.Location = new System.Drawing.Point(7, 51);
             this.LogisticaDvglListadoTransportes.Name = "LogisticaDvglListadoTransportes";
             this.LogisticaDvglListadoTransportes.RowHeadersWidth = 51;
             this.LogisticaDvglListadoTransportes.RowTemplate.Height = 24;
-            this.LogisticaDvglListadoTransportes.Size = new System.Drawing.Size(783, 353);
+            this.LogisticaDvglListadoTransportes.Size = new System.Drawing.Size(1044, 434);
             this.LogisticaDvglListadoTransportes.TabIndex = 19;
             // 
             // LogisticaPnlListadoTransportes
             // 
             this.LogisticaPnlListadoTransportes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
             this.LogisticaPnlListadoTransportes.Controls.Add(this.LogisticaLblTituloListadoTransportes);
-            this.LogisticaPnlListadoTransportes.Location = new System.Drawing.Point(5, 8);
-            this.LogisticaPnlListadoTransportes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LogisticaPnlListadoTransportes.Location = new System.Drawing.Point(7, 10);
+            this.LogisticaPnlListadoTransportes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaPnlListadoTransportes.Name = "LogisticaPnlListadoTransportes";
-            this.LogisticaPnlListadoTransportes.Size = new System.Drawing.Size(801, 29);
+            this.LogisticaPnlListadoTransportes.Size = new System.Drawing.Size(1068, 36);
             this.LogisticaPnlListadoTransportes.TabIndex = 18;
             // 
             // LogisticaLblTituloListadoTransportes
@@ -79,10 +78,9 @@
             this.LogisticaLblTituloListadoTransportes.AutoSize = true;
             this.LogisticaLblTituloListadoTransportes.Font = new System.Drawing.Font("Tahoma", 13.2F);
             this.LogisticaLblTituloListadoTransportes.ForeColor = System.Drawing.Color.White;
-            this.LogisticaLblTituloListadoTransportes.Location = new System.Drawing.Point(47, 3);
-            this.LogisticaLblTituloListadoTransportes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LogisticaLblTituloListadoTransportes.Location = new System.Drawing.Point(63, 4);
             this.LogisticaLblTituloListadoTransportes.Name = "LogisticaLblTituloListadoTransportes";
-            this.LogisticaLblTituloListadoTransportes.Size = new System.Drawing.Size(258, 22);
+            this.LogisticaLblTituloListadoTransportes.Size = new System.Drawing.Size(320, 27);
             this.LogisticaLblTituloListadoTransportes.TabIndex = 9;
             this.LogisticaLblTituloListadoTransportes.Text = "Listado de transportes externos";
             // 
@@ -92,24 +90,21 @@
             this.LogisticaPnlPrincipalListadoDeTransporteExterno.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.LogisticaPnlPrincipalListadoDeTransporteExterno.Controls.Add(this.LogisticaPnlListadoDeTransportes);
             this.LogisticaPnlPrincipalListadoDeTransporteExterno.Location = new System.Drawing.Point(1, 1);
-            this.LogisticaPnlPrincipalListadoDeTransporteExterno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.LogisticaPnlPrincipalListadoDeTransporteExterno.Name = "LogisticaPnlPrincipalListadoDeTransporteExterno";
-            this.LogisticaPnlPrincipalListadoDeTransporteExterno.Size = new System.Drawing.Size(827, 514);
+            this.LogisticaPnlPrincipalListadoDeTransporteExterno.Size = new System.Drawing.Size(1103, 633);
             this.LogisticaPnlPrincipalListadoDeTransporteExterno.TabIndex = 25;
             // 
             // FrmListadoTransporteExterno
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
-            this.ClientSize = new System.Drawing.Size(829, 516);
+            this.ClientSize = new System.Drawing.Size(1105, 635);
             this.Controls.Add(this.LogisticaPnlPrincipalListadoDeTransporteExterno);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "FrmListadoTransporteExterno";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "5025 - ListadoTransporteExterno";
             this.LogisticaPnlListadoDeTransportes.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaDvglListadoTransportes)).EndInit();

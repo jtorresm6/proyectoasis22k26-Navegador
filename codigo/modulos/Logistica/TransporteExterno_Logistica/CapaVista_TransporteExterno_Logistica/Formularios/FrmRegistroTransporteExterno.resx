@@ -11574,6 +11574,37 @@
         VrF/Ui9P9Imp+AKkVCwBeXTkFpWTvXAKwz8LkW0f7iv/P6Wz/sRyVAPFAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="LogisticaBtnLimpiarRegistro.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAADwAAABCCAMAAAA8CkXxAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1
+        MAAA6mAAADqYAAAXcJy6UTwAAAJqUExURT6KhDyJgzuJg2+flo2soIusoLG8rvfax/PZxrC8rfXZxvLY
+        xfTZxvHYxc/JuLC7ra26rNLKuvPZxbS9r0+Rij2KhD2JhFyXj87IuPPYxebTwWOakUSMhkeOh0OMhtbM
+        u9jNvE+SikCLhaC1qM3IuMvHt5Svo2yeld3PvdfMu0GLhcHDs/jax666rD+LhXaimOPSwL/Cs6y6rFWU
+        jHmjmT+LhIGnnOjUwUWNh1qWjpGuovDXxLK8rjqIgzmIguLRv+DQvo6toXqkmnulmnylmmWbklmWjuHR
+        v/HXxPHXxa+7rT2Jg1uXj22elbzBst7PvuTSwOfTwevVwpWwo0aOh6m4qjeHgYysoPbaxu7WxMjGtmqd
+        lLe/sE2RiUKMhVSTjMnGtvjbx6u5q9nNvFCSiz+KhJawpL/CssLDtOvVw2GZkW6flb3BsuzVw2ick8DC
+        s3ejmDiHgr7CsliVjoepnpyzptrOvOnUwrG8rezWw+/XxHijmb7Bsp60p5Ovo+3Ww1aUjXGglq67rerV
+        wszHt9XMu9vOvdzOvdzPvX6mm3Shl+XTwM3It4iqn2yelISonWabkrS9ruPRwGudlMbFtXWimLm/sdHK
+        uWmdk9DJuWCZkOXSwLvAsWeck9/QvrrAsWmdlIqroIKonYqrn4OonX+mnHKhl5ewpMDDs4apnszIt5Cu
+        opKvopKuopmypcTEtFeVjUyQifnbyKW2qai4qubTwHejmW+flXCglqm5q6e4qpqypX2lm4WpnsPDtH+m
+        m8TEtY2soWKakbO9rmKZkau5rI+toYCnnKG1qNrNvHOhl667rO7Ww////5ErcKMAAAAHdElNRQfqCg8D
+        BBlrmUkuAAADLklEQVRYR+3X6VPTQBgH4KSVtuy7CBaqLKgohBtFUCmIUESqUrXQgkIBoVZBOb051Yoi
+        nigqeFW8b8UT8b5v5Y9y2g6QtgnG8EVHfh/amd33ySbZTTJLUaMLLREV2oGl47xEZJzUgWVyhYjIZQ7s
+        jUBEkPcY/qPwYoxYwe69zvBhn/G+fsOZoHTrdoYHK/0DKNVQJk4K5BybG5OgYMnkKYOZStHBIVyaG+Np
+        00PDmHBnmAiKoiOjODQPjg6IiZVjZ+JmUKEz6fhZnpofJww2oUR69py5qiQ1cakRilXJKTEqal6qS41A
+        PF+Vli6h6RSN+9ACMMlYkLkwS0svWiwCA4El2Vi3VBy2B/n+j1iyTMxUOYJky/Wp7gtUKCY5ucjAGNlN
+        wjEQAnn5K1zHFowBQ/zKgkIXLRibJhQVp2eGh7CfDqEYl6zKj6FK88vMrLH5cexq9vsTWUJVFEVNTGYf
+        kwevWVtesU4/nPWV6hJLVVq1X00tq4wbE3VdWmgMK1M2IAQbNxXIXSefE4Ni85ZSNi7PqiSwVbJNyFQB
+        QH0C66z1+tgGQuob3VY3L1a43C5k71cit8XNi4Xkb8KmJvtvbTO7iiceGMtachRgWrDd/eHliAdGO9J3
+        AlilfggTAEyAOL7t9kNhJSgRYn2qOfCulCJkbd3tw6iJiVHjPTWWQGhoqwXY2473NTbuH54vT7ztQMHB
+        PaZW3aFiBmmKDzd1HDnaeez4iS5k7D556nRmZvGZoQviwEntZy2prTqbtg1ptMy5nvNxFy7mXsorZOqi
+        Lns1N1+5mj0CvoYTz4Zc19k6HfhGVVhYRNmZhGrjjo6gnpsIJfQYBk+cCxNj9y2pzqYNRxrt7TtVd+f1
+        3suxRcbGXzBouxC632kbCQM2P3goM2i7HkWnBD6Oz16t6XuCe/ufaqzPnsvlL1qtQ7Ue+OUrAIiQ+Pq0
+        ZOlfBzBrgivevO1uQO/y3xOc+MH/46dE/huGaz4DKDO+mNGpr919375jc9KPgnolUVe0YbBa+lt+DgyW
+        emJnCAFQpA7YFwRe0gT2f3sTYJPpty9AgRnDf5h/G49qOziqjeiotsDi8wtMwSth9UzXdwAAAABJRU5E
+        rkJggg==
+</value>
+  </data>
   <data name="LogisticaBtnEliminarRegistro.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADwAAABCCAYAAAAL1LXDAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1
@@ -11683,7 +11714,7 @@
         5RaAjhg9Sp0MqzozWOnU6zTb7ZrtqCvafg+9+tLP6H/finKO+AVEBgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="LogisticaBtnModificarRegitro.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="LogisticaBtnModificarRegistro.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADwAAABCCAYAAAAL1LXDAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1
         MAAA6mAAADqYAAAXcJy6UTwAAAAHdElNRQfqCg8DBBgcnnm4AAALkUlEQVRoQ+Vb+XMcRxX2/6KocEFV

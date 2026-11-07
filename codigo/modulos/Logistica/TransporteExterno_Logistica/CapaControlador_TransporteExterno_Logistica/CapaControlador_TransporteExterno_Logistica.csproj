@@ -44,10 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modelos de Controladores\ClsControladorCostosTransportecs.cs" />
+    <Compile Include="Modelos de Controladores\ClsControladorIncidenciasEHistorial.cs" />
+    <Compile Include="Modelos de Controladores\ClsControladorIngresarProductos.cs" />
+    <Compile Include="Modelos de Controladores\ClsControladorRutaSeguimiento.cs" />
+    <Compile Include="Modelos de Controladores\ClsControladorTransporteExterno.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modelos de Controladores\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
