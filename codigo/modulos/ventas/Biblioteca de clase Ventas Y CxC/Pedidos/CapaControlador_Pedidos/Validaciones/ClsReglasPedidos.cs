@@ -3,8 +3,36 @@ using System.Data;
 
 namespace CapaControlador_Pedidos
 {
-    internal static class ClsReglasPedidos
+    // Natali Sofía Montenegro Portillo | 0901-23-10017 | Valida fechas, estados, cantidades y descuentos antes de guardar.
+    public static class ClsReglasPedidos
     {
+        public static string VentasFuncErrorCliente(int Cliente) =>
+            Cliente <= 0 ? "Seleccione un cliente." : "";
+
+        public static string VentasFuncErrorVendedor(int Vendedor) =>
+            Vendedor <= 0 ? "Seleccione un vendedor." : "";
+
+        public static string VentasFuncErrorOrigen(bool PorCotizacion, int Cotizacion, int Moneda)
+        {
+            if (PorCotizacion) return Cotizacion <= 0 ? "Seleccione una cotización." : "";
+            return Moneda <= 0 ? "Seleccione una lista de precios." : "";
+        }
+
+        public static string VentasFuncErrorFecha(DateTime Fecha, DateTime Referencia) =>
+            Fecha.Date < Referencia.Date ? "No puede ser anterior a la fecha inicial." : "";
+
+        public static string VentasFuncErrorDetalle(int Productos) =>
+            Productos == 0 ? "Agregue al menos un producto al pedido." : "";
+
+        public static string VentasFuncErrorProducto(bool Seleccionado) =>
+            Seleccionado ? "" : "Seleccione un producto.";
+
+        public static string VentasFuncErrorCantidad(decimal Cantidad) =>
+            Cantidad <= 0 || Cantidad != decimal.Truncate(Cantidad) ? "Entero positivo." : "";
+
+        public static string VentasFuncErrorDescuento(decimal Cantidad, decimal? Precio, decimal Descuento) =>
+            Precio.HasValue && Descuento > Cantidad * Precio.Value ? "Supera el importe." : "";
+
         // Los importes de tblPedidoDetalle son DECIMAL(12,4).
         private static bool VentasFuncDecimal(decimal Valor)
         {
@@ -23,9 +51,15 @@ namespace CapaControlador_Pedidos
                 throw new ArgumentException("Seleccione una lista de precios o cotización con moneda.");
 
             int Id = Convert.ToInt32(Pedido["Id"]);
+            string NuevoEstado = Convert.ToString(Pedido["NuevoEstado"]);
             if (Id > 0 && Convert.ToString(Pedido["Estado"]) != "PENDIENTE" &&
                 Convert.ToString(Pedido["Estado"]) != "CONFIRMADO")
                 throw new InvalidOperationException("El pedido no admite edición.");
+            if (NuevoEstado != "PENDIENTE" && NuevoEstado != "CONFIRMADO" &&
+                NuevoEstado != "COMPLETADO" && NuevoEstado != "ANULADO")
+                throw new ArgumentException("Seleccione un estado válido para el pedido.");
+            if (Id == 0 && NuevoEstado != "PENDIENTE")
+                throw new ArgumentException("Un pedido nuevo debe iniciar pendiente.");
             if (Id > 0 && Convert.ToString(Pedido["Numero"]).Length > 30)
                 throw new ArgumentException("El número de pedido excede 30 caracteres.");
 
@@ -47,10 +81,10 @@ namespace CapaControlador_Pedidos
                 decimal Cantidad = Convert.ToDecimal(Linea["Cantidad"]);
                 decimal Precio = Convert.ToDecimal(Linea["Precio"]);
                 decimal Descuento = Convert.ToDecimal(Linea["Descuento"]);
-                if (!VentasFuncDecimal(Cantidad) || Cantidad == 0 ||
+                if (!VentasFuncDecimal(Cantidad) || Cantidad == 0 || Cantidad != decimal.Truncate(Cantidad) ||
                     !VentasFuncDecimal(Precio) || !VentasFuncDecimal(Descuento) ||
                     Descuento > Cantidad * Precio)
-                    throw new ArgumentException("Revise cantidad, precio y descuento (DECIMAL(12,4) en la BD).");
+                    throw new ArgumentException("La cantidad debe ser un entero positivo; revise precio y descuento.");
                 Linea["Total"] = ClsPedidoControlador.VentasFuncTotal(Cantidad, Precio, Descuento);
             }
         }

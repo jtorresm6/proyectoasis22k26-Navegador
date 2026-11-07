@@ -1352,4 +1352,7 @@
   <data name="BotonOriginalGuardarVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\GuardarVentas.png;System.Drawing.Bitmap, System.Drawing</value>
   </data>
+  <data name="BotonOriginalAyudaVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\AyudaVentas.png;System.Drawing.Bitmap, System.Drawing</value>
+  </data>
 </root>

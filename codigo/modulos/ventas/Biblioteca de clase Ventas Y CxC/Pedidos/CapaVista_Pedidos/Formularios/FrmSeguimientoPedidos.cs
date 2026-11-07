@@ -1,11 +1,11 @@
 using System;
-using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
 using CapaControlador_Pedidos;
 
 namespace CapaVista_Pedidos
 {
+    // Natali Sofía Montenegro Portillo | 0901-23-10017 | Lista pedidos y abre consulta, anulación y reporte.
     public partial class FrmSeguimientoPedidos : Form
     {
         private readonly ClsPedidoControlador _Controlador = new ClsPedidoControlador();
@@ -14,13 +14,44 @@ namespace CapaVista_Pedidos
         public FrmSeguimientoPedidos()
         {
             InitializeComponent();
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-                Load += (Origen, Evento) => VentasMetCargar();
+            Load += (Origen, Evento) => VentasMetCargar();
+        }
+        private void VentasMetReporteClick(object Origen, EventArgs Evento) { VentasMetReporte(); }
+        private void VentasMetAyudaClick(object Origen, EventArgs Evento) { VentasMetAyuda(); }
+        protected override bool ProcessCmdKey(ref Message Mensaje, Keys Tecla)
+        {
+            if (Tecla == Keys.F1)
+            {
+                VentasMetAyuda();
+                return true;
+            }
+            return base.ProcessCmdKey(ref Mensaje, Tecla);
+        }
+        private void VentasMetReporte()
+        {
+            try
+            {
+                using (var Formulario = new FrmReportePedidos(_Controlador)) Formulario.ShowDialog(this);
+            }
+            catch (Exception Error) { MessageBox.Show(this, Error.Message, "Reporte de pedidos", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+        private void VentasMetAyuda()
+        {
+            try
+            {
+                Help.ShowHelp(this, _Controlador.VentasFuncRutaAyuda(typeof(FrmSeguimientoPedidos).Assembly),
+                    HelpNavigator.Topic, "html/Seguimiento_Formulario.html");
+            }
+            catch (Exception Error)
+            {
+                MessageBox.Show(this, "No fue posible abrir la ayuda. " + Error.Message,
+                    "Ayuda de pedidos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void VentasMetCargar()
         {
             try { _Pedidos = _Controlador.VentasFuncListar(); VentasMetMostrar(); }
-            catch (Exception Error) { MessageBox.Show(this, Error.Message, "Pedidos"); }
+            catch (Exception Error) { MessageBox.Show(this, Error.Message, "Pedidos", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private void VentasMetMostrar()
@@ -54,8 +85,8 @@ namespace CapaVista_Pedidos
                 {
                     bool Editable = Pedido != null && (Convert.ToString(Pedido["Estado"]) == "PENDIENTE" || Convert.ToString(Pedido["Estado"]) == "CONFIRMADO");
                     VentasBtnConsultar.Enabled = Pedido != null;
-                    VentasBtnModificar.Enabled = VentasBtnAnular.Enabled = Editable;
-                    VentasBtnConfirmar.Enabled = Editable && Convert.ToString(Pedido["Estado"]) == "PENDIENTE";
+                    VentasBtnModificar.Enabled = Editable;
+                    VentasBtnEliminar.Enabled = Editable;
                     return;
                 }
                 if (Origen == VentasBtnNuevo || Origen == VentasBtnConsultar || Origen == VentasBtnModificar)
@@ -65,14 +96,14 @@ namespace CapaVista_Pedidos
                         Origen == VentasBtnConsultar)) Formulario.ShowDialog(this);
                     VentasMetCargar(); return;
                 }
-                if (Pedido == null) return;
-                string EstadoNuevo = Origen == VentasBtnConfirmar ? "CONFIRMADO" : "ANULADO";
-                if (MessageBox.Show(this, "¿Cambiar el pedido " + Pedido["Numero"] + " a " + EstadoNuevo + "?",
-                    "Pedidos", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
-                _Controlador.VentasMetEstado(Convert.ToInt32(Pedido["Id"]), EstadoNuevo);
+                if (Origen != VentasBtnEliminar || Pedido == null) return;
+                if (MessageBox.Show(this, "¿Cambiar el pedido " + Pedido["Numero"] + " a ANULADO?",
+                    "Anular pedido", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+                _Controlador.VentasMetEstado(Convert.ToInt32(Pedido["Id"]), "ANULADO");
+                MessageBox.Show(this, "Pedido anulado correctamente.", "Pedidos", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 VentasMetCargar();
             }
-            catch (Exception Error) { MessageBox.Show(this, Error.Message, "Pedidos"); }
+            catch (Exception Error) { MessageBox.Show(this, Error.Message, "Pedidos", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
     }
 }

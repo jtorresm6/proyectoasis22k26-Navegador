@@ -51,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TestPedidos.cs" />
-
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

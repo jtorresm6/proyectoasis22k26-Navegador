@@ -4,23 +4,10 @@ using System.Globalization;
 
 namespace CapaModelo_Pedidos
 {
-    public interface IPedidoRepositorio
+    // Natali Sofía Montenegro Portillo | 0901-23-10017 | Guarda pedidos y cambia su estado en la base de datos.
+    public partial class ClsPedidoRepositorio
     {
-        DataTable VentasFuncCatalogo(string Nombre);
-        DataTable VentasFuncListas(int Cliente, DateTime Fecha);
-        DataTable VentasFuncCotizaciones(int Cliente, DateTime Fecha);
-        bool VentasFuncCotVigente(int Cotizacion, int Cliente, DateTime Fecha);
-        DataTable VentasFuncProductos(int Lista);
-        string VentasFuncMoneda(int Id);
-        DataTable VentasFuncListar();
-        DataTable VentasFuncPedido(int Id);
-        int VentasFuncGuardar(DataRow Pedido, DataTable Lineas);
-        void VentasMetEstado(int Id, string Estado);
-    }
-
-    public sealed partial class ClsPedidoRepositorio : IPedidoRepositorio
-    {
-        public int VentasFuncGuardar(DataRow Pedido, DataTable Lineas)
+        public virtual int VentasFuncGuardar(DataRow Pedido, DataTable Lineas)
         {
             using (var Datos = new ClsConexion())
             {
@@ -70,13 +57,17 @@ namespace CapaModelo_Pedidos
             int Id = Convert.ToInt32(Pedido["Id"]);
             if (Id > 0)
             {
-                int Cambios = Datos.VentasFuncEjecutar(@"UPDATE tblPedidoEncabezado
-                    SET idVendedor = ?, fechaPedidoEncabezado = ?,
+                string EstadoActual = Convert.ToString(Datos.VentasFuncEscalar(@"SELECT estadoPedidoEncabezado
+                    FROM tblPedidoEncabezado WHERE idPedidoEncabezado = ? FOR UPDATE", Id));
+                if (EstadoActual != Convert.ToString(Pedido["Estado"]) ||
+                    (EstadoActual != "PENDIENTE" && EstadoActual != "CONFIRMADO"))
+                    throw new InvalidOperationException("El pedido ya no admite cambios.");
+                Datos.VentasFuncEjecutar(@"UPDATE tblPedidoEncabezado
+                    SET estadoPedidoEncabezado = ?, idVendedor = ?, fechaPedidoEncabezado = ?,
                         fechaEntregaPedidoEncabezado = ?, fechaVencimientoPedidoEncabezado = ?
-                    WHERE idPedidoEncabezado = ? AND estadoPedidoEncabezado = ?",
-                    Pedido["VendedorId"], Pedido["Fecha"], Pedido["Entrega"],
-                    Pedido["Vencimiento"], Id, Pedido["Estado"]);
-                if (Cambios != 1) throw new InvalidOperationException("El pedido ya no admite cambios.");
+                    WHERE idPedidoEncabezado = ?",
+                    Pedido["NuevoEstado"], Pedido["VendedorId"], Pedido["Fecha"], Pedido["Entrega"],
+                    Pedido["Vencimiento"], Id);
                 Datos.VentasFuncEjecutar("DELETE FROM tblPedidoDetalle WHERE idPedidoEncabezado = ?", Id);
                 return Id;
             }
@@ -109,12 +100,13 @@ namespace CapaModelo_Pedidos
                     Linea["Cantidad"], Linea["Precio"], Linea["Descuento"]);
         }
 
-        public void VentasMetEstado(int Id, string Estado)
+        public virtual void VentasMetEstado(int Id, string Estado)
         {
             using (var Datos = new ClsConexion())
                 if (Datos.VentasFuncEjecutar(@"UPDATE tblPedidoEncabezado SET estadoPedidoEncabezado=?
                     WHERE idPedidoEncabezado=? AND estadoPedidoEncabezado IN ('PENDIENTE','CONFIRMADO')", Estado, Id) != 1)
                     throw new InvalidOperationException("El pedido ya no admite cambios de estado.");
         }
+
     }
 }

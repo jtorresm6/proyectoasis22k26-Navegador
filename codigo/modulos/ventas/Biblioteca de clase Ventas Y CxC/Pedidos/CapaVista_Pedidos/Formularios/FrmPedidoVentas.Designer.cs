@@ -10,6 +10,7 @@
  */
 namespace CapaVista_Pedidos
 {
+    // Natali Sofía Montenegro Portillo | 0901-23-10017 | Define los controles visuales del formulario de pedidos.
     public partial class FrmPedidoVentas : System.Windows.Forms.Form
     {
         private System.ComponentModel.IContainer components = null;
@@ -44,12 +45,14 @@ namespace CapaVista_Pedidos
             this.VentasBtnConsultarPedido = new System.Windows.Forms.Button();
             this.VentasBtnModificarPedido = new System.Windows.Forms.Button();
             this.VentasBtnAnularPedido = new System.Windows.Forms.Button();
+            this.VentasBtnAyuda = new System.Windows.Forms.Button();
             this.VentasPnlResumen = new System.Windows.Forms.Panel();
             this.VentasLblTotal = new System.Windows.Forms.Label();
             this.VentasLblSubtotal = new System.Windows.Forms.Label();
+            this.VentasLblDescuentoTotal = new System.Windows.Forms.Label();
             this.VentasLblResumenTitulo = new System.Windows.Forms.Label();
             this.VentasLblEstadoPedido = new System.Windows.Forms.Label();
-            this.VentasTxtEstadoPedido = new System.Windows.Forms.TextBox();
+            this.VentasCboEstadoPedido = new System.Windows.Forms.ComboBox();
             this.VentasLblMonedaPedido = new System.Windows.Forms.Label();
             this.VentasTxtMonedaPedido = new System.Windows.Forms.TextBox();
             this.VentasLblListaPrecioPedido = new System.Windows.Forms.Label();
@@ -63,7 +66,6 @@ namespace CapaVista_Pedidos
             this.VentasDgvDetalle = new System.Windows.Forms.DataGridView();
             this.VentasDgvDetalleColCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VentasDgvDetalleColProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VentasDgvDetalleColDisponibilidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VentasDgvDetalleColCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VentasDgvDetalleColPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VentasDgvDetalleColDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -83,8 +85,8 @@ namespace CapaVista_Pedidos
             this.VentasPnlDatosPedido = new System.Windows.Forms.Panel();
             this.VentasCboCotizacionOrigen = new System.Windows.Forms.ComboBox();
             this.VentasLblCotizacionOrigen = new System.Windows.Forms.Label();
-            this.VentasChkPedidoIndependiente = new System.Windows.Forms.CheckBox();
-            this.VentasChkPedidoPorCotizacion = new System.Windows.Forms.CheckBox();
+            this.VentasRdoPedidoIndependiente = new System.Windows.Forms.RadioButton();
+            this.VentasRdoPedidoPorCotizacion = new System.Windows.Forms.RadioButton();
             this.VentasLblOrigenPedido = new System.Windows.Forms.Label();
             this.VentasCboVendedor = new System.Windows.Forms.ComboBox();
             this.VentasLblVendedor = new System.Windows.Forms.Label();
@@ -94,8 +96,7 @@ namespace CapaVista_Pedidos
             this.VentasLblVencimiento = new System.Windows.Forms.Label();
             this.VentasDtpPedido = new System.Windows.Forms.DateTimePicker();
             this.VentasLblFechaPedido = new System.Windows.Forms.Label();
-            this.VentasCboCliente = new System.Windows.Forms.ComboBox();
-            this.VentasLblCliente = new System.Windows.Forms.Label();
+            this.VentasUsrCliente = new CapaVista_Pedidos.VentasUsrCliente();
             this.VentasTxtNumeroPedido = new System.Windows.Forms.TextBox();
             this.VentasLblNumeroPedido = new System.Windows.Forms.Label();
             this.VentasLblDatosTitulo = new System.Windows.Forms.Label();
@@ -126,7 +127,7 @@ namespace CapaVista_Pedidos
             //
             this.VentasLblCodigo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.VentasLblCodigo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(162)))), ((int)(((byte)(74)))));
-            this.VentasLblCodigo.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblCodigo.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblCodigo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblCodigo.Location = new System.Drawing.Point(916, 24);
             this.VentasLblCodigo.Name = "VentasLblCodigo";
@@ -138,7 +139,7 @@ namespace CapaVista_Pedidos
             // VentasLblSubtitulo
             //
             this.VentasLblSubtitulo.AutoSize = true;
-            this.VentasLblSubtitulo.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.VentasLblSubtitulo.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblSubtitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
             this.VentasLblSubtitulo.Location = new System.Drawing.Point(31, 52);
             this.VentasLblSubtitulo.Name = "VentasLblSubtitulo";
@@ -149,7 +150,7 @@ namespace CapaVista_Pedidos
             // VentasLblTitulo
             //
             this.VentasLblTitulo.AutoSize = true;
-            this.VentasLblTitulo.Font = new System.Drawing.Font("Lucida Sans", 19F, System.Drawing.FontStyle.Bold);
+            this.VentasLblTitulo.Font = new System.Drawing.Font("Lucida Sans", 19F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic);
             this.VentasLblTitulo.ForeColor = System.Drawing.Color.White;
             this.VentasLblTitulo.Location = new System.Drawing.Point(27, 12);
             this.VentasLblTitulo.Name = "VentasLblTitulo";
@@ -166,6 +167,7 @@ namespace CapaVista_Pedidos
             this.VentasPnlContenido.Controls.Add(this.VentasBtnConsultarPedido);
             this.VentasPnlContenido.Controls.Add(this.VentasBtnModificarPedido);
             this.VentasPnlContenido.Controls.Add(this.VentasBtnAnularPedido);
+            this.VentasPnlContenido.Controls.Add(this.VentasBtnAyuda);
             this.VentasPnlContenido.Controls.Add(this.VentasPnlResumen);
             this.VentasPnlContenido.Controls.Add(this.VentasDgvDetalle);
             this.VentasPnlContenido.Controls.Add(this.VentasPnlEncabezadoDetalle);
@@ -216,6 +218,17 @@ namespace CapaVista_Pedidos
             this.VentasBtnAnularPedido.Text = string.Empty;
             this.VentasBtnAnularPedido.AccessibleName = "Anular pedido";
             this.VentasBtnAnularPedido.Click += new System.EventHandler(this.VentasMetAccion);
+            this.VentasBtnAyuda.AccessibleName = "Ayuda de pedidos";
+            this.VentasBtnAyuda.BackColor = System.Drawing.Color.FromArgb(123, 63, 147);
+            this.VentasBtnAyuda.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BotonOriginalAyudaVentas")));
+            this.VentasBtnAyuda.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VentasBtnAyuda.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.VentasBtnAyuda.FlatAppearance.BorderSize = 0;
+            this.VentasBtnAyuda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnAyuda.Location = new System.Drawing.Point(334, 628);
+            this.VentasBtnAyuda.Name = "VentasBtnAyuda";
+            this.VentasBtnAyuda.Size = new System.Drawing.Size(64, 64);
+            this.VentasBtnAyuda.Click += new System.EventHandler(this.VentasMetAyudaClick);
             //
             // VentasBtnGuardar
             //
@@ -285,6 +298,7 @@ namespace CapaVista_Pedidos
             this.VentasPnlResumen.BackColor = System.Drawing.Color.White;
             this.VentasPnlResumen.Controls.Add(this.VentasLblTotal);
             this.VentasPnlResumen.Controls.Add(this.VentasLblSubtotal);
+            this.VentasPnlResumen.Controls.Add(this.VentasLblDescuentoTotal);
             this.VentasPnlResumen.Controls.Add(this.VentasLblResumenTitulo);
             this.VentasPnlResumen.Location = new System.Drawing.Point(575, 606);
             this.VentasPnlResumen.Name = "VentasPnlResumen";
@@ -294,9 +308,9 @@ namespace CapaVista_Pedidos
             //
             // VentasLblTotal
             //
-            this.VentasLblTotal.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
+            this.VentasLblTotal.Font = new System.Drawing.Font("Tahoma", 13F);
             this.VentasLblTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.VentasLblTotal.Location = new System.Drawing.Point(16, 62);
+            this.VentasLblTotal.Location = new System.Drawing.Point(16, 66);
             this.VentasLblTotal.Name = "VentasLblTotal";
             this.VentasLblTotal.Size = new System.Drawing.Size(302, 36);
             this.VentasLblTotal.TabIndex = 3;
@@ -305,7 +319,7 @@ namespace CapaVista_Pedidos
             //
             // VentasLblSubtotal
             //
-            this.VentasLblSubtotal.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.VentasLblSubtotal.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblSubtotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(93)))), ((int)(((byte)(103)))));
             this.VentasLblSubtotal.Location = new System.Drawing.Point(16, 25);
             this.VentasLblSubtotal.Name = "VentasLblSubtotal";
@@ -314,10 +328,19 @@ namespace CapaVista_Pedidos
             this.VentasLblSubtotal.Text = "Subtotal                          Q 0.00";
             this.VentasLblSubtotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             //
+            // VentasLblDescuentoTotal
+            //
+            this.VentasLblDescuentoTotal.Location = new System.Drawing.Point(16, 44);
+            this.VentasLblDescuentoTotal.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.VentasLblDescuentoTotal.Name = "VentasLblDescuentoTotal";
+            this.VentasLblDescuentoTotal.Size = new System.Drawing.Size(302, 18);
+            this.VentasLblDescuentoTotal.Text = "Descuentos 0.00";
+            this.VentasLblDescuentoTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            //
             // VentasLblResumenTitulo
             //
             this.VentasLblResumenTitulo.AutoSize = true;
-            this.VentasLblResumenTitulo.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblResumenTitulo.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblResumenTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(63)))), ((int)(((byte)(147)))));
             this.VentasLblResumenTitulo.Location = new System.Drawing.Point(16, 8);
             this.VentasLblResumenTitulo.Name = "VentasLblResumenTitulo";
@@ -350,7 +373,6 @@ namespace CapaVista_Pedidos
             this.VentasDgvDetalle.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.VentasDgvDetalleColCodigo,
             this.VentasDgvDetalleColProducto,
-            this.VentasDgvDetalleColDisponibilidad,
             this.VentasDgvDetalleColCantidad,
             this.VentasDgvDetalleColPrecio,
             this.VentasDgvDetalleColDescuento,
@@ -392,13 +414,7 @@ namespace CapaVista_Pedidos
             this.VentasDgvDetalleColProducto.Name = "VentasDgvDetalleColProducto";
             this.VentasDgvDetalleColProducto.ReadOnly = false;
             //
-            // VentasDgvDetalleColDisponibilidad
             //
-            this.VentasDgvDetalleColDisponibilidad.FillWeight = 95F;
-            this.VentasDgvDetalleColDisponibilidad.HeaderText = "DISPONIBILIDAD";
-            this.VentasDgvDetalleColDisponibilidad.Name = "VentasDgvDetalleColDisponibilidad";
-            this.VentasDgvDetalleColDisponibilidad.ReadOnly = true;
-            this.VentasDgvDetalleColDisponibilidad.ToolTipText = "Pendiente de la fuente de inventario; se muestra en blanco.";
             //
             // VentasDgvDetalleColCantidad
             //
@@ -456,39 +472,43 @@ namespace CapaVista_Pedidos
             this.VentasCboProductoPedido.DisplayMember = "Descripcion";
             this.VentasCboProductoPedido.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.VentasCboProductoPedido.Location = new System.Drawing.Point(255, 18);
+            this.VentasCboProductoPedido.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.VentasCboProductoPedido.Name = "VentasCboProductoPedido";
             this.VentasCboProductoPedido.Size = new System.Drawing.Size(280, 28);
             this.VentasNudCantidadProducto.Location = new System.Drawing.Point(545, 18);
-            this.VentasNudCantidadProducto.DecimalPlaces = 4;
-            this.VentasNudCantidadProducto.Maximum = 99999999.9999m;
-            this.VentasNudCantidadProducto.Minimum = 0.0001m;
+            this.VentasNudCantidadProducto.DecimalPlaces = 0;
+            this.VentasNudCantidadProducto.Maximum = 99999999m;
+            this.VentasNudCantidadProducto.Minimum = 1m;
+            this.VentasNudCantidadProducto.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.VentasNudCantidadProducto.Name = "VentasNudCantidadProducto";
             this.VentasNudCantidadProducto.Size = new System.Drawing.Size(85, 28);
             this.VentasNudCantidadProducto.Value = 1m;
-            this.VentasNudDescuentoProducto.DecimalPlaces = 4;
+            this.VentasNudDescuentoProducto.DecimalPlaces = 2;
             this.VentasNudDescuentoProducto.Location = new System.Drawing.Point(745, 18);
-            this.VentasNudDescuentoProducto.Maximum = 99999999.9999m;
+            this.VentasNudDescuentoProducto.Maximum = 99999999.99m;
+            this.VentasNudDescuentoProducto.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.VentasNudDescuentoProducto.Name = "VentasNudDescuentoProducto";
             this.VentasNudDescuentoProducto.Size = new System.Drawing.Size(130, 28);
             this.VentasNudDescuentoProducto.ThousandsSeparator = true;
             this.VentasTtpAcciones.SetToolTip(this.VentasNudDescuentoProducto, "Descuento total de esta línea");
-            this.VentasLblCantidadProducto.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.VentasLblCantidadProducto.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblCantidadProducto.Location = new System.Drawing.Point(545, 2);
             this.VentasLblCantidadProducto.Name = "VentasLblCantidadProducto";
             this.VentasLblCantidadProducto.Size = new System.Drawing.Size(85, 16);
             this.VentasLblCantidadProducto.Text = "Cantidad";
-            this.VentasLblDescuentoProducto.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.VentasLblDescuentoProducto.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblDescuentoProducto.Location = new System.Drawing.Point(745, 2);
             this.VentasLblDescuentoProducto.Name = "VentasLblDescuentoProducto";
             this.VentasLblDescuentoProducto.Size = new System.Drawing.Size(130, 16);
-            this.VentasLblDescuentoProducto.Text = "Descuento Q";
-            this.VentasLblPrecioListaProducto.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.VentasLblDescuentoProducto.Text = "Descuento";
+            this.VentasLblPrecioListaProducto.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblPrecioListaProducto.Location = new System.Drawing.Point(640, 2);
             this.VentasLblPrecioListaProducto.Name = "VentasLblPrecioListaProducto";
             this.VentasLblPrecioListaProducto.Size = new System.Drawing.Size(95, 16);
-            this.VentasLblPrecioListaProducto.Text = "Precio lista";
+            this.VentasLblPrecioListaProducto.Text = "Precio de lista";
             this.VentasTxtPrecioListaProducto.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
             this.VentasTxtPrecioListaProducto.Location = new System.Drawing.Point(640, 18);
+            this.VentasTxtPrecioListaProducto.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.VentasTxtPrecioListaProducto.Name = "VentasTxtPrecioListaProducto";
             this.VentasTxtPrecioListaProducto.ReadOnly = true;
             this.VentasTxtPrecioListaProducto.Size = new System.Drawing.Size(95, 27);
@@ -496,7 +516,7 @@ namespace CapaVista_Pedidos
             // VentasLblDetalleAyuda
             //
             this.VentasLblDetalleAyuda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.VentasLblDetalleAyuda.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.VentasLblDetalleAyuda.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblDetalleAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(119)))), ((int)(((byte)(132)))));
             this.VentasLblDetalleAyuda.Location = new System.Drawing.Point(250, 18);
             this.VentasLblDetalleAyuda.Name = "VentasLblDetalleAyuda";
@@ -568,7 +588,7 @@ namespace CapaVista_Pedidos
             // VentasLblDetalleTitulo
             //
             this.VentasLblDetalleTitulo.AutoSize = true;
-            this.VentasLblDetalleTitulo.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.VentasLblDetalleTitulo.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblDetalleTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblDetalleTitulo.Location = new System.Drawing.Point(20, 20);
             this.VentasLblDetalleTitulo.Name = "VentasLblDetalleTitulo";
@@ -583,7 +603,7 @@ namespace CapaVista_Pedidos
             this.VentasPnlDatosPedido.BackColor = System.Drawing.Color.White;
             this.VentasPnlDatosPedido.Controls.Add(this.VentasCboCotizacionOrigen);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblEstadoPedido);
-            this.VentasPnlDatosPedido.Controls.Add(this.VentasTxtEstadoPedido);
+            this.VentasPnlDatosPedido.Controls.Add(this.VentasCboEstadoPedido);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblMonedaPedido);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasTxtMonedaPedido);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblListaPrecioPedido);
@@ -595,8 +615,8 @@ namespace CapaVista_Pedidos
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblDireccionCliente);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasTxtDireccionCliente);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblCotizacionOrigen);
-            this.VentasPnlDatosPedido.Controls.Add(this.VentasChkPedidoIndependiente);
-            this.VentasPnlDatosPedido.Controls.Add(this.VentasChkPedidoPorCotizacion);
+            this.VentasPnlDatosPedido.Controls.Add(this.VentasRdoPedidoIndependiente);
+            this.VentasPnlDatosPedido.Controls.Add(this.VentasRdoPedidoPorCotizacion);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblOrigenPedido);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasCboVendedor);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblVendedor);
@@ -606,8 +626,7 @@ namespace CapaVista_Pedidos
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblVencimiento);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasDtpPedido);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblFechaPedido);
-            this.VentasPnlDatosPedido.Controls.Add(this.VentasCboCliente);
-            this.VentasPnlDatosPedido.Controls.Add(this.VentasLblCliente);
+            this.VentasPnlDatosPedido.Controls.Add(this.VentasUsrCliente);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasTxtNumeroPedido);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblNumeroPedido);
             this.VentasPnlDatosPedido.Controls.Add(this.VentasLblDatosTitulo);
@@ -620,20 +639,20 @@ namespace CapaVista_Pedidos
             // Estado y moneda del pedido
             //
             this.VentasLblEstadoPedido.AutoSize = true;
-            this.VentasLblEstadoPedido.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblEstadoPedido.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblEstadoPedido.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             this.VentasLblEstadoPedido.Location = new System.Drawing.Point(26, 301);
             this.VentasLblEstadoPedido.Name = "VentasLblEstadoPedido";
             this.VentasLblEstadoPedido.Text = "Estado";
-            this.VentasTxtEstadoPedido.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.VentasTxtEstadoPedido.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.VentasTxtEstadoPedido.Location = new System.Drawing.Point(26, 322);
-            this.VentasTxtEstadoPedido.Name = "VentasTxtEstadoPedido";
-            this.VentasTxtEstadoPedido.ReadOnly = true;
-            this.VentasTxtEstadoPedido.Size = new System.Drawing.Size(310, 30);
-            this.VentasTxtEstadoPedido.Text = "PENDIENTE";
+            this.VentasCboEstadoPedido.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VentasCboEstadoPedido.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.VentasCboEstadoPedido.Location = new System.Drawing.Point(26, 322);
+            this.VentasCboEstadoPedido.Name = "VentasCboEstadoPedido";
+            this.VentasCboEstadoPedido.Size = new System.Drawing.Size(310, 30);
+            this.VentasCboEstadoPedido.Items.AddRange(new object[] { "PENDIENTE", "CONFIRMADO", "COMPLETADO", "ANULADO" });
+            this.VentasCboEstadoPedido.SelectedIndex = 0;
             this.VentasLblMonedaPedido.AutoSize = true;
-            this.VentasLblMonedaPedido.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblMonedaPedido.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblMonedaPedido.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             this.VentasLblMonedaPedido.Location = new System.Drawing.Point(375, 301);
             this.VentasLblMonedaPedido.Name = "VentasLblMonedaPedido";
@@ -645,7 +664,7 @@ namespace CapaVista_Pedidos
             this.VentasTxtMonedaPedido.ReadOnly = true;
             this.VentasTxtMonedaPedido.Size = new System.Drawing.Size(310, 30);
             this.VentasLblListaPrecioPedido.AutoSize = true;
-            this.VentasLblListaPrecioPedido.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblListaPrecioPedido.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblListaPrecioPedido.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             this.VentasLblListaPrecioPedido.Location = new System.Drawing.Point(724, 301);
             this.VentasLblListaPrecioPedido.Name = "VentasLblListaPrecioPedido";
@@ -657,41 +676,47 @@ namespace CapaVista_Pedidos
             this.VentasCboListaPrecioPedido.Size = new System.Drawing.Size(310, 30);
             this.VentasLblIdentificacionCliente.AutoSize = true;
             this.VentasLblIdentificacionCliente.Location = new System.Drawing.Point(540, 103);
+            this.VentasLblIdentificacionCliente.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblIdentificacionCliente.Name = "VentasLblIdentificacionCliente";
             this.VentasLblIdentificacionCliente.Text = "Identificación del cliente";
             this.VentasTxtIdentificacionCliente.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
             this.VentasTxtIdentificacionCliente.Location = new System.Drawing.Point(540, 124);
+            this.VentasTxtIdentificacionCliente.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.VentasTxtIdentificacionCliente.Name = "VentasTxtIdentificacionCliente";
             this.VentasTxtIdentificacionCliente.ReadOnly = true;
             this.VentasTxtIdentificacionCliente.Size = new System.Drawing.Size(170, 27);
             this.VentasLblContactoCliente.AutoSize = true;
             this.VentasLblContactoCliente.Location = new System.Drawing.Point(724, 103);
+            this.VentasLblContactoCliente.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblContactoCliente.Name = "VentasLblContactoCliente";
-            this.VentasLblContactoCliente.Text = "Contacto";
+            this.VentasLblContactoCliente.Text = "Contacto del cliente";
             this.VentasTxtContactoCliente.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
             this.VentasTxtContactoCliente.Location = new System.Drawing.Point(724, 124);
+            this.VentasTxtContactoCliente.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.VentasTxtContactoCliente.Name = "VentasTxtContactoCliente";
             this.VentasTxtContactoCliente.ReadOnly = true;
             this.VentasTxtContactoCliente.Size = new System.Drawing.Size(310, 27);
             this.VentasLblDireccionCliente.AutoSize = true;
-            this.VentasLblDireccionCliente.Location = new System.Drawing.Point(26, 164);
+            this.VentasLblDireccionCliente.Location = new System.Drawing.Point(26, 172);
+            this.VentasLblDireccionCliente.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblDireccionCliente.Name = "VentasLblDireccionCliente";
             this.VentasLblDireccionCliente.Text = "Dirección";
             this.VentasTxtDireccionCliente.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.VentasTxtDireccionCliente.Location = new System.Drawing.Point(26, 185);
+            this.VentasTxtDireccionCliente.Location = new System.Drawing.Point(26, 192);
+            this.VentasTxtDireccionCliente.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.VentasTxtDireccionCliente.Name = "VentasTxtDireccionCliente";
             this.VentasTxtDireccionCliente.ReadOnly = true;
-            this.VentasTxtDireccionCliente.Size = new System.Drawing.Size(500, 27);
+            this.VentasTxtDireccionCliente.Size = new System.Drawing.Size(500, 30);
             //
             // VentasCboCotizacionOrigen
             //
             this.VentasCboCotizacionOrigen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.VentasCboCotizacionOrigen.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.VentasCboCotizacionOrigen.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.VentasCboCotizacionOrigen.FormattingEnabled = true;
-            this.VentasCboCotizacionOrigen.Location = new System.Drawing.Point(724, 185);
+            this.VentasCboCotizacionOrigen.Location = new System.Drawing.Point(724, 192);
             this.VentasCboCotizacionOrigen.Name = "VentasCboCotizacionOrigen";
             this.VentasCboCotizacionOrigen.Size = new System.Drawing.Size(310, 30);
-            this.VentasCboCotizacionOrigen.DropDownWidth = 500;
+            this.VentasCboCotizacionOrigen.DropDownWidth = 310;
             this.VentasCboCotizacionOrigen.TabIndex = 23;
             this.VentasCboCotizacionOrigen.Visible = false;
             //
@@ -700,44 +725,49 @@ namespace CapaVista_Pedidos
             this.VentasLblCotizacionOrigen.AutoSize = true;
             this.VentasLblCotizacionOrigen.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.VentasLblCotizacionOrigen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.VentasLblCotizacionOrigen.Location = new System.Drawing.Point(724, 164);
+            this.VentasLblCotizacionOrigen.Location = new System.Drawing.Point(724, 172);
             this.VentasLblCotizacionOrigen.Name = "VentasLblCotizacionOrigen";
             this.VentasLblCotizacionOrigen.Size = new System.Drawing.Size(190, 18);
             this.VentasLblCotizacionOrigen.TabIndex = 22;
             this.VentasLblCotizacionOrigen.Text = "Cotización de referencia";
             this.VentasLblCotizacionOrigen.Visible = false;
             //
-            // VentasChkPedidoIndependiente
+            // VentasRdoPedidoIndependiente
             //
-            this.VentasChkPedidoIndependiente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.VentasChkPedidoIndependiente.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.VentasChkPedidoIndependiente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.VentasChkPedidoIndependiente.Location = new System.Drawing.Point(160, 58);
-            this.VentasChkPedidoIndependiente.Appearance = System.Windows.Forms.Appearance.Button;
-            this.VentasChkPedidoIndependiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.VentasChkPedidoIndependiente.FlatAppearance.BorderSize = 0;
-            this.VentasChkPedidoIndependiente.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.VentasChkPedidoIndependiente.Name = "VentasChkPedidoIndependiente";
-            this.VentasChkPedidoIndependiente.Size = new System.Drawing.Size(155, 34);
-            this.VentasChkPedidoIndependiente.TabIndex = 0;
-            this.VentasChkPedidoIndependiente.Text = "Independiente";
-            this.VentasChkPedidoIndependiente.UseVisualStyleBackColor = false;
+            this.VentasRdoPedidoIndependiente.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            this.VentasRdoPedidoIndependiente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
+            this.VentasRdoPedidoIndependiente.Location = new System.Drawing.Point(160, 58);
+            this.VentasRdoPedidoIndependiente.Appearance = System.Windows.Forms.Appearance.Button;
+            this.VentasRdoPedidoIndependiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasRdoPedidoIndependiente.FlatAppearance.BorderSize = 1;
+            this.VentasRdoPedidoIndependiente.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(123, 63, 147);
+            this.VentasRdoPedidoIndependiente.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(201, 162, 74);
+            this.VentasRdoPedidoIndependiente.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VentasRdoPedidoIndependiente.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.VentasRdoPedidoIndependiente.Name = "VentasRdoPedidoIndependiente";
+            this.VentasRdoPedidoIndependiente.Size = new System.Drawing.Size(155, 34);
+            this.VentasRdoPedidoIndependiente.Checked = true;
+            this.VentasRdoPedidoIndependiente.TabIndex = 0;
+            this.VentasRdoPedidoIndependiente.Text = "Independiente";
+            this.VentasRdoPedidoIndependiente.UseVisualStyleBackColor = false;
             //
-            // VentasChkPedidoPorCotizacion
+            // VentasRdoPedidoPorCotizacion
             //
-            this.VentasChkPedidoPorCotizacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
-            this.VentasChkPedidoPorCotizacion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.VentasChkPedidoPorCotizacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.VentasChkPedidoPorCotizacion.Location = new System.Drawing.Point(326, 58);
-            this.VentasChkPedidoPorCotizacion.Appearance = System.Windows.Forms.Appearance.Button;
-            this.VentasChkPedidoPorCotizacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.VentasChkPedidoPorCotizacion.FlatAppearance.BorderSize = 0;
-            this.VentasChkPedidoPorCotizacion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.VentasChkPedidoPorCotizacion.Name = "VentasChkPedidoPorCotizacion";
-            this.VentasChkPedidoPorCotizacion.Size = new System.Drawing.Size(168, 34);
-            this.VentasChkPedidoPorCotizacion.TabIndex = 1;
-            this.VentasChkPedidoPorCotizacion.Text = "Por cotización";
-            this.VentasChkPedidoPorCotizacion.UseVisualStyleBackColor = false;
+            this.VentasRdoPedidoPorCotizacion.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            this.VentasRdoPedidoPorCotizacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
+            this.VentasRdoPedidoPorCotizacion.Location = new System.Drawing.Point(326, 58);
+            this.VentasRdoPedidoPorCotizacion.Appearance = System.Windows.Forms.Appearance.Button;
+            this.VentasRdoPedidoPorCotizacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasRdoPedidoPorCotizacion.FlatAppearance.BorderSize = 1;
+            this.VentasRdoPedidoPorCotizacion.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(123, 63, 147);
+            this.VentasRdoPedidoPorCotizacion.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(201, 162, 74);
+            this.VentasRdoPedidoPorCotizacion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VentasRdoPedidoPorCotizacion.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.VentasRdoPedidoPorCotizacion.Name = "VentasRdoPedidoPorCotizacion";
+            this.VentasRdoPedidoPorCotizacion.Size = new System.Drawing.Size(168, 34);
+            this.VentasRdoPedidoPorCotizacion.TabIndex = 1;
+            this.VentasRdoPedidoPorCotizacion.Text = "Por cotización";
+            this.VentasRdoPedidoPorCotizacion.UseVisualStyleBackColor = false;
             //
             // VentasLblOrigenPedido
             //
@@ -755,7 +785,7 @@ namespace CapaVista_Pedidos
             this.VentasCboVendedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.VentasCboVendedor.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.VentasCboVendedor.FormattingEnabled = true;
-            this.VentasCboVendedor.Location = new System.Drawing.Point(540, 185);
+            this.VentasCboVendedor.Location = new System.Drawing.Point(540, 192);
             this.VentasCboVendedor.Name = "VentasCboVendedor";
             this.VentasCboVendedor.Size = new System.Drawing.Size(170, 31);
             this.VentasCboVendedor.TabIndex = 4;
@@ -764,9 +794,9 @@ namespace CapaVista_Pedidos
             // VentasLblVendedor
             //
             this.VentasLblVendedor.AutoSize = true;
-            this.VentasLblVendedor.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblVendedor.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblVendedor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.VentasLblVendedor.Location = new System.Drawing.Point(540, 164);
+            this.VentasLblVendedor.Location = new System.Drawing.Point(540, 172);
             this.VentasLblVendedor.Name = "VentasLblVendedor";
             this.VentasLblVendedor.Size = new System.Drawing.Size(79, 18);
             this.VentasLblVendedor.TabIndex = 10;
@@ -785,7 +815,7 @@ namespace CapaVista_Pedidos
             // VentasLblEntrega
             //
             this.VentasLblEntrega.AutoSize = true;
-            this.VentasLblEntrega.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblEntrega.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblEntrega.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblEntrega.Location = new System.Drawing.Point(375, 239);
             this.VentasLblEntrega.Name = "VentasLblEntrega";
@@ -805,7 +835,7 @@ namespace CapaVista_Pedidos
             // VentasLblVencimiento
             //
             this.VentasLblVencimiento.AutoSize = true;
-            this.VentasLblVencimiento.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblVencimiento.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblVencimiento.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             this.VentasLblVencimiento.Location = new System.Drawing.Point(724, 239);
             this.VentasLblVencimiento.Name = "VentasLblVencimiento";
@@ -824,7 +854,7 @@ namespace CapaVista_Pedidos
             // VentasLblFechaPedido
             //
             this.VentasLblFechaPedido.AutoSize = true;
-            this.VentasLblFechaPedido.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblFechaPedido.Font = new System.Drawing.Font("Tahoma", 9F);
             this.VentasLblFechaPedido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblFechaPedido.Location = new System.Drawing.Point(26, 239);
             this.VentasLblFechaPedido.Name = "VentasLblFechaPedido";
@@ -832,26 +862,12 @@ namespace CapaVista_Pedidos
             this.VentasLblFechaPedido.TabIndex = 4;
             this.VentasLblFechaPedido.Text = "Fecha de pedido";
             //
-            // VentasCboCliente
+            // VentasUsrCliente
             //
-            this.VentasCboCliente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.VentasCboCliente.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.VentasCboCliente.FormattingEnabled = true;
-            this.VentasCboCliente.Location = new System.Drawing.Point(26, 124);
-            this.VentasCboCliente.Name = "VentasCboCliente";
-            this.VentasCboCliente.Size = new System.Drawing.Size(500, 31);
-            this.VentasCboCliente.TabIndex = 2;
-            //
-            // VentasLblCliente
-            //
-            this.VentasLblCliente.AutoSize = true;
-            this.VentasLblCliente.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.VentasLblCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.VentasLblCliente.Location = new System.Drawing.Point(26, 103);
-            this.VentasLblCliente.Name = "VentasLblCliente";
-            this.VentasLblCliente.Size = new System.Drawing.Size(61, 18);
-            this.VentasLblCliente.TabIndex = 2;
-            this.VentasLblCliente.Text = "Cliente";
+            this.VentasUsrCliente.Location = new System.Drawing.Point(26, 102);
+            this.VentasUsrCliente.Name = "VentasUsrCliente";
+            this.VentasUsrCliente.Size = new System.Drawing.Size(500, 70);
+            this.VentasUsrCliente.TabIndex = 2;
             //
             // VentasTxtNumeroPedido
             //
@@ -881,7 +897,7 @@ namespace CapaVista_Pedidos
             // VentasLblDatosTitulo
             //
             this.VentasLblDatosTitulo.AutoSize = true;
-            this.VentasLblDatosTitulo.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
+            this.VentasLblDatosTitulo.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
             this.VentasLblDatosTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.VentasLblDatosTitulo.Location = new System.Drawing.Point(26, 10);
             this.VentasLblDatosTitulo.Name = "VentasLblDatosTitulo";
@@ -903,7 +919,7 @@ namespace CapaVista_Pedidos
             this.MaximizeBox = false;
             this.Name = "FrmPedidoVentas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "7004 - PedidoVentas";
+            this.Text = "7004 – PedidoVentas";
             this.VentasPnlEncabezado.ResumeLayout(false);
             this.VentasPnlEncabezado.PerformLayout();
             this.VentasPnlContenido.ResumeLayout(false);
@@ -924,6 +940,7 @@ namespace CapaVista_Pedidos
             this.VentasTtpAcciones.SetToolTip(this.VentasBtnConsultarPedido, "Consultar pedidos");
             this.VentasTtpAcciones.SetToolTip(this.VentasBtnModificarPedido, "Modificar este pedido");
             this.VentasTtpAcciones.SetToolTip(this.VentasBtnAnularPedido, "Anular este pedido");
+            this.VentasTtpAcciones.SetToolTip(this.VentasBtnAyuda, "Ayuda de pedidos (F1)");
             this.ResumeLayout(false);
 
         }
@@ -939,8 +956,7 @@ namespace CapaVista_Pedidos
         private System.Windows.Forms.Label VentasLblDatosTitulo;
         private System.Windows.Forms.Label VentasLblNumeroPedido;
         private System.Windows.Forms.TextBox VentasTxtNumeroPedido;
-        private System.Windows.Forms.Label VentasLblCliente;
-        private System.Windows.Forms.ComboBox VentasCboCliente;
+        private VentasUsrCliente VentasUsrCliente;
         private System.Windows.Forms.Label VentasLblFechaPedido;
         private System.Windows.Forms.DateTimePicker VentasDtpPedido;
         private System.Windows.Forms.Label VentasLblEntrega;
@@ -962,7 +978,6 @@ namespace CapaVista_Pedidos
         private System.Windows.Forms.DataGridView VentasDgvDetalle;
         private System.Windows.Forms.DataGridViewTextBoxColumn VentasDgvDetalleColCodigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn VentasDgvDetalleColProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn VentasDgvDetalleColDisponibilidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn VentasDgvDetalleColCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn VentasDgvDetalleColPrecio;
         private System.Windows.Forms.DataGridViewTextBoxColumn VentasDgvDetalleColDescuento;
@@ -970,6 +985,7 @@ namespace CapaVista_Pedidos
         private System.Windows.Forms.Panel VentasPnlResumen;
         private System.Windows.Forms.Label VentasLblResumenTitulo;
         private System.Windows.Forms.Label VentasLblSubtotal;
+        private System.Windows.Forms.Label VentasLblDescuentoTotal;
         private System.Windows.Forms.Label VentasLblTotal;
         private System.Windows.Forms.Button VentasBtnGuardar;
         private System.Windows.Forms.Button VentasBtnCancelar;
@@ -977,15 +993,16 @@ namespace CapaVista_Pedidos
         private System.Windows.Forms.Button VentasBtnConsultarPedido;
         private System.Windows.Forms.Button VentasBtnModificarPedido;
         private System.Windows.Forms.Button VentasBtnAnularPedido;
+        private System.Windows.Forms.Button VentasBtnAyuda;
         private System.Windows.Forms.Button VentasBtnIngresarProducto;
         private System.Windows.Forms.Button VentasBtnEliminarProducto;
         private System.Windows.Forms.Label VentasLblOrigenPedido;
-        private System.Windows.Forms.CheckBox VentasChkPedidoPorCotizacion;
-        private System.Windows.Forms.CheckBox VentasChkPedidoIndependiente;
+        private System.Windows.Forms.RadioButton VentasRdoPedidoPorCotizacion;
+        private System.Windows.Forms.RadioButton VentasRdoPedidoIndependiente;
         private System.Windows.Forms.Label VentasLblCotizacionOrigen;
         private System.Windows.Forms.ComboBox VentasCboCotizacionOrigen;
         private System.Windows.Forms.Label VentasLblEstadoPedido;
-        private System.Windows.Forms.TextBox VentasTxtEstadoPedido;
+        private System.Windows.Forms.ComboBox VentasCboEstadoPedido;
         private System.Windows.Forms.Label VentasLblMonedaPedido;
         private System.Windows.Forms.TextBox VentasTxtMonedaPedido;
         private System.Windows.Forms.Label VentasLblListaPrecioPedido;

@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace CapaModelo_Pedidos
 {
-    // Conexión ODBC del proyecto; las transacciones se cierran al disponerla.
+    // Natali Sofía Montenegro Portillo | 0901-23-10017 | Gestiona la conexión ODBC y las transacciones de Pedidos.
     internal sealed class ClsConexion : IDisposable
     {
         private readonly OdbcConnection _Conexion;
