@@ -1,4 +1,4 @@
-using CapaControlador_Seguridad;
+/*using CapaControlador_Seguridad;
 using CapaControlador_Seguridad.Objetos_de_valor;
 using CapaVista_Seguridad;
 using CapaVista_Seguridad.Ayudas;
@@ -25,7 +25,7 @@ using System.Windows.Forms;
  *  permite registrar, consultar, modificar y eliminar los 
  *  datos ingresados al sistema, tambien cuenta con Reportes y Ayudas.
  * ===================================================================
-*/
+*//*
 
 namespace CapaVista_Seguridad
 {
@@ -538,3 +538,4 @@ namespace CapaVista_Seguridad
         }
     }
 }
+*/

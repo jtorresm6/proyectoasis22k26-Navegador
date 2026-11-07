@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F142E1B8-C4C6-4913-904F-9F2330E2CAB6}</ProjectGuid>
+    <ProjectGuid>{E0EBF007-61E4-4F8C-B6F5-3530E8397452}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CapaVista_TransporteInterno_Logistica</RootNamespace>
@@ -49,78 +49,74 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formas\FrmControlTransporte.cs">
+    <Compile Include="Formularios\FrmMantenimientoCamaraRefrigeracion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmControlTransporte.Designer.cs">
-      <DependentUpon>FrmControlTransporte.cs</DependentUpon>
+    <Compile Include="Formularios\FrmMantenimientoCamaraRefrigeracion.Designer.cs">
+      <DependentUpon>FrmMantenimientoCamaraRefrigeracion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmGestionViajes.cs">
+    <Compile Include="Formularios\FrmMantenimientoEstadoTransporte.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmGestionViajes.Designer.cs">
-      <DependentUpon>FrmGestionViajes.cs</DependentUpon>
+    <Compile Include="Formularios\FrmMantenimientoEstadoTransporte.Designer.cs">
+      <DependentUpon>FrmMantenimientoEstadoTransporte.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmConsultaTransporte.cs">
+    <Compile Include="Formularios\FrmMantenimientoTipoTransporte.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmConsultaTransporte.Designer.cs">
-      <DependentUpon>FrmConsultaTransporte.cs</DependentUpon>
+    <Compile Include="Formularios\FrmMantenimientoTipoTransporte.Designer.cs">
+      <DependentUpon>FrmMantenimientoTipoTransporte.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmSeleccionTipoTraslado.cs">
+    <Compile Include="Formularios\FrmMantenimientoConductor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmSeleccionTipoTraslado.Designer.cs">
-      <DependentUpon>FrmSeleccionTipoTraslado.cs</DependentUpon>
+    <Compile Include="Formularios\FrmMantenimientoConductor.Designer.cs">
+      <DependentUpon>FrmMantenimientoConductor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formas\FrmTransporteInterno.cs">
+    <Compile Include="Formularios\FrmTipoTraslado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formas\FrmTransporteInterno.Designer.cs">
-      <DependentUpon>FrmTransporteInterno.cs</DependentUpon>
+    <Compile Include="Formularios\FrmTipoTraslado.Designer.cs">
+      <DependentUpon>FrmTipoTraslado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoTransporte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmMantenimientoTransporte.Designer.cs">
+      <DependentUpon>FrmMantenimientoTransporte.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CapaControlador_TransporteInterno_Logistica\CapaControlador_TransporteInterno_Logistica.csproj">
+      <Project>{d9fc395a-6524-48e4-9d58-c8cbefe95e2c}</Project>
+      <Name>CapaControlador_TransporteInterno_Logistica</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Ayudas\" />
     <Folder Include="Reportes\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Formas\FrmControlTransporte.resx">
-      <DependentUpon>FrmControlTransporte.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmMantenimientoCamaraRefrigeracion.resx">
+      <DependentUpon>FrmMantenimientoCamaraRefrigeracion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmGestionViajes.resx">
-      <DependentUpon>FrmGestionViajes.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmMantenimientoEstadoTransporte.resx">
+      <DependentUpon>FrmMantenimientoEstadoTransporte.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmConsultaTransporte.resx">
-      <DependentUpon>FrmConsultaTransporte.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmMantenimientoTipoTransporte.resx">
+      <DependentUpon>FrmMantenimientoTipoTransporte.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmSeleccionTipoTraslado.resx">
-      <DependentUpon>FrmSeleccionTipoTraslado.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmMantenimientoConductor.resx">
+      <DependentUpon>FrmMantenimientoConductor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formas\FrmTransporteInterno.resx">
-      <DependentUpon>FrmTransporteInterno.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmTipoTraslado.resx">
+      <DependentUpon>FrmTipoTraslado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="Formularios\FrmMantenimientoTransporte.resx">
+      <DependentUpon>FrmMantenimientoTransporte.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\7.png" />
-    <None Include="Resources\resumenTransporte1.png" />
-    <None Include="Resources\FondoLogistica1.png" />
-    <None Include="Resources\panelestandarizado1.png" />
-    <None Include="Resources\71.png" />
-    <None Include="Resources\f844b316-02c8-41af-9c16-226a1ef14d22.png" />
-    <Content Include="Resources\FondoLogistica.png" />
-    <Content Include="Resources\panelestandarizado.png" />
-    <Content Include="Resources\resumenTransporte.png" />
-    <Content Include="Resources\resumenTraslado.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
