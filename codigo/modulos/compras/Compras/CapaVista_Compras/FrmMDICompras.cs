@@ -1,4 +1,4 @@
-﻿using CapaControlador_Seguridad.Objetos_de_valor;
+using CapaControlador_Seguridad.Objetos_de_valor;
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -18,6 +18,7 @@ namespace CapaVista_Compras
 {
     public partial class FrmMDICompras : Form
     {
+        private ToolTip _AyudaNavegador;
         private Form _FormularioSubproceso;
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras _OpcionSubproceso;
         private bool _NavegadorContraido;
@@ -38,13 +39,15 @@ namespace CapaVista_Compras
         public FrmMDICompras()
         {
             InitializeComponent();
+            if (_Componentes == null) _Componentes = new Container();
+            _AyudaNavegador = new ToolTip(_Componentes) { ShowAlways = true };
             ComprasMetConfigurarDesplazamientoNavegador();
             ComprasTlpRegistrosCompra.Paint += ComprasMetPintarFlechaRegistrosCompra;
             ComprasTlpCatalogos.Paint += ComprasMetPintarFlechaCatalogos;
             ComprasLblCatalogos.Margin = new Padding(3, 4, 26, 4);
             ComprasMetAcomodarCatalogos();
             ComprasMetAcomodarRegistrosCompra();
-            ComprasBtnAyuda.Enabled = false;
+            ComprasBtnAyuda.Enabled = true;
             ComprasTlpBitacora.Enabled = true;
             ComprasTlpHerramientas.Enabled = true;
             ComprasLblBienvenido.Tipografia = CapaVista_Componentes.Componentes.TipografiaCompras.TituloBienvenida;
@@ -147,6 +150,15 @@ namespace CapaVista_Compras
         }
         private void ComprasMetConfigurarEstadosTab(Control Elemento, CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras Panel)
         {
+            foreach (Control ControlActual in Panel.Controls)
+            {
+                var Etiqueta = ControlActual as CapaVista_Componentes.Componentes.ComprasUsrLabel;
+                if (Etiqueta != null)
+                {
+                    _AyudaNavegador.SetToolTip(Elemento, Etiqueta.Texto);
+                    break;
+                }
+            }
             Elemento.MouseEnter += (Origen, Argumentos) => Panel.ComprasProcActualizarHover(true);
             Elemento.MouseLeave += (Origen, Argumentos) =>
             {

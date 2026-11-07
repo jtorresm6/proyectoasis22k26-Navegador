@@ -460,7 +460,7 @@
             this.ComprasDgvEncabezados.Location = new System.Drawing.Point(0, 28);
             this.ComprasDgvEncabezados.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasDgvEncabezados.Name = "ComprasDgvEncabezados";
-            this.ComprasDgvEncabezados.RegistrosPorPagina = 5;
+            this.ComprasDgvEncabezados.RegistrosPorPagina = 10;
             this.ComprasDgvEncabezados.ResaltarFilasAlPasar = true;
             this.ComprasDgvEncabezados.Size = new System.Drawing.Size(1243, 377);
             this.ComprasDgvEncabezados.TabIndex = 2;

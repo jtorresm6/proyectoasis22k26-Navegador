@@ -309,7 +309,7 @@ internal static class ValidarVistaOrdenesCompra
                     using (var Detalle = new FrmDetalleOrdenCompra(Controlador.ComprasFuncObtener(1), Controlador))
                     {
                         var Codigo = ComprasFuncCampo<ComprasUsrTextBox>(Detalle, "ComprasTxtCodigoOrden");
-                        ComprasProcVerificar(Codigo.Text == "1" && !Codigo.Enabled && Codigo.MaxLength == 30);
+                        ComprasProcVerificar(Codigo.Text == "1" && Codigo.Enabled && Codigo.ReadOnly && Codigo.MaxLength == 30);
                         Detalle.Opacity = 0;
                         Detalle.ShowInTaskbar = false;
                         Detalle.Show(Vista);

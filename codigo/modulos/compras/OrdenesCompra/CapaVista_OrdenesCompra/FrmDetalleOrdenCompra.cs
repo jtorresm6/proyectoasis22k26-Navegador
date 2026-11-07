@@ -1,4 +1,4 @@
-﻿using CapaVista_OrdenesCompra.Presentacion;
+using CapaVista_OrdenesCompra.Presentacion;
 using CapaVista_Componentes.Componentes;
 using System;
 using System.Threading.Tasks;
@@ -24,6 +24,10 @@ namespace CapaVista_OrdenesCompra
             _Compra = Compra;
             InitializeComponent();
             ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
+            ComprasProcSoloLectura(this);
+            ComprasDgvProductos.Tabla.ReadOnly = true;
+            ComprasDgvProductos.Tabla.AllowUserToAddRows = false;
+            ComprasDgvProductos.Tabla.AllowUserToDeleteRows = false;
             ComprasCboNombreProveedor.SelectedIndexChanged += ComprasProcActualizarProveedor;
             ComprasDtpFechaEmision.ValueChanged += ComprasProcActualizarVencimiento;
             ClsTablasOrdenesCompra.ComprasProcConfigurarDetalles(ComprasDgvProductos);
@@ -32,25 +36,42 @@ namespace CapaVista_OrdenesCompra
             ComprasTlpMantenimientoProductos.Enabled = false;
             ComprasBtnGuardar.Enabled = false;
             ComprasBtnGuardar.AccessibleDescription = "Se requieren productos para guardar la orden.";
-            ComprasBtnDescartar.AccessibleName = Compra == null ? "Descartar" : "Anular orden";
-            ComprasBtnDescartar.Enabled = _Compra == null || (!_Compra.Bloqueado && _Compra.Estado != "Anulada" && _Compra.Estado != "Recibida");
+            ComprasBtnDescartar.AccessibleName = "Anular orden";
+            ComprasBtnDescartar.Enabled = _Compra != null && !_Compra.Bloqueado && _Compra.Estado != "Anulada" && _Compra.Estado != "Recibida";
             ComprasBtnDescartar.Click += ComprasProcAnular;
             ComprasBtnRegresar.Click += (Remitente, Evento) => Close();
             FormClosing += (Remitente, Evento) => { if (_Anulando) Evento.Cancel = true; };
             ComprasProcMostrarEncabezado();
         }
 
+        private static void ComprasProcSoloLectura(Control Contenedor)
+        {
+            foreach (Control Campo in Contenedor.Controls)
+            {
+                var Texto = Campo as ComprasUsrTextBox;
+                if (Texto != null)
+                {
+                    Texto.Enabled = true;
+                    Texto.ReadOnly = true;
+                    Texto.MostrarEtiquetaError = false;
+                    Texto.TabStop = false;
+                }
+                if (Campo is ComprasUsrComboBox || Campo is DateTimePicker) Campo.Enabled = false;
+                ComprasProcSoloLectura(Campo);
+            }
+        }
+
         private void ComprasProcMostrarEncabezado()
         {
             bool Nueva = _Compra == null;
             ComprasLblCodigoOrden.MostrarAsterisco = false;
-            ComprasLblFechaDeEmision.MostrarAsterisco = Nueva;
-            ComprasLblFechaDeVencimiento.MostrarAsterisco = Nueva;
+            ComprasLblFechaDeEmision.MostrarAsterisco = false;
+            ComprasLblFechaDeVencimiento.MostrarAsterisco = false;
             ComprasTxtCodigoOrden.Enabled = false;
             ComprasTxtCodigoOrden.MaxLength = 30;
-            ComprasDtpFechaEmision.Enabled = Nueva;
-            ComprasDtpFechaVencimiento.Enabled = Nueva;
-            ComprasCboNombreProveedor.Enabled = Nueva;
+            ComprasDtpFechaEmision.Enabled = false;
+            ComprasDtpFechaVencimiento.Enabled = false;
+            ComprasCboNombreProveedor.Enabled = false;
             ComprasTxtComentario.Enabled = false;
             ComprasTxtComentario.Text = Nueva ? string.Empty : _Compra.Comentario;
             ComprasTxtEstadoProveedor.Text = string.Empty;
@@ -85,6 +106,7 @@ namespace CapaVista_OrdenesCompra
                 ComprasTxtDireccionProveedor.Text = _Compra.DireccionProveedor;
                 ComprasTxtEstadoProveedor.Text = _Compra.ProveedorActivo ? "Activo" : "Inactivo";
             }
+            ComprasProcSoloLectura(this);
         }
 
         private void ComprasProcActualizarVencimiento(object Remitente, EventArgs Evento)
@@ -164,7 +186,7 @@ namespace CapaVista_OrdenesCompra
             finally
             {
                 _Anulando = false;
-                ComprasBtnDescartar.Enabled = _Compra == null || (!_Compra.Bloqueado && _Compra.Estado != "Anulada" && _Compra.Estado != "Recibida");
+                ComprasBtnDescartar.Enabled = _Compra != null && !_Compra.Bloqueado && _Compra.Estado != "Anulada" && _Compra.Estado != "Recibida";
                 ComprasBtnRegresar.Enabled = true;
                 UseWaitCursor = false;
             }
