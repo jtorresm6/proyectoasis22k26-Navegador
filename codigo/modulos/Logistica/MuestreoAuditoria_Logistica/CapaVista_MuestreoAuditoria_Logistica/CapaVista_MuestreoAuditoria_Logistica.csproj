@@ -43,10 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmAuditoriaInventario.cs">
+    <Compile Include="Formularios\FrmAuditoriaInventario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmAuditoriaInventario.Designer.cs">
+    <Compile Include="Formularios\FrmAuditoriaInventario.Designer.cs">
       <DependentUpon>FrmAuditoriaInventario.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,7 +63,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FrmAuditoriaInventario.resx">
+    <EmbeddedResource Include="Formularios\FrmAuditoriaInventario.resx">
       <DependentUpon>FrmAuditoriaInventario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -77,5 +77,6 @@
   <ItemGroup>
     <None Include="Resources\FondoLogistica.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

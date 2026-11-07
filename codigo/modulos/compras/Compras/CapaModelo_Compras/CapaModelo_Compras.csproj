@@ -47,9 +47,14 @@
     <Compile Include="ClsModuloCompras.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Contratos\" />
-    <Folder Include="Entidades\" />
-    <Folder Include="Repositorios\" />
+
+
+
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="CapaModelo_Componentes">
+      <HintPath>..\..\Componentes\CapaModelo_Componentes\bin\$(Configuration)\CapaModelo_Componentes.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

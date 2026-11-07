@@ -1,5 +1,17 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.Windows.Forms;
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Miguel David Contreras Jacinto
+ * Carné : 0901-21-3878
+ * Fecha : 24/10/2026
+ * ==================================================================
+ * Propósito :
+ *  Aplica la presentación y el comportamiento compartido a los selectores de Compras.
+ * ===================================================================
+*/
 
 namespace CapaVista_Componentes.Componentes
 {

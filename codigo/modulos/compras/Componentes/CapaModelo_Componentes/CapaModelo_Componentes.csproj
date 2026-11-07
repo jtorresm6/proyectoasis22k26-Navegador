@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -42,11 +42,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\ClsRepositorioCompras.cs" />
+    <Compile Include="Repositorios\ClsRepositorioCombo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Repositorios\" />
-    <Folder Include="Contratos\" />
-    <Folder Include="Entidades\" />
+
+
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="Repositorios\ClsRepositorioMaestroCompras.cs" />
+    <Compile Include="Repositorios\ClsExcepcionDatosCompras.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Repositorios\ClsRepositorioSeguridadCompras.cs" />
+  </ItemGroup>
 </Project>

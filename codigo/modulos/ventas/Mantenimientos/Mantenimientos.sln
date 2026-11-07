@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37502.11
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_Mantenimientos", "CapaModelo_Mantenimientos\CapaModelo_Mantenimientos.csproj", "{120F8E33-3F51-5771-B261-A27B88D48A51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_Mantenimientos", "CapaControlador_Mantenimientos\CapaControlador_Mantenimientos.csproj", "{8A68AF87-E637-5E94-95FA-1EFD913157C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_Mantenimientos", "CapaVista_Mantenimientos\CapaVista_Mantenimientos.csproj", "{533FE7FC-D355-5D64-AA7E-82DBA2D506C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{120F8E33-3F51-5771-B261-A27B88D48A51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{120F8E33-3F51-5771-B261-A27B88D48A51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{120F8E33-3F51-5771-B261-A27B88D48A51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{120F8E33-3F51-5771-B261-A27B88D48A51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A68AF87-E637-5E94-95FA-1EFD913157C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A68AF87-E637-5E94-95FA-1EFD913157C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A68AF87-E637-5E94-95FA-1EFD913157C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A68AF87-E637-5E94-95FA-1EFD913157C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{533FE7FC-D355-5D64-AA7E-82DBA2D506C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{533FE7FC-D355-5D64-AA7E-82DBA2D506C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{533FE7FC-D355-5D64-AA7E-82DBA2D506C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{533FE7FC-D355-5D64-AA7E-82DBA2D506C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B6CCCA94-2A2E-40BF-BFAF-3A5E69C07297}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CapaVista_Empleado</RootNamespace>
+    <AssemblyName>CapaVista_Empleado</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CapaControlador_Empleado">
+      <HintPath>..\CapaControlador_Empleado\bin\Debug\CapaControlador_Empleado.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_AsigCapacitacion">
+      <HintPath>..\..\AsigCapacitacion\CapaVista_AsigCapacitacion\bin\Debug\CapaVista_AsigCapacitacion.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Navegador">
+      <HintPath>..\..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Formularios\FrmCapacitacionesNavegador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmCapacitacionesNavegador.Designer.cs">
+      <DependentUpon>FrmCapacitacionesNavegador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmEmpleados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmEmpleados.Designer.cs">
+      <DependentUpon>FrmEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmCapacitacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmCapacitacion.Designer.cs">
+      <DependentUpon>FrmCapacitacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmEvaluacionNavegador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmEvaluacionNavegador.Designer.cs">
+      <DependentUpon>FrmEvaluacionNavegador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmInstructoresNavegador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmInstructoresNavegador.Designer.cs">
+      <DependentUpon>FrmInstructoresNavegador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmDepartamentosNavegador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmDepartamentosNavegador.Designer.cs">
+      <DependentUpon>FrmDepartamentosNavegador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmTipoPuestosNavegador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmTipoPuestosNavegador.Designer.cs">
+      <DependentUpon>FrmTipoPuestosNavegador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmPuestosNavegador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmPuestosNavegador.Designer.cs">
+      <DependentUpon>FrmPuestosNavegador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmJornadasNavegador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmJornadasNavegador.Designer.cs">
+      <DependentUpon>FrmJornadasNavegador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmAsigPuestosNavegador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmAsigPuestosNavegador.Designer.cs">
+      <DependentUpon>FrmAsigPuestosNavegador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteCapacitacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteCapacitacion.Designer.cs">
+      <DependentUpon>FrmReporteCapacitacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteInstructor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteInstructor.Designer.cs">
+      <DependentUpon>FrmReporteInstructor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteDepartamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteDepartamentos.Designer.cs">
+      <DependentUpon>FrmReporteDepartamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteTipoPuestos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteTipoPuestos.Designer.cs">
+      <DependentUpon>FrmReporteTipoPuestos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes\FrmReportePuestos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReportePuestos.Designer.cs">
+      <DependentUpon>FrmReportePuestos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteJornadas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteJornadas.Designer.cs">
+      <DependentUpon>FrmReporteJornadas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteAsigPuestos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteAsigPuestos.Designer.cs">
+      <DependentUpon>FrmReporteAsigPuestos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\CapaControlador_Empleado.Modelos_de_Controladores.ClsModeloCapacitacion.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Empleado.Modelos_de_Controladores.ClsModeloDepartamento.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Empleado.Modelos_de_Controladores.ClsModeloTipoPuesto.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Empleado.Modelos_de_Controladores.ClsModeloPuesto.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Empleado.Modelos_de_Controladores.ClsModeloJornada.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Empleado.Modelos_de_Controladores.ClsModeloPuestoEmpleado.datasource" />
+    <None Include="Resources\icono_rrhh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Formularios\FrmCapacitacionesNavegador.resx">
+      <DependentUpon>FrmCapacitacionesNavegador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmEmpleados.resx">
+      <DependentUpon>FrmEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmCapacitacion.resx">
+      <DependentUpon>FrmCapacitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmEvaluacionNavegador.resx">
+      <DependentUpon>FrmEvaluacionNavegador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmInstructoresNavegador.resx">
+      <DependentUpon>FrmInstructoresNavegador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmDepartamentosNavegador.resx">
+      <DependentUpon>FrmDepartamentosNavegador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmTipoPuestosNavegador.resx">
+      <DependentUpon>FrmTipoPuestosNavegador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmPuestosNavegador.resx">
+      <DependentUpon>FrmPuestosNavegador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmJornadasNavegador.resx">
+      <DependentUpon>FrmJornadasNavegador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmAsigPuestosNavegador.resx">
+      <DependentUpon>FrmAsigPuestosNavegador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes\FrmReporteCapacitacion.resx">
+      <DependentUpon>FrmReporteCapacitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes\FrmReporteInstructor.resx">
+      <DependentUpon>FrmReporteInstructor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes\FrmReporteDepartamentos.resx">
+      <DependentUpon>FrmReporteDepartamentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes\FrmReporteTipoPuestos.resx">
+      <DependentUpon>FrmReporteTipoPuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes\FrmReportePuestos.resx">
+      <DependentUpon>FrmReportePuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes\FrmReporteJornadas.resx">
+      <DependentUpon>FrmReporteJornadas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes\FrmReporteAsigPuestos.resx">
+      <DependentUpon>FrmReporteAsigPuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpCapacitacion.rdlc" />
+    <EmbeddedResource Include="Reportes\RpInstructor.rdlc" />
+    <EmbeddedResource Include="Reportes\RpDepartamento.rdlc" />
+    <EmbeddedResource Include="Reportes\RpTipoPuesto.rdlc" />
+    <EmbeddedResource Include="Reportes\RpPuesto.rdlc" />
+    <EmbeddedResource Include="Reportes\RpJornada.rdlc" />
+    <EmbeddedResource Include="Reportes\RpPuestoEmpleado.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pnl_fondo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pnl_FondoGeneral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\departamentos_Empleado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pnl_fondoAmarillo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_asistencia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fondo_mantenimientos_relacionados.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_capacitaciones.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_empleados.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Evaluaciones_Capacitaciones.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Instructor_Amarillo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AsigCapacitacion_Amarillo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Ayudas\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_reporte.png" />
+    <None Include="Resources\btn_ayuda.png" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

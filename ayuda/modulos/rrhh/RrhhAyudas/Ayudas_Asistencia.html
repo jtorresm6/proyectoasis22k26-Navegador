@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <title>Ayudas - Asistencia</title>
+</head>
+
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png">
+        <img class="imgButti" src="Imagenes/LogoYMascota/5.png">
+        <h1>Ayudas - Asistencia</h1>
+    </center>
+    <br>
+    <div class="container">
+        <h2>Descripción general</h2>
+        <p> La ventana 9101 - Asistencia es parte del módulo de Recursos Humanos del sistema,
+            desarrollado para Embutidos de Calidad S.A. Su función es llevar el control diario de la
+            asistencia del personal: registrar la hora de entrada y de salida de cada empleado, el estado
+            del día y las observaciones que correspondan.
+        <br><br>
+            Con la jornada asignada al empleado, el sistema calcula las horas trabajadas y señala las
+            incidencias del día, como llegadas tarde o salidas antes de hora. Esta información es la base
+            para el cálculo de la nómina y de las horas extra.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_general.png" alt="Vista general">
+        <br><br><br>
+
+        <h2>¿Cómo funciona la ventana?</h2>
+        <br>
+        <p> La ventana se divide en dos partes. A la izquierda está el Detalle de asistencia, con tres secciones:
+        <br>
+            1. Información del empleado: código, nombre, departamento, puesto, jornada y tipo de puesto.
+            <br>
+            2. Registro de asistencia: fecha, hora de entrada, hora de salida, estado y observaciones.
+            <br>
+            3. Resumen de asistencia: horas trabajadas, estado e incidencias del día, además de la fecha de
+               registro y la última modificación.
+        <br><br>
+            A la derecha está la lista de Asistencias registradas con sus filtros. Al hacer clic sobre
+            cualquier fila, los datos de ese registro se cargan en el detalle, listos para consultarse o modificarse.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_funcion.png" alt="Funcionamiento">
+        <br><br><br>
+
+        <h2>¿Cómo ingresar una asistencia?</h2>
+        <br>
+        <p> A continuación se detallan los pasos:
+        <br>
+            1. Escriba el código o el nombre del empleado. Al encontrarlo, el resto de sus datos se llenan solos.
+            <br>
+            2. Seleccione la fecha de la asistencia.
+            <br>
+            3. Marque la casilla de la hora de entrada y escríbala. Haga lo mismo con la hora de salida si ya la tiene.
+            <br>
+            4. El estado se sugiere solo según la hora de entrada; puede cambiarlo si es necesario.
+            <br>
+            5. Agregue una observación si lo requiere.
+            <br>
+            6. Presione el botón Guardar. El sistema mostrará un mensaje confirmando que la asistencia se guardó correctamente.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_ingresar.png" alt="Ingresar">
+        <br><br><br>
+
+        <h2>Estados de asistencia</h2>
+        <br>
+        <p> Cada registro tiene uno de los siguientes estados, que se muestran con un color distinto en el resumen y en la tabla:
+        <br>
+            1. Presente (verde): el empleado entró a tiempo, con una tolerancia de 5 minutos sobre el inicio de su jornada.
+            <br>
+            2. Tardanza (amarillo): el empleado entró más de 5 minutos después del inicio de su jornada.
+            <br>
+            3. Ausente (rojo): no hay hora de entrada registrada.
+            <br>
+            4. Permiso (azul): el empleado tiene un permiso aprobado para esa fecha.
+        <br><br>
+            Si el empleado tiene un permiso aprobado para la fecha seleccionada, el estado queda en Permiso,
+            no se puede cambiar y debajo del campo se muestra el tipo y el motivo del permiso.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_estados.png" alt="Estados">
+        <br><br><br>
+
+        <h2>Resumen e incidencias</h2>
+        <br>
+        <p> Mientras llena el registro, el resumen se actualiza solo:
+        <br>
+            1. Horas trabajadas: diferencia entre la hora de salida y la de entrada.
+            <br>
+            2. Incidencias: indica si el empleado llegó tarde (y cuántos minutos), si salió antes de terminar su
+               jornada o si le falta la marca de entrada o de salida. Si no hay ninguna, se muestra un guion.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_resumen.png" alt="Resumen">
+        <br><br><br>
+
+        <h2>Validaciones</h2>
+        <br>
+        <p> Antes de guardar o modificar, el sistema revisa los datos. Los campos con error se marcan
+            con un borde rojo y un mensaje debajo. No se permite guardar cuando:
+        <br>
+            1. No se ha seleccionado un empleado.
+            <br>
+            2. La fecha es futura.
+            <br>
+            3. El empleado ya tiene una asistencia registrada en esa fecha.
+            <br>
+            4. Hay hora de salida pero no de entrada, o la salida es antes o igual que la entrada.
+            <br>
+            5. No se ha seleccionado el estado, o el estado no concuerda con los datos (por ejemplo,
+               Permiso sin un permiso aprobado, o Presente sin hora de entrada).
+        <br><br>
+            Los campos marcados con asterisco (*) son obligatorios.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_ingresar.png" alt="Validaciones">
+        <br><br><br>
+
+        <h2>¿Cómo modificar una asistencia?</h2>
+        <br>
+        <p> A continuación se detallan los pasos:
+        <br>
+            1. Seleccione en la tabla la fila de la asistencia que desea modificar.
+            <br>
+            2. Los datos se cargarán en el detalle.
+            <br>
+            3. Realice los cambios necesarios.
+            <br>
+            4. Presione el botón Modificar. El sistema mostrará un mensaje confirmando el cambio y
+               actualizará la fecha de última modificación.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_modificar.png" alt="Modificar">
+        <br><br><br>
+
+        <h2>¿Cómo eliminar una asistencia?</h2>
+        <br>
+        <p> A continuación se detallan los pasos:
+        <br>
+            1. Seleccione en la tabla la fila de la asistencia que desea eliminar.
+            <br>
+            2. Presione el botón Eliminar.
+            <br>
+            3. El sistema pedirá confirmación, indicando el empleado y la fecha del registro.
+            <br>
+            4. Al confirmar, el registro se elimina de forma permanente.
+        <br><br>
+            Los botones Modificar y Eliminar solo se habilitan cuando hay un registro seleccionado.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_modificar.png" alt="Eliminar">
+        <br><br><br>
+
+        <h2>Filtrado de datos</h2>
+        <br>
+        <p> En la parte superior de la lista de asistencias puede filtrar los registros por:
+        <br>
+            1. Rango de fechas, con los campos Desde y Hasta. Por defecto se muestra el mes actual.
+            <br>
+            2. Empleado, escribiendo su nombre o código.
+            <br>
+            3. Estado: Todos, Presente, Tardanza, Ausente o Permiso.
+        <br><br>
+            Luego presione el botón Filtrar. También puede usar el cuadro de búsqueda rápida, que filtra
+            por nombre o código mientras escribe. No importan las mayúsculas o minúsculas. Debajo de la
+            tabla se muestra el total de registros encontrados.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_filtrado.png" alt="Filtrado">
+        <br><br><br>
+
+        <h2>Botones de navegación</h2>
+        <br>
+        <p> El formulario tiene el botón Refrescar, que limpia el detalle para un nuevo registro y vuelve
+            a aplicar los filtros, y los botones de navegación para desplazarse entre los registros de la tabla:
+        <br>
+            1. Inicio va al primer registro.
+            <br>
+            2. Anterior retrocede uno.
+            <br>
+            3. Siguiente avanza uno.
+            <br>
+            4. Fin va al último registro.
+        <br><br>
+            Al navegar, los datos del registro seleccionado se cargan en el detalle.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_navegacion.png" alt="Navegación">
+        <br><br><br>
+
+        <h2>Salir de la ventana</h2>
+        <br>
+        <p> Para salir de la ventana de asistencia, presione el botón Salir o dé clic en la X que se
+            encuentra en la parte superior derecha de la ventana.
+        </p>
+        <img class="imgVentana" src="Imagenes/Asistencia/Asistencia_salir.png" alt="Salir">
+        <br><br><br>
+    </div>
+</body>
+
+</html>

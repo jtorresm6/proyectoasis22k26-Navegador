@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{334872A7-435C-4321-8846-EF652F433CA7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CapaVista_Rrhh</RootNamespace>
+    <AssemblyName>CapaVista_Rrhh</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CapaControlador_Rrhh">
+      <HintPath>..\CapaControlador_Rrhh\bin\Debug\CapaControlador_Rrhh.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Asistencia">
+      <HintPath>..\..\Asistencia\CapaVista_Asistencia\bin\Debug\CapaVista_Asistencia.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_CierreNominas">
+      <HintPath>..\..\Cierre de Nominas\CapaVista_CierreNominas\bin\Debug\CapaVista_CierreNominas.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_EvaluacionDesempeño">
+      <HintPath>..\..\EvaluacionDesempeño\CapaVista_EvaluacionDesempeño\bin\Debug\CapaVista_EvaluacionDesempeño.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Empleado">
+      <HintPath>..\..\Empleados\CapaVista_Empleado\bin\Debug\CapaVista_Empleado.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Liquidacion_Rrhh">
+      <HintPath>..\..\Liquidacion_Empleados_Rrhh\CapaVista_Liquidacion_Rrhh\bin\Debug\CapaVista_Liquidacion_Rrhh.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Nomina">
+      <HintPath>..\..\NominasEmpleados\CapaVista_Nomina\bin\Debug\CapaVista_Nomina.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_PermisosVacaciones">
+      <HintPath>..\..\PermisosVacaciones\CapaVista_PermisosVacaciones\bin\Debug\CapaVista_PermisosVacaciones.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Formularios\FrmMDIRrhh.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmMDIRrhh.Designer.cs">
+      <DependentUpon>FrmMDIRrhh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Formularios\FrmMDIRrhh.resx">
+      <DependentUpon>FrmMDIRrhh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_asistencia.png" />
+    <None Include="Resources\btn_asistencia_diseno.png" />
+    <None Include="Resources\btn_ayuda.png" />
+    <None Include="Resources\btn_capacitaciones.png" />
+    <None Include="Resources\btn_capacitaciones_diseno.png" />
+    <None Include="Resources\btn_cerrarsesion.png" />
+    <None Include="Resources\btn_cerrarsesion_diseno.png" />
+    <None Include="Resources\btn_cierres.png" />
+    <None Include="Resources\btn_cierres_diseno.png" />
+    <None Include="Resources\btn_empleados.png" />
+    <None Include="Resources\btn_empleados_diseno.png" />
+    <None Include="Resources\btn_evaluacion.png" />
+    <None Include="Resources\btn_evaluacion_diseno.png" />
+    <None Include="Resources\btn_liquidacion.png" />
+    <None Include="Resources\btn_liquidacion_diseno.png" />
+    <None Include="Resources\btn_nomina.png" />
+    <None Include="Resources\btn_nomina_diseno.png" />
+    <None Include="Resources\btn_permisos.png" />
+    <None Include="Resources\btn_permisos_diseno.png" />
+    <None Include="Resources\fondo_dashboard.png" />
+    <None Include="Resources\fondo_navegador.png" />
+    <None Include="Resources\icono_rrhh.ico" />
+    <None Include="Resources\kpi_capacitaciones.png" />
+    <None Include="Resources\kpi_colaboradores.png" />
+    <None Include="Resources\kpi_evaluaciones.png" />
+    <None Include="Resources\kpi_liquidacion.png" />
+    <None Include="Resources\kpi_nomina.png" />
+    <None Include="Resources\kpi_permisos.png" />
+    <None Include="Resources\logo.png" />
+    <None Include="Resources\mascota.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Ayudas\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
