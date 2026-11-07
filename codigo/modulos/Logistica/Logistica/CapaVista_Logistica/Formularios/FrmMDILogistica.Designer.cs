@@ -294,7 +294,6 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnEnlaces.TabIndex = 19;
             this.LogisticaBtnEnlaces.Text = "Historico de Inventario";
             this.LogisticaBtnEnlaces.UseVisualStyleBackColor = true;
-            this.LogisticaBtnEnlaces.Click += new System.EventHandler(this.LogisticaBtnEnlaces_Click);
             // 
             // LogisticaBtnIndecencia
             // 
@@ -647,7 +646,6 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnProducto.Text = "Producto";
             this.LogisticaBtnProducto.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LogisticaBtnProducto.UseVisualStyleBackColor = true;
-            this.LogisticaBtnProducto.Click += new System.EventHandler(this.LogisticaBtnProducto_Click);
             // 
             // LogisticaBtnMenuAdministracion
             // 
@@ -1249,7 +1247,7 @@ namespace CapaVista_Logistica.Formularios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 609);
+            this.ClientSize = new System.Drawing.Size(1028, 748);
             this.Controls.Add(this.LogisticaPnlMDI);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

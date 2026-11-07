@@ -421,10 +421,6 @@ namespace CapaVista_Logistica.Formularios
             LogisticaMetAbrirFormulario(new FrmMantenimientoProducto());
         }
 
-        private void LogisticaBtnEnlaces_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void LogisticaBtnEnlaceAOtrosModulos_Click(object sender, EventArgs e)
         {
