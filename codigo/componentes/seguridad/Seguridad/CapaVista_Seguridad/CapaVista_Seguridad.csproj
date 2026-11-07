@@ -44,14 +44,26 @@
     <Reference Include="CapaVista_Bancos">
       <HintPath>..\..\..\..\modulos\bancos\Bibliotecas de Bancos\Bancos\CapaVista_Bancos\bin\Debug\CapaVista_Bancos.dll</HintPath>
     </Reference>
+    <Reference Include="CapaVista_Compras">
+      <HintPath>..\..\..\..\..\..\proyectoasis22k26-Seguridad\codigo\modulos\compras\Compras\CapaVista_Compras\bin\Debug\CapaVista_Compras.dll</HintPath>
+    </Reference>
     <Reference Include="CapaVista_Consultas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\consultas\Consultas\CapaVista_Consultas\bin\Debug\CapaVista_Consultas.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Contabilidad">
+      <HintPath>..\..\..\..\..\..\proyectoasis22k26-Seguridad\codigo\modulos\contabilidad\Contabilidad\CapaVista_Contabilidad\bin\Debug\CapaVista_Contabilidad.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Logistica">
       <HintPath>..\..\..\..\modulos\Logistica\Logistica\CapaVista_Logistica\bin\Debug\CapaVista_Logistica.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Navegador">
       <HintPath>..\..\..\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Rrhh">
+      <HintPath>..\..\..\..\..\..\proyectoasis22k26-Seguridad\codigo\modulos\rrhh\Bibliotecas de clase RRHH\Recursos Humanos\CapaVista_Rrhh\bin\Debug\CapaVista_Rrhh.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Ventas">
+      <HintPath>..\..\..\..\..\..\proyectoasis22k26-Seguridad\codigo\modulos\ventas\VentasYCxC\CapaVista_Ventas\bin\Debug\CapaVista_Ventas.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
