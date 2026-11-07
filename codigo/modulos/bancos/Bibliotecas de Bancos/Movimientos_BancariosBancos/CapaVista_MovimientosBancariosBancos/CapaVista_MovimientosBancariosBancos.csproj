@@ -80,6 +80,18 @@
     <Compile Include="Formularios\FrmMovimientosBancarios.Designer.cs">
       <DependentUpon>FrmMovimientosBancarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FrmSeleccionarBeneficiario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmSeleccionarBeneficiario.Designer.cs">
+      <DependentUpon>FrmSeleccionarBeneficiario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmSeleccionarConcepto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmSeleccionarConcepto.Designer.cs">
+      <DependentUpon>FrmSeleccionarConcepto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FrmTipoTransaccionNavegador.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +121,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmMovimientosBancarios.resx">
       <DependentUpon>FrmMovimientosBancarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmSeleccionarBeneficiario.resx">
+      <DependentUpon>FrmSeleccionarBeneficiario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmSeleccionarConcepto.resx">
+      <DependentUpon>FrmSeleccionarConcepto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmTipoTransaccionNavegador.resx">
       <DependentUpon>FrmTipoTransaccionNavegador.cs</DependentUpon>
@@ -161,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resouces\btn_reporteB.png" />
+    <None Include="Resources\FondoAutorizacionModulo.jpg" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

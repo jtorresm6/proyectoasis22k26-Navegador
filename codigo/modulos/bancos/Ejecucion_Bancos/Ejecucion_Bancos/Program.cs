@@ -8,7 +8,7 @@ using CapaVista_Bancos.Formularios;
 using CapaVista_Seguridad;
 
 namespace Ejecucion_Bancos
-{
+{           
     internal static class Program
     {
         /// <summary>
