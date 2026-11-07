@@ -37,17 +37,8 @@
     <Reference Include="CapaVista_AutorizacionOrdenesBancos">
       <HintPath>..\..\Autorizacion_OrdenesCompraBancos\CapaVista_AutorizacionOrdenesBancos\bin\Debug\CapaVista_AutorizacionOrdenesBancos.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_CierreBancarioBancos">
-      <HintPath>..\..\Cierre_BancarioBancos\CapaVista_CierreBancarioBancos\bin\Debug\CapaVista_CierreBancarioBancos.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaVista_ConciliacionBancariaBancos">
-      <HintPath>..\..\Conciliacion_BancariaBancos\CapaVista_ConciliacionBancariaBancos\bin\Debug\CapaVista_ConciliacionBancariaBancos.dll</HintPath>
-    </Reference>
     <Reference Include="CapaVista_DisponibilidadDiariaBancos">
       <HintPath>..\..\Disponibilidad_DiariaBancos\CapaVista_DisponibilidadDiariaBancos\bin\Debug\CapaVista_DisponibilidadDiariaBancos.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaVista_EnlaceBancos">
-      <HintPath>..\..\Enlace_Otros_ModulosBancos\CapaVista_EnlaceBancos\bin\Debug\CapaVista_EnlaceBancos.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_GeneracionPagosBancos">
       <HintPath>..\..\Generacion_PagosBancos\CapaVista_GeneracionPagosBancos\bin\Debug\CapaVista_GeneracionPagosBancos.dll</HintPath>
