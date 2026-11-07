@@ -68,6 +68,12 @@
   <ItemGroup>
     <Compile Include="ClsPermisosMenuContabilidad.cs" />
     <Compile Include="ClsPresentacionContabilidad.cs" />
+    <Compile Include="FrmPolizas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPolizas.Designer.cs">
+      <DependentUpon>FrmPolizas.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPolizasLocales.Designer.cs">
       <DependentUpon>FrmPolizasLocales.cs</DependentUpon>
     </Compile>

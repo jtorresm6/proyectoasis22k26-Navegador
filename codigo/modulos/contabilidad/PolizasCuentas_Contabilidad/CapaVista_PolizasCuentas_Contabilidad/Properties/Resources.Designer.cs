@@ -55,6 +55,104 @@
             }
         }
 
+        internal static System.Drawing.Bitmap nav_ingresar {
+            get {
+                object obj = ResourceManager.GetObject("nav_ingresar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_consultar {
+            get {
+                object obj = ResourceManager.GetObject("nav_consultar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_modificar {
+            get {
+                object obj = ResourceManager.GetObject("nav_modificar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_eliminar {
+            get {
+                object obj = ResourceManager.GetObject("nav_eliminar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_guardar {
+            get {
+                object obj = ResourceManager.GetObject("nav_guardar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_cancelar {
+            get {
+                object obj = ResourceManager.GetObject("nav_cancelar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_refrescar {
+            get {
+                object obj = ResourceManager.GetObject("nav_refrescar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_imprimir {
+            get {
+                object obj = ResourceManager.GetObject("nav_imprimir", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_ayuda {
+            get {
+                object obj = ResourceManager.GetObject("nav_ayuda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_inicio {
+            get {
+                object obj = ResourceManager.GetObject("nav_inicio", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_anterior {
+            get {
+                object obj = ResourceManager.GetObject("nav_anterior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_siguiente {
+            get {
+                object obj = ResourceManager.GetObject("nav_siguiente", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_fin {
+            get {
+                object obj = ResourceManager.GetObject("nav_fin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap nav_salir {
+            get {
+                object obj = ResourceManager.GetObject("nav_salir", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
         internal static System.Drawing.Bitmap ico_mas {
             get {
                 object obj = ResourceManager.GetObject("ico_mas", resourceCulture);
