@@ -46,6 +46,8 @@
             this.LogisticaLblCodigoAlerta = new System.Windows.Forms.Label();
             this.LogisticaCboTelemetria = new System.Windows.Forms.ComboBox();
             this.LogisticaPnlTituloDatos = new System.Windows.Forms.Panel();
+            this.LogisticaPnlEncabezadoAlerta = new System.Windows.Forms.Panel();
+            this.LogisticaLblDatosdeAlerta = new System.Windows.Forms.Label();
             this.LogisticaLblDatosAlerta = new System.Windows.Forms.Label();
             this.LogisticaLblObservacion = new System.Windows.Forms.Label();
             this.LogisticaCboTipoAlerta = new System.Windows.Forms.ComboBox();
@@ -53,22 +55,21 @@
             this.LogisticaPnlDatosAlerta = new System.Windows.Forms.Panel();
             this.LogisticaTxtObservacion = new System.Windows.Forms.TextBox();
             this.LogisticaPnlHistorialAlertas = new System.Windows.Forms.Panel();
-            this.LogisticaPnlEncabezadoAlerta = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.LogisticaPnlTituloHistorial = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.LogisticaDgvAlertas = new System.Windows.Forms.DataGridView();
             this.ColCodigoAlerta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColTelemetria = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColTipoAlerta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColAtendida = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColObservacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaPnlTituloHistorial = new System.Windows.Forms.Panel();
+            this.LogisticaLblHistorialAlertas = new System.Windows.Forms.Label();
+            this.LogisticaBtnAyuda = new System.Windows.Forms.Button();
             this.LogisticaPnlTituloDatos.SuspendLayout();
+            this.LogisticaPnlEncabezadoAlerta.SuspendLayout();
             this.LogisticaPnlDatosAlerta.SuspendLayout();
             this.LogisticaPnlHistorialAlertas.SuspendLayout();
-            this.LogisticaPnlEncabezadoAlerta.SuspendLayout();
-            this.LogisticaPnlTituloHistorial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaDgvAlertas)).BeginInit();
+            this.LogisticaPnlTituloHistorial.SuspendLayout();
             this.SuspendLayout();
             // 
             // LogisticaBtnRefrescar
@@ -254,6 +255,27 @@
             this.LogisticaPnlTituloDatos.Size = new System.Drawing.Size(1198, 85);
             this.LogisticaPnlTituloDatos.TabIndex = 0;
             // 
+            // LogisticaPnlEncabezadoAlerta
+            // 
+            this.LogisticaPnlEncabezadoAlerta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaPnlEncabezadoAlerta.Controls.Add(this.LogisticaLblDatosdeAlerta);
+            this.LogisticaPnlEncabezadoAlerta.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LogisticaPnlEncabezadoAlerta.Location = new System.Drawing.Point(0, 0);
+            this.LogisticaPnlEncabezadoAlerta.Name = "LogisticaPnlEncabezadoAlerta";
+            this.LogisticaPnlEncabezadoAlerta.Size = new System.Drawing.Size(1198, 85);
+            this.LogisticaPnlEncabezadoAlerta.TabIndex = 2;
+            // 
+            // LogisticaLblDatosdeAlerta
+            // 
+            this.LogisticaLblDatosdeAlerta.AutoSize = true;
+            this.LogisticaLblDatosdeAlerta.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblDatosdeAlerta.ForeColor = System.Drawing.Color.White;
+            this.LogisticaLblDatosdeAlerta.Location = new System.Drawing.Point(19, 23);
+            this.LogisticaLblDatosdeAlerta.Name = "LogisticaLblDatosdeAlerta";
+            this.LogisticaLblDatosdeAlerta.Size = new System.Drawing.Size(192, 28);
+            this.LogisticaLblDatosdeAlerta.TabIndex = 1;
+            this.LogisticaLblDatosdeAlerta.Text = "Datos de Alerta";
+            // 
             // LogisticaLblDatosAlerta
             // 
             this.LogisticaLblDatosAlerta.AutoSize = true;
@@ -330,48 +352,6 @@
             this.LogisticaPnlHistorialAlertas.Size = new System.Drawing.Size(1200, 270);
             this.LogisticaPnlHistorialAlertas.TabIndex = 31;
             // 
-            // LogisticaPnlEncabezadoAlerta
-            // 
-            this.LogisticaPnlEncabezadoAlerta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
-            this.LogisticaPnlEncabezadoAlerta.Controls.Add(this.label1);
-            this.LogisticaPnlEncabezadoAlerta.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LogisticaPnlEncabezadoAlerta.Location = new System.Drawing.Point(0, 0);
-            this.LogisticaPnlEncabezadoAlerta.Name = "LogisticaPnlEncabezadoAlerta";
-            this.LogisticaPnlEncabezadoAlerta.Size = new System.Drawing.Size(1198, 85);
-            this.LogisticaPnlEncabezadoAlerta.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(19, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(192, 28);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Datos de Alerta";
-            // 
-            // LogisticaPnlTituloHistorial
-            // 
-            this.LogisticaPnlTituloHistorial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
-            this.LogisticaPnlTituloHistorial.Controls.Add(this.label2);
-            this.LogisticaPnlTituloHistorial.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LogisticaPnlTituloHistorial.Location = new System.Drawing.Point(0, 0);
-            this.LogisticaPnlTituloHistorial.Name = "LogisticaPnlTituloHistorial";
-            this.LogisticaPnlTituloHistorial.Size = new System.Drawing.Size(1200, 63);
-            this.LogisticaPnlTituloHistorial.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(19, 14);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(236, 28);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Historial de Alertas";
-            // 
             // LogisticaDgvAlertas
             // 
             this.LogisticaDgvAlertas.AllowUserToAddRows = false;
@@ -431,12 +411,45 @@
             this.ColObservacion.Name = "ColObservacion";
             this.ColObservacion.ReadOnly = true;
             // 
+            // LogisticaPnlTituloHistorial
+            // 
+            this.LogisticaPnlTituloHistorial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaPnlTituloHistorial.Controls.Add(this.LogisticaLblHistorialAlertas);
+            this.LogisticaPnlTituloHistorial.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LogisticaPnlTituloHistorial.Location = new System.Drawing.Point(0, 0);
+            this.LogisticaPnlTituloHistorial.Name = "LogisticaPnlTituloHistorial";
+            this.LogisticaPnlTituloHistorial.Size = new System.Drawing.Size(1200, 63);
+            this.LogisticaPnlTituloHistorial.TabIndex = 1;
+            // 
+            // LogisticaLblHistorialAlertas
+            // 
+            this.LogisticaLblHistorialAlertas.AutoSize = true;
+            this.LogisticaLblHistorialAlertas.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblHistorialAlertas.ForeColor = System.Drawing.Color.White;
+            this.LogisticaLblHistorialAlertas.Location = new System.Drawing.Point(19, 14);
+            this.LogisticaLblHistorialAlertas.Name = "LogisticaLblHistorialAlertas";
+            this.LogisticaLblHistorialAlertas.Size = new System.Drawing.Size(236, 28);
+            this.LogisticaLblHistorialAlertas.TabIndex = 1;
+            this.LogisticaLblHistorialAlertas.Text = "Historial de Alertas";
+            // 
+            // LogisticaBtnAyuda
+            // 
+            this.LogisticaBtnAyuda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(221)))), ((int)(((byte)(206)))));
+            this.LogisticaBtnAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaBtnAyuda.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnAyuda.Image")));
+            this.LogisticaBtnAyuda.Location = new System.Drawing.Point(808, 148);
+            this.LogisticaBtnAyuda.Name = "LogisticaBtnAyuda";
+            this.LogisticaBtnAyuda.Size = new System.Drawing.Size(70, 74);
+            this.LogisticaBtnAyuda.TabIndex = 32;
+            this.LogisticaBtnAyuda.UseVisualStyleBackColor = false;
+            // 
             // FrmAlertaCadenaFrio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
             this.ClientSize = new System.Drawing.Size(1525, 912);
+            this.Controls.Add(this.LogisticaBtnAyuda);
             this.Controls.Add(this.LogisticaPnlHistorialAlertas);
             this.Controls.Add(this.LogisticaPnlDatosAlerta);
             this.Controls.Add(this.LogisticaBtnRefrescar);
@@ -456,14 +469,14 @@
             this.Text = "FrmAlertaCadenaFrio";
             this.LogisticaPnlTituloDatos.ResumeLayout(false);
             this.LogisticaPnlTituloDatos.PerformLayout();
+            this.LogisticaPnlEncabezadoAlerta.ResumeLayout(false);
+            this.LogisticaPnlEncabezadoAlerta.PerformLayout();
             this.LogisticaPnlDatosAlerta.ResumeLayout(false);
             this.LogisticaPnlDatosAlerta.PerformLayout();
             this.LogisticaPnlHistorialAlertas.ResumeLayout(false);
-            this.LogisticaPnlEncabezadoAlerta.ResumeLayout(false);
-            this.LogisticaPnlEncabezadoAlerta.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaDgvAlertas)).EndInit();
             this.LogisticaPnlTituloHistorial.ResumeLayout(false);
             this.LogisticaPnlTituloHistorial.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LogisticaDgvAlertas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -495,15 +508,16 @@
         private System.Windows.Forms.Panel LogisticaPnlDatosAlerta;
         private System.Windows.Forms.TextBox LogisticaTxtObservacion;
         private System.Windows.Forms.Panel LogisticaPnlEncabezadoAlerta;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label LogisticaLblDatosdeAlerta;
         private System.Windows.Forms.Panel LogisticaPnlHistorialAlertas;
         private System.Windows.Forms.Panel LogisticaPnlTituloHistorial;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label LogisticaLblHistorialAlertas;
         private System.Windows.Forms.DataGridView LogisticaDgvAlertas;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColCodigoAlerta;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColTelemetria;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColTipoAlerta;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColAtendida;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColObservacion;
+        private System.Windows.Forms.Button LogisticaBtnAyuda;
     }
 }
