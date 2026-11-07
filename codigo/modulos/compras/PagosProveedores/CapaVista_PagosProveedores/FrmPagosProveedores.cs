@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using CapaControlador_PagosProveedores;
 
@@ -17,7 +18,8 @@ using CapaVista_Componentes.Componentes;
  * ==================================================================
  * Propósito :
  *  Presenta los pagos a proveedores, administra los filtros y la selección
- *  de facturas, y coordina las acciones del usuario con el controlador.
+ *  de documentos por pagar, y coordina las acciones del usuario con el
+ *  controlador. Un pago puede aplicarse a varios documentos (detalle).
  * ===================================================================
 */
 
@@ -27,12 +29,17 @@ namespace CapaVista_PagosProveedores
     {
         private const string _TituloMensajes = "Pagos a proveedores";
         private const string _FormatoFecha = "dd/MM/yyyy";
+        private const string _MonedaBase = "GTQ";
 
         private readonly ClsModeloPagoProveedor _Modelo;
         private DataTable _TablaCuentas;
+        private DataTable _TablaMonedas;
+        private List<ClsModeloDetallePagoProveedor> _Detalles;
         private int _IdPagoEditando;
         private string _EstadoEditando;
         private bool _Cargando;
+        private int? _ProveedorAnterior;
+        private int? _MonedaAnterior;
 
         public FrmPagosProveedores()
         {
@@ -40,6 +47,7 @@ namespace CapaVista_PagosProveedores
             StartPosition = FormStartPosition.CenterScreen;
 
             _Modelo = new ClsModeloPagoProveedor();
+            _Detalles = new List<ClsModeloDetallePagoProveedor>();
             _IdPagoEditando = 0;
             _EstadoEditando = "Programado";
             _Cargando = false;
@@ -50,6 +58,8 @@ namespace CapaVista_PagosProveedores
             ComprasBtnCancelar.Click += ComprasMetCancelarClick;
             ComprasBtnEditar.Click += ComprasMetEditarClick;
             ComprasBtnEliminar.Click += ComprasMetEliminarClick;
+            ComprasBtnAgregarDocumento.Click += ComprasMetAgregarDocumentoClick;
+            ComprasBtnQuitarDocumento.Click += ComprasMetQuitarDocumentoClick;
             ComprasMetSuscribirEventos();
         }
 
@@ -60,10 +70,13 @@ namespace CapaVista_PagosProveedores
                 _Cargando = true;
 
                 DataTable Proveedores = _Modelo.ComprasMetObtenerProveedores();
+                DataTable Metodos = _Modelo.ComprasMetObtenerMetodosPago();
+                _TablaMonedas = _Modelo.ComprasMetObtenerMonedas();
 
                 ComprasMetLlenarCombo(ComprasCboProveedorPago, Proveedores, "nombre", "idProveedor");
                 ComprasMetLlenarCombo(ComprasCboEstado, new List<string> { "Todos", "Pagado", "Programado", "Rechazado", "Anulado" }, null, null);
-                ComprasMetLlenarCombo(ComprasCboMetodo, new List<string> { "Transferencia", "Cheque", "Efectivo", "Deposito" }, null, null);
+                ComprasMetLlenarCombo(ComprasCboMetodo, Metodos, "nombre", "idMetodoPago");
+                ComprasMetLlenarCombo(ComprasCboMoneda, _TablaMonedas, "codigo", "idMoneda");
 
                 DateTime Hoy = DateTime.Today;
                 DateTime PrimerDia = new DateTime(Hoy.Year, Hoy.Month, 1);
@@ -84,6 +97,7 @@ namespace CapaVista_PagosProveedores
             }
         }
 
+        // ==================== LISTA DE PAGOS ====================
         private void ComprasMetCargarGrid()
         {
             try
@@ -124,7 +138,7 @@ namespace CapaVista_PagosProveedores
                 Tabla.Columns.Add("idPago", typeof(int));
                 Tabla.Columns.Add("noPago", typeof(string));
                 Tabla.Columns.Add("proveedor", typeof(string));
-                Tabla.Columns.Add("factura", typeof(string));
+                Tabla.Columns.Add("metodo", typeof(string));
                 Tabla.Columns.Add("fecha", typeof(string));
                 Tabla.Columns.Add("monto", typeof(string));
                 Tabla.Columns.Add("estado", typeof(string));
@@ -135,9 +149,9 @@ namespace CapaVista_PagosProveedores
                         Pago.IdPagoProveedor,
                         Pago.NoPagoProveedor,
                         Pago.NombreProveedor,
-                        Pago.FacturaCuentaPorPagar,
+                        Pago.NombreMetodoPago,
                         Pago.FechaPagoProveedor.ToString(_FormatoFecha),
-                        "Q " + Pago.MontoPagoProveedor.ToString("N2"),
+                        ComprasFuncFormatoMonto(Pago.IdMoneda, Pago.MontoPagoProveedor),
                         Pago.EstadoPagoProveedor);
                 }
 
@@ -159,8 +173,8 @@ namespace CapaVista_PagosProveedores
                 ComprasDgvPagos.Columns["noPago"].HeaderText = "No. pago";
             if (ComprasDgvPagos.Columns.Contains("proveedor"))
                 ComprasDgvPagos.Columns["proveedor"].HeaderText = "Proveedor";
-            if (ComprasDgvPagos.Columns.Contains("factura"))
-                ComprasDgvPagos.Columns["factura"].HeaderText = "Factura";
+            if (ComprasDgvPagos.Columns.Contains("metodo"))
+                ComprasDgvPagos.Columns["metodo"].HeaderText = "Método";
             if (ComprasDgvPagos.Columns.Contains("fecha"))
                 ComprasDgvPagos.Columns["fecha"].HeaderText = "Fecha";
             if (ComprasDgvPagos.Columns.Contains("monto"))
@@ -213,10 +227,12 @@ namespace CapaVista_PagosProveedores
             ComprasMetEliminarPago(IdPago, NoPago);
         }
 
+        // ==================== FORMULARIO DE REGISTRO ====================
         private void ComprasMetLimpiarFormulario()
         {
             _IdPagoEditando = 0;
             _EstadoEditando = "Programado";
+            _Detalles = new List<ClsModeloDetallePagoProveedor>();
 
             ComprasCboProveedorPago.Enabled = true;
             ComprasCboFactura.Enabled = true;
@@ -224,6 +240,9 @@ namespace CapaVista_PagosProveedores
             _Cargando = true;
             ComprasMetFijarIndiceCombo(ComprasCboProveedorPago, 0);
             ComprasMetFijarIndiceCombo(ComprasCboMetodo, 0);
+            ComprasMetSeleccionarMonedaBase();
+            _ProveedorAnterior = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboProveedorPago));
+            _MonedaAnterior = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboMoneda));
             _Cargando = false;
 
             ComprasMetFijarTexto(ComprasTxtFechaPago, DateTime.Today.ToString(_FormatoFecha));
@@ -231,6 +250,42 @@ namespace CapaVista_PagosProveedores
             ComprasMetFijarTexto(ComprasTxtReferencia, "");
 
             ComprasMetCargarFacturas();
+            ComprasMetRefrescarDetalle();
+        }
+
+        private void ComprasMetSeleccionarMonedaBase()
+        {
+            if (_TablaMonedas != null)
+            {
+                foreach (DataRow Fila in _TablaMonedas.Rows)
+                {
+                    if (Convert.ToString(Fila["codigo"]) == _MonedaBase)
+                    {
+                        ComprasMetFijarValorCombo(ComprasCboMoneda, Fila["idMoneda"]);
+                        return;
+                    }
+                }
+            }
+            ComprasMetFijarIndiceCombo(ComprasCboMoneda, 0);
+        }
+
+        private void ComprasMetPrepararTablaCuentas(DataTable Tabla)
+        {
+            if (Tabla != null && !Tabla.Columns.Contains("clave"))
+                Tabla.Columns.Add("clave", typeof(string), "serie + '|' + numero + '|' + Convert(idConcepto, 'System.String')");
+        }
+
+        private DataRow ComprasFuncFilaCuenta(string Clave)
+        {
+            if (_TablaCuentas == null || string.IsNullOrEmpty(Clave))
+                return null;
+
+            foreach (DataRow Fila in _TablaCuentas.Rows)
+            {
+                if (Convert.ToString(Fila["clave"]) == Clave)
+                    return Fila;
+            }
+            return null;
         }
 
         private void ComprasMetCargarFacturas()
@@ -238,6 +293,8 @@ namespace CapaVista_PagosProveedores
             try
             {
                 int? IdProveedor = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboProveedorPago));
+                _ProveedorAnterior = IdProveedor;
+
                 if (!IdProveedor.HasValue)
                 {
                     _TablaCuentas = null;
@@ -248,7 +305,8 @@ namespace CapaVista_PagosProveedores
 
                 _Cargando = true;
                 _TablaCuentas = _Modelo.ComprasMetObtenerCuentasPendientes(IdProveedor.Value);
-                ComprasMetLlenarCombo(ComprasCboFactura, _TablaCuentas, "descripcion", "idCuentaPorPagar");
+                ComprasMetPrepararTablaCuentas(_TablaCuentas);
+                ComprasMetLlenarCombo(ComprasCboFactura, _TablaCuentas, "descripcion", "clave");
                 if (_TablaCuentas.Rows.Count > 0)
                     ComprasMetFijarIndiceCombo(ComprasCboFactura, 0);
                 _Cargando = false;
@@ -258,27 +316,24 @@ namespace CapaVista_PagosProveedores
             catch (Exception Ex)
             {
                 _Cargando = false;
-                ComprasMetMostrarAviso("No se pudieron cargar las facturas por pagar. " + Ex.Message);
+                ComprasMetMostrarAviso("No se pudieron cargar los documentos por pagar. " + Ex.Message);
             }
         }
 
+        // Sugiere el saldo del documento cuando está en la misma moneda del pago
         private void ComprasMetAutocompletarMonto()
         {
-            if (_IdPagoEditando != 0)
-                return;
+            string Clave = Convert.ToString(ComprasFuncValorCombo(ComprasCboFactura));
+            DataRow Fila = ComprasFuncFilaCuenta(Clave);
+            int? MonedaPago = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboMoneda));
 
-            int? IdCuenta = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboFactura));
-            if (!IdCuenta.HasValue || _TablaCuentas == null)
+            if (Fila == null || !MonedaPago.HasValue || Convert.ToInt64(Fila["idMoneda"]) != MonedaPago.Value)
             {
                 ComprasMetFijarTexto(ComprasTxtMonto, "");
                 return;
             }
 
-            DataRow[] Filas = _TablaCuentas.Select("idCuentaPorPagar = " + IdCuenta.Value);
-            if (Filas.Length > 0)
-                ComprasMetFijarTexto(ComprasTxtMonto, Convert.ToDecimal(Filas[0]["saldo"]).ToString("F2"));
-            else
-                ComprasMetFijarTexto(ComprasTxtMonto, "");
+            ComprasMetFijarTexto(ComprasTxtMonto, Convert.ToDecimal(Fila["saldo"]).ToString("0.00##", CultureInfo.CurrentCulture));
         }
 
         private void ComprasMetCargarParaEditar(int IdPago)
@@ -298,44 +353,66 @@ namespace CapaVista_PagosProveedores
                 _EstadoEditando = Pago.EstadoPagoProveedor;
 
                 ComprasMetFijarValorCombo(ComprasCboProveedorPago, Pago.IdProveedor);
+                ComprasMetFijarValorCombo(ComprasCboMoneda, (int)Pago.IdMoneda);
+                ComprasMetFijarValorCombo(ComprasCboMetodo, Pago.IdMetodoPago);
 
                 _TablaCuentas = _Modelo.ComprasMetObtenerCuentasPendientes(Pago.IdProveedor);
-                if (_TablaCuentas.Select("idCuentaPorPagar = " + Pago.IdCuentaPorPagar).Length == 0)
+                ComprasMetPrepararTablaCuentas(_TablaCuentas);
+
+                // Los documentos ya pagados por este pago pueden no estar pendientes: se agregan para poder reemplazarlos
+                foreach (ClsModeloDetallePagoProveedor Detalle in Pago.Detalles)
                 {
-                    DataRow FilaCuenta = _TablaCuentas.NewRow();
-                    FilaCuenta["idCuentaPorPagar"] = Pago.IdCuentaPorPagar;
-                    FilaCuenta["descripcion"] = Pago.FacturaCuentaPorPagar;
-                    FilaCuenta["saldo"] = 0m;
-                    _TablaCuentas.Rows.Add(FilaCuenta);
+                    if (ComprasFuncFilaCuenta(Detalle.DocumentoClave) != null)
+                        continue;
+
+                    DataRow FilaNueva = _TablaCuentas.NewRow();
+                    FilaNueva["serie"] = Detalle.SerieDocumento;
+                    FilaNueva["numero"] = Detalle.NumeroDocumento;
+                    FilaNueva["idConcepto"] = Detalle.IdConcepto;
+                    FilaNueva["concepto"] = Detalle.NombreConcepto;
+                    FilaNueva["idMoneda"] = Pago.IdMoneda;
+                    FilaNueva["codigoMoneda"] = ComprasFuncCodigoMoneda(Pago.IdMoneda);
+                    FilaNueva["saldo"] = Detalle.MontoAplicado;
+                    FilaNueva["descripcion"] = Detalle.SerieDocumento + "-" + Detalle.NumeroDocumento + " (" + Detalle.NombreConcepto + ")";
+                    _TablaCuentas.Rows.Add(FilaNueva);
                 }
-                ComprasMetLlenarCombo(ComprasCboFactura, _TablaCuentas, "descripcion", "idCuentaPorPagar");
-                ComprasMetFijarValorCombo(ComprasCboFactura, Pago.IdCuentaPorPagar);
+                ComprasMetLlenarCombo(ComprasCboFactura, _TablaCuentas, "descripcion", "clave");
+
+                _Detalles = new List<ClsModeloDetallePagoProveedor>();
+                foreach (ClsModeloDetallePagoProveedor Detalle in Pago.Detalles)
+                {
+                    _Detalles.Add(new ClsModeloDetallePagoProveedor
+                    {
+                        SerieDocumento = Detalle.SerieDocumento,
+                        NumeroDocumento = Detalle.NumeroDocumento,
+                        IdConcepto = Detalle.IdConcepto,
+                        NombreConcepto = Detalle.NombreConcepto,
+                        MontoAplicado = Detalle.MontoAplicado
+                    });
+                }
+
+                _ProveedorAnterior = Pago.IdProveedor;
+                _MonedaAnterior = (int)Pago.IdMoneda;
 
                 ComprasMetFijarTexto(ComprasTxtFechaPago, Pago.FechaPagoProveedor.ToString(_FormatoFecha));
-                ComprasMetFijarTexto(ComprasTxtMonto, Pago.MontoPagoProveedor.ToString("F2"));
-                ComprasMetFijarTextoCombo(ComprasCboMetodo, Pago.MetodoPagoProveedor);
+                ComprasMetFijarTexto(ComprasTxtMonto, "");
                 ComprasMetFijarTexto(ComprasTxtReferencia, Pago.ReferenciaPagoProveedor ?? "");
 
                 ComprasCboProveedorPago.Enabled = false;
-                ComprasCboFactura.Enabled = false;
             }
             finally
             {
                 _Cargando = false;
             }
+
+            ComprasMetRefrescarDetalle();
         }
 
         private void ComprasMetNuevoPagoClick(object Sender, EventArgs Evento)
         {
             if (ComprasFuncHayOperacionEnCurso())
             {
-                DialogResult Respuesta = MessageBox.Show(
-                    "Hay datos sin guardar. ¿Desea descartarlos y registrar un nuevo pago?",
-                    _TituloMensajes,
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning);
-
-                if (Respuesta != DialogResult.Yes)
+                if (!ComprasFuncConfirmar("Hay datos sin guardar. ¿Desea descartarlos y registrar un nuevo pago?"))
                     return;
             }
 
@@ -355,13 +432,7 @@ namespace CapaVista_PagosProveedores
                     ? "¿Desea cancelar la edición del pago? Se perderán los cambios no guardados."
                     : "¿Desea cancelar el registro? Se perderán los datos ingresados.";
 
-                DialogResult Respuesta = MessageBox.Show(
-                    Pregunta,
-                    _TituloMensajes,
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning);
-
-                if (Respuesta != DialogResult.Yes)
+                if (!ComprasFuncConfirmar(Pregunta))
                     return;
             }
 
@@ -404,6 +475,9 @@ namespace CapaVista_PagosProveedores
             if (_IdPagoEditando != 0)
                 return true;
 
+            if (_Detalles.Count > 0)
+                return true;
+
             if (ComprasFuncTexto(ComprasTxtReferencia).Trim().Length > 0)
                 return true;
 
@@ -413,6 +487,100 @@ namespace CapaVista_PagosProveedores
             return false;
         }
 
+        // ==================== DETALLE (DOCUMENTOS A PAGAR) ====================
+        private void ComprasMetAgregarDocumentoClick(object Sender, EventArgs Evento)
+        {
+            string Clave = Convert.ToString(ComprasFuncValorCombo(ComprasCboFactura));
+            DataRow Fila = ComprasFuncFilaCuenta(Clave);
+            if (Fila == null)
+            {
+                ComprasMetMostrarAviso("Seleccione un documento por pagar.");
+                return;
+            }
+
+            decimal Monto;
+            if (!ComprasFuncMonto(ComprasFuncTexto(ComprasTxtMonto), out Monto) || Monto <= 0)
+            {
+                ComprasMetMostrarAviso("El monto a aplicar no es válido.");
+                return;
+            }
+            Monto = Math.Round(Monto, 4);
+
+            if (_Detalles.Any(Detalle => Detalle.DocumentoClave == Clave))
+            {
+                ComprasMetMostrarAviso("El documento ya fue agregado al pago.");
+                return;
+            }
+
+            decimal Saldo = Convert.ToDecimal(Fila["saldo"]);
+            int? MonedaPago = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboMoneda));
+            bool MismaMoneda = MonedaPago.HasValue && Convert.ToInt64(Fila["idMoneda"]) == MonedaPago.Value;
+            if (MismaMoneda && Monto > Saldo)
+            {
+                ComprasMetMostrarAviso("El monto aplicado excede el saldo pendiente del documento.");
+                return;
+            }
+
+            _Detalles.Add(new ClsModeloDetallePagoProveedor
+            {
+                SerieDocumento = Convert.ToString(Fila["serie"]),
+                NumeroDocumento = Convert.ToString(Fila["numero"]),
+                IdConcepto = Convert.ToInt32(Fila["idConcepto"]),
+                NombreConcepto = Convert.ToString(Fila["concepto"]),
+                MontoAplicado = Monto,
+                SaldoDocumento = Saldo
+            });
+
+            ComprasMetFijarTexto(ComprasTxtMonto, "");
+            ComprasMetRefrescarDetalle();
+        }
+
+        private void ComprasMetQuitarDocumentoClick(object Sender, EventArgs Evento)
+        {
+            DataGridViewRow Fila = ComprasDgvDetalle.CurrentRow;
+            if (Fila == null || Fila.IsNewRow || Fila.Index < 0 || Fila.Index >= _Detalles.Count)
+            {
+                ComprasMetMostrarAviso("Seleccione un documento de la lista del pago.");
+                return;
+            }
+
+            _Detalles.RemoveAt(Fila.Index);
+            ComprasMetRefrescarDetalle();
+        }
+
+        private void ComprasMetRefrescarDetalle()
+        {
+            DataTable Tabla = new DataTable();
+            Tabla.Columns.Add("documento", typeof(string));
+            Tabla.Columns.Add("concepto", typeof(string));
+            Tabla.Columns.Add("monto", typeof(string));
+
+            long IdMoneda = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboMoneda)) ?? 0;
+            foreach (ClsModeloDetallePagoProveedor Detalle in _Detalles)
+            {
+                Tabla.Rows.Add(
+                    Detalle.SerieDocumento + "-" + Detalle.NumeroDocumento,
+                    Detalle.NombreConcepto,
+                    ComprasFuncFormatoMonto(IdMoneda, Detalle.MontoAplicado));
+            }
+
+            ComprasDgvDetalle.AutoGenerateColumns = true;
+            ComprasDgvDetalle.DataSource = Tabla;
+
+            if (ComprasDgvDetalle.Columns.Contains("documento"))
+                ComprasDgvDetalle.Columns["documento"].HeaderText = "Documento";
+            if (ComprasDgvDetalle.Columns.Contains("concepto"))
+                ComprasDgvDetalle.Columns["concepto"].HeaderText = "Concepto";
+            if (ComprasDgvDetalle.Columns.Contains("monto"))
+                ComprasDgvDetalle.Columns["monto"].HeaderText = "Monto aplicado";
+
+            decimal Total = _Detalles.Sum(Detalle => Detalle.MontoAplicado);
+            string TextoTotal = ComprasFuncFormatoMonto(IdMoneda, Total);
+            ComprasLblTotalAplicado.Texto = TextoTotal;
+            ComprasLblTotalAplicado.Text = TextoTotal;
+        }
+
+        // ==================== GUARDAR / ELIMINAR ====================
         private void ComprasMetGuardarClick(object Sender, EventArgs Evento)
         {
             DateTime Fecha;
@@ -422,10 +590,9 @@ namespace CapaVista_PagosProveedores
                 return;
             }
 
-            decimal Monto;
-            if (!ComprasFuncMonto(ComprasFuncTexto(ComprasTxtMonto), out Monto))
+            if (_Detalles.Count == 0)
             {
-                ComprasMetMostrarAviso("El monto no es válido.");
+                ComprasMetMostrarAviso("Agregue al menos un documento por pagar al pago.");
                 return;
             }
 
@@ -434,12 +601,13 @@ namespace CapaVista_PagosProveedores
             ClsModeloPagoProveedor Pago = new ClsModeloPagoProveedor();
             Pago.IdPagoProveedor = _IdPagoEditando;
             Pago.IdProveedor = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboProveedorPago)) ?? 0;
-            Pago.IdCuentaPorPagar = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboFactura)) ?? 0;
             Pago.FechaPagoProveedor = Fecha;
-            Pago.MontoPagoProveedor = Monto;
-            Pago.MetodoPagoProveedor = ComprasFuncTextoCombo(ComprasCboMetodo);
+            Pago.MontoPagoProveedor = _Detalles.Sum(Detalle => Detalle.MontoAplicado);
+            Pago.IdMetodoPago = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboMetodo)) ?? 0;
+            Pago.IdMoneda = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboMoneda)) ?? 0;
             Pago.ReferenciaPagoProveedor = Referencia.Length == 0 ? null : Referencia;
             Pago.EstadoPagoProveedor = _EstadoEditando;
+            Pago.Detalles = new List<ClsModeloDetallePagoProveedor>(_Detalles);
             Pago.Estado = _IdPagoEditando == 0 ? EnmEstadoEntidadCompras.Added : EnmEstadoEntidadCompras.Modified;
 
             List<ValidationResult> Errores = new List<ValidationResult>();
@@ -467,13 +635,7 @@ namespace CapaVista_PagosProveedores
 
         private void ComprasMetEliminarPago(int IdPago, string NoPago)
         {
-            DialogResult Respuesta = MessageBox.Show(
-                "¿Desea eliminar el pago " + NoPago + "?",
-                _TituloMensajes,
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-
-            if (Respuesta != DialogResult.Yes)
+            if (!ComprasFuncConfirmar("¿Desea eliminar el pago " + NoPago + "?"))
                 return;
 
             ClsModeloPagoProveedor Pago = new ClsModeloPagoProveedor();
@@ -486,7 +648,7 @@ namespace CapaVista_PagosProveedores
                 ComprasMetMostrarInformacion(Mensaje);
                 if (_IdPagoEditando == IdPago)
                     ComprasMetLimpiarFormulario();
-                else
+                else if (_IdPagoEditando == 0)
                     ComprasMetCargarFacturas();
                 ComprasMetCargarGrid();
             }
@@ -496,6 +658,7 @@ namespace CapaVista_PagosProveedores
             }
         }
 
+        // ==================== EVENTOS DE CONTROLES ====================
         private void ComprasMetFiltroCambio(object Sender, EventArgs Evento)
         {
             if (_Cargando)
@@ -507,6 +670,23 @@ namespace CapaVista_PagosProveedores
         {
             if (_Cargando || _IdPagoEditando != 0)
                 return;
+
+            if (_Detalles.Count > 0)
+            {
+                if (!ComprasFuncConfirmar("Al cambiar de proveedor se quitarán los documentos agregados al pago. ¿Desea continuar?"))
+                {
+                    if (_ProveedorAnterior.HasValue)
+                    {
+                        _Cargando = true;
+                        ComprasMetFijarValorCombo(ComprasCboProveedorPago, _ProveedorAnterior.Value);
+                        _Cargando = false;
+                    }
+                    return;
+                }
+                _Detalles.Clear();
+                ComprasMetRefrescarDetalle();
+            }
+
             ComprasMetCargarFacturas();
         }
 
@@ -515,6 +695,56 @@ namespace CapaVista_PagosProveedores
             if (_Cargando)
                 return;
             ComprasMetAutocompletarMonto();
+        }
+
+        private void ComprasMetMonedaCambio(object Sender, EventArgs Evento)
+        {
+            if (_Cargando)
+                return;
+
+            if (_Detalles.Count > 0)
+            {
+                if (!ComprasFuncConfirmar("Al cambiar de moneda se quitarán los documentos agregados al pago. ¿Desea continuar?"))
+                {
+                    if (_MonedaAnterior.HasValue)
+                    {
+                        _Cargando = true;
+                        ComprasMetFijarValorCombo(ComprasCboMoneda, _MonedaAnterior.Value);
+                        _Cargando = false;
+                    }
+                    return;
+                }
+                _Detalles.Clear();
+            }
+
+            _MonedaAnterior = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboMoneda));
+            ComprasMetRefrescarDetalle();
+            ComprasMetAutocompletarMonto();
+        }
+
+        // ==================== AUXILIARES ====================
+        private string ComprasFuncCodigoMoneda(long IdMoneda)
+        {
+            if (_TablaMonedas != null)
+            {
+                foreach (DataRow Fila in _TablaMonedas.Rows)
+                {
+                    if (Convert.ToInt64(Fila["idMoneda"]) == IdMoneda)
+                        return Convert.ToString(Fila["codigo"]);
+                }
+            }
+            return "";
+        }
+
+        private string ComprasFuncFormatoMonto(long IdMoneda, decimal Monto)
+        {
+            string Codigo = ComprasFuncCodigoMoneda(IdMoneda);
+            return (Codigo.Length > 0 ? Codigo + " " : "") + Monto.ToString("N2");
+        }
+
+        private bool ComprasFuncConfirmar(string Pregunta)
+        {
+            return MessageBox.Show(Pregunta, _TituloMensajes, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes;
         }
 
         private static int? ComprasFuncEntero(object Valor)
@@ -559,6 +789,7 @@ namespace CapaVista_PagosProveedores
             ComprasTxtHasta.Leave += ComprasMetFiltroCambio;
             ComprasCboProveedorPago.SelectedIndexChanged += ComprasMetProveedorPagoCambio;
             ComprasCboFactura.SelectedIndexChanged += ComprasMetFacturaCambio;
+            ComprasCboMoneda.SelectedIndexChanged += ComprasMetMonedaCambio;
         }
 
         private void ComprasMetLlenarCombo(ComprasUsrComboBox Combo, object Origen, string MiembroTexto, string MiembroValor)
@@ -583,11 +814,6 @@ namespace CapaVista_PagosProveedores
         private void ComprasMetFijarValorCombo(ComprasUsrComboBox Combo, object Valor)
         {
             Combo.SelectedValue = Valor;
-        }
-
-        private void ComprasMetFijarTextoCombo(ComprasUsrComboBox Combo, string Texto)
-        {
-            Combo.Text = Texto;
         }
 
         private void ComprasMetFijarIndiceCombo(ComprasUsrComboBox Combo, int Indice)

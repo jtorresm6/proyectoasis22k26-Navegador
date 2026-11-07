@@ -10,15 +10,25 @@ using System.Data.Odbc;
  * ==================================================================
  * Propósito :
  *  Representa los errores de acceso a datos y proporciona mensajes comprensibles para Compras.
+ *  Su mensaje es apto para mostrarse al usuario.
  * ===================================================================
 */
 
 namespace CapaModelo_Componentes.Repositorios
 {
+    [Serializable]
     public sealed class ClsExcepcionDatosCompras : Exception
     {
         public int Codigo { get; }
 
+        // Constructores públicos (para uso desde otros módulos)
+        public ClsExcepcionDatosCompras() : base() { }
+
+        public ClsExcepcionDatosCompras(string mensaje) : base(mensaje) { }
+
+        public ClsExcepcionDatosCompras(string mensaje, Exception interna) : base(mensaje, interna) { }
+
+        // Constructor original (se conserva igual)
         private ClsExcepcionDatosCompras(int Codigo, string Mensaje) : base(Mensaje)
         {
             this.Codigo = Codigo;

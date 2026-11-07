@@ -46,7 +46,7 @@
     <Compile Include="ClsSentenciasCompras.cs" />
     <Compile Include="Contratos\IRepositorioGenerico.cs" />
     <Compile Include="Contratos\IRepositorioPagoProveedor.cs" />
-    <Compile Include="Entidades\ClsPagoProveedor.cs" />
+    <Compile Include="Entidades\Clsencabezadopagoproveedor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\ClsRepositorioPagoProveedor.cs" />
   </ItemGroup>
