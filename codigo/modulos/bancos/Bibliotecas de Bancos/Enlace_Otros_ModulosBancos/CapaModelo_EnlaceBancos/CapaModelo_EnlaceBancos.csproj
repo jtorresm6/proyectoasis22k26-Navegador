@@ -41,12 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entidades\ClsDetallePartidaConsolidada.cs" />
-    <Compile Include="Entidades\ClsMovimientoBancario.cs" />
-    <Compile Include="Entidades\ClsPartidaConsolidada.cs" />
-    <Compile Include="Repositorio\ClsConexion.cs" />
-    <Compile Include="Repositorio\ClsRepositorioEnlaceB.cs" />
-    <Compile Include="Repositorio\ClsSentencias.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
