@@ -2,17 +2,16 @@
 -- 1. EMPRESA TRANSPORTISTA
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblEmpresaTransportista (
- Pk_EmpresaTransportista INT AUTO_INCREMENT PRIMARY KEY,
- nombreEmpresaTransportista VARCHAR(100) NOT NULL,
- contactoEmpresaTransportista VARCHAR(100),
- telefonoEmpresaTransportista VARCHAR(30),
- Fk_Proveedor_IdProveedor INT NULL, 
- is_active BOOLEAN NOT NULL DEFAULT TRUE,
- created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
- updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT uqEmpresaTransportistaNombre UNIQUE (nombreEmpresaTransportista),
- CONSTRAINT uqEmpresaTransportistaProveedor UNIQUE (Fk_Proveedor_IdProveedor), 
- CONSTRAINT fkEmpresaProveedor FOREIGN KEY (Fk_Proveedor_IdProveedor) REFERENCES tblProveedor(idProveedor) 
+    Pk_EmpresaTransportista INT AUTO_INCREMENT PRIMARY KEY,
+    nombreEmpresaTransportista VARCHAR(100) NOT NULL,
+    contactoEmpresaTransportista VARCHAR(100),
+    telefonoEmpresaTransportista VARCHAR(30),
+    nitEmpresaTransportista VARCHAR(20) NULL, -- Nuevo
+    direccionEmpresaTransportista VARCHAR(255) NULL, -- Nuevo 
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT uqEmpresaTransportistaNombre UNIQUE (nombreEmpresaTransportista)
 ) ENGINE=InnoDB;
 
 -- ============================================================
@@ -338,5 +337,44 @@ BEGIN
  COMMIT;
  SELECT vId AS idServicio, vGuia AS numeroGuia;
 END$$
+
+-- Se agrego nueva tabla
+CREATE TABLE IF NOT EXISTS tblCuentaBancariaTransportista (
+    Pk_Cuenta_Bancaria_Transportista INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Fk_Empresa_Transportista_Codigo INT NOT NULL,
+    Fk_Banco_Codigo BIGINT NOT NULL,
+    Fk_TipoCuentaBancaria_Codigo BIGINT NOT NULL,
+    Fk_Moneda_Codigo BIGINT NOT NULL,
+    numeroCuentaBancariaTransportista VARCHAR(100) NOT NULL,
+    titularCuentaBancariaTransportista VARCHAR(150) NOT NULL,
+    activaCuentaBancariaTransportista BOOLEAN NOT NULL DEFAULT TRUE,
+    predeterminadaCuentaBancariaTransportista BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT uqCuentaBancariaTransportista
+        UNIQUE (Fk_Banco_Codigo, numeroCuentaBancariaTransportista),
+
+    CONSTRAINT Fk_CuentaTransportista_Empresa
+        FOREIGN KEY (Fk_Empresa_Transportista_Codigo)
+        REFERENCES tblEmpresaTransportista(Pk_EmpresaTransportista)
+        ON DELETE RESTRICT,
+
+    CONSTRAINT Fk_CuentaTransportista_Banco
+        FOREIGN KEY (Fk_Banco_Codigo)
+        REFERENCES dbsistemaembutidos.tblBanco(Pk_Banco)
+        ON DELETE RESTRICT,
+
+    CONSTRAINT Fk_CuentaTransportista_Tipo
+        FOREIGN KEY (Fk_TipoCuentaBancaria_Codigo)
+        REFERENCES dbsistemaembutidos.tblTipoCuentaBancaria(Pk_TipoCuentaBancaria)
+        ON DELETE RESTRICT,
+
+    CONSTRAINT Fk_CuentaTransportista_Moneda
+        FOREIGN KEY (Fk_Moneda_Codigo)
+        REFERENCES dbsistemaembutidos.tblMoneda(Pk_Moneda)
+        ON DELETE RESTRICT
+) ENGINE=InnoDB;
 
 DELIMITER ;

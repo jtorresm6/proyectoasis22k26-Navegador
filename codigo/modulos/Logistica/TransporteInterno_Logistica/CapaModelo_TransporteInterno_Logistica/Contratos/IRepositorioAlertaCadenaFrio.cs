@@ -6,10 +6,26 @@
 // ============================================================================
 
 using CapaModelo_TransporteInterno_Logistica.Entidades;
+using System.Collections.Generic;
 
 namespace CapaModelo_TransporteInterno_Logistica.Contratos
 {
     public interface IRepositorioAlertaCadenaFrio : IRepositorioGenerico<ClsAlertaCadenaFrio>
     {
+        // Registrar una alerta.
+        int LogisticaMetAgregar(
+            ClsAlertaCadenaFrio Entidad);
+
+        // Modificar una alerta.
+        int LogisticaMetEditar(
+            ClsAlertaCadenaFrio Entidad);
+
+        // Eliminar una alerta.
+        int LogisticaMetEliminar(
+            long IdAlertaCadenaFrio);
+
+        // Obtener registros de telemetría.
+        IEnumerable<ClsCatalogoDetalleViajeLote>
+            LogisticaMetObtenerTelemetrias();
     }
 }

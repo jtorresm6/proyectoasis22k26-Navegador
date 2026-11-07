@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,6 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modelos de Controladores\ClsControladorAlertaCadenaFrio.cs" />
+    <Compile Include="Modelos de Controladores\ClsControladorDetalleViaje.cs" />
+    <Compile Include="Modelos de Controladores\ClsControladorDetalleViajeLoteProducto.cs" />
+    <Compile Include="Modelos de Controladores\ClsControladorTelemetriaTemperatura.cs" />
+    <Compile Include="Modelos de Controladores\ClsDatosAlertaCadenaFrio.cs" />
+    <Compile Include="Modelos de Controladores\ClsDatosDetalleViaje.cs" />
+    <Compile Include="Modelos de Controladores\ClsDatosDetalleViajeLoteProducto.cs" />
+    <Compile Include="Modelos de Controladores\ClsDatosEncabezadoViaje.cs" />
+    <Compile Include="Modelos de Controladores\ClsControladorEncabezadoViaje.cs" />
+    <Compile Include="Modelos de Controladores\ClsDatosTelemetriaTemperatura.cs" />
+    <Compile Include="Modelos de Controladores\ClsOpcionCatalogo.cs" />
+    <Compile Include="Modelos de Controladores\ClsOpcionCatalogoLote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

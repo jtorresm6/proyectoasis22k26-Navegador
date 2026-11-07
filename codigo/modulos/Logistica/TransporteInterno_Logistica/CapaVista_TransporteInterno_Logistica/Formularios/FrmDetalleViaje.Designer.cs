@@ -40,12 +40,12 @@
             this.LogisticaLblDescripcion = new System.Windows.Forms.Label();
             this.LogisticaLblTitulo = new System.Windows.Forms.Label();
             this.LogisticaPnlDatosDetalle = new System.Windows.Forms.Panel();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.LogisticaNudPeso = new System.Windows.Forms.NumericUpDown();
+            this.LogisticaNudCantidad = new System.Windows.Forms.NumericUpDown();
+            this.LogisticaTxtDescripcionDetalle = new System.Windows.Forms.TextBox();
+            this.LogisticaNudOrdenDetalle = new System.Windows.Forms.NumericUpDown();
+            this.LogisticaCboViaje = new System.Windows.Forms.ComboBox();
+            this.LogisticaTxtCodigoDetalle = new System.Windows.Forms.TextBox();
             this.LogisticaLblCantidad = new System.Windows.Forms.Label();
             this.LogisticaLblDescripcionDetalle = new System.Windows.Forms.Label();
             this.LogisticaLblPeso = new System.Windows.Forms.Label();
@@ -64,10 +64,11 @@
             this.ColPeso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LogisticaPnlTituloHistorial = new System.Windows.Forms.Panel();
             this.LogisticaLblHistorialDetalle = new System.Windows.Forms.Label();
+            this.LogisticaBtnAyuda = new System.Windows.Forms.Button();
             this.LogisticaPnlDatosDetalle.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudPeso)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudCantidad)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudOrdenDetalle)).BeginInit();
             this.LogisticaPnlEncabezadoDetalle.SuspendLayout();
             this.LogisticaPnlHistorialDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaDgvDetalleViaje)).BeginInit();
@@ -190,12 +191,12 @@
             // LogisticaPnlDatosDetalle
             // 
             this.LogisticaPnlDatosDetalle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LogisticaPnlDatosDetalle.Controls.Add(this.numericUpDown3);
-            this.LogisticaPnlDatosDetalle.Controls.Add(this.numericUpDown2);
-            this.LogisticaPnlDatosDetalle.Controls.Add(this.textBox2);
-            this.LogisticaPnlDatosDetalle.Controls.Add(this.numericUpDown1);
-            this.LogisticaPnlDatosDetalle.Controls.Add(this.comboBox1);
-            this.LogisticaPnlDatosDetalle.Controls.Add(this.textBox1);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaNudPeso);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaNudCantidad);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaTxtDescripcionDetalle);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaNudOrdenDetalle);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaCboViaje);
+            this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaTxtCodigoDetalle);
             this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaLblCantidad);
             this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaLblDescripcionDetalle);
             this.LogisticaPnlDatosDetalle.Controls.Add(this.LogisticaLblPeso);
@@ -207,50 +208,50 @@
             this.LogisticaPnlDatosDetalle.Name = "LogisticaPnlDatosDetalle";
             this.LogisticaPnlDatosDetalle.Size = new System.Drawing.Size(1200, 260);
             this.LogisticaPnlDatosDetalle.TabIndex = 20;
-            this.LogisticaPnlDatosDetalle.Paint += new System.Windows.Forms.PaintEventHandler(this.LogisticaPnlDatosDetalle_Paint);
+         
             // 
-            // numericUpDown3
+            // LogisticaNudPeso
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(907, 167);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(201, 22);
-            this.numericUpDown3.TabIndex = 12;
+            this.LogisticaNudPeso.Location = new System.Drawing.Point(907, 167);
+            this.LogisticaNudPeso.Name = "LogisticaNudPeso";
+            this.LogisticaNudPeso.Size = new System.Drawing.Size(201, 22);
+            this.LogisticaNudPeso.TabIndex = 12;
             // 
-            // numericUpDown2
+            // LogisticaNudCantidad
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(907, 119);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(201, 22);
-            this.numericUpDown2.TabIndex = 11;
+            this.LogisticaNudCantidad.Location = new System.Drawing.Point(907, 119);
+            this.LogisticaNudCantidad.Name = "LogisticaNudCantidad";
+            this.LogisticaNudCantidad.Size = new System.Drawing.Size(201, 22);
+            this.LogisticaNudCantidad.TabIndex = 11;
             // 
-            // textBox2
+            // LogisticaTxtDescripcionDetalle
             // 
-            this.textBox2.Location = new System.Drawing.Point(903, 69);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(205, 22);
-            this.textBox2.TabIndex = 10;
+            this.LogisticaTxtDescripcionDetalle.Location = new System.Drawing.Point(903, 69);
+            this.LogisticaTxtDescripcionDetalle.Name = "LogisticaTxtDescripcionDetalle";
+            this.LogisticaTxtDescripcionDetalle.Size = new System.Drawing.Size(205, 22);
+            this.LogisticaTxtDescripcionDetalle.TabIndex = 10;
             // 
-            // numericUpDown1
+            // LogisticaNudOrdenDetalle
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(234, 177);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(204, 22);
-            this.numericUpDown1.TabIndex = 9;
+            this.LogisticaNudOrdenDetalle.Location = new System.Drawing.Point(234, 177);
+            this.LogisticaNudOrdenDetalle.Name = "LogisticaNudOrdenDetalle";
+            this.LogisticaNudOrdenDetalle.Size = new System.Drawing.Size(204, 22);
+            this.LogisticaNudOrdenDetalle.TabIndex = 9;
             // 
-            // comboBox1
+            // LogisticaCboViaje
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(234, 120);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(204, 24);
-            this.comboBox1.TabIndex = 8;
+            this.LogisticaCboViaje.FormattingEnabled = true;
+            this.LogisticaCboViaje.Location = new System.Drawing.Point(234, 120);
+            this.LogisticaCboViaje.Name = "LogisticaCboViaje";
+            this.LogisticaCboViaje.Size = new System.Drawing.Size(204, 24);
+            this.LogisticaCboViaje.TabIndex = 8;
             // 
-            // textBox1
+            // LogisticaTxtCodigoDetalle
             // 
-            this.textBox1.Location = new System.Drawing.Point(234, 69);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(205, 22);
-            this.textBox1.TabIndex = 7;
+            this.LogisticaTxtCodigoDetalle.Location = new System.Drawing.Point(234, 69);
+            this.LogisticaTxtCodigoDetalle.Name = "LogisticaTxtCodigoDetalle";
+            this.LogisticaTxtCodigoDetalle.Size = new System.Drawing.Size(205, 22);
+            this.LogisticaTxtCodigoDetalle.TabIndex = 7;
             // 
             // LogisticaLblCantidad
             // 
@@ -436,6 +437,17 @@
             this.LogisticaLblHistorialDetalle.TabIndex = 0;
             this.LogisticaLblHistorialDetalle.Text = "Historial de Detalles de Viaje";
             // 
+            // LogisticaBtnAyuda
+            // 
+            this.LogisticaBtnAyuda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(221)))), ((int)(((byte)(206)))));
+            this.LogisticaBtnAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaBtnAyuda.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnAyuda.Image")));
+            this.LogisticaBtnAyuda.Location = new System.Drawing.Point(807, 146);
+            this.LogisticaBtnAyuda.Name = "LogisticaBtnAyuda";
+            this.LogisticaBtnAyuda.Size = new System.Drawing.Size(70, 74);
+            this.LogisticaBtnAyuda.TabIndex = 22;
+            this.LogisticaBtnAyuda.UseVisualStyleBackColor = false;
+            // 
             // FrmDetalleViaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -443,6 +455,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
             this.ClientSize = new System.Drawing.Size(1525, 912);
+            this.Controls.Add(this.LogisticaBtnAyuda);
             this.Controls.Add(this.LogisticaPnlHistorialDetalle);
             this.Controls.Add(this.LogisticaPnlDatosDetalle);
             this.Controls.Add(this.LogisticaBtnRefrescar);
@@ -463,9 +476,9 @@
             this.Load += new System.EventHandler(this.FrmDetalleViaje_Load);
             this.LogisticaPnlDatosDetalle.ResumeLayout(false);
             this.LogisticaPnlDatosDetalle.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudPeso)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudCantidad)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudOrdenDetalle)).EndInit();
             this.LogisticaPnlEncabezadoDetalle.ResumeLayout(false);
             this.LogisticaPnlEncabezadoDetalle.PerformLayout();
             this.LogisticaPnlHistorialDetalle.ResumeLayout(false);
@@ -498,12 +511,12 @@
         private System.Windows.Forms.Label LogisticaLblCantidad;
         private System.Windows.Forms.Label LogisticaLblDescripcionDetalle;
         private System.Windows.Forms.Label LogisticaLblPeso;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.NumericUpDown LogisticaNudPeso;
+        private System.Windows.Forms.NumericUpDown LogisticaNudCantidad;
+        private System.Windows.Forms.TextBox LogisticaTxtDescripcionDetalle;
+        private System.Windows.Forms.NumericUpDown LogisticaNudOrdenDetalle;
+        private System.Windows.Forms.ComboBox LogisticaCboViaje;
+        private System.Windows.Forms.TextBox LogisticaTxtCodigoDetalle;
         private System.Windows.Forms.Panel LogisticaPnlHistorialDetalle;
         private System.Windows.Forms.DataGridView LogisticaDgvDetalleViaje;
         private System.Windows.Forms.Panel LogisticaPnlTituloHistorial;
@@ -514,5 +527,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPeso;
+        private System.Windows.Forms.Button LogisticaBtnAyuda;
     }
 }

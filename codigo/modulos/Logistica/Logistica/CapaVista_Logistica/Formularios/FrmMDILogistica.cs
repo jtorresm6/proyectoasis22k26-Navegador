@@ -431,5 +431,36 @@ namespace CapaVista_Logistica.Formularios
         {
             LogisticaMetAbrirFormulario(new FrmMantenimientoStock());
         }
+
+        private void LogisticaBtnEncabezadoViaje_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmEncabezadoViaje());
+        }
+
+        private void LogisticaBtnDetalleViaje_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmDetalleViaje());
+        }
+
+        private void LogisticaBtnDetalleViajeProducto_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmDetalleViajeProducto());
+        }
+
+        private void LogisticaBtnTelemetriaTransporte_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogisticaBtnAlertaCadenaFrio_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmAlertaCadenaFrio());
+
+        }
+
+        private void LogisticaBtnProducto_Click_1(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoProducto());
+        }
     }
 }
