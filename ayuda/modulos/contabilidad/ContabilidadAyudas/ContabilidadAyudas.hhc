@@ -62,12 +62,12 @@
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="P&#243;lizas">
-			<param name="Local" value="Polizas_Contabilidad.html">
+			<param name="Local" value="PolizasLocales_Contabilidad.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Captura de p&#243;lizas">
-			<param name="Local" value="PolizasLocales_Contabilidad.html">
+			<param name="Local" value="DetallePoliza_Contabilidad.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
