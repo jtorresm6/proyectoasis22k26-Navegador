@@ -3,7 +3,7 @@ using System.Data;
 
 namespace CapaControlador_Pedidos
 {
-    // Estado y operaciones de un pedido abierto en pantalla. No conoce controles WinForms.
+    // Natali Sofía Montenegro Portillo | 0901-23-10017 | Mantiene las líneas y el estado de un pedido en edición.
     public sealed class ClsPedidoAcciones
     {
         private readonly ClsPedidoControlador _Controlador;
@@ -69,7 +69,7 @@ namespace CapaControlador_Pedidos
         }
 
         public string VentasFuncGuardar(int Cliente, int Vendedor, bool PorCotizacion,
-            DateTime Fecha, DateTime Entrega, DateTime Vencimiento, string Numero)
+            DateTime Fecha, DateTime Entrega, DateTime Vencimiento, string Numero, string NuevoEstado = "PENDIENTE")
         {
             if (PorCotizacion && Cotizacion <= 0)
                 throw new ArgumentException("Seleccione una cotización.");
@@ -79,9 +79,10 @@ namespace CapaControlador_Pedidos
             foreach (string Campo in new[] { "Fecha", "Entrega", "Vencimiento" })
                 Tabla.Columns.Add(Campo, typeof(DateTime));
             Tabla.Columns.Add("Estado");
+            Tabla.Columns.Add("NuevoEstado");
             Tabla.Columns.Add("Numero");
             DataRow Pedido = Tabla.Rows.Add(Id, PorCotizacion ? (object)Cotizacion : DBNull.Value,
-                Cliente, Vendedor, Moneda, Fecha.Date, Entrega.Date, Vencimiento.Date, Estado, Numero);
+                Cliente, Vendedor, Moneda, Fecha.Date, Entrega.Date, Vencimiento.Date, Estado, NuevoEstado, Numero);
             _Controlador.VentasFuncGuardar(Pedido, Lineas);
             return Convert.ToString(Pedido["Numero"]);
         }

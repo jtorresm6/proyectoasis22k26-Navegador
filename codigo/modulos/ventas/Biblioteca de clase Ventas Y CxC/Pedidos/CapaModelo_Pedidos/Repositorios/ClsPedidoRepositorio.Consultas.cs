@@ -3,19 +3,28 @@ using System.Data;
 
 namespace CapaModelo_Pedidos
 {
-    public sealed partial class ClsPedidoRepositorio
+    // Natali Sofía Montenegro Portillo | 0901-23-10017 | Consulta clientes, precios, cotizaciones y reportes de Pedidos.
+    public partial class ClsPedidoRepositorio
     {
-        public DataTable VentasFuncCatalogo(string Nombre)
+        public virtual DataTable VentasFuncCatalogo(string Nombre)
         {
             string Sql;
             switch (Nombre)
             {
                 case "Clientes":
-                    Sql = @"SELECT idCliente Id,
+                    Sql = @"SELECT cl.idCliente Id,
                         CONCAT(codigoCliente, ' - ', nombreCliente) Nombre,
                         COALESCE(nitCliente, dpiCliente, 'CF') numeroIdentificacion,
-                        direccionCliente, nombreContactoCliente contactoCliente
-                        FROM tblCliente WHERE activoCliente=1 ORDER BY nombreCliente";
+                        direccionCliente, COALESCE(NULLIF(TRIM(cl.nombreContactoCliente), ''),
+                                 NULLIF(TRIM(cl.telefonoCliente), ''),
+                                 NULLIF(TRIM(cl.correoCliente), ''), 'Sin contacto registrado') contactoCliente,
+                        COALESCE(t.nombreTipoCliente, 'Sin tipo asignado') TipoCliente,
+                        t.idTipoCliente TipoClienteId
+                        FROM tblCliente cl
+                        LEFT JOIN tblClienteListaPrecio clp ON clp.idCliente=cl.idCliente
+                        LEFT JOIN tblListaPrecioEncabezado l ON l.idListaPrecioEncabezado=clp.idListaPrecioEncabezado
+                        LEFT JOIN tblTipoCliente t ON t.idTipoCliente=l.idTipoCliente
+                        WHERE cl.activoCliente=1 ORDER BY cl.nombreCliente";
                     break;
                 case "Vendedores":
                     Sql = @"SELECT v.idVendedor Id,
@@ -30,22 +39,25 @@ namespace CapaModelo_Pedidos
                 return Datos.VentasFuncTabla(Sql);
         }
 
-        public DataTable VentasFuncListas(int Cliente, DateTime Fecha)
+        public virtual DataTable VentasFuncListas(int Cliente, DateTime Fecha)
         {
             using (var Datos = new ClsConexion())
                 return Datos.VentasFuncTabla(@"SELECT l.idListaPrecioEncabezado Id,
-                        l.nombreListaPrecioEncabezado Nombre, l.idMoneda MonedaId
+                        l.nombreListaPrecioEncabezado Nombre, l.idMoneda MonedaId,
+                        l.idTipoCliente TipoClienteId
                     FROM tblClienteListaPrecio c
                     JOIN tblListaPrecioEncabezado l
                         ON l.idListaPrecioEncabezado = c.idListaPrecioEncabezado
+                    JOIN tblTipoCliente t ON t.idTipoCliente = l.idTipoCliente
                     WHERE c.idCliente = ? AND l.activoListaPrecioEncabezado = 1
+                        AND t.activoTipoCliente = 1
                         AND l.vigenteDesdeListaPrecioEncabezado <= ?
                         AND (l.vigenteHastaListaPrecioEncabezado IS NULL
                             OR l.vigenteHastaListaPrecioEncabezado >= ?)
                     ORDER BY l.nombreListaPrecioEncabezado", Cliente, Fecha.Date, Fecha.Date);
         }
 
-        public DataTable VentasFuncCotizaciones(int Cliente, DateTime Fecha)
+        public virtual DataTable VentasFuncCotizaciones(int Cliente, DateTime Fecha)
         {
             using (var Datos = new ClsConexion())
                 return Datos.VentasFuncTabla(@"SELECT c.idCotizacionEncabezado CotizacionId,
@@ -71,7 +83,7 @@ namespace CapaModelo_Pedidos
                     Cliente, Fecha.Date, Fecha.Date);
         }
 
-        public bool VentasFuncCotVigente(int Cotizacion, int Cliente, DateTime Fecha)
+        public virtual bool VentasFuncCotVigente(int Cotizacion, int Cliente, DateTime Fecha)
         {
             using (var Datos = new ClsConexion())
                 return Convert.ToInt32(Datos.VentasFuncEscalar(@"SELECT COUNT(*)
@@ -87,7 +99,7 @@ namespace CapaModelo_Pedidos
                     Cotizacion, Cliente, Fecha.Date, Fecha.Date)) == 1;
         }
 
-        public DataTable VentasFuncProductos(int Lista)
+        public virtual DataTable VentasFuncProductos(int Lista)
         {
             using (var Datos = new ClsConexion())
                 return Datos.VentasFuncTabla(@"SELECT pv.idProductoVenta ProductoId,
@@ -102,14 +114,14 @@ namespace CapaModelo_Pedidos
                     ORDER BY p.nombreProducto", Lista);
         }
 
-        public string VentasFuncMoneda(int Id)
+        public virtual string VentasFuncMoneda(int Id)
         {
             using (var Datos = new ClsConexion())
                 return Convert.ToString(Datos.VentasFuncEscalar(
                     "SELECT codigoMoneda FROM tblMoneda WHERE idMoneda = ?", Id)) ?? "";
         }
 
-        public DataTable VentasFuncListar()
+        public virtual DataTable VentasFuncListar()
         {
             using (var Datos = new ClsConexion())
                 return Datos.VentasFuncTabla(@"SELECT p.idPedidoEncabezado Id,
@@ -120,13 +132,37 @@ namespace CapaModelo_Pedidos
                     ORDER BY p.idPedidoEncabezado DESC");
         }
 
-        public DataTable VentasFuncPedido(int Id)
+        public virtual DataTable VentasFuncReporte(DateTime Desde, DateTime Hasta, string Estado)
+        {
+            using (var Datos = new ClsConexion())
+                return Datos.VentasFuncTabla(@"SELECT p.referenciaPedidoEncabezado Numero,
+                        p.fechaPedidoEncabezado Fecha, c.nombreCliente Cliente,
+                        p.estadoPedidoEncabezado Estado, m.codigoMoneda Moneda,
+                        COALESCE(SUM(d.cantidadPedidoDetalle * d.precioUnitarioPedidoDetalle
+                            - d.descuentoMontoPedidoDetalle), 0) Total
+                    FROM tblPedidoEncabezado p
+                    JOIN tblCliente c ON c.idCliente = p.idCliente
+                    JOIN tblMoneda m ON m.idMoneda = p.idMoneda
+                    LEFT JOIN tblPedidoDetalle d ON d.idPedidoEncabezado = p.idPedidoEncabezado
+                    WHERE p.fechaPedidoEncabezado >= ? AND p.fechaPedidoEncabezado <= ?
+                        AND (? = 'Todos los estados' OR p.estadoPedidoEncabezado = ?)
+                    GROUP BY p.idPedidoEncabezado, p.referenciaPedidoEncabezado,
+                        p.fechaPedidoEncabezado, c.nombreCliente, p.estadoPedidoEncabezado,
+                        m.codigoMoneda
+                    ORDER BY p.fechaPedidoEncabezado, p.idPedidoEncabezado", Desde.Date, Hasta.Date, Estado, Estado);
+        }
+
+        public virtual DataTable VentasFuncPedido(int Id)
         {
             using (var Datos = new ClsConexion())
                 return Datos.VentasFuncTabla(@"SELECT p.idPedidoEncabezado Id,
                         p.referenciaPedidoEncabezado Numero,
                         p.idCotizacionEncabezado CotizacionId,
                         p.idCliente ClienteId, p.idVendedor VendedorId,
+                        COALESCE(cl.nitCliente, cl.dpiCliente, 'CF') numeroIdentificacion,
+                        cl.direccionCliente, COALESCE(NULLIF(TRIM(cl.nombreContactoCliente), ''),
+                                 NULLIF(TRIM(cl.telefonoCliente), ''),
+                                 NULLIF(TRIM(cl.correoCliente), ''), 'Sin contacto registrado') contactoCliente,
                         p.idMoneda MonedaId, p.fechaPedidoEncabezado Fecha,
                         p.fechaEntregaPedidoEncabezado Entrega,
                         p.fechaVencimientoPedidoEncabezado Vencimiento,
@@ -136,6 +172,7 @@ namespace CapaModelo_Pedidos
                         pr.nombreProducto Descripcion, d.cantidadPedidoDetalle Cantidad,
                         d.precioUnitarioPedidoDetalle Precio, d.descuentoMontoPedidoDetalle Descuento
                     FROM tblPedidoEncabezado p
+                    JOIN tblCliente cl ON cl.idCliente = p.idCliente
                     LEFT JOIN tblCotizacionEncabezado c
                         ON c.idCotizacionEncabezado = p.idCotizacionEncabezado
                     LEFT JOIN tblPedidoDetalle d

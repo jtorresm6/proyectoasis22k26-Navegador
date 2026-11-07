@@ -1,15 +1,19 @@
 using System;
 using System.Data;
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography;
 using CapaModelo_Pedidos;
 
 namespace CapaControlador_Pedidos
 {
+    // Natali Sofía Montenegro Portillo | 0901-23-10017 | Coordina las reglas de negocio y el repositorio de Pedidos.
     public sealed class ClsPedidoControlador
     {
-        private readonly IPedidoRepositorio _Repositorio;
+        private readonly ClsPedidoRepositorio _Repositorio;
 
         public ClsPedidoControlador() : this(new ClsPedidoRepositorio()) { }
-        public ClsPedidoControlador(IPedidoRepositorio Repositorio)
+        public ClsPedidoControlador(ClsPedidoRepositorio Repositorio)
         {
             _Repositorio = Repositorio ?? throw new ArgumentNullException(nameof(Repositorio));
         }
@@ -23,7 +27,39 @@ namespace CapaControlador_Pedidos
         public DataTable VentasFuncProductos(int Lista) { return _Repositorio.VentasFuncProductos(Lista); }
         public string VentasFuncMoneda(int Id) { return _Repositorio.VentasFuncMoneda(Id); }
         public DataTable VentasFuncListar() { return _Repositorio.VentasFuncListar(); }
+        public DataTable VentasFuncReporte(DateTime Desde, DateTime Hasta, string Estado)
+        {
+            if (Desde.Date > Hasta.Date) throw new ArgumentException("La fecha inicial debe ser anterior o igual a la final.");
+            if (Estado != "Todos los estados" && Estado != "PENDIENTE" && Estado != "CONFIRMADO" &&
+                Estado != "COMPLETADO" && Estado != "ANULADO")
+                throw new ArgumentException("Seleccione un estado válido para el reporte.");
+            return _Repositorio.VentasFuncReporte(Desde.Date, Hasta.Date, Estado);
+        }
         public DataTable VentasFuncPedido(int Id) { return _Repositorio.VentasFuncPedido(Id); }
+
+        public string VentasFuncRutaAyuda(Assembly BibliotecaVista)
+        {
+            if (BibliotecaVista == null) throw new ArgumentNullException(nameof(BibliotecaVista));
+            const string Recurso = "CapaVista_Pedidos.Ayudas.Pedidos.chm";
+            using (Stream Manual = BibliotecaVista.GetManifestResourceStream(Recurso))
+            {
+                if (Manual == null) throw new FileNotFoundException("No se encontró la ayuda de pedidos.");
+                byte[] Huella;
+                using (var Resumen = SHA256.Create()) Huella = Resumen.ComputeHash(Manual);
+                string Carpeta = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "EmbutidosDeCalidad", "Ventas", "Ayuda");
+                Directory.CreateDirectory(Carpeta);
+                string Archivo = Path.Combine(Carpeta, "Pedidos_" +
+                    BitConverter.ToString(Huella, 0, 8).Replace("-", "") + ".chm");
+                if (!File.Exists(Archivo))
+                {
+                    Manual.Position = 0;
+                    using (var Destino = new FileStream(Archivo, FileMode.CreateNew, FileAccess.Write))
+                        Manual.CopyTo(Destino);
+                }
+                return Archivo;
+            }
+        }
 
         public static DataTable VentasFuncLineas()
         {
@@ -65,7 +101,8 @@ namespace CapaControlador_Pedidos
 
         public void VentasMetEstado(int Id, string Estado)
         {
-            if (Id <= 0 || (Estado != "CONFIRMADO" && Estado != "ANULADO"))
+            if (Id <= 0 || (Estado != "PENDIENTE" && Estado != "CONFIRMADO" &&
+                Estado != "COMPLETADO" && Estado != "ANULADO"))
                 throw new ArgumentException("Estado de pedido inválido.");
             _Repositorio.VentasMetEstado(Id, Estado);
         }
