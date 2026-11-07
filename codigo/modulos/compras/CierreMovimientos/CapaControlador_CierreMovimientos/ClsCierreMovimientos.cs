@@ -1,23 +1,29 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using CapaControlador_Seguridad.Objetos_de_valor;
+using CapaModelo_CierreMovimientos.Entidades;
+using CapaModelo_CierreMovimientos.Servicios;
+using CapaModelo_Componentes.Repositorios;
 
 /*
  * ==================================================================
  * Área : Compras
  * Autor : José Pablo Cano Cóbar
  * Carné : 0901-23-1727
- * Fecha : 24/10/2026
+ * Fecha : 24/10/2026 (prototipo) - 04/11/2026 (datos reales y cierre)
  * ==================================================================
  * Propósito :
- *  Prepara las validaciones y el resumen de saldos del prototipo de cierre de movimientos, con sus totales por período.
+ *  Controlador del cierre de movimientos. Obtiene los períodos abiertos, arma
+ *  la vista previa del cierre (validaciones, saldos por proveedor y totales)
+ *  y ejecuta el cierre con el usuario y la IP de la sesión de Seguridad.
+ *  La lógica de negocio está en CapaModelo_CierreMovimientos.
  * ===================================================================
 */
 
 namespace CapaControlador_CierreMovimientos
 {
- 
-    
-    
-  
     public class ClsResumenCierre
     {
         public DataTable Validaciones { get; set; }
@@ -26,85 +32,90 @@ namespace CapaControlador_CierreMovimientos
         public decimal TotalAbonos { get; set; }
         public decimal SaldoFinal { get; set; }
         public bool PuedeCerrar { get; set; }
+        public string Periodo { get; set; }
     }
 
     public class ClsCierreMovimientos
     {
+        private readonly ClsServicioCierreMovimientos _Servicio;
+
+        public ClsCierreMovimientos() : this(new ClsServicioCierreMovimientos()) { }
+
+        public ClsCierreMovimientos(ClsServicioCierreMovimientos Servicio)
+        {
+            _Servicio = Servicio ?? throw new ArgumentNullException(nameof(Servicio));
+        }
+
         public DataTable ComprasFuncObtenerPeriodosCerrables()
         {
-            DataTable Periodos = new DataTable();
-            Periodos.Columns.Add("cmp_id_periodo", typeof(int));
-            Periodos.Columns.Add("cmp_descripcion", typeof(string));
-            Periodos.Rows.Add(202610, "Octubre 2026");
-            return Periodos;
+            List<ClsPeriodoCompras> Periodos = ComprasFuncEjecutar(() => _Servicio.ComprasFuncObtenerPeriodosAbiertos());
+            var Tabla = new DataTable();
+            Tabla.Columns.Add("cmp_id_periodo", typeof(int));
+            Tabla.Columns.Add("cmp_descripcion", typeof(string));
+            foreach (ClsPeriodoCompras Periodo in Periodos) Tabla.Rows.Add(Periodo.IdPeriodo, Periodo.Descripcion);
+            return Tabla;
         }
 
         public ClsResumenCierre ComprasFuncPrepararCierre(int IdPeriodo)
         {
-            DataTable Validaciones = ComprasFuncDatosValidaciones(IdPeriodo);
-            DataTable Saldos = ComprasFuncDatosSaldos(IdPeriodo);
+            ClsPreparacionCierre Preparacion = ComprasFuncEjecutar(() =>
+                _Servicio.ComprasFuncPrepararCierre(IdPeriodo, ClsSesionSeguridad.HaySesionActiva, DateTime.Today));
 
-            ClsResumenCierre Resumen = new ClsResumenCierre
+            var Validaciones = new DataTable();
+            Validaciones.Columns.Add("cmp_estado", typeof(string));
+            Validaciones.Columns.Add("cmp_validacion", typeof(string));
+            Validaciones.Columns.Add("cmp_origen", typeof(string));
+            foreach (ClsValidacionCierre Validacion in Preparacion.Validaciones.OrderByDescending(Fila => Fila.Estado))
+                Validaciones.Rows.Add(Validacion.Estado.ToString(), Validacion.Validacion, Validacion.Origen);
+
+            var Saldos = new DataTable();
+            Saldos.Columns.Add("cmp_proveedor", typeof(string));
+            Saldos.Columns.Add("cmp_saldo_inicial", typeof(decimal));
+            Saldos.Columns.Add("cmp_total_cargos", typeof(decimal));
+            Saldos.Columns.Add("cmp_total_abonos", typeof(decimal));
+            Saldos.Columns.Add("cmp_saldo_final", typeof(decimal));
+            foreach (ClsSaldoProveedorCierre Saldo in Preparacion.Saldos)
+                Saldos.Rows.Add(Saldo.NombreProveedor, Saldo.SaldoInicial, Saldo.Cargos, Saldo.Abonos, Saldo.SaldoFinal);
+
+            return new ClsResumenCierre
             {
                 Validaciones = Validaciones,
                 SaldosProveedor = Saldos,
-                PuedeCerrar = true
+                TotalCargos = Preparacion.Saldos.Sum(Saldo => Saldo.Cargos),
+                TotalAbonos = Preparacion.Saldos.Sum(Saldo => Saldo.Abonos),
+                SaldoFinal = Preparacion.Saldos.Sum(Saldo => Saldo.SaldoFinal),
+                PuedeCerrar = Preparacion.PuedeCerrar,
+                Periodo = Preparacion.Periodo.Descripcion
             };
-
-            foreach (DataRow Fila in Saldos.Rows)
-            {
-                decimal SaldoInicial = (decimal)Fila["cmp_saldo_inicial"];
-                decimal Cargos = (decimal)Fila["cmp_total_cargos"];
-                decimal Abonos = (decimal)Fila["cmp_total_abonos"];
-
-                Fila["cmp_saldo_final"] = SaldoInicial + Cargos - Abonos;
-                Resumen.TotalCargos += Cargos;
-                Resumen.TotalAbonos += Abonos;
-                Resumen.SaldoFinal += (decimal)Fila["cmp_saldo_final"];
-            }
-
-            foreach (DataRow Fila in Validaciones.Rows)
-            {
-                if ((string)Fila["cmp_estado"] == "Bloqueante")
-                {
-                    Resumen.PuedeCerrar = false;
-                }
-            }
-
-            return Resumen;
         }
 
-        private DataTable ComprasFuncDatosValidaciones(int IdPeriodo)
+        public string ComprasFuncEjecutarCierre(int IdPeriodo)
         {
-            DataTable Tabla = new DataTable();
-            Tabla.Columns.Add("cmp_estado", typeof(string));
-            Tabla.Columns.Add("cmp_validacion", typeof(string));
-            Tabla.Columns.Add("cmp_origen", typeof(string));
-            Tabla.Rows.Add("Correcta", "Período anterior cerrado", "3.8 Cierre");
-            Tabla.Rows.Add("Correcta", "Sin movimientos pendientes", "3.1 Movimientos");
-            Tabla.Rows.Add("Correcta", "Pagos cuadrados con caja", "3.5 Pagos");
-            Tabla.Rows.Add("Correcta", "Pólizas enviadas a Contabilidad", "3.2 Enlace contable");
-            Tabla.Rows.Add("Correcta", "Saldos cuadran con cuenta CxP", "Contabilidad");
-            Tabla.Rows.Add("Advertencia", "1 compra recibida sin factura", "3.3 Órdenes de compra");
-            Tabla.Rows.Add("Advertencia", "2 órdenes en autorización", "3.7 Aprobación");
-            return Tabla;
+            int? IdUsuario = ClsSesionSeguridad.HaySesionActiva ? ClsSesionSeguridad.IdUsuario : (int?)null;
+            string Ip = ClsSesionSeguridad.SeguridadMetObtenerIPLocal();
+
+            ClsResultadoCierre Resultado = ComprasFuncEjecutar(() =>
+                _Servicio.ComprasFuncEjecutarCierre(IdPeriodo, IdUsuario, Ip, DateTime.Today));
+
+            return "Se cerró " + Resultado.Periodo.Descripcion + "." + Environment.NewLine + Environment.NewLine +
+                "Proveedores: " + Resultado.Proveedores + Environment.NewLine +
+                "Cargos: Q " + Resultado.TotalCargos.ToString("N2") + Environment.NewLine +
+                "Abonos: Q " + Resultado.TotalAbonos.ToString("N2") + Environment.NewLine +
+                "Saldo final: Q " + Resultado.SaldoFinal.ToString("N2") + Environment.NewLine +
+                "Documentos bloqueados: " + Resultado.DocumentosBloqueados + Environment.NewLine + Environment.NewLine +
+                "Período abierto: " + Resultado.SiguientePeriodo + ".";
         }
 
-        private DataTable ComprasFuncDatosSaldos(int IdPeriodo)
+        private static T ComprasFuncEjecutar<T>(Func<T> Operacion)
         {
-            DataTable Tabla = new DataTable();
-            Tabla.Columns.Add("cmp_proveedor", typeof(string));
-            Tabla.Columns.Add("cmp_saldo_inicial", typeof(decimal));
-            Tabla.Columns.Add("cmp_total_cargos", typeof(decimal));
-            Tabla.Columns.Add("cmp_total_abonos", typeof(decimal));
-            Tabla.Columns.Add("cmp_saldo_final", typeof(decimal));
-            Tabla.Rows.Add("Cárnicos del Pacífico, S.A.", 85400m, 142750m, 120000m, 0m);
-            Tabla.Rows.Add("Empaques Industriales GT", 22300m, 31200m, 40500m, 0m);
-            Tabla.Rows.Add("Condimentos La Antigua", 9850m, 12400m, 9850m, 0m);
-            Tabla.Rows.Add("Tripas Naturales de Occidente", 15600m, 18900m, 15600m, 0m);
-            Tabla.Rows.Add("Frigoríficos Unidos", 41200m, 56300m, 50000m, 0m);
-            return Tabla;
+            try
+            {
+                return Operacion();
+            }
+            catch (ClsExcepcionDatosCompras Error)
+            {
+                throw new InvalidOperationException(Error.Message, Error);
+            }
         }
     }
-    
 }
