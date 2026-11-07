@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaControlador_EnlaceBancos">
-      <HintPath>..\CapaControlador_EnlaceBancos\bin\Debug\CapaControlador_EnlaceBancos.dll</HintPath>
-    </Reference>
     <Reference Include="CapaControlador_Seguridad">
       <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
     </Reference>
