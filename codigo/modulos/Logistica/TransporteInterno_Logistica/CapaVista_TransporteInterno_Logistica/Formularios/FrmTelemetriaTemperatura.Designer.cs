@@ -1,6 +1,6 @@
 ﻿namespace CapaVista_TransporteInterno_Logistica.Formularios
 {
-    partial class FrmTelemetriaTemperatura
+    partial class FrmTelemetriaTransporte
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTelemetriaTemperatura));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTelemetriaTransporte));
             this.LogisticaBtnConsultar = new System.Windows.Forms.Button();
             this.LogisticaBtnRefrescar = new System.Windows.Forms.Button();
             this.LogisticaBtnCancelar = new System.Windows.Forms.Button();
@@ -40,8 +40,10 @@
             this.LogisticaLblDescripcion = new System.Windows.Forms.Label();
             this.LogisticaLblTitulo = new System.Windows.Forms.Label();
             this.LogisticaPnlDatosTelemetria = new System.Windows.Forms.Panel();
-            this.LogisticaPnlTituloTelemetria = new System.Windows.Forms.Panel();
-            this.LogisticaLblDatosTelemetria = new System.Windows.Forms.Label();
+            this.LogisticaTxtUbicacionGPS = new System.Windows.Forms.TextBox();
+            this.LogisticaChkPuertaAbierta = new System.Windows.Forms.CheckBox();
+            this.LogisticaDtpFechaHora = new System.Windows.Forms.DateTimePicker();
+            this.LogisticaLblTemperatura = new System.Windows.Forms.Label();
             this.LogisticaNudHumedad = new System.Windows.Forms.NumericUpDown();
             this.LogisticaNudTemperatura = new System.Windows.Forms.NumericUpDown();
             this.LogisticaCboViaje = new System.Windows.Forms.ComboBox();
@@ -52,13 +54,9 @@
             this.LogisticaLblFechaHora = new System.Windows.Forms.Label();
             this.LogisticaLblViajeAsociado = new System.Windows.Forms.Label();
             this.LogisticaLblCodigoTelemetria = new System.Windows.Forms.Label();
-            this.LogisticaLblTemperatura = new System.Windows.Forms.Label();
-            this.LogisticaDtpFechaHora = new System.Windows.Forms.DateTimePicker();
-            this.LogisticaChkPuertaAbierta = new System.Windows.Forms.CheckBox();
-            this.LogisticaTxtUbicacionGPS = new System.Windows.Forms.TextBox();
+            this.LogisticaPnlTituloTelemetria = new System.Windows.Forms.Panel();
+            this.LogisticaLblDatosTelemetria = new System.Windows.Forms.Label();
             this.LogisticaPnlHistorialTelemetria = new System.Windows.Forms.Panel();
-            this.LogisticaPnlTituloHistorial = new System.Windows.Forms.Panel();
-            this.LogisticaLblHistorialTelemetria = new System.Windows.Forms.Label();
             this.LogisticaDvgHistorialTelemetria = new System.Windows.Forms.DataGridView();
             this.ColCodigoTelemetria = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColViaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,13 +65,17 @@
             this.ColHumedad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColPuertaAbierta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColUbicacionGPS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaPnlTituloHistorial = new System.Windows.Forms.Panel();
+            this.LogisticaLblHistorialTelemetria = new System.Windows.Forms.Label();
+            this.LogisticaBtnNuevo = new System.Windows.Forms.Button();
+            this.LogisticaBtnAyuda = new System.Windows.Forms.Button();
             this.LogisticaPnlDatosTelemetria.SuspendLayout();
-            this.LogisticaPnlTituloTelemetria.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudHumedad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudTemperatura)).BeginInit();
+            this.LogisticaPnlTituloTelemetria.SuspendLayout();
             this.LogisticaPnlHistorialTelemetria.SuspendLayout();
-            this.LogisticaPnlTituloHistorial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaDvgHistorialTelemetria)).BeginInit();
+            this.LogisticaPnlTituloHistorial.SuspendLayout();
             this.SuspendLayout();
             // 
             // LogisticaBtnConsultar
@@ -212,26 +214,40 @@
             this.LogisticaPnlDatosTelemetria.Size = new System.Drawing.Size(1200, 310);
             this.LogisticaPnlDatosTelemetria.TabIndex = 41;
             // 
-            // LogisticaPnlTituloTelemetria
+            // LogisticaTxtUbicacionGPS
             // 
-            this.LogisticaPnlTituloTelemetria.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
-            this.LogisticaPnlTituloTelemetria.Controls.Add(this.LogisticaLblDatosTelemetria);
-            this.LogisticaPnlTituloTelemetria.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LogisticaPnlTituloTelemetria.Location = new System.Drawing.Point(0, 0);
-            this.LogisticaPnlTituloTelemetria.Name = "LogisticaPnlTituloTelemetria";
-            this.LogisticaPnlTituloTelemetria.Size = new System.Drawing.Size(1198, 83);
-            this.LogisticaPnlTituloTelemetria.TabIndex = 0;
+            this.LogisticaTxtUbicacionGPS.Location = new System.Drawing.Point(906, 201);
+            this.LogisticaTxtUbicacionGPS.Name = "LogisticaTxtUbicacionGPS";
+            this.LogisticaTxtUbicacionGPS.Size = new System.Drawing.Size(244, 22);
+            this.LogisticaTxtUbicacionGPS.TabIndex = 29;
             // 
-            // LogisticaLblDatosTelemetria
+            // LogisticaChkPuertaAbierta
             // 
-            this.LogisticaLblDatosTelemetria.AutoSize = true;
-            this.LogisticaLblDatosTelemetria.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaLblDatosTelemetria.ForeColor = System.Drawing.Color.White;
-            this.LogisticaLblDatosTelemetria.Location = new System.Drawing.Point(25, 12);
-            this.LogisticaLblDatosTelemetria.Name = "LogisticaLblDatosTelemetria";
-            this.LogisticaLblDatosTelemetria.Size = new System.Drawing.Size(212, 24);
-            this.LogisticaLblDatosTelemetria.TabIndex = 0;
-            this.LogisticaLblDatosTelemetria.Text = "Datos de Telemetría";
+            this.LogisticaChkPuertaAbierta.AutoSize = true;
+            this.LogisticaChkPuertaAbierta.Location = new System.Drawing.Point(935, 150);
+            this.LogisticaChkPuertaAbierta.Name = "LogisticaChkPuertaAbierta";
+            this.LogisticaChkPuertaAbierta.Size = new System.Drawing.Size(65, 20);
+            this.LogisticaChkPuertaAbierta.TabIndex = 28;
+            this.LogisticaChkPuertaAbierta.Text = "SI/NO";
+            this.LogisticaChkPuertaAbierta.UseVisualStyleBackColor = true;
+            // 
+            // LogisticaDtpFechaHora
+            // 
+            this.LogisticaDtpFechaHora.Location = new System.Drawing.Point(267, 189);
+            this.LogisticaDtpFechaHora.Name = "LogisticaDtpFechaHora";
+            this.LogisticaDtpFechaHora.Size = new System.Drawing.Size(244, 22);
+            this.LogisticaDtpFechaHora.TabIndex = 27;
+            // 
+            // LogisticaLblTemperatura
+            // 
+            this.LogisticaLblTemperatura.AutoSize = true;
+            this.LogisticaLblTemperatura.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblTemperatura.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblTemperatura.Location = new System.Drawing.Point(42, 233);
+            this.LogisticaLblTemperatura.Name = "LogisticaLblTemperatura";
+            this.LogisticaLblTemperatura.Size = new System.Drawing.Size(193, 24);
+            this.LogisticaLblTemperatura.TabIndex = 25;
+            this.LogisticaLblTemperatura.Text = "Temperatura (°C): *";
             // 
             // LogisticaNudHumedad
             // 
@@ -328,40 +344,26 @@
             this.LogisticaLblCodigoTelemetria.TabIndex = 13;
             this.LogisticaLblCodigoTelemetria.Text = "Código de Telemetría:";
             // 
-            // LogisticaLblTemperatura
+            // LogisticaPnlTituloTelemetria
             // 
-            this.LogisticaLblTemperatura.AutoSize = true;
-            this.LogisticaLblTemperatura.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaLblTemperatura.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
-            this.LogisticaLblTemperatura.Location = new System.Drawing.Point(42, 233);
-            this.LogisticaLblTemperatura.Name = "LogisticaLblTemperatura";
-            this.LogisticaLblTemperatura.Size = new System.Drawing.Size(193, 24);
-            this.LogisticaLblTemperatura.TabIndex = 25;
-            this.LogisticaLblTemperatura.Text = "Temperatura (°C): *";
+            this.LogisticaPnlTituloTelemetria.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaPnlTituloTelemetria.Controls.Add(this.LogisticaLblDatosTelemetria);
+            this.LogisticaPnlTituloTelemetria.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LogisticaPnlTituloTelemetria.Location = new System.Drawing.Point(0, 0);
+            this.LogisticaPnlTituloTelemetria.Name = "LogisticaPnlTituloTelemetria";
+            this.LogisticaPnlTituloTelemetria.Size = new System.Drawing.Size(1198, 83);
+            this.LogisticaPnlTituloTelemetria.TabIndex = 0;
             // 
-            // LogisticaDtpFechaHora
+            // LogisticaLblDatosTelemetria
             // 
-            this.LogisticaDtpFechaHora.Location = new System.Drawing.Point(267, 189);
-            this.LogisticaDtpFechaHora.Name = "LogisticaDtpFechaHora";
-            this.LogisticaDtpFechaHora.Size = new System.Drawing.Size(244, 22);
-            this.LogisticaDtpFechaHora.TabIndex = 27;
-            // 
-            // LogisticaChkPuertaAbierta
-            // 
-            this.LogisticaChkPuertaAbierta.AutoSize = true;
-            this.LogisticaChkPuertaAbierta.Location = new System.Drawing.Point(935, 150);
-            this.LogisticaChkPuertaAbierta.Name = "LogisticaChkPuertaAbierta";
-            this.LogisticaChkPuertaAbierta.Size = new System.Drawing.Size(65, 20);
-            this.LogisticaChkPuertaAbierta.TabIndex = 28;
-            this.LogisticaChkPuertaAbierta.Text = "SI/NO";
-            this.LogisticaChkPuertaAbierta.UseVisualStyleBackColor = true;
-            // 
-            // LogisticaTxtUbicacionGPS
-            // 
-            this.LogisticaTxtUbicacionGPS.Location = new System.Drawing.Point(906, 201);
-            this.LogisticaTxtUbicacionGPS.Name = "LogisticaTxtUbicacionGPS";
-            this.LogisticaTxtUbicacionGPS.Size = new System.Drawing.Size(244, 22);
-            this.LogisticaTxtUbicacionGPS.TabIndex = 29;
+            this.LogisticaLblDatosTelemetria.AutoSize = true;
+            this.LogisticaLblDatosTelemetria.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblDatosTelemetria.ForeColor = System.Drawing.Color.White;
+            this.LogisticaLblDatosTelemetria.Location = new System.Drawing.Point(25, 12);
+            this.LogisticaLblDatosTelemetria.Name = "LogisticaLblDatosTelemetria";
+            this.LogisticaLblDatosTelemetria.Size = new System.Drawing.Size(212, 24);
+            this.LogisticaLblDatosTelemetria.TabIndex = 0;
+            this.LogisticaLblDatosTelemetria.Text = "Datos de Telemetría";
             // 
             // LogisticaPnlHistorialTelemetria
             // 
@@ -371,28 +373,6 @@
             this.LogisticaPnlHistorialTelemetria.Name = "LogisticaPnlHistorialTelemetria";
             this.LogisticaPnlHistorialTelemetria.Size = new System.Drawing.Size(1200, 285);
             this.LogisticaPnlHistorialTelemetria.TabIndex = 42;
-            this.LogisticaPnlHistorialTelemetria.Paint += new System.Windows.Forms.PaintEventHandler(this.LogisticaPnlHistorialTelemetria_Paint);
-            // 
-            // LogisticaPnlTituloHistorial
-            // 
-            this.LogisticaPnlTituloHistorial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
-            this.LogisticaPnlTituloHistorial.Controls.Add(this.LogisticaLblHistorialTelemetria);
-            this.LogisticaPnlTituloHistorial.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LogisticaPnlTituloHistorial.Location = new System.Drawing.Point(0, 0);
-            this.LogisticaPnlTituloHistorial.Name = "LogisticaPnlTituloHistorial";
-            this.LogisticaPnlTituloHistorial.Size = new System.Drawing.Size(1200, 85);
-            this.LogisticaPnlTituloHistorial.TabIndex = 0;
-            // 
-            // LogisticaLblHistorialTelemetria
-            // 
-            this.LogisticaLblHistorialTelemetria.AutoSize = true;
-            this.LogisticaLblHistorialTelemetria.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisticaLblHistorialTelemetria.ForeColor = System.Drawing.Color.White;
-            this.LogisticaLblHistorialTelemetria.Location = new System.Drawing.Point(25, 30);
-            this.LogisticaLblHistorialTelemetria.Name = "LogisticaLblHistorialTelemetria";
-            this.LogisticaLblHistorialTelemetria.Size = new System.Drawing.Size(215, 24);
-            this.LogisticaLblHistorialTelemetria.TabIndex = 1;
-            this.LogisticaLblHistorialTelemetria.Text = "Historial de Telemetría";
             // 
             // LogisticaDvgHistorialTelemetria
             // 
@@ -469,12 +449,57 @@
             this.ColUbicacionGPS.Name = "ColUbicacionGPS";
             this.ColUbicacionGPS.ReadOnly = true;
             // 
-            // FrmTelemetriaTemperatura
+            // LogisticaPnlTituloHistorial
+            // 
+            this.LogisticaPnlTituloHistorial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaPnlTituloHistorial.Controls.Add(this.LogisticaLblHistorialTelemetria);
+            this.LogisticaPnlTituloHistorial.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LogisticaPnlTituloHistorial.Location = new System.Drawing.Point(0, 0);
+            this.LogisticaPnlTituloHistorial.Name = "LogisticaPnlTituloHistorial";
+            this.LogisticaPnlTituloHistorial.Size = new System.Drawing.Size(1200, 85);
+            this.LogisticaPnlTituloHistorial.TabIndex = 0;
+            // 
+            // LogisticaLblHistorialTelemetria
+            // 
+            this.LogisticaLblHistorialTelemetria.AutoSize = true;
+            this.LogisticaLblHistorialTelemetria.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblHistorialTelemetria.ForeColor = System.Drawing.Color.White;
+            this.LogisticaLblHistorialTelemetria.Location = new System.Drawing.Point(25, 30);
+            this.LogisticaLblHistorialTelemetria.Name = "LogisticaLblHistorialTelemetria";
+            this.LogisticaLblHistorialTelemetria.Size = new System.Drawing.Size(215, 24);
+            this.LogisticaLblHistorialTelemetria.TabIndex = 1;
+            this.LogisticaLblHistorialTelemetria.Text = "Historial de Telemetría";
+            // 
+            // LogisticaBtnNuevo
+            // 
+            this.LogisticaBtnNuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(221)))), ((int)(((byte)(206)))));
+            this.LogisticaBtnNuevo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaBtnNuevo.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnNuevo.Image")));
+            this.LogisticaBtnNuevo.Location = new System.Drawing.Point(58, 144);
+            this.LogisticaBtnNuevo.Name = "LogisticaBtnNuevo";
+            this.LogisticaBtnNuevo.Size = new System.Drawing.Size(70, 74);
+            this.LogisticaBtnNuevo.TabIndex = 43;
+            this.LogisticaBtnNuevo.UseVisualStyleBackColor = false;
+            // 
+            // LogisticaBtnAyuda
+            // 
+            this.LogisticaBtnAyuda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(221)))), ((int)(((byte)(206)))));
+            this.LogisticaBtnAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaBtnAyuda.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnAyuda.Image")));
+            this.LogisticaBtnAyuda.Location = new System.Drawing.Point(805, 144);
+            this.LogisticaBtnAyuda.Name = "LogisticaBtnAyuda";
+            this.LogisticaBtnAyuda.Size = new System.Drawing.Size(70, 74);
+            this.LogisticaBtnAyuda.TabIndex = 44;
+            this.LogisticaBtnAyuda.UseVisualStyleBackColor = false;
+            // 
+            // FrmTelemetriaTransporte
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
             this.ClientSize = new System.Drawing.Size(1525, 912);
+            this.Controls.Add(this.LogisticaBtnAyuda);
+            this.Controls.Add(this.LogisticaBtnNuevo);
             this.Controls.Add(this.LogisticaPnlHistorialTelemetria);
             this.Controls.Add(this.LogisticaPnlDatosTelemetria);
             this.Controls.Add(this.LogisticaBtnRefrescar);
@@ -488,19 +513,19 @@
             this.Controls.Add(this.LogisticaLblTitulo);
             this.Controls.Add(this.LogisticaBtnConsultar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FrmTelemetriaTemperatura";
+            this.Name = "FrmTelemetriaTransporte";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmTelemetriaTemperatura";
+            this.Text = "FrmTelemetriaTransporte";
             this.LogisticaPnlDatosTelemetria.ResumeLayout(false);
             this.LogisticaPnlDatosTelemetria.PerformLayout();
-            this.LogisticaPnlTituloTelemetria.ResumeLayout(false);
-            this.LogisticaPnlTituloTelemetria.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudHumedad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudTemperatura)).EndInit();
+            this.LogisticaPnlTituloTelemetria.ResumeLayout(false);
+            this.LogisticaPnlTituloTelemetria.PerformLayout();
             this.LogisticaPnlHistorialTelemetria.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LogisticaDvgHistorialTelemetria)).EndInit();
             this.LogisticaPnlTituloHistorial.ResumeLayout(false);
             this.LogisticaPnlTituloHistorial.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LogisticaDvgHistorialTelemetria)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -545,5 +570,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColHumedad;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPuertaAbierta;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColUbicacionGPS;
+        private System.Windows.Forms.Button LogisticaBtnNuevo;
+        private System.Windows.Forms.Button LogisticaBtnAyuda;
     }
 }

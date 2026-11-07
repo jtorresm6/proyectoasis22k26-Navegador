@@ -11,7 +11,7 @@ namespace CapaModelo_TransporteInterno_Logistica.Entidades
 {
     public class ClsEncabezadoViaje
     {
-        public long Pk_Encabezado_Viaje { get; set; }
+        public long IdEncabezadoViaje { get; set; }
         public DateTime FechaDocumentoEncabezadoViaje { get; set; }
         public DateTime HoraSalidaEncabezadoViaje { get; set; }
         public DateTime? HoraLlegadaEncabezadoViaje { get; set; }
@@ -22,5 +22,10 @@ namespace CapaModelo_TransporteInterno_Logistica.Entidades
         public int Fk_Conductor_Codigo { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        // Datos adicionales obtenidos mediante JOIN.
+        public string PlacaTransporte { get; set; }
+
+        public string NombreConductor { get; set; }
     }
 }

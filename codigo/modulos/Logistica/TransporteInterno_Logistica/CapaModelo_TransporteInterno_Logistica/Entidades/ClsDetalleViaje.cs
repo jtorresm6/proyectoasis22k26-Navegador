@@ -11,7 +11,7 @@ namespace CapaModelo_TransporteInterno_Logistica.Entidades
 {
     public class ClsDetalleViaje
     {
-        public long Pk_Detalle_Viaje { get; set; }
+        public long IdDetalleViaje { get; set; }
         public long Fk_Encabezado_Viaje_Codigo { get; set; }
         public int OrdenDetalleViaje { get; set; }
         public string DescripcionDetalleViaje { get; set; }

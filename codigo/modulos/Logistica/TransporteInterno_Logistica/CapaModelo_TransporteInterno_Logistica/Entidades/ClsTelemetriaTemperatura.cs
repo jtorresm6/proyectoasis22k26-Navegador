@@ -11,7 +11,7 @@ namespace CapaModelo_TransporteInterno_Logistica.Entidades
 {
     public class ClsTelemetriaTemperatura
     {
-        public long Pk_Telemetria_Temperatura { get; set; }
+        public long IdTelemetriaTemperatura { get; set; }
         public long Fk_Encabezado_Viaje_Codigo { get; set; }
         public DateTime FechaHoraTelemetriaTemperatura { get; set; }
         public decimal TemperaturaCelsiusTelemetriaTemperatura { get; set; }

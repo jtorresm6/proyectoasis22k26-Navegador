@@ -43,7 +43,7 @@
             this.LogisticaDtpFechaDocumento = new System.Windows.Forms.DateTimePicker();
             this.LogisticaTxtCodigoViaje = new System.Windows.Forms.TextBox();
             this.LogisticaPnlEncabezadoDatos = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
+            this.LogisticaLblTituloDatos = new System.Windows.Forms.Label();
             this.LogisticaPnlAsignacion = new System.Windows.Forms.Panel();
             this.LogisticaLblConductor = new System.Windows.Forms.Label();
             this.LogisticaLblVehiculo = new System.Windows.Forms.Label();
@@ -54,6 +54,15 @@
             this.LogisticaCboTransporte = new System.Windows.Forms.ComboBox();
             this.LogisticaPnlHistorial = new System.Windows.Forms.Panel();
             this.LogisticaDgvViajes = new System.Windows.Forms.DataGridView();
+            this.ColCodigoViaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColFechaDocumento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColHoraSalida = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColHoraLlegada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColCadenaFrio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColEstadoViaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPesoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColTransporte = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColConductor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LogisticaPnlTituloHistorial = new System.Windows.Forms.Panel();
             this.LogisticaLblHistorialDetalle = new System.Windows.Forms.Label();
             this.LogisticaLblTitulo = new System.Windows.Forms.Label();
@@ -66,15 +75,7 @@
             this.LogisticaBtnGuardar = new System.Windows.Forms.Button();
             this.LogisticaBtnCancelar = new System.Windows.Forms.Button();
             this.LogisticaBtnRefrescar = new System.Windows.Forms.Button();
-            this.ColCodigoViaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColFechaDocumento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColHoraSalida = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColHoraLlegada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColCadenaFrio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColEstadoViaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColPesoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColTransporte = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColConductor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaBtnAyuda = new System.Windows.Forms.Button();
             this.LogisticaPnlDatosViaje.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaNudPesoTotal)).BeginInit();
             this.LogisticaPnlEncabezadoDatos.SuspendLayout();
@@ -224,23 +225,23 @@
             // LogisticaPnlEncabezadoDatos
             // 
             this.LogisticaPnlEncabezadoDatos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
-            this.LogisticaPnlEncabezadoDatos.Controls.Add(this.label7);
+            this.LogisticaPnlEncabezadoDatos.Controls.Add(this.LogisticaLblTituloDatos);
             this.LogisticaPnlEncabezadoDatos.Dock = System.Windows.Forms.DockStyle.Top;
             this.LogisticaPnlEncabezadoDatos.Location = new System.Drawing.Point(0, 0);
             this.LogisticaPnlEncabezadoDatos.Name = "LogisticaPnlEncabezadoDatos";
             this.LogisticaPnlEncabezadoDatos.Size = new System.Drawing.Size(633, 66);
             this.LogisticaPnlEncabezadoDatos.TabIndex = 0;
             // 
-            // label7
+            // LogisticaLblTituloDatos
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(15, 21);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(146, 24);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Datos del Viaje";
+            this.LogisticaLblTituloDatos.AutoSize = true;
+            this.LogisticaLblTituloDatos.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblTituloDatos.ForeColor = System.Drawing.Color.White;
+            this.LogisticaLblTituloDatos.Location = new System.Drawing.Point(15, 21);
+            this.LogisticaLblTituloDatos.Name = "LogisticaLblTituloDatos";
+            this.LogisticaLblTituloDatos.Size = new System.Drawing.Size(146, 24);
+            this.LogisticaLblTituloDatos.TabIndex = 0;
+            this.LogisticaLblTituloDatos.Text = "Datos del Viaje";
             // 
             // LogisticaPnlAsignacion
             // 
@@ -359,6 +360,69 @@
             this.LogisticaDgvViajes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.LogisticaDgvViajes.Size = new System.Drawing.Size(1295, 256);
             this.LogisticaDgvViajes.TabIndex = 13;
+            // 
+            // ColCodigoViaje
+            // 
+            this.ColCodigoViaje.HeaderText = "Código de Viaje";
+            this.ColCodigoViaje.MinimumWidth = 6;
+            this.ColCodigoViaje.Name = "ColCodigoViaje";
+            this.ColCodigoViaje.ReadOnly = true;
+            // 
+            // ColFechaDocumento
+            // 
+            this.ColFechaDocumento.HeaderText = "Fecha del Documento";
+            this.ColFechaDocumento.MinimumWidth = 6;
+            this.ColFechaDocumento.Name = "ColFechaDocumento";
+            this.ColFechaDocumento.ReadOnly = true;
+            // 
+            // ColHoraSalida
+            // 
+            this.ColHoraSalida.HeaderText = "Fecha y Hora de Salida";
+            this.ColHoraSalida.MinimumWidth = 6;
+            this.ColHoraSalida.Name = "ColHoraSalida";
+            this.ColHoraSalida.ReadOnly = true;
+            // 
+            // ColHoraLlegada
+            // 
+            this.ColHoraLlegada.HeaderText = "Fecha y Hora de Llegada";
+            this.ColHoraLlegada.MinimumWidth = 6;
+            this.ColHoraLlegada.Name = "ColHoraLlegada";
+            this.ColHoraLlegada.ReadOnly = true;
+            // 
+            // ColCadenaFrio
+            // 
+            this.ColCadenaFrio.HeaderText = "Cadena de Frío";
+            this.ColCadenaFrio.MinimumWidth = 6;
+            this.ColCadenaFrio.Name = "ColCadenaFrio";
+            this.ColCadenaFrio.ReadOnly = true;
+            // 
+            // ColEstadoViaje
+            // 
+            this.ColEstadoViaje.HeaderText = "Estado del Viaje";
+            this.ColEstadoViaje.MinimumWidth = 6;
+            this.ColEstadoViaje.Name = "ColEstadoViaje";
+            this.ColEstadoViaje.ReadOnly = true;
+            // 
+            // ColPesoTotal
+            // 
+            this.ColPesoTotal.HeaderText = "Peso Total (kg)";
+            this.ColPesoTotal.MinimumWidth = 6;
+            this.ColPesoTotal.Name = "ColPesoTotal";
+            this.ColPesoTotal.ReadOnly = true;
+            // 
+            // ColTransporte
+            // 
+            this.ColTransporte.HeaderText = "Vehículo";
+            this.ColTransporte.MinimumWidth = 6;
+            this.ColTransporte.Name = "ColTransporte";
+            this.ColTransporte.ReadOnly = true;
+            // 
+            // ColConductor
+            // 
+            this.ColConductor.HeaderText = "Conductor";
+            this.ColConductor.MinimumWidth = 6;
+            this.ColConductor.Name = "ColConductor";
+            this.ColConductor.ReadOnly = true;
             // 
             // LogisticaPnlTituloHistorial
             // 
@@ -497,68 +561,16 @@
             this.LogisticaBtnRefrescar.UseVisualStyleBackColor = false;
             this.LogisticaBtnRefrescar.Click += new System.EventHandler(this.LogisticaBtnRefrescar_Click);
             // 
-            // ColCodigoViaje
+            // LogisticaBtnAyuda
             // 
-            this.ColCodigoViaje.HeaderText = "Código de Viaje";
-            this.ColCodigoViaje.MinimumWidth = 6;
-            this.ColCodigoViaje.Name = "ColCodigoViaje";
-            this.ColCodigoViaje.ReadOnly = true;
-            // 
-            // ColFechaDocumento
-            // 
-            this.ColFechaDocumento.HeaderText = "Fecha del Documento";
-            this.ColFechaDocumento.MinimumWidth = 6;
-            this.ColFechaDocumento.Name = "ColFechaDocumento";
-            this.ColFechaDocumento.ReadOnly = true;
-            // 
-            // ColHoraSalida
-            // 
-            this.ColHoraSalida.HeaderText = "Fecha y Hora de Salida";
-            this.ColHoraSalida.MinimumWidth = 6;
-            this.ColHoraSalida.Name = "ColHoraSalida";
-            this.ColHoraSalida.ReadOnly = true;
-            // 
-            // ColHoraLlegada
-            // 
-            this.ColHoraLlegada.HeaderText = "Fecha y Hora de Llegada";
-            this.ColHoraLlegada.MinimumWidth = 6;
-            this.ColHoraLlegada.Name = "ColHoraLlegada";
-            this.ColHoraLlegada.ReadOnly = true;
-            // 
-            // ColCadenaFrio
-            // 
-            this.ColCadenaFrio.HeaderText = "Cadena de Frío";
-            this.ColCadenaFrio.MinimumWidth = 6;
-            this.ColCadenaFrio.Name = "ColCadenaFrio";
-            this.ColCadenaFrio.ReadOnly = true;
-            // 
-            // ColEstadoViaje
-            // 
-            this.ColEstadoViaje.HeaderText = "Estado del Viaje";
-            this.ColEstadoViaje.MinimumWidth = 6;
-            this.ColEstadoViaje.Name = "ColEstadoViaje";
-            this.ColEstadoViaje.ReadOnly = true;
-            // 
-            // ColPesoTotal
-            // 
-            this.ColPesoTotal.HeaderText = "Peso Total (kg)";
-            this.ColPesoTotal.MinimumWidth = 6;
-            this.ColPesoTotal.Name = "ColPesoTotal";
-            this.ColPesoTotal.ReadOnly = true;
-            // 
-            // ColTransporte
-            // 
-            this.ColTransporte.HeaderText = "Vehículo";
-            this.ColTransporte.MinimumWidth = 6;
-            this.ColTransporte.Name = "ColTransporte";
-            this.ColTransporte.ReadOnly = true;
-            // 
-            // ColConductor
-            // 
-            this.ColConductor.HeaderText = "Conductor";
-            this.ColConductor.MinimumWidth = 6;
-            this.ColConductor.Name = "ColConductor";
-            this.ColConductor.ReadOnly = true;
+            this.LogisticaBtnAyuda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(221)))), ((int)(((byte)(206)))));
+            this.LogisticaBtnAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(143)))), ((int)(((byte)(141)))));
+            this.LogisticaBtnAyuda.Image = ((System.Drawing.Image)(resources.GetObject("LogisticaBtnAyuda.Image")));
+            this.LogisticaBtnAyuda.Location = new System.Drawing.Point(821, 161);
+            this.LogisticaBtnAyuda.Name = "LogisticaBtnAyuda";
+            this.LogisticaBtnAyuda.Size = new System.Drawing.Size(70, 74);
+            this.LogisticaBtnAyuda.TabIndex = 13;
+            this.LogisticaBtnAyuda.UseVisualStyleBackColor = false;
             // 
             // FrmEncabezadoViaje
             // 
@@ -566,6 +578,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
             this.ClientSize = new System.Drawing.Size(1525, 912);
+            this.Controls.Add(this.LogisticaBtnAyuda);
             this.Controls.Add(this.LogisticaPnlHistorial);
             this.Controls.Add(this.LogisticaPnlAsignacion);
             this.Controls.Add(this.LogisticaPnlDatosViaje);
@@ -622,7 +635,7 @@
         private System.Windows.Forms.ComboBox LogisticaCboConductor;
         private System.Windows.Forms.ComboBox LogisticaCboTransporte;
         private System.Windows.Forms.Panel LogisticaPnlHistorial;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label LogisticaLblTituloDatos;
         private System.Windows.Forms.Panel LogisticaPnlAsignacionTransporte;
         private System.Windows.Forms.Label LogisticaLblTituloAsignacion;
         private System.Windows.Forms.Label LogisticaLblVehiculo;
@@ -649,5 +662,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPesoTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColTransporte;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColConductor;
+        private System.Windows.Forms.Button LogisticaBtnAyuda;
     }
 }

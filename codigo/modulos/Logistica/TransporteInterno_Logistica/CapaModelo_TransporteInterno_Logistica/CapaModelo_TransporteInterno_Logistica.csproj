@@ -48,6 +48,8 @@
     <Compile Include="Contratos\IRepositorioGenerico.cs" />
     <Compile Include="Contratos\IRepositorioTelemetriaTemperatura.cs" />
     <Compile Include="Entidades\ClsAlertaCadenaFrio.cs" />
+    <Compile Include="Entidades\ClsCatalogoDetalleViajeLote.cs" />
+    <Compile Include="Entidades\ClsCatalogoTransporteInterno.cs" />
     <Compile Include="Entidades\ClsDetalleViaje.cs" />
     <Compile Include="Entidades\ClsDetalleViajeLoteProducto.cs" />
     <Compile Include="Entidades\ClsEncabezadoViaje.cs" />

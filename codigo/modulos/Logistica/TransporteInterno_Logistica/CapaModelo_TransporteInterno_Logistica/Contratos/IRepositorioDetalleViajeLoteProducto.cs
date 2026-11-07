@@ -6,10 +6,25 @@
 // ============================================================================
 
 using CapaModelo_TransporteInterno_Logistica.Entidades;
+using System.Collections.Generic;
 
 namespace CapaModelo_TransporteInterno_Logistica.Contratos
 {
     public interface IRepositorioDetalleViajeLoteProducto : IRepositorioGenerico<ClsDetalleViajeLoteProducto>
     {
+        int LogisticaMetAgregar(
+            ClsDetalleViajeLoteProducto Entidad);
+
+        int LogisticaMetEditar(
+            ClsDetalleViajeLoteProducto Entidad);
+
+        int LogisticaMetEliminar(
+            long IdDetalleViajeLoteProducto);
+
+        IEnumerable<ClsCatalogoDetalleViajeLote>
+            LogisticaMetObtenerDetallesViaje();
+
+        IEnumerable<ClsCatalogoDetalleViajeLote>
+            LogisticaMetObtenerLotesProducto();
     }
 }

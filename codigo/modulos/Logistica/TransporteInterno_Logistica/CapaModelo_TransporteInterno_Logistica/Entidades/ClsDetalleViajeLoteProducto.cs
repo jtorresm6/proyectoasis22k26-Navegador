@@ -11,7 +11,7 @@ namespace CapaModelo_TransporteInterno_Logistica.Entidades
 {
     public class ClsDetalleViajeLoteProducto
     {
-        public long Pk_Detalle_Viaje_Lote_Producto { get; set; }
+        public long IdDetalleViajeLoteProducto { get; set; }
         public long Fk_Detalle_Viaje_Codigo { get; set; }
         public long Fk_Lote_Producto_Codigo { get; set; }
         public int CantidadCajasDetalleViajeLoteProducto { get; set; }
