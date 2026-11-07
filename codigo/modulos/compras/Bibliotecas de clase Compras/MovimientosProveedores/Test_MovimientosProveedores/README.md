@@ -10,7 +10,7 @@ Proyecto MSTest para .NET Framework 4.8, integrado en MovimientosProveedores.sln
 
 ## Cobertura
 
-35 casos con datos fijos y fechas independientes del reloj del equipo:
+33 casos con datos fijos y fechas independientes del reloj del equipo:
 
 - Proveedor, concepto y moneda con identificadores cero o negativos.
 - Serie y numero nulos, vacios, con espacios y mayores al limite.
@@ -19,9 +19,8 @@ Proyecto MSTest para .NET Framework 4.8, integrado en MovimientosProveedores.sln
 - Valores validos, minimos positivos, maximos y longitudes maximas; vencimiento el mismo dia.
 - Registro y normalizacion de espacios; rechazo sin guardar para datos invalidos.
 - Rechazo de modificaciones, eliminaciones y estados desconocidos.
-- Repositorios nulos, consultas de catalogos e historial.
-- Envio de fecha y filtro opcional al repositorio de balance.
+- Repositorio nulo, consultas de catalogos e historial.
 
-Los casos invalidos deben aparecer como correctos cuando la validacion lanza la excepcion esperada. Se utiliza un repositorio de prueba en memoria: no requiere conexion ODBC y no modifica datos reales. Las pruebas de balance verifican la delegacion del controlador; no validan el SQL ni el calculo de antiguedad en la base de datos.
+Los casos invalidos deben aparecer como correctos cuando la validacion lanza la excepcion esperada. Se utiliza un repositorio de prueba en memoria: no requiere conexion ODBC y no modifica datos reales.
 
 Los datos se pueden editar en los atributos DataRow y en CrearNota de TestMovimientosProveedores.cs. El proyecto referencia las capas reales de controlador y modelo.
