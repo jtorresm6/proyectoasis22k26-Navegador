@@ -238,11 +238,10 @@ namespace CapaVista_Seguridad
                     "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            //FrmMantenimientoModulo Modulo = new FrmMantenimientoModulo();
-            //Modulo.ShowDialog();
-
-            FrmModulosNavegador Modulos = new FrmModulosNavegador();
-            Modulos.ShowDialog();
+            using (var modulos = new FrmMantenimientoModuloNavegador())
+            {
+                modulos.ShowDialog(this);
+            }
         }
 
         private void SeguridadBtnEmpleados_Click(object sender, EventArgs e)
