@@ -166,6 +166,66 @@ function Write-BuildSummary($Plan, [string]$Directory) {
     Write-Status 'Detalle: resultados.csv | resumen_modulos.csv | fallidos.txt'
 }
 
+function Remove-UntrackedVentasPackages([string]$RepositoryRoot) {
+    # NuGet restaura packages.config dentro del repo. Buscar todas las carpetas
+    # packages de Ventas porque la estructura puede variar entre clones.
+    $ventasRoot = Join-Path $RepositoryRoot 'codigo\modulos\ventas'
+    if (-not (Test-Path -LiteralPath $ventasRoot -PathType Container)) {
+        Write-Status '[AVISO] No se encontro el area de Ventas; no se limpiaron paquetes.'
+        return
+    }
+    $git = Get-Command git -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $git) { Write-Status '[AVISO] Git no esta disponible; se conservan los paquetes locales de Ventas.'; return }
+    $rootLength = $RepositoryRoot.TrimEnd([char]92).Length
+    $packageRoots = New-Object 'System.Collections.Generic.List[string]'
+    $pendingDirectories = New-Object 'System.Collections.Generic.Queue[string]'
+    $pendingDirectories.Enqueue($ventasRoot)
+    while ($pendingDirectories.Count -gt 0) {
+        $currentDirectory = $pendingDirectories.Dequeue()
+        foreach ($directory in Get-ChildItem -LiteralPath $currentDirectory -Directory -Force) {
+            if ($directory.Attributes -band [IO.FileAttributes]::ReparsePoint) { continue }
+            if ($directory.Name -ieq 'packages') {
+                $packageRoots.Add($directory.FullName)
+                continue
+            }
+            if ($directory.Name -match '^(bin|obj|logs|node_modules|\.git|\.vs)$') { continue }
+            $pendingDirectories.Enqueue($directory.FullName)
+        }
+    }
+    if ($packageRoots.Count -eq 0) {
+        Write-Status '[LIMPIEZA] No se encontraron carpetas packages dentro de Ventas.'
+        return
+    }
+    foreach ($packageRoot in $packageRoots) {
+        $relativeRoot = $packageRoot.Substring($rootLength).TrimStart([char]92).Replace([char]92, [char]47)
+        $tracked = @(& $git.Source -C $RepositoryRoot ls-files -- $relativeRoot 2>$null)
+        if ($LASTEXITCODE -ne 0) {
+            Write-Status "[AVISO] No se pudo consultar Git para $relativeRoot; se conserva."
+            continue
+        }
+        $trackedSet = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
+        foreach ($path in $tracked) { [void]$trackedSet.Add($path) }
+        $removed = 0
+        foreach ($file in Get-ChildItem -LiteralPath $packageRoot -File -Recurse -Force) {
+            $relative = $file.FullName.Substring($rootLength).TrimStart([char]92).Replace([char]92, [char]47)
+            if (-not $trackedSet.Contains($relative)) {
+                try {
+                    Remove-Item -LiteralPath $file.FullName -Force -ErrorAction Stop
+                    $removed++
+                } catch {
+                    Write-Status "[AVISO] No se pudo retirar $($file.FullName): $($_.Exception.Message)"
+                }
+            }
+        }
+        Get-ChildItem -LiteralPath $packageRoot -Directory -Recurse -Force |
+            Sort-Object { $_.FullName.Length } -Descending |
+            Where-Object { -not (Get-ChildItem -LiteralPath $_.FullName -Force | Select-Object -First 1) } |
+            ForEach-Object { Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue }
+        if ($removed -gt 0) { Write-Status "[LIMPIEZA] $removed archivo(s) no versionado(s) retirado(s) de $relativeRoot." }
+        else { Write-Status "[LIMPIEZA] Sin archivos no versionados en $relativeRoot." }
+    }
+}
+
 function Get-SourceProjects([string]$Directory) {
     # Podar paquetes y salidas antes de recorrerlos; no seguir enlaces.
     $queue = New-Object 'System.Collections.Generic.Queue[string]'
@@ -719,6 +779,7 @@ try {
         [IO.File]::AppendAllText($script:failedFile, '[AYUDAS] ' + ($helpErrors -join [Environment]::NewLine) + [Environment]::NewLine, $utf8)
     }
     Write-BuildSummary $plan $logDirectory
+    Remove-UntrackedVentasPackages $repo
     if ($pending.Count -gt 0) {
         foreach ($project in $pending) {
             Write-Status "PENDIENTE $($project.Relative)"
