@@ -430,5 +430,10 @@ namespace CapaVista_Logistica.Formularios
         {
             LogisticaMetAbrirFormulario(new Frm_Solicitud_Pago());
         }
+
+        private void LogisticaBtnStock_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoStock());
+        }
     }
 }
