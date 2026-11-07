@@ -103,20 +103,12 @@ namespace CapaVista_Seguridad
                            principal = mdiVentas;
                         break;
 
-<<<<<<< HEAD
-                  case "Ventas":
-                     var mdiVentas = new CapaVista_Ventas.FrmMdiVentas(
-                          ClsSesionSeguridad.NombreEmpleado,
-                            ClsSesionSeguridad.SeguridadMetRolesComoTexto(), ClsSesionSeguridad.IdUsuario);
-                           principal = mdiVentas;
-=======
                     case "Bancos":
                         var MdiBancos = new FrmMDIBancos();
                         MdiBancos.BancosMetActualizarInfoUsuario(
                         ClsSesionSeguridad.NombreEmpleado,
                         ClsSesionSeguridad.SeguridadMetRolesComoTexto());
                         principal = MdiBancos;
->>>>>>> upstream/main
                         break;
 
                     case "Contabilidad":
