@@ -50,6 +50,16 @@
       <HintPath>..\CapaControlador_PolizasCuentas_Contabilidad\bin\$(Configuration)\CapaControlador_PolizasCuentas_Contabilidad.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <!-- Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 07/11/2026 -->
+    <Reference Include="CapaControlador_Navegador">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaControlador_Navegador.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaModelo_Navegador">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaModelo_Navegador.dll</HintPath>
+    </Reference>
+    <!-- Fin de cambio: Oskar Cermeño - 0901-23-15379 - 07/11/2026 -->
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
