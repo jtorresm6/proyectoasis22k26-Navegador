@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_CierreMovim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_CierreMovimientos", "CapaModelo_CierreMovimientos\CapaModelo_CierreMovimientos.csproj", "{0EA8DA64-5CBA-464B-9422-46EE6A1BA721}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebaUnitaria_CierreMovimientos", "PruebaUnitaria_CierreMovimientos\PruebaUnitaria_CierreMovimientos.csproj", "{194C5123-EBDB-4791-BF05-039FAB2C586A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0EA8DA64-5CBA-464B-9422-46EE6A1BA721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EA8DA64-5CBA-464B-9422-46EE6A1BA721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EA8DA64-5CBA-464B-9422-46EE6A1BA721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{194C5123-EBDB-4791-BF05-039FAB2C586A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{194C5123-EBDB-4791-BF05-039FAB2C586A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{194C5123-EBDB-4791-BF05-039FAB2C586A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{194C5123-EBDB-4791-BF05-039FAB2C586A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
