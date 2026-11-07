@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaVista_Logistica;
-
+using CapaVista_Seguridad;
 
 namespace Ejecucion_Logistica
 {
@@ -16,7 +15,7 @@ namespace Ejecucion_Logistica
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CapaVista_Logistica.FrmMDILogistica());
+            Application.Run(new CapaVista_Seguridad.FrmLogin() );
         }
     }
 }

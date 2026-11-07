@@ -1,0 +1,20 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=Ayuda_Logistica.chm
+Contents file=Ayuda_Logistica.hhc
+Index file=Ayuda_Logistica.hhk
+Default topic=logistica.html
+Display compile progress=Yes
+Full-text search=Yes
+Language=0x0C0A Spanish (International Sort)
+Title=Manual de Usuario - Logística
+
+[FILES]
+logistica.html
+imagenes/logistica1.png
+imagenes/logistica2.png
+imagenes/mdi.png
+imagenes/portada.png
+imagenes/mdi3.png
+imagenes/logistica3.png
+imagenes/MDI2.png

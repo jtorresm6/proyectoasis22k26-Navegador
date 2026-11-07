@@ -38,7 +38,9 @@ namespace CapaControlador_Seguridad
         private string _NitEmpleado;
         private string _NombresEmpleado;
         private string _ApellidosEmpleado;
-        private string _PuestoEmpleado;
+        private int _IdDepartamento;
+        private int _IdJornada;
+        private decimal _SalarioEmpleado;
         private string _GeneroEmpleado;
         private DateTime _FechaNacimientoEmpleado;
         private DateTime _FechaContratacionEmpleado;
@@ -59,23 +61,32 @@ namespace CapaControlador_Seguridad
 
         [Required(ErrorMessage = "El campo Dpi es requerido")]
         [RegularExpression(@"^\d{13}$", ErrorMessage = "El Dpi debe tener 13 dígitos numéricos")]
-        
+
         public string DpiEmpleado { get => _DpiEmpleado; set => _DpiEmpleado = value; }
 
         [RegularExpression(@"^\d{7}-[0-9a-zA-Z]$", ErrorMessage = "El Nit debe tener el formato 1234567-8 o 1234567-A")]
         public string NitEmpleado { get => _NitEmpleado; set => _NitEmpleado = value; }
 
         [Required(ErrorMessage = "El campo Nombres es requerido")]
-        [RegularExpression("^[a-zA-Zá-ú ]+$", ErrorMessage = "El campo Nombre debe ser solo letras")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", ErrorMessage = "El campo Nombre debe ser solo letras")]
         public string NombresEmpleado { get => _NombresEmpleado; set => _NombresEmpleado = value; }
 
         [Required(ErrorMessage = "El campo Apellidos es requerido")]
-        [RegularExpression("^[a-zA-Zá-ú ]+$", ErrorMessage = "El campo Apellidos debe ser solo letras")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", ErrorMessage = "El campo Apellidos debe ser solo letras")]
         public string ApellidosEmpleado { get => _ApellidosEmpleado; set => _ApellidosEmpleado = value; }
 
-        [Required(ErrorMessage = "El campo Puesto es requerido")]
-        [RegularExpression("^[a-zA-Zá-ú ]+$", ErrorMessage = "El campo Puesto debe ser solo letras")]
-        public string PuestoEmpleado { get => _PuestoEmpleado; set => _PuestoEmpleado = value; }
+
+        [Required(ErrorMessage = "El campo Departamento es requerido")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar un Departamento válido")]
+        public int IdDepartamento { get => _IdDepartamento; set => _IdDepartamento = value; }
+
+        [Required(ErrorMessage = "El campo Jornada es requerido")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar una Jornada válida")]
+        public int IdJornada { get => _IdJornada; set => _IdJornada = value; }
+
+        [Required(ErrorMessage = "El campo Salario es requerido")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "El Salario debe ser mayor a 0")]
+        public decimal SalarioEmpleado { get => _SalarioEmpleado; set => _SalarioEmpleado = value; }
 
         [Required(ErrorMessage = "El campo Género es requerido")]
         public string GeneroEmpleado { get => _GeneroEmpleado; set => _GeneroEmpleado = value; }
@@ -89,7 +100,7 @@ namespace CapaControlador_Seguridad
         [RegularExpression(@"^\d{8}$", ErrorMessage = "El Telefono debe tener 8 dígitos numéricos")]
         public string TelefonoEmpleado { get => _TelefonoEmpleado; set => _TelefonoEmpleado = value; }
 
-        [RegularExpression(@"^[^@\s]+@[^@\s]+.[^@\s]+$", ErrorMessage = "El correo no tiene un formato válido")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "El correo no tiene un formato válido")]
         public string CorreoEmpleado { get => _CorreoEmpleado; set => _CorreoEmpleado = value; }
 
         public bool IsActive { get => _IsActive; set => _IsActive = value; }
@@ -111,9 +122,6 @@ namespace CapaControlador_Seguridad
                     new[] { nameof(FechaNacimientoEmpleado) });
             }
         }
-
-
-
         public string SeguridadMetGrabarCambios()
         {
             string Mensaje = null;
@@ -126,7 +134,9 @@ namespace CapaControlador_Seguridad
                 ModeloDatos.NitEmpleado = _NitEmpleado;
                 ModeloDatos.NombresEmpleado = _NombresEmpleado;
                 ModeloDatos.ApellidosEmpleado = _ApellidosEmpleado;
-                ModeloDatos.PuestoEmpleado = _PuestoEmpleado;
+                ModeloDatos.IdDepartamento = _IdDepartamento;
+                ModeloDatos.IdJornada = _IdJornada;
+                ModeloDatos.SalarioEmpleado = _SalarioEmpleado;
                 ModeloDatos.GeneroEmpleado = _GeneroEmpleado;
                 ModeloDatos.FechaNacimientoEmpleado = _FechaNacimientoEmpleado;
                 ModeloDatos.FechaContratacionEmpleado = _FechaContratacionEmpleado;
@@ -199,7 +209,9 @@ namespace CapaControlador_Seguridad
                     _NitEmpleado = Item.NitEmpleado,
                     _NombresEmpleado = Item.NombresEmpleado,
                     _ApellidosEmpleado = Item.ApellidosEmpleado,
-                    _PuestoEmpleado = Item.PuestoEmpleado,
+                    _IdDepartamento = Item.IdDepartamento,
+                    _IdJornada = Item.IdJornada,
+                    _SalarioEmpleado = Item.SalarioEmpleado,
                     _GeneroEmpleado = Item.GeneroEmpleado,
                     _FechaNacimientoEmpleado = Item.FechaNacimientoEmpleado,
                     _FechaContratacionEmpleado = Item.FechaContratacionEmpleado,
