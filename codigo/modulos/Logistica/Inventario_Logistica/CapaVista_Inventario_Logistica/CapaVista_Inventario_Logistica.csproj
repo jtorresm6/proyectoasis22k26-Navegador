@@ -113,6 +113,12 @@
     <Compile Include="Formularios\FrmMantenimientoTipoMovimiento.Designer.cs">
       <DependentUpon>FrmMantenimientoTipoMovimiento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FrmSaldosInventario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmSaldosInventario.Designer.cs">
+      <DependentUpon>FrmSaldosInventario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -150,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmMantenimientoTipoMovimiento.resx">
       <DependentUpon>FrmMantenimientoTipoMovimiento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmSaldosInventario.resx">
+      <DependentUpon>FrmSaldosInventario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

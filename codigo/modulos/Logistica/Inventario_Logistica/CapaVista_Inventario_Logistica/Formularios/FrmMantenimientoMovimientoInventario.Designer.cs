@@ -504,6 +504,7 @@ namespace CapaVista_Inventario_Logistica.Formularios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
             this.ClientSize = new System.Drawing.Size(1144, 741);
             this.Controls.Add(this.LogisticaPnlMovimientoInventario);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
