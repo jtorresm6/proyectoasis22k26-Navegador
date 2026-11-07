@@ -43,11 +43,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\Repositorio.cs" />
+    <Compile Include="Repositorios\RepositorioMaestro.cs" />
+    <Compile Include="Contratos\IRepositorioBalanceAntiguedadProveedor.cs" />
+
   </ItemGroup>
   <ItemGroup>
-
-
-
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClsConexionCompras.cs" />
+    <Compile Include="ClsSentenciasCompras.cs" />
+    <Compile Include="Entidades\ClsNotaProveedor.cs" />
+    <Compile Include="Entidades\ClsBalanceAntiguedadProveedor.cs" />
+    <Compile Include="Repositorios\ClsRepositorioBalanceAntiguedadProveedor.cs" />
+    <Compile Include="Contratos\IRepositorioNotasProveedor.cs" />
+    <Compile Include="Repositorios\ClsRepositorioNotasProveedor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CapaModelo_Componentes">
+      <HintPath>..\..\Componentes\CapaModelo_Componentes\bin\$(Configuration)\CapaModelo_Componentes.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

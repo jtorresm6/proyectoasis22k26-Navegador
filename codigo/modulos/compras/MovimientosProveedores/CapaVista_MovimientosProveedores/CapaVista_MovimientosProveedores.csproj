@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -32,9 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaControlador_Componentes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Reference Include="CapaControlador_MovimientosProveedores">
-      <HintPath>..\CapaControlador_MovimientosProveedores\bin\$(Configuration)\CapaControlador_MovimientosProveedores.dll</HintPath>
+    <Reference Include="CapaControlador_Componentes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Componentes\CapaVista_Componentes\bin\$(Configuration)\CapaControlador_Componentes.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Componentes, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
@@ -53,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmMovimientosProveedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMovimientosProveedores.Designer.cs">
+      <DependentUpon>FrmMovimientosProveedores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -61,12 +66,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmMovimientosProveedores.cs">
+    <Compile Include="FrmHistorialMovimientosProveedores.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmMovimientosProveedores.Designer.cs">
-      <DependentUpon>FrmMovimientosProveedores.cs</DependentUpon>
+    <Compile Include="FrmHistorialMovimientosProveedores.Designer.cs">
+      <DependentUpon>FrmHistorialMovimientosProveedores.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FrmHistorialMovimientosProveedores.resx">
+      <DependentUpon>FrmHistorialMovimientosProveedores.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmMovimientosProveedores.resx">
       <DependentUpon>FrmMovimientosProveedores.cs</DependentUpon>
     </EmbeddedResource>
@@ -74,6 +82,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpReporteBalanceAntiguedadSaldos.rdlc" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\CapaControlador_MovimientosProveedores\CapaControlador_MovimientosProveedores.csproj">
+      <Name>CapaControlador_MovimientosProveedores</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
