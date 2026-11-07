@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CapaControlador_Compras">
-      <HintPath>..\..\Compras\CapaControlador_Compras\bin\$(Configuration)\CapaControlador_Compras.dll</HintPath>
+      <HintPath>..\..\Bibliotecas de clase Compras\Compras\CapaControlador_Compras\bin\$(Configuration)\CapaControlador_Compras.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Compras">
-      <HintPath>..\..\Compras\CapaVista_Compras\bin\$(Configuration)\CapaVista_Compras.dll</HintPath>
+      <HintPath>..\..\Bibliotecas de clase Compras\Compras\CapaVista_Compras\bin\$(Configuration)\CapaVista_Compras.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Seguridad">
       <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>

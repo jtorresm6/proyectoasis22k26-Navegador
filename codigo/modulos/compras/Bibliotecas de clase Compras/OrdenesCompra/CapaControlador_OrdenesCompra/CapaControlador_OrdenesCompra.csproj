@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{34CAB7C7-934E-4F2A-866C-61906FC678B1}</ProjectGuid>
+    <ProjectGuid>{3AA9809F-2AAA-4908-8DD0-7E1E0DF8619E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CapaModelo_OrdenesCompra</RootNamespace>
-    <AssemblyName>CapaModelo_OrdenesCompra</AssemblyName>
+    <RootNamespace>CapaControlador_OrdenesCompra</RootNamespace>
+    <AssemblyName>CapaControlador_OrdenesCompra</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CapaModelo_Seguridad">
-      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\bin\$(Configuration)\CapaModelo_Seguridad.dll</HintPath>
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\bin\$(Configuration)\CapaModelo_Seguridad.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -45,16 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contratos\IRepositorioOrdenesCompra.cs" />
-    <Compile Include="Repositorios\ClsRepositorioOrdenesCompra.cs" />
-    <Compile Include="Repositorios\ClsRepositorioBaseOrdenesCompra.cs" />
-    <Compile Include="Repositorios\ClsConsultasOrdenesCompra.cs" />
-    <Compile Include="Repositorios\ClsComandosOrdenesCompra.cs" />
-    <Compile Include="Repositorios\ClsErroresDatosOrdenesCompra.cs" />
+    <Compile Include="ClsOrdenesCompra.cs" />
+    <Compile Include="Entidades\ClsOrdenCompra.cs" />
+    <Compile Include="Servicios\ClsEstadosOrdenesCompra.cs" />
+    <Compile Include="Servicios\ClsFiltroOrdenesCompra.cs" />
+    <Compile Include="Servicios\ClsValidacionOrdenesCompra.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entidades\ClsOrdenCompra.cs" />
+    <Reference Include="CapaModelo_OrdenesCompra">
+      <HintPath>..\CapaModelo_OrdenesCompra\bin\$(Configuration)\CapaModelo_OrdenesCompra.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

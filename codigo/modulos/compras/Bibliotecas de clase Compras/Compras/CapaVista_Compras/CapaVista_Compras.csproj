@@ -38,10 +38,10 @@
       <Name>CapaControlador_Compras</Name>
     </ProjectReference>
     <Reference Include="CapaVista_Consultas">
-      <HintPath>..\..\..\..\componentes\consultas\Consultas\CapaVista_Consultas\bin\$(Configuration)\CapaVista_Consultas.dll</HintPath>
+      <HintPath>..\..\..\..\..\componentes\consultas\Consultas\CapaVista_Consultas\bin\$(Configuration)\CapaVista_Consultas.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Navegador">
-      <HintPath>..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\$(Configuration)\CapaVista_Navegador.dll</HintPath>
+      <HintPath>..\..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\$(Configuration)\CapaVista_Navegador.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Componentes">
       <HintPath>..\..\Componentes\CapaVista_Componentes\bin\$(Configuration)\CapaVista_Componentes.dll</HintPath>
@@ -69,7 +69,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="CapaControlador_Seguridad">
-      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\$(Configuration)\CapaControlador_Seguridad.dll</HintPath>
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\$(Configuration)\CapaControlador_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Design" />

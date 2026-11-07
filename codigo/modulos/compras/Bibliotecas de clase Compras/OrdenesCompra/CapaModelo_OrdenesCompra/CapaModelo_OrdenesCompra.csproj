@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{981FD301-47DF-4248-942B-781F959A736C}</ProjectGuid>
+    <ProjectGuid>{34CAB7C7-934E-4F2A-866C-61906FC678B1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CapaControlador_CierreMovimientos</RootNamespace>
-    <AssemblyName>CapaControlador_CierreMovimientos</AssemblyName>
+    <RootNamespace>CapaModelo_OrdenesCompra</RootNamespace>
+    <AssemblyName>CapaModelo_OrdenesCompra</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaModelo_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\bin\$(Configuration)\CapaModelo_Seguridad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,26 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contratos\IRepositorioOrdenesCompra.cs" />
+    <Compile Include="Repositorios\ClsRepositorioOrdenesCompra.cs" />
+    <Compile Include="Repositorios\ClsRepositorioBaseOrdenesCompra.cs" />
+    <Compile Include="Repositorios\ClsConsultasOrdenesCompra.cs" />
+    <Compile Include="Repositorios\ClsComandosOrdenesCompra.cs" />
+    <Compile Include="Repositorios\ClsErroresDatosOrdenesCompra.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo_CierreMovimientos">
-      <HintPath>..\CapaModelo_CierreMovimientos\bin\$(Configuration)\CapaModelo_CierreMovimientos.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaModelo_Componentes">
-      <HintPath>..\..\Componentes\CapaModelo_Componentes\bin\$(Configuration)\CapaModelo_Componentes.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaControlador_Seguridad">
-      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\$(Configuration)\CapaControlador_Seguridad.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CapaModelo_Seguridad">
-      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\bin\$(Configuration)\CapaModelo_Seguridad.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ClsCierreMovimientos.cs" />
+    <Compile Include="Entidades\ClsOrdenCompra.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

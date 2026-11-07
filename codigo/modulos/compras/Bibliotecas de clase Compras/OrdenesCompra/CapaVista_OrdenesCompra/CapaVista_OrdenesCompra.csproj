@@ -38,7 +38,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
     <Reference Include="CapaVista_Consultas">
-      <HintPath>..\..\..\..\componentes\consultas\Consultas\CapaVista_Consultas\bin\$(Configuration)\CapaVista_Consultas.dll</HintPath>
+      <HintPath>..\..\..\..\..\componentes\consultas\Consultas\CapaVista_Consultas\bin\$(Configuration)\CapaVista_Consultas.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

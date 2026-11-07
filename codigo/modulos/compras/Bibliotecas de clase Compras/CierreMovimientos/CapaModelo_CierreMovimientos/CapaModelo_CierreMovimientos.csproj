@@ -54,7 +54,7 @@
       <HintPath>..\..\Componentes\CapaModelo_Componentes\bin\$(Configuration)\CapaModelo_Componentes.dll</HintPath>
     </Reference>
     <Reference Include="CapaModelo_Seguridad">
-      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\bin\$(Configuration)\CapaModelo_Seguridad.dll</HintPath>
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\bin\$(Configuration)\CapaModelo_Seguridad.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
