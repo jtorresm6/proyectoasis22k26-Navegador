@@ -7,12 +7,13 @@ namespace CapaVista_CierreBancario.Formularios
 {
     public partial class FrmCierreBancario : Form
     {
-        private ClsControladorCierreBancario _Controlador;
+        private readonly ClsControladorCierreBancario _Controlador;
 
         public FrmCierreBancario()
         {
             InitializeComponent();
             _Controlador = new ClsControladorCierreBancario();
+            BancosCboTipoCierre.SelectedIndexChanged += BancosCboTipoCierre_SelectedIndexChanged;
         }
 
         private void FrmCierreBancario_Load(object sender, EventArgs e)
@@ -29,21 +30,52 @@ namespace CapaVista_CierreBancario.Formularios
             BancosCboTipoCierre.Items.Add("Anual");
             BancosCboTipoCierre.SelectedIndex = 0;
 
-            BancosTxtFechaInicial.Text = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).ToString("dd/MM/yyyy");
-            BancosTxFechaFinal.Text = DateTime.Today.AddDays(-1).ToString("dd/MM/yyyy");
+            BancosMetActualizarFechasPeriodo();
 
             BancosMetLimpiarValidaciones();
             BancosMetHabilitarBotonesCierre(false);
         }
 
+        private void BancosCboTipoCierre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BancosMetActualizarFechasPeriodo();
+        }
+
+        private void BancosMetActualizarFechasPeriodo()
+        {
+            DateTime Hoy = DateTime.Today;
+            DateTime FechaFin = Hoy.AddDays(-1);
+            DateTime FechaInicio;
+
+            switch (BancosCboTipoCierre.SelectedItem?.ToString())
+            {
+                case "Trimestral":
+                    int MesInicioTrimestre = ((Hoy.Month - 1) / 3) * 3 + 1;
+                    FechaInicio = new DateTime(Hoy.Year, MesInicioTrimestre, 1);
+                    break;
+                case "Semestral":
+                    FechaInicio = new DateTime(Hoy.Year, Hoy.Month <= 6 ? 1 : 7, 1);
+                    break;
+                case "Anual":
+                    FechaInicio = new DateTime(Hoy.Year, 1, 1);
+                    break;
+                default:
+                    FechaInicio = new DateTime(Hoy.Year, Hoy.Month, 1);
+                    break;
+            }
+
+            BancosTxtFechaInicial.Text = FechaInicio.ToString("dd/MM/yyyy");
+            BancosTxFechaFinal.Text = FechaFin.ToString("dd/MM/yyyy");
+        }
+
         private void BancosMetLimpiarValidaciones()
         {
-            BancosChkPeriodoValido.Checked = false;
+            BancosChkPeriodoValido.Checked             = false;
             BancosChkConciliacionesVerificadas.Checked = false;
-            BancosChkSaldosVerificados.Checked = false;
-            BancosTxtResultadoValidacionesCierre.Text = "Resultado: pendiente de validación";
-            BancosTxtEstadoPeriodo.Text = string.Empty;
-            BancosDgvResumenCuentas.DataSource = null;
+            BancosChkSaldosVerificados.Checked         = false;
+            BancosTxtResultadoValidacionesCierre.Text  = "Resultado: pendiente de validación";
+            BancosTxtEstadoPeriodo.Text                = string.Empty;
+            BancosDgvResumenCuentas.DataSource         = null;
         }
 
         private void BancosMetHabilitarBotonesCierre(bool Habilitado)
@@ -79,25 +111,25 @@ namespace CapaVista_CierreBancario.Formularios
 
             string PrimerEstado = Datos.Rows[0]["Estado"].ToString();
             BancosTxtEstadoPeriodo.Text = BancosMetDescribirEstado(Datos);
-            BancosTxtAlcance.Text = $"Período: {BancosTxtFechaInicial.Text} al {BancosTxFechaFinal.Text}";
+            BancosTxtAlcance.Text       = $"Período: {BancosTxtFechaInicial.Text} al {BancosTxFechaFinal.Text}";
         }
 
         private string BancosMetDescribirEstado(DataTable Datos)
         {
-            bool TieneCerradas = false;
-            bool TieneAbiertas = false;
-            bool TienePendientes = false;
+            bool TieneCerradas    = false;
+            bool TieneAbiertas    = false;
+            bool TienePendientes  = false;
 
             foreach (DataRow Fila in Datos.Rows)
             {
                 string Estado = Fila["Estado"].ToString();
-                if (Estado == "CERRADA") TieneCerradas = true;
+                if (Estado == "CERRADA")                         TieneCerradas   = true;
                 if (Estado == "ABIERTA" || Estado == "PROCESANDO") TieneAbiertas = true;
-                if (Estado == "CON_DIFERENCIAS") TienePendientes = true;
+                if (Estado == "CON_DIFERENCIAS")                 TienePendientes = true;
             }
 
-            if (TieneCerradas) return "CERRADO";
-            if (TieneAbiertas) return "CON PENDIENTES";
+            if (TieneCerradas)  return "CERRADO";
+            if (TieneAbiertas)  return "CON PENDIENTES";
             if (TienePendientes) return "CON DIFERENCIAS";
             return "CONCILIADO";
         }
@@ -138,9 +170,9 @@ namespace CapaVista_CierreBancario.Formularios
                 return;
             }
 
-            BancosChkPeriodoValido.Checked = PeriodoValido;
+            BancosChkPeriodoValido.Checked             = PeriodoValido;
             BancosChkConciliacionesVerificadas.Checked = ConciliacionesVerificadas;
-            BancosChkSaldosVerificados.Checked = SaldosVerificados;
+            BancosChkSaldosVerificados.Checked         = SaldosVerificados;
 
             bool TodoListo = PeriodoValido && ConciliacionesVerificadas && SaldosVerificados;
             BancosTxtResultadoValidacionesCierre.Text = TodoListo
@@ -152,9 +184,9 @@ namespace CapaVista_CierreBancario.Formularios
             if (!TodoListo)
             {
                 string Detalle = string.Empty;
-                if (!PeriodoValido) Detalle += "· El período ya tiene un cierre previo.\n";
+                if (!PeriodoValido)             Detalle += "· El período ya tiene un cierre previo.\n";
                 if (!ConciliacionesVerificadas) Detalle += "· Existen conciliaciones aún abiertas o en proceso.\n";
-                if (!SaldosVerificados) Detalle += "· Existen cuentas con diferencias pendientes.\n";
+                if (!SaldosVerificados)         Detalle += "· Existen cuentas con diferencias pendientes.\n";
                 MessageBox.Show(Detalle.TrimEnd(), "Validación incompleta",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }

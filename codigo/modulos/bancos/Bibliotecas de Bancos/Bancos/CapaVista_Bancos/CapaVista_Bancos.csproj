@@ -34,24 +34,9 @@
     <Reference Include="CapaControlador_Bancos">
       <HintPath>..\CapaControlador_Bancos\bin\Debug\CapaControlador_Bancos.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_AutorizacionOrdenesBancos">
-      <HintPath>..\..\Autorizacion_OrdenesCompraBancos\CapaVista_AutorizacionOrdenesBancos\bin\Debug\CapaVista_AutorizacionOrdenesBancos.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaVista_DisponibilidadDiariaBancos">
-      <HintPath>..\..\Disponibilidad_DiariaBancos\CapaVista_DisponibilidadDiariaBancos\bin\Debug\CapaVista_DisponibilidadDiariaBancos.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaVista_GeneracionPagosBancos">
-      <HintPath>..\..\Generacion_PagosBancos\CapaVista_GeneracionPagosBancos\bin\Debug\CapaVista_GeneracionPagosBancos.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaVista_MovimientosBancariosBancos">
-      <HintPath>..\..\Movimientos_BancariosBancos\CapaVista_MovimientosBancariosBancos\bin\Debug\CapaVista_MovimientosBancariosBancos.dll</HintPath>
-    </Reference>
     <Reference Include="CapaVista_Navegador, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaVista_TipoCambioBancos">
-      <HintPath>..\..\Tipo_CambioBancos\CapaVista_TipoCambioBancos\bin\Debug\CapaVista_TipoCambioBancos.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,6 +48,40 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Autorizacion_OrdenesCompraBancos\CapaVista_AutorizacionOrdenesBancos\CapaVista_AutorizacionOrdenesBancos.csproj">
+      <Project>{7BF864D1-57C4-4DA3-9D71-210AE3A556ED}</Project>
+      <Name>CapaVista_AutorizacionOrdenesBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Disponibilidad_DiariaBancos\CapaVista_DisponibilidadDiariaBancos\CapaVista_DisponibilidadDiariaBancos.csproj">
+      <Project>{C3D4E5F6-A7B8-4C9D-0E1F-2A3B4C5D6E7F}</Project>
+      <Name>CapaVista_DisponibilidadDiariaBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Generacion_PagosBancos\CapaVista_GeneracionPagosBancos\CapaVista_GeneracionPagosBancos.csproj">
+      <Project>{7DCCC297-E977-4B75-89FA-69EAE8623EE3}</Project>
+      <Name>CapaVista_GeneracionPagosBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Movimientos_BancariosBancos\CapaVista_MovimientosBancariosBancos\CapaVista_MovimientosBancariosBancos.csproj">
+      <Project>{FC93E776-4CC8-4FC1-BDAA-5D5870134B5F}</Project>
+      <Name>CapaVista_MovimientosBancariosBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tipo_CambioBancos\CapaVista_TipoCambioBancos\CapaVista_TipoCambioBancos.csproj">
+      <Project>{6789ABCD-EF01-2345-6789-ABCDEF012345}</Project>
+      <Name>CapaVista_TipoCambioBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Conciliacion_BancariaBancos\CapaVista_ConciliacionBancariaBancos\CapaVista_ConciliacionBancariaBancos.csproj">
+      <Project>{B8469BD4-1790-459B-831C-149F7E0CCFF8}</Project>
+      <Name>CapaVista_ConciliacionBancariaBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Cierre_BancarioBancos\CapaVista_CierreBancarioBancos\CapaVista_CierreBancarioBancos.csproj">
+      <Project>{58F7F36E-F37D-4E2C-85D6-EC841F0DF249}</Project>
+      <Name>CapaVista_CierreBancarioBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Enlace_Otros_ModulosBancos\CapaVista_EnlaceBancos\CapaVista_EnlaceBancos.csproj">
+      <Project>{9E683127-35A7-4DC6-A09C-75A7417D17A5}</Project>
+      <Name>CapaVista_EnlaceBancos</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Formularios\FrmMDIBancos.cs">

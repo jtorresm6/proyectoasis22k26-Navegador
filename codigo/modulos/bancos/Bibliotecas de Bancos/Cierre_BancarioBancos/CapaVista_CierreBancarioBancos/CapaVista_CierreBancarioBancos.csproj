@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CapaControlador_CierreBancarioBancos\CapaControlador_CierreBancarioBancos.csproj">
+      <Project>{A49692B9-E1AD-49B1-B549-B28C7BEDBC75}</Project>
+      <Name>CapaControlador_CierreBancarioBancos</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Formularios\FrmCierreBancario.cs">
       <SubType>Form</SubType>
     </Compile>
