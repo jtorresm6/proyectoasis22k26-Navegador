@@ -2,18 +2,20 @@
 /*
  * ============================================================================
  * MÓDULO: LOGÍSTICA - INVENTARIO
- * ARCHIVO: FrmMantenimientoProducto.cs
+ * FORMULARIO: FrmMantenimientoProducto.cs
  *
  * REALIZADO POR: VELVETH SARAÍ CHAVEZ MEJÍA
  * CARNÉ: 0901 23 6269
+ * FECHA DE REALIZACIÓN: 06/11/2026
  *
  * DESCRIPCIÓN:
- * Formulario encargado del mantenimiento de productos del módulo de
- * Logística. Permite ingresar, consultar, modificar y eliminar productos,
- * administrar sus imágenes, cargar catálogos relacionados y visualizar
- * los registros mediante una tabla con búsqueda y paginación.
+ * Formulario para el mantenimiento de productos.
+ * Permite ingresar, consultar, modificar y eliminar productos,
+ * cargar catálogos, seleccionar imágenes y consultar registros
+ * mediante búsqueda inteligente y paginación.
  *
- * FECHA DE REALIZACIÓN: 05/11/2026
+ * Implementa mensajes compactos de confirmación, éxito y error
+ * conforme a la estandarización de Logística.
  * ============================================================================
  */
 
@@ -21,7 +23,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -34,27 +38,23 @@ namespace CapaVista_Inventario_Logistica.Formularios
 {
     public partial class FrmMantenimientoProducto : Form
     {
-        // Controlador del mantenimiento de productos.
+        // ============================================================
+        // VARIABLES
+        // ============================================================
+
         private readonly ClsModeloProducto _ModeloProducto =
             new ClsModeloProducto();
 
-        // Listas de categorías y productos.
-        private List<ClsOpcionCatalogo> _Categorias =
-            new List<ClsOpcionCatalogo>();
-
-        private List<ClsDatosProducto> _TodosProductos =
+        private List<ClsDatosProducto> _Productos =
             new List<ClsDatosProducto>();
 
-        private List<ClsDatosProducto> _ProductosFiltrados =
+        private List<ClsDatosProducto> _Filtrados =
             new List<ClsDatosProducto>();
 
-        // Imagen del producto.
         private byte[] _ImagenProducto;
 
-        // Estado del formulario.
-        private bool _ModoEdicion;
+        private bool _ModoEdicion = false;
 
-        // Configuración de paginación.
         private int _PaginaActual = 1;
 
         private const int _TamanoPagina = 10;
@@ -63,44 +63,273 @@ namespace CapaVista_Inventario_Logistica.Formularios
 
         private bool _OrdenAscendente = false;
 
-        // Controles de consulta creados mediante código.
-        private DataGridView LogisticaDgvProductos;
-
-        private TextBox LogisticaTxtBuscarProducto;
-
-        private Label LogisticaLblBuscarProducto;
-
-        private Label LogisticaLblPaginacionProducto;
-
-        private Button LogisticaBtnAnteriorProducto;
-
-        private Button LogisticaBtnSiguienteProducto;
+        // Tipos de diálogos.
+        private enum ClsTipoDialogo
+        {
+            Confirmacion,
+            Exito,
+            Error
+        }
 
         // ============================================================
-        // CONSTRUCTOR DEL FORMULARIO
+        // CONSTRUCTOR
         // ============================================================
 
         public FrmMantenimientoProducto()
         {
             InitializeComponent();
 
-            LogisticaProcCrearConsultaVisual();
+            LogisticaProcConfigurarFormulario();
 
-            // Conserva los controles del diseñador.
-            ClientSize = new Size(1144, 680);
-
-            LogisticaPnlProducto.AutoScroll = true;
-
-            LogisticaPnlProducto.AutoScrollMinSize =
-                new Size(1125, 742);
+            LogisticaProcConfigurarTabla();
 
             LogisticaProcVincularEventos();
 
-            LogisticaProcBloquearFormulario();
+            LogisticaProcLimpiarCampos();
+
+            LogisticaProcHabilitarEdicion(false);
         }
 
         // ============================================================
-        // VINCULACIÓN DE EVENTOS
+        // CONFIGURAR FORMULARIO
+        // ============================================================
+
+        private void LogisticaProcConfigurarFormulario()
+        {
+            LogisticaTxtIdProducto.ReadOnly = true;
+
+            LogisticaTxtIdProducto.TabStop = false;
+
+            LogisticaTxtSKUProducto.MaxLength = 30;
+
+            LogisticaTxtClasificacionProducto.MaxLength = 5;
+
+            LogisticaTxtNombreProducto.MaxLength = 100;
+
+            LogisticaTxtDescripcionProducto.MaxLength = 255;
+
+            LogisticaTxtPaisProducto.MaxLength = 100;
+
+            // Configurar ComboBox.
+            LogisticaCboCategoria.DropDownStyle =
+                ComboBoxStyle.DropDownList;
+
+            LogisticaCboMarca.DropDownStyle =
+                ComboBoxStyle.DropDownList;
+
+            LogisticaCboLinea.DropDownStyle =
+                ComboBoxStyle.DropDownList;
+
+            LogisticaCboProveedor.DropDownStyle =
+                ComboBoxStyle.DropDownList;
+
+            // Imagen.
+            LogisticaPbImagenProducto.SizeMode =
+                PictureBoxSizeMode.Zoom;
+
+            // Los estilos, tamaños y posiciones restantes
+            // se conservan desde el Designer.
+        }
+
+        // ============================================================
+        // CONFIGURAR DATAGRIDVIEW
+        // ============================================================
+
+        private void LogisticaProcConfigurarTabla()
+        {
+            LogisticaDgvProducto.AutoGenerateColumns = false;
+
+            LogisticaDgvProducto.Columns.Clear();
+
+            LogisticaDgvProducto.ReadOnly = true;
+
+            LogisticaDgvProducto.AllowUserToAddRows = false;
+
+            LogisticaDgvProducto.AllowUserToDeleteRows = false;
+
+            LogisticaDgvProducto.AllowUserToResizeColumns = true;
+
+            LogisticaDgvProducto.MultiSelect = false;
+
+            LogisticaDgvProducto.RowHeadersVisible = false;
+
+            LogisticaDgvProducto.SelectionMode =
+                DataGridViewSelectionMode.FullRowSelect;
+
+            // Desplazamiento horizontal y vertical.
+            LogisticaDgvProducto.AutoSizeColumnsMode =
+                DataGridViewAutoSizeColumnsMode.None;
+
+            LogisticaDgvProducto.ScrollBars =
+                ScrollBars.Both;
+
+            // Estandarización de colores.
+            LogisticaDgvProducto.BackgroundColor =
+                Color.FromArgb(251, 246, 242);
+
+            LogisticaDgvProducto.EnableHeadersVisualStyles =
+                false;
+
+            LogisticaDgvProducto.ColumnHeadersHeight = 32;
+
+            LogisticaDgvProducto.RowTemplate.Height = 27;
+
+            LogisticaDgvProducto
+                .ColumnHeadersDefaultCellStyle.BackColor =
+                Color.FromArgb(62, 138, 132);
+
+            LogisticaDgvProducto
+                .ColumnHeadersDefaultCellStyle.ForeColor =
+                Color.White;
+
+            LogisticaDgvProducto
+                .ColumnHeadersDefaultCellStyle.Font =
+                new Font(
+                    "Segoe UI", 9F, FontStyle.Bold);
+
+            LogisticaDgvProducto
+                .DefaultCellStyle.BackColor =
+                Color.FromArgb(251, 246, 242);
+
+            LogisticaDgvProducto
+                .AlternatingRowsDefaultCellStyle.BackColor =
+                Color.FromArgb(242, 216, 197);
+
+            LogisticaDgvProducto
+                .DefaultCellStyle.SelectionBackColor =
+                Color.FromArgb(210, 99, 46);
+
+            LogisticaDgvProducto
+                .DefaultCellStyle.SelectionForeColor =
+                Color.White;
+
+            // ========================================================
+            // TEXTOS Y COLUMNAS DEL DATAGRIDVIEW
+            // ========================================================
+
+            LogisticaProcAgregarColumna(
+                "IdProducto", "ID", 70);
+
+            LogisticaProcAgregarColumna(
+                "SkuProducto", "SKU", 130);
+
+            LogisticaProcAgregarColumna(
+                "NombreProducto", "Nombre", 200);
+
+            LogisticaProcAgregarColumna(
+                "ClasificacionProducto", "Clasificación", 130);
+
+            LogisticaProcAgregarColumna(
+                "PaisProducto", "País", 150);
+
+            LogisticaProcAgregarColumna(
+                "NombreCategoria", "Categoría", 160);
+
+            LogisticaProcAgregarColumna(
+                "NombreMarca", "Marca", 160);
+
+            LogisticaProcAgregarColumna(
+                "NombreLinea", "Línea", 160);
+
+            LogisticaProcAgregarColumna(
+                "NombreProveedor", "Proveedor", 220);
+
+            LogisticaProcAgregarColumna(
+                "PesoProducto", "Peso", 100);
+
+            LogisticaProcAgregarColumna(
+                "PrecioCostoProducto", "Precio de costo (Q)", 160);
+
+            LogisticaProcAgregarColumna(
+                "PrecioVentaProducto", "Precio de venta (Q)", 160);
+
+            LogisticaProcAgregarColumna(
+                "StockMinimoProducto", "Stock mínimo", 130);
+
+            LogisticaProcAgregarColumna(
+                "StockMaximoProducto", "Stock máximo", 130);
+
+            LogisticaProcAgregarColumna(
+                "PorcentajeComisionProducto", "Comisión", 120);
+
+            LogisticaProcAgregarColumna(
+                "DescripcionProducto", "Descripción", 250);
+
+            // ========================================================
+            // IMAGEN COMO BOOLEANO
+            // ========================================================
+
+            DataGridViewCheckBoxColumn ColumnaImagen =
+                new DataGridViewCheckBoxColumn();
+
+            ColumnaImagen.Name = "TieneImagen";
+
+            ColumnaImagen.HeaderText = "Imagen";
+
+            ColumnaImagen.DataPropertyName = "TieneImagen";
+
+            ColumnaImagen.ValueType = typeof(bool);
+
+            ColumnaImagen.TrueValue = true;
+
+            ColumnaImagen.FalseValue = false;
+
+            ColumnaImagen.ThreeState = false;
+
+            ColumnaImagen.ReadOnly = true;
+
+            ColumnaImagen.Width = 100;
+
+            ColumnaImagen.SortMode =
+                DataGridViewColumnSortMode.Programmatic;
+
+            LogisticaDgvProducto.Columns.Add(ColumnaImagen);
+
+            // Formatos.
+            LogisticaDgvProducto.Columns["PesoProducto"]
+                .DefaultCellStyle.Format = "N2";
+
+            LogisticaDgvProducto.Columns["PrecioCostoProducto"]
+                .DefaultCellStyle.Format = "N2";
+
+            LogisticaDgvProducto.Columns["PrecioVentaProducto"]
+                .DefaultCellStyle.Format = "N2";
+
+            LogisticaDgvProducto.Columns["PorcentajeComisionProducto"]
+                .DefaultCellStyle.Format = "N2";
+        }
+
+        // ============================================================
+        // AGREGAR COLUMNA
+        // ============================================================
+
+        private void LogisticaProcAgregarColumna(
+            string Propiedad,
+            string Titulo,
+            int Ancho)
+        {
+            DataGridViewTextBoxColumn Columna =
+                new DataGridViewTextBoxColumn();
+
+            Columna.Name = Propiedad;
+
+            Columna.DataPropertyName = Propiedad;
+
+            Columna.HeaderText = Titulo;
+
+            Columna.Width = Ancho;
+
+            Columna.AutoSizeMode =
+                DataGridViewAutoSizeColumnMode.None;
+
+            Columna.SortMode =
+                DataGridViewColumnSortMode.Programmatic;
+
+            LogisticaDgvProducto.Columns.Add(Columna);
+        }
+
+        // ============================================================
+        // VINCULAR EVENTOS
         // ============================================================
 
         private void LogisticaProcVincularEventos()
@@ -133,10 +362,28 @@ namespace CapaVista_Inventario_Logistica.Formularios
 
             LogisticaBtnAyudaProducto.Click +=
                 LogisticaBtnAyudaProducto_Click;
+
+            // Buscar.
+            LogisticaTxtBuscarInteligenteProducto.TextChanged +=
+                LogisticaTxtBuscarInteligenteProducto_TextChanged;
+
+            // Paginación.
+            LogisticaBtrnAnteriorProducto.Click +=
+                LogisticaBtnAnteriorProducto_Click;
+
+            LogisticaBtnSiguiente.Click +=
+                LogisticaBtnSiguienteProducto_Click;
+
+            // Tabla.
+            LogisticaDgvProducto.CellDoubleClick +=
+                LogisticaDgvProducto_CellDoubleClick;
+
+            LogisticaDgvProducto.ColumnHeaderMouseClick +=
+                LogisticaDgvProducto_ColumnHeaderMouseClick;
         }
 
         // ============================================================
-        // EVENTO LOAD
+        // CARGA INICIAL
         // ============================================================
 
         private void FrmMantenimientoProducto_Load(
@@ -151,270 +398,70 @@ namespace CapaVista_Inventario_Logistica.Formularios
             }
             catch (Exception Ex)
             {
-                LogisticaProcMostrarError(
-                    "No se pudieron cargar los datos: " +
-                    Ex.Message);
+                LogisticaProcMostrarError(Ex.Message);
             }
         }
 
         // ============================================================
-        // CREACIÓN DE CONTROLES PARA CONSULTAS
-        // ============================================================
-
-        private void LogisticaProcCrearConsultaVisual()
-        {
-            Color Fondo =
-                Color.FromArgb(251, 246, 242);
-
-            Color Verde =
-                Color.FromArgb(62, 138, 132);
-
-            Color Naranja =
-                Color.FromArgb(210, 99, 46);
-
-            Color Botones =
-                Color.FromArgb(242, 216, 197);
-
-            // Etiqueta del buscador.
-            LogisticaLblBuscarProducto = new Label
-            {
-                Name = "LogisticaLblBuscarProducto",
-                Text = "Buscar:",
-                Location = new Point(37, 486),
-                Size = new Size(85, 28),
-                BackColor = Color.Transparent,
-                ForeColor = Verde,
-                Font = new Font("Tahoma", 12.75f)
-            };
-
-            // Campo para buscar productos.
-            LogisticaTxtBuscarProducto = new TextBox
-            {
-                Name = "LogisticaTxtBuscarProducto",
-                Location = new Point(124, 484),
-                Size = new Size(350, 30),
-                Font = new Font("Segoe UI", 12f)
-            };
-
-            LogisticaTxtBuscarProducto.TextChanged +=
-                LogisticaTxtBuscarProducto_TextChanged;
-
-            // Tabla para visualizar los productos.
-            LogisticaDgvProductos = new DataGridView
-            {
-                Name = "LogisticaDgvProductos",
-                Location = new Point(37, 523),
-                Size = new Size(1078, 178),
-                BackgroundColor = Fondo,
-                BorderStyle = BorderStyle.FixedSingle,
-
-                AutoSizeColumnsMode =
-                    DataGridViewAutoSizeColumnsMode.Fill,
-
-                AutoGenerateColumns = true,
-                AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false,
-                ReadOnly = true,
-                MultiSelect = false,
-                RowHeadersVisible = false,
-
-                SelectionMode =
-                    DataGridViewSelectionMode.FullRowSelect,
-
-                EnableHeadersVisualStyles = false
-            };
-
-            // Colores de encabezados.
-            LogisticaDgvProductos
-                .ColumnHeadersDefaultCellStyle.BackColor = Verde;
-
-            LogisticaDgvProductos
-                .ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-
-            // Colores de filas.
-            LogisticaDgvProductos
-                .DefaultCellStyle.BackColor = Fondo;
-
-            LogisticaDgvProductos
-                .AlternatingRowsDefaultCellStyle.BackColor = Botones;
-
-            LogisticaDgvProductos
-                .DefaultCellStyle.SelectionBackColor = Naranja;
-
-            LogisticaDgvProductos
-                .DefaultCellStyle.SelectionForeColor = Color.White;
-
-            // Eventos del DataGridView.
-            LogisticaDgvProductos.CellDoubleClick +=
-                LogisticaDgvProductos_CellDoubleClick;
-
-            LogisticaDgvProductos.ColumnHeaderMouseClick +=
-                LogisticaDgvProductos_ColumnHeaderMouseClick;
-
-            // Botón anterior.
-            LogisticaBtnAnteriorProducto = new Button
-            {
-                Name = "LogisticaBtnAnteriorProducto",
-                Text = "Anterior",
-                Location = new Point(37, 707),
-                Size = new Size(93, 28),
-                BackColor = Botones
-            };
-
-            LogisticaBtnAnteriorProducto.Click += (Sender, E) =>
-            {
-                if (_PaginaActual > 1)
-                {
-                    _PaginaActual--;
-
-                    LogisticaProcMostrarPagina();
-                }
-            };
-
-            // Botón siguiente.
-            LogisticaBtnSiguienteProducto = new Button
-            {
-                Name = "LogisticaBtnSiguienteProducto",
-                Text = "Siguiente",
-                Location = new Point(140, 707),
-                Size = new Size(93, 28),
-                BackColor = Botones
-            };
-
-            LogisticaBtnSiguienteProducto.Click += (Sender, E) =>
-            {
-                if (_PaginaActual < LogisticaFuncTotalPaginas())
-                {
-                    _PaginaActual++;
-
-                    LogisticaProcMostrarPagina();
-                }
-            };
-
-            // Etiqueta de paginación.
-            LogisticaLblPaginacionProducto = new Label
-            {
-                Name = "LogisticaLblPaginacionProducto",
-                Location = new Point(248, 710),
-                Size = new Size(550, 24),
-                BackColor = Color.Transparent,
-                ForeColor = Verde,
-                Font = new Font("Segoe UI", 10f)
-            };
-
-            // Agregar controles al panel principal.
-            LogisticaPnlProducto.Controls.Add(
-                LogisticaLblBuscarProducto);
-
-            LogisticaPnlProducto.Controls.Add(
-                LogisticaTxtBuscarProducto);
-
-            LogisticaPnlProducto.Controls.Add(
-                LogisticaDgvProductos);
-
-            LogisticaPnlProducto.Controls.Add(
-                LogisticaBtnAnteriorProducto);
-
-            LogisticaPnlProducto.Controls.Add(
-                LogisticaBtnSiguienteProducto);
-
-            LogisticaPnlProducto.Controls.Add(
-                LogisticaLblPaginacionProducto);
-
-            // Configuración de imagen.
-            LogisticaPbImagenProducto.SizeMode =
-                PictureBoxSizeMode.Zoom;
-
-            // El identificador es automático.
-            LogisticaTxtIdProducto.ReadOnly = true;
-
-            LogisticaTxtIdProducto.TabStop = false;
-
-            // Autocompletado de categoría.
-            LogisticaTxtCategoriaProducto.AutoCompleteMode =
-                AutoCompleteMode.SuggestAppend;
-
-            LogisticaTxtCategoriaProducto.AutoCompleteSource =
-                AutoCompleteSource.CustomSource;
-
-            // Los ComboBox solo admiten registros existentes.
-            LogisticaCboMarca.DropDownStyle =
-                ComboBoxStyle.DropDownList;
-
-            LogisticaCboLinea.DropDownStyle =
-                ComboBoxStyle.DropDownList;
-
-            LogisticaCboProveedor.DropDownStyle =
-                ComboBoxStyle.DropDownList;
-        }
-
-        // ============================================================
-        // CARGA DE CATÁLOGOS
+        // CARGAR CATÁLOGOS
         // ============================================================
 
         private void LogisticaProcCargarCatalogos()
         {
-            // Obtener categorías desde el controlador.
-            _Categorias =
-                _ModeloProducto.LogisticaFuncCategorias();
+            LogisticaProcCargarCombo(
+                LogisticaCboCategoria,
+                _ModeloProducto.LogisticaFuncCategorias());
 
-            var Nombres = new AutoCompleteStringCollection();
-
-            Nombres.AddRange(
-                _Categorias.Select(C => C.Nombre).ToArray());
-
-            LogisticaTxtCategoriaProducto
-                .AutoCompleteCustomSource = Nombres;
-
-            // Cargar marcas.
-            LogisticaProcConfigurarCombo(
+            LogisticaProcCargarCombo(
                 LogisticaCboMarca,
                 _ModeloProducto.LogisticaFuncMarcas());
 
-            // Cargar líneas.
-            LogisticaProcConfigurarCombo(
+            LogisticaProcCargarCombo(
                 LogisticaCboLinea,
                 _ModeloProducto.LogisticaFuncLineas());
 
-            // Cargar proveedores.
-            LogisticaProcConfigurarCombo(
+            LogisticaProcCargarCombo(
                 LogisticaCboProveedor,
                 _ModeloProducto.LogisticaFuncProveedores());
         }
 
-        // Configura los ComboBox.
-        private void LogisticaProcConfigurarCombo(
+        private void LogisticaProcCargarCombo(
             ComboBox Combo,
-            List<ClsOpcionCatalogo> Datos)
+            List<ClsOpcionCatalogo> Opciones)
         {
-            Combo.DataSource = Datos;
+            Combo.DataSource = null;
 
             Combo.DisplayMember = "Nombre";
 
             Combo.ValueMember = "Id";
 
+            Combo.DataSource = Opciones;
+
             Combo.SelectedIndex = -1;
         }
 
         // ============================================================
-        // CONSULTAR PRODUCTOS
+        // RECARGAR PRODUCTOS
         // ============================================================
 
         private void LogisticaProcRecargarProductos()
         {
-            _TodosProductos =
+            _Productos =
                 _ModeloProducto.LogisticaFuncObtenerTodos();
 
             LogisticaProcFiltrarProductos();
         }
 
-        // Filtrar por ID, SKU, nombre o categoría.
+        // ============================================================
+        // FILTRAR PRODUCTOS
+        // ============================================================
+
         private void LogisticaProcFiltrarProductos()
         {
             string Busqueda =
-                LogisticaTxtBuscarProducto.Text.Trim();
+                LogisticaTxtBuscarInteligenteProducto.Text.Trim();
 
-            _ProductosFiltrados = _TodosProductos.Where(P =>
+            _Filtrados = _Productos.Where(P =>
                 P.IdProducto.ToString().Contains(Busqueda) ||
 
                 (P.SkuProducto ?? "").IndexOf(
@@ -425,7 +472,31 @@ namespace CapaVista_Inventario_Logistica.Formularios
                     Busqueda,
                     StringComparison.OrdinalIgnoreCase) >= 0 ||
 
+                (P.ClasificacionProducto ?? "").IndexOf(
+                    Busqueda,
+                    StringComparison.OrdinalIgnoreCase) >= 0 ||
+
+                (P.PaisProducto ?? "").IndexOf(
+                    Busqueda,
+                    StringComparison.OrdinalIgnoreCase) >= 0 ||
+
                 (P.NombreCategoria ?? "").IndexOf(
+                    Busqueda,
+                    StringComparison.OrdinalIgnoreCase) >= 0 ||
+
+                (P.NombreMarca ?? "").IndexOf(
+                    Busqueda,
+                    StringComparison.OrdinalIgnoreCase) >= 0 ||
+
+                (P.NombreLinea ?? "").IndexOf(
+                    Busqueda,
+                    StringComparison.OrdinalIgnoreCase) >= 0 ||
+
+                (P.NombreProveedor ?? "").IndexOf(
+                    Busqueda,
+                    StringComparison.OrdinalIgnoreCase) >= 0 ||
+
+                (P.DescripcionProducto ?? "").IndexOf(
                     Busqueda,
                     StringComparison.OrdinalIgnoreCase) >= 0
             ).ToList();
@@ -437,30 +508,36 @@ namespace CapaVista_Inventario_Logistica.Formularios
             LogisticaProcMostrarPagina();
         }
 
-        // Ordenar registros.
+        private void LogisticaTxtBuscarInteligenteProducto_TextChanged(
+            object Sender,
+            EventArgs E)
+        {
+            LogisticaProcFiltrarProductos();
+        }
+
+        // ============================================================
+        // ORDENAR PRODUCTOS
+        // ============================================================
+
         private void LogisticaProcOrdenarProductos()
         {
             PropertyInfo Propiedad =
                 typeof(ClsDatosProducto).GetProperty(_ColumnaOrden);
 
-            if (Propiedad == null ||
-                _ColumnaOrden == "ImagenProducto")
+            if (Propiedad == null)
             {
                 return;
             }
 
-            _ProductosFiltrados.Sort((A, B) =>
+            _Filtrados.Sort((A, B) =>
             {
-                object ValorA =
-                    Propiedad.GetValue(A, null);
+                object ValorA = Propiedad.GetValue(A, null);
 
-                object ValorB =
-                    Propiedad.GetValue(B, null);
+                object ValorB = Propiedad.GetValue(B, null);
 
                 int Resultado =
                     Comparer.DefaultInvariant.Compare(
-                        ValorA,
-                        ValorB);
+                        ValorA, ValorB);
 
                 return _OrdenAscendente
                     ? Resultado
@@ -468,127 +545,20 @@ namespace CapaVista_Inventario_Logistica.Formularios
             });
         }
 
-        // Obtener cantidad de páginas.
-        private int LogisticaFuncTotalPaginas()
-        {
-            return Math.Max(
-                1,
-                (_ProductosFiltrados.Count +
-                _TamanoPagina - 1) / _TamanoPagina);
-        }
-
-        // ============================================================
-        // PAGINACIÓN
-        // ============================================================
-
-        private void LogisticaProcMostrarPagina()
-        {
-            LogisticaDgvProductos.DataSource = null;
-
-            LogisticaDgvProductos.DataSource =
-                _ProductosFiltrados
-                    .Skip((_PaginaActual - 1) * _TamanoPagina)
-                    .Take(_TamanoPagina)
-                    .ToList();
-
-            // Ocultar columnas que no deben mostrarse.
-            foreach (DataGridViewColumn Columna
-                in LogisticaDgvProductos.Columns)
-            {
-                Columna.SortMode =
-                    DataGridViewColumnSortMode.Programmatic;
-
-                if (Columna.Name == "ImagenProducto" ||
-                    Columna.Name.StartsWith("Fk") ||
-                    Columna.Name == "IdProveedorProductos" ||
-                    Columna.Name == "DescripcionProducto")
-                {
-                    Columna.Visible = false;
-                }
-            }
-
-            // Títulos de las columnas.
-            LogisticaProcTituloColumna(
-                "IdProducto", "Id");
-
-            LogisticaProcTituloColumna(
-                "SkuProducto", "SKU");
-
-            LogisticaProcTituloColumna(
-                "NombreProducto", "Producto");
-
-            LogisticaProcTituloColumna(
-                "NombreCategoria", "Categoría");
-
-            LogisticaProcTituloColumna(
-                "NombreMarca", "Marca");
-
-            LogisticaProcTituloColumna(
-                "NombreLinea", "Línea");
-
-            LogisticaProcTituloColumna(
-                "NombreProveedor", "Proveedor");
-
-            LogisticaProcTituloColumna(
-                "PrecioVentaProducto", "Precio de venta");
-
-            if (LogisticaDgvProductos.Columns.Contains(
-                _ColumnaOrden))
-            {
-                LogisticaDgvProductos.Columns[_ColumnaOrden]
-                    .HeaderCell.SortGlyphDirection =
-                    _OrdenAscendente
-                        ? SortOrder.Ascending
-                        : SortOrder.Descending;
-            }
-
-            LogisticaDgvProductos.ClearSelection();
-
-            LogisticaLblPaginacionProducto.Text =
-                string.Format(
-                    "Página {0} de {1}  |  {2} productos",
-                    _PaginaActual,
-                    LogisticaFuncTotalPaginas(),
-                    _ProductosFiltrados.Count);
-
-            LogisticaBtnAnteriorProducto.Enabled =
-                _PaginaActual > 1;
-
-            LogisticaBtnSiguienteProducto.Enabled =
-                _PaginaActual < LogisticaFuncTotalPaginas();
-        }
-
-        // Personalizar títulos de columnas.
-        private void LogisticaProcTituloColumna(
-            string Nombre,
-            string Titulo)
-        {
-            if (LogisticaDgvProductos.Columns.Contains(Nombre))
-            {
-                LogisticaDgvProductos.Columns[Nombre]
-                    .HeaderText = Titulo;
-            }
-        }
-
-        // Evento para búsqueda automática.
-        private void LogisticaTxtBuscarProducto_TextChanged(
-            object Sender,
-            EventArgs E)
-        {
-            LogisticaProcFiltrarProductos();
-        }
-
-        // Ordenar haciendo clic en el encabezado.
-        private void LogisticaDgvProductos_ColumnHeaderMouseClick(
+        private void LogisticaDgvProducto_ColumnHeaderMouseClick(
             object Sender,
             DataGridViewCellMouseEventArgs E)
         {
+            if (E.ColumnIndex < 0)
+            {
+                return;
+            }
+
             string Nombre =
-                LogisticaDgvProductos.Columns[E.ColumnIndex]
+                LogisticaDgvProducto.Columns[E.ColumnIndex]
                     .DataPropertyName;
 
-            if (string.IsNullOrEmpty(Nombre) ||
-                Nombre == "ImagenProducto")
+            if (string.IsNullOrWhiteSpace(Nombre))
             {
                 return;
             }
@@ -607,64 +577,160 @@ namespace CapaVista_Inventario_Logistica.Formularios
             LogisticaProcMostrarPagina();
         }
 
-        // Seleccionar producto con doble clic.
-        private void LogisticaDgvProductos_CellDoubleClick(
-            object Sender,
-            DataGridViewCellEventArgs E)
+        // ============================================================
+        // PAGINACIÓN
+        // ============================================================
+
+        private int LogisticaFuncTotalPaginas()
         {
-            if (E.RowIndex >= 0)
+            return Math.Max(
+                1,
+                (_Filtrados.Count + _TamanoPagina - 1)
+                / _TamanoPagina);
+        }
+
+        private void LogisticaProcMostrarPagina()
+        {
+            int Desplazamiento =
+                LogisticaDgvProducto.HorizontalScrollingOffset;
+
+            LogisticaDgvProducto.DataSource = null;
+
+            LogisticaDgvProducto.DataSource =
+                _Filtrados
+                    .Skip((_PaginaActual - 1) * _TamanoPagina)
+                    .Take(_TamanoPagina)
+                    .ToList();
+
+            foreach (DataGridViewColumn Columna
+                in LogisticaDgvProducto.Columns)
             {
-                try
-                {
-                    LogisticaProcCargarSeleccionado();
-                }
-                catch (Exception Ex)
-                {
-                    LogisticaProcMostrarError(Ex.Message);
-                }
+                Columna.HeaderCell.SortGlyphDirection =
+                    SortOrder.None;
+            }
+
+            if (LogisticaDgvProducto.Columns.Contains(
+                _ColumnaOrden))
+            {
+                LogisticaDgvProducto.Columns[_ColumnaOrden]
+                    .HeaderCell.SortGlyphDirection =
+                    _OrdenAscendente
+                        ? SortOrder.Ascending
+                        : SortOrder.Descending;
+            }
+
+            LogisticaDgvProducto.ClearSelection();
+
+            try
+            {
+                LogisticaDgvProducto.HorizontalScrollingOffset =
+                    Desplazamiento;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                LogisticaDgvProducto.HorizontalScrollingOffset = 0;
+            }
+
+            LogisticaLblDatosPaginaTabla.Text =
+                string.Format(
+                    "Página {0} de {1} | {2} productos",
+                    _PaginaActual,
+                    LogisticaFuncTotalPaginas(),
+                    _Filtrados.Count);
+
+            LogisticaBtrnAnteriorProducto.Enabled =
+                _PaginaActual > 1;
+
+            LogisticaBtnSiguiente.Enabled =
+                _PaginaActual < LogisticaFuncTotalPaginas();
+        }
+
+        private void LogisticaBtnAnteriorProducto_Click(
+            object Sender,
+            EventArgs E)
+        {
+            if (_PaginaActual > 1)
+            {
+                _PaginaActual--;
+
+                LogisticaProcMostrarPagina();
+            }
+        }
+
+        private void LogisticaBtnSiguienteProducto_Click(
+            object Sender,
+            EventArgs E)
+        {
+            if (_PaginaActual < LogisticaFuncTotalPaginas())
+            {
+                _PaginaActual++;
+
+                LogisticaProcMostrarPagina();
             }
         }
 
         // ============================================================
-        // OBTENER PRODUCTO SELECCIONADO
+        // SELECCIONAR PRODUCTO
         // ============================================================
 
-        private ClsDatosProducto LogisticaFuncSeleccionado()
+        private ClsDatosProducto LogisticaFuncProductoSeleccionado()
         {
-            if (LogisticaDgvProductos.SelectedRows.Count == 0)
+            if (LogisticaDgvProducto.SelectedRows.Count == 0)
             {
                 throw new ValidationException(
-                    "Seleccione una fila del listado de productos.");
+                    "Seleccione un producto en la tabla.");
             }
 
-            var Producto =
-                LogisticaDgvProductos.SelectedRows[0]
+            ClsDatosProducto Producto =
+                LogisticaDgvProducto.SelectedRows[0]
                     .DataBoundItem as ClsDatosProducto;
 
             if (Producto == null)
             {
                 throw new ValidationException(
-                    "No se pudo identificar el producto seleccionado.");
+                    "No se pudo identificar el producto.");
             }
 
             return Producto;
         }
 
+        private void LogisticaDgvProducto_CellDoubleClick(
+            object Sender,
+            DataGridViewCellEventArgs E)
+        {
+            if (E.RowIndex < 0)
+            {
+                return;
+            }
+
+            try
+            {
+                LogisticaDgvProducto.ClearSelection();
+
+                LogisticaDgvProducto.Rows[E.RowIndex]
+                    .Selected = true;
+
+                LogisticaProcCargarProductoSeleccionado();
+            }
+            catch (Exception Ex)
+            {
+                LogisticaProcMostrarError(Ex.Message);
+            }
+        }
+
         // ============================================================
-        // CARGAR PRODUCTO EN EL FORMULARIO
+        // CARGAR PRODUCTO SELECCIONADO
         // ============================================================
 
-        private void LogisticaProcCargarSeleccionado()
+        private void LogisticaProcCargarProductoSeleccionado()
         {
             ClsDatosProducto Producto =
-                LogisticaFuncSeleccionado();
-
-            LogisticaPnlDatosProducto.Enabled = true;
-
-            _ModoEdicion = true;
+                LogisticaFuncProductoSeleccionado();
 
             _ModeloProducto.Estado =
                 ClsEstadoEntidad.Modified;
+
+            LogisticaProcHabilitarEdicion(true);
 
             LogisticaTxtIdProducto.Text =
                 Producto.IdProducto.ToString();
@@ -672,14 +738,17 @@ namespace CapaVista_Inventario_Logistica.Formularios
             LogisticaTxtSKUProducto.Text =
                 Producto.SkuProducto;
 
-            LogisticaTxtClasificacionProducto.Text =
-                Producto.ClasificacionProducto;
-
             LogisticaTxtNombreProducto.Text =
                 Producto.NombreProducto;
 
-            LogisticaTxtCategoriaProducto.Text =
-                Producto.NombreCategoria;
+            LogisticaTxtClasificacionProducto.Text =
+                Producto.ClasificacionProducto;
+
+            LogisticaTxtPaisProducto.Text =
+                Producto.PaisProducto;
+
+            LogisticaCboCategoria.SelectedValue =
+                Producto.FkCategoriaCodigo;
 
             LogisticaCboMarca.SelectedValue =
                 Producto.FkMarcaCodigo;
@@ -693,8 +762,9 @@ namespace CapaVista_Inventario_Logistica.Formularios
             LogisticaTxtDescripcionProducto.Text =
                 Producto.DescripcionProducto;
 
-            LogisticaTxtPaisProducto.Text =
-                Producto.PaisProducto;
+            LogisticaTxtPesoProducto.Text =
+                Producto.PesoProducto.ToString(
+                    CultureInfo.InvariantCulture);
 
             LogisticaTxtPrecioCostoProducto.Text =
                 Producto.PrecioCostoProducto.ToString(
@@ -704,54 +774,43 @@ namespace CapaVista_Inventario_Logistica.Formularios
                 Producto.PrecioVentaProducto.ToString(
                     CultureInfo.InvariantCulture);
 
-            LogisticaTxtComisionProducto.Text =
-                Producto.PorcentajeComisionProducto.ToString(
-                    CultureInfo.InvariantCulture);
-
             LogisticaTxtStockMinimoProducto.Text =
                 Producto.StockMinimoProducto.ToString();
 
             LogisticaTxtStockMaximoProducto.Text =
                 Producto.StockMaximoProducto.ToString();
 
-            LogisticaTxtPesoProducto.Text =
-                Producto.PesoProducto.ToString(
+            LogisticaTxtComisionProducto.Text =
+                Producto.PorcentajeComisionProducto.ToString(
                     CultureInfo.InvariantCulture);
 
-            _ImagenProducto =
-                Producto.ImagenProducto;
+            _ImagenProducto = Producto.ImagenProducto;
 
             LogisticaProcMostrarImagen(_ImagenProducto);
-
-            LogisticaBtnGuardarProducto.Enabled = true;
-
-            LogisticaTxtSKUProducto.Focus();
         }
 
         // ============================================================
-        // BOTÓN INGRESAR
+        // INGRESAR
         // ============================================================
 
         private void LogisticaBtnIngresarProducto_Click(
             object Sender,
             EventArgs E)
         {
-            LogisticaProcBloquearFormulario();
+            LogisticaProcLimpiarCampos();
 
-            _ModoEdicion = true;
+            LogisticaDgvProducto.ClearSelection();
 
             _ModeloProducto.Estado =
                 ClsEstadoEntidad.Added;
 
-            LogisticaPnlDatosProducto.Enabled = true;
-
-            LogisticaBtnGuardarProducto.Enabled = true;
+            LogisticaProcHabilitarEdicion(true);
 
             LogisticaTxtSKUProducto.Focus();
         }
 
         // ============================================================
-        // BOTÓN CONSULTAR
+        // CONSULTAR
         // ============================================================
 
         private void LogisticaBtnConsultarProducto_Click(
@@ -762,7 +821,7 @@ namespace CapaVista_Inventario_Logistica.Formularios
             {
                 LogisticaProcRecargarProductos();
 
-                LogisticaTxtBuscarProducto.Focus();
+                LogisticaTxtBuscarInteligenteProducto.Focus();
             }
             catch (Exception Ex)
             {
@@ -771,7 +830,7 @@ namespace CapaVista_Inventario_Logistica.Formularios
         }
 
         // ============================================================
-        // BOTÓN MODIFICAR
+        // MODIFICAR
         // ============================================================
 
         private void LogisticaBtnModificarProducto_Click(
@@ -780,7 +839,7 @@ namespace CapaVista_Inventario_Logistica.Formularios
         {
             try
             {
-                LogisticaProcCargarSeleccionado();
+                LogisticaProcCargarProductoSeleccionado();
             }
             catch (Exception Ex)
             {
@@ -789,75 +848,129 @@ namespace CapaVista_Inventario_Logistica.Formularios
         }
 
         // ============================================================
-        // BOTÓN GUARDAR
+        // VALIDAR CAMPOS OBLIGATORIOS
+        // ============================================================
+
+        private bool LogisticaFuncCamposCompletos()
+        {
+            TextBox[] Campos = new TextBox[]
+            {
+                LogisticaTxtSKUProducto,
+                LogisticaTxtNombreProducto,
+                LogisticaTxtClasificacionProducto,
+                LogisticaTxtPaisProducto,
+                LogisticaTxtDescripcionProducto,
+                LogisticaTxtPesoProducto,
+                LogisticaTxtPrecioCostoProducto,
+                LogisticaTxtPrecioVentaProducto,
+                LogisticaTxtStockMinimoProducto,
+                LogisticaTxtStockMaximoProducto,
+                LogisticaTxtComisionProducto
+            };
+
+            foreach (TextBox Campo in Campos)
+            {
+                if (string.IsNullOrWhiteSpace(Campo.Text))
+                {
+                    return false;
+                }
+            }
+
+            if (LogisticaCboCategoria.SelectedIndex < 0 ||
+                LogisticaCboMarca.SelectedIndex < 0 ||
+                LogisticaCboLinea.SelectedIndex < 0 ||
+                LogisticaCboProveedor.SelectedIndex < 0)
+            {
+                return false;
+            }
+
+            if (_ImagenProducto == null ||
+                _ImagenProducto.Length == 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        // ============================================================
+        // GUARDAR
         // ============================================================
 
         private void LogisticaBtnGuardarProducto_Click(
             object Sender,
             EventArgs E)
         {
+            if (!_ModoEdicion)
+            {
+                LogisticaProcMostrarError(
+                    "Primero presione Ingresar o Modificar.");
+
+                return;
+            }
+
+            // Verificar todos los campos antes de guardar.
+            if (!LogisticaFuncCamposCompletos())
+            {
+                LogisticaProcMostrarError(
+                    "Completar todos los campos.");
+
+                return;
+            }
+
             try
             {
-                if (!_ModoEdicion)
-                {
-                    return;
-                }
+                bool EsNuevo =
+                    _ModeloProducto.Estado ==
+                    ClsEstadoEntidad.Added;
 
-                // Obtener datos del formulario.
                 _ModeloProducto.Producto =
                     LogisticaFuncLeerFormulario();
 
-                // Ejecutar operación en el controlador.
-                string Mensaje =
-                    _ModeloProducto.LogisticaFuncGrabarCambios();
+                // Guardar mediante MVC.
+                _ModeloProducto.LogisticaFuncGrabarCambios();
 
-                MessageBox.Show(
-                    Mensaje,
-                    "Éxito",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                LogisticaProcMostrarExito(
+                    EsNuevo
+                        ? "El producto se guardó correctamente."
+                        : "El producto se modificó correctamente.");
 
-                // Limpiar y actualizar el listado.
-                LogisticaProcBloquearFormulario();
+                LogisticaProcLimpiarCampos();
 
-                LogisticaProcRecargarProductos();
+                LogisticaProcHabilitarEdicion(false);
             }
             catch (Exception Ex)
             {
                 LogisticaProcMostrarError(Ex.Message);
+                return;
+            }
+
+            try
+            {
+                LogisticaProcRecargarProductos();
+            }
+            catch (Exception Ex)
+            {
+                LogisticaProcMostrarError(
+                    "El producto se guardó, pero no se pudo " +
+                    "actualizar el listado.");
+
+                Debug.WriteLine(Ex.ToString());
             }
         }
 
         // ============================================================
-        // LEER DATOS DEL FORMULARIO
+        // LEER FORMULARIO
         // ============================================================
 
         private ClsDatosProducto LogisticaFuncLeerFormulario()
         {
-            // Buscar categoría por nombre.
-            ClsOpcionCatalogo Categoria =
-                _Categorias.FirstOrDefault(C =>
-                    string.Equals(
-                        C.Nombre,
-                        LogisticaTxtCategoriaProducto.Text.Trim(),
-                        StringComparison.OrdinalIgnoreCase));
-
-            if (Categoria == null)
+            if (!LogisticaFuncCamposCompletos())
             {
                 throw new ValidationException(
-                    "Escriba una categoría existente del catálogo.");
+                    "Completar todos los campos.");
             }
 
-            // Validar ComboBox.
-            if (LogisticaCboMarca.SelectedValue == null ||
-                LogisticaCboLinea.SelectedValue == null ||
-                LogisticaCboProveedor.SelectedValue == null)
-            {
-                throw new ValidationException(
-                    "Seleccione marca, línea y proveedor.");
-            }
-
-            // Validar stock.
             int StockMinimo;
             int StockMaximo;
 
@@ -869,123 +982,116 @@ namespace CapaVista_Inventario_Logistica.Formularios
                     out StockMaximo))
             {
                 throw new ValidationException(
-                    "Stock mínimo y máximo deben ser números enteros.");
+                    "El stock debe contener números enteros.");
             }
 
-            int Id = 0;
+            int IdProducto = 0;
 
-            // Verificar ID al modificar.
             if (_ModeloProducto.Estado ==
-                    ClsEstadoEntidad.Modified &&
-                !int.TryParse(
-                    LogisticaTxtIdProducto.Text,
-                    out Id))
+                ClsEstadoEntidad.Modified)
             {
-                throw new ValidationException(
-                    "El identificador del producto no es válido.");
+                if (!int.TryParse(
+                    LogisticaTxtIdProducto.Text,
+                    out IdProducto) ||
+                    IdProducto <= 0)
+                {
+                    throw new ValidationException(
+                        "Seleccione un producto válido.");
+                }
             }
 
-            // Construir objeto del producto.
             return new ClsDatosProducto
             {
-                IdProducto = Id,
+                IdProducto = IdProducto,
 
                 SkuProducto =
                     LogisticaTxtSKUProducto.Text.Trim(),
 
-                ClasificacionProducto =
-                    LogisticaTxtClasificacionProducto.Text.Trim(),
-
                 NombreProducto =
                     LogisticaTxtNombreProducto.Text.Trim(),
 
-                IdProveedorProductos =
+                ClasificacionProducto =
+                    LogisticaTxtClasificacionProducto.Text.Trim(),
+
+                PaisProducto =
+                    LogisticaTxtPaisProducto.Text.Trim(),
+
+                FkCategoriaCodigo =
                     Convert.ToInt32(
-                        LogisticaCboProveedor.SelectedValue),
+                        LogisticaCboCategoria.SelectedValue),
 
                 FkMarcaCodigo =
                     Convert.ToInt32(
                         LogisticaCboMarca.SelectedValue),
 
-                FkCategoriaCodigo =
-                    Categoria.Id,
-
                 FkLineaCodigo =
                     Convert.ToInt32(
                         LogisticaCboLinea.SelectedValue),
 
+                IdProveedorProductos =
+                    Convert.ToInt32(
+                        LogisticaCboProveedor.SelectedValue),
+
                 DescripcionProducto =
                     LogisticaTxtDescripcionProducto.Text.Trim(),
 
-                ImagenProducto =
-                    _ImagenProducto,
+                ImagenProducto = _ImagenProducto,
 
-                PaisProducto =
-                    LogisticaTxtPaisProducto.Text.Trim(),
+                PesoProducto =
+                    LogisticaFuncLeerDecimal(
+                        LogisticaTxtPesoProducto,
+                        "Peso"),
 
                 PrecioCostoProducto =
-                    LogisticaFuncDecimal(
+                    LogisticaFuncLeerDecimal(
                         LogisticaTxtPrecioCostoProducto,
                         "Precio de costo"),
 
                 PrecioVentaProducto =
-                    LogisticaFuncDecimal(
+                    LogisticaFuncLeerDecimal(
                         LogisticaTxtPrecioVentaProducto,
                         "Precio de venta"),
 
+                StockMinimoProducto = StockMinimo,
+
+                StockMaximoProducto = StockMaximo,
+
                 PorcentajeComisionProducto =
-                    LogisticaFuncDecimal(
+                    LogisticaFuncLeerDecimal(
                         LogisticaTxtComisionProducto,
-                        "Comisión"),
-
-                StockMinimoProducto =
-                    StockMinimo,
-
-                StockMaximoProducto =
-                    StockMaximo,
-
-                PesoProducto =
-                    LogisticaFuncDecimal(
-                        LogisticaTxtPesoProducto,
-                        "Peso")
+                        "Comisión")
             };
         }
 
         // ============================================================
-        // VALIDAR NÚMEROS DECIMALES
+        // VALIDAR DECIMALES
         // ============================================================
 
-        private decimal LogisticaFuncDecimal(
+        private decimal LogisticaFuncLeerDecimal(
             TextBox Campo,
             string Nombre)
         {
+            string Texto =
+                Campo.Text.Trim().Replace(',', '.');
+
             decimal Valor;
 
-            string Texto = Campo.Text.Trim();
-
             if (!decimal.TryParse(
-                    Texto,
-                    NumberStyles.AllowDecimalPoint |
-                    NumberStyles.AllowLeadingSign,
-                    CultureInfo.InvariantCulture,
-                    out Valor) &&
-
-                !decimal.TryParse(
-                    Texto,
-                    NumberStyles.AllowDecimalPoint |
-                    NumberStyles.AllowLeadingSign,
-                    CultureInfo.CurrentCulture,
-                    out Valor))
+                Texto,
+                NumberStyles.AllowLeadingSign |
+                NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture,
+                out Valor))
             {
                 throw new ValidationException(
-                    Nombre + " debe ser un número decimal válido.");
+                    Nombre + " debe ser un número válido.");
             }
 
             return Valor;
         }
 
         // ============================================================
-        // BOTÓN ELIMINAR
+        // ELIMINAR
         // ============================================================
 
         private void LogisticaBtnEliminarProducto_Click(
@@ -995,43 +1101,45 @@ namespace CapaVista_Inventario_Logistica.Formularios
             try
             {
                 ClsDatosProducto Producto =
-                    LogisticaFuncSeleccionado();
+                    LogisticaFuncProductoSeleccionado();
 
-                DialogResult Confirmacion =
-                    MessageBox.Show(
-                        "¿Desea eliminar el producto " +
-                        Producto.NombreProducto + "?",
-                        "Confirmar eliminación",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Warning);
+                string NombreProducto =
+                    Producto.NombreProducto ?? "";
 
-                if (Confirmacion != DialogResult.Yes)
+                if (NombreProducto.Length > 55)
+                {
+                    NombreProducto =
+                        NombreProducto.Substring(0, 55) + "...";
+                }
+
+                bool Confirmado =
+                    LogisticaFuncConfirmarEliminacion(
+                        "¿Desea eliminar \"" +
+                        NombreProducto + "\"?\n" +
+                        "Esta acción no se puede deshacer.");
+
+                if (!Confirmado)
                 {
                     return;
                 }
 
-                // Establecer ID del producto.
+                _ModeloProducto.Estado =
+                    ClsEstadoEntidad.Deleted;
+
                 _ModeloProducto.Producto =
                     new ClsDatosProducto
                     {
                         IdProducto = Producto.IdProducto
                     };
 
-                // Indicar operación de eliminación.
-                _ModeloProducto.Estado =
-                    ClsEstadoEntidad.Deleted;
+                _ModeloProducto.LogisticaFuncGrabarCambios();
 
-                // Ejecutar operación.
-                string Mensaje =
-                    _ModeloProducto.LogisticaFuncGrabarCambios();
+                LogisticaProcMostrarExito(
+                    "El producto se eliminó correctamente.");
 
-                MessageBox.Show(
-                    Mensaje,
-                    "Éxito",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                LogisticaProcLimpiarCampos();
 
-                LogisticaProcBloquearFormulario();
+                LogisticaProcHabilitarEdicion(false);
 
                 LogisticaProcRecargarProductos();
             }
@@ -1042,7 +1150,7 @@ namespace CapaVista_Inventario_Logistica.Formularios
         }
 
         // ============================================================
-        // BOTÓN REFRESCAR
+        // REFRESCAR
         // ============================================================
 
         private void LogisticaBtnRefrescarProducto_Click(
@@ -1051,11 +1159,13 @@ namespace CapaVista_Inventario_Logistica.Formularios
         {
             try
             {
-                LogisticaProcBloquearFormulario();
+                LogisticaProcLimpiarCampos();
+
+                LogisticaProcHabilitarEdicion(false);
 
                 LogisticaProcCargarCatalogos();
 
-                LogisticaTxtBuscarProducto.Clear();
+                LogisticaTxtBuscarInteligenteProducto.Clear();
 
                 LogisticaProcRecargarProductos();
             }
@@ -1066,21 +1176,23 @@ namespace CapaVista_Inventario_Logistica.Formularios
         }
 
         // ============================================================
-        // BOTÓN SELECCIONAR IMAGEN
+        // SELECCIONAR IMAGEN
         // ============================================================
 
         private void LogisticaBtnSeleccionarImagen_Click(
             object Sender,
             EventArgs E)
         {
-            using (var Dialogo = new OpenFileDialog())
+            using (OpenFileDialog Dialogo =
+                new OpenFileDialog())
             {
                 Dialogo.Title =
                     "Seleccionar imagen del producto";
 
                 Dialogo.Filter =
-                    "Imágenes|*.jpg;*.jpeg;*.png;*.bmp|" +
-                    "Todos los archivos|*.*";
+                    "Imágenes|*.png;*.jpg;*.jpeg;*.bmp";
+
+                Dialogo.CheckFileExists = true;
 
                 if (Dialogo.ShowDialog(this) != DialogResult.OK)
                 {
@@ -1091,6 +1203,13 @@ namespace CapaVista_Inventario_Logistica.Formularios
                 {
                     byte[] Bytes =
                         File.ReadAllBytes(Dialogo.FileName);
+
+                    if (Bytes.Length == 0 ||
+                        Bytes.Length > 10 * 1024 * 1024)
+                    {
+                        throw new ValidationException(
+                            "Seleccione una imagen de hasta 10 MB.");
+                    }
 
                     LogisticaProcMostrarImagen(Bytes);
 
@@ -1104,88 +1223,82 @@ namespace CapaVista_Inventario_Logistica.Formularios
         }
 
         // ============================================================
-        // MOSTRAR IMAGEN DEL PRODUCTO
+        // MOSTRAR IMAGEN
         // ============================================================
 
         private void LogisticaProcMostrarImagen(byte[] Datos)
         {
-            Image Anterior =
+            Image NuevaImagen = null;
+
+            if (Datos != null && Datos.Length > 0)
+            {
+                using (MemoryStream Flujo =
+                    new MemoryStream(Datos))
+                using (Image Temporal =
+                    Image.FromStream(Flujo))
+                {
+                    NuevaImagen = new Bitmap(Temporal);
+                }
+            }
+
+            Image ImagenAnterior =
                 LogisticaPbImagenProducto.Image;
 
-            LogisticaPbImagenProducto.Image = null;
+            LogisticaPbImagenProducto.Image = NuevaImagen;
 
-            if (Anterior != null)
+            if (ImagenAnterior != null)
             {
-                Anterior.Dispose();
-            }
-
-            if (Datos == null || Datos.Length == 0)
-            {
-                return;
-            }
-
-            using (var Flujo = new MemoryStream(Datos))
-            using (var Temporal = Image.FromStream(Flujo))
-            {
-                LogisticaPbImagenProducto.Image =
-                    new Bitmap(Temporal);
+                ImagenAnterior.Dispose();
             }
         }
 
         // ============================================================
-        // LIMPIAR Y BLOQUEAR CAMPOS
+        // LIMPIAR CAMPOS
         // ============================================================
 
-        private void LogisticaProcBloquearFormulario()
+        private void LogisticaProcLimpiarCampos()
         {
-            _ModoEdicion = false;
-
-            LogisticaPnlDatosProducto.Enabled = false;
-
-            LogisticaBtnGuardarProducto.Enabled = false;
-
-            // Limpiar campos.
             LogisticaTxtIdProducto.Clear();
-
             LogisticaTxtSKUProducto.Clear();
-
-            LogisticaTxtClasificacionProducto.Clear();
-
             LogisticaTxtNombreProducto.Clear();
-
-            LogisticaTxtCategoriaProducto.Clear();
-
-            LogisticaTxtDescripcionProducto.Clear();
-
+            LogisticaTxtClasificacionProducto.Clear();
             LogisticaTxtPaisProducto.Clear();
 
-            LogisticaTxtPrecioCostoProducto.Clear();
-
-            LogisticaTxtPrecioVentaProducto.Clear();
-
-            LogisticaTxtComisionProducto.Clear();
-
-            LogisticaTxtStockMinimoProducto.Clear();
-
-            LogisticaTxtStockMaximoProducto.Clear();
-
+            LogisticaTxtDescripcionProducto.Clear();
             LogisticaTxtPesoProducto.Clear();
 
-            // Limpiar selecciones.
+            LogisticaTxtPrecioCostoProducto.Clear();
+            LogisticaTxtPrecioVentaProducto.Clear();
+
+            LogisticaTxtStockMinimoProducto.Clear();
+            LogisticaTxtStockMaximoProducto.Clear();
+            LogisticaTxtComisionProducto.Clear();
+
+            LogisticaCboCategoria.SelectedIndex = -1;
             LogisticaCboMarca.SelectedIndex = -1;
-
             LogisticaCboLinea.SelectedIndex = -1;
-
             LogisticaCboProveedor.SelectedIndex = -1;
 
-            // Limpiar imagen.
             _ImagenProducto = null;
 
             LogisticaProcMostrarImagen(null);
         }
 
         // ============================================================
-        // BOTÓN IMPRIMIR
+        // HABILITAR EDICIÓN
+        // ============================================================
+
+        private void LogisticaProcHabilitarEdicion(bool Habilitar)
+        {
+            _ModoEdicion = Habilitar;
+
+            LogisticaPnlDatosProducto.Enabled = Habilitar;
+
+            LogisticaBtnGuardarProducto.Enabled = Habilitar;
+        }
+
+        // ============================================================
+        // IMPRIMIR Y AYUDA
         // ============================================================
 
         private void LogisticaBtnImprimirProducto_Click(
@@ -1193,40 +1306,276 @@ namespace CapaVista_Inventario_Logistica.Formularios
             EventArgs E)
         {
             MessageBox.Show(
-                "La impresión requiere el reporte RDLC del módulo: " +
-                "FrmReporteProducto.cs y RpReporteProducto.rdlc.",
-                "Reporte pendiente",
+                "El reporte RDLC de productos está pendiente.",
+                "Información - Logística",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
-
-        // ============================================================
-        // BOTÓN AYUDA
-        // ============================================================
 
         private void LogisticaBtnAyudaProducto_Click(
             object Sender,
             EventArgs E)
         {
             MessageBox.Show(
-                "Para activar Ayuda, integra el archivo oficial " +
-                "LogisticaAyudas.chm creado en HTML Help Workshop.",
-                "Ayuda pendiente",
+                "El manual CHM de Producto está pendiente.",
+                "Información - Logística",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
 
         // ============================================================
-        // MOSTRAR ERRORES
+        // MOSTRAR CONFIRMACIÓN
+        // ============================================================
+
+        private bool LogisticaFuncConfirmarEliminacion(
+            string Mensaje)
+        {
+            return LogisticaFuncMostrarDialogo(
+                ClsTipoDialogo.Confirmacion,
+                "Confirmar eliminación",
+                Mensaje) == DialogResult.Yes;
+        }
+
+        // ============================================================
+        // MOSTRAR ÉXITO
+        // ============================================================
+
+        private void LogisticaProcMostrarExito(string Mensaje)
+        {
+            LogisticaFuncMostrarDialogo(
+                ClsTipoDialogo.Exito,
+                "Operación exitosa",
+                Mensaje);
+        }
+
+        // ============================================================
+        // MOSTRAR ERROR
         // ============================================================
 
         private void LogisticaProcMostrarError(string Mensaje)
         {
-            MessageBox.Show(
-                Mensaje,
-                "Error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+            // Guardar mensaje técnico completo
+            // en la ventana Salida de Visual Studio.
+            Debug.WriteLine(
+                "LOGÍSTICA - PRODUCTO: " + Mensaje);
+
+            if (string.IsNullOrWhiteSpace(Mensaje))
+            {
+                Mensaje = "No se pudo completar la operación.";
+            }
+
+            // Evitar mensajes extensos en ventanas pequeñas.
+            if (Mensaje.Length > 150)
+            {
+                Mensaje =
+                    "No se pudo completar la operación. " +
+                    "Revise los datos o la conexión.";
+            }
+
+            LogisticaFuncMostrarDialogo(
+                ClsTipoDialogo.Error,
+                "Ocurrió un error",
+                Mensaje);
+        }
+
+        // ============================================================
+        // DIÁLOGOS ESTÁNDAR DE LOGÍSTICA
+        //
+        // Confirmación: ámbar
+        // Éxito: verde
+        // Error: rojo
+        // ============================================================
+
+        private DialogResult LogisticaFuncMostrarDialogo(
+            ClsTipoDialogo Tipo,
+            string Titulo,
+            string Mensaje)
+        {
+            Color ColorIcono;
+            string Simbolo;
+
+            switch (Tipo)
+            {
+                case ClsTipoDialogo.Confirmacion:
+                    ColorIcono = Color.FromArgb(236, 171, 42);
+                    Simbolo = "!";
+                    break;
+
+                case ClsTipoDialogo.Exito:
+                    ColorIcono = Color.FromArgb(45, 158, 93);
+                    Simbolo = "✓";
+                    break;
+
+                default:
+                    ColorIcono = Color.FromArgb(218, 62, 70);
+                    Simbolo = "×";
+                    break;
+            }
+
+            using (Form Ventana = new Form())
+            {
+                Ventana.Text = Titulo;
+
+                // Mensaje compacto.
+                Ventana.ClientSize = new Size(430, 185);
+
+                Ventana.StartPosition =
+                    FormStartPosition.CenterParent;
+
+                Ventana.FormBorderStyle =
+                    FormBorderStyle.FixedDialog;
+
+                Ventana.MaximizeBox = false;
+                Ventana.MinimizeBox = false;
+                Ventana.ShowIcon = false;
+                Ventana.ShowInTaskbar = false;
+
+                Ventana.BackColor = Color.White;
+
+                // ====================================================
+                // ÍCONO
+                // ====================================================
+
+                PictureBox Icono = new PictureBox
+                {
+                    Location = new Point(25, 60),
+                    Size = new Size(48, 48),
+                    BackColor = Color.White
+                };
+
+                Icono.Paint += (Sender, E) =>
+                {
+                    E.Graphics.SmoothingMode =
+                        SmoothingMode.AntiAlias;
+
+                    using (SolidBrush Pincel =
+                        new SolidBrush(ColorIcono))
+                    {
+                        E.Graphics.FillEllipse(
+                            Pincel, 2, 2, 44, 44);
+                    }
+
+                    using (Font Fuente =
+                        new Font(
+                            "Segoe UI Symbol",
+                            20F,
+                            FontStyle.Bold))
+                    {
+                        TextRenderer.DrawText(
+                            E.Graphics,
+                            Simbolo,
+                            Fuente,
+                            new Rectangle(2, 2, 44, 44),
+                            Color.White,
+                            TextFormatFlags.HorizontalCenter |
+                            TextFormatFlags.VerticalCenter |
+                            TextFormatFlags.NoPadding);
+                    }
+                };
+
+                // ====================================================
+                // TÍTULO
+                // ====================================================
+
+                Label LblTitulo = new Label
+                {
+                    Text = Titulo,
+                    Location = new Point(90, 22),
+                    Size = new Size(310, 30),
+                    ForeColor = ColorIcono,
+                    Font = new Font(
+                        "Segoe UI",
+                        13F,
+                        FontStyle.Bold)
+                };
+
+                // ====================================================
+                // TEXTO DEL MENSAJE
+                // Sin TextBox y sin barras de desplazamiento.
+                // ====================================================
+
+                Label LblMensaje = new Label
+                {
+                    Text = Mensaje,
+                    Location = new Point(90, 58),
+                    Size = new Size(315, 70),
+                    ForeColor = Color.FromArgb(60, 60, 60),
+                    Font = new Font("Segoe UI", 9.5F),
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    AutoEllipsis = true
+                };
+
+                Ventana.Controls.Add(Icono);
+                Ventana.Controls.Add(LblTitulo);
+                Ventana.Controls.Add(LblMensaje);
+
+                // ====================================================
+                // BOTÓN PRINCIPAL
+                // ====================================================
+
+                Button BtnPrincipal = new Button
+                {
+                    Location = new Point(295, 143),
+                    Size = new Size(115, 30),
+                    BackColor = Color.FromArgb(47, 49, 58),
+                    ForeColor = Color.White,
+                    FlatStyle = FlatStyle.Flat,
+                    Font = new Font(
+                        "Segoe UI",
+                        9F,
+                        FontStyle.Bold)
+                };
+
+                BtnPrincipal.FlatAppearance.BorderSize = 0;
+
+                // ====================================================
+                // CONFIRMACIÓN
+                // ====================================================
+
+                if (Tipo == ClsTipoDialogo.Confirmacion)
+                {
+                    BtnPrincipal.Text = "Sí, eliminar";
+
+                    BtnPrincipal.DialogResult =
+                        DialogResult.Yes;
+
+                    Button BtnNo = new Button
+                    {
+                        Text = "No",
+                        Location = new Point(195, 143),
+                        Size = new Size(90, 30),
+                        BackColor = Color.White,
+                        ForeColor = Color.FromArgb(47, 49, 58),
+                        FlatStyle = FlatStyle.Flat,
+                        DialogResult = DialogResult.No,
+                        Font = new Font("Segoe UI", 9F)
+                    };
+
+                    BtnNo.FlatAppearance.BorderColor =
+                        Color.LightGray;
+
+                    Ventana.Controls.Add(BtnNo);
+
+                    Ventana.CancelButton = BtnNo;
+
+                    Ventana.AcceptButton = BtnNo;
+                }
+                else
+                {
+                    BtnPrincipal.Text = "Aceptar";
+
+                    BtnPrincipal.DialogResult =
+                        DialogResult.OK;
+
+                    Ventana.AcceptButton = BtnPrincipal;
+
+                    Ventana.CancelButton = BtnPrincipal;
+                }
+
+                Ventana.Controls.Add(BtnPrincipal);
+
+                return Ventana.ShowDialog(this);
+            }
         }
     }
 }
