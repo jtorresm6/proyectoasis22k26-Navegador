@@ -43,6 +43,7 @@
     <Compile Include="Entidades\ClsDetalleProductoComision.cs" />
     <Compile Include="Entidades\ClsFacturaPago.cs" />
     <Compile Include="Entidades\ClsFormaPagoVenta.cs" />
+    <Compile Include="Entidades\ClsComisionNomina.cs" />
     <Compile Include="Repositorios\ClsConexion.cs" />
     <Compile Include="Repositorios\ClsSentencias.cs" />
     <Compile Include="Repositorios\ClsRepositorioComision.cs" />

@@ -209,6 +209,7 @@ namespace TestComisionVendedores
             public List<ClsFacturaPago> ComisionVendedoresMetObtenerFacturasConSaldo() { return new List<ClsFacturaPago>(); }
             public List<ClsFormaPagoVenta> ComisionVendedoresMetObtenerFormasPagoVenta() { return new List<ClsFormaPagoVenta>(); }
             public decimal ComisionVendedoresMetRegistrarAbonoFactura(int IdFactura, decimal Monto, int IdFormaPago, DateTime Fecha, string Referencia, int IdUsuario) { LlamadasRegistrarAbono++; return Monto; }
+            public List<ClsComisionNomina> ComisionVendedoresMetObtenerComisionesNomina() { return new List<ClsComisionNomina>(); }
         }
     }
 }

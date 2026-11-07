@@ -53,6 +53,9 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\IconosEstandarizados\btn_*.png">
+      <LogicalName>ComisionVendedoresVista.IconosEstandarizados.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmComisionVendedores.resx">
       <DependentUpon>FrmComisionVendedores.cs</DependentUpon>
     </EmbeddedResource>

@@ -14,6 +14,7 @@ namespace ComisionVendedoresVista
     {
         private readonly IControladorComision _Controlador;
         private readonly int _IdUsuario;
+        private readonly int? _IdFacturaInicial;
         private readonly ComboBox ComisionVendedoresCboFactura;
         private readonly ComboBox ComisionVendedoresCboFormaPago;
         private readonly NumericUpDown ComisionVendedoresNudMonto;
@@ -23,15 +24,19 @@ namespace ComisionVendedoresVista
         private readonly Label ComisionVendedoresLblPagado;
         private readonly Label ComisionVendedoresLblSaldo;
         private readonly Label ComisionVendedoresLblReferencia;
+        private readonly Label ComisionVendedoresLblObligatorioReferencia;
+        private readonly ErrorProvider _ErrorProveedor = new ErrorProvider();
+        private readonly Dictionary<Control, Panel> _ContenedoresValidacion = new Dictionary<Control, Panel>();
         private readonly Label ComisionVendedoresLblCalculo;
         private readonly Button ComisionVendedoresBtnRegistrarAbono;
         private List<ClsFacturaPagoVista> _Facturas;
         private List<ClsFormaPagoVentaVista> _FormasPago;
 
-        public FrmPagoFacturaTemporal(IControladorComision Controlador, int IdUsuario)
+        public FrmPagoFacturaTemporal(IControladorComision Controlador, int IdUsuario, int? IdFacturaInicial = null)
         {
             _Controlador = Controlador ?? throw new ArgumentNullException("Controlador");
             _IdUsuario = IdUsuario;
+            _IdFacturaInicial = IdFacturaInicial;
             Name = "FrmPagoFacturaTemporal";
             Text = "7009 – RegistrarAbonoFactura";
             StartPosition = FormStartPosition.CenterParent;
@@ -39,11 +44,14 @@ namespace ComisionVendedoresVista
             MaximizeBox = false;
             MinimizeBox = true;
             Icon = Properties.ClsRecursosComision.IconoVentas;
-            ClientSize = new Size(700, 410);
+            ClientSize = new Size(700, 446);
             Font = new Font("Segoe UI", 9.5F);
             BackColor = Color.FromArgb(248, 245, 249);
+            _ErrorProveedor.ContainerControl = this;
+            _ErrorProveedor.BlinkStyle = ErrorBlinkStyle.NeverBlink;
 
             Controls.Add(ComisionVendedoresMetCrearEtiqueta("ComisionVendedoresLblFacturaAbono", "Factura", 22, 18, 180, 24));
+            ComisionVendedoresMetAgregarAsteriscoObligatorio("ComisionVendedoresLblObligatorioFacturaAbono", 68, 18);
             ComisionVendedoresCboFactura = new ComboBox { Name = "ComisionVendedoresCboFactura", DropDownStyle = ComboBoxStyle.DropDownList, Location = new Point(22, 44), Size = new Size(656, 31), Font = Font };
             ComisionVendedoresCboFactura.SelectedIndexChanged += ComisionVendedoresMetActualizarResumen;
             Controls.Add(ComisionVendedoresCboFactura);
@@ -56,6 +64,7 @@ namespace ComisionVendedoresVista
             Controls.Add(ComisionVendedoresLblSaldo);
 
             Controls.Add(ComisionVendedoresMetCrearEtiqueta("ComisionVendedoresLblMontoAbono", "Monto de este abono", 22, 132, 205, 24));
+            ComisionVendedoresMetAgregarAsteriscoObligatorio("ComisionVendedoresLblObligatorioMontoAbono", 157, 132);
             ComisionVendedoresNudMonto = new NumericUpDown
             {
                 Name = "ComisionVendedoresNudMonto",
@@ -67,17 +76,27 @@ namespace ComisionVendedoresVista
             Controls.Add(ComisionVendedoresNudMonto);
 
             Controls.Add(ComisionVendedoresMetCrearEtiqueta("ComisionVendedoresLblFormaPago", "Método de pago", 248, 132, 200, 24));
+            ComisionVendedoresMetAgregarAsteriscoObligatorio("ComisionVendedoresLblObligatorioFormaPago", 347, 132);
             ComisionVendedoresCboFormaPago = new ComboBox { Name = "ComisionVendedoresCboFormaPago", DropDownStyle = ComboBoxStyle.DropDownList, Location = new Point(248, 158), Size = new Size(205, 31), Font = Font };
             ComisionVendedoresCboFormaPago.SelectedIndexChanged += ComisionVendedoresMetActualizarReferencia;
             Controls.Add(ComisionVendedoresCboFormaPago);
 
             Controls.Add(ComisionVendedoresMetCrearEtiqueta("ComisionVendedoresLblFechaAbono", "Fecha de pago", 474, 132, 190, 24));
+            ComisionVendedoresMetAgregarAsteriscoObligatorio("ComisionVendedoresLblObligatorioFechaAbono", 568, 132);
             ComisionVendedoresDtpFecha = new DateTimePicker { Name = "ComisionVendedoresDtpFecha", Format = DateTimePickerFormat.Custom, CustomFormat = "dd/MM/yyyy", Location = new Point(474, 158), Size = new Size(204, 31), Font = Font, Value = DateTime.Today };
             Controls.Add(ComisionVendedoresDtpFecha);
 
-            ComisionVendedoresLblReferencia = ComisionVendedoresMetCrearEtiqueta("ComisionVendedoresLblReferencia", "Referencia (si aplica)", 22, 208, 220, 24);
+            ComisionVendedoresLblReferencia = ComisionVendedoresMetCrearEtiqueta("ComisionVendedoresLblReferencia", "Referencia (opcional)", 22, 208, 220, 24);
+            ComisionVendedoresLblObligatorioReferencia = new Label
+            {
+                Name = "ComisionVendedoresLblObligatorioReferencia", Text = String.Empty,
+                Location = new Point(22, 208), Size = new Size(12, 24),
+                Font = new Font("Tahoma", 9F, FontStyle.Bold), ForeColor = Color.Firebrick,
+                TextAlign = ContentAlignment.MiddleLeft
+            };
             ComisionVendedoresTxtReferencia = new TextBox { Name = "ComisionVendedoresTxtReferencia", Location = new Point(22, 234), Size = new Size(431, 31), Font = Font, MaxLength = 255 };
             Controls.Add(ComisionVendedoresLblReferencia);
+            Controls.Add(ComisionVendedoresLblObligatorioReferencia);
             Controls.Add(ComisionVendedoresTxtReferencia);
 
             ComisionVendedoresLblCalculo = new Label
@@ -91,13 +110,16 @@ namespace ComisionVendedoresVista
             ComisionVendedoresBtnRegistrarAbono = new Button
             {
                 Name = "ComisionVendedoresBtnRegistrarAbono",
-                Text = "Registrar abono", Location = new Point(464, 354), Size = new Size(145, 36),
-                BackColor = Color.FromArgb(59, 29, 74), ForeColor = Color.White, FlatStyle = FlatStyle.Flat
+                Text = "Realizar pago", Location = new Point(498, 343), Size = new Size(76, 78),
+                BackColor = Color.FromArgb(59, 29, 74), ForeColor = Color.FromArgb(248, 245, 249), FlatStyle = FlatStyle.Flat
             };
-            ComisionVendedoresBtnRegistrarAbono.FlatAppearance.BorderSize = 0;
+            FrmComisionVendedores.ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnRegistrarAbono,
+                "btn_ingresar", "Realizar pago", new Size(76, 78));
             ComisionVendedoresBtnRegistrarAbono.Click += ComisionVendedoresMetGuardarClick;
             Controls.Add(ComisionVendedoresBtnRegistrarAbono);
-            Button ComisionVendedoresBtnCancelarAbono = new Button { Name = "ComisionVendedoresBtnCancelarAbono", Text = "Cancelar", Location = new Point(615, 354), Size = new Size(63, 36), DialogResult = DialogResult.Cancel };
+            Button ComisionVendedoresBtnCancelarAbono = new Button { Name = "ComisionVendedoresBtnCancelarAbono", Text = "Cancelar", Location = new Point(594, 343), Size = new Size(76, 78), DialogResult = DialogResult.Cancel };
+            FrmComisionVendedores.ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnCancelarAbono,
+                "btn_cancelar", "Cancelar", new Size(76, 78));
             Controls.Add(ComisionVendedoresBtnCancelarAbono);
             AcceptButton = ComisionVendedoresBtnRegistrarAbono;
             CancelButton = ComisionVendedoresBtnCancelarAbono;
@@ -110,8 +132,18 @@ namespace ComisionVendedoresVista
             {
                 Name = NombreControl,
                 Text = Texto, Location = new Point(X, Y), Size = new Size(Ancho, Alto),
-                ForeColor = Color.FromArgb(59, 29, 74), TextAlign = ContentAlignment.MiddleLeft
+                Font = new Font("Tahoma", 9F), ForeColor = Color.FromArgb(59, 29, 74), TextAlign = ContentAlignment.MiddleLeft
             };
+        }
+
+        private void ComisionVendedoresMetAgregarAsteriscoObligatorio(string NombreControl, int X, int Y)
+        {
+            Controls.Add(new Label
+            {
+                Name = NombreControl, Text = "*", Location = new Point(X, Y), Size = new Size(12, 24),
+                Font = new Font("Tahoma", 9F, FontStyle.Bold), ForeColor = Color.Firebrick,
+                TextAlign = ContentAlignment.MiddleLeft
+            });
         }
 
         private void ComisionVendedoresMetCargarCatalogos(object Sender, EventArgs Argumentos)
@@ -123,15 +155,15 @@ namespace ComisionVendedoresVista
                 ComisionVendedoresCboFactura.DisplayMember = "Etiqueta";
                 ComisionVendedoresCboFactura.ValueMember = "IdFactura";
                 ComisionVendedoresCboFactura.DataSource = _Facturas;
+                if (_IdFacturaInicial.HasValue && _Facturas.Any(Factura => Factura.IdFactura == _IdFacturaInicial.Value))
+                    ComisionVendedoresCboFactura.SelectedValue = _IdFacturaInicial.Value;
                 ComisionVendedoresCboFormaPago.DisplayMember = "Nombre";
                 ComisionVendedoresCboFormaPago.ValueMember = "IdFormaPago";
                 ComisionVendedoresCboFormaPago.DataSource = _FormasPago;
-                bool Habilitado = _Facturas.Count > 0 && _FormasPago.Count > 0;
-                ComisionVendedoresBtnRegistrarAbono.Enabled = Habilitado;
-                if (!Habilitado)
-                    ComisionVendedoresLblCalculo.Text = _Facturas.Count == 0
-                        ? "No hay facturas emitidas con saldo pendiente en CxC."
-                        : "No hay métodos de pago configurados en tblFormaPagoVenta.";
+                if (_Facturas.Count == 0)
+                    ComisionVendedoresLblCalculo.Text = "No se encontraron facturas. Revise la conexión a la base de datos.";
+                else if (_FormasPago.Count == 0)
+                    ComisionVendedoresLblCalculo.Text = "No hay métodos de pago configurados en tblFormaPagoVenta.";
                 ComisionVendedoresMetActualizarResumen(null, EventArgs.Empty);
                 ComisionVendedoresMetActualizarReferencia(null, EventArgs.Empty);
             }
@@ -150,6 +182,7 @@ namespace ComisionVendedoresVista
                 ComisionVendedoresLblTotal.Text = "Total factura: —";
                 ComisionVendedoresLblPagado.Text = "Pagado: —";
                 ComisionVendedoresLblSaldo.Text = "Saldo: —";
+                ComisionVendedoresBtnRegistrarAbono.Enabled = false;
                 return;
             }
             string Simbolo = Factura.SimboloMoneda ?? "";
@@ -162,6 +195,32 @@ namespace ComisionVendedoresVista
             if (ComisionVendedoresNudMonto.Value > ComisionVendedoresNudMonto.Maximum) ComisionVendedoresNudMonto.Value = ComisionVendedoresNudMonto.Maximum;
             if (ComisionVendedoresNudMonto.Value < ComisionVendedoresNudMonto.Minimum && ComisionVendedoresNudMonto.Maximum >= ComisionVendedoresNudMonto.Minimum)
                 ComisionVendedoresNudMonto.Value = ComisionVendedoresNudMonto.Maximum;
+
+            bool TieneFormaPago = _FormasPago != null && _FormasPago.Count > 0;
+            bool FacturaPagable = String.Equals(Factura.Estado, "EMITIDA", StringComparison.OrdinalIgnoreCase) &&
+                Factura.Saldo >= ComisionVendedoresNudMonto.Minimum && Factura.Total > 0m &&
+                Factura.IdCliente > 0 && Factura.IdMoneda > 0;
+            ComisionVendedoresBtnRegistrarAbono.Enabled = TieneFormaPago && FacturaPagable;
+            if (!TieneFormaPago)
+            {
+                ComisionVendedoresLblCalculo.Text = "No hay métodos de pago configurados en tblFormaPagoVenta.";
+                return;
+            }
+            if (!String.Equals(Factura.Estado, "EMITIDA", StringComparison.OrdinalIgnoreCase))
+            {
+                ComisionVendedoresLblCalculo.Text = "Factura " + Factura.IdFactura + " en estado " + Factura.Estado + ". Solo se aceptan abonos para facturas EMITIDAS.";
+                return;
+            }
+            if (Factura.IdCliente <= 0 || Factura.IdMoneda <= 0)
+            {
+                ComisionVendedoresLblCalculo.Text = "La factura " + Factura.IdFactura + " no tiene cliente o moneda vinculados; no se puede registrar el recibo.";
+                return;
+            }
+            if (Factura.Total <= 0m || Factura.Saldo < ComisionVendedoresNudMonto.Minimum)
+            {
+                ComisionVendedoresLblCalculo.Text = "La factura " + Factura.IdFactura + " no tiene saldo pendiente para recibir otro abono.";
+                return;
+            }
 
             if (Factura.Total <= 0m || ComisionVendedoresNudMonto.Value <= 0m) return;
             decimal PorcentajeAbono = ComisionVendedoresNudMonto.Value / Factura.Total * 100m;
@@ -186,34 +245,118 @@ namespace ComisionVendedoresVista
         {
             try
             {
+                Control[] Campos = { ComisionVendedoresCboFactura, ComisionVendedoresCboFormaPago,
+                    ComisionVendedoresNudMonto, ComisionVendedoresTxtReferencia };
+                foreach (Control Campo in Campos)
+                {
+                    _ErrorProveedor.SetError(Campo, String.Empty);
+                    Campo.BackColor = SystemColors.Window;
+                    Panel Contenedor;
+                    if (_ContenedoresValidacion.TryGetValue(Campo, out Contenedor))
+                        Contenedor.BackColor = (Color)Contenedor.Tag;
+                }
+                ComisionVendedoresLblCalculo.ForeColor = Color.FromArgb(59, 29, 74);
+
                 ClsFacturaPagoVista Factura = ComisionVendedoresCboFactura.SelectedItem as ClsFacturaPagoVista;
                 ClsFormaPagoVentaVista Forma = ComisionVendedoresCboFormaPago.SelectedItem as ClsFormaPagoVentaVista;
-                if (Factura == null) throw new InvalidOperationException("Seleccione la factura a la que se aplicará el abono.");
-                if (Forma == null) throw new InvalidOperationException("Seleccione un método de pago.");
+                if (Factura == null)
+                {
+                    ComisionVendedoresMetMostrarErrorCampo(ComisionVendedoresCboFactura, "Seleccione la factura a la que se aplicará el abono.");
+                    return;
+                }
+                if (!String.Equals(Factura.Estado, "EMITIDA", StringComparison.OrdinalIgnoreCase))
+                {
+                    ComisionVendedoresMetMostrarErrorCampo(ComisionVendedoresCboFactura, "Solo se pueden registrar abonos en facturas EMITIDAS.");
+                    return;
+                }
+                if (Factura.Saldo < 0.01m)
+                {
+                    ComisionVendedoresMetMostrarErrorCampo(ComisionVendedoresCboFactura, "La factura seleccionada no tiene saldo pendiente.");
+                    return;
+                }
+                if (Forma == null)
+                {
+                    ComisionVendedoresMetMostrarErrorCampo(ComisionVendedoresCboFormaPago, "Seleccione un método de pago.");
+                    return;
+                }
                 if (ComisionVendedoresNudMonto.Value <= 0m || ComisionVendedoresNudMonto.Value > Factura.Saldo)
-                    throw new InvalidOperationException("Ingrese un monto mayor que cero y no superior al saldo de la factura.");
+                {
+                    ComisionVendedoresMetMostrarErrorCampo(ComisionVendedoresNudMonto, "Ingrese un monto mayor que cero y no superior al saldo de la factura.");
+                    return;
+                }
                 string Referencia = ComisionVendedoresTxtReferencia.Text.Trim();
                 if (Forma.RequiereReferencia && String.IsNullOrWhiteSpace(Referencia))
                 {
-                    ComisionVendedoresTxtReferencia.BackColor = Color.MistyRose;
-                    throw new InvalidOperationException("El método de pago seleccionado requiere número de referencia.");
+                    ComisionVendedoresMetMostrarErrorCampo(ComisionVendedoresTxtReferencia, "El método de pago seleccionado requiere número de referencia.");
+                    return;
                 }
+
+                string Simbolo = Factura.SimboloMoneda ?? String.Empty;
+                string TextoConfirmacion = "Factura " + Factura.IdFactura + " · " + Simbolo + " " +
+                    ComisionVendedoresNudMonto.Value.ToString("N2", CultureInfo.GetCultureInfo("es-GT")) + " · " + Forma.Nombre +
+                    " · " + ComisionVendedoresDtpFecha.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("es-GT")) +
+                    ". ¿Desea registrar este abono?";
+                if (FrmComisionVendedores.ComisionVendedoresMetConfirmar(this,
+                    "7009 – RegistrarAbonoFactura", TextoConfirmacion, "Sí, registrar") != DialogResult.Yes)
+                    return;
+
                 decimal ComisionDevengada = _Controlador.ComisionVendedoresMetRegistrarAbonoFactura(
                     Factura.IdFactura, ComisionVendedoresNudMonto.Value, Forma.IdFormaPago, ComisionVendedoresDtpFecha.Value.Date, Referencia, _IdUsuario);
                 decimal PorcentajeAbono = ComisionVendedoresNudMonto.Value / Factura.Total * 100m;
-                string Simbolo = Factura.SimboloMoneda ?? "";
                 string Mensaje = "Abono registrado para la factura " + Factura.IdFactura + ": " + Simbolo + " " +
                     ComisionVendedoresNudMonto.Value.ToString("N2", CultureInfo.GetCultureInfo("es-GT")) + " (" + PorcentajeAbono.ToString("0.00") + "% del total)." +
                     Environment.NewLine + "Comisión devengada en este abono: " + Simbolo + " " +
                     ComisionDevengada.ToString("N2", CultureInfo.GetCultureInfo("es-GT")) + ".";
-                MessageBox.Show(this, Mensaje, "7009 – RegistrarAbonoFactura", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                FrmComisionVendedores.ComisionVendedoresMetMostrarExito(this, "7009 – RegistrarAbonoFactura", Mensaje);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception Error)
             {
+                ComisionVendedoresLblCalculo.ForeColor = Color.Firebrick;
+                ComisionVendedoresLblCalculo.Text = Error.Message;
                 MessageBox.Show(this, Error.Message, "7009 – RegistrarAbonoFactura", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void ComisionVendedoresMetEnvolverControl(Control Campo, string NombreContenedor)
+        {
+            Control Padre = Campo.Parent;
+            if (Padre == null || _ContenedoresValidacion.ContainsKey(Campo)) return;
+
+            int Indice = Padre.Controls.GetChildIndex(Campo);
+            Color ColorOriginal = Padre.BackColor;
+            Panel Contenedor = new Panel
+            {
+                Name = NombreContenedor, Location = Campo.Location, Size = Campo.Size,
+                Anchor = Campo.Anchor, BackColor = ColorOriginal, Padding = new Padding(2),
+                TabStop = false, TabIndex = Campo.TabIndex, Tag = ColorOriginal
+            };
+            Padre.Controls.Remove(Campo);
+            Contenedor.Controls.Add(Campo);
+            Campo.Dock = DockStyle.Fill;
+            Campo.Margin = Padding.Empty;
+            Campo.TabIndex = 0;
+            Padre.Controls.Add(Contenedor);
+            Padre.Controls.SetChildIndex(Contenedor, Indice);
+            _ContenedoresValidacion.Add(Campo, Contenedor);
+        }
+        private void ComisionVendedoresMetMostrarErrorCampo(Control Campo, string Mensaje)
+        {
+            Campo.BackColor = Color.MistyRose;
+            Panel Contenedor;
+            if (_ContenedoresValidacion.TryGetValue(Campo, out Contenedor))
+                Contenedor.BackColor = Color.Firebrick;
+            _ErrorProveedor.SetError(Campo, Mensaje);
+            ComisionVendedoresLblCalculo.ForeColor = Color.Firebrick;
+            ComisionVendedoresLblCalculo.Text = Mensaje;
+            Campo.Focus();
+        }
+
+        protected override void Dispose(bool Disposing)
+        {
+            if (Disposing) _ErrorProveedor.Dispose();
+            base.Dispose(Disposing);
         }
     }
 }

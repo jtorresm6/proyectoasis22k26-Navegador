@@ -46,6 +46,7 @@
     <Compile Include="DTO\ClsVendedorComisionVista.cs" />
     <Compile Include="DTO\ClsFacturaPagoVista.cs" />
     <Compile Include="DTO\ClsFormaPagoVentaVista.cs" />
+    <Compile Include="DTO\ClsComisionNominaVista.cs" />
     <Compile Include="Controladores\ClsControladorComision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

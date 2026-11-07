@@ -19,7 +19,7 @@ namespace CapaModelo_ComisionVendedores.Entidades
         public string Linea { get; set; }
         public string Categoria { get; set; }
         public string ElementoComision { get; set; }
-        public decimal Cantidad { get; set; }
+        public double Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
         public decimal BaseComisionable { get; set; }
         public int IdReglaComision { get; set; }

@@ -34,5 +34,6 @@ namespace CapaControlador_ComisionVendedores.Contratos
         List<ClsFormaPagoVentaVista> ComisionVendedoresMetObtenerFormasPagoVenta();
         decimal ComisionVendedoresMetRegistrarAbonoFactura(int IdFactura, decimal Monto,
             int IdFormaPago, DateTime Fecha, string Referencia, int IdUsuario);
+        List<ClsComisionNominaVista> ComisionVendedoresMetObtenerComisionesNomina();
     }
 }

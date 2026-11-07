@@ -8,7 +8,7 @@ namespace CapaControlador_ComisionVendedores.DTO
         public bool ComisionGuardada { get; set; }
         public string NombreProducto { get; set; }
         public string ElementoComision { get; set; }
-        public decimal Cantidad { get; set; }
+        public double Cantidad { get; set; }
         public decimal BaseVenta { get; set; }
         public decimal Porcentaje { get; set; }
         public decimal PorcentajeProducto { get; set; }

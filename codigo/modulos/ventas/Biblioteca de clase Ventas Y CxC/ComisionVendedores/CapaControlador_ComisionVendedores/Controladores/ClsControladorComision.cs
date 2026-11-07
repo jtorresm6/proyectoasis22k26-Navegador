@@ -230,7 +230,7 @@ namespace CapaControlador_ComisionVendedores.Controladores
                     throw new InvalidOperationException("El producto " + Detalle.NombreProducto + " no tiene relación o tasa válida en Logística.");
                 if (Detalle.ComisionGuardada && !string.Equals(Detalle.MetodoGuardado, Metodo.ToString(), StringComparison.OrdinalIgnoreCase))
                     throw new InvalidOperationException("Esta factura ya tiene una comisión guardada con otro método; el cálculo histórico no se puede cambiar.");
-                if (Detalle.ComisionGuardada && Detalle.IdVendedorGuardado != IdVendedor)
+                if (Detalle.ComisionGuardada && Detalle.IdVendedorGuardado > 0 && Detalle.IdVendedorGuardado != IdVendedor)
                     throw new InvalidOperationException("Esta factura ya tiene una comisión guardada para otro vendedor.");
                 decimal BaseVenta = Detalle.BaseComisionable;
                 decimal Porcentaje = Detalle.Porcentaje;
@@ -301,14 +301,19 @@ namespace CapaControlador_ComisionVendedores.Controladores
                 .Select(Factura => new ClsFacturaPagoVista
                 {
                     IdFactura = Factura.IdFactura,
+                    IdCliente = Factura.IdCliente,
+                    IdMoneda = Factura.IdMoneda,
                     Fecha = Factura.Fecha,
+                    Estado = Factura.Estado,
                     Etiqueta = Factura.Etiqueta,
                     SimboloMoneda = Factura.SimboloMoneda,
                     Total = Factura.Total,
                     TotalPagado = Factura.TotalPagado,
                     Saldo = Factura.Saldo,
                     ComisionTotal = Factura.ComisionTotal,
-                    ComisionDevengada = Factura.ComisionDevengada
+                    ComisionDevengada = Factura.ComisionDevengada,
+                    ComisionPagada = Factura.ComisionPagada,
+                    ComisionPendientePago = Factura.ComisionPendientePago
                 }).ToList();
         }
 
@@ -333,6 +338,23 @@ namespace CapaControlador_ComisionVendedores.Controladores
             if (IdUsuario <= 0) throw new ArgumentOutOfRangeException("IdUsuario", "No se encontró un usuario activo en la sesión.");
             return _RepositorioComision.ComisionVendedoresMetRegistrarAbonoFactura(
                 IdFactura, Monto, IdFormaPago, Fecha.Date, Referencia, IdUsuario);
+        }
+
+        public List<ClsComisionNominaVista> ComisionVendedoresMetObtenerComisionesNomina()
+        {
+            return _RepositorioComision.ComisionVendedoresMetObtenerComisionesNomina()
+                .Select(Comision => new ClsComisionNominaVista
+                {
+                    IdAbono = Comision.IdAbono,
+                    IdFactura = Comision.IdFactura,
+                    FechaAbono = Comision.FechaAbono,
+                    Vendedor = Comision.Vendedor,
+                    SimboloMoneda = Comision.SimboloMoneda,
+                    TotalComision = Comision.TotalComision,
+                    MontoPagoCliente = Comision.MontoPagoCliente,
+                    ComisionDevengadaAbono = Comision.ComisionDevengadaAbono,
+                    EstadoPago = Comision.EstadoPago
+                }).ToList();
         }
 
         private string ComisionVendedoresMetObtenerElementoComision(ClsDetalleProductoComision Detalle, EnumMetodoComision Metodo, string NombreVendedor)

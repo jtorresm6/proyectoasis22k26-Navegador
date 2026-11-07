@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.IO;
-using System.Diagnostics;
 using System.Windows.Forms;
 using CapaControlador_ComisionVendedores.Contratos;
 using CapaControlador_ComisionVendedores.Controladores;
@@ -20,6 +19,7 @@ namespace ComisionVendedoresVista
         private List<ClsComisionFacturaDetalle> _DetallesFactura;
         private List<ClsProductoPorcentaje> _ProductosPorcentaje;
         private const int _FilasPorPagina = 9;
+        private const int _FilasResultadosPorPagina = 9;
         private int _PaginaResultados;
         private int _PaginaFactura;
         private int _PaginaPorcentajes;
@@ -27,6 +27,22 @@ namespace ComisionVendedoresVista
         private int _IdFacturaVistaPrevia;
         private ComboBox ComisionVendedoresCboElementoPorcentaje;
         private bool _CargandoPorcentajes;
+        private TabPage ComisionVendedoresTabNomina;
+        private DataGridView ComisionVendedoresDgvNomina;
+        private Label ComisionVendedoresLblNominaEstado;
+        private List<ClsComisionNominaVista> _ComisionesNomina;
+        private Button ComisionVendedoresBtnAnteriorNomina;
+        private Button ComisionVendedoresBtnSiguienteNomina;
+        private Button ComisionVendedoresBtnActualizarNomina;
+        private Label ComisionVendedoresLblPaginaNomina;
+        private const int _FilasNominaPorPagina = 9;
+        private int _PaginaNomina;
+        private readonly ErrorProvider _ErrorProveedor = new ErrorProvider();
+        private readonly Dictionary<DataGridView, string> _ColumnasOrdenadas = new Dictionary<DataGridView, string>();
+        private readonly Dictionary<DataGridView, bool> _OrdenAscendente = new Dictionary<DataGridView, bool>();
+        private readonly Dictionary<Control, Panel> _ContenedoresValidacion = new Dictionary<Control, Panel>();
+        private static readonly Dictionary<string, System.Drawing.Image> _IconosBotonesEstandarizados = new Dictionary<string, System.Drawing.Image>();
+        private static readonly Dictionary<string, System.Drawing.Image> _IconosBotonesDimensionados = new Dictionary<string, System.Drawing.Image>();
 
         private sealed class ClsOpcionPorcentaje
         {
@@ -42,6 +58,22 @@ namespace ComisionVendedoresVista
         public FrmComisionVendedores(IControladorComision ControladorComision)
         {
             InitializeComponent();
+            ComisionVendedoresMetEnvolverControl(ComisionVendedoresDtpFechaInicio, "ComisionVendedoresPnlFechaInicio");
+            ComisionVendedoresMetEnvolverControl(ComisionVendedoresDtpFechaFin, "ComisionVendedoresPnlFechaFin");
+            ComisionVendedoresMetEnvolverControl(ComisionVendedoresCboFactura, "ComisionVendedoresPnlFactura");
+            ComisionVendedoresMetEnvolverControl(ComisionVendedoresCboVendedorFactura, "ComisionVendedoresPnlVendedor");
+            ComisionVendedoresMetEnvolverControl(ComisionVendedoresCboAlcance, "ComisionVendedoresPnlAlcance");
+            System.Drawing.Font FuenteCampo = new System.Drawing.Font("Segoe UI", 10F);
+            ComisionVendedoresCboFactura.Font = FuenteCampo;
+            ComisionVendedoresCboVendedorFactura.Font = FuenteCampo;
+            ComisionVendedoresCboMetodoFactura.Font = FuenteCampo;
+            ComisionVendedoresCboAlcance.Font = FuenteCampo;
+            ComisionVendedoresTxtPorcentaje.Font = FuenteCampo;
+            ComisionVendedoresDgvDetalleFactura.DefaultCellStyle.Font = FuenteCampo;
+            ComisionVendedoresClmMetodoProducto.DefaultCellStyle.Font = FuenteCampo;
+            _ErrorProveedor.ContainerControl = this;
+            _ErrorProveedor.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            ComisionVendedoresMetCrearPestanaNomina();
             ComisionVendedoresBtnAyuda.Click += ComisionVendedoresMetAbrirAyuda;
             ComisionVendedoresCboMetodoFactura.Visible = false;
             ComisionVendedoresLblMetodoFactura.Visible = false;
@@ -60,6 +92,18 @@ namespace ComisionVendedoresVista
             ComisionVendedoresCboVendedorFactura.SelectedValueChanged += ComisionVendedoresMetCambioSeleccionFactura;
             ComisionVendedoresDgvResultados.CellFormatting += ComisionVendedoresMetFormatearMoneda;
             ComisionVendedoresDgvDetalleFactura.CellFormatting += ComisionVendedoresMetFormatearMoneda;
+            ComisionVendedoresLblEstado.AutoSize = false;
+            ComisionVendedoresLblEstado.Size = new System.Drawing.Size(1210, 28);
+            ComisionVendedoresLblEstado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ComisionVendedoresLblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            ComisionVendedoresLblEstadoFactura.AutoSize = false;
+            ComisionVendedoresLblEstadoFactura.Size = new System.Drawing.Size(1210, 40);
+            ComisionVendedoresLblEstadoFactura.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ComisionVendedoresLblEstadoFactura.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            ComisionVendedoresDgvResultados.ColumnHeaderMouseClick += ComisionVendedoresMetOrdenarTabla;
+            ComisionVendedoresDgvDetalleFactura.ColumnHeaderMouseClick += ComisionVendedoresMetOrdenarTabla;
+            ComisionVendedoresDgvDetalleFactura.CellPainting += ComisionVendedoresMetMarcarColumnaObligatoria;
+            ComisionVendedoresDgvPorcentajes.ColumnHeaderMouseClick += ComisionVendedoresMetOrdenarTabla;
             ComisionVendedoresDgvDetalleFactura.CurrentCellDirtyStateChanged += (Sender, Argumentos) =>
             {
                 if (ComisionVendedoresDgvDetalleFactura.IsCurrentCellDirty)
@@ -72,24 +116,34 @@ namespace ComisionVendedoresVista
             ComisionVendedoresCboAlcance.Location = new System.Drawing.Point(24, 25);
             ComisionVendedoresCboAlcance.Size = new System.Drawing.Size(150, 31);
             ComisionVendedoresLblPorcentajeNuevo.AutoSize = false;
+            ComisionVendedoresLblPorcentajeNuevo.Text = "Porcentaje nuevo";
             ComisionVendedoresLblPorcentajeNuevo.Location = new System.Drawing.Point(420, 7);
-            ComisionVendedoresLblPorcentajeNuevo.Size = new System.Drawing.Size(135, 23);
+            ComisionVendedoresLblPorcentajeNuevo.Size = new System.Drawing.Size(150, 23);
             ComisionVendedoresTxtPorcentaje.Location = new System.Drawing.Point(420, 25);
             ComisionVendedoresTxtPorcentaje.Size = new System.Drawing.Size(110, 30);
-            ComisionVendedoresLblObligatorioPorcentaje.Location = new System.Drawing.Point(557, 7);
+            ComisionVendedoresMetEnvolverControl(ComisionVendedoresTxtPorcentaje, "ComisionVendedoresPnlPorcentaje");
             ComisionVendedoresBtnBuscar.Location = new System.Drawing.Point(568, 23);
             ComisionVendedoresBtnBuscar.Size = new System.Drawing.Size(100, 30);
             ComisionVendedoresBtnActualizar.Location = new System.Drawing.Point(670, 23);
             ComisionVendedoresBtnActualizar.Size = new System.Drawing.Size(190, 30);
             ComisionVendedoresLblMantenimientoEstado.AutoSize = false;
             ComisionVendedoresLblMantenimientoEstado.Location = new System.Drawing.Point(24, 68);
-            ComisionVendedoresLblMantenimientoEstado.Size = new System.Drawing.Size(930, 28);
-            ComisionVendedoresTabMantenimiento.Controls.Add(new Label
+            ComisionVendedoresLblMantenimientoEstado.Size = new System.Drawing.Size(1210, 28);
+            Label EtiquetaElementoPorcentaje = new Label
             {
                 Name = "ComisionVendedoresLblElementoPorcentaje",
                 Text = "Elemento específico", Location = new System.Drawing.Point(190, 7),
                 Size = new System.Drawing.Size(220, 23), ForeColor = System.Drawing.Color.FromArgb(59, 29, 74)
-            });
+            };
+            ComisionVendedoresTabMantenimiento.Controls.Add(EtiquetaElementoPorcentaje);
+            Label AsteriscoElementoPorcentaje = new Label
+            {
+                Name = "ComisionVendedoresLblObligatorioElementoPorcentaje", Text = "*",
+                Location = new System.Drawing.Point(EtiquetaElementoPorcentaje.Left + System.Windows.Forms.TextRenderer.MeasureText(EtiquetaElementoPorcentaje.Text, EtiquetaElementoPorcentaje.Font).Width + 2, 7), Size = new System.Drawing.Size(12, 18),
+                Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold),
+                ForeColor = System.Drawing.Color.Firebrick
+            };
+            ComisionVendedoresTabMantenimiento.Controls.Add(AsteriscoElementoPorcentaje);
             ComisionVendedoresCboElementoPorcentaje = new ComboBox
             {
                 Name = "ComisionVendedoresCboElementoPorcentaje",
@@ -97,6 +151,142 @@ namespace ComisionVendedoresVista
                 Size = new System.Drawing.Size(220, 31), Font = ComisionVendedoresCboAlcance.Font
             };
             ComisionVendedoresTabMantenimiento.Controls.Add(ComisionVendedoresCboElementoPorcentaje);
+            ComisionVendedoresMetEnvolverControl(ComisionVendedoresCboElementoPorcentaje, "ComisionVendedoresPnlElementoPorcentaje");
+            ComisionVendedoresLblObligatorioAlcance.Text = "*";
+            ComisionVendedoresLblObligatorioAlcance.Visible = true;
+            ComisionVendedoresLblObligatorioAlcance.Location = new System.Drawing.Point(ComisionVendedoresLblAlcance.Left + System.Windows.Forms.TextRenderer.MeasureText(ComisionVendedoresLblAlcance.Text, ComisionVendedoresLblAlcance.Font).Width + 2, 7);
+            ComisionVendedoresLblObligatorioPorcentaje.Text = "*";
+            ComisionVendedoresLblObligatorioPorcentaje.Visible = true;
+            ComisionVendedoresLblObligatorioPorcentaje.Location = new System.Drawing.Point(ComisionVendedoresLblPorcentajeNuevo.Left + System.Windows.Forms.TextRenderer.MeasureText(ComisionVendedoresLblPorcentajeNuevo.Text, ComisionVendedoresLblPorcentajeNuevo.Font).Width + 2, 7);
+            ComisionVendedoresLblObligatorioAlcance.BringToFront();
+            AsteriscoElementoPorcentaje.BringToFront();
+            ComisionVendedoresLblObligatorioPorcentaje.BringToFront();
+            ComisionVendedoresCboElementoPorcentaje.AccessibleDescription = "Campo obligatorio";
+            ComisionVendedoresLblObligatorioFactura.Text = "*";
+            ComisionVendedoresLblObligatorioFactura.Visible = true;
+            ComisionVendedoresLblObligatorioVendedor.Text = "*";
+            ComisionVendedoresLblObligatorioVendedor.Visible = true;
+            ComisionVendedoresCboAlcance.AccessibleDescription = "Campo obligatorio";
+            ComisionVendedoresTxtPorcentaje.AccessibleDescription = "Campo obligatorio";
+            ComisionVendedoresCboFactura.AccessibleDescription = "Campo obligatorio";
+            ComisionVendedoresCboVendedorFactura.AccessibleDescription = "Campo obligatorio";
+            ComisionVendedoresDtpFechaInicio.AccessibleDescription = "Campo obligatorio";
+            ComisionVendedoresDtpFechaFin.AccessibleDescription = "Campo obligatorio";
+            ComisionVendedoresMetEstandarizarBotones();
+        }
+
+        private void ComisionVendedoresMetEstandarizarBotones()
+        {
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnAyuda, "btn_ayuda", "Ayuda", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnCalcular, "btn_aplicarFiltro", "Calcular", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnCalcularFactura, "btn_consultar", "Calcular comisión", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnAsignarVendedorFactura, "btn_enlace", "Asignar vendedor", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnRegistrarAbonoFactura, "btn_ingresar", "Realizar pago", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnBuscar, "btn_buscar", "Buscar", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnActualizar, "btn_modificar", "Actualizar", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnAnteriorResultados, "btn_anterior", "Anterior", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnSiguienteResultados, "btn_siguiente", "Siguiente", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnAnteriorFactura, "btn_anterior", "Anterior", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnSiguienteFactura, "btn_siguiente", "Siguiente", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnAnteriorPorcentajes, "btn_anterior", "Anterior", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnSiguientePorcentajes, "btn_siguiente", "Siguiente", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnActualizarNomina, "btn_refrescar", "Actualizar", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnAnteriorNomina, "btn_anterior", "Anterior", new System.Drawing.Size(76, 78));
+            ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnSiguienteNomina, "btn_siguiente", "Siguiente", new System.Drawing.Size(76, 78));
+
+            ComisionVendedoresBtnCalcular.Location = new System.Drawing.Point(572, 5);
+            ComisionVendedoresBtnAyuda.Location = new System.Drawing.Point(664, 5);
+            ComisionVendedoresLblEstado.Location = new System.Drawing.Point(24, 100);
+            ComisionVendedoresDgvResultados.Location = new System.Drawing.Point(24, 130);
+            ComisionVendedoresDgvResultados.Size = new System.Drawing.Size(1210, 368);
+
+            ComisionVendedoresBtnCalcularFactura.Location = new System.Drawing.Point(24, 80);
+            ComisionVendedoresBtnAsignarVendedorFactura.Location = new System.Drawing.Point(116, 80);
+            ComisionVendedoresBtnRegistrarAbonoFactura.Location = new System.Drawing.Point(208, 80);
+            ComisionVendedoresLblEstadoFactura.Location = new System.Drawing.Point(24, 174);
+            ComisionVendedoresDgvDetalleFactura.Location = new System.Drawing.Point(24, 208);
+            ComisionVendedoresDgvDetalleFactura.Size = new System.Drawing.Size(1210, 290);
+
+            ComisionVendedoresBtnBuscar.Location = new System.Drawing.Point(570, 4);
+            ComisionVendedoresBtnActualizar.Location = new System.Drawing.Point(664, 4);
+            ComisionVendedoresLblMantenimientoEstado.Location = new System.Drawing.Point(24, 100);
+            ComisionVendedoresDgvPorcentajes.Location = new System.Drawing.Point(24, 130);
+            ComisionVendedoresDgvPorcentajes.Size = new System.Drawing.Size(1210, 368);
+
+            Button[] BotonesAnteriores = { ComisionVendedoresBtnAnteriorResultados, ComisionVendedoresBtnAnteriorFactura,
+                ComisionVendedoresBtnAnteriorPorcentajes, ComisionVendedoresBtnAnteriorNomina };
+            Button[] BotonesSiguientes = { ComisionVendedoresBtnSiguienteResultados, ComisionVendedoresBtnSiguienteFactura,
+                ComisionVendedoresBtnSiguientePorcentajes, ComisionVendedoresBtnSiguienteNomina };
+            foreach (Button Boton in BotonesAnteriores) Boton.Location = new System.Drawing.Point(24, 496);
+            foreach (Button Boton in BotonesSiguientes) Boton.Location = new System.Drawing.Point(1184, 496);
+            ComisionVendedoresLblPaginaResultados.Location = new System.Drawing.Point(486, 532);
+            ComisionVendedoresLblPaginaFactura.Location = new System.Drawing.Point(486, 532);
+            ComisionVendedoresLblPaginaPorcentajes.Location = new System.Drawing.Point(486, 532);
+            ComisionVendedoresDgvNomina.Location = new System.Drawing.Point(24, 104);
+            ComisionVendedoresDgvNomina.Size = new System.Drawing.Size(1210, 394);
+            ComisionVendedoresLblPaginaNomina.Location = new System.Drawing.Point(486, 532);
+            ComisionVendedoresBtnActualizarNomina.Location = new System.Drawing.Point(1166, 8);
+        }
+        internal static void ComisionVendedoresMetAplicarBotonEstandar(Button Boton, string Icono, string Etiqueta, System.Drawing.Size Tamano)
+        {
+            System.Drawing.Image ImagenNormal;
+            if (!_IconosBotonesEstandarizados.TryGetValue(Icono, out ImagenNormal))
+            {
+                string NombreRecurso = "ComisionVendedoresVista.IconosEstandarizados." + Icono + ".png";
+                using (Stream Recurso = Assembly.GetExecutingAssembly().GetManifestResourceStream(NombreRecurso))
+                {
+                    if (Recurso == null) throw new InvalidOperationException("No se encontró el botón estandarizado " + Icono + ".");
+                    using (System.Drawing.Image Imagen = System.Drawing.Image.FromStream(Recurso))
+                        ImagenNormal = new System.Drawing.Bitmap(Imagen);
+                }
+                _IconosBotonesEstandarizados.Add(Icono, ImagenNormal);
+            }
+
+            int TamanoIcono = Math.Max(24, Math.Min(52, Math.Min(Tamano.Width - 12, Tamano.Height - 38)));
+            string ClaveImagenDimensionada = Icono + "_" + TamanoIcono.ToString(CultureInfo.InvariantCulture);
+            System.Drawing.Image ImagenDimensionada;
+            if (!_IconosBotonesDimensionados.TryGetValue(ClaveImagenDimensionada, out ImagenDimensionada))
+            {
+                ImagenDimensionada = new System.Drawing.Bitmap(ImagenNormal, new System.Drawing.Size(TamanoIcono, TamanoIcono));
+                _IconosBotonesDimensionados.Add(ClaveImagenDimensionada, ImagenDimensionada);
+            }
+
+            System.Drawing.Image ImagenDeshabilitada = new System.Drawing.Bitmap(ImagenDimensionada);
+            System.Drawing.Bitmap IconoDeshabilitado = (System.Drawing.Bitmap)ImagenDeshabilitada;
+            for (int Y = 0; Y < IconoDeshabilitado.Height; Y++)
+                for (int X = 0; X < IconoDeshabilitado.Width; X++)
+                {
+                    System.Drawing.Color Pixel = IconoDeshabilitado.GetPixel(X, Y);
+                    if (Pixel.A > 0)
+                        IconoDeshabilitado.SetPixel(X, Y, System.Drawing.Color.FromArgb(Pixel.A, 128, 128, 128));
+                }
+
+            Boton.Size = Tamano;
+            Boton.Text = Etiqueta;
+            Boton.AccessibleName = Etiqueta;
+            Boton.AccessibleDescription = Etiqueta;
+            Boton.Image = Boton.Enabled ? ImagenDimensionada : ImagenDeshabilitada;
+            Boton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            Boton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            Boton.TextImageRelation = TextImageRelation.ImageAboveText;
+            Boton.Padding = new Padding(2);
+            Boton.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            Boton.FlatStyle = FlatStyle.Flat;
+            Boton.FlatAppearance.BorderSize = 1;
+            Boton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(228, 212, 234);
+            Boton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(123, 63, 147);
+            Boton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(201, 162, 74);
+            Boton.UseVisualStyleBackColor = false;
+            Boton.BackColor = Boton.Enabled ? System.Drawing.Color.FromArgb(59, 29, 74) : System.Drawing.Color.LightGray;
+            Boton.ForeColor = Boton.Enabled ? System.Drawing.Color.FromArgb(248, 245, 249) : System.Drawing.SystemColors.GrayText;
+            Boton.Cursor = Cursors.Hand;
+            Boton.Tag = Icono;
+            Boton.EnabledChanged += (Sender, Argumentos) =>
+            {
+                Boton.BackColor = Boton.Enabled ? System.Drawing.Color.FromArgb(59, 29, 74) : System.Drawing.Color.LightGray;
+                Boton.ForeColor = Boton.Enabled ? System.Drawing.Color.FromArgb(248, 245, 249) : System.Drawing.SystemColors.GrayText;
+                Boton.Image = Boton.Enabled ? ImagenDimensionada : ImagenDeshabilitada;
+            };
         }
 
         private void ComisionVendedoresMetCalcularClick(object Sender, EventArgs Argumentos)
@@ -111,57 +301,9 @@ namespace ComisionVendedoresVista
                     ComisionVendedoresDtpFechaInicio.Value.Date, ComisionVendedoresDtpFechaFin.Value.Date);
                 _PaginaResultados = 0;
                 ComisionVendedoresMetMostrarPaginaResultados();
-                bool TieneAbonosPagables = _Resultados.Any(Resultado => Resultado.Movimientos != null &&
-                    Resultado.Movimientos.Any(Movimiento => Movimiento.IdComisionAbono > 0 && Movimiento.MontoComision > 0m));
-                ComisionVendedoresMetActualizarBoton(ComisionVendedoresBtnGuardar, TieneAbonosPagables,
-                    System.Drawing.Color.FromArgb(201, 162, 74));
                 ComisionVendedoresLblEstado.Text = _Resultados.Count == 0
                     ? "No hay comisiones asignadas ni pagos de comisión en el rango seleccionado."
-                    : !TieneAbonosPagables
-                        ? "Se muestran asignaciones del período; aún no hay abonos de comisión pagables. Registrar pago permanece deshabilitado."
-                        : "Cálculo completado. Se muestran comisiones pagables y, cuando aplique, asignaciones sin abono pendiente.";
-            }
-            catch (Exception Excepcion)
-            {
-                ComisionVendedoresMetActualizarBoton(ComisionVendedoresBtnGuardar, false,
-                    System.Drawing.Color.FromArgb(201, 162, 74));
-                ComisionVendedoresMetMostrarError(ComisionVendedoresLblEstado, Excepcion.Message,
-                    ComisionVendedoresDtpFechaInicio, ComisionVendedoresDtpFechaFin);
-                MessageBox.Show(Excepcion.Message, "7008 – ComisionVendedores", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void ComisionVendedoresMetGuardarClick(object Sender, EventArgs Argumentos)
-        {
-            try
-            {
-                if (_Resultados == null || !_Resultados.Any(Resultado => Resultado.Movimientos != null &&
-                    Resultado.Movimientos.Any(Movimiento => Movimiento.IdComisionAbono > 0 && Movimiento.MontoComision > 0m)))
-                    throw new InvalidOperationException("No hay abonos de comisión pagables para registrar en el período. Las asignaciones sin cobros se muestran como información y no se pueden pagar todavía.");
-
-                var AbonosPagables = _Resultados
-                    .Where(Resultado => Resultado.Movimientos != null)
-                    .SelectMany(Resultado => Resultado.Movimientos)
-                    .Where(Movimiento => Movimiento.IdComisionAbono > 0 && Movimiento.MontoComision > 0m).ToList();
-                string TotalPendiente = String.Join(" · ", AbonosPagables
-                    .GroupBy(Movimiento => new { Movimiento.IdMoneda, Movimiento.SimboloMoneda })
-                    .Select(Grupo => (Grupo.Key.SimboloMoneda ?? String.Empty) + " " +
-                        Grupo.Sum(Movimiento => Movimiento.MontoComision).ToString("N2", CultureInfo.GetCultureInfo("es-GT"))));
-                DialogResult Confirmacion = MessageBox.Show(this,
-                    "Se registrarán como pagados " + AbonosPagables.Count +
-                    " abono(s) de comisión por un total de " + TotalPendiente +
-                    ". ¿Desea continuar?",
-                    "Registrar pago de comisiones", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (Confirmacion != DialogResult.Yes) return;
-
-                int Registrados = _ControladorComision.ComisionVendedoresMetGuardar(_Resultados,
-                    ComisionVendedoresDtpFechaInicio.Value.Date, ComisionVendedoresDtpFechaFin.Value.Date,
-                    EnumMetodoComision.Vendedor, EnumBaseComision.Cobrado);
-                ComisionVendedoresLblEstado.Text = Registrados + " abono(s) de comisión marcados como pagados.";
-                ComisionVendedoresMetActualizarBoton(ComisionVendedoresBtnGuardar, false,
-                    System.Drawing.Color.FromArgb(201, 162, 74));
-                _Resultados = new List<ClsComisionVendedorResultado>();
-                ComisionVendedoresMetMostrarPaginaResultados();
+                    : "Cálculo completado. Se muestran los movimientos de comisión devengados en el período.";
             }
             catch (Exception Excepcion)
             {
@@ -176,7 +318,9 @@ namespace ComisionVendedoresVista
             try
             {
                 int IdUsuario = ComisionVendedoresMetObtenerIdUsuarioSesion();
-                using (FrmPagoFacturaTemporal Formulario = new FrmPagoFacturaTemporal(_ControladorComision, IdUsuario))
+                ClsFacturaComisionVista FacturaSeleccionada = ComisionVendedoresCboFactura.SelectedItem as ClsFacturaComisionVista;
+                using (FrmPagoFacturaTemporal Formulario = new FrmPagoFacturaTemporal(_ControladorComision, IdUsuario,
+                    FacturaSeleccionada == null ? (int?)null : FacturaSeleccionada.IdFactura))
                 {
                     if (Formulario.ShowDialog(this) == DialogResult.OK)
                     {
@@ -222,7 +366,10 @@ namespace ComisionVendedoresVista
         {
             try
             {
-                ComisionVendedoresMetRestablecerEstado(ComisionVendedoresLblMantenimientoEstado, ComisionVendedoresCboAlcance);
+                ComisionVendedoresMetRestablecerEstado(ComisionVendedoresLblMantenimientoEstado,
+                    ComisionVendedoresCboAlcance, ComisionVendedoresCboElementoPorcentaje, ComisionVendedoresTxtPorcentaje);
+                if (ComisionVendedoresCboAlcance.SelectedItem == null)
+                    throw new ArgumentException("Seleccione el tipo de porcentaje.");
                 List<ClsProductoPorcentaje> Productos = ComisionVendedoresMetCargarPorcentajes();
                 ComisionVendedoresLblMantenimientoEstado.Text = Productos.Count + " producto(s) cargados. Elija el elemento específico que desea modificar.";
             }
@@ -289,6 +436,8 @@ namespace ComisionVendedoresVista
                     ComisionVendedoresCboFactura, ComisionVendedoresCboVendedorFactura);
                 if (ComisionVendedoresCboFactura.SelectedValue == null || ComisionVendedoresCboVendedorFactura.SelectedValue == null)
                 {
+                    ComisionVendedoresMetMostrarError(ComisionVendedoresLblEstadoFactura,
+                        "Seleccione una factura y un vendedor para continuar.", ComisionVendedoresCboFactura, ComisionVendedoresCboVendedorFactura);
                     ComisionVendedoresLblEstadoFactura.ForeColor = System.Drawing.Color.Firebrick;
                     ComisionVendedoresLblEstadoFactura.Text = "No se puede calcular: seleccione una factura y un vendedor. Si el combo de factura está vacío, revise el error de carga del catálogo.";
                     return;
@@ -352,23 +501,35 @@ namespace ComisionVendedoresVista
         {
             try
             {
+                ComisionVendedoresMetRestablecerEstado(ComisionVendedoresLblEstadoFactura,
+                    ComisionVendedoresCboFactura, ComisionVendedoresCboVendedorFactura);
                 if (ComisionVendedoresCboFactura.SelectedValue == null || ComisionVendedoresCboVendedorFactura.SelectedValue == null)
-                    throw new ArgumentException("Seleccione una factura y un vendedor.");
+                {
+                    ComisionVendedoresMetMostrarError(ComisionVendedoresLblEstadoFactura,
+                        "Seleccione una factura y un vendedor.", ComisionVendedoresCboFactura, ComisionVendedoresCboVendedorFactura);
+                    return;
+                }
                 int IdFactura = Convert.ToInt32(ComisionVendedoresCboFactura.SelectedValue, CultureInfo.InvariantCulture);
                 int IdVendedor = Convert.ToInt32(ComisionVendedoresCboVendedorFactura.SelectedValue, CultureInfo.InvariantCulture);
                 List<ClsComisionFacturaDetalle> Selecciones = ComisionVendedoresMetObtenerSeleccionesMetodo();
-                int IdComision = _ControladorComision.ComisionVendedoresMetAsignarVendedorYGuardarComision(IdFactura, IdVendedor, Selecciones);
                 ClsVendedorComisionVista Vendedor = ComisionVendedoresCboVendedorFactura.SelectedItem as ClsVendedorComisionVista;
                 decimal TotalComisionGuardada = Selecciones.Sum(Detalle => Detalle.ComisionTotal);
                 ClsFacturaComisionVista Factura = ComisionVendedoresCboFactura.SelectedItem as ClsFacturaComisionVista;
                 string SimboloMoneda = Factura == null ? String.Empty : Factura.SimboloMoneda;
+                string TextoConfirmacion = "Se asignará la factura " + IdFactura + " a " +
+                    (Vendedor == null ? "el vendedor seleccionado" : Vendedor.NombreVendedor) + ". Se guardarán " +
+                    Selecciones.Count + " líneas de comisión por " + SimboloMoneda + " " +
+                    TotalComisionGuardada.ToString("N2", CultureInfo.GetCultureInfo("es-GT")) + ". ¿Desea continuar?";
+                if (ComisionVendedoresMetConfirmar(this, "7008 – ComisionVendedores", TextoConfirmacion, "Sí, asignar") != DialogResult.Yes)
+                    return;
+                int IdComision = _ControladorComision.ComisionVendedoresMetAsignarVendedorYGuardarComision(IdFactura, IdVendedor, Selecciones);
                 string Confirmacion = "Factura " + IdFactura + " asignada a " +
                     (Vendedor == null ? "vendedor" : Vendedor.NombreVendedor) + ". Se guardaron " +
                     Selecciones.Count + " líneas de comisión por un total de " + SimboloMoneda + " " +
                     TotalComisionGuardada.ToString("N2", CultureInfo.GetCultureInfo("es-GT")) +
                     " (registro " + IdComision + "). La factura se quitó de la lista para evitar asignarla otra vez.";
                 ComisionVendedoresMetActualizarFacturasDisponiblesDespuesAsignar(IdFactura, Confirmacion);
-                MessageBox.Show(this, Confirmacion, "7008 – ComisionVendedores", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ComisionVendedoresMetMostrarExito(this, "7008 – ComisionVendedores", Confirmacion);
             }
             catch (Exception Excepcion)
             {
@@ -379,6 +540,106 @@ namespace ComisionVendedoresVista
             }
         }
 
+        internal static DialogResult ComisionVendedoresMetConfirmar(IWin32Window VentanaPropietaria, string Titulo, string Mensaje, string TextoAccion)
+        {
+            return ComisionVendedoresMetMostrarDialogoOperacion(VentanaPropietaria, Titulo, Mensaje, true, TextoAccion);
+        }
+
+        internal static void ComisionVendedoresMetMostrarExito(IWin32Window VentanaPropietaria, string Titulo, string Mensaje)
+        {
+            ComisionVendedoresMetMostrarDialogoOperacion(VentanaPropietaria, Titulo, Mensaje, false, "Aceptar");
+        }
+
+        private static DialogResult ComisionVendedoresMetMostrarDialogoOperacion(
+            IWin32Window VentanaPropietaria, string Titulo, string Mensaje, bool EsConfirmacion, string TextoAccion)
+        {
+            using (Form Dialogo = new Form())
+            {
+                Dialogo.Name = "ComisionVendedoresFrmDialogoOperacion";
+                Dialogo.Text = Titulo;
+                Dialogo.StartPosition = FormStartPosition.CenterParent;
+                Dialogo.FormBorderStyle = FormBorderStyle.FixedDialog;
+                Dialogo.MaximizeBox = false;
+                Dialogo.MinimizeBox = true;
+                Dialogo.ShowInTaskbar = false;
+                Dialogo.ClientSize = new System.Drawing.Size(580, 220);
+                Dialogo.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
+                Dialogo.Font = new System.Drawing.Font("Segoe UI", 10F);
+                Dialogo.Icon = Properties.ClsRecursosComision.IconoVentas;
+
+                Panel ComisionVendedoresPnlEncabezadoDialogo = new Panel
+                {
+                    Name = "ComisionVendedoresPnlEncabezadoDialogo",
+                    BackColor = System.Drawing.Color.FromArgb(59, 29, 74),
+                    Location = new System.Drawing.Point(0, 0), Size = new System.Drawing.Size(580, 58)
+                };
+                Label ComisionVendedoresLblEstadoDialogo = new Label
+                {
+                    Name = "ComisionVendedoresLblEstadoDialogo",
+                    Text = EsConfirmacion ? "!" : "✓",
+                    Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold),
+                    ForeColor = EsConfirmacion ? System.Drawing.Color.FromArgb(201, 162, 74) : System.Drawing.Color.ForestGreen,
+                    Location = new System.Drawing.Point(18, 7), Size = new System.Drawing.Size(40, 44),
+                    TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+                };
+                Label ComisionVendedoresLblTituloDialogo = new Label
+                {
+                    Name = "ComisionVendedoresLblTituloDialogo",
+                    Text = EsConfirmacion ? "Confirmar operación" : "Operación completada",
+                    Font = new System.Drawing.Font("Lucida Sans Unicode", 14F,
+                        System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic),
+                    ForeColor = System.Drawing.Color.FromArgb(248, 245, 249),
+                    Location = new System.Drawing.Point(68, 12), Size = new System.Drawing.Size(490, 34),
+                    TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+                };
+                ComisionVendedoresPnlEncabezadoDialogo.Controls.Add(ComisionVendedoresLblEstadoDialogo);
+                ComisionVendedoresPnlEncabezadoDialogo.Controls.Add(ComisionVendedoresLblTituloDialogo);
+                Dialogo.Controls.Add(ComisionVendedoresPnlEncabezadoDialogo);
+
+                Label ComisionVendedoresLblMensajeDialogo = new Label
+                {
+                    Name = "ComisionVendedoresLblMensajeDialogo",
+                    Text = Mensaje, Font = new System.Drawing.Font("Tahoma", 9F),
+                    ForeColor = System.Drawing.Color.FromArgb(59, 29, 74),
+                    Location = new System.Drawing.Point(20, 70), Size = new System.Drawing.Size(540, 58),
+                    TextAlign = System.Drawing.ContentAlignment.MiddleLeft, AutoEllipsis = true
+                };
+                Dialogo.Controls.Add(ComisionVendedoresLblMensajeDialogo);
+
+                Button ComisionVendedoresBtnAceptarDialogo = new Button
+                {
+                    Name = "ComisionVendedoresBtnAceptarDialogo",
+                    Text = TextoAccion, DialogResult = EsConfirmacion ? DialogResult.Yes : DialogResult.OK,
+                    Location = new System.Drawing.Point(EsConfirmacion ? 450 : 490, 136), Size = new System.Drawing.Size(76, 78),
+                    BackColor = System.Drawing.Color.FromArgb(59, 29, 74),
+                    ForeColor = System.Drawing.Color.FromArgb(248, 245, 249), FlatStyle = FlatStyle.Flat
+                };
+                ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnAceptarDialogo,
+                    EsConfirmacion ? "btn_guardar" : "btn_salir", EsConfirmacion ? "Confirmar" : "Cerrar", new System.Drawing.Size(76, 78));
+                ComisionVendedoresBtnAceptarDialogo.AccessibleDescription = TextoAccion;
+                
+                Dialogo.Controls.Add(ComisionVendedoresBtnAceptarDialogo);
+                Dialogo.AcceptButton = ComisionVendedoresBtnAceptarDialogo;
+
+                if (EsConfirmacion)
+                {
+                    Button ComisionVendedoresBtnCancelarDialogo = new Button
+                    {
+                        Name = "ComisionVendedoresBtnCancelarDialogo", Text = "No", DialogResult = DialogResult.No,
+                        Location = new System.Drawing.Point(370, 136), Size = new System.Drawing.Size(76, 78),
+                        BackColor = System.Drawing.Color.FromArgb(59, 29, 74),
+                        ForeColor = System.Drawing.Color.FromArgb(248, 245, 249), FlatStyle = FlatStyle.Flat
+                    };
+                    ComisionVendedoresMetAplicarBotonEstandar(ComisionVendedoresBtnCancelarDialogo,
+                        "btn_cancelar", "No", new System.Drawing.Size(76, 78));
+                    
+                    Dialogo.Controls.Add(ComisionVendedoresBtnCancelarDialogo);
+                    Dialogo.CancelButton = ComisionVendedoresBtnCancelarDialogo;
+                }
+
+                return VentanaPropietaria == null ? Dialogo.ShowDialog() : Dialogo.ShowDialog(VentanaPropietaria);
+            }
+        }
         private void ComisionVendedoresMetActualizarFacturasDisponiblesDespuesAsignar(int IdFactura, string Confirmacion)
         {
             try
@@ -417,6 +678,131 @@ namespace ComisionVendedoresVista
                 ComisionVendedoresMetCargarCatalogosClick(Sender, Argumentos);
             else if (ComisionVendedoresTbcPestanas.SelectedTab == ComisionVendedoresTabMantenimiento)
                 ComisionVendedoresMetBuscarClick(Sender, Argumentos);
+            else if (ComisionVendedoresTbcPestanas.SelectedTab == ComisionVendedoresTabNomina)
+                ComisionVendedoresMetCargarNominaClick(Sender, Argumentos);
+        }
+
+        private void ComisionVendedoresMetCrearPestanaNomina()
+        {
+            ComisionVendedoresTabNomina = new TabPage("Comisiones emitidas")
+            {
+                Name = "ComisionVendedoresTabNomina",
+                BackColor = System.Drawing.Color.FromArgb(248, 245, 249),
+                Padding = new Padding(16),
+                Size = new System.Drawing.Size(1272, 582)
+            };
+            ComisionVendedoresBtnActualizarNomina = new Button
+            {
+                Name = "ComisionVendedoresBtnActualizarNomina", Text = "Actualizar",
+                Location = new System.Drawing.Point(24, 18), Size = new System.Drawing.Size(120, 30),
+                BackColor = System.Drawing.Color.FromArgb(123, 63, 147), ForeColor = System.Drawing.Color.FromArgb(248, 245, 249),
+                FlatStyle = FlatStyle.Flat
+            };
+            ComisionVendedoresBtnActualizarNomina.FlatAppearance.BorderSize = 0;
+            ComisionVendedoresBtnActualizarNomina.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ComisionVendedoresBtnActualizarNomina.Location = new System.Drawing.Point(1128, 18);
+            ComisionVendedoresBtnActualizarNomina.Click += ComisionVendedoresMetCargarNominaClick;
+            ComisionVendedoresLblNominaEstado = new Label
+            {
+                Name = "ComisionVendedoresLblNominaEstado", AutoSize = false,
+                Location = new System.Drawing.Point(160, 18), Size = new System.Drawing.Size(930, 30),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                ForeColor = System.Drawing.Color.FromArgb(59, 29, 74), TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+            };
+            ComisionVendedoresDgvNomina = new DataGridView
+            {
+                Name = "ComisionVendedoresDgvNomina", Location = new System.Drawing.Point(24, 60),
+                Size = new System.Drawing.Size(1210, 480), Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
+                ReadOnly = true, AllowUserToAddRows = false, AllowUserToDeleteRows = false,
+                AutoGenerateColumns = true, AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                BackgroundColor = System.Drawing.Color.FromArgb(248, 245, 249),
+                AllowUserToResizeRows = false,
+                ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing,
+                RowTemplate = { Height = 22 },
+                RowHeadersVisible = false, SelectionMode = DataGridViewSelectionMode.FullRowSelect, MultiSelect = false,
+                AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle { BackColor = System.Drawing.Color.FromArgb(228, 212, 234), ForeColor = System.Drawing.Color.FromArgb(59, 29, 74) },
+                DefaultCellStyle = new DataGridViewCellStyle { BackColor = System.Drawing.Color.FromArgb(248, 245, 249),
+                    ForeColor = System.Drawing.Color.FromArgb(59, 29, 74),
+                    SelectionBackColor = System.Drawing.Color.FromArgb(123, 63, 147),
+                    SelectionForeColor = System.Drawing.Color.FromArgb(248, 245, 249) }
+            };
+            ComisionVendedoresDgvNomina.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(59, 29, 74);
+            ComisionVendedoresDgvNomina.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            ComisionVendedoresDgvNomina.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            ComisionVendedoresDgvNomina.ColumnHeadersHeight = 54;
+            ComisionVendedoresDgvNomina.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            ComisionVendedoresDgvNomina.EnableHeadersVisualStyles = false;
+            ComisionVendedoresDgvNomina.ColumnHeaderMouseClick += ComisionVendedoresMetOrdenarTabla;
+            ComisionVendedoresDgvNomina.CellFormatting += ComisionVendedoresMetFormatearImporteNomina;
+            ComisionVendedoresDgvNomina.DataBindingComplete += (Sender, Argumentos) =>
+            {
+                string[] Encabezados = { "IdAbono|ID abono", "IdFactura|Factura", "FechaAbono|Fecha del abono",
+                    "Vendedor|Vendedor", "SimboloMoneda|Moneda", "TotalComision|Comisión total factura",
+                    "MontoPagoCliente|Abono del cliente", "ComisionDevengadaAbono|Comisión de este abono",
+                    "EstadoPago|Estado del pago al vendedor" };
+                foreach (string Par in Encabezados)
+                {
+                    string[] Partes = Par.Split('|');
+                    if (ComisionVendedoresDgvNomina.Columns.Contains(Partes[0]))
+                        ComisionVendedoresDgvNomina.Columns[Partes[0]].HeaderText = Partes[1];
+                }
+                if (ComisionVendedoresDgvNomina.Columns.Contains("FechaAbono"))
+                    ComisionVendedoresDgvNomina.Columns["FechaAbono"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            };
+            ComisionVendedoresBtnAnteriorNomina = new Button
+            {
+                Name = "ComisionVendedoresBtnAnteriorNomina", Text = "Anterior",
+                Location = new System.Drawing.Point(24, 550), Size = new System.Drawing.Size(100, 28),
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Left, Enabled = false,
+                BackColor = System.Drawing.Color.LightGray, ForeColor = System.Drawing.SystemColors.GrayText,
+                FlatStyle = FlatStyle.Flat
+            };
+            ComisionVendedoresBtnSiguienteNomina = new Button
+            {
+                Name = "ComisionVendedoresBtnSiguienteNomina", Text = "Siguiente",
+                Location = new System.Drawing.Point(1134, 550), Size = new System.Drawing.Size(100, 28),
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Right, Enabled = false,
+                BackColor = System.Drawing.Color.LightGray, ForeColor = System.Drawing.SystemColors.GrayText,
+                FlatStyle = FlatStyle.Flat
+            };
+            ComisionVendedoresBtnAnteriorNomina.FlatAppearance.BorderSize = 0;
+            ComisionVendedoresBtnSiguienteNomina.FlatAppearance.BorderSize = 0;
+            ComisionVendedoresBtnAnteriorNomina.Click += ComisionVendedoresMetCambiarPaginaNomina;
+            ComisionVendedoresBtnSiguienteNomina.Click += ComisionVendedoresMetCambiarPaginaNomina;
+            ComisionVendedoresLblPaginaNomina = new Label
+            {
+                Name = "ComisionVendedoresLblPaginaNomina", AutoSize = false,
+                Location = new System.Drawing.Point(486, 554), Size = new System.Drawing.Size(300, 20),
+                Anchor = AnchorStyles.Bottom, Text = "Página 0 de 0 · 0 registros",
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            };
+            ComisionVendedoresTabNomina.Controls.Add(ComisionVendedoresBtnAnteriorNomina);
+            ComisionVendedoresTabNomina.Controls.Add(ComisionVendedoresBtnSiguienteNomina);
+            ComisionVendedoresTabNomina.Controls.Add(ComisionVendedoresLblPaginaNomina);
+            ComisionVendedoresTabNomina.Controls.Add(ComisionVendedoresBtnActualizarNomina);
+            ComisionVendedoresTabNomina.Controls.Add(ComisionVendedoresLblNominaEstado);
+            ComisionVendedoresTabNomina.Controls.Add(ComisionVendedoresDgvNomina);
+            ComisionVendedoresTbcPestanas.TabPages.Add(ComisionVendedoresTabNomina);
+        }
+
+        private void ComisionVendedoresMetCargarNominaClick(object Sender, EventArgs Argumentos)
+        {
+            try
+            {
+                ComisionVendedoresLblNominaEstado.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
+                _ComisionesNomina = _ControladorComision.ComisionVendedoresMetObtenerComisionesNomina();
+                _PaginaNomina = 0;
+                ComisionVendedoresDgvNomina.DataSource = null;
+                ComisionVendedoresMetMostrarPaginaNomina();
+                ComisionVendedoresLblNominaEstado.Text = _ComisionesNomina.Count == 0
+                    ? "Aún no hay abonos de comisión. Asigne un vendedor y registre pagos confirmados del cliente."
+                    : _ComisionesNomina.Count + " abono(s) de comisión. Cada fila corresponde a un pago confirmado del cliente.";
+            }
+            catch (Exception Error)
+            {
+                ComisionVendedoresLblNominaEstado.ForeColor = System.Drawing.Color.Firebrick;
+                ComisionVendedoresLblNominaEstado.Text = "No se pudieron cargar las comisiones: " + ComisionVendedoresMetObtenerDetalleError(Error);
+            }
         }
 
         private void ComisionVendedoresMetCambioSeleccionFactura(object Sender, EventArgs Argumentos)
@@ -494,7 +880,14 @@ namespace ComisionVendedoresVista
         {
             try
             {
-                ComisionVendedoresMetRestablecerEstado(ComisionVendedoresLblMantenimientoEstado, ComisionVendedoresTxtPorcentaje);
+                ComisionVendedoresMetRestablecerEstado(ComisionVendedoresLblMantenimientoEstado,
+                    ComisionVendedoresCboAlcance, ComisionVendedoresCboElementoPorcentaje, ComisionVendedoresTxtPorcentaje);
+                if (ComisionVendedoresCboAlcance.SelectedItem == null)
+                {
+                    ComisionVendedoresMetMostrarError(ComisionVendedoresLblMantenimientoEstado,
+                        "Seleccione el tipo de porcentaje.", ComisionVendedoresCboAlcance);
+                    throw new ArgumentException("Seleccione el tipo de porcentaje.");
+                }
                 decimal Porcentaje;
                 if (!decimal.TryParse(ComisionVendedoresTxtPorcentaje.Text, NumberStyles.Number,
                     CultureInfo.GetCultureInfo("es-GT"), out Porcentaje))
@@ -504,10 +897,23 @@ namespace ComisionVendedoresVista
                     throw new ArgumentException("Ingrese un porcentaje válido entre 0.00 y 99.00.");
                 }
                 if (Porcentaje < 0m || Porcentaje > 99m)
+                {
+                    ComisionVendedoresMetMostrarError(ComisionVendedoresLblMantenimientoEstado,
+                        "El porcentaje debe estar entre 0.00 y 99.00.", ComisionVendedoresTxtPorcentaje);
                     throw new ArgumentOutOfRangeException("Porcentaje", "El esquema permite porcentajes entre 0.00 y 99.00.");
+                }
                 ClsOpcionPorcentaje Opcion = ComisionVendedoresCboElementoPorcentaje.SelectedItem as ClsOpcionPorcentaje;
-                if (Opcion == null) throw new ArgumentException("Seleccione la línea, producto, categoría o marca que desea modificar.");
+                if (Opcion == null)
+                {
+                    ComisionVendedoresMetMostrarError(ComisionVendedoresLblMantenimientoEstado,
+                        "Seleccione un elemento específico.", ComisionVendedoresCboElementoPorcentaje);
+                    throw new ArgumentException("Seleccione la línea, producto, categoría o marca que desea modificar.");
+                }
                 EnumMetodoComision Metodo = ComisionVendedoresMetObtenerMetodo(ComisionVendedoresCboAlcance.SelectedItem.ToString());
+                string TextoConfirmacion = "Se actualizará el porcentaje de " + Opcion.Etiqueta + " a " +
+                    Porcentaje.ToString("0.00", CultureInfo.GetCultureInfo("es-GT")) + "%. ¿Desea continuar?";
+                if (ComisionVendedoresMetConfirmar(this, "7008 – ComisionVendedores", TextoConfirmacion, "Sí, actualizar") != DialogResult.Yes)
+                    return;
                 int Actualizados = _ControladorComision.ComisionVendedoresMetActualizarPorcentaje(Metodo,
                     Opcion.IdClasificacion, Porcentaje);
 
@@ -517,6 +923,7 @@ namespace ComisionVendedoresVista
                 ComisionVendedoresLblMantenimientoEstado.Text = Actualizados + " registro(s) de " + Opcion.Etiqueta +
                     " guardado(s) con " + Porcentaje.ToString("0.00") + "%.";
                 ComisionVendedoresMetCargarElementosPorcentaje();
+                ComisionVendedoresMetMostrarExito(this, "7008 – ComisionVendedores", ComisionVendedoresLblMantenimientoEstado.Text);
             }
             catch (Exception Excepcion)
             {
@@ -585,14 +992,35 @@ namespace ComisionVendedoresVista
 
         private void ComisionVendedoresMetMostrarPaginaResultados()
         {
-            ComisionVendedoresDgvResultados.DataSource = _Resultados.Skip(_PaginaResultados * _FilasPorPagina).Take(_FilasPorPagina).ToList();
-            ComisionVendedoresLblPaginaResultados.Text = ComisionVendedoresMetObtenerTextoPagina(_PaginaResultados, _Resultados.Count);
+            int UltimaPagina = ComisionVendedoresMetObtenerUltimaPagina(_Resultados.Count, _FilasResultadosPorPagina);
+            _PaginaResultados = Math.Max(0, Math.Min(_PaginaResultados, UltimaPagina));
+            ComisionVendedoresDgvResultados.DataSource = _Resultados.Skip(_PaginaResultados * _FilasResultadosPorPagina).Take(_FilasResultadosPorPagina).ToList();
+            ComisionVendedoresLblPaginaResultados.Text = ComisionVendedoresMetObtenerTextoPagina(_PaginaResultados, _Resultados.Count, _FilasResultadosPorPagina);
             ComisionVendedoresMetActualizarBoton(ComisionVendedoresBtnAnteriorResultados, _PaginaResultados > 0,
                 System.Drawing.Color.FromArgb(228, 212, 234));
             ComisionVendedoresMetActualizarBoton(ComisionVendedoresBtnSiguienteResultados,
-                _PaginaResultados < ComisionVendedoresMetObtenerUltimaPagina(_Resultados.Count), System.Drawing.Color.FromArgb(228, 212, 234));
+                _PaginaResultados < UltimaPagina, System.Drawing.Color.FromArgb(228, 212, 234));
+            ComisionVendedoresMetAplicarIndicadorOrden(ComisionVendedoresDgvResultados);
         }
 
+        private void ComisionVendedoresMetMarcarColumnaObligatoria(object Sender, DataGridViewCellPaintingEventArgs Argumentos)
+        {
+            if (Argumentos.RowIndex != -1 || Argumentos.ColumnIndex < 0 ||
+                ComisionVendedoresDgvDetalleFactura.Columns[Argumentos.ColumnIndex].Name != "ComisionVendedoresClmMetodoProducto")
+                return;
+
+            Argumentos.Paint(Argumentos.ClipBounds, DataGridViewPaintParts.All);
+            string TextoEncabezado = Convert.ToString(Argumentos.FormattedValue);
+            System.Drawing.Size TamanoTexto = TextRenderer.MeasureText(TextoEncabezado, Argumentos.CellStyle.Font);
+            int X = Argumentos.CellBounds.Left + Argumentos.CellStyle.Padding.Left + TamanoTexto.Width;
+            int Y = Argumentos.CellBounds.Top + (Argumentos.CellBounds.Height - TamanoTexto.Height) / 2;
+            using (System.Drawing.Font FuenteAsterisco = new System.Drawing.Font(Argumentos.CellStyle.Font, System.Drawing.FontStyle.Bold))
+            {
+                TextRenderer.DrawText(Argumentos.Graphics, "*", FuenteAsterisco,
+                    new System.Drawing.Point(X, Y), System.Drawing.Color.FromArgb(255, 124, 124), TextFormatFlags.NoPadding);
+            }
+            Argumentos.Handled = true;
+        }
         private void ComisionVendedoresMetFormatearMoneda(object Sender, DataGridViewCellFormattingEventArgs Argumentos)
         {
             DataGridView Tabla = Sender as DataGridView;
@@ -623,6 +1051,88 @@ namespace ComisionVendedoresVista
             Argumentos.FormattingApplied = true;
         }
 
+        private void ComisionVendedoresMetFormatearImporteNomina(object Sender, DataGridViewCellFormattingEventArgs Argumentos)
+        {
+            if (Argumentos.RowIndex < 0 || Argumentos.ColumnIndex < 0 || Argumentos.Value == null) return;
+            string Propiedad = ComisionVendedoresDgvNomina.Columns[Argumentos.ColumnIndex].DataPropertyName;
+            if (Propiedad != "TotalComision" && Propiedad != "MontoPagoCliente" && Propiedad != "ComisionDevengadaAbono") return;
+            ClsComisionNominaVista Comision = ComisionVendedoresDgvNomina.Rows[Argumentos.RowIndex].DataBoundItem as ClsComisionNominaVista;
+            if (Comision == null) return;
+            Argumentos.Value = (Comision.SimboloMoneda ?? String.Empty) + " " +
+                Convert.ToDecimal(Argumentos.Value).ToString("N2", CultureInfo.GetCultureInfo("es-GT"));
+            Argumentos.FormattingApplied = true;
+        }
+
+        private void ComisionVendedoresMetOrdenarTabla(object Sender, DataGridViewCellMouseEventArgs Argumentos)
+        {
+            DataGridView Tabla = Sender as DataGridView;
+            if (Tabla == null || Argumentos.ColumnIndex < 0 || Tabla.Columns[Argumentos.ColumnIndex] is DataGridViewComboBoxColumn) return;
+            string Propiedad = Tabla.Columns[Argumentos.ColumnIndex].DataPropertyName;
+            if (String.IsNullOrWhiteSpace(Propiedad)) return;
+
+            bool Ascendente = !_ColumnasOrdenadas.ContainsKey(Tabla) || _ColumnasOrdenadas[Tabla] != Propiedad ||
+                !_OrdenAscendente.ContainsKey(Tabla) || !_OrdenAscendente[Tabla];
+            _ColumnasOrdenadas[Tabla] = Propiedad;
+            _OrdenAscendente[Tabla] = Ascendente;
+            foreach (DataGridViewColumn Columna in Tabla.Columns)
+            {
+                if (Columna is DataGridViewComboBoxColumn) continue;
+                Columna.SortMode = DataGridViewColumnSortMode.Programmatic;
+                Columna.HeaderCell.SortGlyphDirection = SortOrder.None;
+            }
+            Tabla.Columns[Argumentos.ColumnIndex].HeaderCell.SortGlyphDirection = Ascendente ? SortOrder.Ascending : SortOrder.Descending;
+
+            if (Tabla == ComisionVendedoresDgvResultados)
+                ComisionVendedoresMetOrdenarLista(_Resultados, Propiedad, Ascendente);
+            else if (Tabla == ComisionVendedoresDgvDetalleFactura)
+                ComisionVendedoresMetOrdenarLista(_DetallesFactura, Propiedad, Ascendente);
+            else if (Tabla == ComisionVendedoresDgvPorcentajes)
+                ComisionVendedoresMetOrdenarLista(_ProductosPorcentaje, Propiedad, Ascendente);
+            else if (Tabla == ComisionVendedoresDgvNomina && _ComisionesNomina != null)
+                ComisionVendedoresMetOrdenarLista(_ComisionesNomina, Propiedad, Ascendente);
+
+            if (Tabla == ComisionVendedoresDgvResultados) ComisionVendedoresMetMostrarPaginaResultados();
+            else if (Tabla == ComisionVendedoresDgvDetalleFactura) ComisionVendedoresMetMostrarPaginaFactura();
+            else if (Tabla == ComisionVendedoresDgvPorcentajes) ComisionVendedoresMetMostrarPaginaPorcentajes();
+            else if (Tabla == ComisionVendedoresDgvNomina)
+            {
+                ComisionVendedoresMetMostrarPaginaNomina();
+                ComisionVendedoresMetAplicarIndicadorOrden(ComisionVendedoresDgvNomina);
+            }
+        }
+
+        private static void ComisionVendedoresMetOrdenarLista<T>(List<T> Registros, string NombrePropiedad, bool Ascendente)
+        {
+            if (Registros == null || Registros.Count < 2) return;
+            System.Reflection.PropertyInfo Propiedad = typeof(T).GetProperty(NombrePropiedad);
+            if (Propiedad == null) return;
+            Registros.Sort((Primero, Segundo) =>
+            {
+                object ValorPrimero = Propiedad.GetValue(Primero, null);
+                object ValorSegundo = Propiedad.GetValue(Segundo, null);
+                int Comparacion;
+                if (ValorPrimero == null) Comparacion = ValorSegundo == null ? 0 : -1;
+                else if (ValorSegundo == null) Comparacion = 1;
+                else if (ValorPrimero is IComparable) Comparacion = ((IComparable)ValorPrimero).CompareTo(ValorSegundo);
+                else Comparacion = String.Compare(Convert.ToString(ValorPrimero), Convert.ToString(ValorSegundo), StringComparison.CurrentCultureIgnoreCase);
+                return Ascendente ? Comparacion : -Comparacion;
+            });
+        }
+
+        private void ComisionVendedoresMetAplicarIndicadorOrden(DataGridView Tabla)
+        {
+            string Propiedad;
+            bool Ascendente;
+            if (!_ColumnasOrdenadas.TryGetValue(Tabla, out Propiedad) || !_OrdenAscendente.TryGetValue(Tabla, out Ascendente)) return;
+            foreach (DataGridViewColumn Columna in Tabla.Columns)
+            {
+                if (Columna is DataGridViewComboBoxColumn) continue;
+                Columna.SortMode = DataGridViewColumnSortMode.Programmatic;
+                Columna.HeaderCell.SortGlyphDirection = Columna.DataPropertyName == Propiedad
+                    ? (Ascendente ? SortOrder.Ascending : SortOrder.Descending) : SortOrder.None;
+            }
+        }
+
         private void ComisionVendedoresMetMostrarPaginaFactura()
         {
             ComisionVendedoresDgvDetalleFactura.DataSource = _DetallesFactura.Skip(_PaginaFactura * _FilasPorPagina).Take(_FilasPorPagina).ToList();
@@ -633,6 +1143,7 @@ namespace ComisionVendedoresVista
                 System.Drawing.Color.FromArgb(228, 212, 234));
             ComisionVendedoresMetActualizarBoton(ComisionVendedoresBtnSiguienteFactura,
                 _PaginaFactura < ComisionVendedoresMetObtenerUltimaPagina(_DetallesFactura.Count), System.Drawing.Color.FromArgb(228, 212, 234));
+            ComisionVendedoresMetAplicarIndicadorOrden(ComisionVendedoresDgvDetalleFactura);
         }
 
         private void ComisionVendedoresMetCambiarMetodoProducto(object Sender, DataGridViewCellEventArgs Argumentos)
@@ -658,15 +1169,26 @@ namespace ComisionVendedoresVista
 
         private void ComisionVendedoresMetAbrirAyuda(object Sender, EventArgs Argumentos)
         {
-            string RutaAyuda = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Ayudas", "ComisionVendedoresAyudas.chm");
+            string RutaAyuda = null;
+            DirectoryInfo CarpetaActual = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            while (CarpetaActual != null)
+            {
+                string RutaCentralAyuda = Path.Combine(CarpetaActual.FullName, "ayuda", "modulos", "ventas", "ComisionVendedoresAyuda", "comisionvendedores.chm");
+                if (File.Exists(RutaCentralAyuda))
+                {
+                    RutaAyuda = RutaCentralAyuda;
+                    break;
+                }
+                CarpetaActual = CarpetaActual.Parent;
+            }
+
             if (File.Exists(RutaAyuda))
             {
                 Help.ShowHelp(this, RutaAyuda);
                 return;
             }
-            string RutaHtml = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Ayudas", "FrmComisionVendedores_ComisionVendedores.htm");
-            if (File.Exists(RutaHtml)) Process.Start(new ProcessStartInfo(RutaHtml) { UseShellExecute = true });
-            else MessageBox.Show(this, "No se encontró el archivo de ayuda del módulo.", "Ayuda ComisionVendedores", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "No se encontró comisionvendedores.chm en ayuda\\modulos\\ventas\\ComisionVendedoresAyuda.",
+                "Ayuda ComisionVendedores", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ComisionVendedoresMetFormatearMetodoProducto(object Sender, DataGridViewCellFormattingEventArgs Argumentos)
@@ -689,6 +1211,7 @@ namespace ComisionVendedoresVista
                 System.Drawing.Color.FromArgb(228, 212, 234));
             ComisionVendedoresMetActualizarBoton(ComisionVendedoresBtnSiguientePorcentajes,
                 _PaginaPorcentajes < ComisionVendedoresMetObtenerUltimaPagina(_ProductosPorcentaje.Count), System.Drawing.Color.FromArgb(228, 212, 234));
+            ComisionVendedoresMetAplicarIndicadorOrden(ComisionVendedoresDgvPorcentajes);
         }
 
         private int ComisionVendedoresMetObtenerUltimaPagina(int TotalRegistros)
@@ -696,12 +1219,51 @@ namespace ComisionVendedoresVista
             return Math.Max(0, (int)Math.Ceiling(TotalRegistros / (double)_FilasPorPagina) - 1);
         }
 
+        private int ComisionVendedoresMetObtenerUltimaPagina(int TotalRegistros, int FilasPorPagina)
+        {
+            return Math.Max(0, (int)Math.Ceiling(TotalRegistros / (double)FilasPorPagina) - 1);
+        }
+
+        private string ComisionVendedoresMetObtenerTextoPagina(int Pagina, int TotalRegistros, int FilasPorPagina)
+        {
+            int TotalPaginas = TotalRegistros == 0 ? 0 : ComisionVendedoresMetObtenerUltimaPagina(TotalRegistros, FilasPorPagina) + 1;
+            return "Página " + (TotalPaginas == 0 ? 0 : Pagina + 1) + " de " + TotalPaginas + " · " + TotalRegistros + " registros";
+        }
+
+        private void ComisionVendedoresMetEnvolverControl(Control Campo, string NombreContenedor)
+        {
+            Control Padre = Campo.Parent;
+            if (Padre == null || _ContenedoresValidacion.ContainsKey(Campo)) return;
+
+            int Indice = Padre.Controls.GetChildIndex(Campo);
+            System.Drawing.Color ColorOriginal = Padre.BackColor;
+            Panel Contenedor = new Panel
+            {
+                Name = NombreContenedor, Location = Campo.Location, Size = Campo.Size,
+                Anchor = Campo.Anchor, BackColor = ColorOriginal, Padding = new Padding(2),
+                TabStop = false, TabIndex = Campo.TabIndex, Tag = ColorOriginal
+            };
+            Padre.Controls.Remove(Campo);
+            Contenedor.Controls.Add(Campo);
+            Campo.Dock = DockStyle.Fill;
+            Campo.Margin = Padding.Empty;
+            Campo.TabIndex = 0;
+            Padre.Controls.Add(Contenedor);
+            Padre.Controls.SetChildIndex(Contenedor, Indice);
+            _ContenedoresValidacion.Add(Campo, Contenedor);
+        }
         private void ComisionVendedoresMetMostrarError(Label EtiquetaEstado, string Mensaje, params Control[] Controles)
         {
             EtiquetaEstado.ForeColor = System.Drawing.Color.Firebrick;
             EtiquetaEstado.Text = Mensaje;
             foreach (Control ControlValidado in Controles)
+            {
                 ControlValidado.BackColor = System.Drawing.Color.MistyRose;
+                Panel Contenedor;
+                if (_ContenedoresValidacion.TryGetValue(ControlValidado, out Contenedor))
+                    Contenedor.BackColor = System.Drawing.Color.Firebrick;
+                _ErrorProveedor.SetError(ControlValidado, Mensaje);
+            }
         }
 
         private string ComisionVendedoresMetObtenerDetalleError(Exception Excepcion)
@@ -735,15 +1297,21 @@ namespace ComisionVendedoresVista
         private void ComisionVendedoresMetActualizarBoton(Button Boton, bool Habilitado, System.Drawing.Color ColorActivo)
         {
             Boton.Enabled = Habilitado;
-            Boton.BackColor = Habilitado ? ColorActivo : System.Drawing.Color.LightGray;
-            Boton.ForeColor = Habilitado ? System.Drawing.Color.FromArgb(59, 29, 74) : System.Drawing.SystemColors.GrayText;
+            Boton.BackColor = Habilitado ? System.Drawing.Color.FromArgb(59, 29, 74) : System.Drawing.Color.LightGray;
+            Boton.ForeColor = Habilitado ? System.Drawing.Color.FromArgb(248, 245, 249) : System.Drawing.SystemColors.GrayText;
         }
 
         private void ComisionVendedoresMetRestablecerEstado(Label EtiquetaEstado, params Control[] Controles)
         {
             EtiquetaEstado.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             foreach (Control ControlValidado in Controles)
+            {
                 ControlValidado.BackColor = System.Drawing.SystemColors.Window;
+                Panel Contenedor;
+                if (_ContenedoresValidacion.TryGetValue(ControlValidado, out Contenedor))
+                    Contenedor.BackColor = Contenedor.Tag is System.Drawing.Color ? (System.Drawing.Color)Contenedor.Tag : BackColor;
+                _ErrorProveedor.SetError(ControlValidado, String.Empty);
+            }
         }
 
         private string ComisionVendedoresMetObtenerTextoPagina(int Pagina, int TotalRegistros)
@@ -768,6 +1336,28 @@ namespace ComisionVendedoresVista
         {
             _PaginaPorcentajes += Sender == ComisionVendedoresBtnAnteriorPorcentajes ? -1 : 1;
             ComisionVendedoresMetMostrarPaginaPorcentajes();
+        }
+
+        private void ComisionVendedoresMetMostrarPaginaNomina()
+        {
+            if (_ComisionesNomina == null) _ComisionesNomina = new List<ClsComisionNominaVista>();
+            int UltimaPagina = ComisionVendedoresMetObtenerUltimaPagina(_ComisionesNomina.Count, _FilasNominaPorPagina);
+            _PaginaNomina = Math.Max(0, Math.Min(_PaginaNomina, UltimaPagina));
+            ComisionVendedoresDgvNomina.DataSource = _ComisionesNomina
+                .Skip(_PaginaNomina * _FilasNominaPorPagina).Take(_FilasNominaPorPagina).ToList();
+            ComisionVendedoresLblPaginaNomina.Text = ComisionVendedoresMetObtenerTextoPagina(
+                _PaginaNomina, _ComisionesNomina.Count, _FilasNominaPorPagina);
+            ComisionVendedoresMetActualizarBoton(ComisionVendedoresBtnAnteriorNomina, _PaginaNomina > 0,
+                System.Drawing.Color.FromArgb(228, 212, 234));
+            ComisionVendedoresMetActualizarBoton(ComisionVendedoresBtnSiguienteNomina,
+                _PaginaNomina < UltimaPagina, System.Drawing.Color.FromArgb(228, 212, 234));
+            ComisionVendedoresMetAplicarIndicadorOrden(ComisionVendedoresDgvNomina);
+        }
+
+        private void ComisionVendedoresMetCambiarPaginaNomina(object Sender, EventArgs Argumentos)
+        {
+            _PaginaNomina += Sender == ComisionVendedoresBtnAnteriorNomina ? -1 : 1;
+            ComisionVendedoresMetMostrarPaginaNomina();
         }
 
         private EnumMetodoComision ComisionVendedoresMetObtenerMetodo(string Texto)
