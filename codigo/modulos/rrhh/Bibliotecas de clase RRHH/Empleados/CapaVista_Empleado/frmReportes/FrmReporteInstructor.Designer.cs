@@ -49,9 +49,9 @@
             this.Controls.Add(this.reportViewer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Name = "FrmReporteInstructor";
-            this.Text = "9303 – ReporteInstructores";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "9306 – ReporteInstructores";
             this.Load += new System.EventHandler(this.FrmReporteInstructor_Load);
             this.ResumeLayout(false);
 
