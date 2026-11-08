@@ -22,7 +22,6 @@ namespace CapaVista_PagosProveedores
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPagosProveedores));
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
-            this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "PagosProveedores.html";
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
             this.ComprasDgvPagos = new CapaVista_Componentes.Componentes.ComprasUsrDataGridView();
             this.ComprasGbxRegistrarPago = new CapaVista_Componentes.Componentes.ClsGroupBoxCompras();
@@ -103,6 +102,7 @@ namespace CapaVista_PagosProveedores
             this.ComprasUsrEncabezadoFormulario.MaximumSize = new System.Drawing.Size(1500, 130);
             this.ComprasUsrEncabezadoFormulario.MinimumSize = new System.Drawing.Size(0, 130);
             this.ComprasUsrEncabezadoFormulario.Name = "ComprasUsrEncabezadoFormulario";
+            this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "PagosProveedores.html";
             this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1318, 130);
             this.ComprasUsrEncabezadoFormulario.TabIndex = 0;
             this.ComprasUsrEncabezadoFormulario.TabStop = false;
@@ -782,6 +782,7 @@ namespace CapaVista_PagosProveedores
             this.Margin = new System.Windows.Forms.Padding(0);
             this.MaximizeBox = false;
             this.Name = "FrmPagosProveedores";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "6004 – PagosProveedores";
             this.ComprasTlpFormulario.ResumeLayout(false);
             this.ComprasPnlContenido.ResumeLayout(false);
