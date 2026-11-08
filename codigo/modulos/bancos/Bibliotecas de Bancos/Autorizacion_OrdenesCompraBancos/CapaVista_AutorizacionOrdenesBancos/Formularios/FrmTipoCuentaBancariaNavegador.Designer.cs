@@ -34,26 +34,27 @@
             // 
             // BancosNavTipoCuenta
             // 
-            this.BancosNavTipoCuenta.Location = new System.Drawing.Point(9, 10);
-            this.BancosNavTipoCuenta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BancosNavTipoCuenta.Location = new System.Drawing.Point(12, 12);
+            this.BancosNavTipoCuenta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BancosNavTipoCuenta.Name = "BancosNavTipoCuenta";
-            this.BancosNavTipoCuenta.Size = new System.Drawing.Size(1078, 88);
+            this.BancosNavTipoCuenta.Size = new System.Drawing.Size(1437, 108);
             this.BancosNavTipoCuenta.TabIndex = 0;
             // 
             // FrmTipoCuentaBancariaNavegador
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1085, 609);
+            this.ClientSize = new System.Drawing.Size(1447, 750);
             this.Controls.Add(this.BancosNavTipoCuenta);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "FrmTipoCuentaBancariaNavegador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "8003-MantenimientoTipoCuentaBancaria";
+            this.Load += new System.EventHandler(this.FrmTipoCuentaBancariaNavegador_Load);
             this.ResumeLayout(false);
 
         }

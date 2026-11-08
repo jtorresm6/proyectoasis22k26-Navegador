@@ -519,6 +519,7 @@
             this.BancosBtnReporte.Size = new System.Drawing.Size(65, 65);
             this.BancosBtnReporte.TabIndex = 3;
             this.BancosBtnReporte.UseVisualStyleBackColor = false;
+            this.BancosBtnReporte.Click += new System.EventHandler(this.BancosBtnReporte_Click);
             // 
             // BancosBtnEliminar
             // 

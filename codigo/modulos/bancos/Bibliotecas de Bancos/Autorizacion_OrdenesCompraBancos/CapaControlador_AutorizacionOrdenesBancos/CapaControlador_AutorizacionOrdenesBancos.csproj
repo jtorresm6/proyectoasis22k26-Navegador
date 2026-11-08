@@ -48,6 +48,7 @@
     <Compile Include="Modelos de controladores\ClsModeloAutorizacionOrdenCompra.cs" />
     <Compile Include="Modelos de controladores\ClsModeloCuentaDisponible.cs" />
     <Compile Include="Modelos de controladores\ClsModeloOrdenCompra.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloTipoCuentaBancaria.cs" />
     <Compile Include="Objetos de valor\EstadoEntidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
