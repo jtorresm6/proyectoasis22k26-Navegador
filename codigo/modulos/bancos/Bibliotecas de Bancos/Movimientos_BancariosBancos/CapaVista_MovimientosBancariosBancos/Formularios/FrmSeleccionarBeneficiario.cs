@@ -107,5 +107,34 @@ namespace CapaVista_MovimientosBancarios.Formularios
                     "Error al cargar beneficiarios: " + ex.Message);
             }
         }
+
+        private void BancoTxtBeneficiarioBuscar_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_TablaBeneficiarios == null)
+                    return;
+
+                string Texto = BancoTxtBeneficiarioBuscar.Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(Texto))
+                {
+                    _TablaBeneficiarios.DefaultView.RowFilter = "";
+                    return;
+                }
+
+                Texto = Texto.Replace("'", "''")
+                             .Replace("[", "[[]")
+                             .Replace("%", "[%]")
+                             .Replace("*", "[*]");
+
+                _TablaBeneficiarios.DefaultView.RowFilter =
+                    $"Convert([Nombre], 'System.String') LIKE '%{Texto}%'";
+            }
+            catch (EvaluateException)
+            {
+                _TablaBeneficiarios.DefaultView.RowFilter = "";
+            }
+        }
     }
 }

@@ -180,6 +180,8 @@
   <ItemGroup>
     <None Include="Resouces\btn_reporteB.png" />
     <None Include="Resources\FondoAutorizacionModulo.jpg" />
+    <None Include="Resouces\butti1.png" />
+    <None Include="Resouces\butti3.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
