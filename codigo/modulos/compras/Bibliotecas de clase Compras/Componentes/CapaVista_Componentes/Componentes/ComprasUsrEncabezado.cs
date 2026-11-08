@@ -31,15 +31,44 @@ namespace CapaVista_Componentes.Componentes
         private bool _MostrarReportes = true;
         private string _Titulo = "Titulo";
         private string _Codigo = "6000";
+        private Image _Icono;
+        private readonly Image _IconoPredeterminado;
 
         public ComprasUsrEncabezado()
         {
             InitializeComponent();
+            _IconoPredeterminado = ComprasPbxIcono.BackgroundImage;
             ComprasProcActualizarTitulo();
             ComprasProcActualizarAcciones();
             DoubleBuffered = true;
             TabStop = false;
             ComprasProcSeleccionarFondo();
+        }
+
+        [Category("Compras")]
+        [Description("Imagen del extremo izquierdo. Si no se selecciona una imagen valida, muestra el icono predeterminado.")]
+        [Browsable(true)]
+        [Localizable(true)]
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Image Icono
+        {
+            get => _Icono;
+            set
+            {
+                try
+                {
+                    if (value != null && (value.Width <= 0 || value.Height <= 0))
+                        value = null;
+                    ComprasPbxIcono.BackgroundImage = value ?? _IconoPredeterminado;
+                    _Icono = value;
+                }
+                catch (Exception)
+                {
+                    _Icono = null;
+                    ComprasPbxIcono.BackgroundImage = _IconoPredeterminado;
+                }
+            }
         }
 
         [Category("Compras")]
@@ -157,13 +186,13 @@ namespace CapaVista_Componentes.Componentes
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string RutaAyuda
         {
-            get => "Ayuda_Compras.chm";
+            get => "ComprasAyudas.chm";
             set { }
         }
 
         [Category("Compras")]
         [DefaultValue("index.html")]
-        [Description("Seleccione un archivo .html. Guarda solo el nombre de la pagina dentro de Ayuda_Compras.chm. Si queda vacio o la pagina no existe, abre index.html.")]
+        [Description("Seleccione un archivo .html. Guarda solo el nombre de la pagina dentro de ComprasAyudas.chm. Si queda vacio o la pagina no existe, abre index.html.")]
         [Editor(typeof(ClsEditorPaginaAyudaCompras), typeof(UITypeEditor))]
         public string PaginaInicialAyuda
         {

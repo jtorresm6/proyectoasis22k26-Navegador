@@ -89,6 +89,9 @@
     <EmbeddedResource Include="Reportes\RpReporteEncabezadosCompras.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpReporteDetalleOrdenCompra.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Compile Include="ComprasUsrProductosOrdenCompra.cs">
       <SubType>UserControl</SubType>
     </Compile>

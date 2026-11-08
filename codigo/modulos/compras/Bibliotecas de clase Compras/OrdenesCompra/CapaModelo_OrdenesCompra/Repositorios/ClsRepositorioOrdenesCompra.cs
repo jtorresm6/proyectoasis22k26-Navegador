@@ -3,6 +3,18 @@ using System.Data;
 using CapaModelo_OrdenesCompra.Contratos;
 using CapaModelo_OrdenesCompra.Entidades;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Integra las consultas y los comandos de persistencia de las órdenes de compra.
+ * ===================================================================
+*/
+
 namespace CapaModelo_OrdenesCompra.Repositorios
 {
     public sealed class ClsRepositorioOrdenesCompra : IRepositorioOrdenesCompra
@@ -35,10 +47,11 @@ namespace CapaModelo_OrdenesCompra.Repositorios
         public void ComprasProcActualizarVencimiento(int Id, DateTime Fecha) => _Comandos.ComprasProcActualizarVencimiento(Id, Fecha);
 
         public int ComprasFuncCrear(int IdProveedor, int IdPlazo, int IdMoneda, DateTime Emision,
-            DateTime Vencimiento, decimal TipoCambio, decimal Subtotal, decimal Descuento, string Comentario, decimal Impuesto = 0M)
+            DateTime Vencimiento, decimal TipoCambio, decimal Subtotal, decimal Descuento, string Comentario, decimal Impuesto = 0M,
+            DataTable Detalles = null, long? IdTipoCambio = null)
         {
             return _Comandos.ComprasFuncCrear(IdProveedor, IdPlazo, IdMoneda,
-                Emision, Vencimiento, TipoCambio, Subtotal, Descuento, Comentario, Impuesto);
+                Emision, Vencimiento, TipoCambio, Subtotal, Descuento, Comentario, Impuesto, Detalles, IdTipoCambio);
         }
     }
 }

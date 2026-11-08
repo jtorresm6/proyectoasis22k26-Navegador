@@ -1,6 +1,18 @@
 ﻿using System;
 using System.Data.Odbc;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Traduce errores ODBC en mensajes comprensibles para el usuario.
+ * ===================================================================
+*/
+
 namespace CapaModelo_OrdenesCompra.Repositorios
 {
     internal static class ClsErroresDatosOrdenesCompra

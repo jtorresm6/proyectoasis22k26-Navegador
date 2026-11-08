@@ -1,6 +1,18 @@
 ﻿using System;
 using System.Data;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Representa los datos de una orden de compra obtenidos de la base de datos.
+ * ===================================================================
+*/
+
 namespace CapaModelo_OrdenesCompra.Entidades
 {
     public sealed class ClsOrdenCompra

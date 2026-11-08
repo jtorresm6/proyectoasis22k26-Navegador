@@ -1,5 +1,17 @@
 ﻿using System;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Expone los datos de una orden de compra a la capa de presentación.
+ * ===================================================================
+*/
+
 namespace CapaControlador_OrdenesCompra.Entidades
 {
     public sealed class ClsOrdenCompra

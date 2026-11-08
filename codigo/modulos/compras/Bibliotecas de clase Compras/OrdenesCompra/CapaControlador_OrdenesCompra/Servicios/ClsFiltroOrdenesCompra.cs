@@ -7,21 +7,12 @@ using System.Globalization;
  * Área : Compras
  * Autor : Diego Fernando Santizo Samayoa
  * Carné : 0901-22-15950
- * Fecha : 24/10/2026
+ * Fecha : 08/11/2026
  * ==================================================================
  * Propósito :
- *  Filtra las filas de órdenes de compra por texto, estado y fechas.
+ *  Filtra órdenes de compra por búsqueda, estado y rango de fechas.
  * ===================================================================
 */
-
-
-
-
-
-
-
-
-
 
 namespace CapaControlador_OrdenesCompra.Servicios
 {
@@ -29,10 +20,6 @@ namespace CapaControlador_OrdenesCompra.Servicios
     {
         private static readonly string[] _CamposBusqueda = { "codigoOrdenCompra", "nombreProveedor", "nitProveedor" };
 
-        
-        
-        
-        
         internal static DataTable ComprasFuncFiltrar(DataTable Datos, string Palabra, string Estado, DateTime? Inicio, DateTime? Fin)
         {
             if (Datos == null)
@@ -59,10 +46,6 @@ namespace CapaControlador_OrdenesCompra.Servicios
             return Resultado;
         }
 
-        
-        
-        
-        
         private static bool ComprasFuncCoincideBusqueda(DataRow Fila, string Buscar)
         {
             if (Buscar.Length == 0)

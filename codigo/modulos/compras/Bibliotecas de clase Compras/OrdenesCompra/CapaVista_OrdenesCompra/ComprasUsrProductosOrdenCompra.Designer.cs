@@ -1,4 +1,18 @@
-﻿namespace CapaVista_OrdenesCompra
+﻿
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Define la distribución visual de los productos y la navegación por bodegas.
+ * ===================================================================
+*/
+
+namespace CapaVista_OrdenesCompra
 {
     partial class ComprasUsrProductosOrdenCompra
     {
@@ -58,9 +72,9 @@
             this.ComprasTlpNavegacion.SuspendLayout();
             this.ComprasGbxProductos.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // ComprasDgvProductos
-            // 
+            //
             this.ComprasDgvProductos.AutoGenerateColumns = false;
             this.ComprasDgvProductos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasDgvProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -80,18 +94,18 @@
             this.ComprasDgvProductos.ResaltarFilasAlPasar = true;
             this.ComprasDgvProductos.Size = new System.Drawing.Size(751, 359);
             this.ComprasDgvProductos.TabIndex = 1;
-            // 
+            //
             // ComprasColsku
-            // 
+            //
             this.ComprasColsku.DataPropertyName = "sku";
             this.ComprasColsku.HeaderText = "SKU";
             this.ComprasColsku.MinimumWidth = 45;
             this.ComprasColsku.Name = "ComprasColsku";
             this.ComprasColsku.ReadOnly = true;
             this.ComprasColsku.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
+            //
             // ComprasColproducto
-            // 
+            //
             this.ComprasColproducto.DataPropertyName = "producto";
             this.ComprasColproducto.FillWeight = 180F;
             this.ComprasColproducto.HeaderText = "Producto";
@@ -99,9 +113,9 @@
             this.ComprasColproducto.Name = "ComprasColproducto";
             this.ComprasColproducto.ReadOnly = true;
             this.ComprasColproducto.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
+            //
             // ComprasColpeso
-            // 
+            //
             this.ComprasColpeso.DataPropertyName = "peso";
             dataGridViewCellStyle1.Format = "N2";
             this.ComprasColpeso.DefaultCellStyle = dataGridViewCellStyle1;
@@ -110,18 +124,18 @@
             this.ComprasColpeso.Name = "ComprasColpeso";
             this.ComprasColpeso.ReadOnly = true;
             this.ComprasColpeso.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
+            //
             // ComprasColcantidad
-            // 
+            //
             this.ComprasColcantidad.DataPropertyName = "cantidad";
             this.ComprasColcantidad.HeaderText = "Cantidad";
             this.ComprasColcantidad.MinimumWidth = 45;
             this.ComprasColcantidad.Name = "ComprasColcantidad";
             this.ComprasColcantidad.ReadOnly = true;
             this.ComprasColcantidad.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
+            //
             // ComprasColprecio
-            // 
+            //
             this.ComprasColprecio.DataPropertyName = "precio";
             dataGridViewCellStyle2.Format = "N2";
             this.ComprasColprecio.DefaultCellStyle = dataGridViewCellStyle2;
@@ -130,9 +144,9 @@
             this.ComprasColprecio.Name = "ComprasColprecio";
             this.ComprasColprecio.ReadOnly = true;
             this.ComprasColprecio.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
+            //
             // ComprasColdescuento
-            // 
+            //
             this.ComprasColdescuento.DataPropertyName = "descuento";
             dataGridViewCellStyle3.Format = "N2";
             this.ComprasColdescuento.DefaultCellStyle = dataGridViewCellStyle3;
@@ -141,9 +155,9 @@
             this.ComprasColdescuento.Name = "ComprasColdescuento";
             this.ComprasColdescuento.ReadOnly = true;
             this.ComprasColdescuento.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
+            //
             // ComprasColporcentaje
-            // 
+            //
             this.ComprasColporcentaje.DataPropertyName = "porcentaje";
             dataGridViewCellStyle4.Format = "N2";
             this.ComprasColporcentaje.DefaultCellStyle = dataGridViewCellStyle4;
@@ -152,9 +166,9 @@
             this.ComprasColporcentaje.Name = "ComprasColporcentaje";
             this.ComprasColporcentaje.ReadOnly = true;
             this.ComprasColporcentaje.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
+            //
             // ComprasColtotal
-            // 
+            //
             this.ComprasColtotal.DataPropertyName = "total";
             dataGridViewCellStyle5.Format = "N2";
             this.ComprasColtotal.DefaultCellStyle = dataGridViewCellStyle5;
@@ -163,9 +177,9 @@
             this.ComprasColtotal.Name = "ComprasColtotal";
             this.ComprasColtotal.ReadOnly = true;
             this.ComprasColtotal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
+            //
             // ComprasTlpDetalles
-            // 
+            //
             this.ComprasTlpDetalles.ColumnCount = 1;
             this.ComprasTlpDetalles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpDetalles.Controls.Add(this.ComprasTlpNavegacion, 0, 0);
@@ -180,9 +194,9 @@
             this.ComprasTlpDetalles.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpDetalles.Size = new System.Drawing.Size(761, 464);
             this.ComprasTlpDetalles.TabIndex = 0;
-            // 
+            //
             // ComprasTlpNavegacion
-            // 
+            //
             this.ComprasTlpNavegacion.ColumnCount = 3;
             this.ComprasTlpNavegacion.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.ComprasTlpNavegacion.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -198,9 +212,9 @@
             this.ComprasTlpNavegacion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpNavegacion.Size = new System.Drawing.Size(751, 80);
             this.ComprasTlpNavegacion.TabIndex = 0;
-            // 
+            //
             // ComprasBtnBodegaAnterior
-            // 
+            //
             this.ComprasBtnBodegaAnterior.AccessibleName = "Anterior";
             this.ComprasBtnBodegaAnterior.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(220)))), ((int)(((byte)(239)))));
             this.ComprasBtnBodegaAnterior.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnBodegaAnterior.BackgroundImage")));
@@ -220,9 +234,9 @@
             this.ComprasBtnBodegaAnterior.Size = new System.Drawing.Size(80, 80);
             this.ComprasBtnBodegaAnterior.TabIndex = 0;
             this.ComprasBtnBodegaAnterior.UseVisualStyleBackColor = false;
-            // 
+            //
             // ComprasFlpAccionesProductos
-            // 
+            //
             this.ComprasFlpAccionesProductos.AutoScroll = true;
             this.ComprasFlpAccionesProductos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasFlpAccionesProductos.Location = new System.Drawing.Point(80, 0);
@@ -231,9 +245,9 @@
             this.ComprasFlpAccionesProductos.Size = new System.Drawing.Size(591, 80);
             this.ComprasFlpAccionesProductos.TabIndex = 1;
             this.ComprasFlpAccionesProductos.WrapContents = false;
-            // 
+            //
             // ComprasBtnBodegaSiguiente
-            // 
+            //
             this.ComprasBtnBodegaSiguiente.AccessibleName = "Siguiente";
             this.ComprasBtnBodegaSiguiente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(220)))), ((int)(((byte)(239)))));
             this.ComprasBtnBodegaSiguiente.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnBodegaSiguiente.BackgroundImage")));
@@ -253,9 +267,9 @@
             this.ComprasBtnBodegaSiguiente.Size = new System.Drawing.Size(80, 80);
             this.ComprasBtnBodegaSiguiente.TabIndex = 2;
             this.ComprasBtnBodegaSiguiente.UseVisualStyleBackColor = false;
-            // 
+            //
             // ComprasGbxProductos
-            // 
+            //
             this.ComprasGbxProductos.BackColor = System.Drawing.Color.Transparent;
             this.ComprasGbxProductos.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasGbxProductos.Controls.Add(this.ComprasTlpDetalles);
@@ -270,9 +284,9 @@
             this.ComprasGbxProductos.Size = new System.Drawing.Size(773, 497);
             this.ComprasGbxProductos.TabIndex = 0;
             this.ComprasGbxProductos.TabStop = false;
-            // 
+            //
             // ComprasUsrProductosOrdenCompra
-            // 
+            //
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.Controls.Add(this.ComprasGbxProductos);
             this.Name = "ComprasUsrProductosOrdenCompra";

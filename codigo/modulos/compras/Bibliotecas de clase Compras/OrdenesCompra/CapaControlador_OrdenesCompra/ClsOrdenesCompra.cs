@@ -5,6 +5,18 @@ using CapaModelo_OrdenesCompra.Contratos;
 using CapaControlador_OrdenesCompra.Entidades;
 using CapaModelo_OrdenesCompra.Repositorios;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Coordina la validación, consulta y registro de las órdenes de compra.
+ * ===================================================================
+*/
+
 namespace CapaControlador_OrdenesCompra
 {
     public sealed class ClsOrdenesCompra
@@ -94,6 +106,38 @@ namespace CapaControlador_OrdenesCompra
             Comentario = ClsValidacionOrdenesCompra.ComprasFuncNormalizarComentario(Comentario);
             return _Repositorio.ComprasFuncCrear(IdProveedor, IdPlazo, IdMoneda, Emision.Date,
                 Vencimiento.Date, TipoCambio, Subtotal, Descuento, Comentario, Impuesto);
+        }
+
+        public int ComprasFuncCrearConDetalles(int IdProveedor, int IdPlazo, int IdMoneda, DateTime Emision,
+            DateTime Vencimiento, decimal TipoCambio, long? IdTipoCambio, string Comentario, DataTable Detalles)
+        {
+            if (Detalles == null || Detalles.Rows.Count == 0)
+                throw new ArgumentException("Agrega al menos un producto antes de guardar la orden.");
+            if (IdTipoCambio.HasValue && IdTipoCambio.Value <= 0 || !IdTipoCambio.HasValue && TipoCambio != 1M)
+                throw new ArgumentException("Selecciona un tipo de cambio válido para la moneda y fecha de emisión.");
+            decimal Subtotal = 0M;
+            decimal Descuento = 0M;
+            foreach (DataRow Fila in Detalles.Rows)
+            {
+                int Producto = Convert.ToInt32(Fila["idProducto"]);
+                int Bodega = Convert.ToInt32(Fila["idBodega"]);
+                decimal Cantidad = Convert.ToDecimal(Fila["cantidad"]);
+                decimal Precio = Convert.ToDecimal(Fila["precio"]);
+                decimal Porcentaje = Convert.ToDecimal(Fila["porcentaje"]);
+                if (Producto <= 0 || Bodega <= 0 || Cantidad <= 0 || Cantidad > 99999999.9999M
+                    || decimal.Round(Cantidad, 4) != Cantidad || Precio < 0 || Precio > 99999999.9999M
+                    || decimal.Round(Precio, 4) != Precio || Porcentaje < 0 || Porcentaje > 100
+                    || decimal.Round(Porcentaje, 2) != Porcentaje)
+                    throw new ArgumentException("Revisa el producto, bodega, cantidad, precio y descuento de cada línea.");
+                decimal Bruto = Cantidad * Precio;
+                Subtotal += Bruto;
+                Descuento += Bruto - decimal.Round(Bruto * (1M - Porcentaje / 100M), 4, MidpointRounding.AwayFromZero);
+            }
+            ClsValidacionOrdenesCompra.ComprasProcValidarCreacion(IdProveedor, IdPlazo, IdMoneda,
+                Emision, Vencimiento, TipoCambio, Subtotal, Descuento, 0M);
+            Comentario = ClsValidacionOrdenesCompra.ComprasFuncNormalizarComentario(Comentario);
+            return _Repositorio.ComprasFuncCrear(IdProveedor, IdPlazo, IdMoneda, Emision.Date,
+                Vencimiento.Date, TipoCambio, Subtotal, Descuento, Comentario, 0M, Detalles, IdTipoCambio);
         }
 
         public ClsOrdenCompra ComprasFuncObtener(int Id)

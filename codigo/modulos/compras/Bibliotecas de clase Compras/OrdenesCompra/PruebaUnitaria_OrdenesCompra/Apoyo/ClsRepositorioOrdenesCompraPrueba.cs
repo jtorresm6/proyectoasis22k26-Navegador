@@ -1,7 +1,19 @@
-﻿using System;
+using System;
 using System.Data;
 using CapaModelo_OrdenesCompra.Contratos;
 using CapaModelo_OrdenesCompra.Entidades;
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Proporciona datos y operaciones simuladas para las pruebas de órdenes de compra.
+ * ===================================================================
+*/
 
 namespace PruebaUnitaria_OrdenesCompra.Apoyo
 {
@@ -9,6 +21,9 @@ namespace PruebaUnitaria_OrdenesCompra.Apoyo
     {
         internal DataTable Datos { get; }
         internal string EstadoSolicitado { get; private set; }
+        internal int Creaciones { get; private set; }
+        internal DataTable DetallesCreados { get; private set; }
+        internal bool FallarCreacion { get; set; }
         internal decimal ImpuestoCreado { get; private set; }
         internal string CodigoCreado { get; private set; }
         internal string ComentarioCreado { get; private set; }
@@ -149,8 +164,12 @@ namespace PruebaUnitaria_OrdenesCompra.Apoyo
         }
 
         public int ComprasFuncCrear(int IdProveedor, int IdPlazo, int IdMoneda,
-            DateTime Emision, DateTime Vencimiento, decimal TipoCambio, decimal Subtotal, decimal Descuento, string Comentario, decimal Impuesto = 0M)
+            DateTime Emision, DateTime Vencimiento, decimal TipoCambio, decimal Subtotal, decimal Descuento, string Comentario, decimal Impuesto = 0M,
+            DataTable Detalles = null, long? IdTipoCambio = null)
         {
+            if (FallarCreacion) throw new InvalidOperationException("Error de guardado de prueba.");
+            Creaciones++;
+            DetallesCreados = Detalles?.Copy();
             ImpuestoCreado = Impuesto;
             CodigoCreado = string.Empty;
             ComentarioCreado = Comentario;
@@ -161,6 +180,7 @@ namespace PruebaUnitaria_OrdenesCompra.Apoyo
 
         public void Dispose()
         {
+            DetallesCreados?.Dispose();
             Datos.Dispose();
         }
 

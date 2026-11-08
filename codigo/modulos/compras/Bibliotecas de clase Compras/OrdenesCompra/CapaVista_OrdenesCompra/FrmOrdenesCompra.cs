@@ -8,6 +8,18 @@ using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Gestiona la captura, validación y guardado de una nueva orden de compra.
+ * ===================================================================
+*/
+
 namespace CapaVista_OrdenesCompra
 {
     public partial class FrmOrdenesCompra : Form
@@ -18,6 +30,9 @@ namespace CapaVista_OrdenesCompra
         private bool _CargandoCatalogos = true;
         private bool _CatalogosCargados;
         private bool _Liberado;
+        private bool _Guardando;
+        public bool OrdenGuardada { get; private set; }
+        public int? NumeroOrdenGuardada { get; private set; }
         private int _VersionCambio;
         private decimal? _SaldoProveedorBase;
         private decimal? _CostoProductoBase;
@@ -65,6 +80,12 @@ namespace CapaVista_OrdenesCompra
                 ComprasProcConfigurarValidacionCatalogo(Combo);
             }
             ComprasProcConfigurarProductos();
+            ComprasBtnGuardar.Click += ComprasProcGuardarOrden;
+            ComprasBtnDescartar.Click += ComprasProcRegresarEncabezados;
+            ComprasBtnGuardar.AccessibleName = "Guardar orden de compra";
+            ComprasBtnDescartar.AccessibleName = "Regresar a encabezados";
+            ComprasBtnGuardar.Enabled = false;
+            FormClosing += (Remitente, Evento) => { if (_Guardando) Evento.Cancel = true; };
             ComprasTxtFechaEmision.Text = _FechaEmision.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
             ComprasLblEstadoProveedorValor.Texto = string.Empty;
             ComprasCboMoneda.SelectedIndexChanged += async (Remitente, Evento) => await ComprasProcActualizarCambioAsync();
@@ -99,6 +120,79 @@ namespace CapaVista_OrdenesCompra
                 await ComprasProcActualizarCambioAsync();
             };
             ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
+        }
+
+        protected virtual DialogResult ComprasFuncConfirmarAccion(string Mensaje, string Titulo)
+        {
+            return MessageBox.Show(this, Mensaje, Titulo, MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+        }
+
+        protected virtual void ComprasProcMostrarResultado(string Mensaje, bool Error)
+        {
+            MessageBox.Show(this, Mensaje, "Órdenes de compra", MessageBoxButtons.OK,
+                Error ? MessageBoxIcon.Error : MessageBoxIcon.Information);
+        }
+
+        private void ComprasProcRegresarEncabezados(object Remitente, EventArgs Evento)
+        {
+            if (_Guardando) return;
+            if (ComprasFuncConfirmarAccion("¿Deseas regresar a encabezados sin guardar la orden de compra?",
+                "Regresar a encabezados") == DialogResult.Yes)
+                Close();
+        }
+
+        private async void ComprasProcGuardarOrden(object Remitente, EventArgs Evento)
+        {
+            if (_Guardando || OrdenGuardada || _Liberado) return;
+            if (_CargandoCatalogos || !_CatalogosCargados || !IdProveedorSeleccionado.HasValue
+                || !IdPlazoSeleccionado.HasValue || !IdMonedaSeleccionada.HasValue
+                || !TipoCambioSeleccionado.HasValue || !FechaVencimiento.HasValue
+                || ComprasUsrProductos.Detalles.Rows.Count == 0)
+            {
+                ComprasProcMostrarResultado("Selecciona proveedor, moneda, plazo y tipo de cambio válidos, y agrega al menos un producto.", true);
+                return;
+            }
+            if (ComprasFuncConfirmarAccion("¿Estás seguro de guardar la orden de compra?",
+                "Guardar orden de compra") != DialogResult.Yes) return;
+            using (var Detalles = ComprasUsrProductos.Detalles.Copy())
+            {
+                int Proveedor = IdProveedorSeleccionado.Value;
+                int Plazo = IdPlazoSeleccionado.Value;
+                int Moneda = checked((int)IdMonedaSeleccionada.Value);
+                DateTime Emision = _FechaEmision;
+                DateTime Vencimiento = FechaVencimiento.Value;
+                decimal Cambio = TipoCambioSeleccionado.Value;
+                long? IdCambio = IdTipoCambioSeleccionado;
+                string Comentario = ComprasTxtComentario.Text;
+                _Guardando = true;
+                ComprasPnlContenido.Enabled = false;
+                UseWaitCursor = true;
+                try
+                {
+                    int Numero = await Task.Run(() => _Controlador.ComprasFuncCrearConDetalles(Proveedor, Plazo, Moneda,
+                        Emision, Vencimiento, Cambio, IdCambio, Comentario, Detalles));
+                    if (Numero <= 0) throw new InvalidOperationException("No se obtuvo el número de orden.");
+                    NumeroOrdenGuardada = Numero;
+                    OrdenGuardada = true;
+                }
+                catch (Exception Ex)
+                {
+                    ComprasProcMostrarResultado("No se pudo guardar la orden. " + Ex.Message, true);
+                }
+                finally
+                {
+                    _Guardando = false;
+                    ComprasPnlContenido.Enabled = true;
+                    UseWaitCursor = false;
+                }
+            }
+            if (OrdenGuardada)
+            {
+                ComprasProcMostrarResultado("Orden de compra guardada. Número de orden: "
+                    + NumeroOrdenGuardada.Value.ToString(CultureInfo.InvariantCulture), false);
+                Close();
+            }
         }
 
         private void ComprasProcAlinearEtiquetas(Control Contenedor)
@@ -753,6 +847,7 @@ namespace CapaVista_OrdenesCompra
 
         private void ComprasProcActualizarProductosAgregados()
         {
+            ComprasBtnGuardar.Enabled = !_Guardando && ComprasUsrProductos.Detalles.Rows.Count > 0;
             if (_ActualizandoDetalle && _ProductoEditado != null) return;
             bool ActualizandoAntes = _ActualizandoDetalle;
             _ActualizandoDetalle = true;

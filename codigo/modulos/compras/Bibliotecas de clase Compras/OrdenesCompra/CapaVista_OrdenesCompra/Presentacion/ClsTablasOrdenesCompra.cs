@@ -3,6 +3,18 @@ using System.Drawing;
 using System.Windows.Forms;
 using CapaVista_Componentes.Componentes;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Configura las columnas y los formatos de las tablas de órdenes de compra.
+ * ===================================================================
+*/
+
 namespace CapaVista_OrdenesCompra.Presentacion
 {
     internal static class ClsTablasOrdenesCompra

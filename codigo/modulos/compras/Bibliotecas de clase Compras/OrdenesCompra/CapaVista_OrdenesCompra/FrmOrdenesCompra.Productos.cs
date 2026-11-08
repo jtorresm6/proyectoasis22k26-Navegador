@@ -5,6 +5,18 @@ using System.Globalization;
 using System.Windows.Forms;
 using CapaVista_Componentes.Componentes;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Gestiona los productos, bodegas, descuentos y totales de la captura de órdenes.
+ * ===================================================================
+*/
+
 namespace CapaVista_OrdenesCompra
 {
     public partial class FrmOrdenesCompra

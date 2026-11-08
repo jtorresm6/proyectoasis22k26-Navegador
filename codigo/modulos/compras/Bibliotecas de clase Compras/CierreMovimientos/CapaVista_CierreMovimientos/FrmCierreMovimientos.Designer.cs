@@ -22,6 +22,7 @@ namespace CapaVista_CierreMovimientos
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCierreMovimientos));
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
+            this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "CierreMovimientos.html";
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
             this.ComprasTlpPrincipal = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasGbxPeriodo = new CapaVista_Componentes.Componentes.ClsGroupBoxCompras();

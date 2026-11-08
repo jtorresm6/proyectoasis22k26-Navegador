@@ -22,6 +22,7 @@ namespace CapaVista_PagosProveedores
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPagosProveedores));
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
+            this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "PagosProveedores.html";
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
             this.ComprasDgvPagos = new CapaVista_Componentes.Componentes.ComprasUsrDataGridView();
             this.ComprasGbxRegistrarPago = new CapaVista_Componentes.Componentes.ClsGroupBoxCompras();

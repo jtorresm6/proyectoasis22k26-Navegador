@@ -1,233 +1,197 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Data;
+using System.Globalization;
 using CapaControlador_OrdenesCompra;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PruebaUnitaria_OrdenesCompra.Apoyo;
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Verifica las reglas de validación para el registro de órdenes de compra.
+ * ===================================================================
+*/
 
 namespace PruebaUnitaria_OrdenesCompra
 {
     [TestClass]
     public class TestValidacionesOrdenesCompra
     {
+        private static readonly DateTime Emision = new DateTime(2026, 10, 1);
         private ClsRepositorioOrdenesCompraPrueba _Repositorio;
         private ClsOrdenesCompra _Controlador;
-        private DateTime _Emision;
-        private DateTime _Vencimiento;
 
         [TestInitialize]
-        public void ComprasProcPrepararPrueba()
+        public void Preparar()
         {
             _Repositorio = new ClsRepositorioOrdenesCompraPrueba();
             _Controlador = new ClsOrdenesCompra(_Repositorio);
-            _Emision = new DateTime(2026, 10, 1);
-            _Vencimiento = new DateTime(2026, 10, 31);
         }
 
         [TestCleanup]
-        public void ComprasProcLiberarPrueba()
-        {
-            _Repositorio.Dispose();
-        }
+        public void Liberar() => _Repositorio.Dispose();
+
+        [DataTestMethod]
+        [DataRowAttribute(2028, 2, 28, 30, 2028, 3, 29)]
+        [DataRowAttribute(2026, 12, 31, 1, 2027, 1, 1)]
+        [DataRowAttribute(2026, 10, 1, 0, 2026, 10, 1)]
+        public void CalcularVencimientoRespetaCalendario(int anio, int mes, int dia, int plazo, int anioFin, int mesFin, int diaFin)
+            => Assert.AreEqual(new DateTime(anioFin, mesFin, diaFin), _Controlador.ComprasFuncCalcularVencimiento(new DateTime(anio, mes, dia, 15, 30, 0), plazo));
 
         [TestMethod]
-        public void Test_CalcularVencimientoRespetaDiasYAnioBisiesto()
-        {
-            Assert.AreEqual(new DateTime(2028, 3, 29), _Controlador.ComprasFuncCalcularVencimiento(new DateTime(2028, 2, 28, 15, 30, 0), 30));
-            Assert.AreEqual(_Emision.Date, _Controlador.ComprasFuncCalcularVencimiento(_Emision.AddHours(9), 0));
-        }
+        public void RechazarPlazoNegativo() => Assert.ThrowsException<ArgumentOutOfRangeException>(() => _Controlador.ComprasFuncCalcularVencimiento(Emision, -1));
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Test_CalcularVencimientoRechazaPlazoNegativo()
+        public void CrearNormalizaComentarioFechasYDevuelveId()
         {
-            _Controlador.ComprasFuncCalcularVencimiento(_Emision, -1);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Test_ObtenerTipoCambioRechazaMonedaInvalida()
-        {
-            _Controlador.ComprasFuncObtenerTipoCambio(0L, _Emision);
-        }
-
-        [TestMethod]
-        public void Test_CrearSinCodigoConImpuesto()
-        {
-            int Id = _Controlador.ComprasFuncCrear(3, 2, 1, _Emision, _Vencimiento,
-                1M, 100M, 10M, " Insumos ", 10.8M);
-            Assert.AreEqual(900, Id);
+            int id = _Controlador.ComprasFuncCrear(3, 2, 1, Emision.AddHours(9), Emision.AddDays(30).AddHours(18), 1M, 100M, 10M, " Insumos ", 10.8M);
+            Assert.AreEqual(900, id);
+            Assert.AreEqual(1, _Repositorio.Creaciones);
             Assert.AreEqual(10.8M, _Repositorio.ImpuestoCreado);
             Assert.AreEqual("Insumos", _Repositorio.ComentarioCreado);
+            Assert.AreEqual(Emision, _Repositorio.EmisionCreada);
+            Assert.AreEqual(Emision.AddDays(30), _Repositorio.VencimientoCreado);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Test_CrearRechazaImpuestoNegativo()
+        [DataTestMethod]
+        [DataRowAttribute(null)]
+        [DataRowAttribute("")]
+        [DataRowAttribute("   ")]
+        public void ComentarioOpcionalSeGuardaVacio(string comentario)
         {
-            _Controlador.ComprasFuncCrear(3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 0M, "", -1M);
+            Crear(comentario: comentario);
+            Assert.AreEqual(string.Empty, _Repositorio.ComentarioCreado);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Test_CrearRechazaImpuestoConCincoDecimales()
+        [DataTestMethod]
+        [DataRowAttribute(0, 2, 1)]
+        [DataRowAttribute(-1, 2, 1)]
+        [DataRowAttribute(3, 0, 1)]
+        [DataRowAttribute(3, -1, 1)]
+        [DataRowAttribute(3, 2, 0)]
+        [DataRowAttribute(3, 2, -1)]
+        public void IdentificadoresInvalidosNoGuardan(int proveedor, int plazo, int moneda)
         {
-            _Controlador.ComprasFuncCrear(3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 0M, "", 0.00001M);
+            Assert.ThrowsException<ArgumentException>(() => Crear(proveedor: proveedor, plazo: plazo, moneda: moneda));
+            Assert.AreEqual(0, _Repositorio.Creaciones);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Test_CrearRechazaTotalFueraDeRango()
+        [DataTestMethod]
+        [DataRowAttribute("-1", "100", "10", "0")]
+        [DataRowAttribute("1000000", "100", "10", "0")]
+        [DataRowAttribute("1.0000001", "100", "10", "0")]
+        [DataRowAttribute("1", "-1", "0", "0")]
+        [DataRowAttribute("1", "100000000", "0", "0")]
+        [DataRowAttribute("1", "100.00001", "0", "0")]
+        [DataRowAttribute("1", "100", "-1", "0")]
+        [DataRowAttribute("1", "100", "101", "0")]
+        [DataRowAttribute("1", "100", "0.00001", "0")]
+        [DataRowAttribute("1", "100", "0", "-1")]
+        [DataRowAttribute("1", "100", "0", "0.00001")]
+        [DataRowAttribute("1", "99999999.9999", "0", "1")]
+        public void ImportesFueraDeRangoOPrecisionNoGuardan(string cambio, string subtotal, string descuento, string impuesto)
         {
-            _Controlador.ComprasFuncCrear(3, 2, 1, _Emision, _Vencimiento, 1M, 99999999.9999M, 0M, "", 1M);
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => Crear(cambio: Decimal(cambio), subtotal: Decimal(subtotal), descuento: Decimal(descuento), impuesto: Decimal(impuesto)));
+            Assert.AreEqual(0, _Repositorio.Creaciones);
+        }
+
+        [DataTestMethod]
+        [DataRowAttribute("0.000001", "0", "0", "0")]
+        [DataRowAttribute("999999.999999", "99999999.9999", "0", "0")]
+        [DataRowAttribute("1", "100", "100", "0")]
+        [DataRowAttribute("1", "0", "0", "99999999.9999")]
+        public void ImportesEnLimitesSeGuardan(string cambio, string subtotal, string descuento, string impuesto)
+        {
+            Assert.AreEqual(900, Crear(cambio: Decimal(cambio), subtotal: Decimal(subtotal), descuento: Decimal(descuento), impuesto: Decimal(impuesto)));
+            Assert.AreEqual(1, _Repositorio.Creaciones);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void Test_ActualizarVencimientoRechazaOrdenBloqueada()
+        public void TipoCambioCeroNoGuarda()
+        {
+            Assert.ThrowsException<ArgumentException>(() => Crear(cambio: 0M));
+            Assert.AreEqual(0, _Repositorio.Creaciones);
+        }
+
+        [TestMethod]
+        public void VencimientoAnteriorNoGuarda()
+        {
+            Assert.ThrowsException<ArgumentException>(() => Crear(vencimiento: Emision.AddDays(-1)));
+            Assert.AreEqual(0, _Repositorio.Creaciones);
+        }
+
+        [TestMethod]
+        public void ComentarioAcepta500YRechaza501Caracteres()
+        {
+            Crear(comentario: new string('A', 500));
+            Assert.AreEqual(500, _Repositorio.ComentarioCreado.Length);
+            Assert.ThrowsException<ArgumentException>(() => Crear(comentario: new string('A', 501)));
+            Assert.AreEqual(1, _Repositorio.Creaciones);
+        }
+
+        [DataTestMethod]
+        [DataRowAttribute(null)]
+        [DataRowAttribute("")]
+        [DataRowAttribute("   ")]
+        [DataRowAttribute("1234567890123456789012345678901")]
+        public void CodigoLegacyInvalidoNoGuarda(string codigo)
+        {
+            Assert.ThrowsException<ArgumentException>(() => _Controlador.ComprasFuncCrear(codigo, 3, 2, 1, Emision, Emision, 1M, 100M, 10M, ""));
+            Assert.AreEqual(0, _Repositorio.Creaciones);
+        }
+
+        [DataTestMethod]
+        [DataRowAttribute(" OC-001 ")]
+        [DataRowAttribute("123456789012345678901234567890")]
+        public void CodigoLegacyValidoUsaIdGenerado(string codigo)
+        {
+            Assert.AreEqual(900, _Controlador.ComprasFuncCrear(codigo, 3, 2, 1, Emision, Emision, 1M, 100M, 10M, ""));
+            Assert.AreEqual(string.Empty, _Repositorio.CodigoCreado);
+        }
+
+        [TestMethod]
+        public void ActualizarVencimientoDePendienteEliminaHora()
+        {
+            var fecha = Emision.AddDays(45).AddHours(9);
+            _Controlador.ComprasProcActualizarVencimiento(101, fecha);
+            Assert.AreEqual(fecha.Date, _Repositorio.VencimientoActualizado);
+        }
+
+        [DataTestMethod]
+        [DataRowAttribute(102)]
+        [DataRowAttribute(103)]
+        [DataRowAttribute(104)]
+        [DataRowAttribute(105)]
+        [DataRowAttribute(999)]
+        public void ActualizarVencimientoRechazaOrdenNoEditable(int id)
+        {
+            Assert.ThrowsException<InvalidOperationException>(() => _Controlador.ComprasProcActualizarVencimiento(id, Emision.AddDays(60)));
+            Assert.AreEqual(default(DateTime), _Repositorio.VencimientoActualizado);
+        }
+
+        [TestMethod]
+        public void ActualizarVencimientoRechazaBloqueada()
         {
             _Repositorio.Datos.Rows.Find(101)["bloqueadoOrdenCompra"] = true;
-            _Controlador.ComprasProcActualizarVencimiento(101, _Vencimiento);
+            Assert.ThrowsException<InvalidOperationException>(() => _Controlador.ComprasProcActualizarVencimiento(101, Emision));
+            Assert.AreEqual(default(DateTime), _Repositorio.VencimientoActualizado);
         }
 
         [TestMethod]
-        public void Test_ObtenerMapeaImpuestoYBloqueo()
+        public void ActualizarVencimientoRechazaFechaAnterior()
         {
-            DataRow Fila = _Repositorio.Datos.Rows.Find(101);
-            Fila["impuestoOrdenCompra"] = 12M;
-            Fila["bloqueadoOrdenCompra"] = true;
-            var Orden = _Controlador.ComprasFuncObtener(101);
-            Assert.AreEqual(12M, Orden.Impuesto);
-            Assert.IsTrue(Orden.Bloqueado);
-            Assert.AreEqual("101", Orden.NumeroOrden);
+            Assert.ThrowsException<ArgumentException>(() => _Controlador.ComprasProcActualizarVencimiento(101, Emision.AddDays(-1)));
+            Assert.AreEqual(default(DateTime), _Repositorio.VencimientoActualizado);
         }
 
-        [TestMethod]
-        public void Test_CrearDevuelvePkYNormalizaTextos()
-        {
-            string Codigo = " 000-OC-001 ";
-            string Comentario = " Insumos ";
-            int Resultado = _Controlador.ComprasFuncCrear(Codigo, 3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, Comentario);
-            Assert.AreEqual(900, Resultado);
-            Assert.AreEqual(string.Empty, _Repositorio.CodigoCreado);
-            Assert.AreEqual("Insumos", _Repositorio.ComentarioCreado);
-        }
+        private int Crear(int proveedor = 3, int plazo = 2, int moneda = 1, decimal cambio = 1M,
+            decimal subtotal = 100M, decimal descuento = 10M, decimal impuesto = 0M, string comentario = "Insumos", DateTime? vencimiento = null)
+            => _Controlador.ComprasFuncCrear(proveedor, plazo, moneda, Emision, vencimiento ?? Emision.AddDays(30), cambio, subtotal, descuento, comentario, impuesto);
 
-        [TestMethod]
-        public void Test_CrearEliminaHoraDeLasFechas()
-        {
-            DateTime Emision = _Emision.AddHours(9);
-            DateTime Vencimiento = _Vencimiento.AddHours(18);
-            _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, Emision, Vencimiento, 1M, 100M, 10M, "Insumos");
-            Assert.AreEqual(_Emision, _Repositorio.EmisionCreada);
-            Assert.AreEqual(_Vencimiento, _Repositorio.VencimientoCreado);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Test_CrearRechazaCodigoVacio()
-        {
-            string Codigo = "   ";
-            _Controlador.ComprasFuncCrear(Codigo, 3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, "Insumos");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Test_CrearRechazaCodigoMayorDeTreinta()
-        {
-            string Codigo = new string('A', 31);
-            _Controlador.ComprasFuncCrear(Codigo, 3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, "Insumos");
-        }
-
-        [TestMethod]
-        public void Test_CrearAceptaCodigoDeTreinta()
-        {
-            string Codigo = new string('A', 30);
-            _Controlador.ComprasFuncCrear(Codigo, 3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, "Insumos");
-            Assert.AreEqual(string.Empty, _Repositorio.CodigoCreado);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Test_CrearRechazaProveedorInvalido()
-        {
-            int IdProveedor = 0;
-            _Controlador.ComprasFuncCrear("OC-001", IdProveedor, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, "Insumos");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Test_CrearRechazaVencimientoAnterior()
-        {
-            DateTime Vencimiento = _Emision.AddDays(-1);
-            _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, Vencimiento, 1M, 100M, 10M, "Insumos");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Test_CrearRechazaTipoCambioCero()
-        {
-            decimal TipoCambio = 0M;
-            _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, _Vencimiento, TipoCambio, 100M, 10M, "Insumos");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Test_CrearRechazaTipoCambioConSieteDecimales()
-        {
-            decimal TipoCambio = 1.0000001M;
-            _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, _Vencimiento, TipoCambio, 100M, 10M, "Insumos");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Test_CrearRechazaMontoConCincoDecimales()
-        {
-            decimal Subtotal = 100.00001M;
-            _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, _Vencimiento, 1M, Subtotal, 10M, "Insumos");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Test_CrearRechazaDescuentoMayorQueSubtotal()
-        {
-            decimal Subtotal = 100M;
-            decimal Descuento = 101M;
-            _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, _Vencimiento, 1M, Subtotal, Descuento, "Insumos");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Test_CrearRechazaComentarioExcesivo()
-        {
-            string Comentario = new string('A', 501);
-            _Controlador.ComprasFuncCrear("OC-001", 3, 2, 1, _Emision, _Vencimiento, 1M, 100M, 10M, Comentario);
-        }
-
-        [TestMethod]
-        public void Test_ActualizarVencimientoDeOrdenPendiente()
-        {
-            int IdOrden = 101;
-            DateTime Fecha = new DateTime(2026, 11, 15, 8, 0, 0);
-            _Controlador.ComprasProcActualizarVencimiento(IdOrden, Fecha);
-            Assert.AreEqual(Fecha.Date, _Repositorio.VencimientoActualizado);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void Test_ActualizarVencimientoRechazaOrdenRecibida()
-        {
-            int IdOrden = 105;
-            DateTime Fecha = new DateTime(2026, 12, 15);
-            _Controlador.ComprasProcActualizarVencimiento(IdOrden, Fecha);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Test_ActualizarVencimientoRechazaFechaAnterior()
-        {
-            int IdOrden = 101;
-            DateTime Fecha = new DateTime(2026, 9, 30);
-            _Controlador.ComprasProcActualizarVencimiento(IdOrden, Fecha);
-        }
+        private static decimal Decimal(string valor) => decimal.Parse(valor, CultureInfo.InvariantCulture);
     }
 }

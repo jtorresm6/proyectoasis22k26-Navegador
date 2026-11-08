@@ -19,6 +19,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ComprasTlpPrincipal = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasEncabezado = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
+            this.ComprasEncabezado.PaginaInicialAyuda = "BitacoraCompras.html";
             this.ComprasTlpAcciones = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasTxtBuscar = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
             this.ComprasBtnBuscar = new CapaVista_Componentes.Componentes.ClsButtonCompras();

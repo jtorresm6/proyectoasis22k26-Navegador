@@ -87,7 +87,6 @@ namespace CapaVista_Compras
             _ActualizacionIndicadores = new Timer(_Componentes) { Interval = 60000 };
             _ActualizacionIndicadores.Tick += (Origen, Evento) => ComprasMetSolicitarIndicadores();
             _AyudaIndicadores = new ToolTip(_Componentes) { AutoPopDelay = 15000 };
-            ComprasLblKpi6.Texto = "Saldo por vencer en 7 días";
             string[] Ayudas =
             {
                 "Promedio de días desde la emisión de los documentos con saldo pendiente. Cada documento tiene el mismo peso.",
