@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClsTipoMovimiento.cs" />
     <Compile Include="Formularios\FrmMantenimientoBodegas.cs">
       <SubType>Form</SubType>
     </Compile>
