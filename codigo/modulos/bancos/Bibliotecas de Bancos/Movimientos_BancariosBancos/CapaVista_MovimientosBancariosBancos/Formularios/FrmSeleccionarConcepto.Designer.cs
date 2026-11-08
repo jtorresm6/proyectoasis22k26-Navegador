@@ -39,29 +39,27 @@
             // BancosDgbConceptoBuscar
             // 
             this.BancosDgbConceptoBuscar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.BancosDgbConceptoBuscar.Location = new System.Drawing.Point(12, 82);
-            this.BancosDgbConceptoBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BancosDgbConceptoBuscar.Location = new System.Drawing.Point(9, 67);
             this.BancosDgbConceptoBuscar.Name = "BancosDgbConceptoBuscar";
             this.BancosDgbConceptoBuscar.RowHeadersWidth = 51;
-            this.BancosDgbConceptoBuscar.Size = new System.Drawing.Size(1037, 437);
+            this.BancosDgbConceptoBuscar.Size = new System.Drawing.Size(778, 355);
             this.BancosDgbConceptoBuscar.TabIndex = 0;
             this.BancosDgbConceptoBuscar.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BancosDgbConceptoBuscar_CellDoubleClick);
             // 
             // BancoTxtConceptoBuscar
             // 
-            this.BancoTxtConceptoBuscar.Location = new System.Drawing.Point(407, 27);
-            this.BancoTxtConceptoBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BancoTxtConceptoBuscar.Location = new System.Drawing.Point(305, 22);
             this.BancoTxtConceptoBuscar.Name = "BancoTxtConceptoBuscar";
-            this.BancoTxtConceptoBuscar.Size = new System.Drawing.Size(641, 22);
+            this.BancoTxtConceptoBuscar.Size = new System.Drawing.Size(482, 20);
             this.BancoTxtConceptoBuscar.TabIndex = 1;
             this.BancoTxtConceptoBuscar.TextChanged += new System.EventHandler(this.BancoTxtConceptoBuscar_TextChanged);
             // 
             // BancosLblConceptoFiltrar
             // 
             this.BancosLblConceptoFiltrar.AutoSize = true;
+            this.BancosLblConceptoFiltrar.BackColor = System.Drawing.Color.Transparent;
             this.BancosLblConceptoFiltrar.Font = new System.Drawing.Font("Lucida Fax", 10F, System.Drawing.FontStyle.Bold);
-            this.BancosLblConceptoFiltrar.Location = new System.Drawing.Point(16, 27);
-            this.BancosLblConceptoFiltrar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.BancosLblConceptoFiltrar.Location = new System.Drawing.Point(12, 22);
             this.BancosLblConceptoFiltrar.Name = "BancosLblConceptoFiltrar";
             this.BancosLblConceptoFiltrar.Size = new System.Drawing.Size(225, 16);
             this.BancosLblConceptoFiltrar.TabIndex = 2;
@@ -73,22 +71,22 @@
             this.BancosPblConcepto.BackgroundImage = global::CapaVista_MovimientosBancarios.Properties.Resources.movbac_contenedor;
             this.BancosPblConcepto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.BancosPblConcepto.Location = new System.Drawing.Point(0, 0);
-            this.BancosPblConcepto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BancosPblConcepto.Name = "BancosPblConcepto";
-            this.BancosPblConcepto.Size = new System.Drawing.Size(1065, 553);
+            this.BancosPblConcepto.Size = new System.Drawing.Size(799, 449);
             this.BancosPblConcepto.TabIndex = 3;
             // 
             // FrmSeleccionarConcepto
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.BancosLblConceptoFiltrar);
             this.Controls.Add(this.BancoTxtConceptoBuscar);
             this.Controls.Add(this.BancosDgbConceptoBuscar);
             this.Controls.Add(this.BancosPblConcepto);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MaximizeBox = false;
             this.Name = "FrmSeleccionarConcepto";
             this.Text = "8006.1-ConceptoBancario";
             ((System.ComponentModel.ISupportInitialize)(this.BancosDgbConceptoBuscar)).EndInit();

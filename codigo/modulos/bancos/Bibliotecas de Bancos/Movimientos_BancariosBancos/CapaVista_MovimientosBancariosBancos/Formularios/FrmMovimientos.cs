@@ -735,5 +735,16 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 BancosDtpFechaApl.Value.Date
             );
         }
+
+        private void BancosBtnSalir_Click(object sender, EventArgs e)
+        {
+            FrmMovimientosBancarios principal =
+        this.ParentForm as FrmMovimientosBancarios;
+
+            if (principal != null)
+            {
+                principal.MostrarFormulario(new FrmListaMovimientos());
+            }
+        }
     }
 }
