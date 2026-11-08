@@ -1,0 +1,92 @@
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: #F6F7FA;
+    color: #1E2A5A;
+    font: 20px/1.5 "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.encabezado {
+    margin: 20px 10px 0;
+    text-align: center;
+}
+
+.imgLogo, .imgButti { height: auto; }
+.imgLogo { width: 200px; max-width: 53%; }
+.imgButti { width: 150px; max-width: 40%; }
+
+h1 {
+    margin: 0;
+    font: bold 45px/1.2 "Lucida Bright", Georgia, serif;
+}
+
+.encabezado p {
+    margin: 6px 0 0;
+    color: #3D56A6;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.container {
+    max-width: 1080px;
+    margin: 10px auto;
+    padding: 10px 20px 28px;
+    text-align: center;
+}
+
+section + section { margin-top: 38px; }
+
+h2 {
+    margin: 0 0 16px;
+    color: #3D56A6;
+    font-size: 30px;
+    line-height: 1.25;
+}
+
+.container p {
+    margin: 12px 0;
+    text-align: justify;
+}
+
+figure { margin: 20px 0 0; }
+.imgVentanaMDI {
+    width: 900px;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #D5DCEF;
+}
+figcaption { margin-top: 6px; font-size: 16px; }
+
+ol { padding-left: 26px; text-align: left; }
+li { margin: 8px 0; }
+
+.nota {
+    margin: 20px 0;
+    padding: 10px 14px;
+    border-left: 4px solid #D9913E;
+    background: #D5DCEF;
+    text-align: left;
+}
+.nota h3 { margin: 0; font-size: 20px; }
+.nota p { margin: 6px 0 0; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 18px;
+    text-align: left;
+}
+th, td { padding: 8px 12px; border: 1px solid #D5DCEF; vertical-align: top; }
+thead { background: #3D56A6; color: #fff; }
+tbody th { width: 28%; background: #D5DCEF; }
+
+@media (max-width: 600px) {
+    body, table { font-size: 16px; }
+    h1 { font-size: 32px; }
+    h2 { font-size: 25px; }
+    .container { padding: 10px 14px 20px; }
+    .container p { text-align: left; }
+    th, td { padding: 7px; }
+}

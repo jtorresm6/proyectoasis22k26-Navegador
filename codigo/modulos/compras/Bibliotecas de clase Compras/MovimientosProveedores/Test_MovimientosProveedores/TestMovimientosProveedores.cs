@@ -25,8 +25,8 @@ namespace PruebaUnitaria_MovimientosProveedores
         [DataTestMethod]
         [DataRow("IdProveedor", "0", "Seleccione un proveedor.")]
         [DataRow("IdProveedor", "-1", "Seleccione un proveedor.")]
-        [DataRow("IdConceptoProveedor", "0", "Seleccione un tipo de nota.")]
-        [DataRow("IdConceptoProveedor", "-1", "Seleccione un tipo de nota.")]
+        [DataRow("IdConceptoProveedor", "0", "Seleccione un concepto de proveedor.")]
+        [DataRow("IdConceptoProveedor", "-1", "Seleccione un concepto de proveedor.")]
         [DataRow("Serie", null, "La serie es obligatoria y admite hasta 20 caracteres.")]
         [DataRow("Serie", "", "La serie es obligatoria y admite hasta 20 caracteres.")]
         [DataRow("Serie", "   ", "La serie es obligatoria y admite hasta 20 caracteres.")]
@@ -159,6 +159,7 @@ namespace PruebaUnitaria_MovimientosProveedores
         public DataTable ComprasMetObtenerProveedores() { return Proveedores; }
         public DataTable ComprasMetObtenerConceptos() { return Conceptos; }
         public DataTable ComprasMetObtenerMonedas() { return Monedas; }
+        public decimal? ComprasMetObtenerTipoCambio(long idMoneda, DateTime fechaEmision) { return 1m; }
         public DataTable ComprasMetConsultarNotas(int idProveedor) { ProveedorConsultado = idProveedor; return Historial; }
         public void ComprasMetAgregar(ClsNotaProveedor nota) { Notas.Add(nota); }
     }

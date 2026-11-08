@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es-GT">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ayudas - Movimientos de proveedores</title>
+    <link rel="stylesheet" href="Css/style.css" type="text/css">
+</head>
+<body>
+    <header class="encabezado">
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png" alt="Embutidos de Calidad">
+        <img class="imgButti" src="Imagenes/LogoYMascota/5.png" alt="Butti, mascota de Embutidos de Calidad">
+        <h1>Ayudas - Movimientos de proveedores</h1>
+        <p>Compras y cuentas por pagar &middot; Formulario 6002</p>
+    </header>
+    <main class="container">
+        <section id="ventana">
+            <h2>Descripción general</h2>
+            <p>Este formulario registra documentos de un proveedor en cuentas por pagar. El <strong>Concepto del documento</strong> determina si el movimiento es un cargo que aumenta la cuenta por pagar o un abono a favor de la cuenta del proveedor. El efecto aparece debajo de los campos.</p>
+            <figure>
+                <img class="imgVentanaMDI" src="Imagenes/MovimientosProveedores/Movimientos%20de%20proveedores.png" alt="Formulario 6002 con una factura de compra en dólares, un importe de 2500, tipo de cambio de 7.650000 y equivalente de 19,125.0000 GTQ">
+                <figcaption>Figura 1. Formulario con un documento de prueba.</figcaption>
+            </figure>
+        </section>
+        <section id="registro">
+            <h2>¿Cómo registrar un documento?</h2>
+            <ol>
+                <li>Selecciona el <strong>Proveedor</strong> y el <strong>Concepto del documento</strong>. Revisa debajo de los campos si el concepto corresponde a un cargo o a un abono.</li>
+                <li>Ingresa la <strong>Serie del documento</strong> y el <strong>Número del documento</strong> tal como aparecen en el comprobante. La serie admite hasta 20 caracteres y el número hasta 30.</li>
+                <li>Indica la <strong>Fecha de emisión</strong> y la <strong>Fecha de vencimiento</strong>. El vencimiento debe ser igual o posterior a la emisión.</li>
+                <li>Selecciona la <strong>Moneda</strong> e ingresa el <strong>Importe del documento</strong> en esa moneda. Usa un importe mayor que cero, con hasta cuatro decimales y sin separadores de miles.</li>
+                <li>Revisa el <strong>Tipo de cambio a moneda base</strong> y el <strong>Equivalente en GTQ</strong>. El sistema actualiza la cotización al cambiar la moneda o la fecha de emisión. El campo del tipo de cambio es de solo lectura.</li>
+                <li>Presiona <strong>Guardar</strong>. Cuando aparezca el mensaje de confirmación, el documento habrá quedado con estado <strong>Pendiente</strong>. El formulario conserva el proveedor seleccionado para registrar otro documento.</li>
+            </ol>
+            <div class="nota">
+                <h3>Tipo de cambio y equivalente en GTQ</h3>
+                <p>Para documentos en quetzales, el tipo de cambio es 1. Para otra moneda, se usa la cotización activa más reciente hacia GTQ con fecha igual o anterior a la emisión. En el ejemplo, 2500 USD × 7.65 equivale a 19,125 GTQ.</p>
+            </div>
+            <p>Los abonos se registran como documentos separados de las facturas.</p>
+        </section>
+        <section id="botones">
+            <h2>Botones del formulario</h2>
+            <table>
+                <thead><tr><th scope="col">Botón</th><th scope="col">Qué hace</th></tr></thead>
+                <tbody>
+                    <tr><th scope="row">Refrescar</th><td>Limpia los datos ingresados, deja los selectores sin selección, restablece las fechas al día de hoy y el importe a 0.</td></tr>
+                    <tr><th scope="row">Guardar</th><td>Valida los datos y registra el documento en cuentas por pagar.</td></tr>
+                    <tr><th scope="row">Historial</th><td>Abre la ventana de historial. La consulta de movimientos está pendiente de implementación en esta versión.</td></tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="avisos">
+            <h2>Avisos y soluciones</h2>
+            <table>
+                <thead><tr><th scope="col">Situación</th><th scope="col">Qué revisar</th></tr></thead>
+                <tbody>
+                    <tr><th scope="row">Faltan opciones en los selectores</th><td>Verifica que estén disponibles los catálogos de proveedores, conceptos y monedas. Si hubo un problema de conexión, usa <strong>Reintentar carga</strong> en el mensaje del formulario.</td></tr>
+                    <tr><th scope="row">Falta el tipo de cambio</th><td>Comprueba la moneda y la fecha de emisión. Si falta una cotización activa hacia GTQ para esa fecha, solicita su registro y usa <strong>Reintentar carga</strong> antes de guardar.</td></tr>
+                    <tr><th scope="row">El documento ya existe</th><td>Verifica el concepto, la serie y el número contra el comprobante. Si los datos son correctos, el documento ya está registrado.</td></tr>
+                    <tr><th scope="row">Importe o vencimiento inválido</th><td>Verifica que el importe sea positivo y tenga hasta cuatro decimales, sin separadores de miles. El vencimiento puede ser el mismo día de emisión o posterior.</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
