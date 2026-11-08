@@ -139,6 +139,9 @@
   <data name="btn_reporteB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\btn_reporteB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_ayudaB1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\btn_ayudaB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btn_ayudaB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\btn_ayudaB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -163,7 +166,7 @@
   <data name="movbac_navegador" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\movbac_navegador.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_ayudaB1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resouces\btn_ayudaB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FondoAutorizacionModulo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FondoAutorizacionModulo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
