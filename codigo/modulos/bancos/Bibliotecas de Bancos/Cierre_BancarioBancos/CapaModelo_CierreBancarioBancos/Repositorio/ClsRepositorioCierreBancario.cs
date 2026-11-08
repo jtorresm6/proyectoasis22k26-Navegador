@@ -20,7 +20,7 @@ namespace CapaModelo_CierreBancario.Repositorio
             "FROM tblConciliacion c " +
             "INNER JOIN tblCuentaBancaria cb " +
             "  ON c.Fk_CuentaBancaria_Codigo = cb.Pk_CuentaBancaria " +
-            "WHERE c.fechaCorteConciliacion BETWEEN ? AND ? " +
+            "WHERE c.fechaCorteConciliacion >= ? AND c.fechaCorteConciliacion < ? " +
             "  AND cb.is_active = 1 " +
             "ORDER BY c.fechaCorteConciliacion, cb.nombreCuentaBancaria";
 
@@ -28,7 +28,7 @@ namespace CapaModelo_CierreBancario.Repositorio
             "SELECT COUNT(*) FROM tblConciliacion c " +
             "INNER JOIN tblCuentaBancaria cb " +
             "  ON c.Fk_CuentaBancaria_Codigo = cb.Pk_CuentaBancaria " +
-            "WHERE c.fechaCorteConciliacion BETWEEN ? AND ? " +
+            "WHERE c.fechaCorteConciliacion >= ? AND c.fechaCorteConciliacion < ? " +
             "  AND c.estadoConciliacion = 'CERRADA' " +
             "  AND cb.is_active = 1";
 
@@ -36,15 +36,15 @@ namespace CapaModelo_CierreBancario.Repositorio
             "SELECT COUNT(*) FROM tblConciliacion c " +
             "INNER JOIN tblCuentaBancaria cb " +
             "  ON c.Fk_CuentaBancaria_Codigo = cb.Pk_CuentaBancaria " +
-            "WHERE c.fechaCorteConciliacion BETWEEN ? AND ? " +
-            "  AND c.estadoConciliacion IN ('ABIERTA', 'PROCESANDO') " +
+            "WHERE c.fechaCorteConciliacion >= ? AND c.fechaCorteConciliacion < ? " +
+            "  AND c.estadoConciliacion NOT IN ('CONCILIADA', 'CERRADA') " +
             "  AND cb.is_active = 1";
 
         private const string SqlContarConDiferencias =
             "SELECT COUNT(*) FROM tblConciliacion c " +
             "INNER JOIN tblCuentaBancaria cb " +
             "  ON c.Fk_CuentaBancaria_Codigo = cb.Pk_CuentaBancaria " +
-            "WHERE c.fechaCorteConciliacion BETWEEN ? AND ? " +
+            "WHERE c.fechaCorteConciliacion >= ? AND c.fechaCorteConciliacion < ? " +
             "  AND c.estadoConciliacion = 'CON_DIFERENCIAS' " +
             "  AND cb.is_active = 1";
 
@@ -53,8 +53,8 @@ namespace CapaModelo_CierreBancario.Repositorio
             "  estadoConciliacion = 'CERRADA', " +
             "  fechaCierreConciliacion = NOW(), " +
             "  identificadorResponsableConciliacion = ? " +
-            "WHERE fechaCorteConciliacion BETWEEN ? AND ? " +
-            "  AND estadoConciliacion IN ('CONCILIADA', 'CON_DIFERENCIAS')";
+            "WHERE fechaCorteConciliacion >= ? AND fechaCorteConciliacion < ? " +
+            "  AND estadoConciliacion = 'CONCILIADA'";
 
         private const string SqlConsultarHistorico =
             "SELECT " +
@@ -77,7 +77,7 @@ namespace CapaModelo_CierreBancario.Repositorio
             var Parametros = new List<OdbcParameter>
             {
                 new OdbcParameter("FechaInicial", OdbcType.Date) { Value = FechaInicial.Date },
-                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date }
+                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date.AddDays(1) }
             };
             return BancosMetEjecucionConsulta(SqlConsultarResumen, CommandType.Text, Parametros);
         }
@@ -87,7 +87,7 @@ namespace CapaModelo_CierreBancario.Repositorio
             var Parametros = new List<OdbcParameter>
             {
                 new OdbcParameter("FechaInicial", OdbcType.Date) { Value = FechaInicial.Date },
-                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date }
+                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date.AddDays(1) }
             };
             var Resultado = BancosMetEjecucionConsulta(SqlContarCerradas, CommandType.Text, Parametros);
             return Convert.ToInt32(Resultado.Rows[0][0]) == 0;
@@ -98,7 +98,7 @@ namespace CapaModelo_CierreBancario.Repositorio
             var Parametros = new List<OdbcParameter>
             {
                 new OdbcParameter("FechaInicial", OdbcType.Date) { Value = FechaInicial.Date },
-                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date }
+                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date.AddDays(1) }
             };
             var Resultado = BancosMetEjecucionConsulta(SqlContarPendientes, CommandType.Text, Parametros);
             return Convert.ToInt32(Resultado.Rows[0][0]) == 0;
@@ -109,7 +109,7 @@ namespace CapaModelo_CierreBancario.Repositorio
             var Parametros = new List<OdbcParameter>
             {
                 new OdbcParameter("FechaInicial", OdbcType.Date) { Value = FechaInicial.Date },
-                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date }
+                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date.AddDays(1) }
             };
             var Resultado = BancosMetEjecucionConsulta(SqlContarConDiferencias, CommandType.Text, Parametros);
             return Convert.ToInt32(Resultado.Rows[0][0]) == 0;
@@ -123,7 +123,7 @@ namespace CapaModelo_CierreBancario.Repositorio
                 {
                     new OdbcParameter("Responsable", OdbcType.VarChar, 100) { Value = Responsable },
                     new OdbcParameter("FechaInicial", OdbcType.Date) { Value = FechaInicial.Date },
-                    new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date }
+                    new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date.AddDays(1) }
                 };
                 int FilasAfectadas = BancosMetEjecucionNonQuery(SqlCerrarPeriodo, Parametros, CommandType.Text);
                 if (FilasAfectadas == 0)
