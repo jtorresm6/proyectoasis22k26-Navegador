@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
 using CapaModelo_CierreMovimientos.Entidades;
-using CapaModelo_Componentes.Repositorios;
 
 /*
  * ==================================================================
@@ -22,7 +21,7 @@ using CapaModelo_Componentes.Repositorios;
 
 namespace CapaModelo_CierreMovimientos.Repositorios
 {
-    public class ClsConsultasCierreMovimientos : ClsRepositorioMaestroCompras
+    public class ClsConsultasCierreMovimientos : ClsRepositorioMaestroCierreMovimientos
     {
         private const string _CamposPeriodo =
             "SELECT idPeriodoCompras, anioPeriodoCompras, mesPeriodoCompras, fechaInicioPeriodoCompras, " +

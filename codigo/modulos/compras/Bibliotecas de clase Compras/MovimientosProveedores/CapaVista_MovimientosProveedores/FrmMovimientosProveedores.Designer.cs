@@ -413,7 +413,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasDtpFechaEmision.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
             this.ComprasDtpFechaEmision.Name = "ComprasDtpFechaEmision";
             this.ComprasDtpFechaEmision.Size = new System.Drawing.Size(469, 32);
-            this.ComprasDtpFechaEmision.TabIndex = 6;
+            this.ComprasDtpFechaEmision.TabIndex = 13;
             this.ComprasDtpFechaEmision.TamanoFuente = 11F;
             // 
             // ComprasLblCampoFechaVencimiento
@@ -444,7 +444,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasDtpFechaVencimiento.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
             this.ComprasDtpFechaVencimiento.Name = "ComprasDtpFechaVencimiento";
             this.ComprasDtpFechaVencimiento.Size = new System.Drawing.Size(348, 32);
-            this.ComprasDtpFechaVencimiento.TabIndex = 7;
+            this.ComprasDtpFechaVencimiento.TabIndex = 15;
             this.ComprasDtpFechaVencimiento.TamanoFuente = 11F;
             // 
             // ComprasLblCampoNumCambio
@@ -523,15 +523,21 @@ namespace CapaVista_MovimientosProveedores
             // 
             // ComprasLblEstado
             // 
-            this.ComprasLblEstado.AutoSize = true;
-            this.ComprasLblEstado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasLblEstado.Location = new System.Drawing.Point(4, 456);
-            this.ComprasLblEstado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.ComprasLblEstado.MinimumSize = new System.Drawing.Size(0, 36);
-            this.ComprasLblEstado.Name = "ComprasLblEstado";
-            this.ComprasLblEstado.Size = new System.Drawing.Size(1244, 36);
-            this.ComprasLblEstado.TabIndex = 7;
-            this.ComprasLblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ComprasUsrEncabezadoFormulario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasUsrEncabezadoFormulario.Codigo = "6002";
+            this.ComprasUsrEncabezadoFormulario.Descripcion = "Registro de documentos de proveedor en cuentas por pagar";
+            this.ComprasUsrEncabezadoFormulario.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ComprasUsrEncabezadoFormulario.Location = new System.Drawing.Point(0, 0);
+            this.ComprasUsrEncabezadoFormulario.Margin = new System.Windows.Forms.Padding(0);
+            this.ComprasUsrEncabezadoFormulario.MaximumSize = new System.Drawing.Size(1500, 130);
+            this.ComprasUsrEncabezadoFormulario.MinimumSize = new System.Drawing.Size(0, 130);
+            this.ComprasUsrEncabezadoFormulario.MostrarReportes = false;
+            this.ComprasUsrEncabezadoFormulario.Name = "ComprasUsrEncabezadoFormulario";
+            this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "MovimientosProveedores.html";
+            this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1300, 130);
+            this.ComprasUsrEncabezadoFormulario.TabIndex = 1;
+            this.ComprasUsrEncabezadoFormulario.TabStop = false;
+            this.ComprasUsrEncabezadoFormulario.Titulo = "Movimientos de proveedores";
             // 
             // FrmMovimientosProveedores
             // 

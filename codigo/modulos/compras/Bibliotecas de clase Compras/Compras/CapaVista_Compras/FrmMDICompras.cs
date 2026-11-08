@@ -412,6 +412,18 @@ namespace CapaVista_Compras
             ComprasMetAbrirSubproceso<FrmMantenimientoProveedor>(ComprasTlpProveedores);
         }
         // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
+        private void ComprasMetAbrirAyuda(object Remitente, EventArgs Evento)
+        {
+            try
+            {
+                CapaVista_Componentes.Componentes.ClsAyudasCompras.Abrir(this, "index.html");
+            }
+            catch (Exception Error)
+            {
+                MessageBox.Show(this, Error.Message, "Ayuda de Compras",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void ComprasMetAbrirBitacora(object Remitente, EventArgs Evento)
         {
             ComprasMetAbrirSubproceso<FrmBitacoraCompras>(ComprasTlpBitacora);

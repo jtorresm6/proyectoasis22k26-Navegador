@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
@@ -62,12 +62,12 @@ namespace CapaModelo_Componentes.Repositorios
             else if (string.Equals(Tabla, "tblMoneda", StringComparison.OrdinalIgnoreCase))
             {
                 TablaPermitida = "tblMoneda";
-                CamposPermitidos = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "idMoneda", "nombreMoneda" };
+                CamposPermitidos = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "Pk_Moneda", "idMoneda", "codigoMoneda", "nombreMoneda", "simboloMoneda" };
             }
             else if (string.Equals(Tabla, "tblTipoCambio", StringComparison.OrdinalIgnoreCase))
             {
                 TablaPermitida = "tblTipoCambio";
-                CamposPermitidos = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "idTipoCambio", "descripcionTipoCambio" };
+                CamposPermitidos = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "Pk_TipoCambio", "idTipoCambio", "descripcionTipoCambio" };
             }
             else if (string.Equals(Tabla, "tblSucursal", StringComparison.OrdinalIgnoreCase))
             {
@@ -105,17 +105,21 @@ namespace CapaModelo_Componentes.Repositorios
             if (
                 !CamposPermitidos.Contains(Campo1 ?? string.Empty) || !CamposPermitidos.Contains(Campo2 ?? string.Empty))
                 throw new ArgumentException("La tabla o los campos solicitados no están permitidos para el selector de Compras.");
+            if (TablaPermitida == "tblMetodoPago")
+                return ComprasFuncEjecucionConsulta("SELECT idMetodoPago, nombreMetodoPago FROM tblMetodoPago " +
+                    "WHERE is_active = 1 ORDER BY nombreMetodoPago", CommandType.Text);
             if (TablaPermitida == "tblMoneda")
-                return ComprasFuncEjecucionConsulta("SELECT * FROM tblMoneda ORDER BY nombreMoneda", CommandType.Text);
+                return ComprasFuncEjecucionConsulta("SELECT Pk_Moneda, Pk_Moneda AS idMoneda, codigoMoneda, nombreMoneda, simboloMoneda, " +
+                    "is_active, created_at, updated_at FROM tblMoneda WHERE is_active = 1 ORDER BY nombreMoneda", CommandType.Text);
             if (TablaPermitida == "tblTipoCambio")
                 return ComprasFuncEjecucionConsulta(
-                    "SELECT tc.idTipoCambio, CONCAT(origen.codigoMoneda, ' / ', destino.codigoMoneda, ' - ', " +
+                    "SELECT tc.Pk_TipoCambio, tc.Pk_TipoCambio AS idTipoCambio, CONCAT(origen.codigoMoneda, ' / ', destino.codigoMoneda, ' - ', " +
                     "tc.fechaTipoCambio, ' - ', tc.valorTipoCambio, ' - ', tc.fuenteTipoCambio, " +
                     "' - v', tc.versionTipoCambio) AS descripcionTipoCambio " +
                     "FROM tblTipoCambio tc " +
-                    "INNER JOIN tblMoneda origen ON origen.idMoneda = tc.Fk_Moneda_Origen_Codigo " +
-                    "INNER JOIN tblMoneda destino ON destino.idMoneda = tc.Fk_Moneda_Destino_Codigo " +
-                    "ORDER BY tc.fechaTipoCambio DESC, tc.idTipoCambio DESC", CommandType.Text);
+                    "INNER JOIN tblMoneda origen ON origen.Pk_Moneda = tc.Fk_Moneda_Origen_Codigo " +
+                    "INNER JOIN tblMoneda destino ON destino.Pk_Moneda = tc.Fk_Moneda_Destino_Codigo " +
+                    "ORDER BY tc.fechaTipoCambio DESC, tc.Pk_TipoCambio DESC", CommandType.Text);
             return ComprasFuncEjecucionConsulta("SELECT `" + Campo1 + "`, `" + Campo2 + "` FROM `" + TablaPermitida + "`", CommandType.Text);
         }
     }
