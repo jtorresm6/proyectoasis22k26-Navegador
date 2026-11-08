@@ -190,7 +190,7 @@ namespace TestListadoPrecios
 
             // Assert
             Assert.IsFalse(Resultado);
-            Assert.AreEqual("Una de las filas no contiene un identificador de producto o tipo de cliente válido.", Mensaje);
+            Assert.AreEqual("Una de las filas no contiene un identificador válido de producto o tipo de cliente.", Mensaje);
         }
 
         [TestMethod]
@@ -209,7 +209,7 @@ namespace TestListadoPrecios
 
             // Assert
             Assert.IsFalse(Resultado);
-            Assert.AreEqual("Una de las filas no contiene un identificador de producto o tipo de cliente válido.", Mensaje);
+            Assert.AreEqual("Una de las filas no contiene un identificador válido de producto o tipo de cliente.", Mensaje);
         }
 
         [TestMethod]

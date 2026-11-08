@@ -70,7 +70,7 @@ if not exist "%VENTAS_BIBLIOTECAS%VentasYCxC\CapaModelo_Ventas\CapaModelo_Ventas
 echo         MSBuild disponible.
 echo   %VENTAS_MORADO%[2/2]%VENTAS_RESET% Compilando soluciones y reuniendo las DLL...
 echo         %VENTAS_GRIS%Solo se recompilan los proyectos que cambiaron.%VENTAS_RESET%
-echo         %VENTAS_GRIS%Paquetes versionados del repositorio; sin depender de instalaciones locales.%VENTAS_RESET%
+echo         %VENTAS_GRIS%Dependencias restauradas en la cache NuGet del usuario.%VENTAS_RESET%
 echo.
 set "VENTAS_INICIO=%TIME: =0%"
 pushd "%VENTAS_BUILD%"

@@ -78,7 +78,10 @@
     <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaVista_Ventas\bin\$(Configuration)\CapaVista_Ventas.pdb" />
   </ItemGroup>
   <Import Project="build_componentes_ventas.proj" />
-  <Target Name="PrepararDependenciasVentas" DependsOnTargets="ValidarConfiguracion;CompilarComponentesVentas" />
+  <Target Name="RestaurarDependenciasVentas">
+    <MSBuild Projects="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaModelo_Ventas\CapaModelo_Ventas.csproj;..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\CapaModelo_ListadoPrecios\CapaModelo_ListadoPrecios.csproj;..\Ejecutable_Ventas\Ejecutable_Ventas\Ejecucion_Ventas.csproj" Targets="Restore" Properties="Configuration=$(Configuration);Platform=AnyCPU" BuildInParallel="true" StopOnFirstFailure="true" />
+  </Target>
+  <Target Name="PrepararDependenciasVentas" DependsOnTargets="ValidarConfiguracion;RestaurarDependenciasVentas;CompilarComponentesVentas" />
   <Target Name="Compilar" DependsOnTargets="PrepararDependenciasVentas">
     <Message Text="[8/8] Compilando soluciones MVC de Ventas en paralelo ($(Configuration))..." Importance="high" />
     <MSBuild Projects="..\Ejecutable_Ventas\Ejecutable_Ventas\Ejecucion_Ventas.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="true" StopOnFirstFailure="true" />

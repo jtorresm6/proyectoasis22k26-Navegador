@@ -243,7 +243,7 @@
   </ItemGroup>
   <Target Name="CompilarComponentesVentas">
     <Error Condition="!Exists('%(ComponenteVentas.Identity)')" Text="Falta el proyecto del componente: %(ComponenteVentas.Identity)" />
-    <Message Text="[1/8] Compilando con los paquetes locales de cada solucion..." Importance="high" />
+    <Message Text="[1/8] Compilando con dependencias restauradas en la cache NuGet..." Importance="high" />
     <Message Text="[2/8] Consultas: Modelo, Controlador y Vista..." Importance="high" />
     <MSBuild Projects="@(ConsultasModelo)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
     <MSBuild Projects="@(ConsultasControlador)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
