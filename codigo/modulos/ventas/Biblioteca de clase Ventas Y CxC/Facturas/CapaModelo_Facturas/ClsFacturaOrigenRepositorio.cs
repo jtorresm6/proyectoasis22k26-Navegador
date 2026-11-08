@@ -6,6 +6,8 @@ namespace CapaModelo_Facturas
 {
     public sealed class ClsFacturaOrigenRepositorio
     {
+        // dbSistemaEmbutidos v1.6 usa ids descriptivos (idCotizacionEncabezado,
+        // idPedidoEncabezado, idFacturaEncabezado) y relaciones con esos mismos nombres.
         private const string Cotizaciones = @"SELECT q.idCotizacionEncabezado Id,
             CONCAT(q.numeroCotizacionEncabezado, ' - ', c.nombreCliente) Nombre,
             q.idCotizacionEncabezado CotizacionId, NULL PedidoId, q.idCliente ClienteId,
@@ -33,29 +35,36 @@ namespace CapaModelo_Facturas
             JOIN tblCliente c ON c.idCliente=p.idCliente AND c.activoCliente=1
             JOIN tblMoneda m ON m.idMoneda=p.idMoneda
             WHERE (?=0 OR p.idPedidoEncabezado=?)
-              AND p.estadoPedidoEncabezado IN ('CONFIRMADO','COMPLETADO')
+              AND p.estadoPedidoEncabezado IN ('PENDIENTE','CONFIRMADO','COMPLETADO')
               AND p.fechaPedidoEncabezado <= CURRENT_DATE
               AND NOT EXISTS (SELECT 1 FROM tblFacturaEncabezado f
-                  WHERE f.idPedidoEncabezado=p.idPedidoEncabezado OR f.idCotizacionEncabezado=p.idCotizacionEncabezado)
+                  WHERE f.idPedidoEncabezado=p.idPedidoEncabezado
+                     OR (p.idCotizacionEncabezado IS NOT NULL
+                         AND f.idCotizacionEncabezado=p.idCotizacionEncabezado))
               AND EXISTS (SELECT 1 FROM tblPedidoDetalle d WHERE d.idPedidoEncabezado=p.idPedidoEncabezado)
             ORDER BY p.referenciaPedidoEncabezado";
 
-        private const string LineasCotizacion = @"SELECT d.idProducto ProductoId, d.descripcionItemCotizacionDetalle Producto,
-            d.cantidadCotizacionDetalle Cantidad, d.precioUnitarioCotizacionDetalle Precio,
-            d.descuentoMontoCotizacionDetalle Descuento, d.tasaImpuestoCotizacionDetalle Tasa
-            FROM tblCotizacionDetalle d WHERE d.idCotizacionEncabezado=?
+        private const string LineasCotizacion = @"SELECT d.idProducto ProductoId,
+            d.descripcionItemCotizacionDetalle Producto, d.cantidadCotizacionDetalle Cantidad,
+            d.precioUnitarioCotizacionDetalle Precio, d.descuentoMontoCotizacionDetalle Descuento,
+            d.tasaImpuestoCotizacionDetalle Tasa
+            FROM tblCotizacionDetalle d
+            WHERE d.idCotizacionEncabezado=?
             ORDER BY d.numeroLineaCotizacionDetalle";
 
         private const string LineasPedido = @"SELECT d.idProducto ProductoId,
             COALESCE(c.descripcionItemCotizacionDetalle,p.nombreProducto) Producto,
             d.cantidadPedidoDetalle Cantidad, d.precioUnitarioPedidoDetalle Precio,
             d.descuentoMontoPedidoDetalle Descuento, COALESCE(c.tasaImpuestoCotizacionDetalle,pv.tasaImpuestoProductoVenta,0) Tasa
-            FROM tblPedidoDetalle d JOIN tblPedidoEncabezado h ON h.idPedidoEncabezado=d.idPedidoEncabezado
+            FROM tblPedidoDetalle d
+            JOIN tblPedidoEncabezado h ON h.idPedidoEncabezado=d.idPedidoEncabezado
             JOIN tblProducto p ON p.idProducto=d.idProducto
             LEFT JOIN tblProductoVenta pv ON pv.idProductoVenta=d.idProducto
             LEFT JOIN tblCotizacionDetalle c ON c.idCotizacionEncabezado=h.idCotizacionEncabezado
-                AND c.numeroLineaCotizacionDetalle=d.OrdenPedido AND c.idProducto=d.idProducto
-            WHERE d.idPedidoEncabezado=? ORDER BY d.OrdenPedido";
+                AND c.numeroLineaCotizacionDetalle=d.OrdenPedido
+                AND c.idProducto=d.idProducto
+            WHERE d.idPedidoEncabezado=?
+            ORDER BY d.OrdenPedido";
 
         public DataTable VentasFuncOrigenes(bool Pedido)
         {
@@ -66,7 +75,7 @@ namespace CapaModelo_Facturas
         public DataTable VentasFuncSucursales()
         {
             using (var Datos = new ClsDatosVentas())
-                return Datos.VentasFuncCatalogo("Establecimientos");
+                return Datos.VentasFuncTabla("SELECT idSucursal Id,nombreSucursal Nombre FROM tblSucursal ORDER BY nombreSucursal");
         }
 
         public DataSet VentasFuncCargar(bool Pedido, int Id)
@@ -159,18 +168,19 @@ namespace CapaModelo_Facturas
                 Datos.VentasFuncEjecutar(@"INSERT INTO tblFacturaEncabezado
                     (uuidDteFacturaEncabezado,serieFacturaEncabezado,numeroFacturaEncabezado,idSucursal,
                      idClienteFacturaVersion,idVendedor,idMoneda,idCotizacionEncabezado,idPedidoEncabezado,
-                     fechaEmisionFacturaEncabezado,fechaVencimientoFacturaEncabezado,tipoDteFacturaEncabezado,
-                     condicionPagoFacturaEncabezado,estadoFacturaEncabezado,subtotalFacturaEncabezado,
-                     impuestoIvaFacturaEncabezado,totalFacturaEncabezado,idUsuarioRegistro)
-                    VALUES (?,'VENTAS',?,?,?,?,?,?,?,?,?,'INTERNO_VENTAS',?,'EMITIDA',?,?,?,?)",
+                     fechaEmisionFacturaEncabezado,fechaVencimientoFacturaEncabezado,condicionPagoFacturaEncabezado,
+                     estadoFacturaEncabezado,subtotalFacturaEncabezado,impuestoIvaFacturaEncabezado,
+                     totalFacturaEncabezado,idUsuarioRegistro)
+                    VALUES (?,'VENTAS',?,?,?,?,?,?,?,?,?,?,'EMITIDA',?,?,?,?)",
                     Uuid, Numero, Sucursal, Version, Origen["VendedorId"], Moneda, Origen["CotizacionId"],
                     Origen["PedidoId"], Fecha, Vencimiento, Condicion, Subtotal, Iva, Total, Usuario);
                 int Factura = Datos.VentasFuncObtenerId();
                 int Orden = 0;
                 foreach (DataRow Linea in Lineas.Rows)
                     Datos.VentasFuncEjecutar(@"INSERT INTO tblFacturaDetalle
-                        (idFacturaEncabezadoUuidDte,numeroLineaFacturaDetalle,idProducto,cantidadFacturaDetalle,
-                         precioUnitarioFacturaDetalle,descuentoMontoFacturaDetalle,tasaImpuestoFacturaDetalle)
+                        (idFacturaEncabezadoUuidDte,numeroLineaFacturaDetalle,idProducto,
+                         cantidadFacturaDetalle,precioUnitarioFacturaDetalle,descuentoMontoFacturaDetalle,
+                         tasaImpuestoFacturaDetalle)
                         VALUES (?,?,?,?,?,?,?)", Uuid, ++Orden, Linea["ProductoId"], Linea["Cantidad"],
                         Linea["Precio"], Linea["Descuento"], Linea["Tasa"]);
                 if (Total > 0)

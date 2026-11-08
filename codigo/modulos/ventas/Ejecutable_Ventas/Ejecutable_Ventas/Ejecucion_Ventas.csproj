@@ -15,7 +15,8 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +26,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -83,6 +85,10 @@
     <ProjectReference Include="..\..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaVista_Ventas\CapaVista_Ventas.csproj">
       <Project>{9496BD61-6249-436E-B168-BB5C8C6ABFB0}</Project>
       <Name>CapaVista_Ventas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\CapaVista_CierreMovimientos.csproj" Condition=" '$(Configuration)' == 'Debug' ">
+      <Project>{2AC893AF-20AB-5159-BF28-32D0AA59D794}</Project>
+      <Name>CapaVista_CierreMovimientos</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

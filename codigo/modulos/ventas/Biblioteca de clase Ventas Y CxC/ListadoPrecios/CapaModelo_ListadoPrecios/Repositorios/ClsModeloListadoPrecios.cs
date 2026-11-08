@@ -17,7 +17,7 @@ namespace CapaModelo_ListadoPrecios
 
         public bool UsaBaseDeDatos { get; private set; }
 
-        // True cuando tblproducto tiene la columna Fk_Proveedor_Codigo (relación con tblproveedor).
+        // True cuando tblproducto tiene idProveedorProductos (relación con tblproveedor en v1.6).
         public bool ProveedorRelacionado { get; private set; }
         public string MensajeEstado { get; private set; }
 
@@ -33,16 +33,14 @@ namespace CapaModelo_ListadoPrecios
             // tbltipocliente contiene el nombre y el descuento del cliente.
             // No se filtra por estadoTipoCliente porque esa columna no existe en la tabla real.
             // Tampoco se relaciona con tbllistaprecioencabezado: el respaldo no contiene una FK entre ambas tablas.
-            // El proveedor se obtiene de tblproveedor mediante tblproducto.Fk_Proveedor_Codigo
-            // (columna creada con SQL/01_Relacion_Producto_Proveedor.sql). Esa columna NO existe en el
-            // esquema original, por eso se comprueba antes de consultarla: si falta, el listado carga
-            // igual y el proveedor se muestra como "Sin proveedor".
+            // En dbSistemaEmbutidos v1.6 las claves de Ventas usan idTipoCliente e idProducto.
+            // tblProducto conserva las FK de clasificación Fk_Marca_Codigo/Fk_Linea_Codigo/Fk_Categoria_Codigo.
             const string sqlBase = @"
                 SELECT
-                    tc.Pk_TipoCliente AS IdTipoCliente,
+                    tc.idTipoCliente AS IdTipoCliente,
                     tc.nombreTipoCliente AS TipoCliente,
-                    tc.porcentajeDescuento AS DescuentoCliente,
-                    p.Pk_Producto AS IdProducto,
+                    tc.porcentajeDescuentoTipoCliente AS DescuentoCliente,
+                    p.idProducto AS IdProducto,
                     p.nombreProducto AS Producto,
                     COALESCE(m.nombreMarca, 'Sin marca') AS Marca,
                     COALESCE(li.nombreLinea, 'Sin línea') AS Linea,
@@ -51,14 +49,14 @@ namespace CapaModelo_ListadoPrecios
                     p.precioVentaProducto AS PrecioBase,
                     ROUND(
                         p.precioVentaProducto *
-                        (1 - (tc.porcentajeDescuento / 100)),
+                        (1 - (tc.porcentajeDescuentoTipoCliente / 100)),
                         2
                     ) AS PrecioFinal
                 FROM tblproducto p
                 CROSS JOIN tbltipocliente tc
-                LEFT JOIN tblmarca m ON m.Pk_Marca = p.Fk_Marca_Codigo
-                LEFT JOIN tbllinea li ON li.Pk_Linea = p.Fk_Linea_Codigo
-                LEFT JOIN tblcategoria c ON c.Pk_Categoria = p.Fk_Categoria_Codigo
+                LEFT JOIN tblmarca m ON m.idMarca = p.Fk_Marca_Codigo
+                LEFT JOIN tbllinea li ON li.idLinea = p.Fk_Linea_Codigo
+                LEFT JOIN tblcategoria c ON c.idCategoria = p.Fk_Categoria_Codigo
                 {JOIN_PROVEEDOR}
                 ORDER BY tc.nombreTipoCliente, p.nombreProducto;";
 
@@ -75,7 +73,7 @@ namespace CapaModelo_ListadoPrecios
                             ? "COALESCE(pv.nombreProveedor, 'Sin proveedor') AS Proveedor, COALESCE(pv.idProveedor, 0) AS IdProveedor,"
                             : "'Sin proveedor' AS Proveedor, 0 AS IdProveedor,")
                         .Replace("{JOIN_PROVEEDOR}", ProveedorRelacionado
-                            ? "LEFT JOIN tblproveedor pv ON pv.idProveedor = p.Fk_Proveedor_Codigo"
+                            ? "LEFT JOIN tblproveedor pv ON pv.idProveedor = p.idProveedorProductos"
                             : string.Empty);
 
                     using (var comando = new OdbcCommand(sql, conexion))
@@ -123,7 +121,7 @@ namespace CapaModelo_ListadoPrecios
                     ? "La conexión funciona, pero no hay productos o tipos de cliente registrados."
                     : (ProveedorRelacionado
                         ? "Datos cargados desde tblproducto, tbltipocliente y tblproveedor."
-                        : "Datos cargados desde tblproducto y tbltipocliente. tblproducto aún no tiene la columna Fk_Proveedor_Codigo: ejecute SQL/01_Relacion_Producto_Proveedor.sql para asociar proveedores.");
+                        : "Datos cargados desde tblproducto y tbltipocliente. tblproducto aún no tiene la columna idProveedorProductos para asociar proveedores.");
                 return resultado;
             }
             catch (Exception error)
@@ -141,7 +139,7 @@ namespace CapaModelo_ListadoPrecios
                 FROM information_schema.COLUMNS
                 WHERE TABLE_SCHEMA = DATABASE()
                   AND TABLE_NAME = 'tblproducto'
-                  AND COLUMN_NAME = 'Fk_Proveedor_Codigo';";
+                  AND COLUMN_NAME = 'idProveedorProductos';";
 
             using (var comando = new OdbcCommand(sqlColumna, conexion))
                 return Convert.ToInt32(comando.ExecuteScalar(), CultureInfo.InvariantCulture) > 0;
@@ -214,13 +212,13 @@ namespace CapaModelo_ListadoPrecios
 
             const string actualizarDescuentoCliente = @"
                 UPDATE tbltipocliente
-                SET porcentajeDescuento = ?
-                WHERE Pk_TipoCliente = ?;";
+                SET porcentajeDescuentoTipoCliente = ?
+                WHERE idTipoCliente = ?;";
 
             const string actualizarPrecioProducto = @"
                 UPDATE tblproducto
                 SET precioVentaProducto = ?
-                WHERE Pk_Producto = ?;";
+                WHERE idProducto = ?;";
 
             try
             {

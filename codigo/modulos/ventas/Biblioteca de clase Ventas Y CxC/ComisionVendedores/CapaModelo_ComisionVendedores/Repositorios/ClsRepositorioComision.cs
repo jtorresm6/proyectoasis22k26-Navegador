@@ -14,22 +14,22 @@ namespace CapaModelo_ComisionVendedores.Repositorios
         public List<ClsFacturaComision> ComisionVendedoresMetObtenerFacturas()
         {
             const string Comando = @"
-                SELECT f.Pk_FacturaEncabezado AS id,
-                       COALESCE(f.Fk_Vendedor_Codigo,0) AS id_vendedor,
+                SELECT f.idFacturaEncabezado AS id,
+                       COALESCE(f.idVendedor,0) AS id_vendedor,
                        f.fechaEmisionFacturaEncabezado AS fecha,
                        COALESCE(cfv.nombreClienteFacturaVersion,'') AS cliente,
                        COALESCE(m.simboloMoneda,'') AS simbolo_moneda,
                        COALESCE((SELECT SUM(fd.totalLineaFacturaDetalle)
                            FROM tblFacturaDetalle fd
-                           WHERE fd.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado),0) AS total,
+                           WHERE fd.idFacturaEncabezadoUuidDte=f.uuidDteFacturaEncabezado),0) AS total,
                        0 AS total_pagado, 0 AS ultimo_abono
                 FROM tblFacturaEncabezado f
-                LEFT JOIN tblClienteFacturaVersion cfv ON cfv.Pk_ClienteFacturaVersion=f.Fk_ClienteFacturaVersion_Codigo
-                INNER JOIN tblMoneda m ON m.Pk_Moneda=f.Fk_Moneda_Codigo
-                WHERE COALESCE(f.Fk_Vendedor_Codigo,0)=0 OR NOT EXISTS (
+                LEFT JOIN tblClienteFacturaVersion cfv ON cfv.idClienteFacturaVersion=f.idClienteFacturaVersion
+                INNER JOIN tblMoneda m ON m.idMoneda=f.idMoneda
+                WHERE COALESCE(f.idVendedor,0)=0 OR NOT EXISTS (
                     SELECT 1 FROM tblComisionFacturaEncabezado cf
-                    WHERE cf.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado)
-                ORDER BY f.fechaEmisionFacturaEncabezado DESC, f.Pk_FacturaEncabezado DESC";
+                    WHERE cf.idFacturaEncabezado=f.idFacturaEncabezado)
+                ORDER BY f.fechaEmisionFacturaEncabezado DESC, f.idFacturaEncabezado DESC";
             DataTable Datos = ComisionVendedoresMetEjecucionConsulta(Comando, new List<OdbcParameter>());
             if (Datos.Rows.Count == 0)
             {
@@ -54,11 +54,11 @@ namespace CapaModelo_ComisionVendedores.Repositorios
         public List<ClsVendedorComision> ComisionVendedoresMetObtenerVendedores()
         {
             const string Comando = @"
-                SELECT v.Pk_Vendedor AS id,
+                SELECT v.idVendedor AS id,
                        COALESCE(NULLIF(TRIM(CONCAT_WS(' ', e.nombresEmpleado, e.apellidosEmpleado)), ''), v.codigoVendedor) AS nombre,
                        0 AS porcentaje
                 FROM tblVendedor v
-                LEFT JOIN tblEmpleado e ON e.idEmpleado = v.Fk_Empleado_Codigo
+                LEFT JOIN tblEmpleado e ON e.idEmpleado = v.idEmpleado
                 WHERE v.activoVendedor = 1 ORDER BY nombre";
             DataTable Datos = ComisionVendedoresMetEjecucionConsulta(Comando, new List<OdbcParameter>());
             List<ClsVendedorComision> Resultado = new List<ClsVendedorComision>();
@@ -77,9 +77,9 @@ namespace CapaModelo_ComisionVendedores.Repositorios
             // Dejar al día los abonos de comisión antes de mostrar el estimado en el formulario.
             ComisionVendedoresMetSincronizarAbonos(null);
             const string Comando = @"
-                SELECT f.Pk_FacturaEncabezado AS id_factura,
-                       COALESCE(cfv.Fk_Cliente_Codigo,0) AS id_cliente,
-                       COALESCE(f.Fk_Moneda_Codigo,0) AS id_moneda,
+                SELECT f.idFacturaEncabezado AS id_factura,
+                       COALESCE(cfv.idCliente,0) AS id_cliente,
+                       COALESCE(f.idMoneda,0) AS id_moneda,
                        COALESCE(m.simboloMoneda,'') AS simbolo_moneda,
                        f.fechaEmisionFacturaEncabezado AS fecha,
                        f.estadoFacturaEncabezado AS estado,
@@ -94,28 +94,31 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                        COALESCE(ca.comision_pagada,0) AS comision_pagada,
                        COALESCE(ca.comision_pendiente_pago,0) AS comision_pendiente_pago
                 FROM tblFacturaEncabezado f
-                LEFT JOIN tblClienteFacturaVersion cfv ON cfv.Pk_ClienteFacturaVersion=f.Fk_ClienteFacturaVersion_Codigo
-                LEFT JOIN tblMoneda m ON m.Pk_Moneda=f.Fk_Moneda_Codigo
-                LEFT JOIN (SELECT Fk_FacturaEncabezado_Codigo,SUM(totalLineaFacturaDetalle) AS total
-                           FROM tblFacturaDetalle GROUP BY Fk_FacturaEncabezado_Codigo) ft
-                       ON ft.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado
-                LEFT JOIN (SELECT ap.Fk_FacturaEncabezado_Codigo,SUM(ap.montoAplicadoAplicacionPago) AS pagado
-                           FROM tblAplicacionPago ap INNER JOIN tblReciboPago rp ON rp.Pk_ReciboPago=ap.Fk_ReciboPago_Codigo
+                LEFT JOIN tblClienteFacturaVersion cfv ON cfv.idClienteFacturaVersion=f.idClienteFacturaVersion
+                LEFT JOIN tblMoneda m ON m.idMoneda=f.idMoneda
+                LEFT JOIN (SELECT f2.idFacturaEncabezado,SUM(fd.totalLineaFacturaDetalle) AS total
+                           FROM tblFacturaEncabezado f2
+                           INNER JOIN tblFacturaDetalle fd
+                             ON fd.idFacturaEncabezadoUuidDte=f2.uuidDteFacturaEncabezado
+                           GROUP BY f2.idFacturaEncabezado) ft
+                       ON ft.idFacturaEncabezado=f.idFacturaEncabezado
+                LEFT JOIN (SELECT ap.idFacturaEncabezado,SUM(ap.montoAplicadoAplicacionPago) AS pagado
+                           FROM tblAplicacionPago ap INNER JOIN tblReciboPago rp ON rp.idReciboPago=ap.idReciboPago
                            WHERE ap.estadoAplicacionPago='APLICADA' AND rp.estadoReciboPago='CONFIRMADO'
-                           GROUP BY ap.Fk_FacturaEncabezado_Codigo) pa
-                       ON pa.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado
-                LEFT JOIN (SELECT Fk_FacturaEncabezado_Codigo,
+                           GROUP BY ap.idFacturaEncabezado) pa
+                       ON pa.idFacturaEncabezado=f.idFacturaEncabezado
+                LEFT JOIN (SELECT idFacturaEncabezado,
                                   SUM(cargoMovimientoCxC-abonoMovimientoCxC) AS saldo
-                           FROM tblMovimientoCxC GROUP BY Fk_FacturaEncabezado_Codigo) mc
-                       ON mc.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado
-                LEFT JOIN (SELECT cf.Fk_FacturaEncabezado_Codigo,
+                           FROM tblMovimientoCxC GROUP BY idFacturaEncabezado) mc
+                       ON mc.idFacturaEncabezado=f.idFacturaEncabezado
+                LEFT JOIN (SELECT cf.idFacturaEncabezado,
                                   SUM(cd.baseComisionFacturaDetalle*cd.tasaAplicadaComisionFacturaDetalle) AS total_comision
                            FROM tblComisionFacturaEncabezado cf INNER JOIN tblComisionFacturaDetalle cd
-                             ON cd.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado
+                             ON cd.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado
                            WHERE cf.estadoComisionFacturaEncabezado='CALCULADA'
-                           GROUP BY cf.Fk_FacturaEncabezado_Codigo) cc
-                       ON cc.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado
-                LEFT JOIN (SELECT cf.Fk_FacturaEncabezado_Codigo,
+                           GROUP BY cf.idFacturaEncabezado) cc
+                       ON cc.idFacturaEncabezado=f.idFacturaEncabezado
+                LEFT JOIN (SELECT cf.idFacturaEncabezado,
                                   SUM(CASE WHEN ca.estadoPagoVendedorComisionAbono IN ('PENDIENTE','PAGADO')
                                            THEN ca.montoComisionDevengadoComisionAbono ELSE 0 END) AS comision_devengada,
                                   SUM(CASE WHEN ca.estadoPagoVendedorComisionAbono='PAGADO'
@@ -123,10 +126,10 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                                   SUM(CASE WHEN ca.estadoPagoVendedorComisionAbono='PENDIENTE'
                                            THEN ca.montoComisionDevengadoComisionAbono ELSE 0 END) AS comision_pendiente_pago
                            FROM tblComisionFacturaEncabezado cf INNER JOIN tblComisionAbono ca
-                             ON ca.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado
-                           GROUP BY cf.Fk_FacturaEncabezado_Codigo) ca
-                       ON ca.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado
-                ORDER BY f.fechaEmisionFacturaEncabezado,f.Pk_FacturaEncabezado";
+                             ON ca.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado
+                           GROUP BY cf.idFacturaEncabezado) ca
+                       ON ca.idFacturaEncabezado=f.idFacturaEncabezado
+                ORDER BY f.fechaEmisionFacturaEncabezado,f.idFacturaEncabezado";
             DataTable Datos = ComisionVendedoresMetEjecucionConsulta(Comando, new List<OdbcParameter>());
             List<ClsFacturaPago> Resultado = new List<ClsFacturaPago>();
             foreach (DataRow Fila in Datos.Rows)
@@ -161,7 +164,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
 
         public List<ClsFormaPagoVenta> ComisionVendedoresMetObtenerFormasPagoVenta()
         {
-            const string Comando = @"SELECT Pk_FormaPagoVenta AS id,nombreFormaPagoVenta AS nombre,
+            const string Comando = @"SELECT idFormaPagoVenta AS id,nombreFormaPagoVenta AS nombre,
                                            requiereReferenciaFormaPagoVenta AS requiere_referencia
                                     FROM tblFormaPagoVenta ORDER BY nombreFormaPagoVenta";
             DataTable Datos = ComisionVendedoresMetEjecucionConsulta(Comando, new List<OdbcParameter>());
@@ -181,8 +184,8 @@ namespace CapaModelo_ComisionVendedores.Repositorios
             // Una fila por cada pago confirmado del cliente y su abono de comisión.
             ComisionVendedoresMetSincronizarAbonos(null);
             const string Comando = @"
-                SELECT ca.Pk_ComisionAbono AS id_abono,
-                       f.Pk_FacturaEncabezado AS id_factura,
+                SELECT ca.idComisionAbono AS id_abono,
+                       f.idFacturaEncabezado AS id_factura,
                        ap.fechaAplicacionPago AS fecha_abono,
                        COALESCE(NULLIF(TRIM(CONCAT_WS(' ',e.nombresEmpleado,e.apellidosEmpleado)),''),v.codigoVendedor,'') AS vendedor,
                        COALESCE(m.simboloMoneda,'') AS simbolo_moneda,
@@ -191,22 +194,22 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                        ca.montoComisionDevengadoComisionAbono AS comision_devengada_abono,
                        ca.estadoPagoVendedorComisionAbono AS estado_pago
                 FROM tblComisionFacturaEncabezado cf
-                INNER JOIN tblFacturaEncabezado f ON f.Pk_FacturaEncabezado=cf.Fk_FacturaEncabezado_Codigo
-                LEFT JOIN tblVendedor v ON v.Pk_Vendedor=f.Fk_Vendedor_Codigo
-                LEFT JOIN tblEmpleado e ON e.idEmpleado=v.Fk_Empleado_Codigo
-                LEFT JOIN tblMoneda m ON m.Pk_Moneda=f.Fk_Moneda_Codigo
-                INNER JOIN tblComisionAbono ca ON ca.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado
-                INNER JOIN tblAplicacionPago ap ON ap.Pk_AplicacionPago=ca.Fk_AplicacionPago_Codigo
-                INNER JOIN tblReciboPago rp ON rp.Pk_ReciboPago=ap.Fk_ReciboPago_Codigo
-                LEFT JOIN (SELECT Fk_ComisionFacturaEncabezado_Codigo,
+                INNER JOIN tblFacturaEncabezado f ON f.idFacturaEncabezado=cf.idFacturaEncabezado
+                LEFT JOIN tblVendedor v ON v.idVendedor=f.idVendedor
+                LEFT JOIN tblEmpleado e ON e.idEmpleado=v.idEmpleado
+                LEFT JOIN tblMoneda m ON m.idMoneda=f.idMoneda
+                INNER JOIN tblComisionAbono ca ON ca.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado
+                INNER JOIN tblAplicacionPago ap ON ap.idAplicacionPago=ca.idAplicacionPago
+                INNER JOIN tblReciboPago rp ON rp.idReciboPago=ap.idReciboPago
+                LEFT JOIN (SELECT idComisionFacturaEncabezado,
                                   SUM(montoComisionLineaComisionFacturaDetalle) AS total_comision
-                           FROM tblComisionFacturaDetalle GROUP BY Fk_ComisionFacturaEncabezado_Codigo) det
-                       ON det.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado
+                           FROM tblComisionFacturaDetalle GROUP BY idComisionFacturaEncabezado) det
+                       ON det.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado
                 WHERE cf.estadoComisionFacturaEncabezado='CALCULADA'
                   AND ca.estadoPagoVendedorComisionAbono IN ('PENDIENTE','PAGADO')
                   AND ap.estadoAplicacionPago='APLICADA'
                   AND rp.estadoReciboPago='CONFIRMADO'
-                ORDER BY ap.fechaAplicacionPago DESC,ca.Pk_ComisionAbono DESC";
+                ORDER BY ap.fechaAplicacionPago DESC,ca.idComisionAbono DESC";
             DataTable Datos = ComisionVendedoresMetEjecucionConsulta(Comando, new List<OdbcParameter>());
             List<ClsComisionNomina> Resultado = new List<ClsComisionNomina>();
             foreach (DataRow Fila in Datos.Rows)
@@ -243,35 +246,35 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                         bool TieneMovimientosCxC;
                         string EstadoFactura;
                         using (OdbcCommand BloquearFactura = new OdbcCommand(@"
-                            SELECT f.estadoFacturaEncabezado,f.Fk_Moneda_Codigo,COALESCE(m.simboloMoneda,''),
-                                   cfv.Fk_Cliente_Codigo,
+                            SELECT f.estadoFacturaEncabezado,f.idMoneda,COALESCE(m.simboloMoneda,''),
+                                   cfv.idCliente,
                                    EXISTS(SELECT 1 FROM tblMovimientoCxC mc
-                                          WHERE mc.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado) AS tiene_movimientos_cxc,
+                                          WHERE mc.idFacturaEncabezado=f.idFacturaEncabezado) AS tiene_movimientos_cxc,
                                    COALESCE((SELECT SUM(fd.totalLineaFacturaDetalle) FROM tblFacturaDetalle fd
-                                       WHERE fd.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado),0) AS total_factura,
+                                        WHERE fd.idFacturaEncabezadoUuidDte=f.uuidDteFacturaEncabezado),0) AS total_factura,
                                    GREATEST(COALESCE(NULLIF(
                                        (SELECT SUM(mc.cargoMovimientoCxC-mc.abonoMovimientoCxC)
-                                        FROM tblMovimientoCxC mc WHERE mc.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado),0),
+                                        FROM tblMovimientoCxC mc WHERE mc.idFacturaEncabezado=f.idFacturaEncabezado),0),
                                        COALESCE((SELECT SUM(fd.totalLineaFacturaDetalle) FROM tblFacturaDetalle fd
-                                                 WHERE fd.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado),0)
+                                                  WHERE fd.idFacturaEncabezadoUuidDte=f.uuidDteFacturaEncabezado),0)
                                        - COALESCE((SELECT SUM(ap.montoAplicadoAplicacionPago) FROM tblAplicacionPago ap
-                                                   INNER JOIN tblReciboPago rp ON rp.Pk_ReciboPago=ap.Fk_ReciboPago_Codigo
-                                                   WHERE ap.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado
+                                                   INNER JOIN tblReciboPago rp ON rp.idReciboPago=ap.idReciboPago
+                                                   WHERE ap.idFacturaEncabezado=f.idFacturaEncabezado
                                                      AND ap.estadoAplicacionPago='APLICADA' AND rp.estadoReciboPago='CONFIRMADO'),0)
                                    ),0) AS saldo_factura
                             FROM tblFacturaEncabezado f
-                            INNER JOIN tblClienteFacturaVersion cfv ON cfv.Pk_ClienteFacturaVersion=f.Fk_ClienteFacturaVersion_Codigo
-                            INNER JOIN tblMoneda m ON m.Pk_Moneda=f.Fk_Moneda_Codigo
-                            WHERE f.Pk_FacturaEncabezado=? FOR UPDATE", Conexion, Transaccion))
+                            INNER JOIN tblClienteFacturaVersion cfv ON cfv.idClienteFacturaVersion=f.idClienteFacturaVersion
+                            INNER JOIN tblMoneda m ON m.idMoneda=f.idMoneda
+                            WHERE f.idFacturaEncabezado=? FOR UPDATE", Conexion, Transaccion))
                         {
                             BloquearFactura.Parameters.Add(new OdbcParameter("Factura", OdbcType.Int) { Value = IdFactura });
                             using (OdbcDataReader Lector = BloquearFactura.ExecuteReader())
                             {
                                 if (!Lector.Read()) throw new InvalidOperationException("La factura no existe o no tiene datos de cliente.");
                                 EstadoFactura = Convert.ToString(Lector["estadoFacturaEncabezado"]);
-                                IdMoneda = Convert.ToInt64(Lector["Fk_Moneda_Codigo"]);
+                                IdMoneda = Convert.ToInt64(Lector["idMoneda"]);
                                 SimboloMoneda = Convert.ToString(Lector[2]);
-                                IdCliente = Convert.ToInt32(Lector["Fk_Cliente_Codigo"]);
+                                IdCliente = Convert.ToInt32(Lector["idCliente"]);
                                 TieneMovimientosCxC = Convert.ToInt32(Lector["tiene_movimientos_cxc"]) != 0;
                                 TotalFactura = Convert.ToDecimal(Lector["total_factura"]);
                                 SaldoFactura = Convert.ToDecimal(Lector["saldo_factura"]);
@@ -284,7 +287,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                         if (Monto > Saldo) throw new InvalidOperationException("El abono excede el saldo pendiente de " + (SimboloMoneda ?? String.Empty) + " " + Saldo.ToString("N2", CultureInfo.GetCultureInfo("es-GT")) + ".");
 
                         bool RequiereReferencia;
-                        using (OdbcCommand Forma = new OdbcCommand("SELECT requiereReferenciaFormaPagoVenta FROM tblFormaPagoVenta WHERE Pk_FormaPagoVenta=?", Conexion, Transaccion))
+                        using (OdbcCommand Forma = new OdbcCommand("SELECT requiereReferenciaFormaPagoVenta FROM tblFormaPagoVenta WHERE idFormaPagoVenta=?", Conexion, Transaccion))
                         {
                             Forma.Parameters.Add(new OdbcParameter("Forma", OdbcType.Int) { Value = IdFormaPago });
                             object Valor = Forma.ExecuteScalar();
@@ -298,8 +301,8 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                             Guid.NewGuid().ToString("N").Substring(0, 6).ToUpperInvariant();
                         using (OdbcCommand Recibo = new OdbcCommand(@"
                             INSERT INTO tblReciboPago
-                                (numeroReciboPago,Fk_Cliente_Codigo,Fk_Moneda_Codigo,fechaReciboPago,montoReciboPago,
-                                 referenciaReciboPago,estadoReciboPago,Fk_Usuario_Registro,Fk_FormaPagoVenta_Codigo)
+                                (numeroReciboPago,idCliente,idMoneda,fechaReciboPago,montoReciboPago,
+                                 referenciaReciboPago,estadoReciboPago,idUsuarioRegistro,idFormaPagoVenta)
                             VALUES (?,?,?,?,?,?,'CONFIRMADO',?,?)", Conexion, Transaccion))
                         {
                             Recibo.Parameters.Add(new OdbcParameter("Numero", OdbcType.VarChar, 30) { Value = NumeroRecibo });
@@ -320,8 +323,8 @@ namespace CapaModelo_ComisionVendedores.Repositorios
 
                         using (OdbcCommand Aplicacion = new OdbcCommand(@"
                             INSERT INTO tblAplicacionPago
-                                (Fk_ReciboPago_Codigo,Fk_FacturaEncabezado_Codigo,fechaAplicacionPago,
-                                 montoAplicadoAplicacionPago,estadoAplicacionPago,Fk_Usuario_Registro)
+                                (idReciboPago,idFacturaEncabezado,fechaAplicacionPago,
+                                 montoAplicadoAplicacionPago,estadoAplicacionPago,idUsuarioRegistro)
                             VALUES (?,?,?,?,'APLICADA',?)", Conexion, Transaccion))
                         {
                             Aplicacion.Parameters.Add(new OdbcParameter("Recibo", OdbcType.Int) { Value = IdRecibo });
@@ -343,10 +346,10 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                         {
                             using (OdbcCommand SaldoInicial = new OdbcCommand(@"
                                 INSERT INTO tblMovimientoCxC
-                                    (Fk_FacturaEncabezado_Codigo,fechaMovimientoCxC,tipoMovimientoCxC,
+                                    (idFacturaEncabezado,fechaMovimientoCxC,tipoMovimientoCxC,
                                      descripcionMovimientoCxC,cargoMovimientoCxC,abonoMovimientoCxC,
-                                     Fk_Usuario_Registro,Fk_AplicacionPago_Codigo,Fk_NotaCxC_Codigo,
-                                     Fk_MovimientoCxC_Revertido)
+                                     idUsuarioRegistro,idAplicacionPago,idNotaCxC,
+                                     idMovimientoCxCRevertido)
                                 VALUES (?,?,'AJUSTE_POSITIVO',?,?,0,?,NULL,NULL,NULL)", Conexion, Transaccion))
                             {
                                 SaldoInicial.Parameters.Add(new OdbcParameter("Factura", OdbcType.Int) { Value = IdFactura });
@@ -362,10 +365,10 @@ namespace CapaModelo_ComisionVendedores.Repositorios
 
                         using (OdbcCommand MovimientoCxC = new OdbcCommand(@"
                             INSERT INTO tblMovimientoCxC
-                                (Fk_FacturaEncabezado_Codigo,fechaMovimientoCxC,tipoMovimientoCxC,
+                                (idFacturaEncabezado,fechaMovimientoCxC,tipoMovimientoCxC,
                                  descripcionMovimientoCxC,cargoMovimientoCxC,abonoMovimientoCxC,
-                                 Fk_Usuario_Registro,Fk_AplicacionPago_Codigo,Fk_NotaCxC_Codigo,
-                                 Fk_MovimientoCxC_Revertido)
+                                 idUsuarioRegistro,idAplicacionPago,idNotaCxC,
+                                 idMovimientoCxCRevertido)
                             VALUES (?,?,'PAGO',?,0,?,?,?,NULL,NULL)", Conexion, Transaccion))
                         {
                             MovimientoCxC.Parameters.Add(new OdbcParameter("Factura", OdbcType.Int) { Value = IdFactura });
@@ -383,7 +386,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                         decimal ComisionDevengada;
                         using (OdbcCommand ComisionPago = new OdbcCommand(@"
                             SELECT COALESCE(SUM(montoComisionDevengadoComisionAbono),0)
-                            FROM tblComisionAbono WHERE Fk_AplicacionPago_Codigo=?
+                            FROM tblComisionAbono WHERE idAplicacionPago=?
                               AND estadoPagoVendedorComisionAbono IN ('PENDIENTE','PAGADO')", Conexion, Transaccion))
                         {
                             ComisionPago.Parameters.Add(new OdbcParameter("Aplicacion", OdbcType.Int) { Value = IdAplicacion });
@@ -410,16 +413,16 @@ namespace CapaModelo_ComisionVendedores.Repositorios
         public ClsFacturaComision ComisionVendedoresMetObtenerFactura(int IdFactura)
         {
             const string Comando = @"
-                SELECT f.Pk_FacturaEncabezado AS id, f.Fk_Vendedor_Codigo AS id_vendedor,
+                SELECT f.idFacturaEncabezado AS id, f.idVendedor AS id_vendedor,
                        f.fechaEmisionFacturaEncabezado AS fecha, cfv.nombreClienteFacturaVersion AS cliente,
-                       COALESCE((SELECT SUM(fd.totalLineaFacturaDetalle) FROM tblFacturaDetalle fd WHERE fd.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado),0) AS total,
-                       COALESCE((SELECT SUM(ap.montoAplicadoAplicacionPago) FROM tblAplicacionPago ap INNER JOIN tblReciboPago rp ON rp.Pk_ReciboPago=ap.Fk_ReciboPago_Codigo
-                           WHERE ap.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado AND ap.estadoAplicacionPago='APLICADA' AND rp.estadoReciboPago='CONFIRMADO'),0) AS total_pagado,
-                       COALESCE((SELECT ap.montoAplicadoAplicacionPago FROM tblAplicacionPago ap INNER JOIN tblReciboPago rp ON rp.Pk_ReciboPago=ap.Fk_ReciboPago_Codigo
-                           WHERE ap.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado AND ap.estadoAplicacionPago='APLICADA' AND rp.estadoReciboPago='CONFIRMADO'
-                           ORDER BY ap.fechaAplicacionPago DESC,ap.Pk_AplicacionPago DESC LIMIT 1),0) AS ultimo_abono
-                FROM tblFacturaEncabezado f LEFT JOIN tblClienteFacturaVersion cfv ON cfv.Pk_ClienteFacturaVersion=f.Fk_ClienteFacturaVersion_Codigo
-                WHERE f.Pk_FacturaEncabezado = ?";
+                       COALESCE((SELECT SUM(fd.totalLineaFacturaDetalle) FROM tblFacturaDetalle fd WHERE fd.idFacturaEncabezadoUuidDte=f.uuidDteFacturaEncabezado),0) AS total,
+                       COALESCE((SELECT SUM(ap.montoAplicadoAplicacionPago) FROM tblAplicacionPago ap INNER JOIN tblReciboPago rp ON rp.idReciboPago=ap.idReciboPago
+                           WHERE ap.idFacturaEncabezado=f.idFacturaEncabezado AND ap.estadoAplicacionPago='APLICADA' AND rp.estadoReciboPago='CONFIRMADO'),0) AS total_pagado,
+                       COALESCE((SELECT ap.montoAplicadoAplicacionPago FROM tblAplicacionPago ap INNER JOIN tblReciboPago rp ON rp.idReciboPago=ap.idReciboPago
+                           WHERE ap.idFacturaEncabezado=f.idFacturaEncabezado AND ap.estadoAplicacionPago='APLICADA' AND rp.estadoReciboPago='CONFIRMADO'
+                           ORDER BY ap.fechaAplicacionPago DESC,ap.idAplicacionPago DESC LIMIT 1),0) AS ultimo_abono
+                FROM tblFacturaEncabezado f LEFT JOIN tblClienteFacturaVersion cfv ON cfv.idClienteFacturaVersion=f.idClienteFacturaVersion
+                WHERE f.idFacturaEncabezado = ?";
             DataTable Datos = ComisionVendedoresMetEjecucionConsulta(Comando,
                 new List<OdbcParameter> { new OdbcParameter("IdFactura", OdbcType.Int) { Value = IdFactura } });
             return Datos.Rows.Count == 0 ? null : ComisionVendedoresMetMapearFactura(Datos.Rows[0]);
@@ -448,18 +451,18 @@ namespace CapaModelo_ComisionVendedores.Repositorios
             }
 
             string Comando = @"
-                SELECT fd.Pk_FacturaDetalle AS id_detalle, fd.Fk_Producto_Codigo AS id_producto,
-                       p.Pk_Producto AS id_producto_logistica,
+                SELECT fd.idFacturaDetalle AS id_detalle, fd.idProducto AS id_producto,
+                       p.idProducto AS id_producto_logistica,
                        CASE COALESCE(cd.metodoComisionFacturaDetalle, '')
-                         WHEN 'PRODUCTO' THEN p.Pk_Producto WHEN 'MARCA' THEN p.Fk_Marca_Codigo
+                         WHEN 'PRODUCTO' THEN p.idProducto WHEN 'MARCA' THEN p.Fk_Marca_Codigo
                          WHEN 'LINEA' THEN p.Fk_Linea_Codigo WHEN 'CATEGORIA' THEN p.Fk_Categoria_Codigo
                          ELSE " + IdClasificacion + @" END AS id_clasificacion,
-                       COALESCE(p.nombreProducto, fd.descripcionItemFacturaDetalle) AS nombre_producto,
+                        p.nombreProducto AS nombre_producto,
                        COALESCE(m.nombreMarca, '') AS marca, COALESCE(l.nombreLinea, '') AS linea,
                        COALESCE(c.nombreCategoria, '') AS categoria,
                        COALESCE(cd.metodoComisionFacturaDetalle, cf.metodoComisionFacturaEncabezado, '') AS metodo_guardado,
-                       COALESCE(f.Fk_Vendedor_Codigo, 0) AS vendedor_guardado,
-                       COALESCE(cf.Pk_ComisionFacturaEncabezado, 0) AS comision_guardada,
+                       COALESCE(f.idVendedor, 0) AS vendedor_guardado,
+                       COALESCE(cf.idComisionFacturaEncabezado, 0) AS comision_guardada,
                        COALESCE(cd.montoComisionLineaComisionFacturaDetalle, 0) AS monto_comision_guardado,
                        COALESCE(cd.nombreClasificacionHistoricaComisionFacturaDetalle, " + NombreColumna + @") AS elemento,
                        fd.cantidadFacturaDetalle AS cantidad, fd.precioUnitarioFacturaDetalle AS precio_unitario,
@@ -470,26 +473,26 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                        CAST(CASE WHEN COALESCE(l.porcentajeComisionLinea,0)>0.99 THEN l.porcentajeComisionLinea ELSE COALESCE(l.porcentajeComisionLinea,0)*100 END AS CHAR) AS porcentaje_linea,
                        CAST(CASE WHEN COALESCE(c.porcentajeComisionCategoria,0)>0.99 THEN c.porcentajeComisionCategoria ELSE COALESCE(c.porcentajeComisionCategoria,0)*100 END AS CHAR) AS porcentaje_categoria,
                        COALESCE((SELECT SUM(ca.montoComisionDevengadoComisionAbono)
-                           FROM tblComisionAbono ca INNER JOIN tblAplicacionPago ap ON ap.Pk_AplicacionPago=ca.Fk_AplicacionPago_Codigo
-                           INNER JOIN tblReciboPago rp ON rp.Pk_ReciboPago=ap.Fk_ReciboPago_Codigo
-                           WHERE ca.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado
+                           FROM tblComisionAbono ca INNER JOIN tblAplicacionPago ap ON ap.idAplicacionPago=ca.idAplicacionPago
+                           INNER JOIN tblReciboPago rp ON rp.idReciboPago=ap.idReciboPago
+                           WHERE ca.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado
                              AND ca.estadoPagoVendedorComisionAbono IN ('PENDIENTE','PAGADO')
                              AND ap.estadoAplicacionPago='APLICADA' AND rp.estadoReciboPago='CONFIRMADO'),0) AS comision_devengada,
                        COALESCE((SELECT ca.montoComisionDevengadoComisionAbono
-                           FROM tblComisionAbono ca INNER JOIN tblAplicacionPago ap ON ap.Pk_AplicacionPago=ca.Fk_AplicacionPago_Codigo
-                           INNER JOIN tblReciboPago rp ON rp.Pk_ReciboPago=ap.Fk_ReciboPago_Codigo
-                           WHERE ca.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado
+                           FROM tblComisionAbono ca INNER JOIN tblAplicacionPago ap ON ap.idAplicacionPago=ca.idAplicacionPago
+                           INNER JOIN tblReciboPago rp ON rp.idReciboPago=ap.idReciboPago
+                           WHERE ca.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado
                              AND ca.estadoPagoVendedorComisionAbono IN ('PENDIENTE','PAGADO')
                              AND ap.estadoAplicacionPago='APLICADA' AND rp.estadoReciboPago='CONFIRMADO'
-                           ORDER BY ap.fechaAplicacionPago DESC,ap.Pk_AplicacionPago DESC LIMIT 1),0) AS ultima_comision_devengada
-                FROM tblFacturaDetalle fd INNER JOIN tblFacturaEncabezado f ON f.Pk_FacturaEncabezado=fd.Fk_FacturaEncabezado_Codigo
-                INNER JOIN tblProducto p ON p.Pk_Producto=fd.Fk_Producto_Codigo
-                LEFT JOIN tblMarca m ON m.Pk_Marca=p.Fk_Marca_Codigo
-                LEFT JOIN tblLinea l ON l.Pk_Linea=p.Fk_Linea_Codigo
-                LEFT JOIN tblCategoria c ON c.Pk_Categoria=p.Fk_Categoria_Codigo
-                LEFT JOIN tblComisionFacturaEncabezado cf ON cf.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado
-                LEFT JOIN tblComisionFacturaDetalle cd ON cd.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado AND cd.Fk_FacturaDetalle_Codigo=fd.Pk_FacturaDetalle
-                WHERE fd.Fk_FacturaEncabezado_Codigo = ? ORDER BY fd.numeroLineaFacturaDetalle";
+                           ORDER BY ap.fechaAplicacionPago DESC,ap.idAplicacionPago DESC LIMIT 1),0) AS ultima_comision_devengada
+                FROM tblFacturaDetalle fd INNER JOIN tblFacturaEncabezado f ON f.uuidDteFacturaEncabezado=fd.idFacturaEncabezadoUuidDte
+                INNER JOIN tblProducto p ON p.idProducto=fd.idProducto
+                LEFT JOIN tblMarca m ON m.idMarca=p.Fk_Marca_Codigo
+                LEFT JOIN tblLinea l ON l.idLinea=p.Fk_Linea_Codigo
+                LEFT JOIN tblCategoria c ON c.idCategoria=p.Fk_Categoria_Codigo
+                LEFT JOIN tblComisionFacturaEncabezado cf ON cf.idFacturaEncabezado=f.idFacturaEncabezado
+                LEFT JOIN tblComisionFacturaDetalle cd ON cd.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado AND cd.idFacturaDetalle=fd.idFacturaDetalle
+                 WHERE f.idFacturaEncabezado = ? ORDER BY fd.numeroLineaFacturaDetalle";
             DataTable Datos = ComisionVendedoresMetEjecucionConsulta(Comando,
                 new List<OdbcParameter> { new OdbcParameter("IdFactura", OdbcType.Int) { Value = IdFactura } });
             List<ClsDetalleProductoComision> Resultado = new List<ClsDetalleProductoComision>();
@@ -527,36 +530,40 @@ namespace CapaModelo_ComisionVendedores.Repositorios
         {
             ComisionVendedoresMetSincronizarAbonos(null);
             string Comando = @"
-                SELECT ca.Pk_ComisionAbono AS id_abono, f.Fk_Vendedor_Codigo AS id_vendedor,
+                SELECT ca.idComisionAbono AS id_abono, f.idVendedor AS id_vendedor,
                        COALESCE(NULLIF(TRIM(CONCAT_WS(' ', e.nombresEmpleado, e.apellidosEmpleado)), ''), v.codigoVendedor) AS nombre_vendedor,
-                       f.Fk_Moneda_Codigo AS id_moneda,
+                       f.idMoneda AS id_moneda,
                        COALESCE(m.simboloMoneda,'') AS simbolo_moneda,
-                       f.Pk_FacturaEncabezado AS id_factura, ca.Fk_AplicacionPago_Codigo AS id_aplicacion_pago,
+                       f.idFacturaEncabezado AS id_factura, ca.idAplicacionPago AS id_aplicacion_pago,
                        ap.fechaAplicacionPago AS fecha_aplicacion,
-                       CONCAT('FAC-',f.Pk_FacturaEncabezado,' · ',fd.descripcionItemFacturaDetalle) AS elemento_comision,
+                        CONCAT('FAC-',f.idFacturaEncabezado,' · ',p.nombreProducto) AS elemento_comision,
                        cd.metodoComisionFacturaDetalle AS metodo_comision,
                        cd.tasaAplicadaComisionFacturaDetalle * 100 AS porcentaje,
                        (cd.baseComisionFacturaDetalle / NULLIF(totalFactura.total,0)) * ap.montoAplicadoAplicacionPago AS base_cobrada,
                        (cd.montoComisionLineaComisionFacturaDetalle / NULLIF(comisionFactura.total_comision,0)) * ca.montoComisionDevengadoComisionAbono AS monto_comision,
-                       fd.Pk_FacturaDetalle AS id_detalle
+                       fd.idFacturaDetalle AS id_detalle
                 FROM tblComisionAbono ca
-                INNER JOIN tblComisionFacturaEncabezado cf ON cf.Pk_ComisionFacturaEncabezado=ca.Fk_ComisionFacturaEncabezado_Codigo
-                INNER JOIN tblFacturaEncabezado f ON f.Pk_FacturaEncabezado=cf.Fk_FacturaEncabezado_Codigo
-                INNER JOIN tblMoneda m ON m.Pk_Moneda=f.Fk_Moneda_Codigo
-                INNER JOIN tblVendedor v ON v.Pk_Vendedor=f.Fk_Vendedor_Codigo
-                LEFT JOIN tblEmpleado e ON e.idEmpleado=v.Fk_Empleado_Codigo
-                INNER JOIN tblAplicacionPago ap ON ap.Pk_AplicacionPago=ca.Fk_AplicacionPago_Codigo
-                INNER JOIN tblReciboPago rp ON rp.Pk_ReciboPago=ap.Fk_ReciboPago_Codigo
-                INNER JOIN tblFacturaDetalle fd ON fd.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado
-                INNER JOIN tblComisionFacturaDetalle cd ON cd.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado AND cd.Fk_FacturaDetalle_Codigo=fd.Pk_FacturaDetalle
-                INNER JOIN (SELECT Fk_FacturaEncabezado_Codigo,SUM(totalLineaFacturaDetalle) total FROM tblFacturaDetalle GROUP BY Fk_FacturaEncabezado_Codigo) totalFactura ON totalFactura.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado
-                INNER JOIN (SELECT Fk_ComisionFacturaEncabezado_Codigo,SUM(montoComisionLineaComisionFacturaDetalle) total_comision FROM tblComisionFacturaDetalle GROUP BY Fk_ComisionFacturaEncabezado_Codigo) comisionFactura ON comisionFactura.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado
+                INNER JOIN tblComisionFacturaEncabezado cf ON cf.idComisionFacturaEncabezado=ca.idComisionFacturaEncabezado
+                INNER JOIN tblFacturaEncabezado f ON f.idFacturaEncabezado=cf.idFacturaEncabezado
+                INNER JOIN tblMoneda m ON m.idMoneda=f.idMoneda
+                INNER JOIN tblVendedor v ON v.idVendedor=f.idVendedor
+                LEFT JOIN tblEmpleado e ON e.idEmpleado=v.idEmpleado
+                INNER JOIN tblAplicacionPago ap ON ap.idAplicacionPago=ca.idAplicacionPago
+                INNER JOIN tblReciboPago rp ON rp.idReciboPago=ap.idReciboPago
+                INNER JOIN tblFacturaDetalle fd ON fd.idFacturaEncabezadoUuidDte=f.uuidDteFacturaEncabezado
+                INNER JOIN tblProducto p ON p.idProducto=fd.idProducto
+                INNER JOIN tblComisionFacturaDetalle cd ON cd.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado AND cd.idFacturaDetalle=fd.idFacturaDetalle
+                INNER JOIN (SELECT f2.idFacturaEncabezado,SUM(fd.totalLineaFacturaDetalle) total
+                            FROM tblFacturaEncabezado f2
+                            INNER JOIN tblFacturaDetalle fd ON fd.idFacturaEncabezadoUuidDte=f2.uuidDteFacturaEncabezado
+                            GROUP BY f2.idFacturaEncabezado) totalFactura ON totalFactura.idFacturaEncabezado=f.idFacturaEncabezado
+                INNER JOIN (SELECT idComisionFacturaEncabezado,SUM(montoComisionLineaComisionFacturaDetalle) total_comision FROM tblComisionFacturaDetalle GROUP BY idComisionFacturaEncabezado) comisionFactura ON comisionFactura.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado
                 WHERE ca.estadoPagoVendedorComisionAbono = 'PENDIENTE'
                   AND cf.estadoComisionFacturaEncabezado = 'CALCULADA'
                   AND f.estadoFacturaEncabezado = 'EMITIDA'
                   AND ap.estadoAplicacionPago = 'APLICADA' AND rp.estadoReciboPago = 'CONFIRMADO'
                   AND ap.fechaAplicacionPago >= ? AND ap.fechaAplicacionPago < ?
-                ORDER BY v.codigoVendedor, ap.fechaAplicacionPago, f.Pk_FacturaEncabezado, fd.numeroLineaFacturaDetalle";
+                ORDER BY v.codigoVendedor, ap.fechaAplicacionPago, f.idFacturaEncabezado, fd.numeroLineaFacturaDetalle";
             List<OdbcParameter> Parametros = new List<OdbcParameter>
             {
                 new OdbcParameter("FechaInicio", OdbcType.Date) { Value = FechaInicio.Date },
@@ -588,42 +595,42 @@ namespace CapaModelo_ComisionVendedores.Repositorios
             // Estas filas informan el total calculado,
             // pero llevan IdComisionAbono=0 y no se pueden registrar como pago.
             const string SqlAsignacionesSinAbono = @"
-                SELECT f.Fk_Vendedor_Codigo AS id_vendedor, v.codigoVendedor,
+                SELECT f.idVendedor AS id_vendedor, v.codigoVendedor,
                        COALESCE(NULLIF(TRIM(CONCAT_WS(' ',e.nombresEmpleado,e.apellidosEmpleado)),''),v.codigoVendedor) AS nombre_vendedor,
-                       f.Fk_Moneda_Codigo AS id_moneda, f.Pk_FacturaEncabezado AS id_factura,
+                       f.idMoneda AS id_moneda, f.idFacturaEncabezado AS id_factura,
                        0 AS id_detalle, f.fechaEmisionFacturaEncabezado AS fecha_factura,
                        COALESCE(m.simboloMoneda,'') AS simbolo_moneda,
-                       CONCAT('FAC-',f.Pk_FacturaEncabezado,' · Comisión asignada a un vendedor; ',
+                       CONCAT('FAC-',f.idFacturaEncabezado,' · Comisión asignada a un vendedor; ',
                               dc.cantidad_lineas,' producto(s); total calculado ',m.simboloMoneda,' ',FORMAT(dc.total_comision,2),
                               ' (sin abono de comisión pendiente en el rango)') AS elemento_comision,
                        dc.metodo_comision,
                        dc.porcentaje,
                        dc.total_comision AS monto_comision_total
                 FROM tblComisionFacturaEncabezado cf
-                INNER JOIN tblFacturaEncabezado f ON f.Pk_FacturaEncabezado=cf.Fk_FacturaEncabezado_Codigo
-                INNER JOIN tblMoneda m ON m.Pk_Moneda=f.Fk_Moneda_Codigo
-                INNER JOIN tblVendedor v ON v.Pk_Vendedor=f.Fk_Vendedor_Codigo
-                LEFT JOIN tblEmpleado e ON e.idEmpleado=v.Fk_Empleado_Codigo
+                INNER JOIN tblFacturaEncabezado f ON f.idFacturaEncabezado=cf.idFacturaEncabezado
+                INNER JOIN tblMoneda m ON m.idMoneda=f.idMoneda
+                INNER JOIN tblVendedor v ON v.idVendedor=f.idVendedor
+                LEFT JOIN tblEmpleado e ON e.idEmpleado=v.idEmpleado
                 INNER JOIN (
-                    SELECT Fk_ComisionFacturaEncabezado_Codigo,COUNT(*) AS cantidad_lineas,
+                    SELECT idComisionFacturaEncabezado,COUNT(*) AS cantidad_lineas,
                            CASE WHEN COUNT(DISTINCT metodoComisionFacturaDetalle)=1 THEN MAX(metodoComisionFacturaDetalle) ELSE 'MIXTA' END AS metodo_comision,
                            CASE WHEN SUM(baseComisionFacturaDetalle)>0
                                 THEN SUM(baseComisionFacturaDetalle*tasaAplicadaComisionFacturaDetalle)/SUM(baseComisionFacturaDetalle)*100
                                 ELSE 0 END AS porcentaje,
                            SUM(baseComisionFacturaDetalle*tasaAplicadaComisionFacturaDetalle) AS total_comision
-                    FROM tblComisionFacturaDetalle GROUP BY Fk_ComisionFacturaEncabezado_Codigo
-                ) dc ON dc.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado
+                    FROM tblComisionFacturaDetalle GROUP BY idComisionFacturaEncabezado
+                ) dc ON dc.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado
                 WHERE cf.estadoComisionFacturaEncabezado='CALCULADA' AND f.estadoFacturaEncabezado='EMITIDA'
                   AND f.fechaEmisionFacturaEncabezado>=? AND f.fechaEmisionFacturaEncabezado<?
                   AND NOT EXISTS (
                       SELECT 1 FROM tblComisionAbono ca
-                      INNER JOIN tblAplicacionPago ap ON ap.Pk_AplicacionPago=ca.Fk_AplicacionPago_Codigo
-                      INNER JOIN tblReciboPago rp ON rp.Pk_ReciboPago=ap.Fk_ReciboPago_Codigo
-                      WHERE ca.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado
+                      INNER JOIN tblAplicacionPago ap ON ap.idAplicacionPago=ca.idAplicacionPago
+                      INNER JOIN tblReciboPago rp ON rp.idReciboPago=ap.idReciboPago
+                      WHERE ca.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado
                         AND ca.estadoPagoVendedorComisionAbono='PENDIENTE'
                         AND ap.estadoAplicacionPago='APLICADA' AND rp.estadoReciboPago='CONFIRMADO'
                         AND ap.fechaAplicacionPago>=? AND ap.fechaAplicacionPago<?)
-                ORDER BY v.codigoVendedor,f.fechaEmisionFacturaEncabezado,f.Pk_FacturaEncabezado";
+                ORDER BY v.codigoVendedor,f.fechaEmisionFacturaEncabezado,f.idFacturaEncabezado";
             List<OdbcParameter> ParametrosAsignaciones = new List<OdbcParameter>
             {
                 new OdbcParameter("FechaFacturaInicio", OdbcType.Date) { Value = FechaInicio.Date },
@@ -656,18 +663,18 @@ namespace CapaModelo_ComisionVendedores.Repositorios
         public List<ClsProductoComision> ComisionVendedoresMetConsultarPorcentajes(string Metodo)
         {
             ComisionVendedoresMetObtenerIdClasificacionSql(Metodo);
-            const string Comando = @"SELECT p.Pk_Producto AS id, p.nombreProducto AS nombre,
-                       COALESCE(m.Pk_Marca,0) AS id_marca, COALESCE(l.Pk_Linea,0) AS id_linea,
-                       COALESCE(c.Pk_Categoria,0) AS id_categoria,
+            const string Comando = @"SELECT p.idProducto AS id, p.nombreProducto AS nombre,
+                       COALESCE(m.idMarca,0) AS id_marca, COALESCE(l.idLinea,0) AS id_linea,
+                       COALESCE(c.idCategoria,0) AS id_categoria,
                        COALESCE(m.nombreMarca,'') AS marca, COALESCE(l.nombreLinea,'') AS linea,
                        COALESCE(c.nombreCategoria,'') AS categoria,
                        CAST(CASE WHEN COALESCE(m.porcentajeComisionMarca,0)>0.99 THEN m.porcentajeComisionMarca ELSE COALESCE(m.porcentajeComisionMarca,0)*100 END AS CHAR) AS porcentaje_marca,
                        CAST(CASE WHEN COALESCE(l.porcentajeComisionLinea,0)>0.99 THEN l.porcentajeComisionLinea ELSE COALESCE(l.porcentajeComisionLinea,0)*100 END AS CHAR) AS porcentaje_linea,
                        CAST(CASE WHEN COALESCE(c.porcentajeComisionCategoria,0)>0.99 THEN c.porcentajeComisionCategoria ELSE COALESCE(c.porcentajeComisionCategoria,0)*100 END AS CHAR) AS porcentaje_categoria,
                        CAST(CASE WHEN COALESCE(p.porcentajeComisionProducto,0)>0.99 THEN p.porcentajeComisionProducto ELSE COALESCE(p.porcentajeComisionProducto,0)*100 END AS CHAR) AS porcentaje_producto
-                       FROM tblProducto p LEFT JOIN tblMarca m ON m.Pk_Marca=p.Fk_Marca_Codigo
-                       LEFT JOIN tblLinea l ON l.Pk_Linea=p.Fk_Linea_Codigo
-                       LEFT JOIN tblCategoria c ON c.Pk_Categoria=p.Fk_Categoria_Codigo
+                       FROM tblProducto p LEFT JOIN tblMarca m ON m.idMarca=p.Fk_Marca_Codigo
+                       LEFT JOIN tblLinea l ON l.idLinea=p.Fk_Linea_Codigo
+                       LEFT JOIN tblCategoria c ON c.idCategoria=p.Fk_Categoria_Codigo
                        ORDER BY p.nombreProducto";
             DataTable Datos = ComisionVendedoresMetEjecucionConsulta(Comando, new List<OdbcParameter>());
             List<ClsProductoComision> Resultado = new List<ClsProductoComision>();
@@ -696,10 +703,10 @@ namespace CapaModelo_ComisionVendedores.Repositorios
             string Tabla, Columna, Id;
             switch (Metodo)
             {
-                case "Producto": Tabla = "tblProducto"; Columna = "porcentajeComisionProducto"; Id = "Pk_Producto"; break;
-                case "Marca": Tabla = "tblMarca"; Columna = "porcentajeComisionMarca"; Id = "Pk_Marca"; break;
-                case "Linea": Tabla = "tblLinea"; Columna = "porcentajeComisionLinea"; Id = "Pk_Linea"; break;
-                case "Categoria": Tabla = "tblCategoria"; Columna = "porcentajeComisionCategoria"; Id = "Pk_Categoria"; break;
+                case "Producto": Tabla = "tblProducto"; Columna = "porcentajeComisionProducto"; Id = "idProducto"; break;
+                case "Marca": Tabla = "tblMarca"; Columna = "porcentajeComisionMarca"; Id = "idMarca"; break;
+                case "Linea": Tabla = "tblLinea"; Columna = "porcentajeComisionLinea"; Id = "idLinea"; break;
+                case "Categoria": Tabla = "tblCategoria"; Columna = "porcentajeComisionCategoria"; Id = "idCategoria"; break;
                 default: throw new ArgumentException("Seleccione Marca, Línea, Producto o Categoría.");
             }
             string Comando = "UPDATE " + Tabla + " SET " + Columna + " = ? WHERE " + Id + " = ?";
@@ -741,7 +748,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                     try
                     {
                         using (OdbcCommand YaCalculada = new OdbcCommand(
-                            "SELECT Fk_Vendedor_Codigo FROM tblFacturaEncabezado WHERE Pk_FacturaEncabezado = ?", Conexion, Transaccion))
+                            "SELECT idVendedor FROM tblFacturaEncabezado WHERE idFacturaEncabezado = ?", Conexion, Transaccion))
                         {
                             YaCalculada.Parameters.Add(new OdbcParameter("IdFactura", OdbcType.Int) { Value = IdFactura });
                             object VendedorGuardado = YaCalculada.ExecuteScalar();
@@ -754,8 +761,8 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                             }
                         }
                         using (OdbcCommand Actualizar = new OdbcCommand(@"
-                            UPDATE tblFacturaEncabezado SET Fk_Vendedor_Codigo = ?
-                            WHERE Pk_FacturaEncabezado = ? AND estadoFacturaEncabezado = 'EMITIDA'", Conexion, Transaccion))
+                            UPDATE tblFacturaEncabezado SET idVendedor = ?
+                            WHERE idFacturaEncabezado = ? AND estadoFacturaEncabezado = 'EMITIDA'", Conexion, Transaccion))
                         {
                             Actualizar.Parameters.Add(new OdbcParameter("IdVendedor", OdbcType.Int) { Value = IdVendedor });
                             Actualizar.Parameters.Add(new OdbcParameter("IdFactura", OdbcType.Int) { Value = IdFactura });
@@ -763,7 +770,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                             if (Afectados == 0)
                             {
                                 using (OdbcCommand Confirmar = new OdbcCommand(
-                                    "SELECT COUNT(*) FROM tblFacturaEncabezado WHERE Pk_FacturaEncabezado=? AND Fk_Vendedor_Codigo=? AND estadoFacturaEncabezado='EMITIDA'", Conexion, Transaccion))
+                                    "SELECT COUNT(*) FROM tblFacturaEncabezado WHERE idFacturaEncabezado=? AND idVendedor=? AND estadoFacturaEncabezado='EMITIDA'", Conexion, Transaccion))
                                 {
                                     Confirmar.Parameters.Add(new OdbcParameter("IdFactura", OdbcType.Int) { Value = IdFactura });
                                     Confirmar.Parameters.Add(new OdbcParameter("IdVendedor", OdbcType.Int) { Value = IdVendedor });
@@ -821,9 +828,9 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                         int VendedorActual = 0;
                         bool FacturaEncontrada = false;
                         using (OdbcCommand ConsultarAsignacion = new OdbcCommand(@"
-                            SELECT COALESCE(f.Fk_Vendedor_Codigo,0) AS vendedor_actual
+                            SELECT COALESCE(f.idVendedor,0) AS vendedor_actual
                             FROM tblFacturaEncabezado f
-                            WHERE f.Pk_FacturaEncabezado=? FOR UPDATE", Conexion, Transaccion))
+                            WHERE f.idFacturaEncabezado=? FOR UPDATE", Conexion, Transaccion))
                         {
                             ConsultarAsignacion.Parameters.Add(new OdbcParameter("Factura", OdbcType.Int) { Value = IdFactura });
                             using (OdbcDataReader Lector = ConsultarAsignacion.ExecuteReader())
@@ -840,7 +847,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                             throw new InvalidOperationException("Esta factura ya tiene asignado otro vendedor. Una factura solo puede pertenecer a un vendedor.");
 
                         PasoActual = "asignar vendedor a la factura";
-                        using (OdbcCommand Asignar = new OdbcCommand("UPDATE tblFacturaEncabezado SET Fk_Vendedor_Codigo=? WHERE Pk_FacturaEncabezado=? AND estadoFacturaEncabezado='EMITIDA'", Conexion, Transaccion))
+                        using (OdbcCommand Asignar = new OdbcCommand("UPDATE tblFacturaEncabezado SET idVendedor=? WHERE idFacturaEncabezado=? AND estadoFacturaEncabezado='EMITIDA'", Conexion, Transaccion))
                         {
                             Asignar.Parameters.Add(new OdbcParameter("Vendedor", OdbcType.Int) { Value = IdVendedor });
                             Asignar.Parameters.Add(new OdbcParameter("Factura", OdbcType.Int) { Value = IdFactura });
@@ -904,14 +911,14 @@ namespace CapaModelo_ComisionVendedores.Repositorios
         {
             if (Lineas.Select(Item => Item.IdFacturaDetalle).Distinct().Count() != Lineas.Count)
                 throw new InvalidOperationException("Hay productos repetidos en la selección de comisión.");
-                        using (OdbcCommand Existente = new OdbcCommand("SELECT Pk_ComisionFacturaEncabezado,Fk_FacturaEncabezado_Codigo FROM tblComisionFacturaEncabezado WHERE Fk_FacturaEncabezado_Codigo=? AND estadoComisionFacturaEncabezado='CALCULADA' FOR UPDATE", Conexion, Transaccion))
+                        using (OdbcCommand Existente = new OdbcCommand("SELECT idComisionFacturaEncabezado,idFacturaEncabezado FROM tblComisionFacturaEncabezado WHERE idFacturaEncabezado=? AND estadoComisionFacturaEncabezado='CALCULADA' FOR UPDATE", Conexion, Transaccion))
                         {
                             Existente.Parameters.Add(new OdbcParameter("Factura", OdbcType.Int) { Value = IdFactura });
                             using (OdbcDataReader Reader = Existente.ExecuteReader())
                             {
                                 if (Reader.Read())
                                 {
-                                    int IdComisionExistente = Convert.ToInt32(Reader["Pk_ComisionFacturaEncabezado"]);
+                                    int IdComisionExistente = Convert.ToInt32(Reader["idComisionFacturaEncabezado"]);
                                     Reader.Close();
                                     foreach (ClsDetalleProductoComision Linea in Lineas)
                                     {
@@ -922,25 +929,31 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                                 }
                             }
                         }
-                        using (OdbcCommand Verificar = new OdbcCommand("SELECT COUNT(*) FROM tblVendedor WHERE Pk_Vendedor=? AND activoVendedor=1", Conexion, Transaccion))
+                        using (OdbcCommand Verificar = new OdbcCommand("SELECT COUNT(*) FROM tblVendedor WHERE idVendedor=? AND activoVendedor=1", Conexion, Transaccion))
                         {
                             Verificar.Parameters.Add(new OdbcParameter("Vendedor", OdbcType.Int) { Value = IdVendedor });
                             if (Convert.ToInt32(Verificar.ExecuteScalar()) == 0) throw new InvalidOperationException("El vendedor no existe o está inactivo.");
                         }
                         int Conteo;
-                        using (OdbcCommand Contar = new OdbcCommand("SELECT COUNT(*) FROM tblFacturaDetalle WHERE Fk_FacturaEncabezado_Codigo=?", Conexion, Transaccion))
+                        using (OdbcCommand Contar = new OdbcCommand(@"SELECT COUNT(*)
+                            FROM tblFacturaDetalle fd
+                            INNER JOIN tblFacturaEncabezado f ON f.uuidDteFacturaEncabezado=fd.idFacturaEncabezadoUuidDte
+                            WHERE f.idFacturaEncabezado=?", Conexion, Transaccion))
                         {
                             Contar.Parameters.Add(new OdbcParameter("Factura", OdbcType.Int) { Value = IdFactura });
                             Conteo = Convert.ToInt32(Contar.ExecuteScalar());
                         }
                         if (Conteo != Lineas.Count) throw new InvalidOperationException("Debe elegir un método para todos los productos de la factura.");
-                        using (OdbcCommand Validar = new OdbcCommand("SELECT estadoFacturaEncabezado,Fk_Vendedor_Codigo,COALESCE((SELECT SUM(totalLineaFacturaDetalle) FROM tblFacturaDetalle WHERE Fk_FacturaEncabezado_Codigo=Pk_FacturaEncabezado),0) AS total FROM tblFacturaEncabezado WHERE Pk_FacturaEncabezado=? FOR UPDATE", Conexion, Transaccion))
+                        using (OdbcCommand Validar = new OdbcCommand(@"SELECT f.estadoFacturaEncabezado,f.idVendedor,
+                            COALESCE((SELECT SUM(fd.totalLineaFacturaDetalle) FROM tblFacturaDetalle fd
+                                      WHERE fd.idFacturaEncabezadoUuidDte=f.uuidDteFacturaEncabezado),0) AS total
+                            FROM tblFacturaEncabezado f WHERE f.idFacturaEncabezado=? FOR UPDATE", Conexion, Transaccion))
                         {
                             Validar.Parameters.Add(new OdbcParameter("Factura", OdbcType.Int) { Value = IdFactura });
                             using (OdbcDataReader Reader = Validar.ExecuteReader())
                             {
                                 if (!Reader.Read() || !String.Equals(Convert.ToString(Reader["estadoFacturaEncabezado"]), "EMITIDA", StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("Solo se puede comisionar una factura emitida.");
-                                if (Reader.IsDBNull(Reader.GetOrdinal("Fk_Vendedor_Codigo")) || Convert.ToInt32(Reader["Fk_Vendedor_Codigo"]) != IdVendedor) throw new InvalidOperationException("El vendedor debe estar asignado a esta factura.");
+                                if (Reader.IsDBNull(Reader.GetOrdinal("idVendedor")) || Convert.ToInt32(Reader["idVendedor"]) != IdVendedor) throw new InvalidOperationException("El vendedor debe estar asignado a esta factura.");
                                 if (Convert.ToDecimal(Reader["total"]) <= 0m) throw new InvalidOperationException("La factura debe tener total mayor que cero.");
                             }
                         }
@@ -949,7 +962,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                     ClsDetalleProductoComision Primera = Lineas[0];
                         string MetodoCabecera = Lineas.Select(Item => Item.MetodoSeleccionado.ToUpperInvariant()).Distinct().Count() == 1 ? Primera.MetodoSeleccionado.ToUpperInvariant() : "MIXTA";
                         using (OdbcCommand Insertar = new OdbcCommand(@"INSERT INTO tblComisionFacturaEncabezado
-                            (Fk_FacturaEncabezado_Codigo,metodoComisionFacturaEncabezado,estadoComisionFacturaEncabezado)
+                            (idFacturaEncabezado,metodoComisionFacturaEncabezado,estadoComisionFacturaEncabezado)
                             VALUES (?,?,'CALCULADA')", Conexion, Transaccion))
                         {
                             Insertar.Parameters.Add(new OdbcParameter("Factura", OdbcType.Int) { Value = IdFactura });
@@ -960,9 +973,9 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                         using (OdbcCommand ObtenerId = new OdbcCommand("SELECT LAST_INSERT_ID()", Conexion, Transaccion)) IdComision = Convert.ToInt32(ObtenerId.ExecuteScalar());
                         foreach (ClsDetalleProductoComision Linea in Lineas)
                         {
-                            string ColumnaClasificacion = Linea.MetodoSeleccionado == "Producto" ? "" : Linea.MetodoSeleccionado == "Marca" ? ",Fk_Marca_Codigo" : Linea.MetodoSeleccionado == "Linea" ? ",Fk_Linea_Codigo" : ",Fk_Categoria_Codigo";
+                            string ColumnaClasificacion = Linea.MetodoSeleccionado == "Producto" ? "" : Linea.MetodoSeleccionado == "Marca" ? ",idMarca" : Linea.MetodoSeleccionado == "Linea" ? ",idLinea" : ",idCategoria";
                             using (OdbcCommand InsertarLinea = new OdbcCommand(@"INSERT INTO tblComisionFacturaDetalle
-                            (Fk_ComisionFacturaEncabezado_Codigo,Fk_FacturaDetalle_Codigo,metodoComisionFacturaDetalle,nombreClasificacionHistoricaComisionFacturaDetalle,tasaAplicadaComisionFacturaDetalle,baseComisionFacturaDetalle" + ColumnaClasificacion + @")
+                            (idComisionFacturaEncabezado,idFacturaDetalle,metodoComisionFacturaDetalle,nombreClasificacionHistoricaComisionFacturaDetalle,tasaAplicadaComisionFacturaDetalle,baseComisionFacturaDetalle" + ColumnaClasificacion + @")
                                 VALUES (?,?,?,?,?,?" + (ColumnaClasificacion.Length == 0 ? "" : ",?") + ")", Conexion, Transaccion))
                             {
                                 InsertarLinea.Parameters.Add(new OdbcParameter("Comision", OdbcType.Int) { Value = IdComision });
@@ -1019,12 +1032,12 @@ namespace CapaModelo_ComisionVendedores.Repositorios
             // en cero y sin abonos; no tocar históricos que ya generaron pagos.
             List<int> ComisionesSinAbonoEnCero = new List<int>();
             using (OdbcCommand BuscarCeros = new OdbcCommand(@"
-                SELECT cf.Pk_ComisionFacturaEncabezado
+                SELECT cf.idComisionFacturaEncabezado
                 FROM tblComisionFacturaEncabezado cf
-                INNER JOIN tblComisionFacturaDetalle cd ON cd.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado
+                INNER JOIN tblComisionFacturaDetalle cd ON cd.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado
                 WHERE cf.estadoComisionFacturaEncabezado='CALCULADA'
-                  AND NOT EXISTS (SELECT 1 FROM tblComisionAbono ca WHERE ca.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado)
-                GROUP BY cf.Pk_ComisionFacturaEncabezado
+                  AND NOT EXISTS (SELECT 1 FROM tblComisionAbono ca WHERE ca.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado)
+                GROUP BY cf.idComisionFacturaEncabezado
                 HAVING COALESCE(SUM(cd.baseComisionFacturaDetalle*cd.tasaAplicadaComisionFacturaDetalle),0)=0", Conexion, Transaccion))
             using (OdbcDataReader LectorCeros = BuscarCeros.ExecuteReader())
             {
@@ -1034,13 +1047,13 @@ namespace CapaModelo_ComisionVendedores.Repositorios
             {
                 using (OdbcCommand Reparar = new OdbcCommand(@"
                     UPDATE tblComisionFacturaDetalle cd
-                    INNER JOIN tblComisionFacturaEncabezado cf ON cf.Pk_ComisionFacturaEncabezado=cd.Fk_ComisionFacturaEncabezado_Codigo
-                    INNER JOIN tblFacturaEncabezado f ON f.Pk_FacturaEncabezado=cf.Fk_FacturaEncabezado_Codigo
-                    INNER JOIN tblFacturaDetalle fd ON fd.Pk_FacturaDetalle=cd.Fk_FacturaDetalle_Codigo
-                    INNER JOIN tblProducto p ON p.Pk_Producto=fd.Fk_Producto_Codigo
-                    LEFT JOIN tblMarca m ON m.Pk_Marca=p.Fk_Marca_Codigo
-                    LEFT JOIN tblLinea l ON l.Pk_Linea=p.Fk_Linea_Codigo
-                    LEFT JOIN tblCategoria c ON c.Pk_Categoria=p.Fk_Categoria_Codigo
+                    INNER JOIN tblComisionFacturaEncabezado cf ON cf.idComisionFacturaEncabezado=cd.idComisionFacturaEncabezado
+                    INNER JOIN tblFacturaEncabezado f ON f.idFacturaEncabezado=cf.idFacturaEncabezado
+                    INNER JOIN tblFacturaDetalle fd ON fd.idFacturaDetalle=cd.idFacturaDetalle
+                    INNER JOIN tblProducto p ON p.idProducto=fd.idProducto
+                    LEFT JOIN tblMarca m ON m.idMarca=p.Fk_Marca_Codigo
+                    LEFT JOIN tblLinea l ON l.idLinea=p.Fk_Linea_Codigo
+                    LEFT JOIN tblCategoria c ON c.idCategoria=p.Fk_Categoria_Codigo
                     SET cd.baseComisionFacturaDetalle=GREATEST(fd.totalLineaFacturaDetalle-COALESCE(fd.impuestoMontoFacturaDetalle,0),0),
                         cd.tasaAplicadaComisionFacturaDetalle=CASE UPPER(cd.metodoComisionFacturaDetalle)
                             WHEN 'PRODUCTO' THEN COALESCE(p.porcentajeComisionProducto,0)
@@ -1048,24 +1061,24 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                             WHEN 'LINEA' THEN COALESCE(l.porcentajeComisionLinea,0)
                             WHEN 'CATEGORIA' THEN COALESCE(c.porcentajeComisionCategoria,0)
                             ELSE 0 END
-                    WHERE cd.Fk_ComisionFacturaEncabezado_Codigo=?
-                      AND NOT EXISTS (SELECT 1 FROM tblComisionAbono ca WHERE ca.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado)", Conexion, Transaccion))
+                    WHERE cd.idComisionFacturaEncabezado=?
+                      AND NOT EXISTS (SELECT 1 FROM tblComisionAbono ca WHERE ca.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado)", Conexion, Transaccion))
                 {
                     Reparar.Parameters.Add(new OdbcParameter("Comision", OdbcType.Int) { Value = IdComisionReparar });
                     Reparar.ExecuteNonQuery();
                 }
             }
 
-            string Filtro = IdFactura.HasValue ? " AND f.Pk_FacturaEncabezado = ?" : "";
+            string Filtro = IdFactura.HasValue ? " AND f.idFacturaEncabezado = ?" : "";
             string SqlComisiones = @"
-                SELECT cf.Pk_ComisionFacturaEncabezado, cf.Fk_FacturaEncabezado_Codigo,
+                SELECT cf.idComisionFacturaEncabezado, cf.idFacturaEncabezado,
                        COALESCE((SELECT SUM(cd.baseComisionFacturaDetalle * cd.tasaAplicadaComisionFacturaDetalle) FROM tblComisionFacturaDetalle cd
-                         WHERE cd.Fk_ComisionFacturaEncabezado_Codigo=cf.Pk_ComisionFacturaEncabezado),0) AS montoComisionTotal,
+                         WHERE cd.idComisionFacturaEncabezado=cf.idComisionFacturaEncabezado),0) AS montoComisionTotal,
                        COALESCE((SELECT SUM(fd.totalLineaFacturaDetalle) FROM tblFacturaDetalle fd
-                         WHERE fd.Fk_FacturaEncabezado_Codigo=f.Pk_FacturaEncabezado),0) AS total
+                         WHERE fd.idFacturaEncabezadoUuidDte=f.uuidDteFacturaEncabezado),0) AS total
                 FROM tblComisionFacturaEncabezado cf
-                INNER JOIN tblFacturaEncabezado f ON f.Pk_FacturaEncabezado=cf.Fk_FacturaEncabezado_Codigo
-                WHERE cf.estadoComisionFacturaEncabezado='CALCULADA' AND f.estadoFacturaEncabezado='EMITIDA'" + Filtro + " ORDER BY cf.Pk_ComisionFacturaEncabezado FOR UPDATE";
+                INNER JOIN tblFacturaEncabezado f ON f.idFacturaEncabezado=cf.idFacturaEncabezado
+                WHERE cf.estadoComisionFacturaEncabezado='CALCULADA' AND f.estadoFacturaEncabezado='EMITIDA'" + Filtro + " ORDER BY cf.idComisionFacturaEncabezado FOR UPDATE";
             using (OdbcCommand BuscarComisiones = new OdbcCommand(SqlComisiones, Conexion, Transaccion))
             {
                 if (IdFactura.HasValue) BuscarComisiones.Parameters.Add(new OdbcParameter("IdFactura", OdbcType.Int) { Value = IdFactura.Value });
@@ -1077,8 +1090,8 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                     List<decimal> TotalesComision = new List<decimal>();
                     while (Comisiones.Read())
                     {
-                        IdComisiones.Add(Convert.ToInt32(Comisiones["Pk_ComisionFacturaEncabezado"]));
-                        IdFacturas.Add(Convert.ToInt32(Comisiones["Fk_FacturaEncabezado_Codigo"]));
+                        IdComisiones.Add(Convert.ToInt32(Comisiones["idComisionFacturaEncabezado"]));
+                        IdFacturas.Add(Convert.ToInt32(Comisiones["idFacturaEncabezado"]));
                         TotalesComision.Add(Convert.ToDecimal(Comisiones["montoComisionTotal"]));
                         TotalesFactura.Add(Convert.ToDecimal(Comisiones["total"]));
                     }
@@ -1095,11 +1108,11 @@ namespace CapaModelo_ComisionVendedores.Repositorios
             int IdComision, int IdFactura, decimal MontoComisionTotal, decimal TotalFactura)
         {
             const string PagosSql = @"
-                SELECT ap.Pk_AplicacionPago, ap.montoAplicadoAplicacionPago
-                FROM tblAplicacionPago ap INNER JOIN tblReciboPago rp ON rp.Pk_ReciboPago=ap.Fk_ReciboPago_Codigo
-                WHERE ap.Fk_FacturaEncabezado_Codigo=? AND ap.estadoAplicacionPago='APLICADA'
+                SELECT ap.idAplicacionPago, ap.montoAplicadoAplicacionPago
+                FROM tblAplicacionPago ap INNER JOIN tblReciboPago rp ON rp.idReciboPago=ap.idReciboPago
+                WHERE ap.idFacturaEncabezado=? AND ap.estadoAplicacionPago='APLICADA'
                   AND rp.estadoReciboPago='CONFIRMADO' AND ap.montoAplicadoAplicacionPago > 0
-                ORDER BY ap.fechaAplicacionPago, ap.Pk_AplicacionPago";
+                ORDER BY ap.fechaAplicacionPago, ap.idAplicacionPago";
             using (OdbcCommand Pagos = new OdbcCommand(PagosSql, Conexion, Transaccion))
             {
                 Pagos.Parameters.Add(new OdbcParameter("IdFactura", OdbcType.Int) { Value = IdFactura });
@@ -1109,7 +1122,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                     List<decimal> MontosAplicados = new List<decimal>();
                     while (Lector.Read())
                     {
-                        IdAplicaciones.Add(Convert.ToInt32(Lector["Pk_AplicacionPago"]));
+                        IdAplicaciones.Add(Convert.ToInt32(Lector["idAplicacionPago"]));
                         MontosAplicados.Add(Convert.ToDecimal(Lector["montoAplicadoAplicacionPago"]));
                     }
                     Lector.Close();
@@ -1123,7 +1136,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                         decimal ComisionAcumuladaObjetivo = Math.Round(MontoComisionTotal * Proporcion, 4, MidpointRounding.AwayFromZero);
                         using (OdbcCommand Existente = new OdbcCommand(@"
                             SELECT montoComisionDevengadoComisionAbono, estadoPagoVendedorComisionAbono
-                            FROM tblComisionAbono WHERE Fk_AplicacionPago_Codigo=?", Conexion, Transaccion))
+                            FROM tblComisionAbono WHERE idAplicacionPago=?", Conexion, Transaccion))
                         {
                             Existente.Parameters.Add(new OdbcParameter("IdAplicacion", OdbcType.Int) { Value = IdAplicaciones[Indice] });
                             using (OdbcDataReader Fila = Existente.ExecuteReader())
@@ -1142,7 +1155,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                         decimal PorcentajePagado = Math.Round(Proporcion, 4, MidpointRounding.AwayFromZero);
                         using (OdbcCommand Insertar = new OdbcCommand(@"
                             INSERT INTO tblComisionAbono
-                                (Fk_ComisionFacturaEncabezado_Codigo,Fk_AplicacionPago_Codigo,
+                                (idComisionFacturaEncabezado,idAplicacionPago,
                                  tasaFacturaPagadaAcumuladaComisionAbono,montoComisionDevengadoComisionAbono,estadoPagoVendedorComisionAbono)
                             VALUES (?,?,?,?,'PENDIENTE')", Conexion, Transaccion))
                         {
@@ -1177,7 +1190,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
                             using (OdbcCommand Actualizar = new OdbcCommand(@"
                                 UPDATE tblComisionAbono
                                 SET estadoPagoVendedorComisionAbono='PAGADO', fechaPagoVendedorComisionAbono=CURDATE()
-                                WHERE Pk_ComisionAbono=? AND estadoPagoVendedorComisionAbono='PENDIENTE'", Conexion, Transaccion))
+                                WHERE idComisionAbono=? AND estadoPagoVendedorComisionAbono='PENDIENTE'", Conexion, Transaccion))
                             {
                                 Actualizar.Parameters.Add(new OdbcParameter("IdAbono", OdbcType.Int) { Value = IdAbono });
                                 Guardados += Actualizar.ExecuteNonQuery();
@@ -1199,10 +1212,10 @@ namespace CapaModelo_ComisionVendedores.Repositorios
         {
             switch (Metodo)
             {
-                case "Producto": return "p.Pk_Producto";
-                case "Marca": return "m.Pk_Marca";
-                case "Linea": return "l.Pk_Linea";
-                case "Categoria": return "c.Pk_Categoria";
+                case "Producto": return "p.idProducto";
+                case "Marca": return "m.idMarca";
+                case "Linea": return "l.idLinea";
+                case "Categoria": return "c.idCategoria";
                 default: throw new ArgumentException("Seleccione Línea, Producto, Categoría o Marca.");
             }
         }

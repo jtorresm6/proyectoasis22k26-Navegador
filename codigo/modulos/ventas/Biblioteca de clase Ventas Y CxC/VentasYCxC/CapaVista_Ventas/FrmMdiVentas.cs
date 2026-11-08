@@ -7,6 +7,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Windows.Forms;
@@ -17,6 +18,83 @@ namespace CapaVista_Ventas
     {
         private readonly int _IdUsuario;
         private readonly ClsMenuProcesosVentas _MenuProcesos;
+        private static Assembly _ModuloCierreMovimientos;
+        private static string _DirectorioCierreMovimientos;
+        private static bool _ResolverCierreRegistrado;
+        private static readonly object _BloqueoCargaCierre = new object();
+
+        // El MDI carga Cierre de movimientos al abrir la opción, desde la salida actual de su MVC.
+        private static Assembly VentasMetCargarEnsambladoCierreMovimientos()
+        {
+            if (_ModuloCierreMovimientos != null)
+                return _ModuloCierreMovimientos;
+
+            lock (_BloqueoCargaCierre)
+            {
+                if (_ModuloCierreMovimientos != null)
+                    return _ModuloCierreMovimientos;
+
+#if DEBUG
+                const string Configuracion = "Debug";
+#else
+                const string Configuracion = "Release";
+#endif
+                string RutaModulo = Path.GetFullPath(Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    @"..\..\..\..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin\" +
+                    Configuracion + @"\CapaVista_CierreMovimientos.dll"));
+
+                if (!File.Exists(RutaModulo))
+                    throw new FileNotFoundException(
+                        "No se encontró la DLL de Cierre de movimientos. Compile el módulo de Cierre de Ventas.",
+                        RutaModulo);
+
+                _DirectorioCierreMovimientos = Path.GetDirectoryName(RutaModulo);
+                if (!_ResolverCierreRegistrado)
+                {
+                    AppDomain.CurrentDomain.AssemblyResolve += VentasMetResolverEnsambladoCierre;
+                    _ResolverCierreRegistrado = true;
+                }
+
+                // Precarga primero las dependencias directas de la vista desde la misma salida MVC.
+                // Esto evita que el CLR elija una copia antigua junto al ejecutable.
+                string RutaModelo = Path.Combine(_DirectorioCierreMovimientos, "CapaModelo_CierreMovimientos.dll");
+                string RutaControlador = Path.Combine(_DirectorioCierreMovimientos, "CapaControlador_CierreMovimientos.dll");
+                if (!File.Exists(RutaModelo))
+                    throw new FileNotFoundException("No se encontró el modelo MVC de Cierre de movimientos.", RutaModelo);
+                if (!File.Exists(RutaControlador))
+                    throw new FileNotFoundException("No se encontró el controlador MVC de Cierre de movimientos.", RutaControlador);
+
+                Assembly.LoadFrom(RutaModelo);
+                Assembly.LoadFrom(RutaControlador);
+                Assembly ModuloCierre = Assembly.LoadFrom(RutaModulo);
+                if (ModuloCierre.GetType("CapaVista_CierreMovimientos.FrmCierreMovimientosVentas", false) == null)
+                    throw new TypeLoadException(
+                        "La DLL de Cierre no contiene FrmCierreMovimientosVentas: " + RutaModulo);
+
+                _ModuloCierreMovimientos = ModuloCierre;
+
+                return _ModuloCierreMovimientos;
+            }
+        }
+
+        private static Assembly VentasMetResolverEnsambladoCierre(object Origen, ResolveEventArgs Argumentos)
+        {
+            Assembly ModuloCierre = _ModuloCierreMovimientos;
+            string NombreEnsamblado = new AssemblyName(Argumentos.Name).Name;
+            if (ModuloCierre != null && String.Equals(NombreEnsamblado,
+                "CapaVista_CierreMovimientos", StringComparison.OrdinalIgnoreCase))
+                return ModuloCierre;
+
+            if (!String.IsNullOrEmpty(_DirectorioCierreMovimientos))
+            {
+                string RutaDependencia = Path.Combine(_DirectorioCierreMovimientos, NombreEnsamblado + ".dll");
+                if (File.Exists(RutaDependencia))
+                    return Assembly.LoadFrom(RutaDependencia);
+            }
+
+            return null;
+        }
 
         // WM_SETREDRAW agrupa los cambios de tamaño para evitar imágenes superpuestas al contraer el menú.
         private const int _WmSetRedraw = 0x000B;
@@ -225,8 +303,24 @@ namespace CapaVista_Ventas
         // Abre la opción de cierre de movimientos.
         private void VentasMetBtnCierreMovimientosClick(object Origen, EventArgs Evento)
         {
-            using (var Formulario = new CapaVista_CierreMovimientos.FrmCierreMovimientosVentas() { VentasIdUsuario = _IdUsuario })
-                VentasMetAbrirFormulario(Formulario);
+            try
+            {
+                Assembly ModuloCierre = VentasMetCargarEnsambladoCierreMovimientos();
+                Type TipoFormulario = ModuloCierre.GetType("CapaVista_CierreMovimientos.FrmCierreMovimientosVentas", true);
+                Form Formulario = (Form)Activator.CreateInstance(TipoFormulario);
+                var PropiedadUsuario = TipoFormulario.GetProperty("VentasIdUsuario");
+                if (PropiedadUsuario != null && PropiedadUsuario.CanWrite)
+                    PropiedadUsuario.SetValue(Formulario, _IdUsuario, null);
+
+                using (Formulario)
+                    VentasMetAbrirFormulario(Formulario);
+            }
+            catch (Exception Error)
+            {
+                MessageBox.Show(this,
+                    "No se pudo abrir Cierre de movimientos. Verifique que la vista MVC de Cierre esté compilada.\r\n\r\n" + Error.Message,
+                    "Cierre de movimientos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // Confirma la salida del módulo y cierra su ventana principal.
