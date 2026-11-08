@@ -34,6 +34,7 @@ namespace CapaVista_MovimientosProveedores
         public FrmMovimientosProveedores()
         {
             InitializeComponent();
+            ComprasTxtTipoCambio.Entrada.TabStop = false;
             Load += async (Remitente, Evento) => await ComprasProcCargarCatalogos();
             ComprasLblEstado.LinkClicked += async (Remitente, Evento) => await ComprasProcCargarCatalogos();
             ComprasCboConcepto.SelectedIndexChanged += (Remitente, Evento) => ComprasProcActualizarResumen();
@@ -96,6 +97,18 @@ namespace CapaVista_MovimientosProveedores
             ComprasTxtTipoCambio.Clear();
             ComprasProcActualizarResumen();
 
+            var Moneda = ComprasCboMoneda.SelectedItem as DataRowView;
+            if (Moneda == null)
+            {
+                ComprasTxtMonto.TipoMoneda = string.Empty;
+            }
+            else
+            {
+                string Codigo = Convert.ToString(Moneda["codigoMoneda"]);
+                string Simbolo = Convert.ToString(Moneda["simboloMoneda"]);
+                ComprasTxtMonto.ComprasMetConfigurarMoneda(Codigo, string.IsNullOrWhiteSpace(Simbolo) ? Codigo : Simbolo);
+            }
+
             long IdMoneda = ComprasFuncObtenerIdMoneda();
             if (!_CatalogosListos || IdMoneda == 0)
             {
@@ -111,7 +124,7 @@ namespace CapaVista_MovimientosProveedores
                 if (Version != _VersionTipoCambio || IsDisposed || Disposing) return;
 
                 _TipoCambio = TipoCambio;
-                ComprasTxtTipoCambio.Text = TipoCambio?.ToString("0.000000") ?? "";
+                ComprasTxtTipoCambio.Text = TipoCambio.HasValue ? $"Q {TipoCambio.Value:N6}" : string.Empty;
                 ComprasProcActualizarResumen();
             }
             catch (Exception Error)
@@ -167,19 +180,15 @@ namespace CapaVista_MovimientosProveedores
             ComprasTxtNumero.Clear();
             ComprasDtpFechaEmision.Value = DateTime.Today;
             ComprasDtpFechaVencimiento.Value = DateTime.Today;
-            ComprasTxtMonto.Text = "0";
+            ComprasTxtMonto.Text = $"Q {0m:N2}";
             if (_CatalogosListos)
                 ComprasProcMostrarEstado("Nuevo documento. Complete los campos obligatorios.");
             ComprasProcActualizarResumen();
         }
 
-        private static bool ComprasFuncLeerDecimal(TextBox Entrada, decimal Maximo, int Decimales, out decimal Valor)
+        private static bool ComprasFuncLeerDecimal(ComprasUsrTextBox Entrada, decimal Maximo, int Decimales, out decimal Valor)
         {
-            var Estilo = System.Globalization.NumberStyles.AllowDecimalPoint
-                | System.Globalization.NumberStyles.AllowLeadingSign
-                | System.Globalization.NumberStyles.AllowLeadingWhite
-                | System.Globalization.NumberStyles.AllowTrailingWhite;
-            return decimal.TryParse(Entrada.Text, Estilo, System.Globalization.CultureInfo.CurrentCulture, out Valor)
+            return Entrada.ComprasFuncLeerMonto(out Valor)
                 && Valor > 0 && Valor <= Maximo && decimal.Round(Valor, Decimales) == Valor;
         }
 
@@ -200,7 +209,7 @@ namespace CapaVista_MovimientosProveedores
             if (IdMoneda == 0) { ComprasProcMostrarAviso("Seleccione una moneda."); ComprasCboMoneda.Focus(); return; }
             decimal Monto;
             if (!ComprasFuncLeerDecimal(ComprasTxtMonto, 99999999.9999m, 4, out Monto))
-            { ComprasProcMostrarAviso("Ingrese un importe positivo de hasta 99,999,999.9999 y cuatro decimales, sin separadores de miles."); ComprasTxtMonto.Focus(); return; }
+            { ComprasProcMostrarAviso("Ingrese un importe positivo de hasta 99,999,999.9999 y cuatro decimales."); ComprasTxtMonto.Focus(); return; }
             if (!_TipoCambio.HasValue || _TipoCambio.Value <= 0 || _TipoCambio.Value > 999999.999999m)
             { ComprasProcMostrarAviso("No hay un tipo de cambio válido hacia GTQ para la moneda y la fecha de emisión.", PermitirReintento: true); return; }
             if (ComprasDtpFechaVencimiento.Value.Date < ComprasDtpFechaEmision.Value.Date) { ComprasProcMostrarAviso("El vencimiento no puede ser anterior a la emisión."); ComprasDtpFechaVencimiento.Focus(); return; }
