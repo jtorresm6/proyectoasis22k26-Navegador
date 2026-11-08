@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.Odbc;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CapaControlador_MovimientosProveedores;
@@ -72,7 +73,7 @@ namespace CapaVista_MovimientosProveedores
                 DataTable Conceptos = _ModeloNotaProveedor.ComprasMetObtenerConceptos();
                 DataTable Monedas = _ModeloNotaProveedor.ComprasMetObtenerMonedas();
 
-                ComprasProcLlenarSelector(ComprasCboProveedor, Proveedores, "nombreProveedor", "idProveedor");
+                ComprasCboProveedor.ComprasMetCargarDatos(EnmTipoDatosCompras.Proveedores, Proveedores);
                 ComprasProcLlenarSelector(ComprasCboConcepto, Conceptos, "nombreConceptoProveedor", "idConceptoProveedor");
                 ComprasProcLlenarSelector(ComprasCboMoneda, Monedas, "nombreMoneda", "idMoneda");
                 if (IdProveedor != null) ComprasCboProveedor.SelectedValue = IdProveedor;
@@ -124,7 +125,7 @@ namespace CapaVista_MovimientosProveedores
                 if (Version != _VersionTipoCambio || IsDisposed || Disposing) return;
 
                 _TipoCambio = TipoCambio;
-                ComprasTxtTipoCambio.Text = TipoCambio.HasValue ? $"Q {TipoCambio.Value:N6}" : string.Empty;
+                ComprasTxtTipoCambio.Text = TipoCambio.HasValue ? "Q " + TipoCambio.Value.ToString("N6", CultureInfo.InvariantCulture) : string.Empty;
                 ComprasProcActualizarResumen();
             }
             catch (Exception Error)
@@ -180,7 +181,7 @@ namespace CapaVista_MovimientosProveedores
             ComprasTxtNumero.Clear();
             ComprasDtpFechaEmision.Value = DateTime.Today;
             ComprasDtpFechaVencimiento.Value = DateTime.Today;
-            ComprasTxtMonto.Text = $"Q {0m:N2}";
+            ComprasTxtMonto.Text = "Q 0.00";
             if (_CatalogosListos)
                 ComprasProcMostrarEstado("Nuevo documento. Complete los campos obligatorios.");
             ComprasProcActualizarResumen();

@@ -6,50 +6,28 @@ namespace CapaVista_MovimientosProveedores
 {
     partial class FrmMovimientosProveedores
     {
-        private System.ComponentModel.IContainer _Componentes = null;
-        private ComprasUsrEncabezado ComprasUsrEncabezadoFormulario;
-        private ClsButtonCompras ComprasBtnGuardar, ComprasBtnNueva;
-        private ComprasUsrComboBox ComprasCboProveedor, ComprasCboConcepto, ComprasCboMoneda;
-        private ComprasUsrTextBox ComprasTxtSerie, ComprasTxtNumero;
-        private ClsDatePickerCompras ComprasDtpFechaEmision, ComprasDtpFechaVencimiento;
-        private Label ComprasLblEfecto, ComprasLblEquivalente;
-        private LinkLabel ComprasLblEstado;
-        private TableLayoutPanel ComprasTlpPagina, ComprasTlpCampos;
-        private FlowLayoutPanel ComprasFlpAcciones;
-        private Panel ComprasPnlScroll;
+        private System.ComponentModel.IContainer components = null;
 
-        private Label ComprasLblCampoCboProveedor;
-        private Label ComprasLblCampoCboConcepto;
-        private Label ComprasLblCampoCboMoneda;
-        private Label ComprasLblCampoTxtSerie;
-        private Label ComprasLblCampoTxtNumero;
-        private Label ComprasLblCampoNumMonto;
-        private Label ComprasLblCampoFechaEmision;
-        private Label ComprasLblCampoFechaVencimiento;
-        private Label ComprasLblCampoNumCambio;
-        private Label ComprasLblAyuda;
-
-        protected override void Dispose(bool LiberarRecursos)
+        protected override void Dispose(bool disposing)
         {
-            if (LiberarRecursos && _Componentes != null) _Componentes.Dispose();
-            base.Dispose(LiberarRecursos);
+            if (disposing && components != null)
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMovimientosProveedores));
-            this.ComprasTxtSerie = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
-            this.ComprasTxtNumero = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
-            this.ComprasLblEfecto = new System.Windows.Forms.Label();
-            this.ComprasLblEquivalente = new System.Windows.Forms.Label();
-            this.ComprasLblEstado = new System.Windows.Forms.LinkLabel();
+            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
+            this.ComprasPnlScroll = new System.Windows.Forms.Panel();
             this.ComprasTlpPagina = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasFlpAcciones = new System.Windows.Forms.FlowLayoutPanel();
             this.ComprasBtnNueva = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnGuardar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnHistorial = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasTlpCampos = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasTxtMonto = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
             this.ComprasLblCampoCboProveedor = new System.Windows.Forms.Label();
             this.ComprasCboProveedor = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
             this.ComprasLblCampoCboConcepto = new System.Windows.Forms.Label();
@@ -57,97 +35,53 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasLblCampoCboMoneda = new System.Windows.Forms.Label();
             this.ComprasCboMoneda = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
             this.ComprasLblCampoTxtSerie = new System.Windows.Forms.Label();
+            this.ComprasTxtSerie = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
             this.ComprasLblCampoTxtNumero = new System.Windows.Forms.Label();
+            this.ComprasTxtNumero = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
             this.ComprasLblCampoNumMonto = new System.Windows.Forms.Label();
+            this.ComprasTxtMonto = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
             this.ComprasLblCampoFechaEmision = new System.Windows.Forms.Label();
             this.ComprasDtpFechaEmision = new CapaVista_Componentes.Componentes.ClsDatePickerCompras();
             this.ComprasLblCampoFechaVencimiento = new System.Windows.Forms.Label();
             this.ComprasDtpFechaVencimiento = new CapaVista_Componentes.Componentes.ClsDatePickerCompras();
             this.ComprasLblCampoNumCambio = new System.Windows.Forms.Label();
             this.ComprasTxtTipoCambio = new CapaVista_Componentes.Componentes.ComprasUsrTextBox();
+            this.ComprasLblEfecto = new System.Windows.Forms.Label();
+            this.ComprasLblEquivalente = new System.Windows.Forms.Label();
             this.ComprasLblAyuda = new System.Windows.Forms.Label();
-            this.ComprasPnlScroll = new System.Windows.Forms.Panel();
-            this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
+            this.ComprasLblEstado = new System.Windows.Forms.LinkLabel();
+            this.ComprasPnlScroll.SuspendLayout();
             this.ComprasTlpPagina.SuspendLayout();
             this.ComprasFlpAcciones.SuspendLayout();
             this.ComprasTlpCampos.SuspendLayout();
-            this.ComprasPnlScroll.SuspendLayout();
             this.SuspendLayout();
             // 
-            // ComprasTxtSerie
+            // ComprasUsrEncabezadoFormulario
             // 
-            this.ComprasTxtSerie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.ComprasTxtSerie.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ComprasTxtSerie.EspaciadoTexto = new System.Windows.Forms.Padding(7, 1, 7, 1);
-            this.ComprasTxtSerie.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.ComprasTxtSerie.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasTxtSerie.Location = new System.Drawing.Point(16, 114);
-            this.ComprasTxtSerie.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
-            this.ComprasTxtSerie.MaxLength = 20;
-            this.ComprasTxtSerie.MostrarEtiquetaError = false;
-            this.ComprasTxtSerie.Name = "ComprasTxtSerie";
-            this.ComprasTxtSerie.SelectedText = "";
-            this.ComprasTxtSerie.SelectionLength = 0;
-            this.ComprasTxtSerie.SelectionStart = 0;
-            this.ComprasTxtSerie.Size = new System.Drawing.Size(469, 36);
-            this.ComprasTxtSerie.TabIndex = 7;
+            this.ComprasUsrEncabezadoFormulario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasUsrEncabezadoFormulario.Codigo = "6002";
+            this.ComprasUsrEncabezadoFormulario.Descripcion = "Registro de documentos de proveedor en cuentas por pagar";
+            this.ComprasUsrEncabezadoFormulario.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ComprasUsrEncabezadoFormulario.Location = new System.Drawing.Point(0, 0);
+            this.ComprasUsrEncabezadoFormulario.Margin = new System.Windows.Forms.Padding(0);
+            this.ComprasUsrEncabezadoFormulario.MaximumSize = new System.Drawing.Size(1500, 130);
+            this.ComprasUsrEncabezadoFormulario.MinimumSize = new System.Drawing.Size(0, 130);
+            this.ComprasUsrEncabezadoFormulario.Name = "ComprasUsrEncabezadoFormulario";
+            this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1300, 130);
+            this.ComprasUsrEncabezadoFormulario.TabIndex = 1;
+            this.ComprasUsrEncabezadoFormulario.TabStop = false;
+            this.ComprasUsrEncabezadoFormulario.Titulo = "Movimientos de proveedores";
             // 
-            // ComprasTxtNumero
+            // ComprasPnlScroll
             // 
-            this.ComprasTxtNumero.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.ComprasTxtNumero.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ComprasTxtNumero.EspaciadoTexto = new System.Windows.Forms.Padding(7, 1, 7, 1);
-            this.ComprasTxtNumero.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.ComprasTxtNumero.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasTxtNumero.Location = new System.Drawing.Point(501, 114);
-            this.ComprasTxtNumero.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
-            this.ComprasTxtNumero.MaxLength = 30;
-            this.ComprasTxtNumero.MostrarEtiquetaError = false;
-            this.ComprasTxtNumero.Name = "ComprasTxtNumero";
-            this.ComprasTxtNumero.SelectedText = "";
-            this.ComprasTxtNumero.SelectionLength = 0;
-            this.ComprasTxtNumero.SelectionStart = 0;
-            this.ComprasTxtNumero.Size = new System.Drawing.Size(348, 36);
-            this.ComprasTxtNumero.SoloEnteros = true;
-            this.ComprasTxtNumero.TabIndex = 9;
-            this.ComprasTxtNumero.TipoEntrada = CapaVista_Componentes.Componentes.ComprasEnumTipoEntrada.Enteros;
-            // 
-            // ComprasLblEfecto
-            // 
-            this.ComprasLblEfecto.AutoSize = true;
-            this.ComprasLblEfecto.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasLblEfecto.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.ComprasLblEfecto.Location = new System.Drawing.Point(4, 356);
-            this.ComprasLblEfecto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.ComprasLblEfecto.MinimumSize = new System.Drawing.Size(0, 34);
-            this.ComprasLblEfecto.Name = "ComprasLblEfecto";
-            this.ComprasLblEfecto.Size = new System.Drawing.Size(1244, 34);
-            this.ComprasLblEfecto.TabIndex = 2;
-            this.ComprasLblEfecto.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ComprasLblEquivalente
-            // 
-            this.ComprasLblEquivalente.AutoSize = true;
-            this.ComprasLblEquivalente.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasLblEquivalente.Location = new System.Drawing.Point(4, 390);
-            this.ComprasLblEquivalente.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.ComprasLblEquivalente.MinimumSize = new System.Drawing.Size(0, 30);
-            this.ComprasLblEquivalente.Name = "ComprasLblEquivalente";
-            this.ComprasLblEquivalente.Size = new System.Drawing.Size(1244, 30);
-            this.ComprasLblEquivalente.TabIndex = 3;
-            this.ComprasLblEquivalente.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ComprasLblEstado
-            // 
-            this.ComprasLblEstado.AutoSize = true;
-            this.ComprasLblEstado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasLblEstado.Location = new System.Drawing.Point(4, 456);
-            this.ComprasLblEstado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.ComprasLblEstado.MinimumSize = new System.Drawing.Size(0, 36);
-            this.ComprasLblEstado.Name = "ComprasLblEstado";
-            this.ComprasLblEstado.Size = new System.Drawing.Size(1244, 36);
-            this.ComprasLblEstado.TabIndex = 7;
-            this.ComprasLblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ComprasPnlScroll.AutoScroll = true;
+            this.ComprasPnlScroll.Controls.Add(this.ComprasTlpPagina);
+            this.ComprasPnlScroll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ComprasPnlScroll.Location = new System.Drawing.Point(0, 130);
+            this.ComprasPnlScroll.Name = "ComprasPnlScroll";
+            this.ComprasPnlScroll.Padding = new System.Windows.Forms.Padding(24, 12, 24, 16);
+            this.ComprasPnlScroll.Size = new System.Drawing.Size(1300, 570);
+            this.ComprasPnlScroll.TabIndex = 0;
             // 
             // ComprasTlpPagina
             // 
@@ -257,7 +191,6 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTlpCampos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.ComprasTlpCampos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.ComprasTlpCampos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.ComprasTlpCampos.Controls.Add(this.ComprasTxtMonto, 2, 3);
             this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoCboProveedor, 0, 0);
             this.ComprasTlpCampos.Controls.Add(this.ComprasCboProveedor, 0, 1);
             this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoCboConcepto, 1, 0);
@@ -269,6 +202,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoTxtNumero, 1, 2);
             this.ComprasTlpCampos.Controls.Add(this.ComprasTxtNumero, 1, 3);
             this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoNumMonto, 2, 2);
+            this.ComprasTlpCampos.Controls.Add(this.ComprasTxtMonto, 2, 3);
             this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoFechaEmision, 0, 4);
             this.ComprasTlpCampos.Controls.Add(this.ComprasDtpFechaEmision, 0, 5);
             this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoFechaVencimiento, 1, 4);
@@ -289,28 +223,6 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTlpCampos.Size = new System.Drawing.Size(1246, 254);
             this.ComprasTlpCampos.TabIndex = 1;
             // 
-            // ComprasTxtMonto
-            // 
-            this.ComprasTxtMonto.AlineacionMoneda = System.Windows.Forms.HorizontalAlignment.Left;
-            this.ComprasTxtMonto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.ComprasTxtMonto.ConservarPrecisionMoneda = true;
-            this.ComprasTxtMonto.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ComprasTxtMonto.EspaciadoTexto = new System.Windows.Forms.Padding(7, 1, 7, 1);
-            this.ComprasTxtMonto.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.ComprasTxtMonto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasTxtMonto.Location = new System.Drawing.Point(865, 114);
-            this.ComprasTxtMonto.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
-            this.ComprasTxtMonto.MaxLength = 30;
-            this.ComprasTxtMonto.ModoMoneda = true;
-            this.ComprasTxtMonto.MostrarEtiquetaError = false;
-            this.ComprasTxtMonto.Name = "ComprasTxtMonto";
-            this.ComprasTxtMonto.SelectedText = "";
-            this.ComprasTxtMonto.SelectionLength = 0;
-            this.ComprasTxtMonto.SelectionStart = 0;
-            this.ComprasTxtMonto.Size = new System.Drawing.Size(349, 36);
-            this.ComprasTxtMonto.TabIndex = 17;
-            this.ComprasTxtMonto.TipoEntrada = CapaVista_Componentes.Componentes.ComprasEnumTipoEntrada.Moneda;
-            // 
             // ComprasLblCampoCboProveedor
             // 
             this.ComprasLblCampoCboProveedor.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -325,7 +237,6 @@ namespace CapaVista_MovimientosProveedores
             // 
             this.ComprasCboProveedor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasCboProveedor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ComprasCboProveedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
             this.ComprasCboProveedor.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.ComprasCboProveedor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasCboProveedor.Location = new System.Drawing.Point(16, 36);
@@ -333,10 +244,8 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasCboProveedor.MaxLength = 0;
             this.ComprasCboProveedor.MostrarEtiquetaError = false;
             this.ComprasCboProveedor.Name = "ComprasCboProveedor";
-            this.ComprasCboProveedor.PermitirEscritura = true;
             this.ComprasCboProveedor.Size = new System.Drawing.Size(467, 44);
-            this.ComprasCboProveedor.TabIndex = 1;
-            this.ComprasCboProveedor.TipoDatos = CapaVista_Componentes.Componentes.EnmTipoDatosCompras.Proveedores;
+            this.ComprasCboProveedor.TabIndex = 0;
             // 
             // ComprasLblCampoCboConcepto
             // 
@@ -360,7 +269,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasCboConcepto.MostrarEtiquetaError = false;
             this.ComprasCboConcepto.Name = "ComprasCboConcepto";
             this.ComprasCboConcepto.Size = new System.Drawing.Size(346, 44);
-            this.ComprasCboConcepto.TabIndex = 3;
+            this.ComprasCboConcepto.TabIndex = 1;
             // 
             // ComprasLblCampoCboMoneda
             // 
@@ -384,7 +293,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasCboMoneda.MostrarEtiquetaError = false;
             this.ComprasCboMoneda.Name = "ComprasCboMoneda";
             this.ComprasCboMoneda.Size = new System.Drawing.Size(347, 44);
-            this.ComprasCboMoneda.TabIndex = 5;
+            this.ComprasCboMoneda.TabIndex = 2;
             // 
             // ComprasLblCampoTxtSerie
             // 
@@ -396,6 +305,24 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasLblCampoTxtSerie.Text = "Serie del documento *";
             this.ComprasLblCampoTxtSerie.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // ComprasTxtSerie
+            // 
+            this.ComprasTxtSerie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasTxtSerie.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ComprasTxtSerie.EspaciadoTexto = new System.Windows.Forms.Padding(8, 1, 8, 1);
+            this.ComprasTxtSerie.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.ComprasTxtSerie.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasTxtSerie.Location = new System.Drawing.Point(16, 114);
+            this.ComprasTxtSerie.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
+            this.ComprasTxtSerie.MaxLength = 20;
+            this.ComprasTxtSerie.MostrarEtiquetaError = false;
+            this.ComprasTxtSerie.Name = "ComprasTxtSerie";
+            this.ComprasTxtSerie.SelectedText = "";
+            this.ComprasTxtSerie.SelectionLength = 0;
+            this.ComprasTxtSerie.SelectionStart = 0;
+            this.ComprasTxtSerie.Size = new System.Drawing.Size(469, 36);
+            this.ComprasTxtSerie.TabIndex = 3;
+            // 
             // ComprasLblCampoTxtNumero
             // 
             this.ComprasLblCampoTxtNumero.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -406,6 +333,26 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasLblCampoTxtNumero.Text = "Número del documento *";
             this.ComprasLblCampoTxtNumero.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // ComprasTxtNumero
+            // 
+            this.ComprasTxtNumero.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasTxtNumero.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ComprasTxtNumero.EspaciadoTexto = new System.Windows.Forms.Padding(8, 1, 8, 1);
+            this.ComprasTxtNumero.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.ComprasTxtNumero.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasTxtNumero.Location = new System.Drawing.Point(501, 114);
+            this.ComprasTxtNumero.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
+            this.ComprasTxtNumero.MaxLength = 30;
+            this.ComprasTxtNumero.MostrarEtiquetaError = false;
+            this.ComprasTxtNumero.Name = "ComprasTxtNumero";
+            this.ComprasTxtNumero.SelectedText = "";
+            this.ComprasTxtNumero.SelectionLength = 0;
+            this.ComprasTxtNumero.SelectionStart = 0;
+            this.ComprasTxtNumero.Size = new System.Drawing.Size(348, 36);
+            this.ComprasTxtNumero.SoloEnteros = true;
+            this.ComprasTxtNumero.TabIndex = 4;
+            this.ComprasTxtNumero.TipoEntrada = CapaVista_Componentes.Componentes.ComprasEnumTipoEntrada.Enteros;
+            // 
             // ComprasLblCampoNumMonto
             // 
             this.ComprasLblCampoNumMonto.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -415,6 +362,28 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasLblCampoNumMonto.TabIndex = 10;
             this.ComprasLblCampoNumMonto.Text = "Importe del documento *";
             this.ComprasLblCampoNumMonto.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ComprasTxtMonto
+            // 
+            this.ComprasTxtMonto.AlineacionMoneda = System.Windows.Forms.HorizontalAlignment.Left;
+            this.ComprasTxtMonto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasTxtMonto.ConservarPrecisionMoneda = true;
+            this.ComprasTxtMonto.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ComprasTxtMonto.EspaciadoTexto = new System.Windows.Forms.Padding(8, 1, 8, 1);
+            this.ComprasTxtMonto.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.ComprasTxtMonto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasTxtMonto.Location = new System.Drawing.Point(865, 114);
+            this.ComprasTxtMonto.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
+            this.ComprasTxtMonto.MaxLength = 30;
+            this.ComprasTxtMonto.ModoMoneda = true;
+            this.ComprasTxtMonto.MostrarEtiquetaError = false;
+            this.ComprasTxtMonto.Name = "ComprasTxtMonto";
+            this.ComprasTxtMonto.SelectedText = "";
+            this.ComprasTxtMonto.SelectionLength = 0;
+            this.ComprasTxtMonto.SelectionStart = 0;
+            this.ComprasTxtMonto.Size = new System.Drawing.Size(349, 36);
+            this.ComprasTxtMonto.TabIndex = 5;
+            this.ComprasTxtMonto.TipoEntrada = CapaVista_Componentes.Componentes.ComprasEnumTipoEntrada.Moneda;
             // 
             // ComprasLblCampoFechaEmision
             // 
@@ -444,7 +413,8 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasDtpFechaEmision.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
             this.ComprasDtpFechaEmision.Name = "ComprasDtpFechaEmision";
             this.ComprasDtpFechaEmision.Size = new System.Drawing.Size(469, 32);
-            this.ComprasDtpFechaEmision.TabIndex = 13;
+            this.ComprasDtpFechaEmision.TabIndex = 6;
+            this.ComprasDtpFechaEmision.TamanoFuente = 11F;
             // 
             // ComprasLblCampoFechaVencimiento
             // 
@@ -474,7 +444,8 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasDtpFechaVencimiento.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
             this.ComprasDtpFechaVencimiento.Name = "ComprasDtpFechaVencimiento";
             this.ComprasDtpFechaVencimiento.Size = new System.Drawing.Size(348, 32);
-            this.ComprasDtpFechaVencimiento.TabIndex = 15;
+            this.ComprasDtpFechaVencimiento.TabIndex = 7;
+            this.ComprasDtpFechaVencimiento.TamanoFuente = 11F;
             // 
             // ComprasLblCampoNumCambio
             // 
@@ -488,12 +459,12 @@ namespace CapaVista_MovimientosProveedores
             // 
             // ComprasTxtTipoCambio
             // 
+            this.ComprasTxtTipoCambio.AccessibleName = "Tipo de cambio en quetzales";
             this.ComprasTxtTipoCambio.AlineacionMoneda = System.Windows.Forms.HorizontalAlignment.Left;
             this.ComprasTxtTipoCambio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTxtTipoCambio.ConservarPrecisionMoneda = true;
             this.ComprasTxtTipoCambio.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ComprasTxtTipoCambio.Enabled = false;
-            this.ComprasTxtTipoCambio.EspaciadoTexto = new System.Windows.Forms.Padding(7, 1, 7, 1);
+            this.ComprasTxtTipoCambio.EspaciadoTexto = new System.Windows.Forms.Padding(8, 1, 8, 1);
             this.ComprasTxtTipoCambio.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.ComprasTxtTipoCambio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasTxtTipoCambio.Location = new System.Drawing.Point(865, 192);
@@ -507,9 +478,34 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTxtTipoCambio.SelectionLength = 0;
             this.ComprasTxtTipoCambio.SelectionStart = 0;
             this.ComprasTxtTipoCambio.Size = new System.Drawing.Size(349, 36);
-            this.ComprasTxtTipoCambio.TabIndex = 18;
+            this.ComprasTxtTipoCambio.TabIndex = 8;
             this.ComprasTxtTipoCambio.TabStop = false;
             this.ComprasTxtTipoCambio.TipoEntrada = CapaVista_Componentes.Componentes.ComprasEnumTipoEntrada.Moneda;
+            // 
+            // ComprasLblEfecto
+            // 
+            this.ComprasLblEfecto.AutoSize = true;
+            this.ComprasLblEfecto.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ComprasLblEfecto.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.ComprasLblEfecto.Location = new System.Drawing.Point(4, 356);
+            this.ComprasLblEfecto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ComprasLblEfecto.MinimumSize = new System.Drawing.Size(0, 34);
+            this.ComprasLblEfecto.Name = "ComprasLblEfecto";
+            this.ComprasLblEfecto.Size = new System.Drawing.Size(1244, 34);
+            this.ComprasLblEfecto.TabIndex = 2;
+            this.ComprasLblEfecto.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ComprasLblEquivalente
+            // 
+            this.ComprasLblEquivalente.AutoSize = true;
+            this.ComprasLblEquivalente.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ComprasLblEquivalente.Location = new System.Drawing.Point(4, 390);
+            this.ComprasLblEquivalente.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ComprasLblEquivalente.MinimumSize = new System.Drawing.Size(0, 30);
+            this.ComprasLblEquivalente.Name = "ComprasLblEquivalente";
+            this.ComprasLblEquivalente.Size = new System.Drawing.Size(1244, 30);
+            this.ComprasLblEquivalente.TabIndex = 3;
+            this.ComprasLblEquivalente.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ComprasLblAyuda
             // 
@@ -525,32 +521,17 @@ namespace CapaVista_MovimientosProveedores
     "istran por separado de las facturas.";
             this.ComprasLblAyuda.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ComprasPnlScroll
+            // ComprasLblEstado
             // 
-            this.ComprasPnlScroll.AutoScroll = true;
-            this.ComprasPnlScroll.Controls.Add(this.ComprasTlpPagina);
-            this.ComprasPnlScroll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasPnlScroll.Location = new System.Drawing.Point(0, 130);
-            this.ComprasPnlScroll.Name = "ComprasPnlScroll";
-            this.ComprasPnlScroll.Padding = new System.Windows.Forms.Padding(24, 12, 24, 16);
-            this.ComprasPnlScroll.Size = new System.Drawing.Size(1300, 570);
-            this.ComprasPnlScroll.TabIndex = 0;
-            // 
-            // ComprasUsrEncabezadoFormulario
-            // 
-            this.ComprasUsrEncabezadoFormulario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasUsrEncabezadoFormulario.Codigo = "6002";
-            this.ComprasUsrEncabezadoFormulario.Descripcion = "Registro de documentos de proveedor en cuentas por pagar";
-            this.ComprasUsrEncabezadoFormulario.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ComprasUsrEncabezadoFormulario.Location = new System.Drawing.Point(0, 0);
-            this.ComprasUsrEncabezadoFormulario.Margin = new System.Windows.Forms.Padding(0);
-            this.ComprasUsrEncabezadoFormulario.MaximumSize = new System.Drawing.Size(1500, 130);
-            this.ComprasUsrEncabezadoFormulario.MinimumSize = new System.Drawing.Size(0, 130);
-            this.ComprasUsrEncabezadoFormulario.Name = "ComprasUsrEncabezadoFormulario";
-            this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1300, 130);
-            this.ComprasUsrEncabezadoFormulario.TabIndex = 1;
-            this.ComprasUsrEncabezadoFormulario.TabStop = false;
-            this.ComprasUsrEncabezadoFormulario.Titulo = "Movimientos de proveedores";
+            this.ComprasLblEstado.AutoSize = true;
+            this.ComprasLblEstado.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ComprasLblEstado.Location = new System.Drawing.Point(4, 456);
+            this.ComprasLblEstado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ComprasLblEstado.MinimumSize = new System.Drawing.Size(0, 36);
+            this.ComprasLblEstado.Name = "ComprasLblEstado";
+            this.ComprasLblEstado.Size = new System.Drawing.Size(1244, 36);
+            this.ComprasLblEstado.TabIndex = 7;
+            this.ComprasLblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FrmMovimientosProveedores
             // 
@@ -566,21 +547,45 @@ namespace CapaVista_MovimientosProveedores
             this.Name = "FrmMovimientosProveedores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "6002 – Movimientos de proveedores";
+            this.ComprasPnlScroll.ResumeLayout(false);
+            this.ComprasPnlScroll.PerformLayout();
             this.ComprasTlpPagina.ResumeLayout(false);
             this.ComprasTlpPagina.PerformLayout();
             this.ComprasFlpAcciones.ResumeLayout(false);
             this.ComprasTlpCampos.ResumeLayout(false);
-            this.ComprasPnlScroll.ResumeLayout(false);
-            this.ComprasPnlScroll.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
+        private ComprasUsrEncabezado ComprasUsrEncabezadoFormulario;
+        private Panel ComprasPnlScroll;
+        private TableLayoutPanel ComprasTlpPagina;
+        private FlowLayoutPanel ComprasFlpAcciones;
+        private ClsButtonCompras ComprasBtnNueva;
+        private ClsButtonCompras ComprasBtnGuardar;
         private ClsButtonCompras ComprasBtnHistorial;
+        private TableLayoutPanel ComprasTlpCampos;
+        private Label ComprasLblCampoCboProveedor;
+        private ComprasUsrComboBox ComprasCboProveedor;
+        private Label ComprasLblCampoCboConcepto;
+        private ComprasUsrComboBox ComprasCboConcepto;
+        private Label ComprasLblCampoCboMoneda;
+        private ComprasUsrComboBox ComprasCboMoneda;
+        private Label ComprasLblCampoTxtSerie;
+        private ComprasUsrTextBox ComprasTxtSerie;
+        private Label ComprasLblCampoTxtNumero;
+        private ComprasUsrTextBox ComprasTxtNumero;
+        private Label ComprasLblCampoNumMonto;
         private ComprasUsrTextBox ComprasTxtMonto;
+        private Label ComprasLblCampoFechaEmision;
+        private ClsDatePickerCompras ComprasDtpFechaEmision;
+        private Label ComprasLblCampoFechaVencimiento;
+        private ClsDatePickerCompras ComprasDtpFechaVencimiento;
+        private Label ComprasLblCampoNumCambio;
         private ComprasUsrTextBox ComprasTxtTipoCambio;
+        private Label ComprasLblEfecto;
+        private Label ComprasLblEquivalente;
+        private Label ComprasLblAyuda;
+        private LinkLabel ComprasLblEstado;
     }
 }
-
-
-

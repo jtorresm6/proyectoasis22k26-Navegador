@@ -32,10 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaControlador_Componentes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="CapaControlador_Componentes">
       <HintPath>..\..\Componentes\CapaVista_Componentes\bin\$(Configuration)\CapaControlador_Componentes.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_Componentes, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="CapaVista_Componentes">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Componentes\CapaVista_Componentes\bin\$(Configuration)\CapaVista_Componentes.dll</HintPath>
     </Reference>
