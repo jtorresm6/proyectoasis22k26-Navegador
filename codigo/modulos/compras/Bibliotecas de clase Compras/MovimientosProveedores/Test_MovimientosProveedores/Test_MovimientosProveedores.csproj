@@ -11,6 +11,8 @@
     <RootNamespace>PruebaUnitaria_MovimientosProveedores</RootNamespace>
     <AssemblyName>PruebaUnitaria_MovimientosProveedores</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <!-- Evita rutas de recursos localizados que superan el limite de MSBuild. -->
+    <EnableMSTestV2CopyResources Condition="'$(EnableMSTestV2CopyResources)' == ''">false</EnableMSTestV2CopyResources>
     <FileAlignment>512</FileAlignment>
     <PlatformTarget>x64</PlatformTarget>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

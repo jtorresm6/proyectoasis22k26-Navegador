@@ -8,7 +8,7 @@ namespace CapaModelo_MovimientosProveedores.Repositorios
 {
     public sealed class ClsRepositorioNotasProveedor : RepositorioMaestro, IRepositorioNotasProveedor
     {
-        private const string ConsultaMonedas = @"SELECT m.idMoneda, CONCAT(m.codigoMoneda, ' - ', m.nombreMoneda) AS nombreMoneda
+        private const string ConsultaMonedas = @"SELECT m.idMoneda, m.codigoMoneda, m.simboloMoneda, CONCAT(m.codigoMoneda, ' - ', m.nombreMoneda) AS nombreMoneda
             FROM tblMoneda m WHERE {0}=1 ORDER BY m.codigoMoneda";
 
         private const string ConsultaTipoCambio = @"SELECT t.idTipoCambio,
