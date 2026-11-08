@@ -19,6 +19,7 @@
         {
             this.ComprasTlpFormulario = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
+            this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "HerramientasMoneda.html";
             this.ComprasTlpPestanas = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasBtnTipoCambio = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnConversor = new CapaVista_Componentes.Componentes.ClsButtonCompras();

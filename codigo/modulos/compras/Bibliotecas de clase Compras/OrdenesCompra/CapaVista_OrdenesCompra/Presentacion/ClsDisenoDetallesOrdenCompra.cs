@@ -8,21 +8,12 @@ using CapaVista_Componentes.Componentes;
  * Área : Compras
  * Autor : Diego Fernando Santizo Samayoa
  * Carné : 0901-22-15950
- * Fecha : 24/10/2026
+ * Fecha : 08/11/2026
  * ==================================================================
  * Propósito :
- *  Ajusta la altura del bloque de detalles al contenido de su DGV.
+ *  Ajusta la altura del contenido de detalles según los productos de la orden.
  * ===================================================================
 */
-
-
-
-
-
-
-
-
-
 
 namespace CapaVista_OrdenesCompra.Presentacion
 {
@@ -38,10 +29,6 @@ namespace CapaVista_OrdenesCompra.Presentacion
         private bool _AjustandoAltura;
         private bool _Liberado;
 
-        
-        
-        
-        
         internal ClsDisenoDetallesOrdenCompra(Form Formulario, ComprasUsrDataGridView Productos,
             Panel Contenido, TableLayoutPanel Principal, TableLayoutPanel Detalles, Control GrupoDetalles)
         {
@@ -69,26 +56,16 @@ namespace CapaVista_OrdenesCompra.Presentacion
             ComprasProcAjustarAlturaArticulos();
         }
 
-        
-        
-        
         private void ComprasProcActualizar(object Remitente, EventArgs Evento)
         {
             ComprasProcAjustarAlturaArticulos();
         }
 
-        
-        
-        
         private void ComprasProcLiberar(object Remitente, EventArgs Evento)
         {
             Dispose();
         }
 
-        
-        
-        
-        
         public void Dispose()
         {
             if (_Liberado)
@@ -105,10 +82,6 @@ namespace CapaVista_OrdenesCompra.Presentacion
             _Formulario.Disposed -= ComprasProcLiberar;
         }
 
-        
-        
-        
-        
         private void ComprasProcAjustarAlturaArticulos()
         {
             if (_AjustandoAltura || _Liberado || _Formulario.IsDisposed) return;

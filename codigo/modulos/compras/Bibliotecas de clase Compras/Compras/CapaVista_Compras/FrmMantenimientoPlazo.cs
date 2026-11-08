@@ -18,7 +18,7 @@ namespace CapaVista_Compras
             InitializeComponent();
             ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
             ClsMantenimientoCompras.ComprasProcConfigurar(this, ComprasUsrMantenimiento, "tblPlazo",
-                CodigoAplicacion: 4, CodigoModulo: 4);
+                CodigoAplicacion: CapaControlador_Compras.ClsAplicacionesCompras.MantenimientoPlazo);
         }
     }
 }

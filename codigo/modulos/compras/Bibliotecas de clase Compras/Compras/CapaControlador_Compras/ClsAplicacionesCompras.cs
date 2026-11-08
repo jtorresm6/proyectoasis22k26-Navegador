@@ -27,6 +27,8 @@ namespace CapaControlador_Compras
         public const int MantenimientoProveedor = 6010;
         public const int MantenimientoMetodoPago = 6011;
         public const int EncabezadosComprasPorPagar = 6012;
+        public const int MantenimientoPlazo = 6013;
+        public const int MantenimientoConceptoProveedor = 6014;
 
         public static int ComprasFuncObtenerIdModulo()
         {

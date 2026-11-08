@@ -14,20 +14,12 @@ using Microsoft.Reporting.WinForms;
  * Área : Compras
  * Autor : Diego Fernando Santizo Samayoa
  * Carné : 0901-22-15950
- * Fecha : 24/10/2026
+ * Fecha : 08/11/2026
  * ==================================================================
  * Propósito :
- *  Coordina la consulta y apertura de órdenes de compra desde su listado.
+ *  Coordina la consulta, los filtros, los reportes y la apertura de órdenes de compra.
  * ===================================================================
 */
-
-
-
-
-
-
-
-
 
 namespace CapaVista_OrdenesCompra
 {
@@ -41,9 +33,7 @@ namespace CapaVista_OrdenesCompra
         private bool _RestableciendoFiltros;
         public bool AbrirOrden { get; private set; }
         private Form _OrdenPreparada;
-        
-        
-        
+
         public Form ComprasFuncCrearOrdenSeleccionada()
         {
             if (!AbrirOrden) throw new InvalidOperationException("No hay una orden seleccionada.");
@@ -53,14 +43,8 @@ namespace CapaVista_OrdenesCompra
             return Orden;
         }
 
-        
-        
-        
         public FrmEncabezados() : this(new ClsOrdenesCompra()) { }
-        
-        
-        
-        
+
         public FrmEncabezados(ClsOrdenesCompra Controlador)
         {
             _Controlador = Controlador ?? throw new ArgumentNullException(nameof(Controlador));
@@ -97,19 +81,12 @@ namespace CapaVista_OrdenesCompra
             ComprasDgvEncabezados.CellDoubleClick += ComprasProcAbrirCompra;
         }
 
-        
-        
-        
         protected override async void OnLoad(EventArgs Evento)
         {
             base.OnLoad(Evento);
             await ComprasProcCargarDatosAsync();
         }
 
-
-        
-        
-        
         private void ComprasProcActualizarDisponibilidad()
         {
             bool Disponible = !_Cargando && !_AbriendoCompra;
@@ -121,10 +98,6 @@ namespace CapaVista_OrdenesCompra
             UseWaitCursor = !Disponible;
         }
 
-        
-        
-        
-        
         private async Task ComprasProcCargarDatosAsync()
         {
             if (_Cargando) return;
@@ -179,10 +152,6 @@ namespace CapaVista_OrdenesCompra
             }
         }
 
-        
-        
-        
-        
         private static Control ComprasFuncControlEnfocado(Control Contenedor)
         {
             if (Contenedor.Focused) return Contenedor;
@@ -224,9 +193,6 @@ namespace CapaVista_OrdenesCompra
             ComprasLblResultado.Texto = Resultado.Rows.Count + " órdenes de compra. Doble clic para abrir.";
         }
 
-        
-        
-        
         private async Task ComprasProcRefrescarAsync()
         {
             if (_Cargando || _AbriendoCompra) return;
@@ -234,10 +200,6 @@ namespace CapaVista_OrdenesCompra
             await ComprasProcCargarDatosAsync();
         }
 
-        
-        
-        
-        
         private void ComprasProcRestablecerFiltros()
         {
             _RestableciendoFiltros = true;
@@ -254,9 +216,6 @@ namespace CapaVista_OrdenesCompra
             finally { _RestableciendoFiltros = false; }
         }
 
-        
-        
-        
         private async void ComprasProcNuevaOrden(object Remitente, EventArgs Evento)
         {
             if (_Cargando || _AbriendoCompra) return;
@@ -274,10 +233,6 @@ namespace CapaVista_OrdenesCompra
             }
         }
 
-        
-        
-        
-        
         private async Task ComprasProcMostrarOrdenAsync(ClsOrdenCompra Compra)
         {
             Form Orden = null;
@@ -316,10 +271,6 @@ namespace CapaVista_OrdenesCompra
             }
         }
 
-        
-        
-        
-        
         private async void ComprasProcAbrirCompra(object Remitente, DataGridViewCellEventArgs Evento)
         {
             if (_Cargando || _AbriendoCompra || Evento.RowIndex < 0 || Evento.ColumnIndex < 0
@@ -347,9 +298,6 @@ namespace CapaVista_OrdenesCompra
             }
         }
 
-        
-        
-        
         private void ComprasProcVaciarDatos()
         {
             var Resultado = ComprasDgvEncabezados.DataSource as DataTable;
@@ -359,9 +307,6 @@ namespace CapaVista_OrdenesCompra
             _Datos = null;
         }
 
-        
-        
-        
         protected override void OnFormClosing(FormClosingEventArgs Evento)
         {
             base.OnFormClosing(Evento);
@@ -379,9 +324,6 @@ namespace CapaVista_OrdenesCompra
             base.OnFormClosed(Evento);
         }
 
-        
-        
-        
         private void ComprasProcMostrarError(string Mensaje, Exception Ex)
         {
             System.Diagnostics.Debug.WriteLine(Ex);

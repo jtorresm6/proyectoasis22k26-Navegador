@@ -1,6 +1,18 @@
 ﻿using System;
 using CapaControlador_OrdenesCompra.Entidades;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Valida identificadores, importes, fechas y datos de las órdenes de compra.
+ * ===================================================================
+*/
+
 namespace CapaControlador_OrdenesCompra.Servicios
 {
     internal static class ClsValidacionOrdenesCompra

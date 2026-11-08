@@ -1,4 +1,6 @@
-﻿using CapaControlador_Seguridad.Objetos_de_valor;
+﻿using CapaControlador_Compras;
+using CapaControlador_Seguridad;
+using CapaControlador_Seguridad.Objetos_de_valor;
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -39,6 +41,8 @@ namespace CapaVista_Compras
         public FrmMDICompras()
         {
             InitializeComponent();
+            ComprasMetAplicarPermisos((Modulo, Aplicacion) => false, 0);
+            ComprasMetAplicarOpacidadIndicadores();
             if (_Componentes == null) _Componentes = new Container();
             _AyudaNavegador = new ToolTip(_Componentes) { ShowAlways = true };
             ComprasMetConfigurarDesplazamientoNavegador();
@@ -48,11 +52,7 @@ namespace CapaVista_Compras
             ComprasMetAcomodarCatalogos();
             ComprasMetAcomodarRegistrosCompra();
             ComprasBtnAyuda.Enabled = true;
-            ComprasTlpBitacora.Enabled = true;
-            ComprasTlpHerramientas.Enabled = true;
             ComprasLblBienvenido.Tipografia = CapaVista_Componentes.Componentes.TipografiaCompras.TituloBienvenida;
-            ComprasLblKpi1.Texto = "Antigüedad promedio de saldos";
-            ComprasLblKpi2.Texto = "Órdenes autorizadas (%)";
             DoubleBuffered = true;
             foreach (Control ControlActual in ComprasTlpNavegador.Controls)
             {
@@ -84,6 +84,28 @@ namespace CapaVista_Compras
                     }
                     if (Panel.GetRow(Elemento) == 2) Elemento.Margin = new Padding(2);
                 }
+            }
+        }
+        private void ComprasMetAplicarOpacidadIndicadores()
+        {
+            Control[] Paneles = { ComprasPnlKpi1, ComprasPnlKpi2, ComprasPnlKpi3,
+                ComprasPnlKpi4, ComprasPnlKpi5, ComprasPnlKpi6, ComprasPnlInformacion };
+            foreach (Control Panel in Paneles)
+            {
+                System.Drawing.Image Fondo = Panel.BackgroundImage;
+                if (Fondo == null) continue;
+                var FondoTranslucido = new System.Drawing.Bitmap(Fondo.Width, Fondo.Height,
+                    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                using (var Lienzo = System.Drawing.Graphics.FromImage(FondoTranslucido))
+                using (var Atributos = new System.Drawing.Imaging.ImageAttributes())
+                {
+                    var Matriz = new System.Drawing.Imaging.ColorMatrix { Matrix33 = 1F };
+                    Atributos.SetColorMatrix(Matriz);
+                    Lienzo.DrawImage(Fondo, new System.Drawing.Rectangle(0, 0, Fondo.Width, Fondo.Height),
+                        0, 0, Fondo.Width, Fondo.Height, System.Drawing.GraphicsUnit.Pixel, Atributos);
+                }
+                Panel.BackgroundImage = FondoTranslucido;
+                Panel.Disposed += (Origen, Evento) => FondoTranslucido.Dispose();
             }
         }
         public void ComprasMetActualizarInfoUsuario(string Usuario, string Rol)
@@ -146,7 +168,47 @@ namespace CapaVista_Compras
             ComprasTlpPrincipal.PerformLayout();
             ComprasPnlMain.PerformLayout();
             ComprasMetActualizarInfoUsuario();
+            if (!ComprasMetCargarPermisos()) return;
             ComprasMetIniciarDashboard();
+        }
+        private bool ComprasMetCargarPermisos()
+        {
+            ComprasMetAplicarPermisos((Modulo, Aplicacion) => false, 0);
+            if (!ClsSesionSeguridad.HaySesionActiva) return false;
+            try
+            {
+                int Modulo = ClsAplicacionesCompras.ComprasFuncObtenerIdModulo();
+                var Modelo = new ClsModeloAsigAppPerf();
+                Modelo.SeguridadMetObtenerTodos();
+                return ComprasMetAplicarPermisos((IdModulo, Aplicacion) =>
+                    Modelo.SeguridadMetObtenerPermisosSesion(IdModulo, Aplicacion).TieneAcceso, Modulo);
+            }
+            catch (Exception Error)
+            {
+                ComprasMetAplicarPermisos((Modulo, Aplicacion) => false, 0);
+                MessageBox.Show(this, "No se pudieron cargar los permisos de Compras: " + Error.Message,
+                    "Permisos de Compras", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+        private bool ComprasMetAplicarPermisos(Func<int, int, bool> TieneAcceso, int Modulo)
+        {
+            bool AccesoMdi = TieneAcceso(Modulo, ClsAplicacionesCompras.MdiCompras);
+            ComprasTlpMovimientosProveedores.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.MovimientosProveedores);
+            ComprasTlpPolizas.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.Polizas);
+            ComprasTlpOrdenesCompra.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.OrdenesCompra);
+            ComprasTlpPagosProveedores.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.PagosProveedores);
+            ComprasTlpCierreMovimientos.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.CierreMovimientos);
+            ComprasTlpProveedores.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.MantenimientoProveedor);
+            ComprasTlpMantenimiento2.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.MantenimientoPlazo);
+            ComprasTlpMantenimiento3.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.MantenimientoConceptoProveedor);
+            ComprasTlpRegistroCompras.Enabled = false;
+            ComprasTlpDevolucionesCompras.Enabled = false;
+            ComprasTlpRegistrosCompra.Enabled = ComprasTlpOrdenesCompra.Enabled;
+            ComprasTlpCatalogos.Enabled = ComprasTlpProveedores.Enabled || ComprasTlpMantenimiento2.Enabled || ComprasTlpMantenimiento3.Enabled;
+            ComprasTlpBitacora.Enabled = AccesoMdi && TieneAcceso(4, 12);
+            ComprasTlpHerramientas.Enabled = false;
+            return AccesoMdi;
         }
         private void ComprasMetConfigurarEstadosTab(Control Elemento, CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras Panel)
         {
@@ -159,14 +221,27 @@ namespace CapaVista_Compras
                     break;
                 }
             }
-            Elemento.MouseEnter += (Origen, Argumentos) => Panel.ComprasProcActualizarHover(true);
+            if (ReferenceEquals(Elemento, Panel))
+            {
+                Panel.EnabledChanged += (Origen, Argumentos) =>
+                {
+                    Panel.ComprasProcActualizarHover(false);
+                    if (!Panel.Enabled) Panel.Seleccionado = false;
+                };
+                if (!Panel.Enabled)
+                {
+                    Panel.ComprasProcActualizarHover(false);
+                    Panel.Seleccionado = false;
+                }
+            }
+            Elemento.MouseEnter += (Origen, Argumentos) => Panel.ComprasProcActualizarHover(Panel.Enabled);
             Elemento.MouseLeave += (Origen, Argumentos) =>
             {
                 if (!IsHandleCreated || IsDisposed || Disposing) return;
                 BeginInvoke(new Action(() =>
                 {
                     if (Panel.IsDisposed || IsDisposed || Disposing) return;
-                    Panel.ComprasProcActualizarHover(Panel.ClientRectangle.Contains(Panel.PointToClient(Cursor.Position)));
+                    Panel.ComprasProcActualizarHover(Panel.Enabled && Panel.ClientRectangle.Contains(Panel.PointToClient(Cursor.Position)));
                 }));
             };
             foreach (Control Hijo in Elemento.Controls) ComprasMetConfigurarEstadosTab(Hijo, Panel);
@@ -190,7 +265,7 @@ namespace CapaVista_Compras
         // Versión que recibe cómo crear el formulario, para abrir formularios de otros componentes
         private void ComprasMetAbrirSubproceso(CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras Opcion, Func<Form> CrearFormulario)
         {
-            if (IsDisposed || Disposing) return;
+            if (IsDisposed || Disposing || Opcion == null || !Opcion.Enabled) return;
             if (_FormularioSubproceso != null && !_FormularioSubproceso.IsDisposed)
             {
                 if (ReferenceEquals(_OpcionSubproceso, Opcion))
@@ -283,10 +358,6 @@ namespace CapaVista_Compras
         private void ComprasMetAbrirPagosProveedores(object Remitente, EventArgs Evento)
         {
             ComprasMetAbrirSubproceso<CapaVista_PagosProveedores.FrmPagosProveedores>(ComprasTlpPagosProveedores);
-        }
-        private void ComprasMetAbrirAprobacionFinanciera(object Remitente, EventArgs Evento)
-        {
-            ComprasMetAbrirSubproceso<CapaVista_AprobacionFinanciera.FrmAprobacionFinanciera>(ComprasTlpAprobacionFinanciera);
         }
         private void ComprasMetAbrirCierreMovimientos(object Remitente, EventArgs Evento)
         {
@@ -392,7 +463,7 @@ namespace CapaVista_Compras
                 ComprasTlpNavegador.ResumeLayout(true);
             }
             ComprasMetAjustarDesplazamientoNavegador();
-            ComprasLblRegistrosCompra.Texto = "Registros de compra";
+            ComprasLblRegistrosCompra.Texto = "Registros de Compras";
             ComprasBtnIconoRegistrosCompra.AccessibleName = _RegistrosCompraAbierto ? "Contraer registros de compra" : "Expandir registros de compra";
             ComprasTlpRegistrosCompra.Invalidate();
         }

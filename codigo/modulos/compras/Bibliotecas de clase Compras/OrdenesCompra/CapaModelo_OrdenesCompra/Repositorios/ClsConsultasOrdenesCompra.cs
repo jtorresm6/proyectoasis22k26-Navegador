@@ -4,6 +4,18 @@ using System.Data;
 using System.Data.Odbc;
 using CapaModelo_OrdenesCompra.Entidades;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Consulta órdenes de compra, detalles y catálogos relacionados.
+ * ===================================================================
+*/
+
 namespace CapaModelo_OrdenesCompra.Repositorios
 {
     internal sealed class ClsConsultasOrdenesCompra : ClsRepositorioBaseOrdenesCompra
@@ -41,10 +53,10 @@ namespace CapaModelo_OrdenesCompra.Repositorios
         internal DataTable ComprasFuncListarDetalles(int Id)
         {
             ComprasProcValidarId(Id);
-            return ComprasFuncConsultar("SELECT ordenDetalleOrdenCompra, idProducto, cantidadDetalleOrdenCompra, "
+            return ComprasFuncConsultar("SELECT d.ordenDetalleOrdenCompra, d.idProducto, p.skuProducto, p.nombreProducto, d.cantidadDetalleOrdenCompra, "
                 + "costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra, "
                 + "ROUND(cantidadDetalleOrdenCompra * costoUnitarioDetalleOrdenCompra * "
-                + "(1 - descuentoPorcentajeDetalleOrdenCompra / 100), 4) AS subtotalDetalleOrdenCompra FROM tblDetalleOrdenCompra WHERE idOrdenCompra = ? ORDER BY ordenDetalleOrdenCompra", Id);
+                + "(1 - descuentoPorcentajeDetalleOrdenCompra / 100), 4) AS subtotalDetalleOrdenCompra FROM tblDetalleOrdenCompra d LEFT JOIN tblProducto p ON p.idProducto = d.idProducto WHERE d.idOrdenCompra = ? ORDER BY d.ordenDetalleOrdenCompra", Id);
         }
 
         internal DataTable ComprasFuncListarSucursales()

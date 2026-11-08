@@ -1,6 +1,18 @@
 ﻿using System;
 using System.Data;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Mantiene las líneas de productos y calcula sus importes y descuentos.
+ * ===================================================================
+*/
+
 namespace CapaVista_OrdenesCompra
 {
     public sealed class ClsProductosOrdenCompra : IDisposable

@@ -3,6 +3,7 @@ using CapaControlador_Seguridad.Objetos_de_valor;
 using CapaVista_Componentes.Componentes;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -125,7 +126,7 @@ namespace CapaVista_Compras
 
         private void ComprasMetConfigurarColumnas()
         {
-            ComprasLblEstado.Texto = "Registros encontrados: " + ((List<ClsModeloBitacora>)ComprasDgvBitacora.DataSource).Count;
+            ComprasLblEstado.Texto = "Registros encontrados: " + ((DataTable)ComprasDgvBitacora.DataSource).Rows.Count;
         }
 
         private void ComprasMetBuscar(object sender, EventArgs e)
@@ -192,8 +193,20 @@ namespace CapaVista_Compras
                 ).ToList();
             }
 
-            ComprasDgvBitacora.DataSource = null;
-            ComprasDgvBitacora.DataSource = listaFiltrada;
+            var datos = new DataTable();
+            var propiedades = System.ComponentModel.TypeDescriptor.GetProperties(typeof(ClsModeloBitacora));
+            foreach (System.ComponentModel.PropertyDescriptor propiedad in propiedades)
+                datos.Columns.Add(propiedad.Name, Nullable.GetUnderlyingType(propiedad.PropertyType) ?? propiedad.PropertyType);
+            foreach (var registro in listaFiltrada)
+            {
+                var fila = datos.NewRow();
+                foreach (System.ComponentModel.PropertyDescriptor propiedad in propiedades)
+                    fila[propiedad.Name] = propiedad.GetValue(registro) ?? DBNull.Value;
+                datos.Rows.Add(fila);
+            }
+            var anterior = ComprasDgvBitacora.DataSource as DataTable;
+            ComprasDgvBitacora.DataSource = datos;
+            anterior?.Dispose();
             ComprasMetConfigurarColumnas();
         }
 

@@ -90,3 +90,11 @@ tbody th { width: 28%; background: #D5DCEF; }
     .container p { text-align: left; }
     th, td { padding: 7px; }
 }
+
+/* Navegaci?n com?n de las ayudas de Compras. */
+.container ul { text-align: left; }
+.seccion + .seccion, .seccion + section { margin-top: 38px; }
+nav, footer { margin: 20px 0; font-size: 17px; }
+a { color: #30498f; }
+a:focus { outline: 2px solid #D9913E; outline-offset: 3px; }
+caption { text-align: left; margin-bottom: 8px; font-weight: 600; }

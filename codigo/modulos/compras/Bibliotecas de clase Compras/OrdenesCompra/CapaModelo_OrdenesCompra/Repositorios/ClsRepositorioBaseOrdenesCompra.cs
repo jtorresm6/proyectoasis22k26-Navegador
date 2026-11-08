@@ -9,30 +9,18 @@ using CapaModelo_Seguridad;
  * Área : Compras
  * Autor : Diego Fernando Santizo Samayoa
  * Carné : 0901-22-15950
- * Fecha : 24/10/2026
+ * Fecha : 08/11/2026
  * ==================================================================
  * Propósito :
- *  Ejecuta operaciones ODBC con la conexión de la DLL de Seguridad.
+ *  Ejecuta consultas y transacciones ODBC con la conexión de Seguridad.
  * ===================================================================
 */
-
-
-
-
-
-
-
-
-
 
 namespace CapaModelo_OrdenesCompra.Repositorios
 {
     public abstract class ClsRepositorioBaseOrdenesCompra : ClsConexion
     {
-        
-        
-        
-        
+
         protected DataTable ComprasFuncEjecucionConsulta(string ComandoTexto, CommandType ComandoTipo,
             List<OdbcParameter> Parametros = null)
         {
@@ -48,10 +36,6 @@ namespace CapaModelo_OrdenesCompra.Repositorios
             }, false);
         }
 
-        
-        
-        
-        
         protected int ComprasFuncEjecucionNonQuery(string ComandoTexto, List<OdbcParameter> Parametros,
             CommandType ComandoTipo)
         {
@@ -62,11 +46,6 @@ namespace CapaModelo_OrdenesCompra.Repositorios
             }, false);
         }
 
-        
-        
-        
-        
-        
         protected Resultado ComprasFuncEjecutar<Resultado>(Func<OdbcConnection, OdbcTransaction, Resultado> Operacion,
             bool UsarTransaccion)
         {
@@ -91,11 +70,6 @@ namespace CapaModelo_OrdenesCompra.Repositorios
             }
         }
 
-
-        
-        
-        
-        
         protected static OdbcCommand ComprasFuncCrearComando(OdbcConnection Conexion, OdbcTransaction Transaccion,
             string ComandoTexto, CommandType ComandoTipo, List<OdbcParameter> Parametros)
         {

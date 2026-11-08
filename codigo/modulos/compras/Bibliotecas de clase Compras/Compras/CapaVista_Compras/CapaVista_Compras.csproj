@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClsMantenimientoCompras.cs" />
+    <Compile Include="ClsPanelInformacionCompras.cs"><SubType>Component</SubType></Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -153,8 +154,7 @@
     <Compile Include="FrmReporteBitacoraCompras.cs">
       <SubType>Form</SubType>
     </Compile>
-    <EmbeddedResource Include="..\..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\Reportes\RpReporteBitacora.rdlc">
-      <Link>Reportes\RpReporteBitacora.rdlc</Link>
+    <EmbeddedResource Include="Reportes\RpReporteBitacora.rdlc">
       <LogicalName>CapaVista_Compras.Reportes.RpReporteBitacora.rdlc</LogicalName>
     </EmbeddedResource>
     <Content Include="Reportes\RpReporteBitacora.rdlc">

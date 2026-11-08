@@ -8,6 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Ejecucion_Compras</RootNamespace>
     <AssemblyName>Ejecucion_Compras</AssemblyName>
+    <ApplicationIcon>Compras.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Compras.ico" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="CapaControlador_Compras">
       <HintPath>..\..\Bibliotecas de clase Compras\Compras\CapaControlador_Compras\bin\$(Configuration)\CapaControlador_Compras.dll</HintPath>

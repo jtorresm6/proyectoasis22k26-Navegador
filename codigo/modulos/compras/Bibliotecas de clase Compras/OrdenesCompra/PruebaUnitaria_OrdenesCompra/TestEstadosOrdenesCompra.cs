@@ -1,7 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Data;
 using CapaControlador_OrdenesCompra;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PruebaUnitaria_OrdenesCompra.Apoyo;
 
 /*
@@ -9,10 +8,10 @@ using PruebaUnitaria_OrdenesCompra.Apoyo;
  * Área : Compras
  * Autor : Diego Fernando Santizo Samayoa
  * Carné : 0901-22-15950
- * Fecha : 30/10/2026
+ * Fecha : 08/11/2026
  * ==================================================================
  * Propósito :
- *  Verifica aprobación, anulación y validación de estados del controlador.
+ *  Verifica los estados y las transiciones de las órdenes de compra.
  * ===================================================================
 */
 
@@ -25,126 +24,69 @@ namespace PruebaUnitaria_OrdenesCompra
         private ClsOrdenesCompra _Controlador;
 
         [TestInitialize]
-        public void ComprasProcPrepararPrueba()
+        public void Preparar()
         {
             _Repositorio = new ClsRepositorioOrdenesCompraPrueba();
             _Controlador = new ClsOrdenesCompra(_Repositorio);
         }
 
         [TestCleanup]
-        public void ComprasProcLiberarPrueba()
+        public void Liberar() => _Repositorio.Dispose();
+
+        [DataTestMethod]
+        [DataRowAttribute(" autorizada ", "Autorizada")]
+        [DataRowAttribute("RECHAZADA", "Rechazada")]
+        [DataRowAttribute("anulada", "Anulada")]
+        [DataRowAttribute("Recibida", "Recibida")]
+        [DataRowAttribute("Pendiente", "Pendiente")]
+        public void CambiarEstadoNormalizaTexto(string entrada, string esperado)
         {
-            _Repositorio.Dispose();
+            _Controlador.ComprasProcCambiarEstado(101, entrada);
+            Assert.AreEqual(esperado, _Controlador.ComprasFuncObtener(101).Estado);
+            Assert.AreEqual("Autorizada", _Controlador.ComprasFuncObtener(102).Estado);
+        }
+
+        [DataTestMethod]
+        [DataRowAttribute(null)]
+        [DataRowAttribute("")]
+        [DataRowAttribute("   ")]
+        [DataRowAttribute("Todos")]
+        [DataRowAttribute("Aprobada")]
+        public void CambiarEstadoInvalidoNoModificaOrden(string estado)
+        {
+            Assert.ThrowsException<ArgumentException>(() => _Controlador.ComprasProcCambiarEstado(101, estado));
+            Assert.AreEqual("Pendiente", _Controlador.ComprasFuncObtener(101).Estado);
+        }
+
+        [DataTestMethod]
+        [DataRowAttribute(0)]
+        [DataRowAttribute(-1)]
+        public void CambiarEstadoYAnularRechazanIdInvalido(int id)
+        {
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => _Controlador.ComprasProcCambiarEstado(id, "Autorizada"));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => _Controlador.ComprasFuncAnular(id));
         }
 
         [TestMethod]
-        public void Test_AprobarOrdenPendiente()
+        public void CambiarEstadoRechazaOrdenInexistente() => Assert.ThrowsException<InvalidOperationException>(() => _Controlador.ComprasProcCambiarEstado(999, "Autorizada"));
+
+        [TestMethod]
+        public void AnularDevuelveOrdenActualizada()
         {
-            // Arrange
-            int IdOrden = 101;
-            string Estado = "Autorizada";
-
-            // Act
-            _Controlador.ComprasProcCambiarEstado(IdOrden, Estado);
-
-            // Assert
-            Assert.AreEqual("Autorizada", _Controlador.ComprasFuncObtener(IdOrden).Estado);
+            var resultado = _Controlador.ComprasFuncAnular(101);
+            Assert.AreEqual(101, resultado.IdOrdenCompra);
+            Assert.AreEqual("Anulada", resultado.Estado);
         }
 
         [TestMethod]
-        public void Test_CambiarEstadoNormalizaTexto()
+        public void AnularDetectaOperacionNoAplicada()
         {
-            // Arrange
-            int IdOrden = 101;
-            string Estado = " autorizada ";
-
-            // Act
-            _Controlador.ComprasProcCambiarEstado(IdOrden, Estado);
-
-            // Assert
-            Assert.AreEqual("Autorizada", _Controlador.ComprasFuncObtener(IdOrden).Estado);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Test_CambiarEstadoRechazaTodos()
-        {
-            // Arrange
-            int IdOrden = 101;
-            string Estado = "Todos";
-
-            // Act
-            _Controlador.ComprasProcCambiarEstado(IdOrden, Estado);
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Test_CambiarEstadoRechazaNombreDesconocido()
-        {
-            // Arrange
-            int IdOrden = 101;
-            string Estado = "Aprobada";
-
-            // Act
-            _Controlador.ComprasProcCambiarEstado(IdOrden, Estado);
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Test_CambiarEstadoRechazaPkInvalido()
-        {
-            // Arrange
-            int IdOrden = 0;
-
-            // Act
-            _Controlador.ComprasProcCambiarEstado(IdOrden, "Autorizada");
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void Test_CambiarEstadoPropagaOrdenInexistente()
-        {
-            // Arrange
-            int IdOrden = 999;
-
-            // Act
-            _Controlador.ComprasProcCambiarEstado(IdOrden, "Autorizada");
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
-        }
-
-        [TestMethod]
-        public void Test_AnularDevuelveOrdenActualizada()
-        {
-            // Arrange
-            int IdOrden = 101;
-
-            // Act
-            var Resultado = _Controlador.ComprasFuncAnular(IdOrden);
-
-            // Assert
-            Assert.AreEqual(IdOrden, Resultado.IdOrdenCompra);
-            Assert.AreEqual("Anulada", Resultado.Estado);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void Test_AnularDetectaOperacionNoAplicada()
-        {
-            // Arrange
-            int IdOrden = 101;
             _Repositorio.OmitirAnulacion = true;
-
-            // Act
-            _Controlador.ComprasFuncAnular(IdOrden);
-
-            // Assert: ExpectedException comprueba el tipo de error esperado.
+            Assert.ThrowsException<InvalidOperationException>(() => _Controlador.ComprasFuncAnular(101));
+            Assert.AreEqual("Pendiente", _Controlador.ComprasFuncObtener(101).Estado);
         }
+
+        [TestMethod]
+        public void AnularRechazaOrdenInexistente() => Assert.ThrowsException<InvalidOperationException>(() => _Controlador.ComprasFuncAnular(999));
     }
 }

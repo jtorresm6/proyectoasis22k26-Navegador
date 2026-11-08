@@ -198,6 +198,7 @@
     <Compile Include="Componentes\ClsArchivosEncabezadoCompras.cs" />
     <Compile Include="Componentes\ClsEditoresArchivosCompras.cs" />
     <Compile Include="Componentes\ClsAyudasCompras.cs" />
+    <Compile Include="Componentes\ClsContenidoAyudaCompras.cs" />
     <Compile Include="Componentes\ClsReportesCompras.cs" />
     <Compile Include="Componentes\ComprasUsrDataGridView.Paginacion.cs">
       <DependentUpon>ComprasUsrDataGridView.cs</DependentUpon>
@@ -209,6 +210,11 @@
     <Compile Include="Componentes\ClsPanelVerticalCompras.cs">
       <SubType>Component</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\..\..\..\..\ayuda\modulos\compras\ComprasAyudas.chm">
+      <LogicalName>Ayudas/ComprasAyudas.chm</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

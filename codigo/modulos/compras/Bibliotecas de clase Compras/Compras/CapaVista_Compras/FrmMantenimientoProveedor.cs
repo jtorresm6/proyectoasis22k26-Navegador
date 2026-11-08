@@ -23,7 +23,7 @@ namespace CapaVista_Compras
             InitializeComponent();
             ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
             ClsMantenimientoCompras.ComprasProcConfigurar(this, ComprasNavMantenimiento, "tblProveedor",
-                CodigoAplicacion: 4, CodigoModulo: 4);
+                CodigoAplicacion: CapaControlador_Compras.ClsAplicacionesCompras.MantenimientoProveedor);
             
         }
     }

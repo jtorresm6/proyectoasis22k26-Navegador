@@ -3,6 +3,18 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Guarda órdenes de compra y ejecuta cambios de estado y vencimiento.
+ * ===================================================================
+*/
+
 namespace CapaModelo_OrdenesCompra.Repositorios
 {
     internal sealed class ClsComandosOrdenesCompra : ClsRepositorioBaseOrdenesCompra
@@ -79,18 +91,20 @@ namespace CapaModelo_OrdenesCompra.Repositorios
         }
 
         internal int ComprasFuncCrear(int IdProveedor, int IdPlazo, int IdMoneda, DateTime Emision,
-            DateTime Vencimiento, decimal TipoCambio, decimal Subtotal, decimal Descuento, string Comentario, decimal Impuesto = 0M)
+            DateTime Vencimiento, decimal TipoCambio, decimal Subtotal, decimal Descuento, string Comentario, decimal Impuesto = 0M,
+            DataTable Detalles = null, long? IdTipoCambio = null)
         {
-            const string Sql = "INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, idMoneda, "
+            const string Sql = "INSERT INTO tblEncabezadoOrdenCompra (idProveedor, idPlazo, idMoneda, idTipoCambio, "
                 + "fechaEmisionOrdenCompra, fechaVencimientoOrdenCompra, tipoCambioOrdenCompra, "
                 + "subtotalOrdenCompra, descuentoOrdenCompra, impuestoOrdenCompra, totalOrdenCompra, comentarioOrdenCompra) "
-                + "SELECT p.idProveedor, z.idPlazo, ?, ?, ?, ?, ?, ?, ?, ?, ? FROM tblProveedor p "
+                + "SELECT p.idProveedor, z.idPlazo, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? FROM tblProveedor p "
                 + "CROSS JOIN tblPlazo z WHERE p.idProveedor = ? AND p.estadoProveedor = 1 AND z.idPlazo = ?";
             return ComprasFuncEjecutar((Conexion, Transaccion) =>
             {
                 var Parametros = new List<OdbcParameter>
                 {
                     new OdbcParameter("Moneda", OdbcType.Int) { Value = IdMoneda },
+                    new OdbcParameter("IdTipoCambio", OdbcType.BigInt) { Value = (object)IdTipoCambio ?? DBNull.Value },
                     new OdbcParameter("Emision", OdbcType.Date) { Value = Emision.Date },
                     new OdbcParameter("Vencimiento", OdbcType.Date) { Value = Vencimiento.Date },
                     ComprasFuncParametroDecimal("TipoCambio", TipoCambio, 6),
@@ -108,7 +122,28 @@ namespace CapaModelo_OrdenesCompra.Repositorios
                         throw new InvalidOperationException("El proveedor está inactivo o el plazo no existe.");
                     Comando.Parameters.Clear();
                     Comando.CommandText = "SELECT LAST_INSERT_ID()";
-                    return Convert.ToInt32(Comando.ExecuteScalar());
+                    int Id = Convert.ToInt32(Comando.ExecuteScalar());
+                    if (Id <= 0) throw new InvalidOperationException("No se obtuvo el número de la orden.");
+                    if (Detalles != null)
+                    {
+                        int Linea = 0;
+                        foreach (DataRow Detalle in Detalles.Rows)
+                        {
+                            Comando.Parameters.Clear();
+                            Comando.CommandText = "INSERT INTO tblDetalleOrdenCompra (idOrdenCompra, ordenDetalleOrdenCompra, idProducto, idBodega, "
+                                + "cantidadDetalleOrdenCompra, costoUnitarioDetalleOrdenCompra, descuentoPorcentajeDetalleOrdenCompra) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                            Comando.Parameters.Add(new OdbcParameter("Orden", OdbcType.Int) { Value = Id });
+                            Comando.Parameters.Add(new OdbcParameter("Linea", OdbcType.Int) { Value = ++Linea });
+                            Comando.Parameters.Add(new OdbcParameter("Producto", OdbcType.Int) { Value = Detalle["idProducto"] });
+                            Comando.Parameters.Add(new OdbcParameter("Bodega", OdbcType.Int) { Value = Detalle["idBodega"] });
+                            Comando.Parameters.Add(ComprasFuncParametroDecimal("Cantidad", Convert.ToDecimal(Detalle["cantidad"]), 4));
+                            Comando.Parameters.Add(ComprasFuncParametroDecimal("Costo", Convert.ToDecimal(Detalle["precio"]), 4));
+                            Comando.Parameters.Add(ComprasFuncParametroDecimal("Porcentaje", Convert.ToDecimal(Detalle["porcentaje"]), 2));
+                            if (Comando.ExecuteNonQuery() != 1)
+                                throw new InvalidOperationException("No se pudo guardar un producto de la orden.");
+                        }
+                    }
+                    return Id;
                 }
             }, true);
         }

@@ -5,6 +5,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CapaControlador_OrdenesCompra;
 using CapaControlador_OrdenesCompra.Entidades;
+using Microsoft.Reporting.WinForms;
+using System.Data;
+using System.Globalization;
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 08/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Presenta los detalles de una orden y permite generar su reporte o anularla.
+ * ===================================================================
+*/
 
 namespace CapaVista_OrdenesCompra
 {
@@ -15,6 +30,7 @@ namespace CapaVista_OrdenesCompra
         private ClsOrdenCompra _Compra;
         private bool _Anulando;
         private bool _DetallesCargados;
+        private string _MonedaReporte;
         public bool OrdenGuardada { get; private set; }
 
         public FrmDetalleOrdenCompra() : this(null, new ClsOrdenesCompra()) { }
@@ -38,9 +54,10 @@ namespace CapaVista_OrdenesCompra
             ComprasBtnGuardar.Enabled = false;
             ComprasBtnGuardar.AccessibleDescription = "Se requieren productos para guardar la orden.";
             ComprasBtnDescartar.AccessibleName = "Anular orden";
-            ComprasBtnDescartar.Enabled = _Compra != null && !_Compra.Bloqueado && _Compra.Estado != "Anulada" && _Compra.Estado != "Recibida";
+            ComprasBtnDescartar.Enabled = ComprasFuncPuedeAnular();
             ComprasBtnDescartar.Click += ComprasProcAnular;
             ComprasBtnRegresar.Click += (Remitente, Evento) => Close();
+            ComprasUsrEncabezado.PrepararReporte += (Remitente, Evento) => ComprasProcPrepararReporte(Evento.Reporte);
             FormClosing += (Remitente, Evento) => { if (_Anulando) Evento.Cancel = true; };
             ComprasProcMostrarEncabezado();
         }
@@ -142,7 +159,16 @@ namespace CapaVista_OrdenesCompra
             try
             {
                 int Id = _Compra.IdOrdenCompra;
-                var Detalles = await Task.Run(() => _Controlador.ComprasFuncListarDetalles(Id));
+                var Detalles = await Task.Run(() =>
+                {
+                    using (var Monedas = _Controlador.ComprasFuncListarMonedas())
+                    {
+                        foreach (DataRow Moneda in Monedas.Rows)
+                            if (Convert.ToInt32(Moneda["idMoneda"]) == _Compra.IdMoneda)
+                                _MonedaReporte = Convert.ToString(Moneda["codigoMoneda"]) + " - " + Convert.ToString(Moneda["nombreMoneda"]);
+                    }
+                    return _Controlador.ComprasFuncListarDetalles(Id);
+                });
                 if (IsDisposed || Disposing)
                 {
                     Detalles.Dispose();
@@ -161,6 +187,33 @@ namespace CapaVista_OrdenesCompra
             }
         }
 
+        private void ComprasProcPrepararReporte(LocalReport Reporte)
+        {
+            var Detalles = ComprasDgvProductos.DataSource as DataTable;
+            if (_Anulando || !_DetallesCargados || _Compra == null || Detalles == null)
+                throw new InvalidOperationException("Espera a que termine la carga de la orden antes de abrir el reporte.");
+            if (string.IsNullOrWhiteSpace(_MonedaReporte))
+                throw new InvalidOperationException("No se pudo identificar la moneda de la orden. Actualiza la consulta antes de generar el reporte.");
+            Reporte.DataSources.Clear();
+            Reporte.DataSources.Add(new ReportDataSource("DetalleOrdenCompra", Detalles));
+            Reporte.DisplayName = "Orden de compra " + _Compra.CodigoOrdenCompra;
+            var Formato = CultureInfo.GetCultureInfo("es-GT");
+            Reporte.SetParameters(new[]
+            {
+                new ReportParameter("Orden", "Orden No. " + _Compra.CodigoOrdenCompra + " | Estado: " + _Compra.Estado),
+                new ReportParameter("Proveedor", "PROVEEDOR: " + _Compra.NombreProveedor + "\nNIT: " + _Compra.NitProveedor
+                    + "\nDirección: " + _Compra.DireccionProveedor + "\nTel.: " + _Compra.TelefonoProveedor + " | Correo: " + _Compra.CorreoProveedor),
+                new ReportParameter("Condiciones", "Emisión: " + _Compra.FechaEmision.ToString("dd/MM/yyyy")
+                    + " | Vencimiento: " + _Compra.FechaVencimiento.ToString("dd/MM/yyyy")
+                    + "\nPlazo: " + _Compra.NombrePlazo + " (" + _Compra.DiasPlazo + " días) | Moneda: " + _MonedaReporte),
+                new ReportParameter("Totales", "Subtotal: " + _Compra.Subtotal.ToString("N4", Formato)
+                    + "\nDescuento: " + _Compra.Descuento.ToString("N4", Formato)
+                    + "\nImpuesto: " + _Compra.Impuesto.ToString("N4", Formato)
+                    + "\nTOTAL (" + _MonedaReporte + "): " + _Compra.MontoTotal.ToString("N4", Formato)),
+                new ReportParameter("Comentario", string.IsNullOrWhiteSpace(_Compra.Comentario) ? "Sin observaciones." : _Compra.Comentario)
+            });
+        }
+
         private void ComprasProcLiberarDetalles()
         {
             _DisenoDetalles?.Dispose();
@@ -171,8 +224,7 @@ namespace CapaVista_OrdenesCompra
 
         private async void ComprasProcAnular(object Remitente, EventArgs Evento)
         {
-            if (_Anulando) return;
-            if (_Compra == null) { Close(); return; }
+            if (_Anulando || !ComprasFuncPuedeAnular()) return;
             if (MessageBox.Show(this, "¿Anular la orden " + _Compra.CodigoOrdenCompra + "?",
                 "Anular orden", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
             _Anulando = true;
@@ -194,10 +246,16 @@ namespace CapaVista_OrdenesCompra
             finally
             {
                 _Anulando = false;
-                ComprasBtnDescartar.Enabled = _Compra != null && !_Compra.Bloqueado && _Compra.Estado != "Anulada" && _Compra.Estado != "Recibida";
+                ComprasBtnDescartar.Enabled = ComprasFuncPuedeAnular();
                 ComprasBtnRegresar.Enabled = true;
                 UseWaitCursor = false;
             }
+        }
+
+        private bool ComprasFuncPuedeAnular()
+        {
+            return _Compra != null && !_Compra.Bloqueado
+                && (_Compra.Estado == "Pendiente" || _Compra.Estado == "Autorizada" || _Compra.Estado == "Rechazada");
         }
 
         private void ComprasProcActualizarProveedor(object Remitente, EventArgs Evento)
