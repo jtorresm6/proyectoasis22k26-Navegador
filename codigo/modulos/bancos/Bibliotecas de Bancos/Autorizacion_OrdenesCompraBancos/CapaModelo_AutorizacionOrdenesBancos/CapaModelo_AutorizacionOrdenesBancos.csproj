@@ -45,16 +45,19 @@
     <Compile Include="Contratos\IRepositorioCuentaDisponible.cs" />
     <Compile Include="Contratos\IRepositorioGenerico.cs" />
     <Compile Include="Contratos\IRepositorioOrdenCompra.cs" />
+    <Compile Include="Contratos\IRepositorioTipoCuentaBancaria.cs" />
     <Compile Include="Entidades\ClsAutorizacionDetalle.cs" />
     <Compile Include="Entidades\ClsAutorizacionOrdenCompra.cs" />
     <Compile Include="Entidades\ClsCuentaDisponible.cs" />
     <Compile Include="Entidades\ClsEvidenciaFondos.cs" />
     <Compile Include="Entidades\ClsOrdenCompra.cs" />
+    <Compile Include="Entidades\ClsTipoCuentaBancaria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\ClsConexion.cs" />
     <Compile Include="Repositorios\ClsRepositorioAutorizacionOrdenCompra.cs" />
     <Compile Include="Repositorios\ClsRepositorioCuentaDisponible.cs" />
     <Compile Include="Repositorios\ClsRepositorioOrdenCompra.cs" />
+    <Compile Include="Repositorios\ClsRepositorioTipoCuentaBancaria.cs" />
     <Compile Include="Repositorios\ClsSentencias.cs" />
   </ItemGroup>
   <ItemGroup />
