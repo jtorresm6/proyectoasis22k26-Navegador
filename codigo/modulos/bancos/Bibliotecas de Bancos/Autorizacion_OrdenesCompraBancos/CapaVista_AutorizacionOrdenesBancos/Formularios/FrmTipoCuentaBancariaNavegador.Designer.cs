@@ -53,7 +53,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmTipoCuentaBancariaNavegador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "8003-MantenimientoTipoCuentaBancaria";
+            this.Text = "8003–MantenimientoTipoCuentaBancaria";
             this.Load += new System.EventHandler(this.FrmTipoCuentaBancariaNavegador_Load);
             this.ResumeLayout(false);
 

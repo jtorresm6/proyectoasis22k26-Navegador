@@ -183,9 +183,16 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
                 }
 
                 decimal Monto;
+
                 if (!decimal.TryParse(BancosTxtMontoAsignado.Text, out Monto) || Monto <= 0)
                 {
                     MessageBox.Show("Ingrese un monto asignado válido");
+                    return;
+                }
+
+                if (Monto != Math.Round(Monto, 2))
+                {
+                    MessageBox.Show("El monto solo puede tener 2 decimales");
                     return;
                 }
 
