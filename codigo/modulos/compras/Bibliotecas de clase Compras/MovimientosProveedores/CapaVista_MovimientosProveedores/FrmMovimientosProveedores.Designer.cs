@@ -299,7 +299,6 @@ namespace CapaVista_MovimientosProveedores
             // 
             this.ComprasCboProveedor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasCboProveedor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ComprasCboProveedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
             this.ComprasCboProveedor.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.ComprasCboProveedor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasCboProveedor.Location = new System.Drawing.Point(16, 36);
@@ -307,7 +306,6 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasCboProveedor.MaxLength = 0;
             this.ComprasCboProveedor.MostrarEtiquetaError = false;
             this.ComprasCboProveedor.Name = "ComprasCboProveedor";
-            this.ComprasCboProveedor.PermitirEscritura = true;
             this.ComprasCboProveedor.Size = new System.Drawing.Size(467, 44);
             this.ComprasCboProveedor.TabIndex = 1;
             this.ComprasCboProveedor.TipoDatos = CapaVista_Componentes.Componentes.EnmTipoDatosCompras.Proveedores;
@@ -419,6 +417,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasDtpFechaEmision.Name = "ComprasDtpFechaEmision";
             this.ComprasDtpFechaEmision.Size = new System.Drawing.Size(469, 32);
             this.ComprasDtpFechaEmision.TabIndex = 13;
+            this.ComprasDtpFechaEmision.TamanoFuente = 11F;
             // 
             // ComprasLblCampoFechaVencimiento
             // 
@@ -449,6 +448,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasDtpFechaVencimiento.Name = "ComprasDtpFechaVencimiento";
             this.ComprasDtpFechaVencimiento.Size = new System.Drawing.Size(348, 32);
             this.ComprasDtpFechaVencimiento.TabIndex = 15;
+            this.ComprasDtpFechaVencimiento.TamanoFuente = 11F;
             // 
             // ComprasLblCampoNumCambio
             // 
@@ -509,7 +509,9 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasUsrEncabezadoFormulario.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasUsrEncabezadoFormulario.MaximumSize = new System.Drawing.Size(1500, 130);
             this.ComprasUsrEncabezadoFormulario.MinimumSize = new System.Drawing.Size(0, 130);
+            this.ComprasUsrEncabezadoFormulario.MostrarReportes = false;
             this.ComprasUsrEncabezadoFormulario.Name = "ComprasUsrEncabezadoFormulario";
+            this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "MovimientosProveedores.html";
             this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1300, 130);
             this.ComprasUsrEncabezadoFormulario.TabIndex = 1;
             this.ComprasUsrEncabezadoFormulario.TabStop = false;

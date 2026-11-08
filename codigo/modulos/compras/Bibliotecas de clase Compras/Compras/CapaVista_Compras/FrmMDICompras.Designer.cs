@@ -1649,6 +1649,7 @@ namespace CapaVista_Compras
             this.ComprasBtnAyuda.TabIndex = 3;
             this.ComprasBtnAyuda.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.ComprasBtnAyuda.UseVisualStyleBackColor = false;
+            this.ComprasBtnAyuda.Click += new System.EventHandler(this.ComprasMetAbrirAyuda);
             // 
             // ComprasPbMascota
             // 

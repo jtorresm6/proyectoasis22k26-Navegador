@@ -514,13 +514,13 @@ namespace CapaVista_Componentes.Componentes
 
                 case EnmTipoDatosCompras.Monedas:
                     Tabla = "tblMoneda";
-                    Valor = "idMoneda";
+                    Valor = "Pk_Moneda";
                     Mostrar = "nombreMoneda";
                     break;
 
                 case EnmTipoDatosCompras.TiposCambio:
                     Tabla = "tblTipoCambio";
-                    Valor = "idTipoCambio";
+                    Valor = "Pk_TipoCambio";
                     Mostrar = "descripcionTipoCambio";
                     break;
 
@@ -567,10 +567,9 @@ namespace CapaVista_Componentes.Componentes
                     break;
 
                 case EnmTipoDatosCompras.Metodos:
-             
-                    Tabla = string.Empty;
-                    Valor = "IDmetodo";
-                    Mostrar = "nombreMetodo";
+                    Tabla = "tblMetodoPago";
+                    Valor = "idMetodoPago";
+                    Mostrar = "nombreMetodoPago";
                     break;
 
                 default:
@@ -585,17 +584,6 @@ namespace CapaVista_Componentes.Componentes
 
             try
             {
-                if (_TipoDatos == EnmTipoDatosCompras.Metodos)
-                {
-                    DataTable Metodos = new DataTable();
-                    Metodos.Columns.Add("IDmetodo", typeof(string));
-                    Metodos.Columns.Add("nombreMetodo", typeof(string));
-                    foreach (string Metodo in new[] { "Transferencia", "Cheque", "Efectivo", "Deposito" })
-                        Metodos.Rows.Add(Metodo, Metodo);
-                    ComprasMetCargarDatos(Metodos);
-                    return;
-                }
-
                 ComprasProcObtenerConfiguracion(_TipoDatos,
                     out string Tabla, out string Valor, out string Mostrar);
 

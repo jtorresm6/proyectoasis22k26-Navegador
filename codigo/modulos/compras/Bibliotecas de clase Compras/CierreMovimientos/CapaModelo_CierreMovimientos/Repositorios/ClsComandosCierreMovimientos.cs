@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.Odbc;
 using System.Linq;
 using CapaModelo_CierreMovimientos.Entidades;
-using CapaModelo_Componentes.Repositorios;
 using CapaModelo_Seguridad.Entidades;
 using CapaModelo_Seguridad.Repositorios;
 
@@ -28,7 +27,7 @@ using CapaModelo_Seguridad.Repositorios;
 
 namespace CapaModelo_CierreMovimientos.Repositorios
 {
-    public class ClsComandosCierreMovimientos : ClsRepositorioMaestroCompras
+    public class ClsComandosCierreMovimientos : ClsRepositorioMaestroCierreMovimientos
     {
         private const string _AccionBitacora = "Cierre de período";
         private const string _TablaBitacora = "tblPeriodoCompras";

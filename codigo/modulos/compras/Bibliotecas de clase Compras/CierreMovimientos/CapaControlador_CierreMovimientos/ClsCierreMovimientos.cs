@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using CapaControlador_Seguridad.Objetos_de_valor;
 using CapaModelo_CierreMovimientos.Entidades;
 using CapaModelo_CierreMovimientos.Servicios;
-using CapaModelo_Componentes.Repositorios;
+using CapaModelo_CierreMovimientos.Repositorios;
 
 /*
  * ==================================================================

@@ -38,7 +38,7 @@ namespace CapaVista_Componentes.Componentes
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext Contexto)
         {
             var Codigos = new List<string>();
-            foreach (DataRow Moneda in new ClsComboCompras().ComprasFuncEnviarDatos("tblMoneda", "idMoneda", "nombreMoneda").Rows)
+            foreach (DataRow Moneda in new ClsComboCompras().ComprasFuncEnviarDatos("tblMoneda", "Pk_Moneda", "nombreMoneda").Rows)
                 Codigos.Add(Convert.ToString(Moneda["codigoMoneda"]));
             return new StandardValuesCollection(Codigos);
         }
@@ -352,7 +352,7 @@ namespace CapaVista_Componentes.Componentes
                     ComprasProcConfigurarMoneda(string.Empty, "Q");
                     return;
                 }
-                foreach (DataRow Moneda in new ClsComboCompras().ComprasFuncEnviarDatos("tblMoneda", "idMoneda", "nombreMoneda").Rows)
+                foreach (DataRow Moneda in new ClsComboCompras().ComprasFuncEnviarDatos("tblMoneda", "Pk_Moneda", "nombreMoneda").Rows)
                 {
                     if (!string.Equals(Convert.ToString(Moneda["codigoMoneda"]), Codigo, StringComparison.OrdinalIgnoreCase)) continue;
                     ComprasMetConfigurarMoneda(Convert.ToString(Moneda["codigoMoneda"]), Convert.ToString(Moneda["simboloMoneda"]));
