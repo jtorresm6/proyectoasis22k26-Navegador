@@ -458,15 +458,41 @@ namespace CapaVista_Componentes.Componentes
             return _SimboloMoneda;
         }
 
+        [Category("Compras")]
+        [DefaultValue(false)]
+        public bool ConservarPrecisionMoneda { get; set; }
+
+        public bool ComprasFuncLeerMonto(out decimal Monto)
+        {
+            string Simbolo = ComprasFuncObtenerSimboloMoneda();
+            string Numero = Text.Trim();
+            if (!ConservarPrecisionMoneda)
+                return decimal.TryParse(Numero.Replace(Simbolo, "").Replace(",", "").Trim(), out Monto);
+
+            if (Numero.StartsWith(Simbolo, StringComparison.Ordinal))
+                Numero = Numero.Substring(Simbolo.Length).TrimStart();
+
+            Monto = 0;
+            if (Numero.IndexOf(',') >= 0 && !System.Text.RegularExpressions.Regex.IsMatch(Numero, @"\A[+-]?[0-9]{1,3}(,[0-9]{3})+(\.[0-9]*)?\z"))
+                return false;
+            return decimal.TryParse(Numero, NumberStyles.Number, CultureInfo.InvariantCulture, out Monto);
+        }
+
+        private string ComprasFuncFormatearMonto(decimal Monto, bool AgruparMiles)
+        {
+            if (!ConservarPrecisionMoneda)
+                return Monto.ToString(AgruparMiles ? "N2" : "0.00");
+
+            int Decimales = Math.Max(2, (decimal.GetBits(Monto)[3] >> 16) & 0xFF);
+            return Monto.ToString((AgruparMiles ? "N" : "F") + Decimales, CultureInfo.InvariantCulture);
+        }
+
         private void ComprasMetAplicarFormatoMoneda()
         {
             if (!_ModoMoneda || string.IsNullOrWhiteSpace(this.Text)) return;
 
-            string TextoPuro = this.Text.Replace(ComprasFuncObtenerSimboloMoneda(), "").Replace(",", "").Trim();
-            if (decimal.TryParse(TextoPuro, out decimal Monto))
-            {
-                this.Text = $"{ComprasFuncObtenerSimboloMoneda()} {Monto:N2}";
-            }
+            if (ComprasFuncLeerMonto(out decimal Monto))
+                Text = $"{ComprasFuncObtenerSimboloMoneda()} {ComprasFuncFormatearMonto(Monto, AgruparMiles: true)}";
         }
 
         private void ComprasMetRemoverFormatoMoneda()
@@ -474,13 +500,11 @@ namespace CapaVista_Componentes.Componentes
             if (!_ModoMoneda) return;
 
             string Simbolo = ComprasFuncObtenerSimboloMoneda();
-            string TextoPuro = this.Text.Replace(Simbolo, "").Replace(",", "").Trim();
-
-            if (decimal.TryParse(TextoPuro, out decimal Monto))
+            if (ComprasFuncLeerMonto(out decimal Monto))
             {
-                this.Text = $"{Simbolo} {Monto.ToString("0.00")}";
+                Text = $"{Simbolo} {ComprasFuncFormatearMonto(Monto, AgruparMiles: false)}";
             }
-            else
+            else if (!ConservarPrecisionMoneda || string.IsNullOrWhiteSpace(Text))
             {
                 this.Text = $"{Simbolo} ";
             }
