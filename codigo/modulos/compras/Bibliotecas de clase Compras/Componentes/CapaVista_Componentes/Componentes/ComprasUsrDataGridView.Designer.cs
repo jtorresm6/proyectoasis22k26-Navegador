@@ -89,7 +89,7 @@
             this.ComprasDgvMain.TabIndex = 0;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = ClsTemaCompras.FondoGeneral;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.ForeColor = ClsTemaCompras.PrincipalNavegador;
             this.Controls.Add(this.ComprasPnlBorde);
             this.Margin = new System.Windows.Forms.Padding(0);

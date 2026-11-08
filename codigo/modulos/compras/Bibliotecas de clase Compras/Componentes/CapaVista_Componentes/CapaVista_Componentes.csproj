@@ -35,6 +35,18 @@
       <Project>{A539B6E1-1363-4B6A-8992-ED27B8C333FB}</Project>
       <Name>CapaControlador_Componentes</Name>
     </ProjectReference>
+    <Reference Include="Microsoft.ReportViewer.Common">
+      <HintPath>..\..\..\..\ventas\VentasYCxC\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel">
+      <HintPath>..\..\..\..\ventas\VentasYCxC\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms">
+      <HintPath>..\..\..\..\ventas\VentasYCxC\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization">
+      <HintPath>..\..\..\..\ventas\VentasYCxC\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Design" />
     <Reference Include="System.Windows.Forms" />
@@ -141,6 +153,10 @@
     <EmbeddedResource Include="Componentes\ComprasUsrMDITab.resx">
       <DependentUpon>ComprasUsrMDITab.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Componentes\ClsGroupBoxCompras.resx">
+      <DependentUpon>ClsGroupBoxCompras.cs</DependentUpon>
+      <LogicalName>CapaVista_Componentes.Componentes.ClsGroupBoxCompras.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Componentes\ClsSelectorCompras.resx">
       <DependentUpon>ClsSelectorCompras.cs</DependentUpon>
       <LogicalName>CapaVista_Componentes.Componentes.ClsSelectorCompras.resources</LogicalName>
@@ -178,6 +194,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Componentes\ClsPresentacionCompras.cs" />
+    <Compile Include="Componentes\ClsFondoEntradaCompras.cs" />
+    <Compile Include="Componentes\ClsArchivosEncabezadoCompras.cs" />
+    <Compile Include="Componentes\ClsEditoresArchivosCompras.cs" />
+    <Compile Include="Componentes\ClsAyudasCompras.cs" />
+    <Compile Include="Componentes\ClsReportesCompras.cs" />
     <Compile Include="Componentes\ComprasUsrDataGridView.Paginacion.cs">
       <DependentUpon>ComprasUsrDataGridView.cs</DependentUpon>
       <SubType>UserControl</SubType>

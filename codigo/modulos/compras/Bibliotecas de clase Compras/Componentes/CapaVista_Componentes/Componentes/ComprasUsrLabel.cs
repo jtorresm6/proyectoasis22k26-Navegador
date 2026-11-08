@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -29,6 +29,13 @@ namespace CapaVista_Componentes.Componentes
     [DefaultEvent("Click")]
     public partial class ComprasUsrLabel : UserControl
     {
+        [DefaultValue(typeof(Color), "Transparent")]
+        public override Color BackColor
+        {
+            get => base.BackColor;
+            set => base.BackColor = value;
+        }
+
 
         private bool _MostrarAsterisco = true;
         private TipografiaCompras _Tipografia = TipografiaCompras.Etiqueta;

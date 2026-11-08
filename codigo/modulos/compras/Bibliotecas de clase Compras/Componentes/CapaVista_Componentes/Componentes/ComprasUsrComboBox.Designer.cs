@@ -1,4 +1,4 @@
-
+﻿
 namespace CapaVista_Componentes.Componentes
 {
     partial class ComprasUsrComboBox
@@ -28,7 +28,7 @@ namespace CapaVista_Componentes.Componentes
             // 
             // ComprasTlpMain
             // 
-            this.ComprasTlpMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasTlpMain.BackColor = System.Drawing.Color.Transparent;
             this.ComprasTlpMain.ColumnCount = 1;
             this.ComprasTlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpMain.Controls.Add(this.ComprasPnlBorde, 0, 0);
@@ -61,7 +61,7 @@ namespace CapaVista_Componentes.Componentes
             // 
             this.ComprasCboEntrada.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasCboEntrada.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasCboEntrada.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComprasCboEntrada.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
             this.ComprasCboEntrada.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasCboEntrada.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.ComprasCboEntrada.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
@@ -74,7 +74,7 @@ namespace CapaVista_Componentes.Componentes
             // ComprasLblError
             // 
             this.ComprasLblError.AlineacionTexto = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ComprasLblError.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasLblError.BackColor = System.Drawing.Color.Transparent;
             this.ComprasLblError.ColorTexto = System.Drawing.Color.Red;
             this.ComprasLblError.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasLblError.Font = new System.Drawing.Font("Tahoma", 9F);
@@ -96,7 +96,7 @@ namespace CapaVista_Componentes.Componentes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.ComprasTlpMain);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));

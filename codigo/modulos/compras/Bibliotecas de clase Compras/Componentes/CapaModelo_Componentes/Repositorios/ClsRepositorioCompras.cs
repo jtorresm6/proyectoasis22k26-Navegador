@@ -1,4 +1,5 @@
 using System.Data.Odbc;
+using CapaModelo_Seguridad;
 
 /*
  * ==================================================================
@@ -16,15 +17,19 @@ namespace CapaModelo_Componentes.Repositorios
 {
     public abstract class ClsRepositorioCompras
     {
-        private readonly string _CadenaConexion;
+        private readonly ConexionSeguridad _Conexion = new ConexionSeguridad();
 
-        protected ClsRepositorioCompras()
-        {
-            _CadenaConexion = "Dsn=EmbutidosS.A";
-        }
         protected OdbcConnection ComprasFuncObtenerConexion()
         {
-            return new OdbcConnection(_CadenaConexion);
+            return _Conexion.ObtenerConexion();
+        }
+
+        private sealed class ConexionSeguridad : ClsConexion
+        {
+            internal OdbcConnection ObtenerConexion()
+            {
+                return SeguridadMetObtenerConexion();
+            }
         }
     }
 

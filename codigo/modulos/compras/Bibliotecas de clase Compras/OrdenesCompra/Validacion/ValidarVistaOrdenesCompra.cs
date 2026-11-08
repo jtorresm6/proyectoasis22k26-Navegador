@@ -15,7 +15,12 @@ internal static class ValidarVistaOrdenesCompra
     private static int _Pruebas;
     private static T ComprasFuncCampo<T>(object Vista, string Nombre)
     {
-        return (T)Vista.GetType().GetField(Nombre, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(Vista);
+        var Campo = Vista.GetType().GetField(Nombre, BindingFlags.Instance | BindingFlags.NonPublic);
+        if (Campo != null) return (T)Campo.GetValue(Vista);
+        var Formulario = Vista as FrmOrdenesCompra;
+        if (Formulario != null)
+            return ComprasFuncCampo<T>(ComprasFuncCampo<ComprasUsrProductosOrdenCompra>(Formulario, "ComprasUsrProductos"), Nombre);
+        throw new MissingFieldException(Vista.GetType().Name, Nombre);
     }
     private static void ComprasProcVerificar(bool Condicion, [System.Runtime.CompilerServices.CallerLineNumber] int Linea = 0)
     {
@@ -42,6 +47,44 @@ internal static class ValidarVistaOrdenesCompra
         {
             if (DateTime.UtcNow > Limite) throw new TimeoutException("La vista no termino la operacion.");
             await Task.Delay(20);
+        }
+    }
+
+    private static void ComprasProcValidarAperturaModal(ClsOrdenesCompra Controlador, Form Propietario, bool Detalle)
+    {
+        using (var Apertura = new FrmEncabezados(Controlador))
+        using (var Temporizador = new System.Windows.Forms.Timer { Interval = 50 })
+        {
+            Apertura.ShowInTaskbar = false;
+            Apertura.Opacity = 0;
+            bool Solicitada = false;
+            var Tiempo = System.Diagnostics.Stopwatch.StartNew();
+            Temporizador.Tick += (Remitente, Evento) =>
+            {
+                if (Tiempo.Elapsed.TotalSeconds > 10)
+                {
+                    Temporizador.Stop();
+                    Apertura.Close();
+                    return;
+                }
+                if (Solicitada || ComprasFuncCampo<bool>(Apertura, "_Cargando")) return;
+                Solicitada = true;
+                if (Detalle)
+                    typeof(FrmEncabezados).GetMethod("ComprasProcAbrirCompra", BindingFlags.NonPublic | BindingFlags.Instance)
+                        .Invoke(Apertura, new object[] { Apertura, new DataGridViewCellEventArgs(0, 0) });
+                else
+                    ComprasFuncCampo<Button>(Apertura, "ComprasBtnNuevaOrden").PerformClick();
+            };
+            Apertura.Shown += (Remitente, Evento) => Temporizador.Start();
+            Apertura.ShowDialog(Propietario);
+            Temporizador.Stop();
+            ComprasProcVerificar(Solicitada && Apertura.AbrirOrden);
+            Apertura.Dispose();
+            using (var Orden = Apertura.ComprasFuncCrearOrdenSeleccionada())
+            {
+                ComprasProcVerificar(!Orden.IsDisposed);
+                ComprasProcVerificar(Detalle ? Orden is FrmDetalleOrdenCompra : Orden is FrmOrdenesCompra);
+            }
         }
     }
 
@@ -82,7 +125,11 @@ internal static class ValidarVistaOrdenesCompra
                         Nueva.Opacity = 0;
                         Nueva.ShowInTaskbar = false;
                         foreach (string Nombre in new[] { "ComprasCboNombreProveedor", "ComprasCboMoneda", "ComprasCboPlazo", "ComprasCboSucursal", "ComprasCboBodega", "ComprasCboSkuProducto", "ComprasCboNombreProducto" })
-                            ComprasFuncCampo<ComprasUsrComboBox>(Nueva, Nombre).TipoDatos = EnmTipoDatosCompras.Ninguno;
+                        {
+                            var ComboEditable = ComprasFuncCampo<ComprasUsrComboBox>(Nueva, Nombre);
+                            ComboEditable.TipoDatos = EnmTipoDatosCompras.Ninguno;
+                            ComprasProcVerificar(ComboEditable.PermitirEscritura && ComboEditable.DropDownStyle == ComboBoxStyle.DropDown);
+                        }
                         Nueva.Show(Vista);
                         await ComprasProcEsperarAsync(() => Nueva.CatalogosCargados);
                         var ScrollInicial = ComprasFuncCampo<ClsPanelVerticalCompras>(Nueva, "ComprasPnlDesplazamiento");
@@ -189,6 +236,10 @@ internal static class ValidarVistaOrdenesCompra
                         DescuentoImporte.Text = "200";
                         ComprasProcVerificar(DescripcionProducto.Height < AlturaDescripcionNormal && DescuentoImporte.Height > AlturaDescuentoNormal);
                         ComprasProcVerificar(DescuentoImporte.MostrarEtiquetaError && ComprasFuncCampo<ComprasUsrLabel>(DescuentoImporte, "ComprasLblError").Visible);
+                        var EtiquetaDescuento = ComprasFuncCampo<ComprasUsrLabel>(Nueva, "ComprasLblDescuentoProducto");
+                        int CentroEtiqueta = EtiquetaDescuento.PointToScreen(new Point(0, EtiquetaDescuento.Height / 2)).Y;
+                        int CentroEntrada = DescuentoImporte.Entrada.PointToScreen(new Point(0, DescuentoImporte.Entrada.Height / 2)).Y;
+                        ComprasProcVerificar(Math.Abs(CentroEtiqueta - CentroEntrada) <= 1);
                         ComprasProcVerificar(Porcentaje.Text.Length == 0 && ComprasFuncCampo<ErrorProvider>(Nueva, "_Errores").GetError(DescuentoImporte).Length > 0);
                         ComprasProcVerificar(ComprasFuncCampo<Panel>(DescuentoImporte, "ComprasPnlBorde").BackColor == Color.Red);
                         ComprasProcVerificar(TotalProducto.Text.Length == 0);
@@ -211,8 +262,18 @@ internal static class ValidarVistaOrdenesCompra
                         InsertarProducto.PerformClick();
                         ComprasProcVerificar(GridProductos.Rows.Count == 1 && GridProductos.Columns.Count == 8 && PestanasBodega.Controls.Count == 1);
                         ComprasProcVerificar(Convert.ToDecimal(((DataRowView)GridProductos.Rows[0].DataBoundItem)["total"]) == 138.60M);
+                        ComprasProcVerificar(SkuNuevo.SelectedIndex == -1 && ProductoNuevo.SelectedIndex == -1);
+                        foreach (string Campo in new[] { "ComprasTxtDescripcionProducto", "ComprasTxtPesoProducto", "ComprasTxtCantidadProducto",
+                            "ComprasTxtCostoUnitarioProducto", "ComprasTxtDescuentoProducto", "ComprasTxtDescuentoPorcentajeProducto", "ComprasTxtTotalProducto" })
+                            ComprasProcVerificar(ComprasFuncCampo<ComprasUsrTextBox>(Nueva, Campo).Text.Length == 0);
+                        ComprasProcVerificar(Convert.ToInt32(SucursalNueva.SelectedValue) == 1 && Convert.ToInt32(BodegaNueva.SelectedValue) == 11);
+                        InsertarProducto.PerformClick();
+                        ComprasProcVerificar(GridProductos.Rows.Count == 1);
                         SucursalNueva.SelectedValue = 2;
                         BodegaNueva.SelectedValue = 12;
+                        SkuNuevo.SelectedValue = 1;
+                        Cantidad.Text = "2";
+                        Porcentaje.Text = "10";
                         InsertarProducto.PerformClick();
                         ComprasProcVerificar(PestanasBodega.Controls[0] is ClsButtonCompras);
                         ComprasProcVerificar(PestanasBodega.Controls.Count == 2 && ComprasFuncCampo<int?>(Nueva, "_BodegaVisible") == 12);
@@ -230,6 +291,9 @@ internal static class ValidarVistaOrdenesCompra
                         ComprasProcVerificar(PestanasBodega.Controls[0].BackColor == ClsTemaCompras.FondoBotones);
                         AnteriorBodega.PerformClick();
                         ComprasProcVerificar(ComprasFuncCampo<int?>(Nueva, "_BodegaVisible") == 11 && GridProductos.Rows.Count == 1);
+                        SkuNuevo.SelectedValue = 1;
+                        Cantidad.Text = "2";
+                        Porcentaje.Text = "10";
                         InsertarProducto.PerformClick();
                         ComprasProcVerificar(ComprasFuncCampo<int?>(Nueva, "_BodegaVisible") == 12 && GridProductos.Rows.Count == 2);
                         ComprasProcVerificar(ComprasFuncCampo<ComprasUsrTextBox>(Nueva, "ComprasTxtTotalOrden").Text == "Q 415.80");
@@ -394,6 +458,67 @@ internal static class ValidarVistaOrdenesCompra
                         Contenido.DrawToBitmap(Captura, new Rectangle(Point.Empty, Contenido.Size));
                         Captura.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VistaOrdenesCompra.png"), ImageFormat.Png);
                     }
+                    using (var Apertura = new FrmEncabezados(Controlador))
+                    {
+                        Apertura.ShowInTaskbar = false;
+                        Apertura.Opacity = 0;
+                        Apertura.Show();
+                        await ComprasProcEsperarAsync(() => !ComprasFuncCampo<bool>(Apertura, "_Cargando"));
+                        Repositorio.RechazarCatalogos = true;
+                        var BotonNuevaPrueba = ComprasFuncCampo<Button>(Apertura, "ComprasBtnNuevaOrden");
+                        BotonNuevaPrueba.PerformClick();
+                        await ComprasProcEsperarAsync(() => !ComprasFuncCampo<bool>(Apertura, "_AbriendoCompra"));
+                        ComprasProcVerificar(Apertura.Visible && !Apertura.IsDisposed && !Apertura.AbrirOrden);
+                        ComprasProcVerificar(ComprasFuncCampo<ComprasUsrLabel>(Apertura, "ComprasLblResultado").Texto.Contains("Catalogos rechazados"));
+                        ComprasProcVerificar(BotonNuevaPrueba.Enabled && ComprasFuncCampo<Button>(Apertura, "ComprasBtnActualizar").Enabled && !Apertura.UseWaitCursor);
+                        Repositorio.RechazarCatalogos = false;
+                        BotonNuevaPrueba.PerformClick();
+                        await ComprasProcEsperarAsync(() => !ComprasFuncCampo<bool>(Apertura, "_AbriendoCompra"));
+                        ComprasProcVerificar(Apertura.AbrirOrden && !Apertura.Visible);
+                        int Consultas = Repositorio.ConsultasProductos;
+                        Apertura.Dispose();
+                        using (var Preparada = (FrmOrdenesCompra)Apertura.ComprasFuncCrearOrdenSeleccionada())
+                        {
+                            ComprasProcVerificar(Preparada.CatalogosCargados && !Preparada.Visible);
+                            Preparada.ShowInTaskbar = false;
+                            Preparada.Opacity = 0;
+                            Preparada.Show();
+                            await Task.Delay(50);
+                            ComprasProcVerificar(Preparada.CatalogosCargados && Repositorio.ConsultasProductos == Consultas);
+                            Preparada.Close();
+                        }
+                    }
+                    using (var Apertura = new FrmEncabezados(Controlador))
+                    {
+                        Apertura.ShowInTaskbar = false;
+                        Apertura.Opacity = 0;
+                        Apertura.Show();
+                        await ComprasProcEsperarAsync(() => !ComprasFuncCampo<bool>(Apertura, "_Cargando"));
+                        var Abrir = typeof(FrmEncabezados).GetMethod("ComprasProcAbrirCompra", BindingFlags.NonPublic | BindingFlags.Instance);
+                        Repositorio.RechazarDetalles = true;
+                        Abrir.Invoke(Apertura, new object[] { Apertura, new DataGridViewCellEventArgs(0, 0) });
+                        await ComprasProcEsperarAsync(() => !ComprasFuncCampo<bool>(Apertura, "_AbriendoCompra"));
+                        ComprasProcVerificar(Apertura.Visible && !Apertura.IsDisposed && !Apertura.AbrirOrden);
+                        ComprasProcVerificar(ComprasFuncCampo<ComprasUsrLabel>(Apertura, "ComprasLblResultado").Texto.Contains("Detalles rechazados"));
+                        ComprasProcVerificar(ComprasFuncCampo<ComprasUsrDataGridView>(Apertura, "ComprasDgvEncabezados").Enabled && !Apertura.UseWaitCursor);
+                        Repositorio.RechazarDetalles = false;
+                        Abrir.Invoke(Apertura, new object[] { Apertura, new DataGridViewCellEventArgs(0, 0) });
+                        await ComprasProcEsperarAsync(() => !ComprasFuncCampo<bool>(Apertura, "_AbriendoCompra"));
+                        ComprasProcVerificar(Apertura.AbrirOrden && !Apertura.Visible);
+                        int Consultas = Repositorio.ConsultasDetalles;
+                        Apertura.Dispose();
+                        using (var Preparada = (FrmDetalleOrdenCompra)Apertura.ComprasFuncCrearOrdenSeleccionada())
+                        {
+                            Preparada.ShowInTaskbar = false;
+                            Preparada.Opacity = 0;
+                            Preparada.Show();
+                            await Task.Delay(50);
+                            ComprasProcVerificar(Repositorio.ConsultasDetalles == Consultas);
+                            Preparada.Close();
+                        }
+                    }
+                    ComprasProcValidarAperturaModal(Controlador, Vista, false);
+                    ComprasProcValidarAperturaModal(Controlador, Vista, true);
                     Console.WriteLine(_Pruebas + " pruebas de vista correctas.");
                 }
                 catch (Exception Error)

@@ -47,6 +47,8 @@ namespace CapaVista_OrdenesCompra
         {
             _Controlador = Controlador ?? throw new ArgumentNullException(nameof(Controlador));
             InitializeComponent();
+            ComprasTxtDescripcionProducto.Entrada.ScrollBars = RichTextBoxScrollBars.Vertical;
+            ComprasProcAlinearEtiquetas(ComprasPnlContenido);
             _AlturasProducto = new float[ComprasTlpProducto.RowStyles.Count];
             for (int Indice = 0; Indice < _AlturasProducto.Length; Indice++)
                 _AlturasProducto[Indice] = ComprasTlpProducto.RowStyles[Indice].Height;
@@ -58,7 +60,9 @@ namespace CapaVista_OrdenesCompra
             foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo, ComprasCboSucursal, ComprasCboBodega, ComprasCboSkuProducto, ComprasCboNombreProducto })
             {
                 Combo.TipoDatos = EnmTipoDatosCompras.Ninguno;
+                Combo.PermitirEscritura = true;
                 Combo.Enabled = false;
+                ComprasProcConfigurarValidacionCatalogo(Combo);
             }
             ComprasProcConfigurarProductos();
             ComprasTxtFechaEmision.Text = _FechaEmision.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -97,9 +101,62 @@ namespace CapaVista_OrdenesCompra
             ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
         }
 
+        private void ComprasProcAlinearEtiquetas(Control Contenedor)
+        {
+            var Hijos = new List<Control>();
+            foreach (Control Hijo in Contenedor.Controls) Hijos.Add(Hijo);
+            foreach (Control Hijo in Hijos) ComprasProcAlinearEtiquetas(Hijo);
+            var Tabla = Contenedor as TableLayoutPanel;
+            if (Tabla == null) return;
+            foreach (Control Etiqueta in Hijos)
+            {
+                if (!(Etiqueta is ComprasUsrLabel)) continue;
+                int Columna = Tabla.GetColumn(Etiqueta);
+                int Fila = Tabla.GetRow(Etiqueta);
+                var Campo = Tabla.GetControlFromPosition(Columna + 1, Fila);
+                Control Entrada = (Campo as ComprasUsrComboBox)?.Entrada;
+                if (Entrada == null) Entrada = (Campo as ComprasUsrTextBox)?.Entrada;
+                if (Entrada == null) continue;
+                int Filas = Tabla.GetRowSpan(Etiqueta);
+                int Columnas = Tabla.GetColumnSpan(Etiqueta);
+                var Espacio = new Panel
+                {
+                    Name = Etiqueta.Name + "Espacio", Dock = DockStyle.Fill,
+                    Margin = Padding.Empty, TabStop = false, TabIndex = Etiqueta.TabIndex
+                };
+                Tabla.Controls.Remove(Etiqueta);
+                Tabla.Controls.Add(Espacio, Columna, Fila);
+                Tabla.SetRowSpan(Espacio, Filas);
+                Tabla.SetColumnSpan(Espacio, Columnas);
+                Espacio.Controls.Add(Etiqueta);
+                Etiqueta.Dock = DockStyle.None;
+                Etiqueta.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+                Action Alinear = () =>
+                {
+                    int Superior = Entrada.Height / 2;
+                    for (Control Actual = Entrada; Actual != null && Actual != Tabla; Actual = Actual.Parent)
+                        Superior += Actual.Top;
+                    Etiqueta.SetBounds(Etiqueta.Margin.Left,
+                        Math.Max(0, Superior - Espacio.Top - Etiqueta.Height / 2),
+                        Math.Max(0, Espacio.ClientSize.Width - Etiqueta.Margin.Horizontal), Etiqueta.Height);
+                };
+                Espacio.Layout += (Remitente, Evento) => Alinear();
+                Campo.Layout += (Remitente, Evento) => Alinear();
+                Campo.LocationChanged += (Remitente, Evento) => Alinear();
+                Entrada.SizeChanged += (Remitente, Evento) => Alinear();
+                Entrada.LocationChanged += (Remitente, Evento) => Alinear();
+                Alinear();
+            }
+        }
+
         protected override async void OnShown(EventArgs Evento)
         {
             base.OnShown(Evento);
+            await ComprasProcPrepararAsync(false);
+        }
+
+        internal async Task ComprasProcPrepararAsync(bool PropagarError = true)
+        {
             if (_CatalogosCargados || _Liberado) return;
             ActiveControl = null;
             ComprasPnlDesplazamiento.AutoScrollPosition = Point.Empty;
@@ -142,7 +199,6 @@ namespace CapaVista_OrdenesCompra
                 ComprasProcVincular(ComprasCboSkuProducto, Datos[5], "idProducto", "skuProducto");
                 ComprasProcVincular(ComprasCboNombreProducto, Datos[5], "idProducto", "nombreProducto");
                 _CargandoCatalogos = false;
-                _CatalogosCargados = true;
                 foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo, ComprasCboSucursal, ComprasCboBodega, ComprasCboSkuProducto, ComprasCboNombreProducto })
                     Combo.Enabled = true;
                 for (int Indice = 0; Indice < Datos[0].Rows.Count; Indice++)
@@ -155,6 +211,7 @@ namespace CapaVista_OrdenesCompra
                 ComprasProcActualizarVencimiento();
                 ComprasProcActualizarSucursal();
                 ComprasProcActualizarProducto(ComprasCboNombreProducto);
+                _CatalogosCargados = true;
                 ComprasCboMoneda.Focus();
                 ComprasPnlDesplazamiento.AutoScrollPosition = Point.Empty;
             }
@@ -162,6 +219,7 @@ namespace CapaVista_OrdenesCompra
             {
                 if (_Liberado || IsDisposed || Disposing) return;
                 _CargandoCatalogos = false;
+                if (PropagarError) throw;
                 foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo, ComprasCboSucursal, ComprasCboBodega, ComprasCboSkuProducto, ComprasCboNombreProducto })
                     _Errores.SetError(Combo, "No se pudieron cargar los catalogos. Cierra y vuelve a abrir la orden. " + Ex.Message);
                 ComprasPnlDesplazamiento.AutoScrollPosition = Point.Empty;
@@ -181,10 +239,57 @@ namespace CapaVista_OrdenesCompra
             finally { Combo.EndUpdate(); }
         }
 
+        private void ComprasProcConfigurarValidacionCatalogo(ComprasUsrComboBox Combo)
+        {
+            bool ErrorVisible = false;
+            bool Pendiente = false;
+            float EspacioTomado = 0F;
+            Action Validar = () =>
+            {
+                if (_Liberado || _CargandoCatalogos || _ActualizandoProducto || Combo.IsDisposed) return;
+                bool Invalido = !string.IsNullOrWhiteSpace(Combo.Text) && Combo.FindStringExact(Combo.Text) < 0;
+                if (Invalido != ErrorVisible)
+                {
+                    var Tabla = Combo.Parent as TableLayoutPanel;
+                    if (Tabla != null)
+                    {
+                        int Fila = Tabla.GetRow(Combo);
+                        int Reserva = Tabla == ComprasTlpProducto ? (Combo == ComprasCboSkuProducto ? 3 : 4) : Tabla.RowStyles.Count - 1;
+                        float Cambio = Invalido ? 30F : -30F;
+                        if (Invalido) EspacioTomado = Math.Min(30F, Tabla.RowStyles[Reserva].Height);
+                        float ReservaCambio = Invalido ? EspacioTomado : -EspacioTomado;
+                        Tabla.RowStyles[Fila].Height += Cambio;
+                        Tabla.RowStyles[Reserva].Height -= ReservaCambio;
+                        if (Tabla == ComprasTlpProducto)
+                        {
+                            _AlturasProducto[Fila] += Cambio;
+                            _AlturasProducto[Reserva] -= ReservaCambio;
+                            _AlturaDescripcion -= (int)ReservaCambio;
+                            ComprasProcAjustarErrorDescuento();
+                        }
+                    }
+                    Combo.MostrarEtiquetaError = Invalido;
+                    ErrorVisible = Invalido;
+                }
+                if (Invalido) Combo.ComprasMetMostrarError("Selecciona una opción del catálogo.");
+                else Combo.ComprasMetLimpiarError();
+            };
+            EventHandler Programar = (Remitente, Evento) =>
+            {
+                if (Pendiente || !Combo.IsHandleCreated || _Liberado) return;
+                Pendiente = true;
+                Combo.BeginInvoke(new Action(() => { Pendiente = false; Validar(); }));
+            };
+            Combo.TextChanged += Programar;
+            Combo.SelectedIndexChanged += Programar;
+            Combo.Leave += (Remitente, Evento) => Validar();
+        }
+
         private static DataRow ComprasFuncFila(ComprasUsrComboBox Combo)
         {
             var Fila = Combo.SelectedItem as DataRowView;
-            return Combo.SelectedIndex < 0 || Fila == null || Fila.Row.RowState == DataRowState.Deleted ? null : Fila.Row;
+            return Combo.SelectedIndex < 0 || Fila == null || Fila.Row.RowState == DataRowState.Deleted
+                || !string.Equals(Combo.Text, Combo.GetItemText(Combo.SelectedItem), StringComparison.CurrentCultureIgnoreCase) ? null : Fila.Row;
         }
 
         private async Task ComprasProcActualizarCambioAsync()
@@ -261,8 +366,8 @@ namespace CapaVista_OrdenesCompra
                 }
             }
             finally { _ActualizandoDescuento = SincronizacionAnterior; }
-            if (ComprasDgvProductos.Columns.Count > 0)
-                foreach (DataGridViewColumn Columna in ComprasDgvProductos.Columns)
+            if (ComprasUsrProductos.Tabla.Columns.Count > 0)
+                foreach (DataGridViewColumn Columna in ComprasUsrProductos.Tabla.Columns)
                     if (Columna.DataPropertyName == "costoUnitarioDetalleOrdenCompra" || Columna.DataPropertyName == "subtotalDetalleOrdenCompra")
                         Columna.DefaultCellStyle.Format = "'" + Simbolo.Replace("'", "''") + "' #,##0.0000";
         }
@@ -395,13 +500,14 @@ namespace CapaVista_OrdenesCompra
                     ComprasTlpProducto.RowStyles[Indice].Height = _AlturasProducto[Indice];
                 if (Mostrar)
                 {
-                    ComprasTlpProducto.RowStyles[3].Height -= 25F;
-                    ComprasTlpProducto.RowStyles[4].Height -= 25F;
+                    ComprasTlpProducto.RowStyles[3].Height = Math.Max(0F, _AlturasProducto[3] - 25F);
+                    ComprasTlpProducto.RowStyles[4].Height = Math.Max(0F, _AlturasProducto[4] - 25F);
                     ComprasTlpProducto.RowStyles[Campo == ComprasTxtDescuentoProducto ? 7 : 8].Height += 50F;
                     Campo.AlturaEtiquetaError = 44;
                     Campo.ComprasMetMostrarError(Mensaje);
                 }
-                ComprasTxtDescripcionProducto.Height = _AlturaDescripcion - (Mostrar ? 50 : 0);
+                int EspacioDescuento = Mostrar ? (int)(Math.Min(25F, _AlturasProducto[3]) + Math.Min(25F, _AlturasProducto[4])) : 0;
+                ComprasTxtDescripcionProducto.Height = _AlturaDescripcion - EspacioDescuento;
                 ComprasTxtDescuentoProducto.Height = _AlturaDescuento + (Mostrar && Campo == ComprasTxtDescuentoProducto ? 50 : 0);
                 ComprasTxtDescuentoPorcentajeProducto.Height = _AlturaPorcentaje + (Mostrar && Campo == ComprasTxtDescuentoPorcentajeProducto ? 50 : 0);
             }
@@ -511,12 +617,168 @@ namespace CapaVista_OrdenesCompra
             _VersionCambio++;
             foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo, ComprasCboSucursal, ComprasCboBodega, ComprasCboSkuProducto, ComprasCboNombreProducto })
                 Combo.DataSource = null;
-            ComprasDgvProductos.DataSource = null;
-            _ProductosBodega?.Dispose();
-            _DetallesProductos.Dispose();
+            ComprasUsrProductos.Tabla.DataSource = null;
             _VistaBodegas?.Dispose();
             foreach (var Tabla in _Catalogos) Tabla.Dispose();
             _Catalogos.Clear();
+        }
+        private DataRow _ProductoEditado;
+        private bool _ActualizandoDetalle;
+
+        private void ComprasProcConfigurarProductos()
+        {
+            ComprasBtnIngresarProducto.Click += (Remitente, Evento) => ComprasProcGuardarProducto(false);
+            ComprasBtnModificarProducto.Click += (Remitente, Evento) => ComprasProcGuardarProducto(true);
+            ComprasBtnEliminarProducto.Click += (Remitente, Evento) => ComprasProcEliminarProducto();
+            ComprasUsrProductos.ProductoSeleccionado += (Remitente, Evento) => ComprasProcSeleccionarProductoAgregado();
+            ComprasProcEstadoBotonesProducto();
+        }
+
+        private void ComprasProcEstadoBotonesProducto()
+        {
+            bool Seleccionado = _ProductoEditado != null && _ProductoEditado.RowState != DataRowState.Detached;
+            ComprasBtnModificarProducto.Enabled = Seleccionado;
+            ComprasBtnEliminarProducto.Enabled = Seleccionado;
+        }
+
+        private void ComprasProcSeleccionarProductoAgregado()
+        {
+            if (_ActualizandoDetalle || _Liberado) return;
+            _ProductoEditado = ComprasUsrProductos.Seleccionado;
+            ComprasProcEstadoBotonesProducto();
+            if (_ProductoEditado == null) return;
+            _ActualizandoDetalle = true;
+            try
+            {
+                DataRow Fila = _ProductoEditado;
+                ComprasCboSucursal.SelectedValue = (int)Fila["idSucursal"];
+                ComprasCboBodega.SelectedValue = (int)Fila["idBodega"];
+                ComprasCboSkuProducto.SelectedValue = (int)Fila["idProducto"];
+                _CostoProductoBase = (decimal)Fila["costoBase"];
+                ComprasTxtDescripcionProducto.Text = Convert.ToString(Fila["descripcion"]);
+                ComprasTxtPesoProducto.Text = ((decimal)Fila["peso"]).ToString("N2");
+                ComprasTxtCantidadProducto.Text = Convert.ToString(Fila["cantidad"], CultureInfo.CurrentCulture);
+                _DescuentoDesdePorcentaje = false;
+                _DescuentoImporteBase = (decimal)Fila["descuentoBase"];
+                _DescuentoValido = true;
+                ComprasProcActualizarImportesConvertidos();
+            }
+            finally { _ActualizandoDetalle = false; }
+        }
+
+        private void ComprasProcGuardarProducto(bool Modificar)
+        {
+            if (_CargandoCatalogos || _Liberado) return;
+            var Producto = ComprasFuncFila(ComprasCboNombreProducto);
+            var Bodega = ComprasFuncFila(ComprasCboBodega);
+            _Errores.SetError(ComprasCboNombreProducto, Producto == null ? "Selecciona un producto." : string.Empty);
+            _Errores.SetError(ComprasCboBodega, Bodega == null ? "Selecciona una bodega." : string.Empty);
+            ComprasProcActualizarDescuentos();
+            if (Producto == null || Bodega == null || string.IsNullOrWhiteSpace(ComprasTxtTotalProducto.Text)) return;
+            if (Modificar && (_ProductoEditado == null || _ProductoEditado.RowState == DataRowState.Detached))
+            {
+                _Errores.SetError(ComprasUsrProductos.Tabla, "Selecciona el producto que deseas modificar.");
+                return;
+            }
+            int Cantidad = int.Parse(ComprasTxtCantidadProducto.Text, CultureInfo.CurrentCulture);
+            decimal Costo = decimal.Round(_CostoProductoBase.Value / TipoCambioSeleccionado.Value, 2, MidpointRounding.AwayFromZero);
+            decimal Descuento = _DescuentoDesdePorcentaje
+                ? decimal.Round(Costo * _DescuentoPorcentaje / 100M, 2, MidpointRounding.AwayFromZero)
+                : decimal.Round(_DescuentoImporteBase / TipoCambioSeleccionado.Value, 2, MidpointRounding.AwayFromZero);
+            _ActualizandoDetalle = true;
+            try
+            {
+            ComprasUsrProductos.Guardar(Modificar ? _ProductoEditado : null, Producto, Bodega, Cantidad,
+                _CostoProductoBase.Value, Descuento, TipoCambioSeleccionado.Value, Costo);
+            _ProductoEditado = null;
+            _Errores.SetError(ComprasUsrProductos.Tabla, string.Empty);
+            ComprasUsrProductos.BodegaVisible = Convert.ToInt32(Bodega["idBodega"]);
+            ComprasProcActualizarProductosAgregados();
+            ComprasUsrProductos.ComprasProcActualizarPestanasBodega();
+            }
+            finally { _ActualizandoDetalle = false; ComprasProcEstadoBotonesProducto(); }
+            if (!Modificar) ComprasProcLimpiarCapturaProducto();
+        }
+
+        private void ComprasProcLimpiarCapturaProducto()
+        {
+            _ActualizandoProducto = true;
+            _ActualizandoDescuento = true;
+            try
+            {
+                ComprasCboSkuProducto.SelectedIndex = -1;
+                ComprasCboNombreProducto.SelectedIndex = -1;
+                ComprasCboSkuProducto.Text = string.Empty;
+                ComprasCboNombreProducto.Text = string.Empty;
+                ComprasCboSkuProducto.ComprasMetLimpiarError();
+                ComprasCboNombreProducto.ComprasMetLimpiarError();
+                _CostoProductoBase = null;
+                _DescuentoDesdePorcentaje = true;
+                _DescuentoPorcentaje = 0M;
+                _DescuentoImporteBase = 0M;
+                _DescuentoValido = true;
+                foreach (var Campo in new[] { ComprasTxtDescripcionProducto, ComprasTxtPesoProducto,
+                    ComprasTxtCantidadProducto, ComprasTxtCostoUnitarioProducto, ComprasTxtDescuentoProducto,
+                    ComprasTxtDescuentoPorcentajeProducto, ComprasTxtTotalProducto })
+                {
+                    Campo.Text = string.Empty;
+                    Campo.ComprasMetLimpiarError();
+                    _Errores.SetError(Campo, string.Empty);
+                }
+                _Errores.SetError(ComprasCboSkuProducto, string.Empty);
+                _Errores.SetError(ComprasCboNombreProducto, string.Empty);
+            }
+            finally
+            {
+                _ActualizandoProducto = false;
+                _ActualizandoDescuento = false;
+            }
+            ComprasProcAjustarErrorDescuento();
+            ComprasCboSkuProducto.Focus();
+        }
+
+        private void ComprasProcEliminarProducto()
+        {
+            if (_ProductoEditado == null) return;
+            _ActualizandoDetalle = true;
+            try
+            {
+                ComprasUsrProductos.Eliminar(_ProductoEditado);
+                _ProductoEditado = null;
+                ComprasProcActualizarProductosAgregados();
+                ComprasUsrProductos.ComprasProcActualizarPestanasBodega();
+            }
+            finally { _ActualizandoDetalle = false; ComprasProcEstadoBotonesProducto(); }
+        }
+
+        private void ComprasProcActualizarProductosAgregados()
+        {
+            if (_ActualizandoDetalle && _ProductoEditado != null) return;
+            bool ActualizandoAntes = _ActualizandoDetalle;
+            _ActualizandoDetalle = true;
+            try
+            {
+                var Moneda = ComprasFuncFila(ComprasCboMoneda);
+                ComprasUsrProductos.Recalcular(TipoCambioSeleccionado, Moneda == null ? string.Empty : Convert.ToString(Moneda["simboloMoneda"]));
+                if (!TipoCambioSeleccionado.HasValue || TipoCambioSeleccionado.Value <= 0)
+                {
+                    foreach (var Campo in new[] { ComprasTxtSubtotalOrden, ComprasTxtDescuentoTotal, ComprasTxtDescuentoPorcentajeTotal, ComprasTxtSubtotalNeto, ComprasTxtImpuestoTotal, ComprasTxtTotalOrden }) Campo.Text = string.Empty;
+                    return;
+                }
+                _BrutoOrden = ComprasUsrProductos.Bruto;
+                _DescuentoLineasOrden = ComprasUsrProductos.Descuento;
+                ComprasProcActualizarDescuentoTotal();
+            }
+            finally
+            {
+                if (!ActualizandoAntes)
+                {
+                    ComprasUsrProductos.Tabla.ClearSelection();
+                    _ProductoEditado = null;
+                    ComprasProcEstadoBotonesProducto();
+                }
+                _ActualizandoDetalle = ActualizandoAntes;
+            }
         }
     }
 }

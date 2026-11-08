@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/estilos.css" rel="stylesheet" type="text/css">
+    <title>Pantalla principal (MDI) - Ayuda de Compras</title>
+</head>
+<body>
+    <div class="encabezado" id="inicio">
+        <img class="logo" src="recursos/LogoCompras.png" alt="Compras y cuentas por pagar" width="140" height="140">
+        <p class="identificador">Manual de usuario · Compras</p>
+        <h1>Pantalla principal (MDI)</h1>
+        <p class="subtitulo">Menú de navegación, resumen de compras y acceso a los formularios</p>
+    </div>
+    <div class="container">
+        <div class="seccion">
+            <p><a href="index.html">Volver a la ayuda de Compras</a></p>
+            <h2>¿Para qué sirve esta pantalla?</h2>
+            <p>La pantalla principal reúne el menú del módulo y el resumen de Compras. Desde ella puede abrir los catálogos, los procesos de compra, los pagos y la bitácora.</p>
+            <ul class="indice">
+                <li><a href="#sesion">Identificar la sesión</a></li>
+                <li><a href="#menu">Usar el menú lateral</a></li>
+                <li><a href="#opciones">Encontrar una opción</a></li>
+                <li><a href="#indicadores">Interpretar los indicadores</a></li>
+                <li><a href="#ventanas">Abrir y cerrar formularios</a></li>
+                <li><a href="#salir">Cerrar la sesión</a></li>
+            </ul>
+        </div>
+        <div class="seccion" id="sesion">
+            <h2>Identificar la sesión</h2>
+            <p>Ingrese al módulo desde Seguridad. En la parte superior encontrará el <strong>usuario</strong> y el <strong>rol</strong> de la sesión. Compruebe estos datos antes de trabajar.</p>
+            <div class="nota">El acceso a los formularios y las acciones disponibles dependen de los permisos del usuario. Si aparece «Sin sesión», vuelva al inicio de sesión.</div>
+        </div>
+        <div class="seccion" id="menu">
+            <h2>Usar el menú lateral</h2>
+            <ol class="pasos">
+                <li>Pulse el botón de las tres líneas para contraer o expandir el menú. Al contraerlo, los iconos continúan disponibles.</li>
+                <li>Pulse <strong>Catálogos</strong> o <strong>Registros de compra</strong> para mostrar u ocultar sus opciones.</li>
+                <li>Coloque el puntero sobre el menú y gire la rueda del ratón para ver las opciones que quedan fuera del área visible.</li>
+                <li>Seleccione la opción que desea abrir.</li>
+            </ol>
+            <p>Si el menú está contraído y necesita reconocer una opción, deje el puntero sobre su icono para consultar su nombre, o expanda nuevamente el menú.</p>
+            <p>Utilice <kbd>Alt</kbd> + <kbd>Enter</kbd> desde la pantalla principal para alternar el modo de pantalla completa.</p>
+        </div>
+        <div class="seccion" id="opciones">
+            <h2>Encontrar una opción</h2>
+            <table class="tabla-ayuda">
+                <caption>Organización del menú de Compras</caption>
+                <thead><tr><th scope="col">Opción o grupo</th><th scope="col">Qué encontrará</th></tr></thead>
+                <tbody>
+                    <tr><td>Movimientos de Proveedores</td><td>Formulario de movimientos asociados a proveedores.</td></tr>
+                    <tr><td>Pólizas</td><td>Formulario de pólizas.</td></tr>
+                    <tr><td>Catálogos</td><td>Proveedores, Plazos y Conceptos de proveedor.</td></tr>
+                    <tr><td>Registros de compra</td><td>Órdenes de Compra, Compras y Devoluciones de compras. La disponibilidad de cada opción depende de su implementación y de los permisos.</td></tr>
+                    <tr><td>Pagos a Proveedores</td><td>Formulario de pagos a proveedores.</td></tr>
+                    <tr><td>Aprobación Financiera</td><td>Formulario de aprobación financiera.</td></tr>
+                    <tr><td>Cierre de Movimientos</td><td>Formulario de cierre de movimientos.</td></tr>
+                    <tr><td>Bitácora</td><td>Historial de acciones del sistema, búsqueda y reporte según permisos.</td></tr>
+                    <tr><td>Herramientas</td><td>Herramienta de moneda.</td></tr>
+                    <tr><td>Salir</td><td>Confirmación para cerrar la sesión.</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="seccion" id="indicadores">
+            <h2>Resumen de Compras</h2>
+            <p>Las tarjetas del panel central presentan estos indicadores:</p>
+            <table class="tabla-ayuda">
+                <caption>Indicadores del resumen</caption>
+                <thead><tr><th scope="col">Indicador</th><th scope="col">Significado</th></tr></thead>
+                <tbody>
+                    <tr><td>Antigüedad promedio de saldos</td><td>Promedio de días desde la emisión de los documentos que todavía tienen saldo pendiente.</td></tr>
+                    <tr><td>Órdenes autorizadas (%)</td><td>Porcentaje de órdenes autorizadas o recibidas respecto de las órdenes no anuladas.</td></tr>
+                    <tr><td>Órdenes pendientes de recepción</td><td>Órdenes autorizadas que todavía no se han recibido.</td></tr>
+                    <tr><td>Saldo por pagar</td><td>Saldos pendientes y parciales de cargos a proveedores, expresados en quetzales.</td></tr>
+                    <tr><td>Saldo vencido</td><td>Saldo pendiente de documentos cuyo vencimiento es anterior a hoy.</td></tr>
+                    <tr><td>Saldo por vencer en 7 días</td><td>Saldo pendiente de documentos que vencen entre hoy y los próximos siete días, inclusive.</td></tr>
+                </tbody>
+            </table>
+            <p>Coloque el puntero sobre una tarjeta para consultar su explicación. Revise también la fecha y hora de actualización mostradas en la pantalla.</p>
+            <div class="nota">Los indicadores se consultan al abrir la pantalla, al regresar de un proceso y automáticamente cada minuto. Si aparece «—» o un mensaje de error, no lo interprete como un saldo de cero: espere la siguiente actualización y revise la conexión.</div>
+        </div>
+        <div class="seccion" id="ventanas">
+            <h2>Abrir y cerrar formularios</h2>
+            <p>Al elegir un proceso se abre su formulario sobre la pantalla principal. Complete la consulta o la operación en esa ventana. Utilice su botón <strong>Salir</strong> o el cierre de la ventana para volver al MDI.</p>
+            <p>En los mantenimientos, utilice el desplazamiento vertical cuando no se vean todos los campos. Al regresar a la pantalla principal, el módulo solicita nuevamente los indicadores.</p>
+        </div>
+        <div class="seccion" id="salir">
+            <h2>Cerrar la sesión</h2>
+            <ol class="pasos">
+                <li>Cierre el formulario de trabajo para regresar a la pantalla principal.</li>
+                <li>Seleccione <strong>Salir</strong> en el menú.</li>
+                <li>En «¿Desea cerrar sesión?», pulse <strong>Sí</strong> para cerrar o <strong>No</strong> para permanecer en Compras.</li>
+            </ol>
+            <p class="volver"><a href="#inicio">Volver al inicio de esta página</a> · <a href="index.html">Ayuda de Compras</a></p>
+        </div>
+        <div class="pie">Ayuda de Compras · Pantalla principal</div>
+    </div>
+</body>
+</html>

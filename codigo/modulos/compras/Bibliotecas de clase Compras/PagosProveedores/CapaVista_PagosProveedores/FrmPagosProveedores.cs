@@ -78,10 +78,7 @@ namespace CapaVista_PagosProveedores
                 ComprasMetLlenarCombo(ComprasCboMetodo, Metodos, "nombre", "idMetodoPago");
                 ComprasMetLlenarCombo(ComprasCboMoneda, _TablaMonedas, "codigo", "idMoneda");
 
-                DateTime Hoy = DateTime.Today;
-                DateTime PrimerDia = new DateTime(Hoy.Year, Hoy.Month, 1);
-                ComprasMetFijarTexto(ComprasTxtDesde, PrimerDia.ToString(_FormatoFecha));
-                ComprasMetFijarTexto(ComprasTxtHasta, PrimerDia.AddMonths(1).AddDays(-1).ToString(_FormatoFecha));
+                ComprasMetRestablecerRangoFechas();
 
                 ComprasMetFijarIndiceCombo(ComprasCboEstado, 0);
 
@@ -102,31 +99,13 @@ namespace CapaVista_PagosProveedores
         {
             try
             {
-                DateTime? Desde = null;
-                DateTime? Hasta = null;
-                DateTime FechaLeida;
+                DateTime? Desde = comprasUsrRangoFechas1.FechaInicio;
+                DateTime? Hasta = comprasUsrRangoFechas1.FechaFin;
 
-                string TextoDesde = ComprasFuncTexto(ComprasTxtDesde).Trim();
-                string TextoHasta = ComprasFuncTexto(ComprasTxtHasta).Trim();
-
-                if (TextoDesde.Length > 0)
+                if (Desde.HasValue && Hasta.HasValue && Desde.Value.Date > Hasta.Value.Date)
                 {
-                    if (!ComprasFuncFecha(TextoDesde, out FechaLeida))
-                    {
-                        ComprasMetMostrarAviso("La fecha Desde debe tener el formato dd/MM/aaaa.");
-                        return;
-                    }
-                    Desde = FechaLeida;
-                }
-
-                if (TextoHasta.Length > 0)
-                {
-                    if (!ComprasFuncFecha(TextoHasta, out FechaLeida))
-                    {
-                        ComprasMetMostrarAviso("La fecha Hasta debe tener el formato dd/MM/aaaa.");
-                        return;
-                    }
-                    Hasta = FechaLeida;
+                    ComprasMetMostrarAviso("La fecha Desde no puede ser mayor que la fecha Hasta.");
+                    return;
                 }
 
                 int? IdProveedor = ComprasFuncEntero(ComprasFuncValorCombo(ComprasCboProveedor));
@@ -438,10 +417,7 @@ namespace CapaVista_PagosProveedores
 
             // Restablece los filtros a su estado inicial
             _Cargando = true;
-            DateTime Hoy = DateTime.Today;
-            DateTime PrimerDia = new DateTime(Hoy.Year, Hoy.Month, 1);
-            ComprasMetFijarTexto(ComprasTxtDesde, PrimerDia.ToString(_FormatoFecha));
-            ComprasMetFijarTexto(ComprasTxtHasta, PrimerDia.AddMonths(1).AddDays(-1).ToString(_FormatoFecha));
+            ComprasMetRestablecerRangoFechas();
             ComprasMetFijarIndiceCombo(ComprasCboEstado, 0);
             ComprasMetFijarIndiceCombo(ComprasCboProveedor, 0);
             _Cargando = false;
@@ -723,6 +699,17 @@ namespace CapaVista_PagosProveedores
         }
 
         // ==================== AUXILIARES ====================
+
+        // Deja el rango de fechas en el mes actual
+        private void ComprasMetRestablecerRangoFechas()
+        {
+            DateTime Hoy = DateTime.Today;
+            DateTime PrimerDia = new DateTime(Hoy.Year, Hoy.Month, 1);
+
+            comprasUsrRangoFechas1.FechaInicio = PrimerDia;
+            comprasUsrRangoFechas1.FechaFin = PrimerDia.AddMonths(1).AddDays(-1);
+        }
+
         private string ComprasFuncCodigoMoneda(long IdMoneda)
         {
             if (_TablaMonedas != null)
@@ -785,8 +772,7 @@ namespace CapaVista_PagosProveedores
         {
             ComprasCboProveedor.SelectedIndexChanged += ComprasMetFiltroCambio;
             ComprasCboEstado.SelectedIndexChanged += ComprasMetFiltroCambio;
-            ComprasTxtDesde.Leave += ComprasMetFiltroCambio;
-            ComprasTxtHasta.Leave += ComprasMetFiltroCambio;
+            comprasUsrRangoFechas1.Leave += ComprasMetFiltroCambio;
             ComprasCboProveedorPago.SelectedIndexChanged += ComprasMetProveedorPagoCambio;
             ComprasCboFactura.SelectedIndexChanged += ComprasMetFacturaCambio;
             ComprasCboMoneda.SelectedIndexChanged += ComprasMetMonedaCambio;
@@ -835,6 +821,18 @@ namespace CapaVista_PagosProveedores
         private void ComprasMetFijarTexto(ComprasUsrTextBox Caja, string Texto)
         {
             Caja.Text = Texto;
+        }
+
+        // Handlers vacíos: el Designer los tiene enlazados, por eso se conservan.
+        // Si los quitás, borrá también las líneas "+= new System.EventHandler(...)" en el Designer.
+        private void ComprasCboEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComprasBtnAgregarDocumento_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

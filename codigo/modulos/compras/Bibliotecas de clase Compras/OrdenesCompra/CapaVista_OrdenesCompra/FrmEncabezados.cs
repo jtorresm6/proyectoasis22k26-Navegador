@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using CapaControlador_OrdenesCompra;
 using CapaControlador_OrdenesCompra.Entidades;
 using CapaVista_Componentes.Componentes;
+using Microsoft.Reporting.WinForms;
 
 /*
  * ==================================================================
@@ -39,16 +40,17 @@ namespace CapaVista_OrdenesCompra
         private bool _AbriendoCompra;
         private bool _RestableciendoFiltros;
         public bool AbrirOrden { get; private set; }
-        private ClsOrdenCompra _CompraSeleccionada;
+        private Form _OrdenPreparada;
         
         
         
         public Form ComprasFuncCrearOrdenSeleccionada()
         {
             if (!AbrirOrden) throw new InvalidOperationException("No hay una orden seleccionada.");
-            return _CompraSeleccionada == null
-                ? (Form)new FrmOrdenesCompra()
-                : new FrmDetalleOrdenCompra(_CompraSeleccionada, _Controlador);
+            var Orden = _OrdenPreparada;
+            if (Orden == null) throw new InvalidOperationException("La orden no está preparada para abrirse.");
+            _OrdenPreparada = null;
+            return Orden;
         }
 
         
@@ -67,6 +69,16 @@ namespace CapaVista_OrdenesCompra
             ComprasCboEstado.Items.AddRange(new object[] { "Todos", "Pendiente", "Autorizada", "Rechazada", "Anulada", "Recibida" });
             ComprasProcRestablecerFiltros();
             ClsTablasOrdenesCompra.ComprasProcConfigurarEncabezados(ComprasDgvEncabezados);
+            ComprasUsrEncabezado.PrepararReporte += (Remitente, Evento) =>
+            {
+                if (_Cargando || _AbriendoCompra)
+                    throw new InvalidOperationException("Espera a que termine la carga de las órdenes de compra.");
+                var DatosReporte = ComprasDgvEncabezados.DataSource as DataTable;
+                if (DatosReporte == null)
+                    throw new InvalidOperationException("Actualiza el listado de órdenes de compra antes de abrir el reporte.");
+                Evento.Reporte.DataSources.Clear();
+                Evento.Reporte.DataSources.Add(new ReportDataSource("RpReporteEncabezadosCompras", DatosReporte));
+            };
             ComprasTxtBuscar.TextChanged += (Remitente, Evento) => ComprasProcAplicarFiltros();
             ComprasCboEstado.SelectedIndexChanged += (Remitente, Evento) =>
             {
@@ -245,24 +257,63 @@ namespace CapaVista_OrdenesCompra
         
         
         
-        private void ComprasProcNuevaOrden(object Remitente, EventArgs Evento)
+        private async void ComprasProcNuevaOrden(object Remitente, EventArgs Evento)
         {
             if (_Cargando || _AbriendoCompra) return;
             _AbriendoCompra = true;
-            try { ComprasProcMostrarOrden(null); }
-            catch (Exception Ex) { ComprasProcMostrarError("No se pudo abrir la nueva orden.", Ex); }
-            finally { _AbriendoCompra = false; }
+            ComprasProcActualizarDisponibilidad();
+            try { await ComprasProcMostrarOrdenAsync(null); }
+            catch (Exception Ex)
+            {
+                if (!IsDisposed && !Disposing) ComprasProcMostrarError("No se pudo abrir la nueva orden.", Ex);
+            }
+            finally
+            {
+                _AbriendoCompra = false;
+                if (!IsDisposed && !Disposing) ComprasProcActualizarDisponibilidad();
+            }
         }
 
         
         
         
         
-        private void ComprasProcMostrarOrden(ClsOrdenCompra Compra)
+        private async Task ComprasProcMostrarOrdenAsync(ClsOrdenCompra Compra)
         {
-            _CompraSeleccionada = Compra;
-            AbrirOrden = true;
-            Close();
+            Form Orden = null;
+            try
+            {
+                if (Compra == null)
+                {
+                    var Nueva = new FrmOrdenesCompra(_Controlador);
+                    Orden = Nueva;
+                    await Nueva.ComprasProcPrepararAsync();
+                }
+                else
+                {
+                    var Detalle = new FrmDetalleOrdenCompra(Compra, _Controlador);
+                    Orden = Detalle;
+                    await Detalle.ComprasProcPrepararAsync();
+                }
+                if (IsDisposed || Disposing) return;
+                _OrdenPreparada = Orden;
+                AbrirOrden = true;
+                Close();
+                if (!AbrirOrden) return;
+                Orden = null;
+            }
+            finally
+            {
+                if (Orden != null)
+                {
+                    if (ReferenceEquals(_OrdenPreparada, Orden))
+                    {
+                        _OrdenPreparada = null;
+                        AbrirOrden = false;
+                    }
+                    Orden.Dispose();
+                }
+            }
         }
 
         
@@ -282,9 +333,8 @@ namespace CapaVista_OrdenesCompra
                 int Id = Convert.ToInt32(Fila["idOrdenCompra"]);
                 ClsOrdenCompra Compra = await Task.Run(() => _Controlador.ComprasFuncObtener(Id));
                 if (IsDisposed || Disposing) return;
-                UseWaitCursor = false;
                 if (Compra == null) { ComprasLblResultado.Texto = "La compra ya no esta disponible. Actualiza la lista."; return; }
-                ComprasProcMostrarOrden(Compra);
+                await ComprasProcMostrarOrdenAsync(Compra);
             }
             catch (Exception Ex)
             {
@@ -312,6 +362,17 @@ namespace CapaVista_OrdenesCompra
         
         
         
+        protected override void OnFormClosing(FormClosingEventArgs Evento)
+        {
+            base.OnFormClosing(Evento);
+            if (Evento.Cancel && AbrirOrden)
+            {
+                AbrirOrden = false;
+                _OrdenPreparada?.Dispose();
+                _OrdenPreparada = null;
+            }
+        }
+
         protected override void OnFormClosed(FormClosedEventArgs Evento)
         {
             ComprasProcVaciarDatos();
