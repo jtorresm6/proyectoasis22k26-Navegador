@@ -1,4 +1,4 @@
-using CapaVista_OrdenesCompra.Presentacion;
+﻿using CapaVista_OrdenesCompra.Presentacion;
 using CapaVista_Componentes.Componentes;
 using System;
 using System.Threading.Tasks;
@@ -14,6 +14,7 @@ namespace CapaVista_OrdenesCompra
         private readonly ClsOrdenesCompra _Controlador;
         private ClsOrdenCompra _Compra;
         private bool _Anulando;
+        private bool _DetallesCargados;
         public bool OrdenGuardada { get; private set; }
 
         public FrmDetalleOrdenCompra() : this(null, new ClsOrdenesCompra()) { }
@@ -130,8 +131,14 @@ namespace CapaVista_OrdenesCompra
             }
         }
 
-        private async Task ComprasProcCargarDetallesAsync()
+        internal Task ComprasProcPrepararAsync()
         {
+            return ComprasProcCargarDetallesAsync(true);
+        }
+
+        private async Task ComprasProcCargarDetallesAsync(bool PropagarError = false)
+        {
+            if (_DetallesCargados || _Compra == null) return;
             try
             {
                 int Id = _Compra.IdOrdenCompra;
@@ -143,22 +150,23 @@ namespace CapaVista_OrdenesCompra
                 }
                 ComprasDgvProductos.DataSource = Detalles;
                 ComprasDgvProductos.ClearSelection();
+                _DetallesCargados = true;
             }
             catch (Exception Ex)
             {
+                if (PropagarError) throw;
                 if (!IsDisposed && !Disposing)
                     MessageBox.Show(this, "No se pudieron cargar los detalles. " + Ex.Message,
                         "Órdenes de compra", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        protected override void OnFormClosed(FormClosedEventArgs Evento)
+        private void ComprasProcLiberarDetalles()
         {
-            _DisenoDetalles.Dispose();
+            _DisenoDetalles?.Dispose();
             var Detalles = ComprasDgvProductos.DataSource as System.Data.DataTable;
             ComprasDgvProductos.DataSource = null;
             Detalles?.Dispose();
-            base.OnFormClosed(Evento);
         }
 
         private async void ComprasProcAnular(object Remitente, EventArgs Evento)

@@ -21,6 +21,23 @@ namespace CapaVista_Componentes.Componentes
     [DefaultEvent("ValueChanged")]
     public class ClsDatePickerCompras : DateTimePicker
     {
+        [Category("Compras")]
+        [Description("Tamaño de la fuente de la fecha, en puntos.")]
+        [DefaultValue(14F)]
+        [RefreshProperties(RefreshProperties.All)]
+        public float TamanoFuente
+        {
+            get => Font.SizeInPoints;
+            set
+            {
+                if (float.IsNaN(value) || float.IsInfinity(value) || value <= 0)
+                    throw new System.ArgumentOutOfRangeException(nameof(value));
+                if (TamanoFuente == value) return;
+                Font = new Font(Font.FontFamily, value, Font.Style, GraphicsUnit.Point,
+                    Font.GdiCharSet, Font.GdiVerticalFont);
+            }
+        }
+
         public ClsDatePickerCompras()
         {
             Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);

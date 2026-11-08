@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
@@ -68,7 +68,7 @@ namespace CapaVista_Componentes.Componentes
             ComprasFlpPaginacion = new FlowLayoutPanel
             {
                 Name = "ComprasFlpPaginacion", Dock = DockStyle.Bottom, Height = 46,
-                WrapContents = false, BackColor = ClsTemaCompras.FondoGeneral,
+                WrapContents = false, BackColor = System.Drawing.Color.Transparent,
                 Visible = _PaginacionHabilitada
             };
             ComprasBtnAnterior = new ClsButtonCompras
@@ -77,7 +77,8 @@ namespace CapaVista_Componentes.Componentes
                 Text = string.Empty, AccessibleName = "Anterior", Size = new System.Drawing.Size(40, 40),
                 BackgroundImage = (System.Drawing.Image)Recursos.GetObject("Anterior"),
                 ImagenDeshabilitado = (System.Drawing.Image)Recursos.GetObject("Anterior_gris"),
-                BackgroundImageLayout = ImageLayout.Zoom
+                BackgroundImageLayout = ImageLayout.Zoom,
+                BackColor = System.Drawing.Color.Transparent
             };
             ComprasBtnSiguiente = new ClsButtonCompras
             {
@@ -85,12 +86,14 @@ namespace CapaVista_Componentes.Componentes
                 Text = string.Empty, AccessibleName = "Siguiente", Size = new System.Drawing.Size(40, 40),
                 BackgroundImage = (System.Drawing.Image)Recursos.GetObject("Siguiente"),
                 ImagenDeshabilitado = (System.Drawing.Image)Recursos.GetObject("Siguiente_gris"),
-                BackgroundImageLayout = ImageLayout.Zoom
+                BackgroundImageLayout = ImageLayout.Zoom,
+                BackColor = System.Drawing.Color.Transparent
             };
             ComprasLblPagina = new Label
             {
                 Name = "ComprasLblPagina", AutoSize = true, Padding = new Padding(4, 13, 0, 0),
-                Font = new System.Drawing.Font("Tahoma", 9F)
+                Font = new System.Drawing.Font("Tahoma", 9F),
+                BackColor = System.Drawing.Color.Transparent
             };
             ComprasFlpPaginacion.Controls.AddRange(new Control[] { ComprasBtnAnterior, ComprasBtnSiguiente, ComprasLblPagina });
             Controls.Add(ComprasFlpPaginacion);

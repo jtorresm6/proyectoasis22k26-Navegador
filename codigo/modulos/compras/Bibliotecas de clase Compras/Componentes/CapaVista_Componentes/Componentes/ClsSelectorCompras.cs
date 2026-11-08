@@ -104,12 +104,26 @@ namespace CapaVista_Componentes.Componentes
             ComprasFiltroRueda.Instalar();
             Font = new Font("Segoe UI",10F,FontStyle.Regular,GraphicsUnit.Point);
             ForeColor = ClsTemaCompras.PrincipalNavegador;
-            BackColor = ClsTemaCompras.FondoGeneral;
-            DropDownStyle = ComboBoxStyle.DropDownList;
+            BackColor = Color.Empty;
+            DropDownStyle = ComboBoxStyle.DropDown;
             FlatStyle = FlatStyle.Flat;
             IntegralHeight = true;
             MaxDropDownItems = 8;
             Margin = new Padding(3);
+        }
+
+        protected override void OnEnter(System.EventArgs Evento)
+        {
+            base.OnEnter(Evento);
+            if (DropDownStyle == ComboBoxStyle.DropDownList) return;
+            SelectAll();
+            if (!IsHandleCreated) return;
+            string Texto = Text;
+            BeginInvoke(new System.Action(() =>
+            {
+                if (!IsDisposed && Focused && Text == Texto && !DroppedDown)
+                    SelectAll();
+            }));
         }
 
         protected override Size DefaultSize =>

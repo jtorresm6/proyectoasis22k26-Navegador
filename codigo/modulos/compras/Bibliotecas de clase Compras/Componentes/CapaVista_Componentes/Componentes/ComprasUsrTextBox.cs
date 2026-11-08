@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using CapaControlador_Componentes;
 using System.Collections.Generic;
 using System.Data;
@@ -50,6 +50,19 @@ namespace CapaVista_Componentes.Componentes
             ComprasFiltroRueda.Instalar();
         }
 
+        protected override void OnEnter(EventArgs Evento)
+        {
+            base.OnEnter(Evento);
+            SelectAll();
+            if (!IsHandleCreated) return;
+            string Texto = Text;
+            BeginInvoke(new Action(() =>
+            {
+                if (!IsDisposed && Focused && Text == Texto)
+                    SelectAll();
+            }));
+        }
+
         protected override void WndProc(ref Message Mensaje)
         {
             if ((Mensaje.Msg == 0x020A || Mensaje.Msg == 0x020E) && ComprasFiltroRueda.DebeBloquear(this))
@@ -72,6 +85,15 @@ namespace CapaVista_Componentes.Componentes
     [DefaultEvent("TextChanged")]
     public partial class ComprasUsrTextBox : UserControl
     {
+        private readonly ClsFondoEntradaCompras _FondoEntrada;
+
+        [DefaultValue(typeof(Color), "Transparent")]
+        public override Color BackColor
+        {
+            get => base.BackColor;
+            set => base.BackColor = value;
+        }
+
         [Category("Compras")]
         [DefaultValue(false)]
         public bool PermitirRuedaMouse { get; set; }
@@ -193,7 +215,7 @@ namespace CapaVista_Componentes.Componentes
 
         [Category("Compras")]
         [Description("Espacio interior en p?xeles entre el borde y el texto.")]
-        [DefaultValue(typeof(Padding), "6, 1, 6, 1")]
+        [DefaultValue(typeof(Padding), "6, 6, 6, 1")]
         public Padding EspaciadoTexto
         {
             get => ComprasPnlInterior.Padding;
@@ -385,11 +407,14 @@ namespace CapaVista_Componentes.Componentes
         public ComprasUsrTextBox()
         {
             InitializeComponent();
+            _FondoEntrada = new ClsFondoEntradaCompras(this, ComprasProcActualizarColorEntrada);
             DoubleBuffered = true;
             ComprasLblError.ComprasProcConservarRojo();
 
             ComprasTxtTexto.TextChanged += (Sender, Evento) => ComprasProcTextoCambiado(Evento);
             ComprasTxtTexto.HandleCreated += (Sender, Evento) => ComprasProcAplicarFormatoTexto();
+            ComprasTxtTexto.ReadOnlyChanged += (Sender, Evento) => ComprasProcActualizarColorEntrada();
+            ComprasTxtTexto.EnabledChanged += (Sender, Evento) => ComprasProcActualizarColorEntrada();
             Enter += (Sender, Evento) => ComprasTxtTexto.Focus();
 
             ComprasTxtTexto.KeyDown += (Sender, Evento) => OnKeyDown(Evento);
@@ -476,13 +501,14 @@ namespace CapaVista_Componentes.Componentes
                 Evento.Handled = true;
             }
 
-            if ((Evento.KeyChar == '.') && (this.Text.IndexOf('.') > -1))
+            if ((Evento.KeyChar == '.') && (Text.Remove(SelectionStart, SelectionLength).IndexOf('.') > -1))
             {
                 Evento.Handled = true;
             }
 
             string Simbolo = ComprasFuncObtenerSimboloMoneda();
-            if (ComprasTxtTexto.SelectionStart <= Simbolo.Length && !char.IsControl(Evento.KeyChar))
+            if (ComprasTxtTexto.SelectionLength != ComprasTxtTexto.TextLength &&
+                ComprasTxtTexto.SelectionStart <= Simbolo.Length && !char.IsControl(Evento.KeyChar))
             {
                 ComprasTxtTexto.SelectionStart = Simbolo.Length + 1;
             }
@@ -543,12 +569,11 @@ namespace CapaVista_Componentes.Componentes
                     string TextoLimpio = ComprasTxtTexto.Text.Replace(Simbolo, "").TrimStart();
 
                     ComprasTxtTexto.Text = $"{Simbolo} {TextoLimpio}";
-                    ComprasTxtTexto.SelectionStart = Math.Max(Simbolo.Length + 1, PosicionCursor + Simbolo.Length);
+                    ComprasTxtTexto.SelectionStart = Math.Max(Simbolo.Length + 1, PosicionCursor + Simbolo.Length + 1);
                 }
                 _ProtegiendoMoneda = false;
             }
             
-            ComprasProcAplicarFormatoTexto();
             OnTextChanged(Evento);
         }
 
@@ -629,9 +654,17 @@ namespace CapaVista_Componentes.Componentes
         protected override void OnBackColorChanged(EventArgs Evento)
         {
             base.OnBackColorChanged(Evento);
-            if (ComprasTxtTexto != null) ComprasTxtTexto.BackColor = BackColor;
-            if (ComprasPnlInterior != null) ComprasPnlInterior.BackColor = BackColor;
+            ComprasProcActualizarColorEntrada();
             if (ComprasTlpMain != null) ComprasTlpMain.BackColor = BackColor;
+        }
+
+        private void ComprasProcActualizarColorEntrada()
+        {
+            if (ComprasTxtTexto == null) return;
+            Color Fondo = ComprasTxtTexto.ReadOnly || !ComprasTxtTexto.Enabled
+                ? ClsTemaCompras.FondoBotones : ClsFondoEntradaCompras.ObtenerColor(this);
+            ComprasTxtTexto.BackColor = Fondo;
+            if (ComprasPnlInterior != null) ComprasPnlInterior.BackColor = Fondo;
         }
 
         private void ComprasProcActualizarBorde()

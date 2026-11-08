@@ -63,7 +63,7 @@ namespace CapaVista_Compras
             this.ComprasBtnIconoMantenimiento3 = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasLblMantenimiento3 = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasFlpEncabezado = new System.Windows.Forms.FlowLayoutPanel();
-            this.ComprasBtnAlternarNavegador = new CapaVista_Componentes.Componentes.ClsButtonCompras();
+            this.ComprasBtnAlternarNavegador = new CapaVista_Compras.ClsBotonMenuSinFoco();
             this.ComprasLblUsuario = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasLblRol = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasPnlMain = new CapaVista_Componentes.Componentes.ClsPanelCompras();
@@ -245,7 +245,6 @@ namespace CapaVista_Compras
             this.ComprasTlpRegistroCompras.Controls.Add(this.ComprasLblRegistroCompras, 1, 0);
             this.ComprasTlpRegistroCompras.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ComprasTlpRegistroCompras.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasTlpRegistroCompras.Enabled = true;
             this.ComprasTlpRegistroCompras.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTlpRegistroCompras.ImagenHover = ((System.Drawing.Image)(resources.GetObject("ComprasTlpRegistroCompras.ImagenHover")));
             this.ComprasTlpRegistroCompras.ImagenNormal = ((System.Drawing.Image)(resources.GetObject("ComprasTlpRegistroCompras.ImagenNormal")));
@@ -261,12 +260,12 @@ namespace CapaVista_Compras
             // 
             // ComprasBtnIconoRegistroCompras
             // 
-            this.ComprasBtnIconoRegistroCompras.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoRegistroCompras.AplicarColoresEstado = false;
             this.ComprasBtnIconoRegistroCompras.BackColor = System.Drawing.Color.Transparent;
             this.ComprasBtnIconoRegistroCompras.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnIconoRegistroCompras.BackgroundImage")));
             this.ComprasBtnIconoRegistroCompras.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ComprasBtnIconoRegistroCompras.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComprasBtnIconoRegistroCompras.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoRegistroCompras.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.ComprasBtnIconoRegistroCompras.FlatAppearance.BorderSize = 0;
             this.ComprasBtnIconoRegistroCompras.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -274,10 +273,10 @@ namespace CapaVista_Compras
             this.ComprasBtnIconoRegistroCompras.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasBtnIconoRegistroCompras.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnIconoRegistroCompras.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnIconoRegistroCompras.Location = new System.Drawing.Point(5, 0);
+            this.ComprasBtnIconoRegistroCompras.Location = new System.Drawing.Point(0, 0);
             this.ComprasBtnIconoRegistroCompras.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.ComprasBtnIconoRegistroCompras.Name = "ComprasBtnIconoRegistroCompras";
-            this.ComprasBtnIconoRegistroCompras.Size = new System.Drawing.Size(54, 1);
+            this.ComprasBtnIconoRegistroCompras.Size = new System.Drawing.Size(59, 1);
             this.ComprasBtnIconoRegistroCompras.TabIndex = 0;
             this.ComprasBtnIconoRegistroCompras.UseVisualStyleBackColor = false;
             // 
@@ -315,7 +314,6 @@ namespace CapaVista_Compras
             this.ComprasTlpDevolucionesCompras.Controls.Add(this.ComprasLblDevolucionesCompras, 1, 0);
             this.ComprasTlpDevolucionesCompras.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ComprasTlpDevolucionesCompras.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasTlpDevolucionesCompras.Enabled = true;
             this.ComprasTlpDevolucionesCompras.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTlpDevolucionesCompras.ImagenHover = ((System.Drawing.Image)(resources.GetObject("ComprasTlpDevolucionesCompras.ImagenHover")));
             this.ComprasTlpDevolucionesCompras.ImagenNormal = ((System.Drawing.Image)(resources.GetObject("ComprasTlpDevolucionesCompras.ImagenNormal")));
@@ -331,12 +329,12 @@ namespace CapaVista_Compras
             // 
             // ComprasBtnIconoDevolucionesCompras
             // 
-            this.ComprasBtnIconoDevolucionesCompras.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoDevolucionesCompras.AplicarColoresEstado = false;
             this.ComprasBtnIconoDevolucionesCompras.BackColor = System.Drawing.Color.Transparent;
             this.ComprasBtnIconoDevolucionesCompras.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnIconoDevolucionesCompras.BackgroundImage")));
             this.ComprasBtnIconoDevolucionesCompras.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ComprasBtnIconoDevolucionesCompras.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComprasBtnIconoDevolucionesCompras.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoDevolucionesCompras.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.ComprasBtnIconoDevolucionesCompras.FlatAppearance.BorderSize = 0;
             this.ComprasBtnIconoDevolucionesCompras.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -344,10 +342,10 @@ namespace CapaVista_Compras
             this.ComprasBtnIconoDevolucionesCompras.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasBtnIconoDevolucionesCompras.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnIconoDevolucionesCompras.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnIconoDevolucionesCompras.Location = new System.Drawing.Point(5, 0);
+            this.ComprasBtnIconoDevolucionesCompras.Location = new System.Drawing.Point(0, 0);
             this.ComprasBtnIconoDevolucionesCompras.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.ComprasBtnIconoDevolucionesCompras.Name = "ComprasBtnIconoDevolucionesCompras";
-            this.ComprasBtnIconoDevolucionesCompras.Size = new System.Drawing.Size(54, 1);
+            this.ComprasBtnIconoDevolucionesCompras.Size = new System.Drawing.Size(59, 1);
             this.ComprasBtnIconoDevolucionesCompras.TabIndex = 0;
             this.ComprasBtnIconoDevolucionesCompras.UseVisualStyleBackColor = false;
             // 
@@ -706,12 +704,12 @@ namespace CapaVista_Compras
             // 
             // ComprasBtnIconoProveedores
             // 
-            this.ComprasBtnIconoProveedores.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoProveedores.AplicarColoresEstado = false;
             this.ComprasBtnIconoProveedores.BackColor = System.Drawing.Color.Transparent;
             this.ComprasBtnIconoProveedores.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnIconoProveedores.BackgroundImage")));
             this.ComprasBtnIconoProveedores.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ComprasBtnIconoProveedores.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComprasBtnIconoProveedores.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoProveedores.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.ComprasBtnIconoProveedores.FlatAppearance.BorderSize = 0;
             this.ComprasBtnIconoProveedores.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -719,10 +717,10 @@ namespace CapaVista_Compras
             this.ComprasBtnIconoProveedores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasBtnIconoProveedores.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnIconoProveedores.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnIconoProveedores.Location = new System.Drawing.Point(5, 0);
+            this.ComprasBtnIconoProveedores.Location = new System.Drawing.Point(0, 0);
             this.ComprasBtnIconoProveedores.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.ComprasBtnIconoProveedores.Name = "ComprasBtnIconoProveedores";
-            this.ComprasBtnIconoProveedores.Size = new System.Drawing.Size(54, 1);
+            this.ComprasBtnIconoProveedores.Size = new System.Drawing.Size(59, 1);
             this.ComprasBtnIconoProveedores.TabIndex = 0;
             this.ComprasBtnIconoProveedores.UseVisualStyleBackColor = false;
             this.ComprasBtnIconoProveedores.Click += new System.EventHandler(this.ComprasMetAbrirProveedores);
@@ -778,12 +776,12 @@ namespace CapaVista_Compras
             // 
             // ComprasBtnIconoOrdenesCompra
             // 
-            this.ComprasBtnIconoOrdenesCompra.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoOrdenesCompra.AplicarColoresEstado = false;
             this.ComprasBtnIconoOrdenesCompra.BackColor = System.Drawing.Color.Transparent;
             this.ComprasBtnIconoOrdenesCompra.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnIconoOrdenesCompra.BackgroundImage")));
             this.ComprasBtnIconoOrdenesCompra.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ComprasBtnIconoOrdenesCompra.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComprasBtnIconoOrdenesCompra.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoOrdenesCompra.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.ComprasBtnIconoOrdenesCompra.FlatAppearance.BorderSize = 0;
             this.ComprasBtnIconoOrdenesCompra.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -791,10 +789,10 @@ namespace CapaVista_Compras
             this.ComprasBtnIconoOrdenesCompra.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasBtnIconoOrdenesCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnIconoOrdenesCompra.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnIconoOrdenesCompra.Location = new System.Drawing.Point(5, 0);
+            this.ComprasBtnIconoOrdenesCompra.Location = new System.Drawing.Point(0, 0);
             this.ComprasBtnIconoOrdenesCompra.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.ComprasBtnIconoOrdenesCompra.Name = "ComprasBtnIconoOrdenesCompra";
-            this.ComprasBtnIconoOrdenesCompra.Size = new System.Drawing.Size(54, 1);
+            this.ComprasBtnIconoOrdenesCompra.Size = new System.Drawing.Size(59, 1);
             this.ComprasBtnIconoOrdenesCompra.TabIndex = 0;
             this.ComprasBtnIconoOrdenesCompra.UseVisualStyleBackColor = false;
             this.ComprasBtnIconoOrdenesCompra.Click += new System.EventHandler(this.ComprasMetAbrirOrdenesCompra);
@@ -1285,12 +1283,12 @@ namespace CapaVista_Compras
             // 
             // ComprasBtnIconoMantenimiento2
             // 
-            this.ComprasBtnIconoMantenimiento2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoMantenimiento2.AplicarColoresEstado = false;
             this.ComprasBtnIconoMantenimiento2.BackColor = System.Drawing.Color.Transparent;
             this.ComprasBtnIconoMantenimiento2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnIconoMantenimiento2.BackgroundImage")));
             this.ComprasBtnIconoMantenimiento2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ComprasBtnIconoMantenimiento2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComprasBtnIconoMantenimiento2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoMantenimiento2.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.ComprasBtnIconoMantenimiento2.FlatAppearance.BorderSize = 0;
             this.ComprasBtnIconoMantenimiento2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -1298,10 +1296,10 @@ namespace CapaVista_Compras
             this.ComprasBtnIconoMantenimiento2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasBtnIconoMantenimiento2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnIconoMantenimiento2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnIconoMantenimiento2.Location = new System.Drawing.Point(5, 0);
+            this.ComprasBtnIconoMantenimiento2.Location = new System.Drawing.Point(0, 0);
             this.ComprasBtnIconoMantenimiento2.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.ComprasBtnIconoMantenimiento2.Name = "ComprasBtnIconoMantenimiento2";
-            this.ComprasBtnIconoMantenimiento2.Size = new System.Drawing.Size(54, 1);
+            this.ComprasBtnIconoMantenimiento2.Size = new System.Drawing.Size(59, 1);
             this.ComprasBtnIconoMantenimiento2.TabIndex = 0;
             this.ComprasBtnIconoMantenimiento2.UseVisualStyleBackColor = false;
             this.ComprasBtnIconoMantenimiento2.Click += new System.EventHandler(this.ComprasMetAbrirPlazos);
@@ -1357,12 +1355,12 @@ namespace CapaVista_Compras
             // 
             // ComprasBtnIconoMantenimiento3
             // 
-            this.ComprasBtnIconoMantenimiento3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoMantenimiento3.AplicarColoresEstado = false;
             this.ComprasBtnIconoMantenimiento3.BackColor = System.Drawing.Color.Transparent;
             this.ComprasBtnIconoMantenimiento3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnIconoMantenimiento3.BackgroundImage")));
             this.ComprasBtnIconoMantenimiento3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ComprasBtnIconoMantenimiento3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComprasBtnIconoMantenimiento3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasBtnIconoMantenimiento3.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.ComprasBtnIconoMantenimiento3.FlatAppearance.BorderSize = 0;
             this.ComprasBtnIconoMantenimiento3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -1370,10 +1368,10 @@ namespace CapaVista_Compras
             this.ComprasBtnIconoMantenimiento3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasBtnIconoMantenimiento3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnIconoMantenimiento3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnIconoMantenimiento3.Location = new System.Drawing.Point(5, 0);
+            this.ComprasBtnIconoMantenimiento3.Location = new System.Drawing.Point(0, 0);
             this.ComprasBtnIconoMantenimiento3.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.ComprasBtnIconoMantenimiento3.Name = "ComprasBtnIconoMantenimiento3";
-            this.ComprasBtnIconoMantenimiento3.Size = new System.Drawing.Size(54, 1);
+            this.ComprasBtnIconoMantenimiento3.Size = new System.Drawing.Size(59, 1);
             this.ComprasBtnIconoMantenimiento3.TabIndex = 0;
             this.ComprasBtnIconoMantenimiento3.UseVisualStyleBackColor = false;
             this.ComprasBtnIconoMantenimiento3.Click += new System.EventHandler(this.ComprasMetAbrirConceptosProveedor);
@@ -2363,7 +2361,7 @@ namespace CapaVista_Compras
         }
         private System.Windows.Forms.TableLayoutPanel ComprasTlpPrincipal;
         private System.Windows.Forms.FlowLayoutPanel ComprasFlpEncabezado;
-        private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnAlternarNavegador;
+        private CapaVista_Compras.ClsBotonMenuSinFoco ComprasBtnAlternarNavegador;
         private CapaVista_Componentes.Componentes.ClsPanelCompras ComprasPnlMain;
         private System.Windows.Forms.PictureBox ComprasPbMarca;
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras ComprasTlpMovimientosProveedores;

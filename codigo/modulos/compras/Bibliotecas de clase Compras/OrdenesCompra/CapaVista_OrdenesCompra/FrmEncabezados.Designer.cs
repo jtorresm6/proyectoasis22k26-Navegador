@@ -18,8 +18,8 @@
             this.ComprasTlpPrincipal = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasUsrEncabezado = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
             this.ComprasTlpNuevaOrden = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
-            this.ComprasBtnNuevaOrden = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasLblNuevaOrden = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasBtnNuevaOrden = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasGbxFiltros = new CapaVista_Componentes.Componentes.ClsGroupBoxCompras();
             this.ComprasTlpFiltros = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
             this.ComprasTlpBuscar = new CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras();
@@ -114,6 +114,8 @@
             this.ComprasUsrEncabezado.MaximumSize = new System.Drawing.Size(0, 130);
             this.ComprasUsrEncabezado.MinimumSize = new System.Drawing.Size(0, 130);
             this.ComprasUsrEncabezado.Name = "ComprasUsrEncabezado";
+            this.ComprasUsrEncabezado.PaginaInicialAyuda = "MDI_Compras.html";
+            this.ComprasUsrEncabezado.RutaReporte = "RpReporteEncabezadosCompras.rdlc";
             this.ComprasUsrEncabezado.Size = new System.Drawing.Size(1279, 130);
             this.ComprasUsrEncabezado.TabIndex = 0;
             this.ComprasUsrEncabezado.TabStop = false;
@@ -122,13 +124,13 @@
             // ComprasTlpNuevaOrden
             // 
             this.ComprasTlpNuevaOrden.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.ComprasTlpNuevaOrden.ColumnCount = 3;
-            this.ComprasTlpNuevaOrden.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.ComprasTlpNuevaOrden.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 330F));
-            this.ComprasTlpNuevaOrden.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ComprasTlpNuevaOrden.ColumnCount = 4;
             this.ComprasTlpNuevaOrden.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.ComprasTlpNuevaOrden.Controls.Add(this.ComprasBtnNuevaOrden, 0, 0);
+            this.ComprasTlpNuevaOrden.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 375F));
+            this.ComprasTlpNuevaOrden.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.ComprasTlpNuevaOrden.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpNuevaOrden.Controls.Add(this.ComprasLblNuevaOrden, 1, 0);
+            this.ComprasTlpNuevaOrden.Controls.Add(this.ComprasBtnNuevaOrden, 2, 0);
             this.ComprasTlpNuevaOrden.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasTlpNuevaOrden.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasTlpNuevaOrden.Location = new System.Drawing.Point(0, 130);
@@ -138,6 +140,24 @@
             this.ComprasTlpNuevaOrden.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpNuevaOrden.Size = new System.Drawing.Size(1279, 100);
             this.ComprasTlpNuevaOrden.TabIndex = 0;
+            // 
+            // ComprasLblNuevaOrden
+            // 
+            this.ComprasLblNuevaOrden.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComprasLblNuevaOrden.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasLblNuevaOrden.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.ComprasLblNuevaOrden.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasLblNuevaOrden.Location = new System.Drawing.Point(24, 39);
+            this.ComprasLblNuevaOrden.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ComprasLblNuevaOrden.MaximumSize = new System.Drawing.Size(1375, 0);
+            this.ComprasLblNuevaOrden.MostrarAsterisco = false;
+            this.ComprasLblNuevaOrden.Name = "ComprasLblNuevaOrden";
+            this.ComprasLblNuevaOrden.Size = new System.Drawing.Size(367, 22);
+            this.ComprasLblNuevaOrden.TabIndex = 1;
+            this.ComprasLblNuevaOrden.TabStop = false;
+            this.ComprasLblNuevaOrden.TamanoTipografia = 12F;
+            this.ComprasLblNuevaOrden.Text = "Crear una nueva orden de compra →";
+            this.ComprasLblNuevaOrden.Texto = "Crear una nueva orden de compra →";
             this.ComprasBtnNuevaOrden.TipoBoton = CapaVista_Componentes.Componentes.ComprasTipoBoton.Libre;
             // 
             // ComprasBtnNuevaOrden
@@ -155,7 +175,7 @@
             this.ComprasBtnNuevaOrden.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasBtnNuevaOrden.Font = new System.Drawing.Font("Tahoma", 10F);
             this.ComprasBtnNuevaOrden.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnNuevaOrden.Location = new System.Drawing.Point(10, 10);
+            this.ComprasBtnNuevaOrden.Location = new System.Drawing.Point(400, 10);
             this.ComprasBtnNuevaOrden.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasBtnNuevaOrden.MaximumSize = new System.Drawing.Size(80, 80);
             this.ComprasBtnNuevaOrden.MinimumSize = new System.Drawing.Size(80, 80);
@@ -163,26 +183,6 @@
             this.ComprasBtnNuevaOrden.Size = new System.Drawing.Size(80, 80);
             this.ComprasBtnNuevaOrden.TabIndex = 0;
             this.ComprasBtnNuevaOrden.UseVisualStyleBackColor = false;
-            // 
-            // ComprasLblNuevaOrden
-            // 
-            this.ComprasLblNuevaOrden.AlineacionTexto = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ComprasLblNuevaOrden.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.ComprasLblNuevaOrden.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.ComprasLblNuevaOrden.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.ComprasLblNuevaOrden.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasLblNuevaOrden.Location = new System.Drawing.Point(104, 39);
-            this.ComprasLblNuevaOrden.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.ComprasLblNuevaOrden.MaximumSize = new System.Drawing.Size(1375, 0);
-            this.ComprasLblNuevaOrden.MostrarAsterisco = false;
-            this.ComprasLblNuevaOrden.Name = "ComprasLblNuevaOrden";
-            this.ComprasLblNuevaOrden.Size = new System.Drawing.Size(322, 22);
-            this.ComprasLblNuevaOrden.TabIndex = 1;
-            this.ComprasLblNuevaOrden.TabStop = false;
-            this.ComprasLblNuevaOrden.TamanoTipografia = 12F;
-            this.ComprasLblNuevaOrden.Text = "Crear una nueva orden de compra";
-            this.ComprasLblNuevaOrden.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ComprasLblNuevaOrden.Texto = "Crear una nueva orden de compra";
             // 
             // ComprasGbxFiltros
             // 
@@ -359,6 +359,7 @@
             this.ComprasUsrFechas.Name = "ComprasUsrFechas";
             this.ComprasUsrFechas.Size = new System.Drawing.Size(616, 80);
             this.ComprasUsrFechas.TabIndex = 1;
+            this.ComprasUsrFechas.TamanoFuente = 10F;
             // 
             // ComprasFlpAcciones
             // 
@@ -469,10 +470,9 @@
             // 
             this.ComprasTlpPie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTlpPie.ColumnCount = 2;
-            this.ComprasTlpPie.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.ComprasTlpPie.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ComprasTlpPie.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.ComprasTlpPie.Controls.Add(this.ComprasBtnCerrar, 0, 0);
+            this.ComprasTlpPie.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.ComprasTlpPie.Controls.Add(this.ComprasBtnCerrar, 1, 0);
             this.ComprasTlpPie.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasTlpPie.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasTlpPie.Location = new System.Drawing.Point(0, 860);
@@ -499,7 +499,7 @@
             this.ComprasBtnCerrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasBtnCerrar.Font = new System.Drawing.Font("Tahoma", 10F);
             this.ComprasBtnCerrar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnCerrar.Location = new System.Drawing.Point(10, 10);
+            this.ComprasBtnCerrar.Location = new System.Drawing.Point(1189, 10);
             this.ComprasBtnCerrar.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasBtnCerrar.MaximumSize = new System.Drawing.Size(80, 80);
             this.ComprasBtnCerrar.MinimumSize = new System.Drawing.Size(80, 80);

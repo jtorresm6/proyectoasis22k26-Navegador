@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/estilos.css" rel="stylesheet" type="text/css">
+    <title>Compras y cuentas por pagar - Ayuda</title>
+</head>
+<body>
+    <div class="encabezado" id="inicio">
+        <img class="logo" src="recursos/LogoCompras.png" alt="Compras y cuentas por pagar" width="140" height="140">
+        <p class="identificador">Manual de usuario</p>
+        <h1>Compras y cuentas por pagar</h1>
+        <p class="subtitulo">Guía inicial para navegar por el módulo de Compras</p>
+    </div>
+
+    <div class="container">
+        <div class="seccion">
+            <h2>Bienvenido a Compras</h2>
+            <p><a href="MDI_Compras.html">Ver la guía de la pantalla principal (MDI)</a></p>
+            <p>Este módulo reúne los catálogos de proveedores, los registros de compra y los procesos relacionados con las cuentas por pagar. Esta página es el punto de partida para consultar su ayuda.</p>
+            <div class="nota">Ingrese desde el inicio de sesión de Seguridad. Las acciones disponibles dependen de los permisos de su usuario.</div>
+            <h3>Contenido</h3>
+            <ul class="indice">
+                <li><a href="#navegacion">Conocer la pantalla principal</a></li>
+                <li><a href="#catalogos">Consultar los catálogos</a></li>
+                <li><a href="#procesos">Ubicar los procesos de Compras</a></li>
+                <li><a href="#bitacora">Consultar la bitácora</a></li>
+                <li><a href="#ayuda">Resolver dudas frecuentes</a></li>
+            </ul>
+        </div>
+
+        <div class="seccion" id="navegacion">
+            <h2>Pantalla principal</h2>
+            <ol class="pasos">
+                <li>Revise el usuario y el rol mostrados en la pantalla principal.</li>
+                <li>Utilice el menú lateral para elegir una opción. El botón de menú permite contraer o expandir el navegador.</li>
+                <li>Si una opción queda fuera de la vista, coloque el puntero sobre el menú y utilice la rueda del ratón para desplazarse verticalmente.</li>
+                <li>Abra una opción para trabajar en su formulario. Al cerrarlo, regresará a la pantalla principal.</li>
+            </ol>
+            <p>Los indicadores de la pantalla principal muestran información de compras y saldos. Si aparece un mensaje de actualización fallida, revise la conexión antes de utilizar esos valores.</p>
+            <p class="volver"><a href="#inicio">Volver al inicio</a></p>
+        </div>
+
+        <div class="seccion" id="catalogos">
+            <h2>Catálogos</h2>
+            <p>Abra <strong>Catálogos</strong> en el menú lateral para acceder a los mantenimientos.</p>
+            <table class="tabla-ayuda">
+                <caption>Catálogos disponibles en Compras</caption>
+                <thead><tr><th scope="col">Opción</th><th scope="col">Contenido</th></tr></thead>
+                <tbody>
+                    <tr><td>Proveedores</td><td>Información de los proveedores utilizados en las operaciones de compra.</td></tr>
+                    <tr><td>Plazos</td><td>Plazos utilizados en el módulo.</td></tr>
+                    <tr><td>Conceptos de proveedor</td><td>Conceptos asociados a los movimientos de proveedores.</td></tr>
+                </tbody>
+            </table>
+            <p>Los mantenimientos comparten el navegador de registros. Cuando el contenido exceda el alto de la ventana, utilice el desplazamiento vertical para ver los campos y controles restantes.</p>
+            <p>Para aprender a utilizar los filtros de consulta, consulte la <a href="../../componentes/consultas/ConsultaSimple.html">ayuda de consultas simples</a> o la <a href="../../componentes/consultas/ConsultaCompleja.html">ayuda de consultas complejas</a>.</p>
+        </div>
+
+        <div class="seccion" id="procesos">
+            <h2>Procesos de Compras</h2>
+            <p>Estas opciones permiten ubicar las áreas de trabajo del módulo. Las instrucciones detalladas de cada proceso se incorporarán en páginas independientes.</p>
+            <table class="tabla-ayuda">
+                <caption>Opciones principales del módulo</caption>
+                <thead><tr><th scope="col">Área</th><th scope="col">Opciones</th></tr></thead>
+                <tbody>
+                    <tr><td>Compras</td><td>Órdenes de compra y registros de compra.</td></tr>
+                    <tr><td>Proveedores y saldos</td><td>Movimientos de proveedores y pagos a proveedores.</td></tr>
+                    <tr><td>Control financiero</td><td>Pólizas, aprobación financiera y cierre de movimientos.</td></tr>
+                </tbody>
+            </table>
+            <div class="nota">Esta es una guía inicial de navegación. Antes de confirmar una operación, revise sus datos y los mensajes de la aplicación.</div>
+        </div>
+
+        <div class="seccion" id="bitacora">
+            <h2>Bitácora</h2>
+            <p>La bitácora presenta el historial de acciones del sistema en una tabla de solo lectura.</p>
+            <ol class="pasos">
+                <li>Seleccione <strong>Bitácora</strong> en el menú lateral.</li>
+                <li>Escriba un usuario, acción, tabla, registro, detalle, dirección IP o fecha.</li>
+                <li>Pulse <strong>Buscar</strong> o <kbd>Enter</kbd> para aplicar la búsqueda.</li>
+                <li>Borre el texto y vuelva a buscar para consultar el historial completo.</li>
+            </ol>
+            <p>El botón de reportes del encabezado permite consultar el reporte del historial completo cuando su usuario tiene permiso de impresión.</p>
+        </div>
+
+        <div class="seccion" id="ayuda">
+            <h2>Dudas frecuentes</h2>
+            <h3>Un mantenimiento está deshabilitado</h3>
+            <p>Compruebe que ingresó desde Seguridad y que su usuario tiene acceso al formulario.</p>
+            <h3>No encuentro una opción o un campo</h3>
+            <p>Expanda el grupo correspondiente del menú. Utilice la rueda del ratón sobre el menú o el desplazamiento vertical del mantenimiento para consultar el contenido que no esté visible.</p>
+            <h3>El reporte no se abre</h3>
+            <p>Revise el mensaje mostrado por la aplicación y el permiso de impresión de su usuario. Si el mensaje indica que falta un archivo de reporte, comuníquelo al encargado del sistema.</p>
+            <p class="volver"><a href="#inicio">Volver al inicio</a></p>
+        </div>
+        <div class="pie">Ayuda de Compras · Guía inicial</div>
+    </div>
+</body>
+</html>

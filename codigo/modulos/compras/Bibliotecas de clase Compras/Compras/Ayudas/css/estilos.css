@@ -1,0 +1,90 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #EDE7DA;
+    color: #2E4A63;
+}
+
+.encabezado {
+    text-align: center;
+    padding: 28px 20px 18px 20px;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+h1 {
+    color: #2E4A63;
+    text-align: center;
+    font-size: 38px;
+    margin-bottom: 8px;
+}
+
+h2 {
+    color: #C4573F;
+    text-align: left;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: justify;
+    padding: 8px 0;
+}
+
+.subtitulo {
+    text-align: center;
+    font-size: 17px;
+    color: #4E8078;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.seccion {
+    background-color: #FFFFFF;
+    border: 1px solid #D8D1C5;
+    border-left: 6px solid #4E8078;
+    padding: 22px;
+    margin-bottom: 22px;
+}
+
+.captura {
+    display: block;
+    width: 80%;
+    max-width: 760px;
+    height: auto;
+    margin: 18px auto 5px auto;
+    border: 1px solid #B8B8B8;
+}
+
+.pasos {
+    margin: 8px 0 15px 15px;
+}
+
+.pasos p {
+    padding: 3px 0;
+}
+
+.nota {
+    background-color: #FFFFFF;
+    border-left: 6px solid #C4573F;
+    padding: 16px;
+    margin: 20px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}

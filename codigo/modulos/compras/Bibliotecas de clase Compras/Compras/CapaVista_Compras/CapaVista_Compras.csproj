@@ -120,6 +120,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FrmBitacoraCompras.resx">
+      <DependentUpon>FrmBitacoraCompras.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmMantenimientoConceptoProveedor.resx">
       <DependentUpon>FrmMantenimientoConceptoProveedor.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,10 +135,43 @@
     <EmbeddedResource Include="FrmMDICompras.resx">
       <DependentUpon>FrmMDICompras.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmReporteBitacoraCompras.resx">
+      <DependentUpon>FrmReporteBitacoraCompras.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrmBitacoraCompras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBitacoraCompras.Designer.cs">
+      <DependentUpon>FrmBitacoraCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmReporteBitacoraCompras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="..\..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\Reportes\RpReporteBitacora.rdlc">
+      <Link>Reportes\RpReporteBitacora.rdlc</Link>
+      <LogicalName>CapaVista_Compras.Reportes.RpReporteBitacora.rdlc</LogicalName>
+    </EmbeddedResource>
+    <Content Include="Reportes\RpReporteBitacora.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Reference Include="Microsoft.ReportViewer.Common">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

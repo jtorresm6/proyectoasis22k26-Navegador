@@ -22,11 +22,21 @@ namespace CapaVista_Compras
         }
     }
 
+    [ToolboxItem(false)]
+    public sealed class ClsBotonMenuSinFoco : ClsButtonCompras
+    {
+        public ClsBotonMenuSinFoco()
+        {
+            SetStyle(ControlStyles.Selectable, false);
+            TabStop = false;
+        }
+
+        protected override bool ShowFocusCues => false;
+    }
+
     public partial class FrmMDICompras : IMessageFilter
     {
-        private Timer _AnimacionNavegador;
         private Timer _ActualizacionIndicadores;
-        private readonly Stopwatch _RelojNavegador = new Stopwatch();
         private double _PosicionNavegador;
         private double _DestinoNavegador;
         private int _LimiteDesplazamiento;
@@ -74,8 +84,6 @@ namespace CapaVista_Compras
             if (_DashboardIniciado) return;
             _DashboardIniciado = true;
             if (_Componentes == null) _Componentes = new Container();
-            _AnimacionNavegador = new Timer(_Componentes) { Interval = 15 };
-            _AnimacionNavegador.Tick += ComprasMetAnimarNavegador;
             _ActualizacionIndicadores = new Timer(_Componentes) { Interval = 60000 };
             _ActualizacionIndicadores.Tick += (Origen, Evento) => ComprasMetSolicitarIndicadores();
             _AyudaIndicadores = new ToolTip(_Componentes) { AutoPopDelay = 15000 };
@@ -101,7 +109,7 @@ namespace CapaVista_Compras
         public bool PreFilterMessage(ref Message Mensaje)
         {
             if (Mensaje.Msg != 0x020A || IsDisposed || Disposing || !Visible || !Enabled
-                || _FormularioSubproceso != null || _AnimacionNavegador == null) return false;
+                || _FormularioSubproceso != null || !_DashboardIniciado) return false;
             long Coordenadas = Mensaje.LParam.ToInt64();
             var Punto = new Point(unchecked((short)(Coordenadas & 0xffff)), unchecked((short)((Coordenadas >> 16) & 0xffff)));
             if (!_PanelDesplazamientoNavegador.RectangleToScreen(_PanelDesplazamientoNavegador.ClientRectangle).Contains(Punto)) return false;
@@ -110,37 +118,24 @@ namespace CapaVista_Compras
             int Delta = unchecked((short)((Mensaje.WParam.ToInt64() >> 16) & 0xffff));
             int Lineas = SystemInformation.MouseWheelScrollLines;
             double Distancia = Lineas < 0 ? _PanelDesplazamientoNavegador.ClientSize.Height : Lineas * 20.0;
-            ComprasMetMoverNavegador(_DestinoNavegador - Delta * Distancia / SystemInformation.MouseWheelScrollDelta);
+            double Movimiento = -Delta * Distancia / SystemInformation.MouseWheelScrollDelta;
+            ComprasMetMoverNavegador(_PosicionNavegador + Movimiento);
             return true;
         }
 
         private void ComprasMetMoverNavegador(double Destino)
         {
             _DestinoNavegador = Math.Max(0, Math.Min(Destino, _LimiteDesplazamiento));
-            if (_AnimacionNavegador == null || Math.Abs(_DestinoNavegador - _PosicionNavegador) < 0.01) return;
-            if (!_AnimacionNavegador.Enabled)
-            {
-                _RelojNavegador.Restart();
-                _AnimacionNavegador.Start();
-            }
+            _PosicionNavegador = _DestinoNavegador;
+            ComprasMetAplicarPosicionNavegador();
         }
 
-        private void ComprasMetAnimarNavegador(object Origen, EventArgs Evento)
+        private void ComprasMetAplicarPosicionNavegador()
         {
-            double Segundos = _RelojNavegador.Elapsed.TotalSeconds;
-            _RelojNavegador.Restart();
-            double Diferencia = _DestinoNavegador - _PosicionNavegador;
-            _PosicionNavegador += Diferencia * (1 - Math.Exp(-20 * Segundos));
-            if (Math.Abs(_DestinoNavegador - _PosicionNavegador) < 0.5)
-            {
-                _PosicionNavegador = _DestinoNavegador;
-                _AnimacionNavegador.Stop();
-                _RelojNavegador.Stop();
-            }
-            int Posicion = (int)Math.Round(_PosicionNavegador);
-            if (Posicion == _DesplazamientoNavegador) return;
-            _DesplazamientoNavegador = Posicion;
-            ComprasTlpNavegador.Top = -Posicion;
+            int Desplazamiento = (int)Math.Round(_PosicionNavegador);
+            if (Desplazamiento == _DesplazamientoNavegador) return;
+            _DesplazamientoNavegador = Desplazamiento;
+            ComprasTlpNavegador.Top = -Desplazamiento;
         }
 
         private void ComprasMetMostrarOpcionNavegador(Control Elemento)

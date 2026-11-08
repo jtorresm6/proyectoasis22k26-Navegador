@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaModelo_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\bin\$(Configuration)\CapaModelo_Seguridad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

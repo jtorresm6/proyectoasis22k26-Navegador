@@ -1,4 +1,4 @@
-using CapaControlador_Componentes;
+﻿using CapaControlador_Componentes;
 using System;
 using System.ComponentModel;
 using System.Data;
@@ -43,6 +43,15 @@ namespace CapaVista_Componentes.Componentes
     [DefaultEvent("SelectedIndexChanged")]
     public partial class ComprasUsrComboBox : UserControl
     {
+        private readonly ClsFondoEntradaCompras _FondoEntrada;
+
+        [DefaultValue(typeof(Color), "Transparent")]
+        public override Color BackColor
+        {
+            get => base.BackColor;
+            set => base.BackColor = value;
+        }
+
         [Category("Compras")]
         [DefaultValue(false)]
         public bool PermitirRuedaMouse { get; set; }
@@ -62,7 +71,7 @@ namespace CapaVista_Componentes.Componentes
 
         [Category("Compras")]
         [Description("Permite escribir y muestra sugerencias nativas de las opciones del combo conforme se escribe.")]
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         [RefreshProperties(RefreshProperties.All)]
         public bool PermitirEscritura
         {
@@ -72,7 +81,8 @@ namespace CapaVista_Componentes.Componentes
                 if (_PermitirEscritura == value) return;
                 if (value)
                 {
-                    _EstiloSinEscritura = ComprasCboEntrada.DropDownStyle;
+                    _EstiloSinEscritura = ComprasCboEntrada.DropDownStyle == ComboBoxStyle.DropDown
+                        ? ComboBoxStyle.DropDownList : ComprasCboEntrada.DropDownStyle;
                     _AutoCompleteSinEscritura = ComprasCboEntrada.AutoCompleteMode;
                     _AutoSourceSinEscritura = ComprasCboEntrada.AutoCompleteSource;
                     ComprasCboEntrada.AutoCompleteMode = AutoCompleteMode.None;
@@ -187,7 +197,10 @@ namespace CapaVista_Componentes.Componentes
         public ComprasUsrComboBox()
         {
             InitializeComponent();
+            _FondoEntrada = new ClsFondoEntradaCompras(this, ComprasProcActualizarColorEntrada);
             DoubleBuffered = true;
+            _EstiloSinEscritura = ComboBoxStyle.DropDownList;
+            PermitirEscritura = true;
             ComprasLblError.ComprasProcConservarRojo();
             ComprasCboEntrada.TextChanged += (Sender, Evento) => ComprasProcTextoCambiado(Evento);
             Enter += (Sender, Evento) => ComprasCboEntrada.Focus();
@@ -285,7 +298,7 @@ namespace CapaVista_Componentes.Componentes
         public int SelectedIndex { get => ComprasCboEntrada.SelectedIndex; set => ComprasCboEntrada.SelectedIndex = value; }
 
         [Category("Comportamiento")]
-        [DefaultValue(ComboBoxStyle.DropDownList)]
+        [DefaultValue(ComboBoxStyle.DropDown)]
         [RefreshProperties(RefreshProperties.All)]
         public ComboBoxStyle DropDownStyle
         {
@@ -373,8 +386,14 @@ namespace CapaVista_Componentes.Componentes
         protected override void OnBackColorChanged(EventArgs Evento)
         {
             base.OnBackColorChanged(Evento);
-            if (ComprasCboEntrada != null) ComprasCboEntrada.BackColor = BackColor;
+            ComprasProcActualizarColorEntrada();
             if (ComprasTlpMain != null) ComprasTlpMain.BackColor = BackColor;
+        }
+
+        private void ComprasProcActualizarColorEntrada()
+        {
+            if (ComprasCboEntrada != null)
+                ComprasCboEntrada.BackColor = ClsFondoEntradaCompras.ObtenerColor(this);
         }
 
         private void ComprasProcActualizarBorde()

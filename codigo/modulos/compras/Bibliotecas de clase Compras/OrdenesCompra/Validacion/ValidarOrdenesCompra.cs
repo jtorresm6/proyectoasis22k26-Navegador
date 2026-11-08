@@ -126,6 +126,10 @@ internal static class ValidarOrdenesCompra
         public string EstadoConsultado { get; private set; }
         public bool RechazarCambio { get; set; }
         public bool RechazarConsulta { get; set; }
+        public bool RechazarCatalogos { get; set; }
+        public bool RechazarDetalles { get; set; }
+        public int ConsultasProductos { get; private set; }
+        public int ConsultasDetalles { get; private set; }
         public DateTime Vencimiento { get; private set; }
         public string Comentario { get; private set; }
         public string CodigoCreado { get; private set; }
@@ -155,7 +159,12 @@ internal static class ValidarOrdenesCompra
                 throw new InvalidOperationException("La orden de compra no existe.");
             _Datos.Rows[Id - 1]["estadoOrdenCompra"] = Estado;
         }
-        public DataTable ComprasFuncListarDetalles(int Id) => new DataTable();
+        public DataTable ComprasFuncListarDetalles(int Id)
+        {
+            ConsultasDetalles++;
+            if (RechazarDetalles) throw new InvalidOperationException("Detalles rechazados para la prueba.");
+            return new DataTable();
+        }
         public DataTable ComprasFuncListarSucursales()
         {
             var Datos = new DataTable();
@@ -180,6 +189,8 @@ internal static class ValidarOrdenesCompra
 
         public DataTable ComprasFuncListarProductos()
         {
+            ConsultasProductos++;
+            if (RechazarCatalogos) throw new InvalidOperationException("Catalogos rechazados para la prueba.");
             var Datos = new DataTable();
             Datos.Columns.Add("idProducto", typeof(int));
             Datos.Columns.Add("skuProducto", typeof(string));

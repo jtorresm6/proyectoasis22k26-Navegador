@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -32,6 +32,36 @@ namespace CapaVista_Componentes.Componentes
             ComprasProcEstablecerRango(new DateTime(Hoy.Year, Hoy.Month, 1), Hoy);
             ComprasDtpFechaInicio.ValueChanged += ComprasProcFechaCambiada;
             ComprasDtpFechaFin.ValueChanged += ComprasProcFechaCambiada;
+        }
+
+        [Category("Compras")]
+        [Description("Tamaño de la fuente de ambas fechas, en puntos.")]
+        [DefaultValue(14F)]
+        [RefreshProperties(RefreshProperties.All)]
+        public float TamanoFuente
+        {
+            get => ComprasDtpFechaInicio.TamanoFuente;
+            set
+            {
+                ComprasDtpFechaInicio.TamanoFuente = value;
+                ComprasDtpFechaFin.TamanoFuente = value;
+            }
+        }
+
+        [Category("Compras")]
+        [Description("Tamano de la fuente de las etiquetas Desde y Hasta, en puntos.")]
+        [DefaultValue(13F)]
+        [RefreshProperties(RefreshProperties.All)]
+        public float TamanoFuenteEtiquetas
+        {
+            get => ComprasLblFechaInicio.TamanoTipografia;
+            set
+            {
+                ComprasLblFechaInicio.TamanoTipografia = value;
+                ComprasLblFechaFin.TamanoTipografia = value;
+                ComprasTlpRango.RowStyles[0].Height = Math.Max(28F,
+                    Math.Max(ComprasLblFechaInicio.Font.Height, ComprasLblFechaFin.Font.Height) + 4F);
+            }
         }
 
         [Category("Compras")]

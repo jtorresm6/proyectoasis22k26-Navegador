@@ -1,4 +1,4 @@
-
+﻿
 namespace CapaVista_Componentes.Componentes
 {
     partial class ComprasUsrTextBox
@@ -30,7 +30,7 @@ namespace CapaVista_Componentes.Componentes
             // 
             // ComprasTlpMain
             // 
-            this.ComprasTlpMain.BackColor = CapaVista_Componentes.Componentes.ClsTemaCompras.FondoGeneral;
+            this.ComprasTlpMain.BackColor = System.Drawing.Color.Transparent;
             this.ComprasTlpMain.ColumnCount = 1;
             this.ComprasTlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpMain.Controls.Add(this.ComprasPnlBorde, 0, 0);
@@ -67,7 +67,7 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasPnlInterior.Location = new System.Drawing.Point(1, 1);
             this.ComprasPnlInterior.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasPnlInterior.Name = "ComprasPnlInterior";
-            this.ComprasPnlInterior.Padding = new System.Windows.Forms.Padding(6, 1, 6, 1);
+            this.ComprasPnlInterior.Padding = new System.Windows.Forms.Padding(6, 6, 6, 1);
             this.ComprasPnlInterior.Size = new System.Drawing.Size(166, 28);
             this.ComprasPnlInterior.TabIndex = 0;
             // 
@@ -78,7 +78,7 @@ namespace CapaVista_Componentes.Componentes
             this.ComprasTxtTexto.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasTxtTexto.Font = new System.Drawing.Font("Segoe UI", 16F);
             this.ComprasTxtTexto.ForeColor = CapaVista_Componentes.Componentes.ClsTemaCompras.PrincipalNavegador;
-            this.ComprasTxtTexto.Location = new System.Drawing.Point(6, 1);
+            this.ComprasTxtTexto.Location = new System.Drawing.Point(6, 6);
             this.ComprasTxtTexto.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasTxtTexto.Multiline = false;
             this.ComprasTxtTexto.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
@@ -90,7 +90,7 @@ namespace CapaVista_Componentes.Componentes
             // ComprasUsrError
             // 
             this.ComprasLblError.AlineacionTexto = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ComprasLblError.BackColor = CapaVista_Componentes.Componentes.ClsTemaCompras.FondoGeneral;
+            this.ComprasLblError.BackColor = System.Drawing.Color.Transparent;
             this.ComprasLblError.ColorTexto = System.Drawing.Color.Red;
             this.ComprasLblError.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasLblError.Font = new System.Drawing.Font("Tahoma", 9F);
@@ -112,7 +112,7 @@ namespace CapaVista_Componentes.Componentes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = CapaVista_Componentes.Componentes.ClsTemaCompras.FondoGeneral;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.ComprasTlpMain);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.ForeColor = CapaVista_Componentes.Componentes.ClsTemaCompras.PrincipalNavegador;
