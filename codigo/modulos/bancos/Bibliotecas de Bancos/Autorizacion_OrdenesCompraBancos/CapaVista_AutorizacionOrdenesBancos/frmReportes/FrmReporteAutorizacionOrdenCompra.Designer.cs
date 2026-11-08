@@ -51,7 +51,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmReporteAutorizacionOrdenCompra";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmReporteAutorizacionOrdenCompra";
+            this.Text = "8011–FrmReporteAutorizacionOrdenCompra";
             this.Load += new System.EventHandler(this.FrmReporteAutorizacionOrdenCompra_Load);
             this.ResumeLayout(false);
 
