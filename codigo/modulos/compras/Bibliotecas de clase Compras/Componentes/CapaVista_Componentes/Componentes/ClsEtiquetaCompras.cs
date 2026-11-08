@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -18,6 +18,11 @@ namespace CapaVista_Componentes.Componentes
 {
     public sealed class ClsEtiquetaCompras : Label
     {
+        public ClsEtiquetaCompras()
+        {
+            BackColor = Color.Transparent;
+        }
+
         internal bool ComprasConservarRojo { get; set; }
 
         protected override void OnPaint(PaintEventArgs Evento)

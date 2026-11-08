@@ -27,7 +27,7 @@ namespace CapaVista_Compras
             {
                 string Mensaje;
                 if (!ClsSesionSeguridad.HaySesionActiva)
-                    Mensaje = "Inicie sesión desde Seguridad para habilitar el mantenimiento de proveedores.";
+                    Mensaje = "Inicie sesión desde Seguridad para habilitar el mantenimiento.";
                 else
                 {
                     try

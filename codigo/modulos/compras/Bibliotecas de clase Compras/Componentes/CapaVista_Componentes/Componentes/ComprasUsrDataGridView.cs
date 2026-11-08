@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -20,6 +20,13 @@ namespace CapaVista_Componentes.Componentes
     [DefaultEvent("CellClick")]
     public partial class ComprasUsrDataGridView : UserControl
     {
+        [DefaultValue(typeof(System.Drawing.Color), "Transparent")]
+        public override System.Drawing.Color BackColor
+        {
+            get => base.BackColor;
+            set => base.BackColor = value;
+        }
+
 
         private int _FilaHover = -1;
         private bool _ResaltarFilasAlPasar;

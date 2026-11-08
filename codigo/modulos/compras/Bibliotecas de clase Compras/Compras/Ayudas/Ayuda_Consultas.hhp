@@ -1,0 +1,19 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=Ayuda_Consultas.chm
+Contents file=Ayuda_Consultas.hhc
+Default Window=Ayuda_Consultas
+Default topic=ConsultaCompleja.html
+Display compile progress=No
+Language=0x100a Español (Guatemala)
+
+[WINDOWS]
+Ayuda_Consultas="Directorio de Ayuda del Componente de Consultas","Ayuda_Consultas.hhc",,"ConsultaSimple.html","ConsultaSimple.html","ConsultaSimple.html","Consultas Simples","ConsultaCompleja.html","Consultas Complejas",0x23520,,0xc387e,,,,,,,,0
+
+
+[FILES]
+ConsultaCompleja.html
+ConsultaSimple.html
+
+[INFOTYPES]
+

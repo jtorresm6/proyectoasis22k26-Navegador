@@ -35,6 +35,10 @@
       <Project>{52BDA3DB-7D81-4A37-B0B1-9662E241DB27}</Project>
       <Name>CapaModelo_Componentes</Name>
     </ProjectReference>
+    <Reference Include="CapaModelo_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\bin\$(Configuration)\CapaModelo_Seguridad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

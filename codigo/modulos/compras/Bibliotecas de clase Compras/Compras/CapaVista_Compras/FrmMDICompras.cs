@@ -1,4 +1,4 @@
-using CapaControlador_Seguridad.Objetos_de_valor;
+﻿using CapaControlador_Seguridad.Objetos_de_valor;
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ namespace CapaVista_Compras
         private readonly Dictionary<TableLayoutPanel, ColumnStyle> _ColumnasNavegador =
             new Dictionary<TableLayoutPanel, ColumnStyle>();
         // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
-        // Seguridad asigna aquí cómo crear su FrmBitacora al abrir este MDI después del login.
+        // Permite que Seguridad personalice la creación de su FrmBitacora.
         public Func<Form> CrearBitacora { get; set; }
         // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
         public FrmMDICompras()
@@ -414,14 +414,7 @@ namespace CapaVista_Compras
         // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
         private void ComprasMetAbrirBitacora(object Remitente, EventArgs Evento)
         {
-            if (CrearBitacora == null)
-            {
-                MessageBox.Show(this,
-                    "La bitácora está disponible al ingresar a Compras desde el inicio de sesión de Seguridad.",
-                    "Bitácora", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            ComprasMetAbrirSubproceso(ComprasTlpBitacora, CrearBitacora);
+            ComprasMetAbrirSubproceso<FrmBitacoraCompras>(ComprasTlpBitacora);
         }
         // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
         // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
@@ -474,8 +467,6 @@ namespace CapaVista_Compras
             {
                 if (Ventana != IntPtr.Zero) ComprasFuncSuspenderRedibujado(Ventana, 0x000B, IntPtr.Zero, IntPtr.Zero);
                 foreach (Control Panel in Paneles) Panel.SuspendLayout();
-                if (_AnimacionNavegador != null) _AnimacionNavegador.Stop();
-                _RelojNavegador.Stop();
                 _PosicionNavegador = _DesplazamientoNavegador;
                 _DestinoNavegador = _PosicionNavegador;
                 _NavegadorContraido = !_NavegadorContraido;

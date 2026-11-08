@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/estilos.css" rel="stylesheet" type="text/css">
+    <title>Consultas Simples - Ayuda</title>
+    <style>
+        .ayuda-intro { margin-bottom: 18px; }
+        .pasos { margin: 12px 0 22px 22px; line-height: 1.6; }
+        .tabla-ayuda { width: 100%; border-collapse: collapse; margin: 14px 0 24px; }
+        .tabla-ayuda th { background: #2E4A63; color: white; text-align: left; padding: 10px; }
+        .tabla-ayuda td { border: 1px solid #d8d0c2; padding: 10px; vertical-align: top; }
+        .tabla-ayuda tr:nth-child(even) td { background: #f7f3eb; }
+        .nota { background: #EDE7DA; border-left: 5px solid #C4573F; padding: 12px 14px; margin: 16px 0; }
+        .captura { width: 100%; max-width: 100%; height: auto; }
+        h2 { margin-top: 24px; }
+        h3 { margin: 20px 0 8px; font-size: 22px; }
+        figure { margin: 16px 0 24px; }
+        figcaption { text-align: center; line-height: 1.5; padding: 8px; }
+        .indice { line-height: 1.8; padding-left: 24px; }
+        kbd { border: 1px solid #d8d0c2; padding: 2px 6px; font-family: inherit; }
+    </style>
+</head>
+<body>
+    <div class="encabezado">
+        <img class="logo" src="img/LogoConsultas.png" alt="Consultas">
+        <h1>Capacitación - Consultas</h1>
+        <p class="subtitulo">Búsqueda rápida mediante filtros simples</p>
+    </div>
+
+    <div class="container">
+        <div class="seccion">
+            <p><a href="ConsultaCompleja.html">Ver la guía de consultas complejas</a></p>
+            <h2>Consultas simples</h2>
+            <p class="ayuda-intro">
+                Esta pantalla permite filtrar los registros mostrados en la tabla utilizando un campo,
+                un operador y un valor. Es la opción recomendada cuando necesita realizar una búsqueda
+                rápida sin combinar varias condiciones.
+            </p>
+
+            <p>Un <strong>registro</strong> es una fila de la tabla. Un <strong>filtro</strong> es una condición para mostrar solamente las filas que le interesan. Buscar no modifica ni elimina los datos de esa tabla.</p>
+            <div class="nota">Las capturas muestran una bitácora como ejemplo. En su aplicación pueden aparecer otros campos y registros. Los recuadros rojos señalan dónde debe realizar cada paso.</div>
+            <ul class="indice">
+                <li><a href="#buscar">Buscar paso a paso</a></li>
+                <li><a href="#operadores">Elegir el operador adecuado</a></li>
+                <li><a href="#seleccionar">Revisar y confirmar un registro</a></li>
+                <li><a href="#problemas">Resolver dudas y mensajes</a></li>
+            </ul>
+            <figure>
+                <a href="img/ConsultaSimple.png"><img class="captura" src="img/ConsultaSimple.png" alt="Vista general: filtro en la parte superior, registros al centro y páginas en la parte inferior"></a>
+                <figcaption>Vista general de consultas simples. Pulse cualquier captura para verla en su tamaño original.</figcaption>
+            </figure>
+
+            <h2 id="buscar">Cómo realizar una búsqueda</h2>
+            <h3>1. Seleccione el campo que desea buscar</h3>
+            <p>Abra la lista <strong>Campo</strong> mediante la flecha y elija la columna que contiene el dato que busca. Para seguir el ejemplo de las imágenes, seleccione <strong>accionBitacora</strong>, que contiene el tipo de acción registrada.</p>
+            <p>Si necesita encontrar una persona por su nombre, elija el campo de nombre que aparezca en su pantalla. El campo elegido debe corresponder al dato que va a escribir.</p>
+            <figure>
+                <a href="img/ConsultaSimple_SeleccioneUnCampo.png"><img class="captura" src="img/ConsultaSimple_SeleccioneUnCampo.png" alt="La lista Campo está marcada con un recuadro rojo"></a>
+                <figcaption>Paso 1: abra Campo y seleccione la columna de búsqueda.</figcaption>
+            </figure>
+            <div class="nota">Al cambiar Campo se borra el contenido de Valor y se actualiza la lista de operadores. Vuelva a revisar ambos antes de buscar.</div>
+            <h3>2. Seleccione cómo comparar el dato</h3>
+            <p>Abra <strong>Operador</strong>. Elija <strong>=</strong> para buscar un valor completo o <strong>Contiene</strong> para localizar una palabra o parte de un texto. En el ejemplo se usará Contiene para encontrar acciones que incluyan INSERT.</p>
+            <figure>
+                <a href="img/ConsultaSimple_SeleccioneUnOperador.png"><img class="captura" src="img/ConsultaSimple_SeleccioneUnOperador.png" alt="La lista Operador desplegada muestra igual, diferente, Contiene, Comienza con y Termina con"></a>
+                <figcaption>Paso 2: elija el operador. Las opciones dependen del campo seleccionado.</figcaption>
+            </figure>
+            <h3>3. Escriba el valor y presione Buscar</h3>
+            <p>Haga clic en <strong>Valor</strong> y escriba el dato. En el ejemplo, escriba <strong>INSERT</strong>, sin comillas. Compruebe que Campo sea accionBitacora y Operador sea Contiene.</p>
+            <ol class="pasos">
+                <li>Complete Campo, Operador y Valor. El botón Buscar se habilita cuando esos datos están completos.</li>
+                <li>Presione <strong>Buscar</strong> o <kbd>Enter</kbd> mientras escribe en Valor.</li>
+                <li>Revise la tabla y el número de registros indicado al pie. Escribir el valor por sí solo todavía no aplica la búsqueda.</li>
+            </ol>
+            <figure>
+                <a href="img/ConsultaSimple_EscribaElValor.png"><img class="captura" src="img/ConsultaSimple_EscribaElValor.png" alt="Valor contiene INSERT y el botón Buscar está disponible"></a>
+                <figcaption>Paso 3: escriba el valor y ejecute la búsqueda con Buscar.</figcaption>
+            </figure>
+            <p>Para realizar otra búsqueda, cambie los datos y presione Buscar nuevamente. Para quitar el filtro aplicado y volver al listado actualizado, presione <strong>Refrescar</strong>.</p>
+
+            <h2 id="operadores">¿Qué hace cada operador?</h2>
+            <p>
+                Los operadores disponibles pueden cambiar según el tipo de campo seleccionado.
+                Los campos de texto ofrecen =, &lt;&gt;, Contiene, Comienza con y Termina con.
+                Los campos numéricos y de fecha ofrecen =, &lt;&gt;, &gt;, &lt;, &gt;= y &lt;=.
+                Los campos booleanos ofrecen únicamente = y &lt;&gt;.
+            </p>
+
+            <table class="tabla-ayuda">
+                <thead>
+                    <tr>
+                        <th>Operador</th>
+                        <th>Qué hace</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Igual a (=)</strong></td>
+                        <td>Muestra los registros cuyo campo coincide con el valor indicado.</td>
+                        <td>Edad igual a <strong>30</strong>: muestra los registros con edad 30.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Diferente de (&lt;&gt;)</strong></td>
+                        <td>Muestra los registros cuyo campo no coincide con el valor indicado.</td>
+                        <td>Estado diferente de <strong>Inactivo</strong>: excluye los registros inactivos.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mayor que (&gt;)</strong></td>
+                        <td>Muestra los valores superiores al indicado, sin incluirlo.</td>
+                        <td>Edad mayor que <strong>30</strong>: muestra 31, 32, 33, etc.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mayor o igual que (&gt;=)</strong></td>
+                        <td>Muestra los valores iguales o superiores al indicado.</td>
+                        <td>Edad mayor o igual que <strong>30</strong>: incluye 30, 31, 32, etc.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Menor que (&lt;)</strong></td>
+                        <td>Muestra los valores inferiores al indicado, sin incluirlo.</td>
+                        <td>Edad menor que <strong>30</strong>: muestra 29, 28, 27, etc.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Menor o igual que (&lt;=)</strong></td>
+                        <td>Muestra los valores iguales o inferiores al indicado.</td>
+                        <td>Edad menor o igual que <strong>30</strong>: incluye 30, 29, 28, etc.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contiene</strong></td>
+                        <td>Busca el texto indicado en cualquier parte del campo.</td>
+                        <td>Nombre contiene <strong>ana</strong>: puede encontrar «Ana» y «Mariana».</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Comienza con</strong></td>
+                        <td>Busca valores que comienzan con el texto indicado.</td>
+                        <td>Nombre comienza con <strong>Mar</strong>: puede encontrar «María» y «Marcos».</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Termina con</strong></td>
+                        <td>Busca valores que finalizan con el texto indicado.</td>
+                        <td>Apellido termina con <strong>ez</strong>: puede encontrar «López» y «Pérez».</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="nota">
+                <strong>Fechas:</strong> use <strong>aaaa-MM-dd</strong> o <strong>dd/MM/aaaa</strong> (por ejemplo, 2026-10-07 o 07/10/2026). Para fecha y hora, agregue <strong>HH:mm:ss</strong> (2026-10-07 14:30:00).
+                Los operadores «mayor que» y «menor que» permiten buscar fechas posteriores
+                o anteriores, respectivamente.
+            </div>
+
+            <h2 id="seleccionar">Revisar y confirmar un registro</h2>
+            <p>Escriba enteros sin decimales, números decimales con punto (125.50), horas como HH:mm:ss y valores booleanos como 1, 0, true o false. Respete la longitud permitida del campo de texto.</p>
+            <p>Al cambiar Campo se borra Valor y se actualizan los operadores. Los errores de formato y los avisos de búsqueda sin resultados aparecen debajo de Valor; corrija el dato y vuelva a buscar.</p>
+            <p>La tabla muestra 15 registros por página. Haga clic en el encabezado de una columna para ordenar y vuelva a hacer clic para alternar la dirección. Para devolver un registro a la pantalla que abrió Consultas, haga doble clic en su fila o selecciónela y presione Enter.</p>
+            <ol class="pasos">
+                <li>Revise varias columnas de la fila para comprobar que corresponde al registro que necesita. Use las barras de desplazamiento si algún dato queda fuera de la vista.</li>
+                <li>Si hay varias páginas, use <strong>Siguiente</strong>, <strong>Anterior</strong> o un número de página. El texto inferior indica la página actual y el total de registros de la búsqueda.</li>
+                <li>Haga <strong>doble clic</strong> sobre la fila correcta, o haga un clic para seleccionarla y presione <kbd>Enter</kbd> con el foco en la tabla.</li>
+                <li>La ventana se cierra y la pantalla desde la que abrió la búsqueda recibe el registro confirmado. Compruebe el dato mostrado antes de continuar su trabajo.</li>
+            </ol>
+            <figure>
+                <a href="img/ConsultaSimple_SeleccioneUnRegistro.png"><img class="captura" src="img/ConsultaSimple_SeleccioneUnRegistro.png" alt="La zona Seleccione un Registro está marcada en rojo y una fila aparece resaltada"></a>
+                <figcaption>La fila resaltada está seleccionada. Confírmela con doble clic o Enter en la tabla.</figcaption>
+            </figure>
+            <div class="nota"><strong>Seleccionar no es confirmar:</strong> un solo clic resalta una fila. Si desea abandonar la búsqueda, use Salir o cierre la ventana sin confirmar; el dato previamente confirmado en la pantalla de origen se conserva. Enter en Valor ejecuta la búsqueda; Enter en la tabla confirma una fila seleccionada.</div>
+
+            <h2>Botones y controles</h2>
+            <table class="tabla-ayuda">
+                <thead>
+                    <tr>
+                        <th>Botón o control</th>
+                        <th>Función</th>
+                        <th>Cómo usarlo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Campo</strong></td>
+                        <td>Indica qué columna se utilizará para realizar la búsqueda.</td>
+                        <td>Abra la lista y seleccione el campo que corresponda al dato que desea encontrar.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Operador</strong></td>
+                        <td>Define la comparación que se aplicará al campo seleccionado.</td>
+                        <td>Seleccione uno de los operadores disponibles en la lista.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Valor</strong></td>
+                        <td>Contiene el dato que será comparado durante la búsqueda.</td>
+                        <td>Escriba el texto, número o fecha correspondiente al campo elegido.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Buscar</strong></td>
+                        <td>Ejecuta la búsqueda con el campo, operador y valor seleccionados.</td>
+                        <td>Complete los controles del filtro y luego presione el botón.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Refrescar</strong></td>
+                        <td>Recarga la tabla y permite volver al listado actualizado.</td>
+                        <td>Úselo para quitar el resultado de una búsqueda anterior o actualizar los datos.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ayuda</strong></td>
+                        <td>Muestra este manual de uso.</td>
+                        <td>Presiónelo cuando necesite consultar las instrucciones de la pantalla.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Consultas Complejas</strong></td>
+                        <td>Abre la pantalla para trabajar con consultas guardadas o con búsquedas que requieren mayor configuración.</td>
+                        <td>Úselo cuando una consulta simple no sea suficiente para obtener la información que necesita.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Salir</strong></td>
+                        <td>Cierra la ventana actual.</td>
+                        <td>Presiónelo cuando haya terminado de trabajar.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Anterior / Siguiente / páginas</strong></td>
+                        <td>Permiten desplazarse entre las páginas de resultados.</td>
+                        <td>Use los controles inferiores cuando la tabla contenga más registros de los que se muestran en una sola página.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="nota">
+                <strong>Consejo:</strong> si la búsqueda no devuelve resultados, revise que el campo,
+                operador y valor correspondan entre sí y luego vuelva a presionar <strong>Buscar</strong>.
+            </div>
+            <h2 id="problemas">Si algo no sale como esperaba</h2>
+            <table class="tabla-ayuda">
+                <thead><tr><th>Situación</th><th>Qué puede hacer</th></tr></thead>
+                <tbody>
+                    <tr><td>Buscar aparece deshabilitado.</td><td>Seleccione Campo y Operador e ingrese un Valor. Si cambió Campo, vuelva a escribir Valor.</td></tr>
+                    <tr><td>No aparecen resultados.</td><td>Revise la escritura y el campo elegido. Para texto, pruebe Contiene con una parte del dato. Para volver a ver todos los registros, presione Refrescar.</td></tr>
+                    <tr><td>Aparece un mensaje rojo debajo de Valor.</td><td>Lea el aviso, corrija el dato según su formato y presione Buscar otra vez. Un aviso sin resultados no significa que se hayan eliminado registros.</td></tr>
+                    <tr><td>La fila no se confirma.</td><td>Seleccione una fila de datos y use doble clic o Enter en la tabla. El encabezado de una columna sirve para ordenar, no para elegir un registro.</td></tr>
+                    <tr><td>Se informa que falta una llave primaria, que es compuesta o que el identificador es nulo.</td><td>La selección no se confirma. Comunique el mensaje y la pantalla en la que ocurrió a la persona encargada del sistema; no elija otro registro suponiendo que representa al mismo.</td></tr>
+                    <tr><td>Hay un aviso de conexión o la información no carga.</td><td>Compruebe que tiene acceso al sistema y vuelva a intentar. Si el aviso continúa, comuníquelo al soporte de su organización.</td></tr>
+                </tbody>
+            </table>
+            <p>Si necesita combinar condiciones o repetir una búsqueda guardada, continúe con <a href="ConsultaCompleja.html">la guía de consultas complejas</a>.</p>
+        </div>
+    </div>
+</body>
+</html>
