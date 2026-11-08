@@ -25,8 +25,8 @@ namespace PruebaUnitaria_MovimientosProveedores
         [DataTestMethod]
         [DataRow("IdProveedor", "0", "Seleccione un proveedor.")]
         [DataRow("IdProveedor", "-1", "Seleccione un proveedor.")]
-        [DataRow("IdConceptoProveedor", "0", "Seleccione un tipo de nota.")]
-        [DataRow("IdConceptoProveedor", "-1", "Seleccione un tipo de nota.")]
+        [DataRow("IdConceptoProveedor", "0", "Seleccione un concepto de proveedor.")]
+        [DataRow("IdConceptoProveedor", "-1", "Seleccione un concepto de proveedor.")]
         [DataRow("Serie", null, "La serie es obligatoria y admite hasta 20 caracteres.")]
         [DataRow("Serie", "", "La serie es obligatoria y admite hasta 20 caracteres.")]
         [DataRow("Serie", "   ", "La serie es obligatoria y admite hasta 20 caracteres.")]
@@ -121,10 +121,9 @@ namespace PruebaUnitaria_MovimientosProveedores
         }
 
         [TestMethod]
-        public void Constructores_RepositorioNulo_Rechazan()
+        public void Constructor_RepositorioNulo_Rechaza()
         {
             Assert.ThrowsException<ArgumentNullException>(() => new ClsModeloNotaProveedor(null));
-            Assert.ThrowsException<ArgumentNullException>(() => new ClsControladorBalanceAntiguedadProveedor(null));
         }
 
         [TestMethod]
@@ -139,37 +138,17 @@ namespace PruebaUnitaria_MovimientosProveedores
             Assert.AreEqual(15, repo.ProveedorConsultado);
             Assert.AreEqual("Proveedor de prueba", repo.Proveedores.Rows[0]["Nombre"]);
         }
-
-        [DataTestMethod]
-        [DataRow(null)]
-        [DataRow(15)]
-        public void Balance_TransfiereFechaYFiltro_DevuelveFilas(int? proveedor)
-        {
-            var repo = new RepositorioPrueba();
-            var fecha = new DateTime(2026, 11, 5);
-            var controlador = new ClsControladorBalanceAntiguedadProveedor(repo);
-            var filas = proveedor.HasValue ? controlador.ComprasMetConsultarBalanceAntiguedad(fecha, proveedor) : controlador.ComprasMetConsultarBalanceAntiguedad(fecha);
-            Assert.AreEqual(fecha, repo.FechaConsultada);
-            Assert.AreEqual(proveedor, repo.FiltroProveedor);
-            Assert.AreSame(repo.Balance, filas);
-            Assert.AreEqual(150m, filas[0].Total);
-        }
     }
 
     // Doble de prueba: no conecta a ODBC ni reproduce reglas de negocio.
-    internal sealed class RepositorioPrueba : IRepositorioNotasProveedor, IRepositorioBalanceAntiguedadProveedor
+    internal sealed class RepositorioPrueba : IRepositorioNotasProveedor
     {
         internal readonly List<ClsNotaProveedor> Notas = new List<ClsNotaProveedor>();
         internal readonly DataTable Proveedores = Tabla("Proveedor de prueba");
         internal readonly DataTable Conceptos = Tabla("Nota de credito");
         internal readonly DataTable Monedas = Tabla("GTQ");
         internal readonly DataTable Historial = Tabla("NC-1001");
-        internal readonly List<ClsBalanceAntiguedadProveedor> Balance = new List<ClsBalanceAntiguedadProveedor> {
-            new ClsBalanceAntiguedadProveedor { IdProveedor = 15, IdMoneda = 1, Vigente = 100m, De1A30 = 50m, Total = 150m }
-        };
         internal int ProveedorConsultado;
-        internal DateTime FechaConsultada;
-        internal int? FiltroProveedor;
         private static DataTable Tabla(string nombre)
         {
             var tabla = new DataTable();
@@ -180,13 +159,8 @@ namespace PruebaUnitaria_MovimientosProveedores
         public DataTable ComprasMetObtenerProveedores() { return Proveedores; }
         public DataTable ComprasMetObtenerConceptos() { return Conceptos; }
         public DataTable ComprasMetObtenerMonedas() { return Monedas; }
+        public decimal? ComprasMetObtenerTipoCambio(long idMoneda, DateTime fechaEmision) { return 1m; }
         public DataTable ComprasMetConsultarNotas(int idProveedor) { ProveedorConsultado = idProveedor; return Historial; }
         public void ComprasMetAgregar(ClsNotaProveedor nota) { Notas.Add(nota); }
-        public List<ClsBalanceAntiguedadProveedor> ComprasMetConsultarBalanceAntiguedad(DateTime fechaCorte, int? idProveedor = null)
-        {
-            FechaConsultada = fechaCorte;
-            FiltroProveedor = idProveedor;
-            return Balance;
-        }
     }
 }

@@ -9,18 +9,17 @@ namespace CapaVista_MovimientosProveedores
         private System.ComponentModel.IContainer _Componentes = null;
         private ComprasUsrEncabezado ComprasUsrEncabezadoFormulario;
         private ClsButtonCompras ComprasBtnGuardar, ComprasBtnNueva;
-        private ComprasUsrComboBox ComprasCboProveedor, ComprasCboMoneda;
-        private ClsRadioButtonCompras ComprasRdbDebito, ComprasRdbCredito;
-        private FlowLayoutPanel ComprasFlpTipoNota;
+        private ComprasUsrComboBox ComprasCboProveedor, ComprasCboConcepto, ComprasCboMoneda;
         private TextBox ComprasTxtSerie, ComprasTxtNumero;
         private ClsDatePickerCompras ComprasDtpFechaEmision, ComprasDtpFechaVencimiento;
-        private Label ComprasLblEfecto, ComprasLblEquivalente, ComprasLblEstado;
+        private Label ComprasLblEfecto, ComprasLblEquivalente;
+        private LinkLabel ComprasLblEstado;
         private TableLayoutPanel ComprasTlpPagina, ComprasTlpCampos;
         private FlowLayoutPanel ComprasFlpAcciones;
         private Panel ComprasPnlScroll;
 
         private Label ComprasLblCampoCboProveedor;
-        private Label ComprasLblCampoTipoNota;
+        private Label ComprasLblCampoCboConcepto;
         private Label ComprasLblCampoCboMoneda;
         private Label ComprasLblCampoTxtSerie;
         private Label ComprasLblCampoTxtNumero;
@@ -38,11 +37,12 @@ namespace CapaVista_MovimientosProveedores
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMovimientosProveedores));
             this.ComprasTxtSerie = new System.Windows.Forms.TextBox();
             this.ComprasTxtNumero = new System.Windows.Forms.TextBox();
             this.ComprasLblEfecto = new System.Windows.Forms.Label();
             this.ComprasLblEquivalente = new System.Windows.Forms.Label();
-            this.ComprasLblEstado = new System.Windows.Forms.Label();
+            this.ComprasLblEstado = new System.Windows.Forms.LinkLabel();
             this.ComprasTlpPagina = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasFlpAcciones = new System.Windows.Forms.FlowLayoutPanel();
             this.ComprasBtnNueva = new CapaVista_Componentes.Componentes.ClsButtonCompras();
@@ -52,10 +52,8 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTxtMonto = new System.Windows.Forms.TextBox();
             this.ComprasLblCampoCboProveedor = new System.Windows.Forms.Label();
             this.ComprasCboProveedor = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
-            this.ComprasLblCampoTipoNota = new System.Windows.Forms.Label();
-            this.ComprasFlpTipoNota = new System.Windows.Forms.FlowLayoutPanel();
-            this.ComprasRdbDebito = new CapaVista_Componentes.Componentes.ClsRadioButtonCompras();
-            this.ComprasRdbCredito = new CapaVista_Componentes.Componentes.ClsRadioButtonCompras();
+            this.ComprasLblCampoCboConcepto = new System.Windows.Forms.Label();
+            this.ComprasCboConcepto = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
             this.ComprasLblCampoCboMoneda = new System.Windows.Forms.Label();
             this.ComprasCboMoneda = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
             this.ComprasLblCampoTxtSerie = new System.Windows.Forms.Label();
@@ -73,7 +71,6 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTlpPagina.SuspendLayout();
             this.ComprasFlpAcciones.SuspendLayout();
             this.ComprasTlpCampos.SuspendLayout();
-            this.ComprasFlpTipoNota.SuspendLayout();
             this.ComprasPnlScroll.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,10 +98,12 @@ namespace CapaVista_MovimientosProveedores
             // 
             // ComprasLblEfecto
             // 
+            this.ComprasLblEfecto.AutoSize = true;
             this.ComprasLblEfecto.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasLblEfecto.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.ComprasLblEfecto.Location = new System.Drawing.Point(4, 312);
+            this.ComprasLblEfecto.Location = new System.Drawing.Point(4, 356);
             this.ComprasLblEfecto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ComprasLblEfecto.MinimumSize = new System.Drawing.Size(0, 34);
             this.ComprasLblEfecto.Name = "ComprasLblEfecto";
             this.ComprasLblEfecto.Size = new System.Drawing.Size(1244, 34);
             this.ComprasLblEfecto.TabIndex = 2;
@@ -112,9 +111,11 @@ namespace CapaVista_MovimientosProveedores
             // 
             // ComprasLblEquivalente
             // 
+            this.ComprasLblEquivalente.AutoSize = true;
             this.ComprasLblEquivalente.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasLblEquivalente.Location = new System.Drawing.Point(4, 346);
+            this.ComprasLblEquivalente.Location = new System.Drawing.Point(4, 390);
             this.ComprasLblEquivalente.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ComprasLblEquivalente.MinimumSize = new System.Drawing.Size(0, 30);
             this.ComprasLblEquivalente.Name = "ComprasLblEquivalente";
             this.ComprasLblEquivalente.Size = new System.Drawing.Size(1244, 30);
             this.ComprasLblEquivalente.TabIndex = 3;
@@ -122,9 +123,11 @@ namespace CapaVista_MovimientosProveedores
             // 
             // ComprasLblEstado
             // 
+            this.ComprasLblEstado.AutoSize = true;
             this.ComprasLblEstado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasLblEstado.Location = new System.Drawing.Point(4, 412);
+            this.ComprasLblEstado.Location = new System.Drawing.Point(4, 456);
             this.ComprasLblEstado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ComprasLblEstado.MinimumSize = new System.Drawing.Size(0, 36);
             this.ComprasLblEstado.Name = "ComprasLblEstado";
             this.ComprasLblEstado.Size = new System.Drawing.Size(1244, 36);
             this.ComprasLblEstado.TabIndex = 7;
@@ -146,91 +149,88 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTlpPagina.Location = new System.Drawing.Point(24, 12);
             this.ComprasTlpPagina.Name = "ComprasTlpPagina";
             this.ComprasTlpPagina.RowCount = 6;
-            this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
+            this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 260F));
-            this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.ComprasTlpPagina.Size = new System.Drawing.Size(1252, 448);
+            this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.ComprasTlpPagina.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.ComprasTlpPagina.Size = new System.Drawing.Size(1252, 492);
             this.ComprasTlpPagina.TabIndex = 0;
             // 
             // ComprasFlpAcciones
             // 
+            this.ComprasFlpAcciones.AutoSize = true;
+            this.ComprasFlpAcciones.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ComprasFlpAcciones.Controls.Add(this.ComprasBtnNueva);
             this.ComprasFlpAcciones.Controls.Add(this.ComprasBtnGuardar);
             this.ComprasFlpAcciones.Controls.Add(this.ComprasBtnHistorial);
             this.ComprasFlpAcciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasFlpAcciones.Location = new System.Drawing.Point(3, 3);
             this.ComprasFlpAcciones.Name = "ComprasFlpAcciones";
-            this.ComprasFlpAcciones.Size = new System.Drawing.Size(1246, 46);
+            this.ComprasFlpAcciones.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.ComprasFlpAcciones.Size = new System.Drawing.Size(1246, 90);
             this.ComprasFlpAcciones.TabIndex = 0;
             this.ComprasFlpAcciones.WrapContents = false;
-            this.ComprasBtnNueva.TipoBoton = CapaVista_Componentes.Componentes.ComprasTipoBoton.Libre;
             // 
             // ComprasBtnNueva
             // 
+            this.ComprasBtnNueva.AccessibleName = "Limpiar campos";
             this.ComprasBtnNueva.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ComprasBtnNueva.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(220)))), ((int)(((byte)(239)))));
+            this.ComprasBtnNueva.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnNueva.BackgroundImage")));
             this.ComprasBtnNueva.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasBtnNueva.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComprasBtnNueva.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnNueva.FlatAppearance.BorderSize = 0;
-            this.ComprasBtnNueva.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(173)))), ((int)(((byte)(213)))));
-            this.ComprasBtnNueva.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(182)))), ((int)(((byte)(193)))), ((int)(((byte)(224)))));
             this.ComprasBtnNueva.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComprasBtnNueva.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.ComprasBtnNueva.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnNueva.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnNueva.Location = new System.Drawing.Point(0, 2);
+            this.ComprasBtnNueva.Location = new System.Drawing.Point(0, 5);
             this.ComprasBtnNueva.Margin = new System.Windows.Forms.Padding(0, 2, 12, 2);
+            this.ComprasBtnNueva.MaximumSize = new System.Drawing.Size(80, 80);
+            this.ComprasBtnNueva.MinimumSize = new System.Drawing.Size(80, 80);
             this.ComprasBtnNueva.Name = "ComprasBtnNueva";
-            this.ComprasBtnNueva.Size = new System.Drawing.Size(154, 40);
+            this.ComprasBtnNueva.Size = new System.Drawing.Size(80, 80);
             this.ComprasBtnNueva.TabIndex = 2;
-            this.ComprasBtnNueva.Text = "Limpiar campos";
             this.ComprasBtnNueva.UseVisualStyleBackColor = false;
-            this.ComprasBtnGuardar.TipoBoton = CapaVista_Componentes.Componentes.ComprasTipoBoton.Libre;
             // 
             // ComprasBtnGuardar
             // 
+            this.ComprasBtnGuardar.AccessibleName = "Guardar";
             this.ComprasBtnGuardar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ComprasBtnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasBtnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(220)))), ((int)(((byte)(239)))));
+            this.ComprasBtnGuardar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnGuardar.BackgroundImage")));
             this.ComprasBtnGuardar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasBtnGuardar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComprasBtnGuardar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnGuardar.FlatAppearance.BorderSize = 0;
-            this.ComprasBtnGuardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(173)))), ((int)(((byte)(213)))));
-            this.ComprasBtnGuardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(182)))), ((int)(((byte)(193)))), ((int)(((byte)(224)))));
             this.ComprasBtnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComprasBtnGuardar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.ComprasBtnGuardar.ForeColor = System.Drawing.Color.White;
-            this.ComprasBtnGuardar.Location = new System.Drawing.Point(166, 2);
+            this.ComprasBtnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ComprasBtnGuardar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasBtnGuardar.Location = new System.Drawing.Point(92, 5);
             this.ComprasBtnGuardar.Margin = new System.Windows.Forms.Padding(0, 2, 12, 2);
+            this.ComprasBtnGuardar.MaximumSize = new System.Drawing.Size(80, 80);
+            this.ComprasBtnGuardar.MinimumSize = new System.Drawing.Size(80, 80);
             this.ComprasBtnGuardar.Name = "ComprasBtnGuardar";
-            this.ComprasBtnGuardar.Size = new System.Drawing.Size(154, 40);
+            this.ComprasBtnGuardar.Size = new System.Drawing.Size(80, 80);
             this.ComprasBtnGuardar.TabIndex = 3;
-            this.ComprasBtnGuardar.Text = "Guardar nota";
             this.ComprasBtnGuardar.UseVisualStyleBackColor = false;
-            this.ComprasBtnHistorial.TipoBoton = CapaVista_Componentes.Componentes.ComprasTipoBoton.Libre;
             // 
             // ComprasBtnHistorial
             // 
+            this.ComprasBtnHistorial.AccessibleName = "Historial";
             this.ComprasBtnHistorial.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ComprasBtnHistorial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(220)))), ((int)(((byte)(239)))));
+            this.ComprasBtnHistorial.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnHistorial.BackgroundImage")));
             this.ComprasBtnHistorial.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasBtnHistorial.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComprasBtnHistorial.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnHistorial.FlatAppearance.BorderSize = 0;
-            this.ComprasBtnHistorial.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(173)))), ((int)(((byte)(213)))));
-            this.ComprasBtnHistorial.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(182)))), ((int)(((byte)(193)))), ((int)(((byte)(224)))));
             this.ComprasBtnHistorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComprasBtnHistorial.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.ComprasBtnHistorial.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnHistorial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnHistorial.Location = new System.Drawing.Point(332, 2);
+            this.ComprasBtnHistorial.Location = new System.Drawing.Point(184, 5);
             this.ComprasBtnHistorial.Margin = new System.Windows.Forms.Padding(0, 2, 12, 2);
+            this.ComprasBtnHistorial.MaximumSize = new System.Drawing.Size(80, 80);
+            this.ComprasBtnHistorial.MinimumSize = new System.Drawing.Size(80, 80);
             this.ComprasBtnHistorial.Name = "ComprasBtnHistorial";
-            this.ComprasBtnHistorial.Size = new System.Drawing.Size(140, 40);
+            this.ComprasBtnHistorial.Size = new System.Drawing.Size(80, 80);
             this.ComprasBtnHistorial.TabIndex = 5;
-            this.ComprasBtnHistorial.Text = "Historial";
             this.ComprasBtnHistorial.UseVisualStyleBackColor = false;
             this.ComprasBtnHistorial.Click += new System.EventHandler(this.ComprasMetAbrirHistorial);
             // 
@@ -244,8 +244,8 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTlpCampos.Controls.Add(this.ComprasTxtMonto, 2, 3);
             this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoCboProveedor, 0, 0);
             this.ComprasTlpCampos.Controls.Add(this.ComprasCboProveedor, 0, 1);
-            this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoTipoNota, 1, 0);
-            this.ComprasTlpCampos.Controls.Add(this.ComprasFlpTipoNota, 1, 1);
+            this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoCboConcepto, 1, 0);
+            this.ComprasTlpCampos.Controls.Add(this.ComprasCboConcepto, 1, 1);
             this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoCboMoneda, 2, 0);
             this.ComprasTlpCampos.Controls.Add(this.ComprasCboMoneda, 2, 1);
             this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoTxtSerie, 0, 2);
@@ -260,7 +260,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTlpCampos.Controls.Add(this.ComprasLblCampoNumCambio, 2, 4);
             this.ComprasTlpCampos.Controls.Add(this.ComprasTxtTipoCambio, 2, 5);
             this.ComprasTlpCampos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasTlpCampos.Location = new System.Drawing.Point(3, 55);
+            this.ComprasTlpCampos.Location = new System.Drawing.Point(3, 99);
             this.ComprasTlpCampos.Name = "ComprasTlpCampos";
             this.ComprasTlpCampos.Padding = new System.Windows.Forms.Padding(16, 8, 16, 8);
             this.ComprasTlpCampos.RowCount = 6;
@@ -312,62 +312,29 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasCboProveedor.TabIndex = 1;
             this.ComprasCboProveedor.TipoDatos = CapaVista_Componentes.Componentes.EnmTipoDatosCompras.Proveedores;
             // 
-            // ComprasLblCampoTipoNota
+            // ComprasLblCampoCboConcepto
             // 
-            this.ComprasLblCampoTipoNota.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasLblCampoTipoNota.Location = new System.Drawing.Point(504, 8);
-            this.ComprasLblCampoTipoNota.Name = "ComprasLblCampoTipoNota";
-            this.ComprasLblCampoTipoNota.Size = new System.Drawing.Size(358, 24);
-            this.ComprasLblCampoTipoNota.TabIndex = 2;
-            this.ComprasLblCampoTipoNota.Text = "Tipo de nota *";
-            this.ComprasLblCampoTipoNota.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ComprasLblCampoCboConcepto.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ComprasLblCampoCboConcepto.Location = new System.Drawing.Point(504, 8);
+            this.ComprasLblCampoCboConcepto.Name = "ComprasLblCampoCboConcepto";
+            this.ComprasLblCampoCboConcepto.Size = new System.Drawing.Size(358, 24);
+            this.ComprasLblCampoCboConcepto.TabIndex = 2;
+            this.ComprasLblCampoCboConcepto.Text = "Concepto del documento *";
+            this.ComprasLblCampoCboConcepto.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ComprasFlpTipoNota
+            // ComprasCboConcepto
             // 
-            this.ComprasFlpTipoNota.Controls.Add(this.ComprasRdbDebito);
-            this.ComprasFlpTipoNota.Controls.Add(this.ComprasRdbCredito);
-            this.ComprasFlpTipoNota.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasFlpTipoNota.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.ComprasFlpTipoNota.Location = new System.Drawing.Point(501, 36);
-            this.ComprasFlpTipoNota.Margin = new System.Windows.Forms.Padding(0, 4, 18, 0);
-            this.ComprasFlpTipoNota.Name = "ComprasFlpTipoNota";
-            this.ComprasFlpTipoNota.Size = new System.Drawing.Size(346, 50);
-            this.ComprasFlpTipoNota.TabIndex = 3;
-            this.ComprasFlpTipoNota.WrapContents = false;
-            // 
-            // ComprasRdbDebito
-            // 
-            this.ComprasRdbDebito.AccessibleDescription = "Cargo que aumenta la cuenta por pagar.";
-            this.ComprasRdbDebito.AutoSize = true;
-            this.ComprasRdbDebito.BackColor = System.Drawing.Color.Transparent;
-            this.ComprasRdbDebito.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComprasRdbDebito.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ComprasRdbDebito.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasRdbDebito.Location = new System.Drawing.Point(0, 0);
-            this.ComprasRdbDebito.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
-            this.ComprasRdbDebito.Name = "ComprasRdbDebito";
-            this.ComprasRdbDebito.Size = new System.Drawing.Size(147, 27);
-            this.ComprasRdbDebito.TabIndex = 0;
-            this.ComprasRdbDebito.TabStop = true;
-            this.ComprasRdbDebito.Text = "Nota de débito";
-            this.ComprasRdbDebito.UseVisualStyleBackColor = true;
-            // 
-            // ComprasRdbCredito
-            // 
-            this.ComprasRdbCredito.AccessibleDescription = "Abono a favor de la cuenta del proveedor.";
-            this.ComprasRdbCredito.AutoSize = true;
-            this.ComprasRdbCredito.BackColor = System.Drawing.Color.Transparent;
-            this.ComprasRdbCredito.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComprasRdbCredito.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ComprasRdbCredito.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasRdbCredito.Location = new System.Drawing.Point(0, 29);
-            this.ComprasRdbCredito.Margin = new System.Windows.Forms.Padding(0);
-            this.ComprasRdbCredito.Name = "ComprasRdbCredito";
-            this.ComprasRdbCredito.Size = new System.Drawing.Size(151, 27);
-            this.ComprasRdbCredito.TabIndex = 1;
-            this.ComprasRdbCredito.TabStop = true;
-            this.ComprasRdbCredito.Text = "Nota de crédito";
-            this.ComprasRdbCredito.UseVisualStyleBackColor = true;
+            this.ComprasCboConcepto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasCboConcepto.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ComprasCboConcepto.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.ComprasCboConcepto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasCboConcepto.Location = new System.Drawing.Point(501, 36);
+            this.ComprasCboConcepto.Margin = new System.Windows.Forms.Padding(0, 4, 18, 0);
+            this.ComprasCboConcepto.MaxLength = 0;
+            this.ComprasCboConcepto.MostrarEtiquetaError = false;
+            this.ComprasCboConcepto.Name = "ComprasCboConcepto";
+            this.ComprasCboConcepto.Size = new System.Drawing.Size(346, 44);
+            this.ComprasCboConcepto.TabIndex = 3;
             // 
             // ComprasLblCampoCboMoneda
             // 
@@ -392,7 +359,6 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasCboMoneda.Name = "ComprasCboMoneda";
             this.ComprasCboMoneda.Size = new System.Drawing.Size(347, 44);
             this.ComprasCboMoneda.TabIndex = 5;
-            this.ComprasCboMoneda.TipoDatos = CapaVista_Componentes.Componentes.EnmTipoDatosCompras.Monedas;
             // 
             // ComprasLblCampoTxtSerie
             // 
@@ -421,7 +387,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasLblCampoNumMonto.Name = "ComprasLblCampoNumMonto";
             this.ComprasLblCampoNumMonto.Size = new System.Drawing.Size(359, 24);
             this.ComprasLblCampoNumMonto.TabIndex = 10;
-            this.ComprasLblCampoNumMonto.Text = "Importe de la nota *";
+            this.ComprasLblCampoNumMonto.Text = "Importe del documento *";
             this.ComprasLblCampoNumMonto.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ComprasLblCampoFechaEmision
@@ -502,20 +468,24 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasTxtTipoCambio.Margin = new System.Windows.Forms.Padding(0, 4, 16, 0);
             this.ComprasTxtTipoCambio.MaxLength = 30;
             this.ComprasTxtTipoCambio.Name = "ComprasTxtTipoCambio";
+            this.ComprasTxtTipoCambio.ReadOnly = true;
             this.ComprasTxtTipoCambio.Size = new System.Drawing.Size(349, 32);
             this.ComprasTxtTipoCambio.TabIndex = 18;
+            this.ComprasTxtTipoCambio.TabStop = false;
             this.ComprasTxtTipoCambio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // ComprasLblAyuda
             // 
+            this.ComprasLblAyuda.AutoSize = true;
             this.ComprasLblAyuda.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComprasLblAyuda.Location = new System.Drawing.Point(4, 376);
+            this.ComprasLblAyuda.Location = new System.Drawing.Point(4, 420);
             this.ComprasLblAyuda.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ComprasLblAyuda.MinimumSize = new System.Drawing.Size(0, 36);
             this.ComprasLblAyuda.Name = "ComprasLblAyuda";
             this.ComprasLblAyuda.Size = new System.Drawing.Size(1244, 36);
             this.ComprasLblAyuda.TabIndex = 4;
-            this.ComprasLblAyuda.Text = "* Campos obligatorios. La nota se registra como Pendiente; los créditos se conser" +
-    "van como abonos y no se aplican automáticamente a facturas.";
+            this.ComprasLblAyuda.Text = "* Campos obligatorios. El documento se registra como Pendiente. Los abonos se reg" +
+    "istran por separado de las facturas.";
             this.ComprasLblAyuda.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ComprasPnlScroll
@@ -526,14 +496,14 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasPnlScroll.Location = new System.Drawing.Point(0, 130);
             this.ComprasPnlScroll.Name = "ComprasPnlScroll";
             this.ComprasPnlScroll.Padding = new System.Windows.Forms.Padding(24, 12, 24, 16);
-            this.ComprasPnlScroll.Size = new System.Drawing.Size(1300, 520);
+            this.ComprasPnlScroll.Size = new System.Drawing.Size(1300, 570);
             this.ComprasPnlScroll.TabIndex = 0;
             // 
             // ComprasUsrEncabezadoFormulario
             // 
             this.ComprasUsrEncabezadoFormulario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasUsrEncabezadoFormulario.Codigo = "6002";
-            this.ComprasUsrEncabezadoFormulario.Descripcion = "Registro de notas de débito y crédito en cuentas por pagar";
+            this.ComprasUsrEncabezadoFormulario.Descripcion = "Registro de documentos de proveedor en cuentas por pagar";
             this.ComprasUsrEncabezadoFormulario.Dock = System.Windows.Forms.DockStyle.Top;
             this.ComprasUsrEncabezadoFormulario.Location = new System.Drawing.Point(0, 0);
             this.ComprasUsrEncabezadoFormulario.Margin = new System.Windows.Forms.Padding(0);
@@ -549,7 +519,7 @@ namespace CapaVista_MovimientosProveedores
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(1300, 650);
+            this.ClientSize = new System.Drawing.Size(1300, 700);
             this.Controls.Add(this.ComprasPnlScroll);
             this.Controls.Add(this.ComprasUsrEncabezadoFormulario);
             this.DoubleBuffered = true;
@@ -560,11 +530,10 @@ namespace CapaVista_MovimientosProveedores
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "6002 – Movimientos de proveedores";
             this.ComprasTlpPagina.ResumeLayout(false);
+            this.ComprasTlpPagina.PerformLayout();
             this.ComprasFlpAcciones.ResumeLayout(false);
             this.ComprasTlpCampos.ResumeLayout(false);
             this.ComprasTlpCampos.PerformLayout();
-            this.ComprasFlpTipoNota.ResumeLayout(false);
-            this.ComprasFlpTipoNota.PerformLayout();
             this.ComprasPnlScroll.ResumeLayout(false);
             this.ComprasPnlScroll.PerformLayout();
             this.ResumeLayout(false);

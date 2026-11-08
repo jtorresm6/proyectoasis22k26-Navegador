@@ -20,9 +20,13 @@ namespace CapaControlador_MovimientosProveedores
         public DataTable ComprasMetObtenerProveedores() { return _Repositorio.ComprasMetObtenerProveedores(); }
         public DataTable ComprasMetObtenerConceptos() { return _Repositorio.ComprasMetObtenerConceptos(); }
         public DataTable ComprasMetObtenerMonedas() { return _Repositorio.ComprasMetObtenerMonedas(); }
+        public decimal? ComprasMetObtenerTipoCambio(long IdMoneda, DateTime FechaEmision)
+        {
+            return _Repositorio.ComprasMetObtenerTipoCambio(IdMoneda, FechaEmision);
+        }
         public DataTable ComprasMetConsultarNotas(int IdProveedor) { return _Repositorio.ComprasMetConsultarNotas(IdProveedor); }
         public void ComprasMetAgregar(int Proveedor, int Concepto, string Serie, string Numero,
-            DateTime Emision, DateTime Vencimiento, int Moneda, decimal Cambio, decimal Monto)
+            DateTime Emision, DateTime Vencimiento, long Moneda, decimal Cambio, decimal Monto)
         {
             IdProveedor = Proveedor;
             IdConceptoProveedor = Concepto;
@@ -43,16 +47,16 @@ namespace CapaControlador_MovimientosProveedores
         public string Numero { get; set; }
         public DateTime FechaEmision { get; set; }
         public DateTime FechaVencimiento { get; set; }
-        public int IdMoneda { get; set; }
+        public long IdMoneda { get; set; }
         public decimal TipoCambio { get; set; }
         public decimal Monto { get; set; }
         public EstadoEntidad Estado { private get; set; }
 
         public string GrabarCambios()
         {
-            // Las notas registradas no se editan ni eliminan desde este proceso contable.
+            // Este proceso contable solo registra documentos.
             if (Estado != EstadoEntidad.Added)
-                throw new InvalidOperationException("Este proceso solo permite agregar notas de proveedor.");
+                throw new InvalidOperationException("Este proceso solo permite agregar documentos de proveedor.");
             ComprasMetValidar();
             var Nota = new ClsNotaProveedor {
                 IdProveedor = IdProveedor, IdConceptoProveedor = IdConceptoProveedor,
@@ -67,7 +71,7 @@ namespace CapaControlador_MovimientosProveedores
         public void ComprasMetValidar()
         {
             if (IdProveedor <= 0) throw new ArgumentException("Seleccione un proveedor.");
-            if (IdConceptoProveedor <= 0) throw new ArgumentException("Seleccione un tipo de nota.");
+            if (IdConceptoProveedor <= 0) throw new ArgumentException("Seleccione un concepto de proveedor.");
             Serie = (Serie ?? "").Trim();
             Numero = (Numero ?? "").Trim();
             if (Serie.Length == 0 || Serie.Length > 20) throw new ArgumentException("La serie es obligatoria y admite hasta 20 caracteres.");

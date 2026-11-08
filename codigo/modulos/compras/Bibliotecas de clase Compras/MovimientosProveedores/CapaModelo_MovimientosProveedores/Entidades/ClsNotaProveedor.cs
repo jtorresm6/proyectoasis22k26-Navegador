@@ -10,7 +10,7 @@ namespace CapaModelo_MovimientosProveedores.Entidades
         public string Numero { get; set; }
         public DateTime FechaEmision { get; set; }
         public DateTime FechaVencimiento { get; set; }
-        public int IdMoneda { get; set; }
+        public long IdMoneda { get; set; }
         public decimal TipoCambio { get; set; }
         public decimal Monto { get; set; }
 
