@@ -112,5 +112,26 @@
   <ItemGroup>
     <None Include="Resources\btn_consultarB.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_actualizarH.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_actualizar_historial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_inicio.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_anterior.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_siguiente.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_fin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_exportar.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
