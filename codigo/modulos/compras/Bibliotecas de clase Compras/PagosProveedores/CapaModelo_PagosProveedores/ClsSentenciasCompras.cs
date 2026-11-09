@@ -123,7 +123,7 @@ namespace CapaModelo_PagosProveedores
                             FORMAT(c.saldoActualCuentaPorPagar, 2)) AS descripcion
                 FROM tblCuentaPorPagar c
                INNER JOIN tblConceptoProveedor k ON k.idConceptoProveedor = c.idConceptoProveedor
-               INNER JOIN tblMoneda m ON m.idMoneda = c.idMoneda
+               INNER JOIN tblMoneda m ON m.Pk_Moneda = c.idMoneda
                WHERE c.idProveedor = ?
                  AND k.naturalezaConceptoProveedor = 'Cargo'
                  AND c.saldoActualCuentaPorPagar > 0
@@ -166,9 +166,10 @@ namespace CapaModelo_PagosProveedores
             @"SELECT idMetodoPago AS idMetodoPago, nombreMetodoPago AS nombre
                 FROM tblMetodoPago WHERE is_active = 1 ORDER BY nombreMetodoPago";
 
+        // tblMoneda (Bancos): llave Pk_Moneda y bandera is_active; se conservan los alias idMoneda/codigo
         public const string PagoMonedas =
-            @"SELECT idMoneda AS idMoneda, codigoMoneda AS codigo, nombreMoneda AS nombre
-                FROM tblMoneda WHERE activoMoneda = 1 ORDER BY codigoMoneda";
+            @"SELECT Pk_Moneda AS idMoneda, codigoMoneda AS codigo, nombreMoneda AS nombre
+                FROM tblMoneda WHERE is_active = 1 ORDER BY codigoMoneda";
 
         // Params: idProveedor
         public const string PagoNombreProveedor =
@@ -180,11 +181,12 @@ namespace CapaModelo_PagosProveedores
 
         // Params: codigo
         public const string PagoIdMonedaPorCodigo =
-            "SELECT idMoneda FROM tblMoneda WHERE codigoMoneda = ?";
+            "SELECT Pk_Moneda FROM tblMoneda WHERE codigoMoneda = ?";
 
         // Params: origen, destino, fecha
+        // tblTipoCambio (Bancos): llave Pk_TipoCambio
         public const string PagoTipoCambioVigente =
-            @"SELECT idTipoCambio, valorTipoCambio
+            @"SELECT Pk_TipoCambio, valorTipoCambio
                 FROM tblTipoCambio
                WHERE Fk_Moneda_Origen_Codigo = ?
                  AND Fk_Moneda_Destino_Codigo = ?

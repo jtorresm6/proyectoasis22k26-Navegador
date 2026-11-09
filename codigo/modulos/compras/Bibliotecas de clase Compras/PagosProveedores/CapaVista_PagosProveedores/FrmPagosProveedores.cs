@@ -94,7 +94,7 @@ namespace CapaVista_PagosProveedores
             }
         }
 
-        // ==================== LISTA DE PAGOS ====================
+        // LISTA DE PAGOS 
         private void ComprasMetCargarGrid()
         {
             try
@@ -206,7 +206,7 @@ namespace CapaVista_PagosProveedores
             ComprasMetEliminarPago(IdPago, NoPago);
         }
 
-        // ==================== FORMULARIO DE REGISTRO ====================
+        //  FORMULARIO DE REGISTRO 
         private void ComprasMetLimpiarFormulario()
         {
             _IdPagoEditando = 0;
@@ -463,7 +463,7 @@ namespace CapaVista_PagosProveedores
             return false;
         }
 
-        // ==================== DETALLE (DOCUMENTOS A PAGAR) ====================
+        //  DETALLE (DOCUMENTOS A PAGAR) 
         private void ComprasMetAgregarDocumentoClick(object Sender, EventArgs Evento)
         {
             string Clave = Convert.ToString(ComprasFuncValorCombo(ComprasCboFactura));
@@ -556,7 +556,7 @@ namespace CapaVista_PagosProveedores
             ComprasLblTotalAplicado.Text = TextoTotal;
         }
 
-        // ==================== GUARDAR / ELIMINAR ====================
+        //  GUARDAR / ELIMINAR
         private void ComprasMetGuardarClick(object Sender, EventArgs Evento)
         {
             DateTime Fecha;
@@ -634,7 +634,7 @@ namespace CapaVista_PagosProveedores
             }
         }
 
-        // ==================== EVENTOS DE CONTROLES ====================
+        // EVENTOS DE CONTROLES 
         private void ComprasMetFiltroCambio(object Sender, EventArgs Evento)
         {
             if (_Cargando)
@@ -772,7 +772,8 @@ namespace CapaVista_PagosProveedores
         {
             ComprasCboProveedor.SelectedIndexChanged += ComprasMetFiltroCambio;
             ComprasCboEstado.SelectedIndexChanged += ComprasMetFiltroCambio;
-            comprasUsrRangoFechas1.Leave += ComprasMetFiltroCambio;
+            // El control avisa con RangoCambiado cada vez que cambia Desde o Hasta
+            comprasUsrRangoFechas1.RangoCambiado += ComprasMetFiltroCambio;
             ComprasCboProveedorPago.SelectedIndexChanged += ComprasMetProveedorPagoCambio;
             ComprasCboFactura.SelectedIndexChanged += ComprasMetFacturaCambio;
             ComprasCboMoneda.SelectedIndexChanged += ComprasMetMonedaCambio;
@@ -823,8 +824,7 @@ namespace CapaVista_PagosProveedores
             Caja.Text = Texto;
         }
 
-        // Handlers vacíos: el Designer los tiene enlazados, por eso se conservan.
-        // Si los quitás, borrá también las líneas "+= new System.EventHandler(...)" en el Designer.
+       
         private void ComprasCboEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
 
