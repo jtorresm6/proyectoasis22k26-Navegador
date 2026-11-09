@@ -22,7 +22,10 @@ namespace CapaVista_Contabilidad
 
         private static readonly System.Collections.Generic.Dictionary<string, int> _Codigos = new System.Collections.Generic.Dictionary<string, int>
         {
-            { "FrmPolizasLocales", 10001 }
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 28/10/2026
+            { "FrmPolizas", 10001 },
+            { "FrmPolizasLocales", 10006 }
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 28/10/2026
         };
 
         internal static void ContabilidadMetPrepararVentana(Form Formulario, string Titulo, Size AreaCliente)

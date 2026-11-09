@@ -49,6 +49,10 @@ namespace CapaVista_Contabilidad
         private Button[] _BotonesCatalogos;
         private bool _CatalogosAbierto;
         private readonly Dictionary<int, Button> _BotonesMenu;
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+        // posición original de cada control del menú
+        private readonly Dictionary<Control, int> _PosicionesMenu = new Dictionary<Control, int>();
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
 
         public FrmMDIContabilidad() : this(1)
         {
@@ -87,6 +91,17 @@ namespace CapaVista_Contabilidad
             ContabilidadMetConfigurarEstadosMenu();
             ContabilidadPnlDashboard.Resize += (Remitente, Evento) => ContabilidadMetAcomodarDashboard();
             ContabilidadPnlInfo.Resize += (Remitente, Evento) => ContabilidadMetAcomodarInfo();
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+            foreach (Control Elemento in ContabilidadPnlNavegador.Controls)
+            {
+                if (Elemento != ContabilidadBtnCerrarSesion) _PosicionesMenu[Elemento] = Elemento.Top;
+                Elemento.MouseWheel += ContabilidadMetRuedaMenu;
+            }
+            ContabilidadPnlNavegador.MouseWheel += ContabilidadMetRuedaMenu;
+            ContabilidadVsbMenu.ValueChanged += (Remitente, Evento) => ContabilidadMetAcomodarMenu();
+            ContabilidadPnlNavegador.Resize += (Remitente, Evento) => ContabilidadMetAcomodarMenu();
+            ContabilidadMetAcomodarMenu();
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
         }
 
         private void ContabilidadMetCargarFormulario(object Remitente, EventArgs Evento)
@@ -261,7 +276,44 @@ namespace CapaVista_Contabilidad
                 Boton.Left = Izquierda;
             }
             ContabilidadBtnCatalogos.Invalidate();
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+            ContabilidadMetAcomodarMenu();
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
         }
+
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+        // Cerrar sesión va al final del menú; si no cabe, la barra de la izquierda mueve el menú
+        private void ContabilidadMetAcomodarMenu()
+        {
+            Button Ultimo = _CatalogosAbierto ? ContabilidadBtnCuentasModulo : ContabilidadBtnCatalogos;
+            int Visible = ContabilidadPnlNavegador.ClientSize.Height;
+            int Alto = ContabilidadBtnCerrarSesion.Height;
+            int TopCerrar = Math.Max(_PosicionesMenu[Ultimo] + Ultimo.Height + 12, Visible - Alto - 16);
+            int Contenido = TopCerrar + Alto + 16;
+            bool Desborda = Contenido > Visible && Visible > 0;
+            ContabilidadVsbMenu.Visible = Desborda;
+            int Desplazamiento = 0;
+            if (Desborda)
+            {
+                ContabilidadVsbMenu.Minimum = 0;
+                ContabilidadVsbMenu.Maximum = Contenido - 1;
+                ContabilidadVsbMenu.LargeChange = Visible;
+                if (ContabilidadVsbMenu.Value > Contenido - Visible) ContabilidadVsbMenu.Value = Contenido - Visible;
+                Desplazamiento = ContabilidadVsbMenu.Value;
+            }
+            foreach (KeyValuePair<Control, int> Posicion in _PosicionesMenu) Posicion.Key.Top = Posicion.Value - Desplazamiento;
+            ContabilidadBtnCerrarSesion.Top = TopCerrar - Desplazamiento;
+        }
+
+        // La rueda del mouse sobre el menú mueve la barra
+        private void ContabilidadMetRuedaMenu(object Remitente, MouseEventArgs Evento)
+        {
+            if (!ContabilidadVsbMenu.Visible) return;
+            int Maximo = ContabilidadVsbMenu.Maximum - ContabilidadVsbMenu.LargeChange + 1;
+            int Nuevo = ContabilidadVsbMenu.Value - Math.Sign(Evento.Delta) * ContabilidadVsbMenu.SmallChange * 3;
+            ContabilidadVsbMenu.Value = Math.Max(0, Math.Min(Maximo, Nuevo));
+        }
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
 
         private void ContabilidadMetAbrirPaises(object Remitente, EventArgs Evento)
         {

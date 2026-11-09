@@ -71,6 +71,7 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnCierreContable = new System.Windows.Forms.Button();
             this.ContabilidadBtnEstadosFinancieros = new System.Windows.Forms.Button();
             this.ContabilidadBtnCerrarSesion = new System.Windows.Forms.Button();
+            this.ContabilidadVsbMenu = new System.Windows.Forms.VScrollBar();
             this.ContabilidadBtnCatalogos = new System.Windows.Forms.Button();
             this.ContabilidadBtnPaises = new System.Windows.Forms.Button();
             this.ContabilidadBtnModulosContables = new System.Windows.Forms.Button();
@@ -148,11 +149,20 @@ namespace CapaVista_Contabilidad
             this.ContabilidadLblUsuario.Text = "Usuario: Sin sesión";
             this.ContabilidadPnlLateral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
             this.ContabilidadPnlLateral.Controls.Add(this.ContabilidadPnlNavegador);
+            this.ContabilidadPnlLateral.Controls.Add(this.ContabilidadVsbMenu);
             this.ContabilidadPnlLateral.Dock = System.Windows.Forms.DockStyle.Left;
             this.ContabilidadPnlLateral.Location = new System.Drawing.Point(0, 0);
             this.ContabilidadPnlLateral.Name = "ContabilidadPnlLateral";
             this.ContabilidadPnlLateral.Size = new System.Drawing.Size(302, 1022);
             this.ContabilidadPnlLateral.TabIndex = 0;
+            this.ContabilidadVsbMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.ContabilidadVsbMenu.Location = new System.Drawing.Point(2, 14);
+            this.ContabilidadVsbMenu.Name = "ContabilidadVsbMenu";
+            this.ContabilidadVsbMenu.Size = new System.Drawing.Size(12, 1014);
+            this.ContabilidadVsbMenu.SmallChange = 20;
+            this.ContabilidadVsbMenu.TabIndex = 1;
+            this.ContabilidadVsbMenu.Visible = false;
             this.ContabilidadPnlNavegador.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.ContabilidadPnlNavegador.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
@@ -250,7 +260,7 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnEstadosFinancieros.TabIndex = 5;
             this.ContabilidadBtnEstadosFinancieros.UseVisualStyleBackColor = false;
             this.ContabilidadBtnEstadosFinancieros.Click += new System.EventHandler(this.ContabilidadMetAbrirEstadosFinancieros);
-            this.ContabilidadBtnCerrarSesion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ContabilidadBtnCerrarSesion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.ContabilidadBtnCerrarSesion.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnCerrarSesion.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.botonmdi12;
             this.ContabilidadBtnCerrarSesion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -758,6 +768,7 @@ namespace CapaVista_Contabilidad
         private System.Windows.Forms.Button ContabilidadBtnCierreContable;
         private System.Windows.Forms.Button ContabilidadBtnEstadosFinancieros;
         private System.Windows.Forms.Button ContabilidadBtnCerrarSesion;
+        private System.Windows.Forms.VScrollBar ContabilidadVsbMenu;
         private System.Windows.Forms.Button ContabilidadBtnCatalogos;
         private System.Windows.Forms.Button ContabilidadBtnPaises;
         private System.Windows.Forms.Button ContabilidadBtnModulosContables;
