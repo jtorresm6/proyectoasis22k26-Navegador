@@ -1,4 +1,5 @@
-﻿using CapaModelo_MovimientosBancarios.Contratos;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using CapaModelo_MovimientosBancarios.Contratos;
 using CapaModelo_MovimientosBancarios.Entidades;
 using System;
 using System.Collections.Generic;

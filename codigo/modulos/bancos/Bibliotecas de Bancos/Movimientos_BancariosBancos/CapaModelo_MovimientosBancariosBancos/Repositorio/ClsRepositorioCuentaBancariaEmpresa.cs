@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
@@ -12,7 +13,6 @@ namespace CapaModelo_MovimientosBancarios.Repositorio
 {
     public class ClsRepositorioCuentaBancariaEmpresa : ClsSentencias, IRepositorioCuentaBancariaEmpresa
     {
-        // Obtener cuentas empresariales
         public IEnumerable<ClsCuentaBancariaEmpresa>
             BancosMetObtenerCuentasEmpresa()
         {
@@ -53,14 +53,11 @@ namespace CapaModelo_MovimientosBancarios.Repositorio
 
             return Cuentas;
         }
-
-        // Calcular saldo de la cuenta empresarial
         public decimal BancosMetObtenerSaldoDisponible(
             long IdCuentaBancaria)
         {
             if (IdCuentaBancaria <= 0)
-                throw new ArgumentException(
-                    "El identificador de la cuenta no es válido.");
+                throw new ArgumentException("El identificador de la cuenta no es válido.");
 
             string Consulta = @"
                 SELECT
@@ -90,21 +87,13 @@ namespace CapaModelo_MovimientosBancarios.Repositorio
                     }
                 };
 
-            DataTable Tabla = BancosMetEjecucionConsulta(
-                Consulta,
-                CommandType.Text,
-                Parametros
-            );
+            DataTable Tabla = BancosMetEjecucionConsulta(Consulta, CommandType.Text, Parametros);
 
-            if (Tabla.Rows.Count == 0)
-                throw new InvalidOperationException(
-                    "La cuenta bancaria no existe o está inactiva.");
+            if (Tabla.Rows.Count == 0) throw new InvalidOperationException("La cuenta bancaria no existe o está inactiva.");
 
-            return Convert.ToDecimal(
-                Tabla.Rows[0]["SaldoDisponible"]);
+            return Convert.ToDecimal(Tabla.Rows[0]["SaldoDisponible"]);
         }
 
-        // Métodos heredados del repositorio genérico
         public IEnumerable<ClsCuentaBancariaEmpresa> BancosMetObtenerTodos()
         {
             return BancosMetObtenerCuentasEmpresa();
@@ -112,20 +101,17 @@ namespace CapaModelo_MovimientosBancarios.Repositorio
 
         public int BancosMetAgregar(ClsCuentaBancariaEmpresa Entidad)
         {
-            throw new NotSupportedException(
-                "Las cuentas bancarias se registran desde su módulo.");
+            throw new NotSupportedException("Las cuentas bancarias se registran desde su módulo.");
         }
 
         public int BancosMetEditar(ClsCuentaBancariaEmpresa Entidad)
         {
-            throw new NotSupportedException(
-                "Este módulo no modifica cuentas empresariales.");
+            throw new NotSupportedException("Este módulo no modifica cuentas empresariales.");
         }
 
         public int BancosMetRemover(ClsCuentaBancariaEmpresa Entidad)
         {
-            throw new NotSupportedException(
-                "Este módulo no elimina cuentas empresariales.");
+            throw new NotSupportedException("Este módulo no elimina cuentas empresariales.");
         }
     }
 }

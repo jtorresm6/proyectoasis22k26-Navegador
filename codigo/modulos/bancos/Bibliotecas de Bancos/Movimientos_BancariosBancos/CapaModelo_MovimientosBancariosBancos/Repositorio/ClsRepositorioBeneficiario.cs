@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -98,11 +99,7 @@ namespace CapaModelo_MovimientosBancarios.Repositorio
               AND m.is_active = 1
             ORDER BY b.nombreBanco, c.numeroCuentaBancariaTercero;";
 
-            DataTable Tabla = BancosMetEjecucionConsulta(
-                Consulta,
-                CommandType.Text
-            );
-
+            DataTable Tabla = BancosMetEjecucionConsulta(Consulta,CommandType.Text);
             List<ClsCuentaBancariaTercero> Cuentas = new List<ClsCuentaBancariaTercero>();
             foreach (DataRow Fila in Tabla.Rows)
             {
