@@ -110,6 +110,7 @@ namespace CapaModelo_PagosProveedores
                  AND idConceptoProveedor = ?";
 
         // Params: idProveedor
+        // tblMoneda (Bancos): la llave se renombró a idMoneda (V1.1)
         public const string PagoCuentasPendientes =
             @"SELECT c.serieDocumentoCuentaPorPagar AS serie,
                      c.numeroDocumentoCuentaPorPagar AS numero,
@@ -123,7 +124,7 @@ namespace CapaModelo_PagosProveedores
                             FORMAT(c.saldoActualCuentaPorPagar, 2)) AS descripcion
                 FROM tblCuentaPorPagar c
                INNER JOIN tblConceptoProveedor k ON k.idConceptoProveedor = c.idConceptoProveedor
-               INNER JOIN tblMoneda m ON m.Pk_Moneda = c.idMoneda
+               INNER JOIN tblMoneda m ON m.idMoneda = c.idMoneda
                WHERE c.idProveedor = ?
                  AND k.naturalezaConceptoProveedor = 'Cargo'
                  AND c.saldoActualCuentaPorPagar > 0
@@ -166,9 +167,9 @@ namespace CapaModelo_PagosProveedores
             @"SELECT idMetodoPago AS idMetodoPago, nombreMetodoPago AS nombre
                 FROM tblMetodoPago WHERE is_active = 1 ORDER BY nombreMetodoPago";
 
-        // tblMoneda (Bancos): llave Pk_Moneda y bandera is_active; se conservan los alias idMoneda/codigo
+        // tblMoneda (Bancos): llave idMoneda (antes Pk_Moneda) y bandera is_active
         public const string PagoMonedas =
-            @"SELECT Pk_Moneda AS idMoneda, codigoMoneda AS codigo, nombreMoneda AS nombre
+            @"SELECT idMoneda AS idMoneda, codigoMoneda AS codigo, nombreMoneda AS nombre
                 FROM tblMoneda WHERE is_active = 1 ORDER BY codigoMoneda";
 
         // Params: idProveedor
@@ -181,12 +182,13 @@ namespace CapaModelo_PagosProveedores
 
         // Params: codigo
         public const string PagoIdMonedaPorCodigo =
-            "SELECT Pk_Moneda FROM tblMoneda WHERE codigoMoneda = ?";
+            "SELECT idMoneda FROM tblMoneda WHERE codigoMoneda = ?";
 
-        // Params: origen, destino, fecha
-        // tblTipoCambio (Bancos): llave Pk_TipoCambio
+        // Params: idMonedaOrigen, idMonedaDestino, fecha
+        // Las columnas Fk_Moneda_*_Codigo guardan el ID numérico de la moneda (no el código de 3 letras).
+        // tblTipoCambio (Bancos): llave idTipoCambio (antes Pk_TipoCambio)
         public const string PagoTipoCambioVigente =
-            @"SELECT Pk_TipoCambio, valorTipoCambio
+            @"SELECT idTipoCambio, valorTipoCambio
                 FROM tblTipoCambio
                WHERE Fk_Moneda_Origen_Codigo = ?
                  AND Fk_Moneda_Destino_Codigo = ?
