@@ -38,7 +38,7 @@ namespace CapaVista_Seguridad.frmReportes
 
         private void FrmReporteMantenimientoAplicacioncs_Load(object sender, EventArgs e)
         {
-            ReportDataSource reportDataSource = new ReportDataSource("RpReporteMantenimientoAplicacion", aplicacion.SeguridadMetObtenerTodos());
+            ReportDataSource reportDataSource = new ReportDataSource("DsMantenimientoAplicacion", aplicacion.SeguridadMetObtenerTodos());
             reportViewer1.LocalReport.ReportEmbeddedResource = "CapaVista_Seguridad.Reportes.RpReporteMantenimientoAplicacion.rdlc";
             reportViewer1.LocalReport.DataSources.Clear();
             reportViewer1.LocalReport.DataSources.Add(reportDataSource);
