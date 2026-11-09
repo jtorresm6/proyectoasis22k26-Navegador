@@ -184,8 +184,9 @@ namespace CapaModelo_PagosProveedores
             "SELECT Pk_Moneda FROM tblMoneda WHERE codigoMoneda = ?";
 
         // Params: origen, destino, fecha
+        // tblTipoCambio (Bancos): llave Pk_TipoCambio
         public const string PagoTipoCambioVigente =
-            @"SELECT idTipoCambio, valorTipoCambio
+            @"SELECT Pk_TipoCambio, valorTipoCambio
                 FROM tblTipoCambio
                WHERE Fk_Moneda_Origen_Codigo = ?
                  AND Fk_Moneda_Destino_Codigo = ?
