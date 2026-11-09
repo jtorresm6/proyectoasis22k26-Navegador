@@ -10,16 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-<<<<<<< HEAD
-//using CapaVista_Ventas;
 using CapaVista_Logistica.Formularios;
-=======
+
 using CapaVista_Ventas;
 using CapaVista_Logistica.Formularios;
 using CapaVista_Consultas;
 using CapaVista_Contabilidad;
 using CapaVista_Compras;
->>>>>>> upstream/main
+
 
 /*
  * ============================================================
@@ -88,19 +86,13 @@ namespace CapaVista_Seguridad
                   case "Logistica":
                     var MDILogistica = new CapaVista_Logistica.Formularios.FrmMDILogistica();
                       MDILogistica.LogisticaMetActualizarInfoUsuario(
-<<<<<<< HEAD
                      ClsSesionSeguridad.NombreEmpleado,
                      ClsSesionSeguridad.SeguridadMetRolesComoTexto());
                       principal = MDILogistica;
                       break;
-=======
-                      ClsSesionSeguridad.NombreEmpleado,
-                      ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                       principal = MDILogistica;
-                       break;
->>>>>>> upstream/main
 
-                    case "Compras":
+
+                  case "Compras":
                         var MDICompras = new FrmMDICompras();
                         MDICompras.ComprasMetActualizarInfoUsuario(
                         ClsSesionSeguridad.NombreEmpleado,
@@ -108,11 +100,11 @@ namespace CapaVista_Seguridad
                         principal = MDICompras;
                         break;
 
-                  case "Ventas":
-                     var mdiVentas = new CapaVista_Ventas.FrmMdiVentas(
-                          ClsSesionSeguridad.NombreEmpleado,
-                            ClsSesionSeguridad.SeguridadMetRolesComoTexto(), ClsSesionSeguridad.IdUsuario);
-                           principal = mdiVentas;
+                    case "Ventas":
+                        var mdiVentas = new CapaVista_Ventas.FrmMdiVentas(
+                        ClsSesionSeguridad.NombreEmpleado,
+                        ClsSesionSeguridad.SeguridadMetRolesComoTexto(), ClsSesionSeguridad.IdUsuario);
+                        principal = mdiVentas;
                         break;
 
                     case "Bancos":
