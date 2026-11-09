@@ -41,14 +41,29 @@
     <Reference Include="CapaModelo_Navegador, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaModelo_Navegador.dll</HintPath>
     </Reference>
+    <Reference Include="CapaVista_Bancos">
+      <HintPath>..\..\..\..\..\..\proyectoasis22k26\codigo\modulos\bancos\Bibliotecas de Bancos\Bancos\CapaVista_Bancos\bin\Debug\CapaVista_Bancos.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Compras">
+      <HintPath>..\..\..\..\modulos\compras\Compras\CapaVista_Compras\bin\Debug\CapaVista_Compras.dll</HintPath>
+    </Reference>
     <Reference Include="CapaVista_Consultas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\consultas\Consultas\CapaVista_Consultas\bin\Debug\CapaVista_Consultas.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Contabilidad">
+      <HintPath>..\..\..\..\modulos\contabilidad\Contabilidad\CapaVista_Contabilidad\bin\Debug\CapaVista_Contabilidad.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Logistica">
       <HintPath>..\..\..\..\modulos\Logistica\Logistica\CapaVista_Logistica\bin\Debug\CapaVista_Logistica.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Navegador">
       <HintPath>..\..\..\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Rrhh">
+      <HintPath>..\..\..\..\modulos\rrhh\Bibliotecas de clase RRHH\Recursos Humanos\CapaVista_Rrhh\bin\Debug\CapaVista_Rrhh.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Ventas">
+      <HintPath>..\..\..\..\modulos\ventas\VentasYCxC\CapaVista_Ventas\bin\Debug\CapaVista_Ventas.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
@@ -119,9 +134,7 @@
     <Compile Include="FrmMantenimientoAplicacionNavegador.Designer.cs">
       <DependentUpon>FrmMantenimientoAplicacionNavegador.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmMantenimientoEmpleado.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FrmMantenimientoEmpleado.cs" />
     <Compile Include="FrmMantenimientoEmpleado.Designer.cs">
       <DependentUpon>FrmMantenimientoEmpleado.cs</DependentUpon>
     </Compile>
@@ -143,11 +156,11 @@
     <Compile Include="FrmEmpleadosNavegador.Designer.cs">
       <DependentUpon>FrmEmpleadosNavegador.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmModulosNavegador.cs">
+    <Compile Include="FrmMantenimientoModuloNavegador.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmModulosNavegador.Designer.cs">
-      <DependentUpon>FrmModulosNavegador.cs</DependentUpon>
+    <Compile Include="FrmMantenimientoModuloNavegador.Designer.cs">
+      <DependentUpon>FrmMantenimientoModuloNavegador.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmPerfilesNavegador.cs">
       <SubType>Form</SubType>
@@ -278,8 +291,8 @@
     <EmbeddedResource Include="FrmEmpleadosNavegador.resx">
       <DependentUpon>FrmEmpleadosNavegador.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmModulosNavegador.resx">
-      <DependentUpon>FrmModulosNavegador.cs</DependentUpon>
+    <EmbeddedResource Include="FrmMantenimientoModuloNavegador.resx">
+      <DependentUpon>FrmMantenimientoModuloNavegador.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPerfilesNavegador.resx">
       <DependentUpon>FrmPerfilesNavegador.cs</DependentUpon>
