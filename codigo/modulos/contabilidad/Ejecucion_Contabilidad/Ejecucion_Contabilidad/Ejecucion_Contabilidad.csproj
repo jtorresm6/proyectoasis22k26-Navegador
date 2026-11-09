@@ -13,7 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <UseSharedCompilation>false</UseSharedCompilation>
-    <ApplicationIcon>..\..\Contabilidad\CapaVista_Contabilidad\Resources\Icono-Contabilidad.ico</ApplicationIcon>
+    <ApplicationIcon>..\..\Bibliotecas de Contabilidad\Contabilidad\CapaVista_Contabilidad\Resources\Icono-Contabilidad.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -39,7 +39,7 @@
   <ItemGroup>
     <Reference Include="CapaVista_Contabilidad">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Contabilidad\CapaVista_Contabilidad\bin\$(Configuration)\CapaVista_Contabilidad.dll</HintPath>
+      <HintPath>..\..\Bibliotecas de Contabilidad\Contabilidad\CapaVista_Contabilidad\bin\$(Configuration)\CapaVista_Contabilidad.dll</HintPath>
     </Reference>
     <Reference Include="CapaControlador_Seguridad">
       <SpecificVersion>False</SpecificVersion>

@@ -17,7 +17,9 @@
 setlocal EnableDelayedExpansion
 chcp 65001 >nul
 
-set "MARCA=codigo\modulos\contabilidad\Contabilidad\Contabilidad.sln"
+:: Inicio de cambio: Gabriel Andre Guillen Pocon - 0901-23-1998 - 09/11/2026
+set "MARCA=codigo\modulos\contabilidad\Bibliotecas de Contabilidad\Contabilidad\Contabilidad.sln"
+:: Fin de cambio: Gabriel Andre Guillen Pocon - 0901-23-1998 - 09/11/2026
 set "RAIZ="
 if not "%~1"=="" if exist "%~f1\%MARCA%" set "RAIZ=%~f1"
 if not defined RAIZ call :subir "%~dp0."
@@ -36,6 +38,9 @@ if not defined RAIZ (
 
 set "C=%RAIZ%\codigo\componentes"
 set "M=%RAIZ%\codigo\modulos\contabilidad"
+:: Inicio de cambio: Gabriel Andre Guillen Pocon - 0901-23-1998 - 09/11/2026
+set "B=%M%\Bibliotecas de Contabilidad"
+:: Fin de cambio: Gabriel Andre Guillen Pocon - 0901-23-1998 - 09/11/2026
 
 set "MSB=C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe"
 if not exist "%MSB%" (
@@ -78,12 +83,12 @@ call :compilar "%MOD%\compras\MovimientosProveedores\CapaModelo_MovimientosProve
 call :compilar "%MOD%\compras\OrdenesCompra\CapaModelo_OrdenesCompra\CapaModelo_OrdenesCompra.csproj" || goto :fallo
 call :compilar "%MOD%\compras\PagosProveedores\CapaModelo_PagosProveedores\CapaModelo_PagosProveedores.csproj" || goto :fallo
 call :compilar "%MOD%\compras\Polizas\CapaModelo_Polizas\CapaModelo_Polizas.csproj" || goto :fallo
-call :compilar "%M%\Contabilidad\CapaModelo_Contabilidad\CapaModelo_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\ActivosFijos_Contabilidad\CapaModelo_ActivosFijos_Contabilidad\CapaModelo_ActivosFijos_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\CierreContable_Contabilidad\CapaModelo_CierreContable_Contabilidad\CapaModelo_CierreContable_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\EstadosFinancieros_Contabilidad\CapaModelo_EstadosFinancieros_Contabilidad\CapaModelo_EstadosFinancieros_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\PolizasCuentas_Contabilidad\CapaModelo_PolizasCuentas_Contabilidad\CapaModelo_PolizasCuentas_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\Presupuestos_Contabilidad\CapaModelo_Presupuestos_Contabilidad\CapaModelo_Presupuestos_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\Contabilidad\CapaModelo_Contabilidad\CapaModelo_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\ActivosFijos_Contabilidad\CapaModelo_ActivosFijos_Contabilidad\CapaModelo_ActivosFijos_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\CierreContable_Contabilidad\CapaModelo_CierreContable_Contabilidad\CapaModelo_CierreContable_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\EstadosFinancieros_Contabilidad\CapaModelo_EstadosFinancieros_Contabilidad\CapaModelo_EstadosFinancieros_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\PolizasCuentas_Contabilidad\CapaModelo_PolizasCuentas_Contabilidad\CapaModelo_PolizasCuentas_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\Presupuestos_Contabilidad\CapaModelo_Presupuestos_Contabilidad\CapaModelo_Presupuestos_Contabilidad.csproj" || goto :fallo
 call :compilar "%MOD%\Logistica\CierreInventario_Logistica\CapaModelo_CierreInventario_Logistica\CapaModelo_CierreInventario_Logistica.csproj" || goto :fallo
 call :compilar "%MOD%\Logistica\Inventario_Logistica\CapaModelo_Inventario_Logistica\CapaModelo_Inventario_Logistica.csproj" || goto :fallo
 call :compilar "%MOD%\Logistica\Logistica\CapaModelo_Logistica\CapaModelo_Logistica.csproj" || goto :fallo
@@ -135,12 +140,12 @@ call :compilar "%MOD%\compras\MovimientosProveedores\CapaControlador_Movimientos
 call :compilar "%MOD%\compras\OrdenesCompra\CapaControlador_OrdenesCompra\CapaControlador_OrdenesCompra.csproj" || goto :fallo
 call :compilar "%MOD%\compras\PagosProveedores\CapaControlador_PagosProveedores\CapaControlador_PagosProveedores.csproj" || goto :fallo
 call :compilar "%MOD%\compras\Polizas\CapaControlador_Polizas\CapaControlador_Polizas.csproj" || goto :fallo
-call :compilar "%M%\Contabilidad\CapaControlador_Contabilidad\CapaControlador_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\ActivosFijos_Contabilidad\CapaControlador_ActivosFijos_Contabilidad\CapaControlador_ActivosFijos_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\PolizasCuentas_Contabilidad\CapaControlador_PolizasCuentas_Contabilidad\CapaControlador_PolizasCuentas_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\CierreContable_Contabilidad\CapaControlador_CierreContable_Contabilidad\CapaControlador_CierreContable_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\EstadosFinancieros_Contabilidad\CapaControlador_EstadosFinancieros_Contabilidad\CapaControlador_EstadosFinancieros_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\Presupuestos_Contabilidad\CapaControlador_Presupuestos_Contabilidad\CapaControlador_Presupuestos_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\Contabilidad\CapaControlador_Contabilidad\CapaControlador_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\ActivosFijos_Contabilidad\CapaControlador_ActivosFijos_Contabilidad\CapaControlador_ActivosFijos_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\PolizasCuentas_Contabilidad\CapaControlador_PolizasCuentas_Contabilidad\CapaControlador_PolizasCuentas_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\CierreContable_Contabilidad\CapaControlador_CierreContable_Contabilidad\CapaControlador_CierreContable_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\EstadosFinancieros_Contabilidad\CapaControlador_EstadosFinancieros_Contabilidad\CapaControlador_EstadosFinancieros_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\Presupuestos_Contabilidad\CapaControlador_Presupuestos_Contabilidad\CapaControlador_Presupuestos_Contabilidad.csproj" || goto :fallo
 call :compilar "%MOD%\Logistica\CierreInventario_Logistica\CapaControlador_CierreInventario_Logistica\CapaControlador_CierreInventario_Logistica.csproj" || goto :fallo
 call :compilar "%MOD%\Logistica\Inventario_Logistica\CapaControlador_Inventario_Logistica\CapaControlador_Inventario_Logistica.csproj" || goto :fallo
 call :compilar "%MOD%\Logistica\Logistica\CapaControlador_Logistica\CapaControlador_Logistica.csproj" || goto :fallo
@@ -195,12 +200,12 @@ call :compilar "%MOD%\compras\OrdenesCompra\CapaVista_OrdenesCompra\CapaVista_Or
 call :compilar "%MOD%\compras\PagosProveedores\CapaVista_PagosProveedores\CapaVista_PagosProveedores.csproj" || goto :fallo
 call :compilar "%MOD%\compras\Polizas\CapaVista_Polizas\CapaVista_Polizas.csproj" || goto :fallo
 call :compilar "%MOD%\compras\Compras\CapaVista_Compras\CapaVista_Compras.csproj" || goto :fallo
-call :compilar "%M%\ActivosFijos_Contabilidad\CapaVista_ActivosFijos_Contabilidad\CapaVista_ActivosFijos_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\CierreContable_Contabilidad\CapaVista_CierreContable_Contabilidad\CapaVista_CierreContable_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\EstadosFinancieros_Contabilidad\CapaVista_EstadosFinancieros_Contabilidad\CapaVista_EstadosFinancieros_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\PolizasCuentas_Contabilidad\CapaVista_PolizasCuentas_Contabilidad\CapaVista_PolizasCuentas_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\Presupuestos_Contabilidad\CapaVista_Presupuestos_Contabilidad\CapaVista_Presupuestos_Contabilidad.csproj" || goto :fallo
-call :compilar "%M%\Contabilidad\CapaVista_Contabilidad\CapaVista_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\ActivosFijos_Contabilidad\CapaVista_ActivosFijos_Contabilidad\CapaVista_ActivosFijos_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\CierreContable_Contabilidad\CapaVista_CierreContable_Contabilidad\CapaVista_CierreContable_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\EstadosFinancieros_Contabilidad\CapaVista_EstadosFinancieros_Contabilidad\CapaVista_EstadosFinancieros_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\PolizasCuentas_Contabilidad\CapaVista_PolizasCuentas_Contabilidad\CapaVista_PolizasCuentas_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\Presupuestos_Contabilidad\CapaVista_Presupuestos_Contabilidad\CapaVista_Presupuestos_Contabilidad.csproj" || goto :fallo
+call :compilar "%B%\Contabilidad\CapaVista_Contabilidad\CapaVista_Contabilidad.csproj" || goto :fallo
 call :compilar "%MOD%\Logistica\CierreInventario_Logistica\CapaVista_CierreInventario_Logistica\CapaVista_CierreInventario_Logistica.csproj" || goto :fallo
 call :compilar "%MOD%\Logistica\Enlace_OtrosModulos_Logistica\CapaVista_Enlace_Logistica\CapaVista_Enlace_Logistica.csproj" || goto :fallo
 call :compilar "%MOD%\Logistica\Inventario_Logistica\CapaVista_Inventario_Logistica\CapaVista_Inventario_Logistica.csproj" || goto :fallo
