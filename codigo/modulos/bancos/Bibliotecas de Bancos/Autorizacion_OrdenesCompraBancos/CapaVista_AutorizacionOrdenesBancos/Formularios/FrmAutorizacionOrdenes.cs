@@ -1,5 +1,6 @@
 ﻿using CapaControlador_AutorizacionOrdenes;
 using CapaControlador_AutorizacionOrdenes.Modelos_de_controladores;
+using CapaVista_AutorizacionOrdenes.frmReportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -55,6 +56,8 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             BancosMetAplicarColorSeleccion(BancosDgvAsignacionCuenta);
             BancosMetEstablecerFuente(BancosDgvOrdenesPendientes);
             BancosMetEstablecerFuente(BancosDgvAsignacionCuenta);
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = new Point(290, 0);
         }
 
         private void BancosMetListaOrdenesPendientes()
@@ -180,9 +183,16 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
                 }
 
                 decimal Monto;
+
                 if (!decimal.TryParse(BancosTxtMontoAsignado.Text, out Monto) || Monto <= 0)
                 {
                     MessageBox.Show("Ingrese un monto asignado válido");
+                    return;
+                }
+
+                if (Monto != Math.Round(Monto, 2))
+                {
+                    MessageBox.Show("El monto solo puede tener 2 decimales");
                     return;
                 }
 
@@ -509,6 +519,12 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             BancosMetCargarCombos();
             BancosMetListaOrdenesPendientes();
             BancosMetReinicio();
+        }
+
+        private void BancosBtnReporte_Click(object sender, EventArgs e)
+        {
+            FrmReporteAutorizacionOrdenCompra reporte = new FrmReporteAutorizacionOrdenCompra();
+            reporte.Show();
         }
     }
 }

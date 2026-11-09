@@ -42,6 +42,7 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
 
         private List<ClsEvidenciaFondos> _Evidencias;
         private List<ClsAutorizacionDetalle> _Detalles;
+        private List<ClsModeloAutorizacionOrdenCompra> _ListaAutorizacionOrdenCompra;
         private ClsRepositorioAutorizacionOrdenCompra _RepositorioAutorizacionOrdenCompra;
 
         public long IdAutorizacionOrden { get => _IdAutorizacionOrden; set => _IdAutorizacionOrden = value; }
@@ -77,6 +78,28 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
         {
             _Evidencias = new List<ClsEvidenciaFondos>();
             _Detalles = new List<ClsAutorizacionDetalle>();
+        }
+        public List<ClsModeloAutorizacionOrdenCompra> BancosMetObtenerTodos()
+        {
+            var DatosAutorizacionOrdenCompra = _RepositorioAutorizacionOrdenCompra.BancosMetObtenerTodos();
+            _ListaAutorizacionOrdenCompra = new List<ClsModeloAutorizacionOrdenCompra>();
+            foreach (ClsAutorizacionOrdenCompra Item in DatosAutorizacionOrdenCompra)
+            {
+                _ListaAutorizacionOrdenCompra.Add(new ClsModeloAutorizacionOrdenCompra
+                {
+                    _IdAutorizacionOrden = Item.IdAutorizacionOrden,
+                    _IdOrdenCompra = Item.IdOrdenCompra,
+                    _IdEmpresaAutorizacionOrden = Item.IdEmpresaAutorizacionOrden,
+                    _EstadoAutorizacionOrden = Item.EstadoAutorizacionOrden,
+                    _IdUsuarioAutoriza = Item.IdUsuarioAutoriza,
+                    _FechaDecisionAutorizacionOrden = Item.FechaDecisionAutorizacionOrden,
+                    _ComentarioAutorizacionOrden = Item.ComentarioAutorizacionOrden,
+                    _MotivoRechazoAutorizacionOrden = Item.MotivoRechazoAutorizacionOrden,
+                    _CreatedAt = Item.CreatedAt,
+                    _UpdatedAt = Item.UpdatedAt
+                });
+            }
+            return _ListaAutorizacionOrdenCompra;
         }
 
         public void BancosMetAgregarCuenta(ClsModeloCuentaDisponible Cuenta, long IdMonedaOrden, decimal Monto)

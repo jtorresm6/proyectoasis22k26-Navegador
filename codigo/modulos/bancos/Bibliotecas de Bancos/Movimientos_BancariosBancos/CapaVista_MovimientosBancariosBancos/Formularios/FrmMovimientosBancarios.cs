@@ -28,11 +28,7 @@ namespace CapaVista_MovimientosBancarios.Formularios
             MostrarFormulario(new FrmMovimientos());
         }
 
-        private void BancosBtnCheques_Click(object sender, EventArgs e)
-        {
-            MostrarFormulario(new FrmCheques());
-        }
-        private void MostrarFormulario(Form frm)
+        public void MostrarFormulario(Form frm)
         {
             BancosScContenedor.Panel2.Controls.Clear();
             frm.TopLevel = false;

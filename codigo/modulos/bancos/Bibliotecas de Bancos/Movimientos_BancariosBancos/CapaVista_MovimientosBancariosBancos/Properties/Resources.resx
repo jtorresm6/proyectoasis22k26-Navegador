@@ -130,6 +130,9 @@
   <data name="bancos_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\bancos_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FondoAutorizacionModulo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FondoAutorizacionModulo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="movbac_butti3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\movbac_butti3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -139,14 +142,23 @@
   <data name="btn_reporteB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\btn_reporteB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btn_ayudaB1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\btn_ayudaB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btn_ayudaB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\btn_ayudaB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="butti3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\butti3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="movbac_btn3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\movbac_btn3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="movbac_btn1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\movbac_btn1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="butti1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\butti1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="movbac_contenedor1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\movbac_contenedor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -163,7 +175,7 @@
   <data name="movbac_navegador" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\movbac_navegador.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btn_ayudaB1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resouces\btn_ayudaB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="butti31" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\butti3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
