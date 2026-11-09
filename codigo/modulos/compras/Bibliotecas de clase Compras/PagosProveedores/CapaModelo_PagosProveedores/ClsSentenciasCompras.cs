@@ -181,7 +181,7 @@ namespace CapaModelo_PagosProveedores
 
         // Params: codigo
         public const string PagoIdMonedaPorCodigo =
-            "SELECT idMoneda FROM tblMoneda WHERE codigoMoneda = ?";
+            "SELECT Pk_Moneda FROM tblMoneda WHERE codigoMoneda = ?";
 
         // Params: origen, destino, fecha
         public const string PagoTipoCambioVigente =
