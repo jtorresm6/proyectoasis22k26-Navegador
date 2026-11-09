@@ -1,4 +1,5 @@
-﻿using CapaControlador_MovimientosBancarios;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using CapaControlador_MovimientosBancarios;
 using CapaControlador_MovimientosBancarios.Modelo_de_Controladores;
 using CapaVista_MovimientosBancarios.Formularios;
 using System;
@@ -197,20 +198,16 @@ namespace CapaVista_MovimientosBancarios.Formularios
 
         private void BancosMetCargarCuentasTercero(string TipoBeneficiario,long IdBeneficiario)
         {
-            // Limpiamos la cuenta anterior.
             BancosCbCuentaTercero.DataSource = null;
             BancosCbCuentaTercero.Items.Clear();
             BancosCbCuentaTercero.Enabled = false;
 
-            // Consultamos las cuentas mediante el controlador.
             DataTable Tabla = _ControladorBeneficiario.BancosMetObtenerCuentasTerceroTabla(TipoBeneficiario, IdBeneficiario);
 
-            // Configuramos el ComboBox.
             BancosCbCuentaTercero.DisplayMember = "Descripcion";
             BancosCbCuentaTercero.ValueMember = "ID";
             BancosCbCuentaTercero.DataSource = Tabla;
 
-            // Evitamos seleccionar una cuenta automáticamente.
             BancosCbCuentaTercero.SelectedIndex = -1;
             BancosCbCuentaTercero.Enabled = Tabla.Rows.Count > 0;
         }
@@ -223,8 +220,7 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 BancosCbCuentaEmpresa.DataSource = null;
                 BancosTxtSaldoDisponible.Clear();
 
-                DataTable Tabla = _ControladorCuentaEmpresa
-                    .BancosMetObtenerCuentasEmpresaTabla();
+                DataTable Tabla = _ControladorCuentaEmpresa.BancosMetObtenerCuentasEmpresaTabla();
 
                 BancosCbCuentaEmpresa.DisplayMember = "Descripcion";
                 BancosCbCuentaEmpresa.ValueMember = "ID";
@@ -239,46 +235,28 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 BancosCbCuentaEmpresa.Enabled = false;
                 BancosTxtSaldoDisponible.Clear();
 
-                MessageBox.Show(
-                    "No se pudieron cargar las cuentas empresariales:\n"
-                    + Ex.Message,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MessageBox.Show("No se pudieron cargar las cuentas empresariales:\n" + Ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void BancosCbCuentaEmpresa_SelectionChangeCommitted(object sender, EventArgs e)
         {
             BancosTxtSaldoDisponible.Clear();
 
-            if (BancosCbCuentaEmpresa.SelectedIndex < 0 ||
-                BancosCbCuentaEmpresa.SelectedValue == null)
+            if (BancosCbCuentaEmpresa.SelectedIndex < 0 ||BancosCbCuentaEmpresa.SelectedValue == null)
             {
                 return;
             }
 
             try
             {
-                long IdCuentaBancaria = Convert.ToInt64(
-                    BancosCbCuentaEmpresa.SelectedValue
-                );
+                long IdCuentaBancaria = Convert.ToInt64(BancosCbCuentaEmpresa.SelectedValue);
 
-                decimal SaldoDisponible = _ControladorCuentaEmpresa
-                    .BancosMetObtenerSaldoDisponible(IdCuentaBancaria);
-
-                BancosTxtSaldoDisponible.Text =
-                    SaldoDisponible.ToString("N2");
+                decimal SaldoDisponible = _ControladorCuentaEmpresa.BancosMetObtenerSaldoDisponible(IdCuentaBancaria);
+                BancosTxtSaldoDisponible.Text = SaldoDisponible.ToString("N2");
             }
             catch (Exception Ex)
             {
-                MessageBox.Show(
-                    "No se pudo obtener el saldo de la cuenta:\n"
-                    + Ex.Message,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MessageBox.Show("No se pudo obtener el saldo de la cuenta:\n" + Ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -312,14 +290,11 @@ namespace CapaVista_MovimientosBancarios.Formularios
         {
             List<string> Errores = new List<string>();
 
-            // 1. CONCEPTO BANCARIO
-            if (_IdConceptoSeleccionado <= 0 ||
-                string.IsNullOrWhiteSpace(BancosTxtConcepto.Text))
+            if (_IdConceptoSeleccionado <= 0 || string.IsNullOrWhiteSpace(BancosTxtConcepto.Text))
             {
                 Errores.Add("Debe seleccionar un concepto bancario.");
             }
 
-            // 2. NATURALEZA DEL MOVIMIENTO
             string Naturaleza = BancosTxtTipoConc.Text.Trim().ToUpperInvariant();
 
             if (Naturaleza != "INGRESO" && Naturaleza != "EGRESO")
@@ -327,32 +302,18 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 Errores.Add("La naturaleza debe ser INGRESO o EGRESO.");
             }
 
-            if (BancosCbTipoTrans.SelectedIndex < 0 ||
-            !(BancosCbTipoTrans.SelectedItem is DataRowView FilaTipo) ||
-            !long.TryParse(
-                Convert.ToString(FilaTipo["ID"]),
-                out long IdTipoTransaccion) ||
-            IdTipoTransaccion <= 0)
+            if (BancosCbTipoTrans.SelectedIndex < 0 || !(BancosCbTipoTrans.SelectedItem is DataRowView FilaTipo) || !long.TryParse(Convert.ToString(FilaTipo["ID"]), out long IdTipoTransaccion) || IdTipoTransaccion <= 0)
             {
-                Errores.Add(
-                    "Debe seleccionar un tipo de transacción bancaria válido.");
+                Errores.Add("Debe seleccionar un tipo de transacción bancaria válido.");
             }
             else
             {
-                string NaturalezaTipo =
-                    Convert.ToString(FilaTipo["Naturaleza"])
-                    .Trim().ToUpperInvariant();
-
-                if (NaturalezaTipo != Naturaleza &&
-                    NaturalezaTipo != "AMBOS")
+                string NaturalezaTipo = Convert.ToString(FilaTipo["Naturaleza"]).Trim().ToUpperInvariant();
+                if (NaturalezaTipo != Naturaleza && NaturalezaTipo != "AMBOS")
                 {
-                    Errores.Add(
-                        "La naturaleza del tipo de transacción " +
-                        "no corresponde al concepto bancario.");
+                    Errores.Add("La naturaleza del tipo de transacción " + "no corresponde al concepto bancario.");
                 }
             }
-
-            // 3. TIPO DE BENEFICIARIO
             string Tipo = BancosTxtTipoBeneficiario.Text.Trim().ToUpperInvariant();
             bool TipoValido = Tipo == "NINGUNO" || Tipo == "CLIENTE" || Tipo == "PROVEEDOR" || Tipo == "EMPLEADO";
 
@@ -363,7 +324,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
 
             bool RequiereTercero = Tipo == "CLIENTE" || Tipo == "PROVEEDOR" || Tipo == "EMPLEADO";
 
-            // 4. BENEFICIARIO
             if (RequiereTercero)
             {
                 if (_IdBeneficiarioSeleccionado <= 0 || _TipoBeneficiarioSeleccionado != Tipo || string.IsNullOrWhiteSpace(BancosTxtTitular.Text) || string.IsNullOrWhiteSpace(BancosTxtCodigo.Text))
@@ -371,7 +331,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
                     Errores.Add("Debe seleccionar un beneficiario válido.");
                 }
 
-                // 5. CUENTA DEL TERCERO
                 if (BancosCbCuentaTercero.SelectedIndex < 0 || !(BancosCbCuentaTercero.SelectedItem is DataRowView FilaTercero) ||
                     !long.TryParse(Convert.ToString(FilaTercero["ID"]), out long IdCuentaTercero) || IdCuentaTercero <= 0)
                 {
@@ -388,13 +347,11 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 }
             }
 
-            // 6. MÉTODO DE PAGO
             if (BancosCbMetodo.SelectedIndex < 0 || !(BancosCbMetodo.SelectedItem is DataRowView FilaMetodo) || !long.TryParse(Convert.ToString(FilaMetodo["ID"]), out long IdMetodo) || IdMetodo <= 0)
             {
                 Errores.Add("Debe seleccionar una forma de pago válida.");
             }
 
-            // 7. FECHA DE OPERACIÓN
             bool FechaRegistroValida = BancosDtpFechaReg.CustomFormat != " ";
             bool FechaAplicacionValida = BancosDtpFechaApl.CustomFormat != " ";
 
@@ -410,7 +367,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
                     Errores.Add("La fecha de aplicación no puede ser anterior " + "a la fecha de registro.");
                 }
 
-                // Primera versión: únicamente movimientos aplicados
                 if (Registro > DateTime.Today)
                 {
                     Errores.Add("La fecha de registro no puede ser futura.");
@@ -422,7 +378,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 }
             }
 
-            // 8. MONTO TOTAL
             string TextoMonto = BancosTxtMontoTotal.Text.Trim();
             bool MontoValido = decimal.TryParse(TextoMonto, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal Monto);
 
@@ -448,7 +403,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 }
             }
 
-            // 9. CUENTA EMPRESARIAL Y MONEDA
             bool CuentaEmpresaValida = false;
 
             if (BancosCbCuentaEmpresa.SelectedIndex < 0 || !(BancosCbCuentaEmpresa.SelectedItem is DataRowView FilaEmpresa) || !long.TryParse(Convert.ToString(FilaEmpresa["ID"]), out long IdCuentaEmpresa) || IdCuentaEmpresa <= 0)
@@ -466,7 +420,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 }
             }
 
-            // 10. SALDO DISPONIBLE
             bool SaldoValido = decimal.TryParse(BancosTxtSaldoDisponible.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal SaldoDisponible);
 
             if (CuentaEmpresaValida && !SaldoValido)
@@ -474,7 +427,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 Errores.Add("No se pudo determinar el saldo disponible de la cuenta.");
             }
 
-            // 11. FONDOS SUFICIENTES
             if (Naturaleza == "EGRESO" && MontoValido && Monto > 0 && SaldoValido && CuentaEmpresaValida)
             {
                 if (Monto > SaldoDisponible)
@@ -483,7 +435,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 }
             }
 
-            // 12. MOSTRAR TODOS LOS ERRORES
             if (Errores.Count > 0)
             {
                 string Mensaje = "Se encontraron los siguientes problemas:\n\n" + string.Join("\n\n", Errores.Select((Error, Indice) => $"{Indice + 1}. {Error}"));
@@ -493,7 +444,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
 
             return true;
         }
-
         private void BancosBtnRegistra_Click(object sender, EventArgs e)
         {
             if (!BancosMetValidarMovimiento()) return;
@@ -556,7 +506,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
 
             try
             {
-                // Vista -> Controlador -> Modelo.
                 long IdMovimiento =
                     BancosMetRegistrarMovimientoDesdeFormulario();
 
@@ -570,10 +519,7 @@ namespace CapaVista_MovimientosBancarios.Formularios
                     MessageBoxIcon.Information
                 );
 
-                // El registro ya fue confirmado.
                 _ReferenciaMovimientoPendiente = null;
-
-                // Limpiar los controles.
                 BancosBtnLimpiar_Click(sender, EventArgs.Empty);
             }
 
@@ -581,11 +527,7 @@ namespace CapaVista_MovimientosBancarios.Formularios
             {
                 string DetalleError = Ex.ToString();
 
-                // Guardamos el error completo en un archivo.
-                string RutaError = System.IO.Path.Combine(
-                    Environment.GetFolderPath(
-                        Environment.SpecialFolder.Desktop),
-                    "ErrorMovimientoBancario.txt"
+                string RutaError = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),"ErrorMovimientoBancario.txt"
                 );
 
                 try
@@ -621,10 +563,7 @@ namespace CapaVista_MovimientosBancarios.Formularios
 
         private void BancosMetFiltrarTiposTransaccion()
         {
-            string Naturaleza = BancosTxtTipoConc.Text
-                .Trim()
-                .ToUpperInvariant();
-
+            string Naturaleza = BancosTxtTipoConc.Text.Trim().ToUpperInvariant();
             BancosCbTipoTrans.SelectedIndex = -1;
             BancosCbTipoTrans.Enabled = false;
 
@@ -633,8 +572,7 @@ namespace CapaVista_MovimientosBancarios.Formularios
 
             DataView Vista = Tabla.DefaultView;
 
-            if (Naturaleza == "INGRESO" ||
-                Naturaleza == "EGRESO")
+            if (Naturaleza == "INGRESO" || Naturaleza == "EGRESO")
             {
                 Vista.RowFilter =
                     $"Naturaleza = '{Naturaleza}' OR Naturaleza = 'AMBOS'";
@@ -658,30 +596,12 @@ namespace CapaVista_MovimientosBancarios.Formularios
 
             bool ConceptoValido = _IdConceptoSeleccionado > 0;
 
-            bool RequiereBeneficiario =
-                Tipo == "CLIENTE" ||
-                Tipo == "PROVEEDOR" ||
-                Tipo == "EMPLEADO";
+            bool RequiereBeneficiario = Tipo == "CLIENTE" || Tipo == "PROVEEDOR" || Tipo == "EMPLEADO";
+            bool BeneficiarioSeleccionado = _IdBeneficiarioSeleccionado > 0 && _TipoBeneficiarioSeleccionado == Tipo;
+            bool CuentaTerceroSeleccionada = BancosCbCuentaTercero.SelectedIndex >= 0 && BancosCbCuentaTercero.SelectedValue != null;
+            bool Habilitar = ConceptoValido && (Tipo == "NINGUNO" || (RequiereBeneficiario && BeneficiarioSeleccionado && CuentaTerceroSeleccionada));
 
-            bool BeneficiarioSeleccionado =
-                _IdBeneficiarioSeleccionado > 0 &&
-                _TipoBeneficiarioSeleccionado == Tipo;
-
-            bool CuentaTerceroSeleccionada =
-                BancosCbCuentaTercero.SelectedIndex >= 0 &&
-                BancosCbCuentaTercero.SelectedValue != null;
-
-            bool Habilitar =
-                ConceptoValido &&
-                (
-                    Tipo == "NINGUNO" ||
-                    (RequiereBeneficiario &&
-                     BeneficiarioSeleccionado &&
-                     CuentaTerceroSeleccionada)
-                );
-
-            BancosCbCuentaEmpresa.Enabled =
-                Habilitar && BancosCbCuentaEmpresa.Items.Count > 0;
+            BancosCbCuentaEmpresa.Enabled =Habilitar && BancosCbCuentaEmpresa.Items.Count > 0;
 
             if (!Habilitar)
             {

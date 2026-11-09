@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,20 +22,17 @@ namespace CapaModelo_MovimientosBancarios.Repositorio
 
         public int BancosMetAgregar(ClsConceptoBancario Entidad)
         {
-            throw new NotSupportedException(
-                "El registro de conceptos bancarios aún no está implementado.");
+            throw new NotSupportedException("El registro de conceptos bancarios aún no está implementado.");
         }
 
         public int BancosMetEditar(ClsConceptoBancario Entidad)
         {
-            throw new NotSupportedException(
-                "La edición de conceptos bancarios aún no está implementada.");
+            throw new NotSupportedException("La edición de conceptos bancarios aún no está implementada.");
         }
 
         public int BancosMetRemover(ClsConceptoBancario Entidad)
         {
-            throw new NotSupportedException(
-                "La eliminación de conceptos bancarios aún no está implementada.");
+            throw new NotSupportedException("La eliminación de conceptos bancarios aún no está implementada.");
         }
 
         public IEnumerable<ClsConceptoBancario> BancosMetObtenerTodos()
