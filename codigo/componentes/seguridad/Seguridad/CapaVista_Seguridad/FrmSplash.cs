@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 //using CapaVista_Ventas;
-using CapaVista_Logistica.Formularios;
+//using CapaVista_Logistica.Formularios;
 
 /*
  * ============================================================
@@ -79,13 +79,13 @@ namespace CapaVista_Seguridad
                         principal = new FrmMDISeguridad();
                         break;
                     
-                  case "Logistica":
-                    var MDILogistica = new CapaVista_Logistica.Formularios.FrmMDILogistica();
-                      MDILogistica.LogisticaMetActualizarInfoUsuario(
-                     ClsSesionSeguridad.NombreEmpleado,
-                     ClsSesionSeguridad.SeguridadMetRolesComoTexto());
-                      principal = MDILogistica;
-                      break;
+                    //case "Logistica":
+                        //var MDILogistica = new CapaVista_Logistica.Formularios.FrmMDILogistica();
+                        //MDILogistica.LogisticaMetActualizarInfoUsuario(
+                        //ClsSesionSeguridad.NombreEmpleado,
+                        //ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                        //principal = MDILogistica;
+                        //break;
 
                     //case "Compras":
                         //var MDICompras = new FrmMDICompras();
