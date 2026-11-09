@@ -32,8 +32,6 @@ namespace CapaModelo_Contabilidad.Entidades
         public decimal Residual { get; set; }
         // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         public decimal ValorEnLibros { get; set; }
-        public string EstadoLogistica { get; set; } = "PENDIENTE";
-        public string ReferenciaLogistica { get; set; }
         // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         public int Meses { get; set; }
     }

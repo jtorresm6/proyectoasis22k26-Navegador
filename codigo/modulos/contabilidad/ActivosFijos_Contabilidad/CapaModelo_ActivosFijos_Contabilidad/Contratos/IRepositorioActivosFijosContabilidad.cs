@@ -25,9 +25,5 @@ namespace CapaModelo_Contabilidad.Contratos
         string[] ContabilidadFuncObtenerModulos();
 
         List<ClsVidaUtilContabilidad> ContabilidadFuncObtenerVidaUtil();
-
-        // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
-        int ContabilidadFuncMarcarEnviadoLogistica(int IdActivo, string Referencia);
-        // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
     }
 }

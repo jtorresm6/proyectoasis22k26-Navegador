@@ -7,10 +7,10 @@
  * ==================================================================
  * Propósito :
  *  Reglas de activos fijos: catálogos, validación, grabación según el
- *  estado y sincronización con Logística. Responsable de la
- *  pantalla: Dylan.
+ *  estado y envío a Logística. Responsable de la pantalla: Dylan.
  * Reglas especificas:
- *  La validación vive en ClsModeloActivoFijoContabilidad.
+ *  La validación vive en ClsModeloActivoFijoContabilidad. Solo los
+ *  activos del módulo de Logística se le envían, al crearlos.
  * ===================================================================
 */
 
@@ -30,6 +30,10 @@ namespace CapaControlador_Contabilidad
 {
     public class ClsControladorActivosFijosContabilidad
     {
+        // Inicio de cambio: Gabriel Guillén - 0901-23-1998 - 09/11/2026
+        private const string _ModuloLogistica = "Logística";
+        // Fin de cambio: Gabriel Guillén - 0901-23-1998 - 09/11/2026
+
         private readonly IRepositorioActivosFijosContabilidad _Repositorio = new ClsRepositorioActivosFijosContabilidad();
 
         public string[] ContabilidadFuncModulos()
@@ -65,12 +69,10 @@ namespace CapaControlador_Contabilidad
             Tabla.Columns.Add("Residual", typeof(decimal));
             Tabla.Columns.Add("Libros", typeof(decimal));
             Tabla.Columns.Add("Meses", typeof(int));
-            Tabla.Columns.Add("Logistica", typeof(string));
             foreach (ClsActivoFijoContabilidad Activo in _Repositorio.ContabilidadFuncObtenerTodos())
                 Tabla.Rows.Add(Activo.IdActivo, Activo.Codigo, Activo.Descripcion, Activo.Modulo, Activo.Tipo,
                     Tipos.ContainsKey(Activo.Tipo) ? Tipos[Activo.Tipo] : Activo.Tipo, Activo.Adquisicion, Activo.Inicio,
-                    Activo.Compra, Activo.Residual, Activo.ValorEnLibros, Activo.Meses,
-                    Activo.EstadoLogistica == "ENVIADO" ? "Sincronizado · " + Activo.ReferenciaLogistica : "Pendiente");
+                    Activo.Compra, Activo.Residual, Activo.ValorEnLibros, Activo.Meses);
             return Tabla;
         }
         // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
@@ -147,10 +149,10 @@ namespace CapaControlador_Contabilidad
                         // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
                         IdActivo = Entidad.IdActivo;
                         Mensaje = "Activo " + Entidad.Codigo + " guardado correctamente.";
-                        string Envio;
-                        ContabilidadFuncEnviarPendientesLogistica(out Envio);
-                        if (Envio != string.Empty) Mensaje += " " + Envio;
                         // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+                        // Inicio de cambio: Dylan Hernández - 0901-23-519 - 29/10/2026
+                        if (Entidad.Modulo == _ModuloLogistica) Mensaje += " " + ContabilidadFuncEnviarLogistica(Entidad);
+                        // Fin de cambio: Dylan Hernández - 0901-23-519 - 29/10/2026
                         break;
                     case EstadoEntidadContabilidad.Modificar:
                         // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
@@ -183,56 +185,30 @@ namespace CapaControlador_Contabilidad
             }
         }
 
-        // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
-        public int ContabilidadFuncEnviarPendientesLogistica(out string Mensaje)
+        // Inicio de cambio: Dylan Hernández - 0901-23-519 - 29/10/2026
+        private string ContabilidadFuncEnviarLogistica(ClsActivoFijoContabilidad Activo)
         {
-            Mensaje = string.Empty;
             try
             {
-                List<ClsActivoFijoContabilidad> Pendientes = _Repositorio.ContabilidadFuncObtenerTodos()
-                    .Where(Activo => Activo.EstadoLogistica == "PENDIENTE").ToList();
-                if (Pendientes.Count == 0) return 0;
                 IReceptorActivoFijoContabilidad Receptor = ClsEnlaceLogisticaContabilidad.ContabilidadFuncBuscarReceptor();
-                if (Receptor == null)
-                {
-                    Mensaje = "Logística todavía no publica la recepción de activos: " + Pendientes.Count + " activo(s) quedan pendientes de sincronizar.";
-                    return 0;
-                }
+                if (Receptor == null) return "Logística todavía no publica la recepción de activos; no se le envió.";
                 Dictionary<string, string> Tipos = _Repositorio.ContabilidadFuncObtenerVidaUtil().ToDictionary(Vida => Vida.Tipo, Vida => Vida.Nombre);
-                int Enviados = 0;
-                List<string> Rechazos = new List<string>();
-                foreach (ClsActivoFijoContabilidad Activo in Pendientes)
+                ClsModeloActivoLogisticaContabilidad Datos = new ClsModeloActivoLogisticaContabilidad
                 {
-                    ClsModeloActivoLogisticaContabilidad Datos = new ClsModeloActivoLogisticaContabilidad
-                    {
-                        Codigo = Activo.Codigo, Descripcion = Activo.Descripcion, Modulo = Activo.Modulo, CodigoTipo = Activo.Tipo,
-                        NombreTipo = Tipos.ContainsKey(Activo.Tipo) ? Tipos[Activo.Tipo] : Activo.Tipo, FechaAdquisicion = Activo.Adquisicion,
-                        FechaInicioUso = Activo.Inicio, ValorCompra = Activo.Compra, ValorResidual = Activo.Residual, VidaUtilMeses = Activo.Meses
-                    };
-                    try
-                    {
-                        string Referencia, Respuesta;
-                        if (Receptor.ContabilidadFuncRecibirActivoFijo(Datos, out Referencia, out Respuesta))
-                        {
-                            _Repositorio.ContabilidadFuncMarcarEnviadoLogistica(Activo.IdActivo, Referencia);
-                            Enviados++;
-                        }
-                        else Rechazos.Add(Activo.Codigo + ": " + Respuesta);
-                    }
-                    catch (Exception Excepcion)
-                    {
-                        Rechazos.Add(Activo.Codigo + ": " + Excepcion.Message);
-                    }
-                }
-                Mensaje = Enviados + " activo(s) sincronizados con Logística." + (Rechazos.Count == 0 ? string.Empty : " Siguen pendientes " + string.Join("; ", Rechazos) + ".");
-                return Enviados;
+                    Codigo = Activo.Codigo, Descripcion = Activo.Descripcion, Modulo = Activo.Modulo, CodigoTipo = Activo.Tipo,
+                    NombreTipo = Tipos.ContainsKey(Activo.Tipo) ? Tipos[Activo.Tipo] : Activo.Tipo, FechaAdquisicion = Activo.Adquisicion,
+                    FechaInicioUso = Activo.Inicio, ValorCompra = Activo.Compra, ValorResidual = Activo.Residual, VidaUtilMeses = Activo.Meses
+                };
+                string Referencia, Respuesta;
+                return Receptor.ContabilidadFuncRecibirActivoFijo(Datos, out Referencia, out Respuesta)
+                    ? "Enviado a Logística" + (string.IsNullOrWhiteSpace(Referencia) ? "." : " con referencia " + Referencia + ".")
+                    : "Logística no lo recibió: " + Respuesta;
             }
             catch (Exception Excepcion)
             {
-                Mensaje = "No se pudo sincronizar con Logística: " + Excepcion.Message;
-                return 0;
+                return "No se pudo enviar a Logística: " + Excepcion.Message;
             }
         }
-        // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+        // Fin de cambio: Dylan Hernández - 0901-23-519 - 29/10/2026
     }
 }

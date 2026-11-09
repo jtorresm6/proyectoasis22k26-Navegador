@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+    &#193;rea  : Componente Navegador
+    Autor : Byron Alexander Chiquito Paredes
+    Carn&#233; : 0901-23-3747
+    Fecha : 02/11/2026
+    Ayuda de uso del Navegador (mantenimientos con Ingresar, Consultar, Modificar y Eliminar).
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ayudas - Navegador</title>
+    <link href="Css/navegador.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png">
+        <img class="imgButti" src="Imagenes/LogoYMascota/5.png">
+        <h1>Ayudas - Navegador</h1>
+    </center>
+    <br>
+    <div class="container">
+        <h2>Descripci&#243;n general</h2>
+        <p> El Navegador es la barra de botones que aparece en las ventanas de mantenimiento del sistema,
+            desarrollado para Embutidos de Calidad S.A. Con ella se pueden ingresar, consultar, modificar
+            y eliminar registros de una tabla, desplazarse entre ellos e imprimir sus reportes, siempre
+            con la misma forma de trabajo en todas las ventanas.
+        <br><br>
+            Los botones que puede usar dependen de los permisos que tenga su usuario en esa ventana.
+            Todas las acciones que guardan, modifican o eliminan datos quedan registradas en la bit&#225;cora.
+        </p>
+        <img class="imgVentanaMDI" src="Imagenes/Navegador/05_crud_cuadricula.png">
+
+        <br><br><br>
+
+        <h2>&#191;C&#243;mo funciona la ventana?</h2>
+        <br>
+        <p> En la parte superior est&#225; la barra de botones del Navegador. Debajo de ella se despliega la tabla
+            con los registros y, cuando se ingresa o modifica un registro, el formulario con los campos.
+        <br><br>
+            Al hacer clic sobre una fila de la tabla, ese registro queda seleccionado y es sobre el que
+            trabajan los botones Modificar y Eliminar. Los botones que aparecen en gris est&#225;n deshabilitados
+            porque su usuario no tiene ese permiso.
+        </p>
+        <img class="imgVentanaMDI" src="Imagenes/Navegador/21_cuadricula_botones.png">
+
+        <br><br><br>
+
+        <h2>&#191;C&#243;mo ingresar un registro?</h2>
+        <br>
+        <p> A continuaci&#243;n se detallan los pasos:
+        <br>
+            1. Presionar el bot&#243;n Ingresar. Se abrir&#225; el formulario "Nuevo registro" con los campos de la tabla.
+        <br>
+            2. Llenar los campos. Los campos autom&#225;ticos, como el c&#243;digo del registro, no se pueden editar.
+        <br>
+            3. Los campos que se relacionan con otra tabla se eligen de una lista y las fechas se seleccionan
+               en el calendario.
+        <br>
+            4. Presionar el bot&#243;n Guardar.
+        </p>
+        <img class="imgVentanaMDI" src="Imagenes/Navegador/23_formulario_ingresar.png">
+
+        <br><br><br>
+
+        <p> Antes de guardar, el sistema mostrar&#225; un resumen de los datos y preguntar&#225; si desea ingresar
+            el registro. Presione S&#237; para guardarlo o No para regresar al formulario.
+        </p>
+        <img class="imgVentanaMDI" src="Imagenes/Navegador/14_confirmacion_ingreso.png">
+
+        <br><br><br>
+
+        <p> Si los datos son correctos, aparecer&#225; el mensaje "Registro guardado correctamente." y el nuevo
+            registro se mostrar&#225; en la tabla.
+        </p>
+        <img class="imgVentanaMDI" src="Imagenes/Navegador/15_registro_guardado.png">
+
+        <br><br><br>
+
+        <h2>&#191;C&#243;mo consultar registros?</h2>
+        <br>
+        <p> A continuaci&#243;n se detallan los pasos:
+        <br>
+            1. Presionar el bot&#243;n Consultar. Se abrir&#225; la ventana de Consultas.
+        <br>
+            2. Buscar y seleccionar el registro que desea ver.
+        <br>
+            3. La tabla del Navegador mostrar&#225; &#250;nicamente ese registro, listo para modificarlo o eliminarlo.
+        <br>
+            4. Para volver a ver todos los registros, presionar el bot&#243;n Refrescar.
+        </p>
+
+        <br><br><br>
+
+        <h2>&#191;C&#243;mo modificar un registro?</h2>
+        <br>
+        <p> A continuaci&#243;n se detallan los pasos:
+        <br>
+            1. Seleccionar en la tabla la fila del registro que desea modificar.
+        <br>
+            2. Presionar el bot&#243;n Modificar. Se abrir&#225; el formulario "Modificar registro" con sus datos.
+        <br>
+            3. Realizar los cambios necesarios. El c&#243;digo del registro no se puede cambiar.
+        <br>
+            4. Presionar el bot&#243;n Guardar y confirmar los cambios.
+        <br>
+            5. Si no hay ninguna fila seleccionada, el sistema mostrar&#225; el aviso
+               "Seleccione un registro en la tabla para Modificar."
+        </p>
+        <img class="imgVentanaMDI" src="Imagenes/Navegador/17_formulario_modificar.png">
+
+        <br><br><br>
+
+        <h2>&#191;C&#243;mo eliminar un registro?</h2>
+        <br>
+        <p> A continuaci&#243;n se detallan los pasos:
+        <br>
+            1. Seleccionar en la tabla la fila del registro que desea eliminar.
+        <br>
+            2. Presionar el bot&#243;n Eliminar.
+        <br>
+            3. El sistema preguntar&#225; si desea eliminar el registro seleccionado.
+        <br>
+            4. Al confirmar, aparecer&#225; el mensaje "Registro eliminado correctamente." y el registro
+               desaparecer&#225; de la tabla.
+        <br><br>
+            Si el registro est&#225; siendo usado por otra tabla, el sistema no permitir&#225; eliminarlo y mostrar&#225;
+            un aviso indicando que existe una relaci&#243;n con otros datos.
+        </p>
+
+        <br><br><br>
+
+        <h2>Cancelar</h2>
+        <br>
+        <p> Si est&#225; ingresando o modificando un registro y no desea guardar los cambios, presione el bot&#243;n
+            Cancelar. El formulario se cerrar&#225; y los datos de la tabla quedar&#225;n sin cambios.
+        </p>
+
+        <br><br><br>
+
+        <h2>Botones de navegaci&#243;n</h2>
+        <br>
+        <p> El Navegador cuenta con el bot&#243;n Refrescar, que vuelve a cargar todos los registros desde la base
+            de datos, y con botones para desplazarse entre los registros de la tabla:
+        <br>
+            1. Inicio va al primer registro.
+        <br>
+            2. Anterior retrocede uno.
+        <br>
+            3. Siguiente avanza uno.
+        <br>
+            4. Fin va al &#250;ltimo registro.
+        </p>
+
+        <br><br><br>
+
+        <h2>Ayuda din&#225;mica</h2>
+        <br>
+        <p> Las ventanas de mantenimiento que usan el Navegador cuentan con una ayuda din&#225;mica. Al presionar
+            el bot&#243;n Ayuda, el Navegador detecta en qu&#233; ventana se encuentra y muestra la ayuda de esa
+            ventana en particular, por ejemplo la de Departamentos, Puestos o Jornadas, en lugar de una
+            ayuda general.
+        <br><br>
+            De esta forma, el usuario siempre ve la explicaci&#243;n de los campos y acciones de la ventana que
+            est&#225; usando, sin tener que buscarla. Si una ventana todav&#237;a no tiene su propia ayuda, se
+            mostrar&#225; esta ayuda general del Navegador.
+        <br><br>
+            Por ejemplo, en la ventana 2006 - Mantenimiento de M&#243;dulos, al presionar el bot&#243;n Ayuda del
+            Navegador se abre directamente la ayuda de M&#243;dulos, ya seleccionada en el &#237;ndice de la ayuda.
+        </p>
+        <img class="imgVentanaMDI" src="Imagenes/Navegador/AyudaDinamica.jpg">
+
+        <br><br><br>
+
+        <h2>Imprimir</h2>
+        <br>
+        <p> Al presionar el bot&#243;n Imprimir se abre la ventana de reportes con los reportes disponibles para
+            esa ventana. Desde ah&#237; puede verlos, imprimirlos o exportarlos. Este bot&#243;n solo est&#225; habilitado
+            si su usuario tiene permiso de impresi&#243;n.
+        </p>
+
+        <br><br><br>
+
+        <h2>Permisos</h2>
+        <br>
+        <p> Los botones Ingresar, Modificar, Eliminar e Imprimir se habilitan seg&#250;n los permisos que el
+            administrador le haya asignado a su usuario en Seguridad. Si un bot&#243;n aparece en gris, no tiene
+            ese permiso en la ventana.
+        <br><br>
+            Si su usuario no tiene acceso a la ventana, todos los botones quedar&#225;n deshabilitados.
+        </p>
+        <img class="imgVentanaMDI" src="Imagenes/Navegador/26_formulario_sin_permisos.png">
+
+        <br><br><br>
+
+        <p> Si intenta entrar a un m&#243;dulo al que no tiene acceso, el sistema mostrar&#225; el mensaje
+            "No tienes acceso a este m&#243;dulo." Si cree que deber&#237;a tenerlo, comun&#237;quese con el administrador
+            del sistema.
+        </p>
+        <img class="imgVentana" src="Imagenes/Navegador/25_acceso_modulo_denegado.png">
+
+        <br><br><br>
+
+        <h2>Mensajes de validaci&#243;n</h2>
+        <br>
+        <p> Si los datos no se pueden guardar o eliminar, el sistema le indicar&#225; el motivo con uno de estos
+            mensajes:
+        <br>
+            1. Ya existe un registro con el mismo valor en un campo &#250;nico.
+        <br>
+            2. Hay un campo obligatorio que no puede quedar vac&#237;o.
+        <br>
+            3. Uno de los valores ingresados es demasiado largo para el campo correspondiente.
+        <br>
+            4. Uno de los valores ingresados tiene un formato incorrecto para su campo.
+        <br>
+            5. El registro no puede guardarse o eliminarse porque existe una relaci&#243;n de llave for&#225;nea.
+        <br><br>
+            Corrija el dato indicado y vuelva a presionar Guardar.
+        </p>
+
+        <br><br><br>
+
+        <h2>Salir</h2>
+        <br>
+        <p> El bot&#243;n Salir cierra el formulario y la tabla, y deja visible solo la barra de botones del
+            Navegador. Para cerrar la ventana por completo, d&#233; clic en la X que se encuentra en la parte
+            superior derecha.
+        </p>
+        <br><br>
+    </div>
+</body>
+
+</html>

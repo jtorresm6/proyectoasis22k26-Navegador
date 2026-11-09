@@ -41,6 +41,20 @@
             }
         }
 
+        internal static System.Drawing.Bitmap ico_nuevo_oscuro {
+            get {
+                object obj = ResourceManager.GetObject("ico_nuevo_oscuro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap ico_quitar_oscuro {
+            get {
+                object obj = ResourceManager.GetObject("ico_quitar_oscuro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
         internal static System.Drawing.Icon Icono_Contabilidad {
             get {
                 object obj = ResourceManager.GetObject("Icono_Contabilidad", resourceCulture);

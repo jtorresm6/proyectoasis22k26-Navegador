@@ -91,8 +91,6 @@ namespace CapaVista_Contabilidad
                 else Campo.TextChanged += ContabilidadMetCambiarFicha;
             }
             // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
-            string Envio;
-            _Controlador.ContabilidadFuncEnviarPendientesLogistica(out Envio);
             ContabilidadMetCargarLista();
             ContabilidadMetCargar(null);
         }

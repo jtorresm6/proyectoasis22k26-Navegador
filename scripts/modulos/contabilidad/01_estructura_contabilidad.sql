@@ -1,13 +1,8 @@
+
 -- =============================================================================
 --  TERMINUS ERP  |  Contabilidad
 --  Script 1 de 2: estructura (tablas y vistas) para una base de datos nueva.
 --  Motor: MySQL 8.0.46 o posterior
---
---  NOTA DE ESTANDARIZACIÓN (EST-01):
---  * Las columnas NO llevan prefijo Pk_ ni Fk_, usan la estructura idEntidad.
---  * Los nombres de columnas llevan el sufijo de su tabla correspondiente.
---  * Las restricciones (CONSTRAINTS) llevan los prefijos Pk_ y Fk_.
---  * Los nombres de las FKs son únicos en toda la base de datos para evitar Error 1826.
 -- =============================================================================
 
 CREATE DATABASE IF NOT EXISTS dbContabilidad CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -366,17 +361,70 @@ GROUP BY pe.idPolizaEncabezado, m.nombreModuloContable, pe.documentoOrigenPoliza
 
 -- Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
 ALTER TABLE tblModuloContable
-    ADD COLUMN metodoActualizacionModuloContable VARCHAR(10) NOT NULL DEFAULT 'BATCH' AFTER codigoModuloContable,
-    ADD CONSTRAINT ckModuloMetodoActualizacion CHECK (metodoActualizacionModuloContable IN ('ONLINE','BATCH'));
+    ADD COLUMN metodoActualizacionModuloContable VARCHAR(30) NOT NULL DEFAULT 'BATCH' AFTER codigoModuloContable,
+    ADD CONSTRAINT ckModuloMetodoActualizacion CHECK (metodoActualizacionModuloContable IN ('LINEA','BATCH'));
 
 ALTER TABLE tblCuenta
     RENAME COLUMN cargoActualCuenta TO cargoAcumuladoCuenta,
     RENAME COLUMN abonoActualCuenta TO abonoAcumuladoCuenta;
 
 ALTER TABLE tblActivoFijo
-    DROP COLUMN codigoCentroCostoActivoFijo,
-    ADD COLUMN estadoEnvioLogisticaActivoFijo VARCHAR(10) NOT NULL DEFAULT 'PENDIENTE' AFTER fechaInicioUsoActivoFijo,
-    ADD COLUMN referenciaLogisticaActivoFijo VARCHAR(50) NULL AFTER estadoEnvioLogisticaActivoFijo,
-    ADD COLUMN fechaEnvioLogisticaActivoFijo DATETIME NULL AFTER referenciaLogisticaActivoFijo,
-    ADD CONSTRAINT ckActivoFijoEnvioLogistica CHECK (estadoEnvioLogisticaActivoFijo IN ('PENDIENTE','ENVIADO'));
+    DROP COLUMN codigoCentroCostoActivoFijo;
 -- Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+
+-- Inicio de cambio: Dylan Hernández - 0901-23-519 - 29/10/2026
+ALTER TABLE tblPais
+    ADD COLUMN codigoMonedaPais CHAR(3) NOT NULL DEFAULT 'GTQ' AFTER nombrePais;
+
+UPDATE tblPais SET codigoMonedaPais = CASE nombrePais
+    WHEN 'El Salvador' THEN 'USD'
+    WHEN 'Honduras'    THEN 'HNL'
+    ELSE 'GTQ' END
+WHERE idPais > 0;
+
+ALTER TABLE tblPolizaEncabezado
+    ADD COLUMN idPais INT NOT NULL DEFAULT 1 AFTER idModuloContable,
+    ADD CONSTRAINT Fk_PolizaEncabezado_Pais FOREIGN KEY (idPais) REFERENCES tblPais (idPais) ON DELETE RESTRICT ON UPDATE CASCADE;
+-- Fin de cambio: Dylan Hernández - 0901-23-519 - 29/10/2026
+
+-- Inicio de cambio: Dylan Hernández - 0901-23-519 - 30/10/2026
+CREATE TABLE IF NOT EXISTS tblImpuesto (
+    idImpuesto                    INT          NOT NULL AUTO_INCREMENT,
+    nombreImpuesto                VARCHAR(100) NOT NULL,
+    descripcionImpuesto           VARCHAR(255) NULL,
+    tipoImpuesto                  VARCHAR(30)  NOT NULL,
+    operacionImpuesto             VARCHAR(30)  NOT NULL DEFAULT 'AMBAS',
+    valorImpuesto                 DECIMAL(5,4) NOT NULL,
+    periodicidadImpuesto          VARCHAR(30)  NOT NULL,
+    idCuentaAcreditableImpuesto   INT          NULL,
+    idCuentaPorPagarImpuesto      INT          NULL,
+    is_active                     BOOLEAN      NOT NULL DEFAULT TRUE,
+    created_at                    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at                    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_Impuesto PRIMARY KEY (idImpuesto),
+    CONSTRAINT ckImpuestoTipo CHECK (tipoImpuesto IN ('CONSUMO','RENTA','PATRIMONIO','CONTRIBUCION','OTRO')),
+    CONSTRAINT ckImpuestoOperacion CHECK (operacionImpuesto IN ('COMPRA','VENTA','AMBAS','PLANILLA','PERIODO')),
+    CONSTRAINT ckImpuestoPeriodicidad CHECK (periodicidadImpuesto IN ('MENSUAL','TRIMESTRAL','ANUAL','POR_EVENTO')),
+    CONSTRAINT Fk_Impuesto_CuentaAcreditable FOREIGN KEY (idCuentaAcreditableImpuesto) REFERENCES tblCuenta (idCuenta) ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT Fk_Impuesto_CuentaPorPagar FOREIGN KEY (idCuentaPorPagarImpuesto) REFERENCES tblCuenta (idCuenta) ON DELETE RESTRICT ON UPDATE CASCADE,
+    INDEX idxImpuestoTipo (tipoImpuesto),
+    INDEX idxImpuestoOperacion (operacionImpuesto)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS tblImpuestoTramo (
+    idImpuestoTramo              INT           NOT NULL AUTO_INCREMENT,
+    idImpuesto                   INT           NOT NULL,
+    montoDesdeImpuestoTramo      DECIMAL(12,4) NOT NULL DEFAULT 0.0000,
+    montoHastaImpuestoTramo      DECIMAL(12,4) NULL,
+    tasaImpuestoTramo            DECIMAL(5,4)  NOT NULL,
+    importeFijoImpuestoTramo     DECIMAL(12,4) NOT NULL DEFAULT 0.0000,
+    is_active                    BOOLEAN       NOT NULL DEFAULT TRUE,
+    created_at                   TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at                   TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_ImpuestoTramo PRIMARY KEY (idImpuestoTramo),
+    CONSTRAINT uqImpuestoTramo UNIQUE (idImpuesto, montoDesdeImpuestoTramo),
+    CONSTRAINT ckImpuestoTramoRango CHECK (montoHastaImpuestoTramo IS NULL OR montoHastaImpuestoTramo > montoDesdeImpuestoTramo),
+    CONSTRAINT Fk_ImpuestoTramo_Impuesto FOREIGN KEY (idImpuesto) REFERENCES tblImpuesto (idImpuesto) ON DELETE CASCADE ON UPDATE CASCADE,
+    INDEX idxImpuestoTramoImpuesto (idImpuesto)
+) ENGINE=InnoDB;
+-- Fin de cambio: Dylan Hernández - 0901-23-519 - 30/10/2026

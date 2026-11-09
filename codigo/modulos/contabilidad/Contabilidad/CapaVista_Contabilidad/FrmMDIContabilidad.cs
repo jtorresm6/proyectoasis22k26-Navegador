@@ -26,6 +26,9 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CapaControlador_Contabilidad;
+// Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
+using CapaControlador_Navegador;
+// Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
 
 namespace CapaVista_Contabilidad
 {
@@ -393,14 +396,126 @@ namespace CapaVista_Contabilidad
             Boton.Invalidate();
             using (Form Formulario = Crear(_Estado.Permisos[Codigo]))
             {
+                // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
+                ContabilidadMetAgregarAyuda(Formulario, Codigo);
+                // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
                 Formulario.ShowDialog(this);
             }
         }
 
         private void ContabilidadMetMostrarAyuda(object Remitente, EventArgs Evento)
         {
-            MessageBox.Show("La ayuda del módulo de Contabilidad aún no está disponible.",
-                "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
+            ContabilidadMetAbrirAyuda(this, 10000, GetType().Name);
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
         }
+
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
+        private static void ContabilidadMetAbrirAyuda(Control Duenio, int Codigo, string NombreFormulario)
+        {
+            try
+            {
+                ClsDestinoAyuda Destino = new ClsCtrlAyuda().NavegadorFuncObtenerDestino(Codigo, NombreFormulario);
+
+                if (Destino.RutaArchivo == "")
+                {
+                    MessageBox.Show(Duenio, Destino.Mensaje, "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (Destino.Pagina == "")
+                {
+                    Help.ShowHelp(Duenio, Destino.RutaArchivo);
+                }
+                else
+                {
+                    Help.ShowHelp(Duenio, Destino.RutaArchivo, HelpNavigator.Topic, Destino.Pagina);
+                }
+            }
+            catch (Exception Excepcion)
+            {
+                MessageBox.Show(Duenio, "No se pudo abrir la ayuda de Contabilidad.\n\n" + Excepcion.Message,
+                    "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ContabilidadMetAgregarAyuda(Form Formulario, int Codigo)
+        {
+            Formulario.KeyPreview = true;
+            Formulario.KeyDown += (Remitente, Tecla) =>
+            {
+                if (Tecla.KeyCode != Keys.F1) return;
+                Tecla.Handled = true;
+                ContabilidadMetAbrirAyuda(Formulario, Codigo, Formulario.GetType().Name);
+            };
+
+            if (Codigo < 10001 || Codigo > 10005) return;
+
+            Button BtnAyuda = new Button
+            {
+                Name = "ContabilidadBtnAyudaVentana",
+                Size = new Size(44, 44),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = ContabilidadBtnAyuda.BackColor,
+                BackgroundImage = ContabilidadBtnAyuda.BackgroundImage,
+                BackgroundImageLayout = ImageLayout.Stretch,
+                Cursor = Cursors.Hand,
+                TabStop = false,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
+            };
+            BtnAyuda.FlatAppearance.BorderSize = 0;
+            new ToolTip().SetToolTip(BtnAyuda, "Ayuda (F1)");
+            BtnAyuda.Click += (Remitente, Argumentos) => ContabilidadMetAbrirAyuda(Formulario, Codigo, Formulario.GetType().Name);
+            Formulario.Shown += (Remitente, Argumentos) => ContabilidadMetUbicarAyuda(Formulario, BtnAyuda);
+        }
+
+        private static void ContabilidadMetUbicarAyuda(Form Formulario, Button BtnAyuda)
+        {
+            Control Contenedor = Formulario;
+            Point Referencia = new Point(Formulario.ClientSize.Width - 40, 40);
+            foreach (Control Hijo in Formulario.Controls)
+            {
+                if (Hijo.Visible && Hijo.Bounds.Contains(Referencia) && Hijo.Controls.Count > 0)
+                {
+                    Contenedor = Hijo;
+                    break;
+                }
+            }
+
+            Rectangle Zona = new Rectangle(Contenedor.ClientSize.Width - 44 - 18, 12, 44, 44);
+            while (Zona.X > Contenedor.ClientSize.Width / 2)
+            {
+                bool Ocupada = false;
+                foreach (Control Hijo in Contenedor.Controls)
+                {
+                    if (Hijo.Visible && ContabilidadFuncAreaOcupada(Hijo).IntersectsWith(Rectangle.Inflate(Zona, 6, 6)))
+                    {
+                        Ocupada = true;
+                        break;
+                    }
+                }
+                if (!Ocupada)
+                {
+                    BtnAyuda.Location = Zona.Location;
+                    Contenedor.Controls.Add(BtnAyuda);
+                    BtnAyuda.BringToFront();
+                    return;
+                }
+                Zona.Offset(-10, 0);
+            }
+            BtnAyuda.Dispose();
+        }
+
+        private static Rectangle ContabilidadFuncAreaOcupada(Control Hijo)
+        {
+            Label Etiqueta = Hijo as Label;
+            if (Etiqueta == null || Etiqueta.AutoSize || Etiqueta.Image != null) return Hijo.Bounds;
+
+            int Ancho = Math.Min(Hijo.Width, TextRenderer.MeasureText(Etiqueta.Text, Etiqueta.Font).Width + 12);
+            ContentAlignment Alineacion = Etiqueta.TextAlign;
+            bool Derecha = Alineacion == ContentAlignment.TopRight || Alineacion == ContentAlignment.MiddleRight || Alineacion == ContentAlignment.BottomRight;
+            bool Centro = Alineacion == ContentAlignment.TopCenter || Alineacion == ContentAlignment.MiddleCenter || Alineacion == ContentAlignment.BottomCenter;
+            int Izquierda = Derecha ? Hijo.Right - Ancho : Centro ? Hijo.Left + (Hijo.Width - Ancho) / 2 : Hijo.Left;
+            return new Rectangle(Izquierda, Hijo.Top, Ancho, Hijo.Height);
+        }
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
     }
 }

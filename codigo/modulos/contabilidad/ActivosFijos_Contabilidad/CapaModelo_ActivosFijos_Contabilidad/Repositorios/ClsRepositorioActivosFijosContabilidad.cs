@@ -40,8 +40,7 @@ namespace CapaModelo_Contabilidad.Repositorios
         private const string _SelectTodos =
             "SELECT a.idActivoFijo, a.codigoActivoFijo, a.descripcionActivoFijo, m.nombreModuloContable, " +
             "v.codigoMaestroVidaUtil, a.fechaAdquisicionActivoFijo, a.fechaInicioUsoActivoFijo, a.valorCompraActivoFijo, " +
-            "a.valorResidualActivoFijo, a.valorEnLibrosActivoFijo, a.mesesVidaUtilActivoFijo, a.estadoEnvioLogisticaActivoFijo, " +
-            "a.referenciaLogisticaActivoFijo FROM tblActivoFijo a " +
+            "a.valorResidualActivoFijo, a.valorEnLibrosActivoFijo, a.mesesVidaUtilActivoFijo FROM tblActivoFijo a " +
             "INNER JOIN tblModuloContable m ON m.idModuloContable = a.idModuloContable " +
             "INNER JOIN tblMaestroVidaUtil v ON v.idMaestroVidaUtil = a.idMaestroVidaUtil " +
             "WHERE a.is_active = TRUE ORDER BY a.codigoActivoFijo";
@@ -149,23 +148,11 @@ namespace CapaModelo_Contabilidad.Repositorios
                         Compra = Convert.ToDecimal(Fila["valorCompraActivoFijo"]),
                         Residual = Convert.ToDecimal(Fila["valorResidualActivoFijo"]),
                         ValorEnLibros = Convert.ToDecimal(Fila["valorEnLibrosActivoFijo"]),
-                        EstadoLogistica = Convert.ToString(Fila["estadoEnvioLogisticaActivoFijo"]),
-                        ReferenciaLogistica = Fila["referenciaLogisticaActivoFijo"] == DBNull.Value ? null : Convert.ToString(Fila["referenciaLogisticaActivoFijo"]),
                         Meses = Convert.ToInt32(Fila["mesesVidaUtilActivoFijo"])
                     });
             return Activos;
             // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         }
-
-        // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
-        public int ContabilidadFuncMarcarEnviadoLogistica(int IdActivo, string Referencia)
-        {
-            return ContabilidadFuncEjecutarNonQuery("UPDATE tblActivoFijo SET estadoEnvioLogisticaActivoFijo = 'ENVIADO', referenciaLogisticaActivoFijo = ?, " +
-                "fechaEnvioLogisticaActivoFijo = NOW() WHERE idActivoFijo = ? AND estadoEnvioLogisticaActivoFijo = 'PENDIENTE'",
-                new List<OdbcParameter> { new OdbcParameter("Referencia", string.IsNullOrWhiteSpace(Referencia) ? (object)DBNull.Value : Referencia), new OdbcParameter("Activo", IdActivo) },
-                CommandType.Text);
-        }
-        // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
 
         public string[] ContabilidadFuncObtenerModulos()
         {
