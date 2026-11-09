@@ -166,9 +166,10 @@ namespace CapaModelo_PagosProveedores
             @"SELECT idMetodoPago AS idMetodoPago, nombreMetodoPago AS nombre
                 FROM tblMetodoPago WHERE is_active = 1 ORDER BY nombreMetodoPago";
 
+        // tblMoneda (Bancos): llave Pk_Moneda y bandera is_active; se conservan los alias idMoneda/codigo
         public const string PagoMonedas =
-            @"SELECT idMoneda AS idMoneda, codigoMoneda AS codigo, nombreMoneda AS nombre
-                FROM tblMoneda WHERE activoMoneda = 1 ORDER BY codigoMoneda";
+            @"SELECT Pk_Moneda AS idMoneda, codigoMoneda AS codigo, nombreMoneda AS nombre
+                FROM tblMoneda WHERE is_active = 1 ORDER BY codigoMoneda";
 
         // Params: idProveedor
         public const string PagoNombreProveedor =
