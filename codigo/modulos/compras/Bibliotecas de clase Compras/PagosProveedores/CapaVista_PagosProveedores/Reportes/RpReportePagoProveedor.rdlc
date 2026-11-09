@@ -1,0 +1,1397 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  
+
+  <Body>
+    <ReportItems>
+      <Textbox Name="TituloProveedor">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        
+
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>PROVEEDOR</Value>
+                <Style>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>9pt</FontSize>
+                  <Color>#3D56A6</Color>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            
+
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>0</Top>
+        <Left>0cm</Left>
+        <Height>0.55cm</Height>
+        <Width>10.9cm</Width>
+        
+
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+          
+
+          <PaddingLeft>6pt</PaddingLeft>
+          <PaddingRight>6pt</PaddingRight>
+          <PaddingTop>6pt</PaddingTop>
+          <PaddingBottom>6pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Proveedor">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        
+
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Replace(Parameters!Proveedor.Value, &quot;PROVEEDOR: &quot;, &quot;&quot;)</Value>
+                <Style>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>9pt</FontSize>
+                  <Color>#1E2A5A</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            
+
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>0.6cm</Top>
+        <Left>0cm</Left>
+        <Height>2.9cm</Height>
+        <Width>10.9cm</Width>
+        
+
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+          <BackgroundColor>#F6F7FA</BackgroundColor>
+          
+
+          <PaddingLeft>6pt</PaddingLeft>
+          <PaddingRight>6pt</PaddingRight>
+          <PaddingTop>6pt</PaddingTop>
+          <PaddingBottom>6pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="TituloInformacion">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        
+
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>DATOS DEL PAGO</Value>
+                <Style>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>9pt</FontSize>
+                  <Color>#3D56A6</Color>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            
+
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>0</Top>
+        <Left>11.3cm</Left>
+        <Height>0.55cm</Height>
+        <Width>7.7cm</Width>
+        
+
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+          
+
+          <PaddingLeft>6pt</PaddingLeft>
+          <PaddingRight>6pt</PaddingRight>
+          <PaddingTop>6pt</PaddingTop>
+          <PaddingBottom>6pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Informacion">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        
+
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!Informacion.Value</Value>
+                <Style>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>9pt</FontSize>
+                  <Color>#1E2A5A</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            
+
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>0.6cm</Top>
+        <Left>11.3cm</Left>
+        <Height>2.9cm</Height>
+        <Width>7.7cm</Width>
+        
+
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+          <BackgroundColor>#F6F7FA</BackgroundColor>
+          
+
+          <PaddingLeft>6pt</PaddingLeft>
+          <PaddingRight>6pt</PaddingRight>
+          <PaddingTop>6pt</PaddingTop>
+          <PaddingBottom>6pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="TituloDocumentos">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        
+
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>DOCUMENTOS APLICADOS</Value>
+                <Style>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>10pt</FontSize>
+                  <Color>#1E2A5A</Color>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            
+
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <Top>3.6cm</Top>
+        <Left>0cm</Left>
+        <Height>0.55cm</Height>
+        <Width>19cm</Width>
+        
+
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+          
+
+          <PaddingLeft>6pt</PaddingLeft>
+          <PaddingRight>6pt</PaddingRight>
+          <PaddingTop>6pt</PaddingTop>
+          <PaddingBottom>6pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Tablix Name="DocumentosPago">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>0.8cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>3.0cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>4.2cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>6.0cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>5.0cm</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>.85cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Titulo_numero">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      
+
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>#</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Color>White</Color>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          
+
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      
+
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <BackgroundColor>#1E2A5A</BackgroundColor>
+                        
+
+                        <PaddingLeft>5pt</PaddingLeft>
+                        <PaddingRight>5pt</PaddingRight>
+                        <PaddingTop>5pt</PaddingTop>
+                        <PaddingBottom>5pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Titulo_serie">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      
+
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Serie</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Color>White</Color>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          
+
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      
+
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <BackgroundColor>#1E2A5A</BackgroundColor>
+                        
+
+                        <PaddingLeft>5pt</PaddingLeft>
+                        <PaddingRight>5pt</PaddingRight>
+                        <PaddingTop>5pt</PaddingTop>
+                        <PaddingBottom>5pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Titulo_documento">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      
+
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Número documento</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Color>White</Color>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          
+
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      
+
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <BackgroundColor>#1E2A5A</BackgroundColor>
+                        
+
+                        <PaddingLeft>5pt</PaddingLeft>
+                        <PaddingRight>5pt</PaddingRight>
+                        <PaddingTop>5pt</PaddingTop>
+                        <PaddingBottom>5pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Titulo_concepto">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      
+
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Concepto</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Color>White</Color>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          
+
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      
+
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <BackgroundColor>#1E2A5A</BackgroundColor>
+                        
+
+                        <PaddingLeft>5pt</PaddingLeft>
+                        <PaddingRight>5pt</PaddingRight>
+                        <PaddingTop>5pt</PaddingTop>
+                        <PaddingBottom>5pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Titulo_monto">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      
+
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Monto aplicado</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Color>White</Color>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          
+
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      
+
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <BackgroundColor>#1E2A5A</BackgroundColor>
+                        
+
+                        <PaddingLeft>5pt</PaddingLeft>
+                        <PaddingRight>5pt</PaddingRight>
+                        <PaddingTop>5pt</PaddingTop>
+                        <PaddingBottom>5pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>.8cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Valor_numero">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      
+
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=RowNumber(Nothing)</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Color>#1E2A5A</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          
+
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      
+
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, &quot;#F6F7FA&quot;, &quot;White&quot;)</BackgroundColor>
+                        
+
+                        <PaddingLeft>5pt</PaddingLeft>
+                        <PaddingRight>5pt</PaddingRight>
+                        <PaddingTop>5pt</PaddingTop>
+                        <PaddingBottom>5pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Valor_serie">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      
+
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!serieDocumentoCuentaPorPagar.Value</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Color>#1E2A5A</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          
+
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      
+
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, &quot;#F6F7FA&quot;, &quot;White&quot;)</BackgroundColor>
+                        
+
+                        <PaddingLeft>5pt</PaddingLeft>
+                        <PaddingRight>5pt</PaddingRight>
+                        <PaddingTop>5pt</PaddingTop>
+                        <PaddingBottom>5pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Valor_documento">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      
+
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!numeroDocumentoCuentaPorPagar.Value</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Color>#1E2A5A</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          
+
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      
+
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, &quot;#F6F7FA&quot;, &quot;White&quot;)</BackgroundColor>
+                        
+
+                        <PaddingLeft>5pt</PaddingLeft>
+                        <PaddingRight>5pt</PaddingRight>
+                        <PaddingTop>5pt</PaddingTop>
+                        <PaddingBottom>5pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Valor_concepto">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      
+
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!nombreConceptoProveedor.Value</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Color>#1E2A5A</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          
+
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      
+
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, &quot;#F6F7FA&quot;, &quot;White&quot;)</BackgroundColor>
+                        
+
+                        <PaddingLeft>5pt</PaddingLeft>
+                        <PaddingRight>5pt</PaddingRight>
+                        <PaddingTop>5pt</PaddingTop>
+                        <PaddingBottom>5pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Valor_monto">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      
+
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!montoAplicadoDetallePago.Value</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Color>#1E2A5A</Color>
+                                <Format>N2</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          
+
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      
+
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Middle</VerticalAlign>
+                        <BackgroundColor>=IIF(RowNumber(Nothing) Mod 2 = 0, &quot;#F6F7FA&quot;, &quot;White&quot;)</BackgroundColor>
+                        
+
+                        <PaddingLeft>5pt</PaddingLeft>
+                        <PaddingRight>5pt</PaddingRight>
+                        <PaddingTop>5pt</PaddingTop>
+                        <PaddingBottom>5pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember/>
+            <TablixMember/>
+            <TablixMember/>
+            <TablixMember/>
+            <TablixMember/>
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="Lineas"/>
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>DetallePagoProveedor</DataSetName>
+        <NoRowsMessage>El pago no tiene documentos aplicados.</NoRowsMessage>
+        <Top>4.1cm</Top>
+        <Left>0cm</Left>
+        <Height>1.65cm</Height>
+        <Width>19cm</Width>
+        <Style/>
+      </Tablix>
+      <Rectangle Name="ResumenPago">
+        <ReportItems>
+          <Textbox Name="TituloObservaciones">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            
+
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>OBSERVACIONES</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                      <Color>#3D56A6</Color>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                
+
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>0</Top>
+            <Left>0cm</Left>
+            <Height>0.6cm</Height>
+            <Width>10.4cm</Width>
+            
+
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              
+
+              <PaddingLeft>6pt</PaddingLeft>
+              <PaddingRight>6pt</PaddingRight>
+              <PaddingTop>6pt</PaddingTop>
+              <PaddingBottom>6pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Comentario">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            
+
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Parameters!Comentario.Value</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                      <Color>#1E2A5A</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                
+
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>0.65cm</Top>
+            <Left>0cm</Left>
+            <Height>2.7cm</Height>
+            <Width>10.4cm</Width>
+            
+
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <BackgroundColor>#F6F7FA</BackgroundColor>
+              
+
+              <PaddingLeft>6pt</PaddingLeft>
+              <PaddingRight>6pt</PaddingRight>
+              <PaddingTop>6pt</PaddingTop>
+              <PaddingBottom>6pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="TituloResumen">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            
+
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>RESUMEN DEL PAGO</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                      <Color>#3D56A6</Color>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                
+
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>0</Top>
+            <Left>10.9cm</Left>
+            <Height>0.6cm</Height>
+            <Width>8.1cm</Width>
+            
+
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              
+
+              <PaddingLeft>6pt</PaddingLeft>
+              <PaddingRight>6pt</PaddingRight>
+              <PaddingTop>6pt</PaddingTop>
+              <PaddingBottom>6pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="ResumenDocumentos">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            
+
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Split(Parameters!Totales.Value, vbLf)(0)</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                      <Color>#1E2A5A</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                
+
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>0.65cm</Top>
+            <Left>10.9cm</Left>
+            <Height>0.55cm</Height>
+            <Width>8.1cm</Width>
+            
+
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              
+
+              <PaddingLeft>6pt</PaddingLeft>
+              <PaddingRight>6pt</PaddingRight>
+              <PaddingTop>6pt</PaddingTop>
+              <PaddingBottom>6pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="ResumenMoneda">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            
+
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Split(Parameters!Totales.Value, vbLf)(1)</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                      <Color>#1E2A5A</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                
+
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>1.2cm</Top>
+            <Left>10.9cm</Left>
+            <Height>0.55cm</Height>
+            <Width>8.1cm</Width>
+            
+
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              
+
+              <PaddingLeft>6pt</PaddingLeft>
+              <PaddingRight>6pt</PaddingRight>
+              <PaddingTop>6pt</PaddingTop>
+              <PaddingBottom>6pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="ResumenTipoCambio">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            
+
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Split(Parameters!Totales.Value, vbLf)(2)</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>9pt</FontSize>
+                      <Color>#1E2A5A</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                
+
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>1.75cm</Top>
+            <Left>10.9cm</Left>
+            <Height>0.55cm</Height>
+            <Width>8.1cm</Width>
+            
+
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              
+
+              <PaddingLeft>6pt</PaddingLeft>
+              <PaddingRight>6pt</PaddingRight>
+              <PaddingTop>6pt</PaddingTop>
+              <PaddingBottom>6pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="TotalPago">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            
+
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Split(Parameters!Totales.Value, vbLf)(3)</Value>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <Color>White</Color>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                
+
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>2.4cm</Top>
+            <Left>10.9cm</Left>
+            <Height>1cm</Height>
+            <Width>8.1cm</Width>
+            
+
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <BackgroundColor>#1E2A5A</BackgroundColor>
+              
+
+              <PaddingLeft>6pt</PaddingLeft>
+              <PaddingRight>6pt</PaddingRight>
+              <PaddingTop>6pt</PaddingTop>
+              <PaddingBottom>6pt</PaddingBottom>
+            </Style>
+          </Textbox>
+        </ReportItems>
+        <KeepTogether>true</KeepTogether>
+        
+
+        <Top>6.15cm</Top>
+        <Left>0cm</Left>
+        <Height>3.5cm</Height>
+        <Width>19cm</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Rectangle>
+    </ReportItems>
+    <Height>9.85cm</Height>
+    <Style/>
+  </Body>
+  
+
+  <Width>19cm</Width>
+  
+
+  <Page>
+    <PageHeader>
+      <Height>2.2cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="TituloPago">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          
+
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>PAGO A PROVEEDOR</Value>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>23pt</FontSize>
+                    <Color>#1E2A5A</Color>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              
+
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0</Top>
+          <Left>0cm</Left>
+          <Height>1cm</Height>
+          <Width>14.5cm</Width>
+          
+
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            
+
+            <PaddingLeft>6pt</PaddingLeft>
+            <PaddingRight>6pt</PaddingRight>
+            <PaddingTop>6pt</PaddingTop>
+            <PaddingBottom>6pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="MarcaCompras">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          
+
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>COMPRAS</Value>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>11pt</FontSize>
+                    <Color>#D9913E</Color>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              
+
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0</Top>
+          <Left>14.5cm</Left>
+          <Height>1cm</Height>
+          <Width>4.5cm</Width>
+          
+
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            
+
+            <PaddingLeft>6pt</PaddingLeft>
+            <PaddingRight>6pt</PaddingRight>
+            <PaddingTop>6pt</PaddingTop>
+            <PaddingBottom>6pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="NumeroPago">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          
+
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Parameters!Pago.Value</Value>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>10pt</FontSize>
+                    <Color>#3D56A6</Color>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              
+
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>1.05cm</Top>
+          <Left>0cm</Left>
+          <Height>0.65cm</Height>
+          <Width>19cm</Width>
+          
+
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            
+
+            <PaddingLeft>6pt</PaddingLeft>
+            <PaddingRight>6pt</PaddingRight>
+            <PaddingTop>6pt</PaddingTop>
+            <PaddingBottom>6pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Line Name="LineaMarca">
+          <Top>1.9cm</Top>
+          <Left>0cm</Left>
+          <Height>0cm</Height>
+          <Width>19cm</Width>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+              <Color>#D9913E</Color>
+              <Width>2pt</Width>
+            </Border>
+          </Style>
+        </Line>
+      </ReportItems>
+      <Style/>
+    </PageHeader>
+    
+
+    <PageFooter>
+      <Height>.8cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Pie">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          
+
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Compras | Comprobante de pago a proveedor</Value>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <Color>#3D56A6</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              
+
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0</Top>
+          <Left>0cm</Left>
+          <Height>0.65cm</Height>
+          <Width>13cm</Width>
+          
+
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            
+
+            <PaddingLeft>6pt</PaddingLeft>
+            <PaddingRight>6pt</PaddingRight>
+            <PaddingTop>6pt</PaddingTop>
+            <PaddingBottom>6pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Pagina">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          
+
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=&quot;Página &quot; &amp; Globals!PageNumber &amp; &quot; de &quot; &amp; Globals!TotalPages</Value>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <Color>#3D56A6</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              
+
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0</Top>
+          <Left>13cm</Left>
+          <Height>0.65cm</Height>
+          <Width>6cm</Width>
+          
+
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <VerticalAlign>Middle</VerticalAlign>
+            
+
+            <PaddingLeft>6pt</PaddingLeft>
+            <PaddingRight>6pt</PaddingRight>
+            <PaddingTop>6pt</PaddingTop>
+            <PaddingBottom>6pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style/>
+    </PageFooter>
+    
+
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
+    <TopMargin>1cm</TopMargin>
+    <BottomMargin>1cm</BottomMargin>
+    <Style/>
+  </Page>
+  
+
+  <AutoRefresh>0</AutoRefresh>
+  
+
+  <DataSources>
+    <DataSource Name="DatosCompras">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString/>
+      </ConnectionProperties>
+    </DataSource>
+  </DataSources>
+  
+
+  <DataSets>
+    <DataSet Name="DetallePagoProveedor">
+      <Query>
+        <DataSourceName>DatosCompras</DataSourceName>
+        <CommandText/>
+      </Query>
+      <Fields>
+        <Field Name="serieDocumentoCuentaPorPagar">
+          <DataField>serieDocumentoCuentaPorPagar</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="numeroDocumentoCuentaPorPagar">
+          <DataField>numeroDocumentoCuentaPorPagar</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="nombreConceptoProveedor">
+          <DataField>nombreConceptoProveedor</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="montoAplicadoDetallePago">
+          <DataField>montoAplicadoDetallePago</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  
+
+  <ReportParameters>
+    <ReportParameter Name="Pago">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Pago</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Proveedor">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Proveedor</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Informacion">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Informacion</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Totales">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Totales</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Comentario">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Comentario</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  
+
+  <Language>es-GT</Language>
+</Report>

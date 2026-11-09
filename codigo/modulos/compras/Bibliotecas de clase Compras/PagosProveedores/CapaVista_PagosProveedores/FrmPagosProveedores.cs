@@ -824,13 +824,18 @@ namespace CapaVista_PagosProveedores
             Caja.Text = Texto;
         }
 
-       
+
         private void ComprasCboEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
         private void ComprasBtnAgregarDocumento_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComprasUsrEncabezadoFormulario_Load(object sender, EventArgs e)
         {
 
         }

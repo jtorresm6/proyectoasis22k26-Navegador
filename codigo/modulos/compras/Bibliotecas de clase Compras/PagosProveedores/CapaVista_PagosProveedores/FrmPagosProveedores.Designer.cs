@@ -103,10 +103,12 @@ namespace CapaVista_PagosProveedores
             this.ComprasUsrEncabezadoFormulario.MinimumSize = new System.Drawing.Size(0, 130);
             this.ComprasUsrEncabezadoFormulario.Name = "ComprasUsrEncabezadoFormulario";
             this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "PagosProveedores.html";
+            this.ComprasUsrEncabezadoFormulario.RutaReporte = "RpReportePagoProveedor.rdlc";
             this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1318, 130);
             this.ComprasUsrEncabezadoFormulario.TabIndex = 0;
             this.ComprasUsrEncabezadoFormulario.TabStop = false;
             this.ComprasUsrEncabezadoFormulario.Titulo = "Pagos a proveedores";
+            this.ComprasUsrEncabezadoFormulario.Load += new System.EventHandler(this.ComprasUsrEncabezadoFormulario_Load);
             // 
             // ComprasPnlContenido
             // 
