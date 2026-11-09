@@ -123,7 +123,7 @@ namespace CapaModelo_PagosProveedores
                             FORMAT(c.saldoActualCuentaPorPagar, 2)) AS descripcion
                 FROM tblCuentaPorPagar c
                INNER JOIN tblConceptoProveedor k ON k.idConceptoProveedor = c.idConceptoProveedor
-               INNER JOIN tblMoneda m ON m.idMoneda = c.idMoneda
+               INNER JOIN tblMoneda m ON m.Pk_Moneda = c.idMoneda
                WHERE c.idProveedor = ?
                  AND k.naturalezaConceptoProveedor = 'Cargo'
                  AND c.saldoActualCuentaPorPagar > 0
