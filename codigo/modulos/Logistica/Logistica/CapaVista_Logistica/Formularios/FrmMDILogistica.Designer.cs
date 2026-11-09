@@ -231,7 +231,6 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaPnlNavegador.Controls.Add(this.LogisticaPbLogo);
             this.LogisticaPnlNavegador.Dock = System.Windows.Forms.DockStyle.Left;
             this.LogisticaPnlNavegador.Location = new System.Drawing.Point(0, 0);
-            this.LogisticaPnlNavegador.Margin = new System.Windows.Forms.Padding(4);
             this.LogisticaPnlNavegador.Name = "LogisticaPnlNavegador";
             this.LogisticaPnlNavegador.Size = new System.Drawing.Size(300, 1061);
             this.LogisticaPnlNavegador.TabIndex = 1;
@@ -260,7 +259,9 @@ namespace CapaVista_Logistica.Formularios
             // 
             this.LogistincaPnlMenuFin.BackColor = System.Drawing.Color.Transparent;
             this.LogistincaPnlMenuFin.Location = new System.Drawing.Point(7, 2087);
+
             this.LogistincaPnlMenuFin.Margin = new System.Windows.Forms.Padding(4);
+
             this.LogistincaPnlMenuFin.Name = "LogistincaPnlMenuFin";
             this.LogistincaPnlMenuFin.Size = new System.Drawing.Size(264, 105);
             this.LogistincaPnlMenuFin.TabIndex = 25;
