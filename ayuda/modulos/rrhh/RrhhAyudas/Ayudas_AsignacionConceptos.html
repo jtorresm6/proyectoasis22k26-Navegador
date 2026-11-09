@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <title>Ayudas - Asignación de Conceptos</title>
+</head>
+
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png">
+        <img class="imgButti" src="Imagenes/LogoYMascota/5.png">
+        <h1>Ayudas - Asignación de Conceptos</h1>
+    </center>
+    <br>
+    <div class="container">
+        <h2>Descripción general</h2>
+        <br>
+        <p> En este formulario se indica qué empleados o departamentos recibirán una percepción o deducción configurada con aplicación Algunos. La asignación relaciona un concepto existente con su destinatario; no define el monto ni cambia su forma de cálculo, que se administran en el catálogo de conceptos y, cuando corresponde, en los rangos salariales.</p>
+        <p> Si se elige Empleado, la asignación corresponde únicamente a la persona seleccionada. Si se elige Departamento, el cálculo de nómina busca a los empleados que pertenecen a ese departamento. Solo se utiliza un tipo de destinatario por registro: al cambiar de tipo se deshabilita y limpia la selección que deja de corresponder.</p>
+        <img class="imgVentana" src="Imagenes/NominaEmpleado/AsignacionConceptos_General.png" alt="Vista general de Asignación de Conceptos">
+        <br><br><br>
+        <h2>Antes de comenzar</h2>
+        <br>
+        <p> El concepto debe estar creado y tener aplicación Algunos para aparecer en la lista. Los conceptos configurados como Todos no requieren una asignación en esta ventana. También deben existir el empleado o el departamento que se desea seleccionar y la conexión a la base de datos debe estar disponible.</p>
+        <p> La asignación influye en cálculos posteriores. El empleado debe cumplir las condiciones del proceso de nómina, y tanto el concepto como la asignación deben estar activos para que la consulta de conceptos aplicables los considere.</p>
+        <h2>Datos de la asignación</h2>
+        <br>
+        <p> Concepto: Lista de percepciones y deducciones cuya aplicación es Algunos. Seleccione el concepto que desea asignar.</p>
+        <p> Tipo de asignación: Seleccione Empleado o Departamento. Solo una opción puede quedar marcada.</p>
+        <p> Empleado: Se habilita al elegir Empleado. Seleccione una persona de la lista; no se escribe un nombre libre.</p>
+        <p> Departamento: Se habilita al elegir Departamento. Seleccione el área que recibirá el concepto.</p>
+        <p> Activo: Marcado significa que la asignación está habilitada. Al iniciar un registro se marca de forma predeterminada.</p>
+        <img class="imgVentana" src="Imagenes/NominaEmpleado/AsignacionConceptos_Asignacion.png" alt="Selección del concepto y del destinatario">
+        <br><br><br>
+        <h2>Cómo interpretar el listado</h2>
+        <br>
+        <p> El listado muestra código, concepto, empleado, departamento, estado activo y fechas de creación y actualización. Los identificadores de concepto y destinatario se presentan como nombres. En una asignación individual queda vacío el departamento; en una asignación por departamento queda vacío el empleado.</p>
+        <p> Al seleccionar una fila, sus datos se copian a los controles superiores. La tabla es de solo lectura: para cambiar una asignación se utilizan los campos y el botón Modificar, no se escribe directamente sobre las celdas.</p>
+        <h2>Registro y mantenimiento</h2>
+        <br>
+        <h2>Crear una asignación</h2>
+        <br>
+        <p> 1. Seleccione el concepto que desea asignar.</p>
+        <p> 2. Marque Empleado o Departamento y elija el destinatario en la lista habilitada.</p>
+        <p> 3. Revise Activo y presione Guardar para crear un registro nuevo.</p>
+        <p> 4. Lea el mensaje del sistema y compruebe que la asignación aparezca en el listado. Después del intento de grabación, el formulario puede limpiar los campos; si se informó un error, vuelva a completar lo necesario.</p>
+        <img class="imgVentana" src="Imagenes/NominaEmpleado/AsignacionConceptos_Insert.png" alt="Guardar una nueva asignación de conceptos">
+        <br><br><br>
+        <h2>Modificar o desactivar</h2>
+        <br>
+        <p> Seleccione una fila del listado, cambie el concepto, el tipo de destino, el destinatario o la marca Activo y presione Modificar. Si quiere suspender su uso sin borrar la relación, desmarque Activo y guarde mediante Modificar. Presionar Guardar crea una nueva asignación, aunque hubiera seleccionado una fila.</p>
+        <h2>Eliminar</h2>
+        <br>
+        <p> Seleccione la fila y presione Eliminar. La ventana pide confirmar la eliminación; al responder Sí se solicita borrar la relación. Esto elimina la asignación, no el concepto, el empleado ni el departamento. Si la base de datos rechaza la operación, revise el mensaje antes de continuar.</p>
+        <h2>Consulta y validaciones</h2>
+        <br>
+        <h2>Buscar y navegar</h2>
+        <br>
+        <p> Consulta General filtra conforme escribe, buscando coincidencias en el nombre del concepto, del empleado o del departamento, sin distinguir mayúsculas. Al cambiar el filtro se limpian las selecciones superiores. Inicio y Fin seleccionan la primera o última fila del listado visible; Anterior y Siguiente permiten recorrerlo sin salir de sus límites.</p>
+        <h2>Refrescar y otras acciones</h2>
+        <br>
+        <p> Refrescar borra la búsqueda, vuelve a consultar las asignaciones y deja los campos preparados para otro registro. Las listas de conceptos, empleados y departamentos se cargan al abrir la ventana; si se agregaron opciones desde otra pantalla, cierre y vuelva a abrir este formulario para cargarlas. Imprimir abre el reporte de asignaciones. Para cerrar la ventana puede utilizar la X de su barra de título.</p>
+        <h2>Mensajes y qué hacer</h2>
+        <br>
+        <p> Falta el concepto o el destino: Seleccione el concepto, el tipo de asignación y una opción del destino habilitado.</p>
+        <p> El empleado o departamento ya tiene el concepto: Busque la asignación existente y utilice Modificar. Una asignación inactiva también puede impedir crear otra igual.</p>
+        <p> No hay una fila seleccionada: Seleccione un registro antes de modificarlo o eliminarlo.</p>
+        <p> El concepto de una fila no aparece arriba: Puede haber cambiado su aplicación y ya no ser Algunos. Revise el catálogo antes de modificar la asignación.</p>
+        <h2>Ejemplo de uso</h2>
+        <br>
+        <p> Para asignar un premio al departamento de Contabilidad, cree antes el concepto Premio contable con aplicación Algunos. En esta ventana elija ese concepto, marque Departamento, seleccione Contabilidad, mantenga Activo y presione Guardar. El monto se toma de la configuración del concepto cuando se calcule la nómina; no se ingresa aquí. La pertenencia al departamento se consulta al calcular, por lo que no se guarda una lista fija de personas dentro de la asignación.</p>
+    </div>
+</body>
+
+</html>
