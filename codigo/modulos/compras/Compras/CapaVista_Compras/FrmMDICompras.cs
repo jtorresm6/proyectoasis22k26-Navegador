@@ -1,18 +1,28 @@
 ﻿using CapaControlador_Seguridad.Objetos_de_valor;
-using CapaVista_Navegador;
+
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Diego Fernando Santizo Samayoa
+ * Carné : 0901-22-15950
+ * Fecha : 24/10/2026
+ * ==================================================================
+ * Propósito :
+ *  Presenta la ventana principal de Compras y administra la navegación, la apertura de subprocesos y las transiciones del menú.
+ * ===================================================================
+*/
+
 namespace CapaVista_Compras
 {
     public partial class FrmMDICompras : Form
     {
-        private ClsTransicionNavegador _ClsTransicionNavegador;
         private Form _FormularioSubproceso;
         private CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras _OpcionSubproceso;
-        private bool _ContenidoOculto;
         private bool _NavegadorContraido;
         private bool _PantallaCompleta;
         private FormBorderStyle _BordeAnterior;
@@ -24,6 +34,12 @@ namespace CapaVista_Compras
         public FrmMDICompras()
         {
             InitializeComponent();
+            ComprasBtnAyuda.Enabled = false;
+            ComprasTlpBitacora.Enabled = false;
+            ComprasTlpHerramientas.Enabled = false;
+            ComprasLblBienvenido.Tipografia = CapaVista_Componentes.Componentes.TipografiaCompras.TituloBienvenida;
+            ComprasLblKpi1.Texto = "Antigüedad promedio de saldos";
+            ComprasLblKpi2.Texto = "Órdenes autorizadas a tiempo (%)";
             DoubleBuffered = true;
             foreach (Control ControlActual in ComprasTlpNavegador.Controls)
             {
@@ -36,10 +52,36 @@ namespace CapaVista_Compras
             TableLayoutPanel[] PanelesIndicadores = { ComprasTlpKpi1, ComprasTlpKpi2, ComprasTlpKpi3, ComprasTlpKpi4, ComprasTlpKpi5, ComprasTlpKpi6 };
             foreach (TableLayoutPanel Panel in PanelesIndicadores)
             {
-                Panel.RowStyles[0].Height = 56F;
-                Panel.RowStyles[1].Height = 28F;
+                for (int Fila = 0; Fila < ComprasTlpKpi1.RowStyles.Count; Fila++)
+                {
+                    Panel.RowStyles[Fila].SizeType = ComprasTlpKpi1.RowStyles[Fila].SizeType;
+                    Panel.RowStyles[Fila].Height = ComprasTlpKpi1.RowStyles[Fila].Height;
+                }
+                Panel.RowStyles[1].SizeType = SizeType.Absolute;
+                Panel.RowStyles[1].Height = 30F;
+                Panel.RowStyles[2].SizeType = SizeType.Absolute;
+                Panel.RowStyles[2].Height = 38F;
                 foreach (Control Elemento in Panel.Controls)
                     if (Panel.GetRow(Elemento) == 2) Elemento.Margin = new Padding(2);
+            }
+        }
+
+        public void ComprasMetActualizarInfoUsuario(string Usuario, string Rol)
+        {
+            ComprasLblUsuario.Texto = "Usuario: " + Usuario;
+            ComprasLblRol.Texto = "Rol: " + Rol;
+        }   
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams Parametros = base.CreateParams;
+                // Buffer the entire child control tree during sidebar resizing.
+                // DoubleBuffered on the form alone does not buffer child windows.
+                const int EstiloComposicion = 0x02000000; // WS_EX_COMPOSITED
+                Parametros.ExStyle |= EstiloComposicion;
+                return Parametros;
             }
         }
 
@@ -136,26 +178,40 @@ namespace CapaVista_Compras
                 if (_FormularioSubproceso != null && !_FormularioSubproceso.IsDisposed) return;
             }
 
-            T Formulario = new T();
-            try
+            Form Formulario = new T();
+            bool FlujoOrdenes = Formulario is CapaVista_OrdenesCompra.FrmEncabezados;
+            while (Formulario != null)
             {
-                Formulario.StartPosition = FormStartPosition.CenterParent;
-                Formulario.ShowInTaskbar = false;
-                Formulario.MaximizeBox = false;
-                Formulario.MinimizeBox = true;
-                Formulario.FormClosed += ComprasMetSubprocesoCerrado;
-                _FormularioSubproceso = Formulario;
-                _OpcionSubproceso = Opcion;
-                ComprasMetActualizarSeleccionSubproceso();
-                Formulario.ShowDialog(this);
-            }
-            finally
-            {
-                Formulario.FormClosed -= ComprasMetSubprocesoCerrado;
-                Formulario.Dispose();
-                _FormularioSubproceso = null;
-                _OpcionSubproceso = null;
-                ComprasMetActualizarSeleccionSubproceso();
+                Func<Form> CrearSiguiente = null;
+                try
+                {
+                    Formulario.StartPosition = FormStartPosition.CenterParent;
+                    Formulario.ShowInTaskbar = false;
+                    Formulario.MaximizeBox = false;
+                    Formulario.MinimizeBox = true;
+                    Formulario.FormClosed += ComprasMetSubprocesoCerrado;
+                    _FormularioSubproceso = Formulario;
+                    _OpcionSubproceso = Opcion;
+                    ComprasMetActualizarSeleccionSubproceso();
+                    Formulario.ShowDialog(this);
+                    if (FlujoOrdenes && !IsDisposed && !Disposing)
+                    {
+                        var Encabezados = Formulario as CapaVista_OrdenesCompra.FrmEncabezados;
+                        if (Encabezados != null && Encabezados.AbrirOrden)
+                            CrearSiguiente = Encabezados.ComprasFuncCrearOrdenSeleccionada;
+                        else if (Formulario is CapaVista_OrdenesCompra.FrmOrdenesCompra)
+                            CrearSiguiente = () => new CapaVista_OrdenesCompra.FrmEncabezados();
+                    }
+                }
+                finally
+                {
+                    Formulario.FormClosed -= ComprasMetSubprocesoCerrado;
+                    Formulario.Dispose();
+                    _FormularioSubproceso = null;
+                    _OpcionSubproceso = null;
+                    ComprasMetActualizarSeleccionSubproceso();
+                }
+                Formulario = CrearSiguiente == null ? null : CrearSiguiente();
             }
         }
 
@@ -193,7 +249,7 @@ namespace CapaVista_Compras
 
         private void ComprasMetAbrirOrdenesCompra(object Remitente, EventArgs Evento)
         {
-            ComprasMetAbrirSubproceso<CapaVista_OrdenesCompra.FrmOrdenesCompra>(ComprasTlpOrdenesCompra);
+            ComprasMetAbrirSubproceso<CapaVista_OrdenesCompra.FrmEncabezados>(ComprasTlpOrdenesCompra);
         }
 
         private void ComprasMetAbrirPagosProveedores(object Remitente, EventArgs Evento)
@@ -216,92 +272,47 @@ namespace CapaVista_Compras
             ComprasMetAbrirSubproceso<FrmMantenimientoProveedor>(ComprasTlpProveedores);
         }
 
-        private void ComprasMetAbrirMetodosPago(object Remitente, EventArgs Evento)
-        {
-            ComprasMetAbrirSubproceso<FrmMantenimientoMetodoPago>(ComprasTlpMetodosPago);
-        }
-
         private void ComprasMetOpcionPendienteClick(object Remitente, EventArgs Evento)
         {
-            // Punto de integracion existente para mantenimientos y bitacora.
+            
         }
 
-        private void ComprasBtnSalir_Click(object Remitente, EventArgs Evento)
+        private void ComprasProcSalirClick(object Remitente, EventArgs Evento)
         {
-            Close();
+            DialogResult Respuesta = MessageBox.Show(this,
+                "¿Desea cerrar sesión?", "Cerrar sesión",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (Respuesta == DialogResult.Yes)
+            {
+                Close();
+                return;
+            }
+            ActiveControl = null;
+            ComprasTlpSalir.Seleccionado = false;
+            ComprasTlpSalir.ComprasProcActualizarHover(false);
+            BeginInvoke(new Action(() =>
+            {
+                if (IsDisposed || Disposing || ComprasTlpSalir.IsDisposed) return;
+                ComprasTlpSalir.ComprasProcActualizarHover(false);
+            }));
         }
 
-        private async void ComprasBtnBurger_Click(object Remitente, EventArgs Evento)
+        private void ComprasProcAlternarMenuClick(object Remitente, EventArgs Evento)
         {
-            if (_ContenidoOculto || _ClsTransicionNavegador != null) return;
-            _ContenidoOculto = true;
-            bool EncabezadoVisible = ComprasFlpEncabezado.Visible;
-            bool ContenidoVisible = ComprasPnlMain.Visible;
-            var Tiempo = System.Diagnostics.Stopwatch.StartNew();
-            ComprasTlpPrincipal.SuspendLayout();
+            if (IsDisposed || Disposing || !ComprasTlpPrincipal.IsHandleCreated) return;
+            SuspendLayout();
             try
             {
-                ComprasFlpEncabezado.Visible = false;
-                ComprasPnlMain.Visible = false;
-            }
-            finally
-            {
-                ComprasTlpPrincipal.ResumeLayout(true);
-            }
-            try
-            {
-                ComprasTlpPrincipal.Refresh();
                 ComprasMetCambiarNavegador();
-                int Espera = Math.Max(1, 500 - (int)Tiempo.ElapsedMilliseconds);
-                await System.Threading.Tasks.Task.Delay(Espera);
             }
             finally
             {
-                if (!IsDisposed && !Disposing)
-                {
-                    using (var Cubierta = new Panel())
-                    {
-                        Cubierta.BackColor = ComprasTlpPrincipal.BackColor;
-                        int Izquierda = ComprasTlpPrincipal.Left + ComprasTlpPrincipal.Padding.Left
-                            + (int)ComprasTlpPrincipal.ColumnStyles[0].Width;
-                        Cubierta.Bounds = new System.Drawing.Rectangle(Izquierda, ComprasTlpPrincipal.Top,
-                            Math.Max(0, ComprasTlpPrincipal.Right - Izquierda), ComprasTlpPrincipal.Height);
-                        Controls.Add(Cubierta);
-                        Cubierta.BringToFront();
-                        Cubierta.Refresh();
-                        ComprasTlpPrincipal.SuspendLayout();
-                        try
-                        {
-                            ComprasFlpEncabezado.Visible = EncabezadoVisible;
-                            ComprasPnlMain.Visible = ContenidoVisible;
-                        }
-                        finally
-                        {
-                            ComprasTlpPrincipal.ResumeLayout(true);
-                        }
-                        ComprasPnlMain.PerformLayout();
-                        ComprasMetAjustarDashboard();
-                        ComprasFlpEncabezado.Refresh();
-                        ComprasPnlMain.Refresh();
-                        Controls.Remove(Cubierta);
-                        ComprasTlpPrincipal.Refresh();
-                    }
-                }
-                _ContenidoOculto = false;
+                ResumeLayout(true);
             }
         }
 
         private void ComprasMetCambiarNavegador()
         {
-            bool Contraer = !_NavegadorContraido;
-            int AnchoAnterior = ComprasTlpNavegador.Width;
-            int AnchoFinal = Contraer ? 64 + ComprasTlpNavegador.Padding.Horizontal : 270;
-            System.Drawing.Bitmap ImagenMenu = null;
-            if (Contraer)
-            {
-                ImagenMenu = new System.Drawing.Bitmap(ComprasTlpNavegador.Width, ComprasTlpNavegador.Height);
-                ComprasTlpNavegador.DrawToBitmap(ImagenMenu, ComprasTlpNavegador.ClientRectangle);
-            }
             _NavegadorContraido = !_NavegadorContraido;
             ComprasTlpPrincipal.SuspendLayout();
             ComprasTlpNavegador.SuspendLayout();
@@ -324,79 +335,6 @@ namespace CapaVista_Compras
             {
                 ComprasTlpNavegador.ResumeLayout(true);
                 ComprasTlpPrincipal.ResumeLayout(true);
-                if (ImagenMenu == null)
-                {
-                    ImagenMenu = new System.Drawing.Bitmap(ComprasTlpNavegador.Width, ComprasTlpNavegador.Height);
-                    ComprasTlpNavegador.DrawToBitmap(ImagenMenu, ComprasTlpNavegador.ClientRectangle);
-                }
-                var Cubierta = new ClsTransicionNavegador(ImagenMenu, AnchoAnterior, AnchoFinal);
-                _ClsTransicionNavegador = Cubierta;
-                Cubierta.Disposed += (Origen, Argumentos) => _ClsTransicionNavegador = null;
-                Cubierta.Location = PointToClient(ComprasTlpNavegador.PointToScreen(System.Drawing.Point.Empty));
-                Cubierta.Size = new System.Drawing.Size(Math.Max(AnchoAnterior, AnchoFinal), ComprasTlpNavegador.Height);
-                Cubierta.BackColor = ComprasTlpPrincipal.BackColor;
-                Controls.Add(Cubierta);
-                Cubierta.BringToFront();
-                Cubierta.Iniciar();
-            }
-        }
-
-        private sealed class ClsTransicionNavegador : Control
-        {
-            private readonly System.Drawing.Bitmap _Menu;
-            private readonly Timer _Reloj = new Timer { Interval = 15 };
-            private readonly System.Diagnostics.Stopwatch _Tiempo = new System.Diagnostics.Stopwatch();
-            private readonly int _Desde, _Hasta;
-            private int _AnchoVisible;
-
-            internal ClsTransicionNavegador(System.Drawing.Bitmap Menu, int Desde, int Hasta)
-            {
-                _Menu = Menu;
-                _Desde = Desde;
-                _Hasta = Hasta;
-                _AnchoVisible = Desde;
-                SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint
-                    | ControlStyles.OptimizedDoubleBuffer | ControlStyles.Opaque, true);
-                _Reloj.Tick += (Origen, Argumentos) =>
-                {
-                    double Paso = Math.Min(1D, _Tiempo.Elapsed.TotalMilliseconds / 260D);
-                    if (Paso >= 1D)
-                    {
-                        Dispose();
-                        return;
-                    }
-                    Paso = Paso * Paso * Paso * (Paso * (Paso * 6D - 15D) + 10D);
-                    _AnchoVisible = (int)Math.Round(_Desde + (_Hasta - _Desde) * Paso);
-                    Invalidate();
-                };
-            }
-
-            internal void Iniciar()
-            {
-                Refresh();
-                _Tiempo.Start();
-                _Reloj.Start();
-            }
-
-            protected override void OnPaintBackground(PaintEventArgs Evento) { }
-
-            protected override void OnPaint(PaintEventArgs Evento)
-            {
-                Evento.Graphics.Clear(BackColor);
-                var Estado = Evento.Graphics.Save();
-                Evento.Graphics.SetClip(new System.Drawing.Rectangle(0, 0, _AnchoVisible, Height));
-                Evento.Graphics.DrawImageUnscaled(_Menu, 0, 0);
-                Evento.Graphics.Restore(Estado);
-            }
-
-            protected override void Dispose(bool Disposing)
-            {
-                if (Disposing)
-                {
-                    _Reloj.Dispose();
-                    _Menu.Dispose();
-                }
-                base.Dispose(Disposing);
             }
         }
 
@@ -411,9 +349,19 @@ namespace CapaVista_Compras
         private void ComprasMetAjustarPresentacion()
         {
             bool Compacto = ComprasTlpPresentacion.Height < 320;
+            float TamanoTitulo = Compacto ? 32F : 42F;
+            if (Math.Abs(ComprasLblBienvenido.TamanoTipografia - TamanoTitulo) > 0.01F)
+                ComprasLblBienvenido.TamanoTipografia = TamanoTitulo;
+            ComprasLblBienvenido.Margin = new Padding(0, Compacto ? 6 : 15, 12, Compacto ? 6 : 15);
+            float TamanoModulo = Compacto ? 16F : 19F;
+            if (Math.Abs(ComprasLblModulo.TamanoTipografia - TamanoModulo) > 0.01F)
+                ComprasLblModulo.TamanoTipografia = TamanoModulo;
             RowStyle Fila = ComprasTlpPresentacion.RowStyles[1];
-            SizeType Tipo = Compacto ? SizeType.Absolute : SizeType.Percent;
-            float Altura = Compacto ? 64F : 22F;
+            SizeType Tipo = SizeType.Absolute;
+            float Altura = Math.Max(ComprasLblModulo.Font.Height * 2,
+                TextRenderer.MeasureText(ComprasLblModulo.Texto, ComprasLblModulo.Font,
+                    new System.Drawing.Size(Math.Max(1, ComprasLblModulo.Width - 6), int.MaxValue),
+                    TextFormatFlags.WordBreak).Height) + ComprasLblModulo.Margin.Vertical;
             if (Fila.SizeType == Tipo && Fila.Height == Altura) return;
             ComprasTlpPresentacion.SuspendLayout();
             try

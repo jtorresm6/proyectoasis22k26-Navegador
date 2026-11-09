@@ -1,4 +1,5 @@
 ﻿
+using CapaControlador_Seguridad;
 using CapaVista_Navegador;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,16 @@ namespace CapaVista_Seguridad
     public partial class FrmPerfilesNavegador : Form
     {
 
+        ClsModeloRoles datos = new ClsModeloRoles();
         public FrmPerfilesNavegador()
-
-
         {
-
             InitializeComponent();
-            navegador1.NavegadorMetConfigurar("tblaplicacion", 4, 8);
+            Dictionary<string, object> fuentes = new Dictionary<string, object>();
+            fuentes.Add("DsMantenimientoPerfiles", datos.SeguridadMetObtenerTodos());
+            fuentes.Add("RpReporteMantenimientoPerfil", datos.SeguridadMetObtenerTodos());
+            navegador1.NavegadorMetConfigurar("tblRol", 4, 8, fuentes);
         }
+
+        
     }
 }

@@ -1,7 +1,19 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Windows.Forms;
 using CapaVista_Componentes.Componentes;
+
+/*
+ * ==================================================================
+ * Área : Compras
+ * Autor : Carlos Andres Arriaza Lara
+ * Carné : 0901-23-13862
+ * Fecha : 24/10/2026
+ * ==================================================================
+ * Propósito :
+ *  Presenta los filtros, los datos del proveedor y la tabla de movimientos de demostración con sus importes y estados.
+ * ===================================================================
+*/
 
 namespace CapaVista_MovimientosProveedores
 {
@@ -9,7 +21,7 @@ namespace CapaVista_MovimientosProveedores
     {
         private readonly object[,] _Movimientos =
         {
-            // Fecha, Tipo de movimiento, Documento, Descripción, Debe, Haber, Saldo, Estado
+            
 
             {
                 new DateTime(2026, 10, 1),
@@ -82,15 +94,14 @@ namespace CapaVista_MovimientosProveedores
         public FrmMovimientosProveedores()
         {
             InitializeComponent();
+            ComprasBtnConsultar.Enabled = false;
             CapaVista_Componentes.Componentes.ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
 
             this.BackColor = ClsTemaCompras.FondoGeneral;
 
-            ComprasCboProveedores.DropDownStyle = ComboBoxStyle.DropDown;
-            ComprasCboProveedores.Text = "Buscar Proveedor...";
             ComprasProcInicializarTablaMovimientos();
             ComprasProcCargarMovimientos();
-            ComprasUsrMovimientos.DataBindingComplete += (Remitente, Evento) => ComprasProcFormatearMovimientos();
+            ComprasDgvMovimientos.DataBindingComplete += (Remitente, Evento) => ComprasProcFormatearMovimientos();
             ComprasProcFormatearMovimientos();
         }
         private void ComprasProcInicializarTablaMovimientos()
@@ -110,13 +121,13 @@ namespace CapaVista_MovimientosProveedores
             string[] Campos = { "ComprasColFecha", "ComprasColDocumento", "ComprasColDebe", "ComprasColHaber", "ComprasColSaldo", "ComprasColEstado" };
             string[] Titulos = { "Fecha", "Documento", "Debe", "Haber", "Saldo", "Estado" };
             for (int Indice = 0; Indice < Campos.Length; Indice++)
-                if (ComprasUsrMovimientos.Columns.Contains(Campos[Indice]))
-                    ComprasUsrMovimientos.Columns[Campos[Indice]].HeaderText = Titulos[Indice];
-            if (!ComprasUsrMovimientos.Columns.Contains("ComprasColFecha")) return;
-            ComprasUsrMovimientos.Columns["ComprasColFecha"].DefaultCellStyle.Format = "dd/MM/yyyy";
+                if (ComprasDgvMovimientos.Columns.Contains(Campos[Indice]))
+                    ComprasDgvMovimientos.Columns[Campos[Indice]].HeaderText = Titulos[Indice];
+            if (!ComprasDgvMovimientos.Columns.Contains("ComprasColFecha")) return;
+            ComprasDgvMovimientos.Columns["ComprasColFecha"].DefaultCellStyle.Format = "dd/MM/yyyy";
             foreach (string Campo in new[] { "ComprasColDebe", "ComprasColHaber", "ComprasColSaldo" })
             {
-                var Estilo = ComprasUsrMovimientos.Columns[Campo].DefaultCellStyle;
+                var Estilo = ComprasDgvMovimientos.Columns[Campo].DefaultCellStyle;
                 Estilo.Format = "N2";
                 Estilo.FormatProvider = System.Globalization.CultureInfo.InvariantCulture;
                 Estilo.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -139,8 +150,8 @@ namespace CapaVista_MovimientosProveedores
                 );
             }
 
-            ComprasUsrMovimientos.AutoGenerateColumns = true;
-            ComprasUsrMovimientos.DataSource = _TablaMovimientos;
+            ComprasDgvMovimientos.AutoGenerateColumns = true;
+            ComprasDgvMovimientos.DataSource = _TablaMovimientos;
         }
     }
 }

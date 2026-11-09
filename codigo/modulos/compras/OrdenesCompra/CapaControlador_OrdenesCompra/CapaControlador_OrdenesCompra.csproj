@@ -41,8 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClsComprasPorPagar.cs" />
+    <Compile Include="Entidades\ClsCompraPorPagar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ClsCalculoOrdenCompra.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CapaModelo_OrdenesCompra">
@@ -50,4 +51,14 @@
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="CapaModelo_Componentes">
+      <HintPath>..\..\Componentes\CapaModelo_Componentes\bin\$(Configuration)\CapaModelo_Componentes.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CapaControlador_Componentes">
+      <HintPath>..\..\Componentes\CapaControlador_Componentes\bin\$(Configuration)\CapaControlador_Componentes.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
