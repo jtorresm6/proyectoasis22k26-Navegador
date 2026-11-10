@@ -215,7 +215,6 @@ namespace CapaVista_Componentes.Componentes
 
         public void AbrirReporte()
         {
-            string Archivo = ClsReportesCompras.ObtenerRuta(this, RutaReporte);
             using (var Ventana = new Form())
             using (var Visor = new ReportViewer())
             {
@@ -228,7 +227,16 @@ namespace CapaVista_Componentes.Componentes
                 Visor.Dock = DockStyle.Fill;
                 Visor.ProcessingMode = ProcessingMode.Local;
                 Visor.ZoomMode = ZoomMode.PageWidth;
-                Visor.LocalReport.ReportPath = Archivo;
+                if (Propietario == null)
+                    throw new InvalidOperationException("No se encontró el formulario del reporte.");
+                var Biblioteca = Propietario.GetType().Assembly;
+                string Recurso = Biblioteca.GetName().Name + ".Reportes." + RutaReporte;
+                using (var Contenido = Biblioteca.GetManifestResourceStream(Recurso))
+                {
+                    if (Contenido == null)
+                        throw new InvalidOperationException("No se encontró el reporte incrustado: " + Recurso);
+                    Visor.LocalReport.LoadReportDefinition(Contenido);
+                }
                 PrepararReporte?.Invoke(this, new ComprasReporteEventArgs(Visor.LocalReport));
                 Ventana.Controls.Add(Visor);
                 Ventana.Load += (Remitente, Evento) => Visor.RefreshReport();
