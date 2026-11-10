@@ -59,7 +59,9 @@ namespace CapaVista_Contabilidad
                 // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
             };
             DateTime Mes = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-            ContabilidadDtpDesde.Value = new DateTime(Mes.Year, 1, 1);
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+            ContabilidadDtpDesde.Value = ContabilidadFuncInicioAnio(Mes);
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
             ContabilidadDtpHasta.Value = Mes;
             ContabilidadCboInforme.DataSource = _Controlador.ContabilidadFuncTiposEstado();
             ContabilidadCboNivel.DataSource = _Controlador.ContabilidadFuncNiveles();
@@ -118,7 +120,14 @@ namespace CapaVista_Contabilidad
         private void ContabilidadMetSincronizarDesde()
         {
             if (ContabilidadDtpDesde.Enabled) return;
-            ContabilidadDtpDesde.Value = new DateTime(ContabilidadDtpHasta.Value.Year, 1, 1);
+            ContabilidadDtpDesde.Value = ContabilidadFuncInicioAnio(ContabilidadDtpHasta.Value);
+        }
+
+        // Inicio del año sin pasar del arranque del sistema
+        private static DateTime ContabilidadFuncInicioAnio(DateTime Fecha)
+        {
+            DateTime Inicio = new DateTime(Fecha.Year, 1, 1);
+            return Inicio < ClsControladorEstadosFinancierosContabilidad.InicioSistema ? ClsControladorEstadosFinancierosContabilidad.InicioSistema : Inicio;
         }
         // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
 

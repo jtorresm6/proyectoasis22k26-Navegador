@@ -58,8 +58,17 @@ namespace CapaControlador_Contabilidad
         }
         // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
 
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+        // El sistema empezó a operar en octubre de 2026
+        public static readonly DateTime InicioSistema = new DateTime(2026, 10, 1);
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+
         public string ContabilidadFuncErrorFechas(DateTime Inicio, DateTime Fin)
         {
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+            if (Inicio < InicioSistema || Fin < InicioSistema)
+                return "La fecha no es correcta: el sistema inició en octubre de 2026.";
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
             return ClsValidacionDatosContabilidad.ContabilidadFuncErrorRangoFechas(Inicio, Fin);
         }
 

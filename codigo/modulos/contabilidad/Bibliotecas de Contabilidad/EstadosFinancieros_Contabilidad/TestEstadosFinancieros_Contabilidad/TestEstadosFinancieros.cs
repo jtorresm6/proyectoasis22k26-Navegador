@@ -118,14 +118,16 @@ namespace TestEstadosFinancieros
         {
             // Arrange
             ClsControladorEstadosFinancierosContabilidad Controlador = new ClsControladorEstadosFinancierosContabilidad();
-            DateTime Inicio = new DateTime(2026, 10, 1);
-            DateTime Fin = new DateTime(2026, 9, 1);
+            DateTime Inicio = new DateTime(2026, 11, 1);
+            DateTime Fin = new DateTime(2026, 10, 1);
             // Act
             string Invertidas = Controlador.ContabilidadFuncErrorFechas(Inicio, Fin);
             string Correctas = Controlador.ContabilidadFuncErrorFechas(Fin, Inicio);
+            string Anteriores = Controlador.ContabilidadFuncErrorFechas(new DateTime(2026, 9, 1), Inicio);
             // Assert
             Assert.AreNotEqual(string.Empty, Invertidas);
             Assert.AreEqual(string.Empty, Correctas);
+            Assert.AreNotEqual(string.Empty, Anteriores);
         }
 
         [TestMethod]
