@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +16,7 @@ namespace CapaModelo_MovimientosBancarios.Entidades
         public string CodigoMoneda { get; set; }
         public string DescripcionCuenta
         {
-            get
-            {
-                return $"{NombreBanco} - {NumeroCuentaBancariaTercero} ({CodigoMoneda})";
-            }
+            get{ return $"{NombreBanco} - {NumeroCuentaBancariaTercero} ({CodigoMoneda})"; }
         }
     }
 }

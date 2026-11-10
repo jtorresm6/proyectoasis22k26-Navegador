@@ -1,4 +1,5 @@
-﻿using CapaControlador_MovimientosBancarios;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using CapaControlador_MovimientosBancarios;
 using CapaControlador_MovimientosBancarios.Modelo_de_Controladores;
 using System;
 using System.Collections.Generic;
@@ -29,12 +30,7 @@ namespace CapaVista_MovimientosBancarios.Formularios
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error al cargar los conceptos: " + ex.Message,
-                    "Movimientos Bancarios",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MessageBox.Show("Error al cargar los conceptos: " + ex.Message, "Movimientos Bancarios", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -81,7 +77,6 @@ namespace CapaVista_MovimientosBancarios.Formularios
 
         private void BancosDgbConceptoBuscar_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Evitamos seleccionar los encabezados.
             if (e.RowIndex < 0) return;
             DataGridViewRow Fila = BancosDgbConceptoBuscar.Rows[e.RowIndex];
             IdConceptoSeleccionado = Convert.ToInt64(Fila.Cells["ID"].Value);

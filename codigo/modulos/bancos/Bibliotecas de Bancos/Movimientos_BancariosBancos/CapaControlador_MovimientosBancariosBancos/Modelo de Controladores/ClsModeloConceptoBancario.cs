@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
@@ -20,9 +21,7 @@ namespace CapaControlador_MovimientosBancarios.Modelo_de_Controladores
 
         public List<ClsConceptoBancario> BancosMetObtenerTodos()
         {
-            return _RepositorioConceptoBancario
-                .BancosMetObtenerTodos()
-                .ToList();
+            return _RepositorioConceptoBancario.BancosMetObtenerTodos().ToList();
         }
 
         public IEnumerable<ClsConceptoBancario> BancosMetBuscarPorCodigo(

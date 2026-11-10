@@ -1,148 +1,205 @@
+/*
+ * ================================================================
+ * Área   : Bancos
+ * Autor  : Evelyn Sofía Andrade Luna
+ * Autor  : Andre De Jesus Gonzalez Camey
+ * Carné  : 9959-23-1224 -- 9959-23-3117
+ * Fecha  : 08/11/2026
+ * ================================================================
+ * Propósito :
+ *  Consulta, valida y actualiza las conciliaciones bancarias
+ *  relacionadas con el proceso de cierre.
+ * ================================================================
+ */
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
 
 namespace CapaModelo_CierreBancario.Repositorio
 {
-    public class ClsRepositorioCierreBancario : ClsSentencias
+    public class ClsRepositorioCierreBancario : ClsConexion, IClsRepositorioCierreBancario
     {
         private const string SqlConsultarResumen =
-            "SELECT " +
-            "  c.Pk_Conciliacion, " +
-            "  c.fechaCorteConciliacion AS FechaCorte, " +
-            "  cb.nombreCuentaBancaria AS Cuenta, " +
-            "  cb.numeroCuentaBancaria AS NumeroCuenta, " +
-            "  c.estadoConciliacion AS Estado, " +
-            "  c.saldoLibroConciliacion AS SaldoLibro, " +
-            "  c.saldoBancoConciliacion AS SaldoBanco, " +
-            "  c.diferenciaConciliacion AS Diferencia " +
+            "SELECT c.idConciliacion AS IdConciliacion, " +
+            "c.fechaCorteConciliacion AS FechaCorte, " +
+            "cb.nombreCuentaBancaria AS Cuenta, " +
+            "cb.numeroCuentaBancaria AS NumeroCuenta, " +
+            "m.nombreMoneda AS Moneda, " +
+            "c.estadoConciliacion AS Estado, " +
+            "c.saldoLibroConciliacion AS SaldoLibro, " +
+            "c.saldoBancoConciliacion AS SaldoBanco, " +
+            "c.diferenciaConciliacion AS Diferencia " +
             "FROM tblConciliacion c " +
-            "INNER JOIN tblCuentaBancaria cb " +
-            "  ON c.Fk_CuentaBancaria_Codigo = cb.Pk_CuentaBancaria " +
+            "INNER JOIN tblCuentaBancaria cb ON c.Fk_CuentaBancaria_Codigo = cb.idCuentaBancaria " +
+            "INNER JOIN tblMoneda m ON cb.Fk_Moneda_Codigo = m.idMoneda " +
             "WHERE c.fechaCorteConciliacion >= ? AND c.fechaCorteConciliacion < ? " +
-            "  AND cb.is_active = 1 " +
             "ORDER BY c.fechaCorteConciliacion, cb.nombreCuentaBancaria";
 
         private const string SqlContarCerradas =
-            "SELECT COUNT(*) FROM tblConciliacion c " +
-            "INNER JOIN tblCuentaBancaria cb " +
-            "  ON c.Fk_CuentaBancaria_Codigo = cb.Pk_CuentaBancaria " +
-            "WHERE c.fechaCorteConciliacion >= ? AND c.fechaCorteConciliacion < ? " +
-            "  AND c.estadoConciliacion = 'CERRADA' " +
-            "  AND cb.is_active = 1";
-
-        private const string SqlContarPendientes =
-            "SELECT COUNT(*) FROM tblConciliacion c " +
-            "INNER JOIN tblCuentaBancaria cb " +
-            "  ON c.Fk_CuentaBancaria_Codigo = cb.Pk_CuentaBancaria " +
-            "WHERE c.fechaCorteConciliacion >= ? AND c.fechaCorteConciliacion < ? " +
-            "  AND c.estadoConciliacion NOT IN ('CONCILIADA', 'CERRADA') " +
-            "  AND cb.is_active = 1";
-
-        private const string SqlContarConDiferencias =
-            "SELECT COUNT(*) FROM tblConciliacion c " +
-            "INNER JOIN tblCuentaBancaria cb " +
-            "  ON c.Fk_CuentaBancaria_Codigo = cb.Pk_CuentaBancaria " +
-            "WHERE c.fechaCorteConciliacion >= ? AND c.fechaCorteConciliacion < ? " +
-            "  AND c.estadoConciliacion = 'CON_DIFERENCIAS' " +
-            "  AND cb.is_active = 1";
-
-        private const string SqlCerrarPeriodo =
-            "UPDATE tblConciliacion SET " +
-            "  estadoConciliacion = 'CERRADA', " +
-            "  fechaCierreConciliacion = NOW(), " +
-            "  identificadorResponsableConciliacion = ? " +
+            "SELECT COUNT(*) FROM tblConciliacion " +
             "WHERE fechaCorteConciliacion >= ? AND fechaCorteConciliacion < ? " +
-            "  AND estadoConciliacion = 'CONCILIADA'";
+            "AND estadoConciliacion = 'CERRADA'";
+
+        private const string SqlContarNoConciliadas =
+            "SELECT COUNT(*) FROM tblConciliacion " +
+            "WHERE fechaCorteConciliacion >= ? AND fechaCorteConciliacion < ? " +
+            "AND estadoConciliacion <> 'CONCILIADA'";
+
+        private const string SqlContarSaldosNoVerificados =
+            "SELECT COUNT(*) FROM tblConciliacion " +
+            "WHERE fechaCorteConciliacion >= ? AND fechaCorteConciliacion < ? " +
+            "AND (estadoConciliacion = 'CON_DIFERENCIAS' " +
+            "OR saldoLibroConciliacion IS NULL OR saldoBancoConciliacion IS NULL " +
+            "OR diferenciaConciliacion IS NULL OR diferenciaConciliacion <> 0)";
 
         private const string SqlConsultarHistorico =
-            "SELECT " +
-            "  c.fechaCorteConciliacion AS FechaCorte, " +
-            "  cb.nombreCuentaBancaria AS Cuenta, " +
-            "  cb.numeroCuentaBancaria AS NumeroCuenta, " +
-            "  c.saldoLibroConciliacion AS SaldoLibro, " +
-            "  c.saldoBancoConciliacion AS SaldoBanco, " +
-            "  c.diferenciaConciliacion AS Diferencia, " +
-            "  c.identificadorResponsableConciliacion AS Responsable, " +
-            "  c.fechaCierreConciliacion AS FechaCierre " +
-            "FROM tblConciliacion c " +
-            "INNER JOIN tblCuentaBancaria cb " +
-            "  ON c.Fk_CuentaBancaria_Codigo = cb.Pk_CuentaBancaria " +
-            "WHERE c.estadoConciliacion = 'CERRADA' " +
-            "ORDER BY c.fechaCierreConciliacion DESC, c.fechaCorteConciliacion";
+            "SELECT MIN(fechaCorteConciliacion) AS FechaInicial, " +
+            "MAX(fechaCorteConciliacion) AS FechaFinal, " +
+            "COUNT(*) AS Conciliaciones, " +
+            "fechaCierreConciliacion AS FechaCierre " +
+            "FROM tblConciliacion " +
+            "WHERE estadoConciliacion = 'CERRADA' AND fechaCierreConciliacion IS NOT NULL " +
+            "GROUP BY fechaCierreConciliacion " +
+            "ORDER BY fechaCierreConciliacion DESC";
 
         public DataTable BancosMetConsultarResumenCuentas(DateTime FechaInicial, DateTime FechaFinal)
         {
-            var Parametros = new List<OdbcParameter>
+            using (OdbcConnection Conexion = BancosMetObtenerConexion())
+            using (OdbcCommand Comando = new OdbcCommand(SqlConsultarResumen, Conexion))
             {
-                new OdbcParameter("FechaInicial", OdbcType.Date) { Value = FechaInicial.Date },
-                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date.AddDays(1) }
-            };
-            return BancosMetEjecucionConsulta(SqlConsultarResumen, CommandType.Text, Parametros);
+                Comando.Parameters.Add("FechaInicial", OdbcType.Date).Value = FechaInicial.Date;
+                Comando.Parameters.Add("FechaFinal", OdbcType.Date).Value = FechaFinal.Date.AddDays(1);
+                Conexion.Open();
+                DataTable Resultado = new DataTable();
+                using (OdbcDataReader Lector = Comando.ExecuteReader())
+                    Resultado.Load(Lector);
+                return Resultado;
+            }
         }
 
         public bool BancosMetValidarPeriodoSinCierre(DateTime FechaInicial, DateTime FechaFinal)
         {
-            var Parametros = new List<OdbcParameter>
-            {
-                new OdbcParameter("FechaInicial", OdbcType.Date) { Value = FechaInicial.Date },
-                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date.AddDays(1) }
-            };
-            var Resultado = BancosMetEjecucionConsulta(SqlContarCerradas, CommandType.Text, Parametros);
-            return Convert.ToInt32(Resultado.Rows[0][0]) == 0;
+            return BancosMetContar(SqlContarCerradas, FechaInicial, FechaFinal) == 0;
         }
 
         public bool BancosMetValidarConciliacionesCompletas(DateTime FechaInicial, DateTime FechaFinal)
         {
-            var Parametros = new List<OdbcParameter>
-            {
-                new OdbcParameter("FechaInicial", OdbcType.Date) { Value = FechaInicial.Date },
-                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date.AddDays(1) }
-            };
-            var Resultado = BancosMetEjecucionConsulta(SqlContarPendientes, CommandType.Text, Parametros);
-            return Convert.ToInt32(Resultado.Rows[0][0]) == 0;
+            return BancosMetContar(SqlContarNoConciliadas, FechaInicial, FechaFinal) == 0;
         }
 
         public bool BancosMetValidarSaldosVerificados(DateTime FechaInicial, DateTime FechaFinal)
         {
-            var Parametros = new List<OdbcParameter>
-            {
-                new OdbcParameter("FechaInicial", OdbcType.Date) { Value = FechaInicial.Date },
-                new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date.AddDays(1) }
-            };
-            var Resultado = BancosMetEjecucionConsulta(SqlContarConDiferencias, CommandType.Text, Parametros);
-            return Convert.ToInt32(Resultado.Rows[0][0]) == 0;
+            return BancosMetContar(SqlContarSaldosNoVerificados, FechaInicial, FechaFinal) == 0;
         }
 
-        public string BancosMetCerrarPeriodo(DateTime FechaInicial, DateTime FechaFinal, string Responsable)
+        private int BancosMetContar(string Sql, DateTime FechaInicial, DateTime FechaFinal)
         {
-            try
+            using (OdbcConnection Conexion = BancosMetObtenerConexion())
+            using (OdbcCommand Comando = new OdbcCommand(Sql, Conexion))
             {
-                var Parametros = new List<OdbcParameter>
+                Comando.Parameters.Add("FechaInicial", OdbcType.Date).Value = FechaInicial.Date;
+                Comando.Parameters.Add("FechaFinal", OdbcType.Date).Value = FechaFinal.Date.AddDays(1);
+                Conexion.Open();
+                return Convert.ToInt32(Comando.ExecuteScalar());
+            }
+        }
+
+        public string BancosMetCerrarPeriodo(DateTime FechaInicial, DateTime FechaFinal)
+        {
+            using (OdbcConnection Conexion = BancosMetObtenerConexion())
+            {
+                Conexion.Open();
+                using (OdbcTransaction Transaccion = Conexion.BeginTransaction(IsolationLevel.Serializable))
                 {
-                    new OdbcParameter("Responsable", OdbcType.VarChar, 100) { Value = Responsable },
-                    new OdbcParameter("FechaInicial", OdbcType.Date) { Value = FechaInicial.Date },
-                    new OdbcParameter("FechaFinal", OdbcType.Date) { Value = FechaFinal.Date.AddDays(1) }
-                };
-                int FilasAfectadas = BancosMetEjecucionNonQuery(SqlCerrarPeriodo, Parametros, CommandType.Text);
-                if (FilasAfectadas == 0)
-                    return "No se encontraron conciliaciones en el período para cerrar.";
-                return string.Empty;
+                    try
+                    {
+                        int Cantidad = BancosMetContarBloqueados(Conexion, Transaccion, FechaInicial, FechaFinal);
+                        if (Cantidad == 0)
+                            return BancosMetRevertir(Transaccion, "No hay conciliaciones en el período seleccionado.");
+
+                        if (BancosMetContarTransaccional(Conexion, Transaccion, SqlContarCerradas, FechaInicial, FechaFinal) > 0)
+                            return BancosMetRevertir(Transaccion, "El período ya contiene conciliaciones cerradas.");
+
+                        if (BancosMetContarTransaccional(Conexion, Transaccion, SqlContarNoConciliadas, FechaInicial, FechaFinal) > 0)
+                            return BancosMetRevertir(Transaccion, "Todas las conciliaciones deben estar en estado CONCILIADA.");
+
+                        if (BancosMetContarTransaccional(Conexion, Transaccion, SqlContarSaldosNoVerificados, FechaInicial, FechaFinal) > 0)
+                            return BancosMetRevertir(Transaccion, "Hay saldos pendientes o diferencias sin resolver.");
+
+                        const string SqlCerrar =
+                            "UPDATE tblConciliacion SET estadoConciliacion = 'CERRADA', " +
+                            "fechaCierreConciliacion = CURRENT_TIMESTAMP " +
+                            "WHERE fechaCorteConciliacion >= ? AND fechaCorteConciliacion < ? " +
+                            "AND estadoConciliacion = 'CONCILIADA'";
+
+                        using (OdbcCommand Comando = new OdbcCommand(SqlCerrar, Conexion, Transaccion))
+                        {
+                            Comando.Parameters.Add("FechaInicial", OdbcType.Date).Value = FechaInicial.Date;
+                            Comando.Parameters.Add("FechaFinal", OdbcType.Date).Value = FechaFinal.Date.AddDays(1);
+                            if (Comando.ExecuteNonQuery() != Cantidad)
+                                return BancosMetRevertir(Transaccion, "Los datos cambiaron durante el cierre. Consulte y valide el período nuevamente.");
+                        }
+
+                        Transaccion.Commit();
+                        return string.Empty;
+                    }
+                    catch (OdbcException)
+                    {
+                        if (Transaccion.Connection != null) Transaccion.Rollback();
+                        return "Error de base de datos al cerrar el período.";
+                    }
+                    catch (Exception)
+                    {
+                        if (Transaccion.Connection != null) Transaccion.Rollback();
+                        return "Error inesperado al cerrar el período.";
+                    }
+                }
             }
-            catch (OdbcException)
+        }
+
+        private int BancosMetContarBloqueados(OdbcConnection Conexion, OdbcTransaction Transaccion, DateTime FechaInicial, DateTime FechaFinal)
+        {
+            const string SqlBloquear =
+                "SELECT idConciliacion FROM tblConciliacion " +
+                "WHERE fechaCorteConciliacion >= ? AND fechaCorteConciliacion < ? FOR UPDATE";
+            using (OdbcCommand Comando = new OdbcCommand(SqlBloquear, Conexion, Transaccion))
             {
-                return "Error de base de datos al cerrar el período.";
+                Comando.Parameters.Add("FechaInicial", OdbcType.Date).Value = FechaInicial.Date;
+                Comando.Parameters.Add("FechaFinal", OdbcType.Date).Value = FechaFinal.Date.AddDays(1);
+                int Cantidad = 0;
+                using (OdbcDataReader Lector = Comando.ExecuteReader())
+                    while (Lector.Read()) Cantidad++;
+                return Cantidad;
             }
-            catch (Exception)
+        }
+
+        private int BancosMetContarTransaccional(OdbcConnection Conexion, OdbcTransaction Transaccion, string Sql, DateTime FechaInicial, DateTime FechaFinal)
+        {
+            using (OdbcCommand Comando = new OdbcCommand(Sql, Conexion, Transaccion))
             {
-                return "Error inesperado al cerrar el período.";
+                Comando.Parameters.Add("FechaInicial", OdbcType.Date).Value = FechaInicial.Date;
+                Comando.Parameters.Add("FechaFinal", OdbcType.Date).Value = FechaFinal.Date.AddDays(1);
+                return Convert.ToInt32(Comando.ExecuteScalar());
             }
+        }
+
+        private string BancosMetRevertir(OdbcTransaction Transaccion, string Mensaje)
+        {
+            Transaccion.Rollback();
+            return Mensaje;
         }
 
         public DataTable BancosMetConsultarHistorico()
         {
-            return BancosMetEjecucionConsulta(SqlConsultarHistorico, CommandType.Text);
+            using (OdbcConnection Conexion = BancosMetObtenerConexion())
+            using (OdbcCommand Comando = new OdbcCommand(SqlConsultarHistorico, Conexion))
+            {
+                Conexion.Open();
+                DataTable Resultado = new DataTable();
+                using (OdbcDataReader Lector = Comando.ExecuteReader())
+                    Resultado.Load(Lector);
+                return Resultado;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using System;
 using System.Collections.Generic;
 using CapaModelo_MovimientosBancarios.Contratos;
 using System.Data.Odbc;
@@ -17,7 +18,6 @@ namespace CapaControlador_MovimientosBancarios
         private DateTime _CreatedAt;
         private DateTime _UpdatedAt;
         private ClsRepositorioTipoTransaccion _RepositorioTipoTransaccion;
-
         public EstadoEntidad Estado { private get; set; }
         private List<ClsModeloTipoTransaccion> _ListaTipoTransaccion;
 

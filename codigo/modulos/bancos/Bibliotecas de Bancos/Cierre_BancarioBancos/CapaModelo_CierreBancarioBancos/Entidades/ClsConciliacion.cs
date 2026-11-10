@@ -1,3 +1,16 @@
+/*
+ * ================================================================
+ * Área   : Bancos
+ * Autor  : Evelyn Sofía Andrade Luna
+ * Autor  : Andre De Jesus Gonzalez Camey
+ * Carné  : 9959-23-1224 -- 9959-23-3117
+ * Fecha  : 08/11/2026
+ * ================================================================
+ * Propósito :
+ *  Representa los datos de una conciliación bancaria utilizados
+ *  durante la consulta y el cierre de un período.
+ * ================================================================
+ */
 using System;
 
 namespace CapaModelo_CierreBancario.Entidades

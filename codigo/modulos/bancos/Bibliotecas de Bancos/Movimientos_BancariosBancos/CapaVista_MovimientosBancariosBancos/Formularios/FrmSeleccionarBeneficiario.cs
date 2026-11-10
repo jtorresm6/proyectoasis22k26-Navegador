@@ -1,4 +1,5 @@
-﻿using CapaControlador_MovimientosBancarios;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using CapaControlador_MovimientosBancarios;
 using CapaControlador_MovimientosBancarios.Modelo_de_Controladores;
 using System;
 using System.Collections.Generic;
@@ -32,21 +33,14 @@ namespace CapaVista_MovimientosBancarios.Formularios
         {
             if (e.RowIndex < 0) return;
 
-            DataGridViewRow Fila =
-                BancosDgbBeneficiarioBuscar.Rows[e.RowIndex];
-
+            DataGridViewRow Fila = BancosDgbBeneficiarioBuscar.Rows[e.RowIndex];
             DataRowView Datos = Fila.DataBoundItem as DataRowView;
 
             if (Datos == null) return;
 
-            IdBeneficiarioSeleccionado =
-                Convert.ToInt64(Datos["ID"]);
-
-            CodigoBeneficiarioSeleccionado =
-                Convert.ToString(Datos["Codigo"]);
-
-            NombreBeneficiarioSeleccionado =
-                Convert.ToString(Datos["Nombre"]);
+            IdBeneficiarioSeleccionado = Convert.ToInt64(Datos["ID"]);
+            CodigoBeneficiarioSeleccionado = Convert.ToString(Datos["Codigo"]);
+            NombreBeneficiarioSeleccionado = Convert.ToString(Datos["Nombre"]);
 
             DialogResult = DialogResult.OK;
             Close();
@@ -123,13 +117,9 @@ namespace CapaVista_MovimientosBancarios.Formularios
                     return;
                 }
 
-                Texto = Texto.Replace("'", "''")
-                             .Replace("[", "[[]")
-                             .Replace("%", "[%]")
-                             .Replace("*", "[*]");
+                Texto = Texto.Replace("'", "''").Replace("[", "[[]").Replace("%", "[%]").Replace("*", "[*]");
 
-                _TablaBeneficiarios.DefaultView.RowFilter =
-                    $"Convert([Nombre], 'System.String') LIKE '%{Texto}%'";
+                _TablaBeneficiarios.DefaultView.RowFilter = $"Convert([Nombre], 'System.String') LIKE '%{Texto}%'";
             }
             catch (EvaluateException)
             {

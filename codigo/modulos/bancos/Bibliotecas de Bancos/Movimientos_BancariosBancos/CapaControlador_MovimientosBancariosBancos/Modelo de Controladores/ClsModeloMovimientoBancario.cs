@@ -1,12 +1,13 @@
-﻿    using CapaModelo_MovimientosBancarios.Contratos;
-    using CapaModelo_MovimientosBancarios.Entidades;
-    using CapaModelo_MovimientosBancarios.Repositorio;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Data;
-    using System.Text;
-    using System.Threading.Tasks;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using CapaModelo_MovimientosBancarios.Contratos;
+using CapaModelo_MovimientosBancarios.Entidades;
+using CapaModelo_MovimientosBancarios.Repositorio;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Data;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CapaControlador_MovimientosBancarios.Modelo_de_Controladores
 {
@@ -24,58 +25,39 @@ namespace CapaControlador_MovimientosBancarios.Modelo_de_Controladores
         {
             if (Movimiento == null)
             {
-                throw new ArgumentNullException(
-                    nameof(Movimiento));
+                throw new ArgumentNullException(nameof(Movimiento));
             }
 
             if (Movimiento.IdConceptoBancario <= 0)
             {
-                throw new ArgumentException(
-                    "Debe seleccionar un concepto bancario.");
+                throw new ArgumentException("Debe seleccionar un concepto bancario.");
             }
 
             if (Movimiento.IdCuentaEmpresa <= 0)
             {
-                throw new ArgumentException(
-                    "Debe seleccionar una cuenta empresarial.");
+                throw new ArgumentException("Debe seleccionar una cuenta empresarial.");
             }
 
             if (Movimiento.IdTipoTransaccion <= 0)
             {
-                throw new ArgumentException(
-                    "Debe especificar un tipo de transacción.");
+                throw new ArgumentException("Debe especificar un tipo de transacción.");
             }
 
             if (Movimiento.Importe <= 0)
             {
-                throw new ArgumentException(
-                    "El importe debe ser mayor que cero.");
+                throw new ArgumentException("El importe debe ser mayor que cero.");
             }
 
             if (Movimiento.ImporteGTQ != Movimiento.Importe ||
                 Movimiento.TipoCambioAplicado != 1.0000m)
             {
-                throw new ArgumentException(
-                    "Por ahora solo se permiten movimientos en GTQ.");
+                throw new ArgumentException("Por ahora solo se permiten movimientos en GTQ.");
             }
 
             return _Repositorio.BancosMetRegistrarMovimiento(Movimiento);
         }
 
-        public long BancosMetRegistrarMovimientoDesdeVista(
-            string Referencia,
-            long IdConcepto,
-            long IdMetodo,
-            long IdTipoTransaccion,
-            long IdCuentaEmpresa,
-            long? IdCuentaTercero,
-            long? IdBeneficiario,
-            string TipoBeneficiario,
-            string Concepto,
-            string Naturaleza,
-            decimal Monto,
-            DateTime FechaOperacion,
-            DateTime FechaAplicacion)
+        public long BancosMetRegistrarMovimientoDesdeVista(string Referencia, long IdConcepto, long IdMetodo, long IdTipoTransaccion, long IdCuentaEmpresa, long? IdCuentaTercero, long? IdBeneficiario, string TipoBeneficiario, string Concepto, string Naturaleza, decimal Monto, DateTime FechaOperacion, DateTime FechaAplicacion)
         {
             ClsRegistroMovimientoBancario Movimiento =
                 new ClsRegistroMovimientoBancario
