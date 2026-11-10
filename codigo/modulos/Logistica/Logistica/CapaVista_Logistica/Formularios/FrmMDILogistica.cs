@@ -796,5 +796,6 @@ namespace CapaVista_Logistica.Formularios
         {
             LogisticaMetAbrirFormulario(new FrmListadoTransporteExterno());
         }
+
     }
 }
