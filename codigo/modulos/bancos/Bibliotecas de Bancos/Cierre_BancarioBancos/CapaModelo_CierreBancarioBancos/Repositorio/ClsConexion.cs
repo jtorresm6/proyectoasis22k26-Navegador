@@ -1,3 +1,16 @@
+/*
+ * ================================================================
+ * Área   : Bancos
+ * Autor  : Evelyn Sofía Andrade Luna
+ * Autor  : Andre De Jesus Gonzalez Camey
+ * Carné  : 9959-23-1224 -- 9959-23-3117
+ * Fecha  : 08/11/2026
+ * ================================================================
+ * Propósito :
+ *  Proporciona la conexión de base de datos usada por el módulo
+ *  de cierre bancario.
+ * ================================================================
+ */
 using System;
 using System.Data.Odbc;
 

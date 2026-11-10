@@ -1,4 +1,15 @@
-﻿using System.Reflection;
+/*
+ * ================================================================
+ * Área   : Bancos
+ * Autor  : Evelyn Sofía Andrade Luna
+ * Carné  : 9959-23-1224
+ * Fecha  : 08/11/2026
+ * ================================================================
+ * Propósito :
+ *  Contiene los metadatos o recursos del módulo de cierre bancario.
+ * ================================================================
+ */
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 

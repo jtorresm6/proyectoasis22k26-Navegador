@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_CierreBanca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_CierreBancarioBancos", "CapaModelo_CierreBancarioBancos\CapaModelo_CierreBancarioBancos.csproj", "{5EC221AB-7DBA-480B-AC6F-7F29D6A068A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCierreBancario", "TestCierreBancario\TestCierreBancario.csproj", "{B06AF07A-41D6-46D3-A59A-6B1A80331841}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5EC221AB-7DBA-480B-AC6F-7F29D6A068A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EC221AB-7DBA-480B-AC6F-7F29D6A068A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EC221AB-7DBA-480B-AC6F-7F29D6A068A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B06AF07A-41D6-46D3-A59A-6B1A80331841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B06AF07A-41D6-46D3-A59A-6B1A80331841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B06AF07A-41D6-46D3-A59A-6B1A80331841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B06AF07A-41D6-46D3-A59A-6B1A80331841}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

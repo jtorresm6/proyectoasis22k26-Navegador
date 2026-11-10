@@ -1,3 +1,16 @@
+/*
+ * ================================================================
+ * Área   : Bancos
+ * Autor  : Evelyn Sofía Andrade Luna
+ * Autor  : Andre De Jesus Gonzalez Camey
+ * Carné  : 9959-23-1224 --- 9959-23-3117
+ * Fecha  : 08/11/2026
+ * ================================================================
+ * Propósito :
+ *  Centraliza las sentencias SQL usadas para consultar y cerrar
+ *  conciliaciones bancarias.
+ * ================================================================
+ */
 using System;
 using System.Collections.Generic;
 using System.Data;
