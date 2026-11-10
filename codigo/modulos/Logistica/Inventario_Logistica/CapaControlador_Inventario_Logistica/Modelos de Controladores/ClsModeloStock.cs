@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
  * MÓDULO: LOGÍSTICA - INVENTARIO
  * ARCHIVO: ClsModeloStock.cs
  * REALIZADO POR: VELVETH SARAÍ CHAVEZ MEJÍA
@@ -33,6 +32,16 @@ namespace CapaControlador_Inventario_Logistica.Modelos_de_Controladores
         public ClsModeloStock()
         {
             _Repositorio = new ClsRepositorioStock();
+
+            Stock = new ClsDatosStock();
+        }
+
+        // Constructor adicional para pruebas unitarias.
+        // Conserva el constructor original utilizado por la Vista.
+        public ClsModeloStock(ClsIRepositorioStock Repositorio)
+        {
+            _Repositorio = Repositorio
+                ?? throw new ArgumentNullException(nameof(Repositorio));
 
             Stock = new ClsDatosStock();
         }

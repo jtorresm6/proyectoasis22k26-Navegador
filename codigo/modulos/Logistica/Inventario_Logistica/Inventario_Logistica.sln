@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_Inventario_Logis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_Inventario_Logistica", "CapaControlador_Inventario_Logistica\CapaControlador_Inventario_Logistica.csproj", "{4404686F-85D0-41DB-A708-FA32C2204F80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_Inventario_logistica", "Test_Inventario_logistica\Test_Inventario_logistica.csproj", "{B509D061-16C5-46A8-8EB8-326AA380450E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4404686F-85D0-41DB-A708-FA32C2204F80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4404686F-85D0-41DB-A708-FA32C2204F80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4404686F-85D0-41DB-A708-FA32C2204F80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B509D061-16C5-46A8-8EB8-326AA380450E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B509D061-16C5-46A8-8EB8-326AA380450E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B509D061-16C5-46A8-8EB8-326AA380450E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B509D061-16C5-46A8-8EB8-326AA380450E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

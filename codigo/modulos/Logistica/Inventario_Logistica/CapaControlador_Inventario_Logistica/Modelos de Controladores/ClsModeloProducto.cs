@@ -34,6 +34,16 @@ namespace CapaControlador_Inventario_Logistica.Modelos_de_Controladores
             Producto = new ClsDatosProducto();
         }
 
+        // Permite inyectar un repositorio falso en las pruebas unitarias.
+        // El constructor original sigue funcionando con ODBC.
+        public ClsModeloProducto(ClsIRepositorioProducto Repositorio)
+        {
+            _RepositorioProducto = Repositorio
+                ?? throw new ArgumentNullException(nameof(Repositorio));
+
+            Producto = new ClsDatosProducto();
+        }
+
         // Ejecuta la operación seleccionada.
         public string LogisticaFuncGrabarCambios()
         {

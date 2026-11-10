@@ -42,6 +42,7 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnIndecencia = new System.Windows.Forms.Button();
             this.LogisticaBtnCostoyPago = new System.Windows.Forms.Button();
             this.LogisticaPnlMenuTransporteExterno = new System.Windows.Forms.Panel();
+            this.LogisticaBtnListadoTransporteExterno = new System.Windows.Forms.Button();
             this.LogisticaBtnAlertaCadenaFrio = new System.Windows.Forms.Button();
             this.LogisticaBtnTelemetriaTransporte = new System.Windows.Forms.Button();
             this.LogisticaBtnRutaSeguimiento = new System.Windows.Forms.Button();
@@ -113,7 +114,6 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaLblBienvenida = new System.Windows.Forms.Label();
             this.LogisticaPbDonButti = new System.Windows.Forms.PictureBox();
             this.LogisticaBtnHamburguesa = new System.Windows.Forms.Button();
-            this.LogisticaBtnListadoTransporteExterno = new System.Windows.Forms.Button();
             this.LogisticaPnlMDI.SuspendLayout();
             this.LogisticaPnlNavegador.SuspendLayout();
             this.LogisticaPnlMenuAdministracionCostos.SuspendLayout();
@@ -331,6 +331,20 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaPnlMenuTransporteExterno.Name = "LogisticaPnlMenuTransporteExterno";
             this.LogisticaPnlMenuTransporteExterno.Size = new System.Drawing.Size(264, 303);
             this.LogisticaPnlMenuTransporteExterno.TabIndex = 24;
+            // 
+            // LogisticaBtnListadoTransporteExterno
+            // 
+            this.LogisticaBtnListadoTransporteExterno.BackgroundImage = global::CapaVista_Logistica.Properties.Resources.Btn_Transporte_externo;
+            this.LogisticaBtnListadoTransporteExterno.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.LogisticaBtnListadoTransporteExterno.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LogisticaBtnListadoTransporteExterno.FlatAppearance.BorderSize = 0;
+            this.LogisticaBtnListadoTransporteExterno.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogisticaBtnListadoTransporteExterno.Location = new System.Drawing.Point(12, 237);
+            this.LogisticaBtnListadoTransporteExterno.Name = "LogisticaBtnListadoTransporteExterno";
+            this.LogisticaBtnListadoTransporteExterno.Size = new System.Drawing.Size(246, 49);
+            this.LogisticaBtnListadoTransporteExterno.TabIndex = 23;
+            this.LogisticaBtnListadoTransporteExterno.UseVisualStyleBackColor = true;
+            this.LogisticaBtnListadoTransporteExterno.Click += new System.EventHandler(this.LogisticaBtnListadoTransporteExterno_Click);
             // 
             // LogisticaBtnAlertaCadenaFrio
             // 
@@ -1310,35 +1324,19 @@ namespace CapaVista_Logistica.Formularios
             this.LogisticaBtnHamburguesa.UseVisualStyleBackColor = true;
             this.LogisticaBtnHamburguesa.Click += new System.EventHandler(this.LogisticaBtnHamburguesa_Click);
             // 
-            // LogisticaBtnListadoTransporteExterno
-            // 
-            this.LogisticaBtnListadoTransporteExterno.BackgroundImage = global::CapaVista_Logistica.Properties.Resources.Btn_Transporte_externo;
-            this.LogisticaBtnListadoTransporteExterno.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.LogisticaBtnListadoTransporteExterno.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogisticaBtnListadoTransporteExterno.FlatAppearance.BorderSize = 0;
-            this.LogisticaBtnListadoTransporteExterno.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogisticaBtnListadoTransporteExterno.Location = new System.Drawing.Point(12, 237);
-            this.LogisticaBtnListadoTransporteExterno.Name = "LogisticaBtnListadoTransporteExterno";
-            this.LogisticaBtnListadoTransporteExterno.Size = new System.Drawing.Size(246, 49);
-            this.LogisticaBtnListadoTransporteExterno.TabIndex = 23;
-            this.LogisticaBtnListadoTransporteExterno.UseVisualStyleBackColor = true;
-            this.LogisticaBtnListadoTransporteExterno.Click += new System.EventHandler(this.LogisticaBtnListadoTransporteExterno_Click);
-            // 
             // FrmMDILogistica
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 748);
+            this.ClientSize = new System.Drawing.Size(1348, 748);
             this.Controls.Add(this.LogisticaPnlMDI);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(1386, 787);
-            this.MinimumSize = new System.Drawing.Size(1027, 630);
+            this.MinimumSize = new System.Drawing.Size(1364, 766);
             this.Name = "FrmMDILogistica";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "5000 - Principal";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.LogisticaPnlMDI.ResumeLayout(false);
             this.LogisticaPnlMDI.PerformLayout();
             this.LogisticaPnlNavegador.ResumeLayout(false);

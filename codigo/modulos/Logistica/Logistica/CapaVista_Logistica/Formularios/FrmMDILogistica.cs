@@ -77,8 +77,13 @@ namespace CapaVista_Logistica.Formularios
                 System.ComponentModel.LicenseUsageMode.Designtime)
                 return;
 
+            // Configurar el navegador
             LogisticaPnlMDI.Dock = DockStyle.Fill;
+
             MetPanelesSubMenu();
+
+            // Adaptar el formulario a la pantalla
+            LogisticaMetAdaptarPantalla();
         }
 
         public void LogisticaMetActualizarInfoUsuario(string Nombre, string Rol)
@@ -797,5 +802,22 @@ namespace CapaVista_Logistica.Formularios
             LogisticaMetAbrirFormulario(new FrmListadoTransporteExterno());
         }
 
+        // ============================================
+        // ADAPTAR FORMULARIO A LA PANTALLA
+        // ============================================
+        private void LogisticaMetAdaptarPantalla()
+        {
+            // Tamaño mínimo permitido
+            this.MinimumSize = new Size(1100, 600);
+
+            // Centrar si se restaura la ventana
+            this.StartPosition = FormStartPosition.CenterScreen;
+
+            // Maximizar según la resolución de la computadora
+            this.WindowState = FormWindowState.Maximized;
+
+            // El panel principal ocupa el espacio disponible
+            LogisticaPnlMDI.Dock = DockStyle.Fill;
+        }
     }
 }
