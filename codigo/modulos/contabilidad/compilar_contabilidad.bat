@@ -246,7 +246,8 @@ exit /b 0
 
 :compilar
 for %%F in ("%~dp1..") do set "SOL=%%~fF\\"
-"%MSB%" "%~1" -restore -p:RestorePackagesConfig=true "-p:SolutionDir=!SOL!" -p:Configuration=Debug -v:quiet -nologo >"%TEMP%\compilar_contabilidad.log" 2>&1
+:: Sin compilador compartido ni nodos reutilizados: no deben quedarse con el log abierto
+"%MSB%" "%~1" -restore -nodeReuse:false -p:UseSharedCompilation=false -p:RestorePackagesConfig=true "-p:SolutionDir=!SOL!" -p:Configuration=Debug -v:quiet -nologo >"%TEMP%\compilar_contabilidad.log" 2>&1
 if errorlevel 1 (
     echo [ERROR] %~n1
     findstr /c:": error " "%TEMP%\compilar_contabilidad.log"

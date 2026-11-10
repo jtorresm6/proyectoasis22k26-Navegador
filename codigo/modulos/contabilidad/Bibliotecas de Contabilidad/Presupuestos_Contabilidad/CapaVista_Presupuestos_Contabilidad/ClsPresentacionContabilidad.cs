@@ -22,7 +22,9 @@ namespace CapaVista_Contabilidad
 
         private static readonly System.Collections.Generic.Dictionary<string, int> _Codigos = new System.Collections.Generic.Dictionary<string, int>
         {
-            { "FrmPresupuestos", 10002 }
+            // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+            { "FrmPresupuestos", 10002 }, { "FrmPresupuestoEdicion", 10002 }
+            // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
         };
 
         internal static void ContabilidadMetPrepararVentana(Form Formulario, string Titulo, Size AreaCliente)
