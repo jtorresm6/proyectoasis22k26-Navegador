@@ -3,94 +3,98 @@
  * MÓDULO: LOGÍSTICA
  * FORMULARIO: FrmMDILogistica
  * DESCRIPCIÓN:
- * Formulario principal con navegación mediante menús desplegables.
- *
+ * Navegador con menús tipo acordeón y vista compacta, sin alterar las
+ * imágenes ni los eventos de los formularios del módulo.
  * RESPONSABLE: VELVETH SARAÍ CHAVEZ MEJÍA
  * CARNÉ: 0901 23 6269
  * ============================================================================
  */
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-// Formularios de los submódulos.
 using CapaVista_Inventario_Logistica.Formularios;
 using CapaVista_Traslados_Logistica.Formularios;
 using CapaVista_MuestreoAuditoria_Logistica.Formularios;
 using CapaVista_CierreInventario_Logistica.Formularios;
 using CapaVista_Enlace_Logistica.Formas;
 using CapaVista_TransporteInterno_Logistica.Formularios;
+using CapaVista_TransporteExterno_Logistica.Formularios;
 
 namespace CapaVista_Logistica.Formularios
 {
     public partial class FrmMDILogistica : Form
     {
-        // ========================================================
-        // NAVEGADOR: estado y elementos visuales
-        // ========================================================
-
-        private const int LogisticaAnchoExpandido = 273;
+        // Los botones originales miden 264 x 53 y contienen texto en sus PNG.
+        // No se redimensionan ni se les escribe texto por encima.
+        private const int LogisticaAnchoExpandido = 300;
         private const int LogisticaAnchoContraido = 64;
+        private const int LogisticaMargenMenu = 8;
+        private const int LogisticaSeparacion = 7;
 
-        private static readonly Color LogisticaColorTurquesa =
+        private readonly Color LogisticaColorTurquesa =
             Color.FromArgb(62, 138, 132);
-
-        private static readonly Color LogisticaColorSeleccion =
-            Color.FromArgb(242, 216, 197);
 
         private Button[] LogisticaBotonesMenu;
         private Panel[] LogisticaPanelesMenu;
         private Label[] LogisticaFlechasMenu;
-        private Panel[] LogisticaBarrasActivas;
-        private string[] LogisticaTitulosMenu;
-        private int[] LogisticaAnchosMenu;
-        private int[] LogisticaIzquierdasMenu;
-        private int[] LogisticaAlturasMenu;
-        private Padding[] LogisticaRellenosMenu;
-        private ContentAlignment[] LogisticaAlineacionesMenu;
-        private Color[] LogisticaFondosMenu;
+        private Panel[] LogisticaIndicadores;
 
-        private bool LogisticaMenuContraido = false;
+        // Se usan los nombres solamente para la ayuda al pasar el mouse.
+        private readonly string[] LogisticaNombresMenu =
+        {
+            "Mantenimientos",
+            "Gestión de Inventario y Catálogo",
+            "Cierre y Auditoría de Inventario",
+            "Gestión de Traslados",
+            "Gestión de Viajes y Despacho",
+            "Transporte Externo y Monitoreo",
+            "Administración, Costos e Incidencias"
+        };
+
+        private Panel LogisticaPnlContenidoNavegador;
+        private Panel LogisticaPnlSubMenuEmergente;
         private ToolTip LogisticaAyudasMenu;
+        private readonly Dictionary<Control, Point> LogisticaUbicacionesOriginales =
+            new Dictionary<Control, Point>();
+
+        private int LogisticaIndiceAbierto = -1;
+        private bool LogisticaMenuContraido = false;
+        private ImageLayout LogisticaDisposicionOriginalFondo;
 
         // ============================================
-        // CONSTRUCTOR PRINCIPAL
+        // CONSTRUCTOR
         // ============================================
 
         public FrmMDILogistica()
         {
             InitializeComponent();
 
-            // Ajusta el área visible y el scroll al tamaño real de la ventana.
-            LogisticaPnlMDI.Dock = DockStyle.Fill;
+            // No modificar el Designer cuando Visual Studio lo abre.
+            if (System.ComponentModel.LicenseManager.UsageMode ==
+                System.ComponentModel.LicenseUsageMode.Designtime)
+                return;
 
-            // Configurar los menús desplegables.
+            LogisticaPnlMDI.Dock = DockStyle.Fill;
             MetPanelesSubMenu();
         }
 
-        // ============================================
-        // ACTUALIZAR INFORMACIÓN DEL USUARIO
-        // ============================================
-
-        public void LogisticaMetActualizarInfoUsuario(
-            string Nombre, string Rol)
+        public void LogisticaMetActualizarInfoUsuario(string Nombre, string Rol)
         {
             LogisticaLblUsuario.Text = Nombre;
             LogisticaLblRolUsuario.Text = Rol;
-
-            LogisticaLbUsuarioRol.Left =
-                LogisticaLblUsuario.Right + 30;
+            LogisticaLbUsuarioRol.Left = LogisticaLblUsuario.Right + 30;
         }
 
         // ============================================
-        // INICIALIZAR SUBMENÚS
+        // CONFIGURAR NAVEGACIÓN
         // ============================================
 
         private void MetPanelesSubMenu()
         {
-            // Se mantienen los controles y el diseño del Designer original.
-            LogisticaBotonesMenu = new Button[]
+            LogisticaBotonesMenu = new[]
             {
                 LogisticaBtnMenuMantenimientos,
                 LogisticaBtnMenuGestionInventario,
@@ -101,7 +105,7 @@ namespace CapaVista_Logistica.Formularios
                 LogisticaBtnMenuAdministracion
             };
 
-            LogisticaPanelesMenu = new Panel[]
+            LogisticaPanelesMenu = new[]
             {
                 LogisticaPnlMenuMantenimientos,
                 LogisticaPnlMenuGestionInventario,
@@ -112,46 +116,89 @@ namespace CapaVista_Logistica.Formularios
                 LogisticaPnlMenuAdministracionCostos
             };
 
-            int cantidad = LogisticaBotonesMenu.Length;
-            LogisticaFlechasMenu = new Label[cantidad];
-            LogisticaBarrasActivas = new Panel[cantidad];
-            LogisticaTitulosMenu = new string[cantidad];
-            LogisticaAnchosMenu = new int[cantidad];
-            LogisticaIzquierdasMenu = new int[cantidad];
-            LogisticaAlturasMenu = new int[cantidad];
-            LogisticaRellenosMenu = new Padding[cantidad];
-            LogisticaAlineacionesMenu = new ContentAlignment[cantidad];
-            LogisticaFondosMenu = new Color[cantidad];
+            // Se guardan las ubicaciones del Designer para que la hamburguesa
+            // siempre vuelva exactamente al mismo lugar y no acumule desfases.
+            Control[] controlesCabecera =
+            {
+                LogisticaPnlBanner,
+                LogisticaBtnHamburguesa,
+                LogisticaLblTextoUsuario,
+                LogisticaLblUsuario,
+                LogisticaLblTextoRol,
+                LogisticaLblRolUsuario
+            };
 
+            foreach (Control control in controlesCabecera)
+                LogisticaUbicacionesOriginales.Add(control, control.Location);
+
+            LogisticaDisposicionOriginalFondo =
+                LogisticaPnlNavegador.BackgroundImageLayout;
+
+            LogisticaPnlNavegador.SuspendLayout();
+            LogisticaPnlNavegador.Width = LogisticaAnchoExpandido;
             LogisticaPnlNavegador.AutoScroll = true;
             LogisticaPnlNavegador.AutoScrollMinSize = Size.Empty;
-            LogisticaPnlNavegador.AutoScrollMargin = new Size(0, 10);
-            LogistincaPnlMenuFin.Visible = false;
+            LogisticaPnlNavegador.AutoScrollMargin = Size.Empty;
 
-            LogisticaAyudasMenu = new ToolTip();
-            LogisticaAyudasMenu.SetToolTip(LogisticaBtnCerrarSesion, "Cerrar Sesión");
-            this.Disposed += (s, e) => LogisticaAyudasMenu.Dispose();
-            LogisticaPnlNavegador.Scroll += (s, e) =>
-                LogisticaMetPosicionarSubMenuFlotante();
-            LogisticaPnlMDI.Resize += (s, e) =>
-                LogisticaMetPosicionarSubMenuFlotante();
+            // El contenedor interno elimina el movimiento errático de Top
+            // producido al modificar controles dentro de un Panel con AutoScroll.
+            LogisticaPnlContenidoNavegador = new Panel();
+            LogisticaPnlContenidoNavegador.Name = "LogisticaPnlContenidoNavegador";
+            LogisticaPnlContenidoNavegador.Location = Point.Empty;
+            LogisticaPnlContenidoNavegador.Size = new Size(
+                LogisticaAnchoExpandido - SystemInformation.VerticalScrollBarWidth - 3,
+                1);
+            LogisticaPnlContenidoNavegador.BackColor = Color.Transparent;
+            LogisticaPnlContenidoNavegador.AutoScroll = false;
+            LogisticaPnlContenidoNavegador.Anchor =
+                AnchorStyles.Top | AnchorStyles.Left;
 
-            for (int i = 0; i < cantidad; i++)
+            // Transferir los mismos controles creados por el Designer.
+            // No se crean botones sustitutos ni se pierden sus imágenes.
+            LogisticaPnlContenidoNavegador.Controls.Add(LogisticaPbLogo);
+            foreach (Button boton in LogisticaBotonesMenu)
+                LogisticaPnlContenidoNavegador.Controls.Add(boton);
+
+            foreach (Panel submenu in LogisticaPanelesMenu)
             {
-                Button boton = LogisticaBotonesMenu[i];
-                LogisticaTitulosMenu[i] = boton.Text;
-                LogisticaAnchosMenu[i] = boton.Width;
-                LogisticaIzquierdasMenu[i] = boton.Left;
-                LogisticaAlturasMenu[i] = boton.Height;
-                LogisticaRellenosMenu[i] = boton.Padding;
-                LogisticaAlineacionesMenu[i] = boton.TextAlign;
-                LogisticaFondosMenu[i] = boton.BackColor;
-
-                LogisticaAyudasMenu.SetToolTip(boton, boton.Text);
-                LogisticaMetAgregarFlecha(boton, i);
+                LogisticaPnlContenidoNavegador.Controls.Add(submenu);
+                submenu.Visible = false;
+                submenu.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             }
 
-            // Si el Designer ya conectó eventos, se evita duplicarlos.
+            LogisticaPnlContenidoNavegador.Controls.Add(LogisticaBtnCerrarSesion);
+            LogisticaPnlNavegador.Controls.Add(LogisticaPnlContenidoNavegador);
+            LogistincaPnlMenuFin.Visible = false;
+            LogisticaPnlNavegador.ResumeLayout(true);
+
+            // Este panel solo aparece al usar el menú estrecho. Permite
+            // ver los submenús completos sin aplastar los iconos ni las fotos.
+            LogisticaPnlSubMenuEmergente = new Panel();
+            LogisticaPnlSubMenuEmergente.Name = "LogisticaPnlSubMenuEmergente";
+            LogisticaPnlSubMenuEmergente.BackColor =
+                Color.FromArgb(251, 246, 242);
+            LogisticaPnlSubMenuEmergente.BorderStyle = BorderStyle.FixedSingle;
+            LogisticaPnlSubMenuEmergente.AutoScroll = true;
+            LogisticaPnlSubMenuEmergente.Visible = false;
+            LogisticaPnlSubMenuEmergente.Size = new Size(293, 200);
+            LogisticaPnlMDI.Controls.Add(LogisticaPnlSubMenuEmergente);
+
+            LogisticaFlechasMenu = new Label[LogisticaBotonesMenu.Length];
+            LogisticaIndicadores = new Panel[LogisticaBotonesMenu.Length];
+            LogisticaAyudasMenu = new ToolTip();
+
+            for (int i = 0; i < LogisticaBotonesMenu.Length; i++)
+            {
+                LogisticaMetAgregarIndicadores(i);
+                LogisticaAyudasMenu.SetToolTip(
+                    LogisticaBotonesMenu[i], LogisticaNombresMenu[i]);
+            }
+
+            LogisticaAyudasMenu.SetToolTip(LogisticaBtnCerrarSesion,
+                "Cerrar sesión");
+            Disposed += (s, e) => LogisticaAyudasMenu.Dispose();
+
+            // No se agrega dos veces ningún evento de menú.
             LogisticaBtnMenuMantenimientos.Click -= LogisticaBtnCatalogo_Click;
             LogisticaBtnMenuMantenimientos.Click += LogisticaBtnCatalogo_Click;
 
@@ -173,203 +220,268 @@ namespace CapaVista_Logistica.Formularios
             LogisticaBtnMenuAdministracion.Click -= LogisticaMetClickAdministracion;
             LogisticaBtnMenuAdministracion.Click += LogisticaMetClickAdministracion;
 
-            // Mantener activos los formularios que ya funcionaban, aun si
-            // el Designer no tiene sus eventos Click configurados.
             LogisticaMetConectarFormularios();
 
-            MetEsconderSubMenu();
+            LogisticaPnlNavegador.Scroll += (s, e) =>
+                LogisticaMetPosicionarSubMenuEmergente();
+            LogisticaPnlMDI.Resize += (s, e) =>
+                LogisticaMetPosicionarSubMenuEmergente();
+
             MetOrganizarMenu();
-            LogisticaMetActualizarFlechas();
         }
 
         // ============================================
-        // OCULTAR TODOS LOS SUBMENÚS
+        // FLECHAS E INDICADORES
         // ============================================
 
-        private void MetEsconderSubMenu()
+        private void LogisticaMetAgregarIndicadores(int indice)
         {
-            // Si un submenú estaba flotando, regresarlo al navegador
-            // antes de ocultarlo. No se pierden los controles interiores.
-            foreach (Panel subMenu in LogisticaPanelesMenu)
-            {
-                subMenu.Visible = false;
+            Button boton = LogisticaBotonesMenu[indice];
 
-                if (subMenu.Parent != LogisticaPnlNavegador)
-                    subMenu.Parent = LogisticaPnlNavegador;
+            // La flecha va al costado del PNG, NO encima de las letras
+            // que ya están dibujadas en la imagen del botón.
+            Label flecha = new Label();
+            flecha.Name = "LogisticaLblFlecha" + indice;
+            flecha.AutoSize = false;
+            flecha.Size = new Size(14, boton.Height);
+            flecha.BackColor = Color.Transparent;
+            flecha.ForeColor = Color.FromArgb(242, 216, 197);
+            flecha.Font = new Font("Segoe UI Symbol", 10f, FontStyle.Bold);
+            flecha.TextAlign = ContentAlignment.MiddleCenter;
+            flecha.Cursor = Cursors.Hand;
+            flecha.Click += (s, e) => boton.PerformClick();
+            LogisticaPnlContenidoNavegador.Controls.Add(flecha);
+
+            Panel indicador = new Panel();
+            indicador.Name = "LogisticaPnlIndicador" + indice;
+            indicador.Width = 4;
+            indicador.BackColor = LogisticaColorTurquesa;
+            indicador.Visible = false;
+            indicador.Cursor = Cursors.Hand;
+            indicador.Click += (s, e) => boton.PerformClick();
+            LogisticaPnlContenidoNavegador.Controls.Add(indicador);
+
+            flecha.BringToFront();
+            indicador.BringToFront();
+            LogisticaFlechasMenu[indice] = flecha;
+            LogisticaIndicadores[indice] = indicador;
+        }
+
+        private void LogisticaMetActualizarIndicadores()
+        {
+            for (int i = 0; i < LogisticaBotonesMenu.Length; i++)
+            {
+                Button boton = LogisticaBotonesMenu[i];
+                Label flecha = LogisticaFlechasMenu[i];
+                Panel indicador = LogisticaIndicadores[i];
+                bool activo = i == LogisticaIndiceAbierto;
+
+                flecha.Text = activo ? "▼" : "▶";
+                flecha.Left = boton.Right - 6;
+                flecha.Top = boton.Top;
+                flecha.Height = boton.Height;
+                flecha.Visible = !LogisticaMenuContraido;
+                flecha.BringToFront();
+
+                indicador.SetBounds(boton.Left - 2, boton.Top + 3,
+                    4, boton.Height - 6);
+                indicador.Visible = activo;
+                indicador.BringToFront();
             }
         }
 
         // ============================================
-        // MOSTRAR U OCULTAR SUBMENÚ
-        // ============================================
-
-        private void metShowSubMenu(Panel subMenu)
-        {
-            // Abrir/cerrar sin cambiar el ancho del navegador.
-            // En modo compacto, las opciones aparecen completas a la derecha.
-            bool abrir = !subMenu.Visible;
-            MetEsconderSubMenu();
-
-            if (abrir)
-            {
-                if (LogisticaMenuContraido)
-                    subMenu.Parent = LogisticaPnlMDI;
-
-                subMenu.Visible = true;
-            }
-
-            MetOrganizarMenu();
-            LogisticaMetActualizarFlechas();
-        }
-
-        // ============================================
-        // ORGANIZAR LOS MENÚS VERTICALMENTE
+        // ACOMODAR EL ACORDEÓN SIN ALTERAR LAS IMÁGENES
         // ============================================
 
         private void MetOrganizarMenu()
         {
-            int scrollAnterior = Math.Max(0,
-                -LogisticaPnlNavegador.AutoScrollPosition.Y);
+            if (LogisticaPnlContenidoNavegador == null)
+                return;
 
-            LogisticaPnlNavegador.SuspendLayout();
-            LogisticaPnlNavegador.AutoScrollPosition = Point.Empty;
+            LogisticaPnlContenidoNavegador.SuspendLayout();
 
-            // Se conserva la ubicación original del logotipo y se
-            // agrupan las secciones cerradas sin dejar huecos.
+            LogisticaPnlContenidoNavegador.Width =
+                LogisticaMenuContraido
+                    ? 60
+                    : LogisticaAnchoExpandido -
+                      SystemInformation.VerticalScrollBarWidth - 3;
+
+            // El logotipo mantiene su posición de diseño.
+            LogisticaPbLogo.Visible = !LogisticaMenuContraido;
+            LogisticaPbLogo.Location = new Point(77, 11);
+
             int posicionY = LogisticaMenuContraido
-                ? 12 : LogisticaPbLogo.Bottom + 6;
+                ? 10 : LogisticaPbLogo.Bottom + 6;
 
             for (int i = 0; i < LogisticaBotonesMenu.Length; i++)
             {
                 Button boton = LogisticaBotonesMenu[i];
                 Panel subMenu = LogisticaPanelesMenu[i];
 
-                // Nunca se sustituyen los títulos por iniciales.
-                boton.Text = LogisticaTitulosMenu[i];
-                boton.BackColor = LogisticaFondosMenu[i];
+                // Las imágenes de los encabezados ya incluyen textos e iconos.
+                // Mantener su altura y su ancho ORIGINAL en modo expandido.
+                boton.SetBounds(
+                    LogisticaMenuContraido ? 5 : LogisticaMargenMenu,
+                    posicionY,
+                    LogisticaMenuContraido ? 54 : 264,
+                    53);
 
-                if (!LogisticaMenuContraido)
-                {
-                    boton.SetBounds(LogisticaIzquierdasMenu[i], posicionY,
-                        LogisticaAnchosMenu[i], LogisticaAlturasMenu[i]);
-                    boton.TextAlign = LogisticaAlineacionesMenu[i];
-                    boton.Padding = LogisticaRellenosMenu[i];
-                }
-                else
-                {
-                    // El ancho de 64 px solo permite ver una parte del
-                    // título; el texto completo permanece en el botón.
-                    // Al abrir el menú, las opciones salen como panel flotante.
-                    boton.SetBounds(5, posicionY, 54, LogisticaAlturasMenu[i]);
-                    boton.TextAlign = ContentAlignment.MiddleLeft;
-                    boton.Padding = new Padding(5, 0, 0, 0);
-                }
+                // El PNG mantiene su escala, se recorta en modo icono.
+                // No asignar boton.Text ni cambiar BackgroundImage.
+                posicionY += boton.Height + LogisticaSeparacion;
 
-                posicionY += boton.Height + 6;
+                if (subMenu.Parent == LogisticaPnlContenidoNavegador)
+                    subMenu.Location = new Point(LogisticaMargenMenu,
+                        posicionY);
 
-                if (subMenu.Parent == LogisticaPnlNavegador)
-                    subMenu.Top = posicionY;
-
-                // Un panel flotante no ocupa altura dentro del navegador.
-                if (!LogisticaMenuContraido && subMenu.Visible)
-                    posicionY += subMenu.Height + 6;
+                if (!LogisticaMenuContraido &&
+                    LogisticaIndiceAbierto == i)
+                    posicionY += subMenu.Height + LogisticaSeparacion;
             }
 
-            // Mantener el botón original de cierre de sesión.
-            LogisticaBtnCerrarSesion.Left = LogisticaMenuContraido ? 5 : 7;
-            LogisticaBtnCerrarSesion.Width = LogisticaMenuContraido ? 54 : 264;
-            LogisticaBtnCerrarSesion.Text = "Cerrar Sesión";
-            LogisticaBtnCerrarSesion.Top = posicionY;
-            posicionY += LogisticaBtnCerrarSesion.Height + 12;
+            LogisticaBtnCerrarSesion.SetBounds(
+                LogisticaMenuContraido ? 5 : LogisticaMargenMenu,
+                posicionY,
+                LogisticaMenuContraido ? 54 : 264,
+                53);
 
-            LogisticaPnlNavegador.AutoScrollMinSize =
-                new Size(0, posicionY);
-            LogisticaPnlNavegador.ResumeLayout(true);
+            // ¡No asignar Text = "Cerrar Sesión"! Ya está escrito en el PNG.
+            posicionY += LogisticaBtnCerrarSesion.Height + 14;
+            LogisticaPnlContenidoNavegador.Height = posicionY;
+            LogisticaPnlContenidoNavegador.ResumeLayout(true);
 
-            LogisticaPnlNavegador.AutoScrollPosition =
-                new Point(0, scrollAnterior);
-
-            LogisticaMetPosicionarSubMenuFlotante();
-            LogisticaMetActualizarFlechas();
+            // La barra vertical se controla automáticamente por la altura
+            // del panel interno. No se usa AutoScrollMinSize = 3100.
+            LogisticaMetActualizarIndicadores();
+            LogisticaMetPosicionarSubMenuEmergente();
         }
 
+        // ============================================
+        // ABRIR/CERRAR MENÚS
+        // ============================================
 
-        // ========================================================
-        // FLECHAS E INDICADOR LATERAL (estilo Contabilidad)
-        // Sin reemplazar los botones originales.
-        // ========================================================
-
-        private void LogisticaMetAgregarFlecha(Button boton, int indice)
+        private void MetEsconderSubMenu()
         {
-            // Label encima del botón: evita que Windows tape la flecha
-            // cuando pinta el estilo nativo de los controles.
-            Label flecha = new Label();
-            flecha.Name = "LogisticaLblFlecha" + indice;
-            flecha.AutoSize = false;
-            flecha.Size = new Size(27, boton.Height);
-            flecha.Location = new Point(boton.Width - 29, 0);
-            flecha.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            flecha.BackColor = boton.BackColor;
-            flecha.ForeColor = LogisticaColorTurquesa;
-            flecha.Font = new Font("Segoe UI Symbol", 12f, FontStyle.Bold);
-            flecha.TextAlign = ContentAlignment.MiddleCenter;
-            flecha.Text = "▶";
-            flecha.Cursor = Cursors.Hand;
-            flecha.Click += (s, e) => boton.PerformClick();
-
-            Panel indicador = new Panel();
-            indicador.Name = "LogisticaPnlIndicador" + indice;
-            indicador.Dock = DockStyle.Left;
-            indicador.Width = 4;
-            indicador.BackColor = LogisticaColorTurquesa;
-            indicador.Visible = false;
-            indicador.Cursor = Cursors.Hand;
-            indicador.Click += (s, e) => boton.PerformClick();
-
-            boton.Controls.Add(flecha);
-            boton.Controls.Add(indicador);
-            flecha.BringToFront();
-            indicador.BringToFront();
-
-            LogisticaFlechasMenu[indice] = flecha;
-            LogisticaBarrasActivas[indice] = indicador;
+            LogisticaIndiceAbierto = -1;
+            LogisticaMetAplicarVisibilidadSubMenus();
+            MetOrganizarMenu();
         }
 
-        private void LogisticaMetActualizarFlechas()
+        private void metShowSubMenu(Panel subMenu)
         {
-            if (LogisticaBotonesMenu == null)
+            int indice = Array.IndexOf(LogisticaPanelesMenu, subMenu);
+            if (indice < 0)
                 return;
 
-            for (int i = 0; i < LogisticaBotonesMenu.Length; i++)
-            {
-                Button boton = LogisticaBotonesMenu[i];
-                Label flecha = LogisticaFlechasMenu[i];
-                Panel indicador = LogisticaBarrasActivas[i];
-                bool abierto = LogisticaPanelesMenu[i].Visible;
+            LogisticaIndiceAbierto = LogisticaIndiceAbierto == indice
+                ? -1 : indice;
 
-                boton.BackColor = abierto
-                    ? LogisticaColorSeleccion : LogisticaFondosMenu[i];
+            LogisticaMetAplicarVisibilidadSubMenus();
+            MetOrganizarMenu();
 
-                // Como en Contabilidad: derecha = cerrado, abajo = abierto.
-                flecha.Text = abierto ? "▼" : "▶";
-                flecha.BackColor = boton.BackColor;
-                flecha.ForeColor = LogisticaColorTurquesa;
-                flecha.Height = boton.Height;
-                flecha.Width = LogisticaMenuContraido ? 17 : 27;
-                // Reservar espacio para la barra vertical del navegador.
-                flecha.Left = boton.Width - flecha.Width -
-                    (LogisticaMenuContraido ? 2 : 18);
-                flecha.Top = 0;
-                flecha.Visible = true;
-                flecha.BringToFront();
-
-                indicador.Visible = abierto;
-            }
+            // Facilitar el acceso a un encabezado situado al final del menú.
+            if (!LogisticaMenuContraido && LogisticaIndiceAbierto >= 0)
+                LogisticaPnlNavegador.ScrollControlIntoView(
+                    LogisticaBotonesMenu[LogisticaIndiceAbierto]);
         }
 
-        // ========================================================
+        private void LogisticaMetAplicarVisibilidadSubMenus()
+        {
+            for (int i = 0; i < LogisticaPanelesMenu.Length; i++)
+            {
+                Panel subMenu = LogisticaPanelesMenu[i];
+                bool activo = LogisticaIndiceAbierto == i;
+                Control padre = (activo && LogisticaMenuContraido)
+                    ? (Control)LogisticaPnlSubMenuEmergente
+                    : (Control)LogisticaPnlContenidoNavegador;
+
+                // Cambiar Parent solo cuando haga falta para evitar
+                // parpadeos y la reordenación de los controles internos.
+                if (subMenu.Parent != padre)
+                    subMenu.Parent = padre;
+
+                subMenu.Visible = activo;
+            }
+
+            LogisticaPnlSubMenuEmergente.Visible =
+                LogisticaMenuContraido && LogisticaIndiceAbierto >= 0;
+        }
+
+        // ============================================
+        // VISTA COMPACTA: LOS BOTONES SIGUEN SIENDO ICONOS
+        // ============================================
+
+        private void LogisticaMetCambiarNavegador(bool contraer)
+        {
+            if (contraer == LogisticaMenuContraido)
+                return;
+
+            LogisticaMenuContraido = contraer;
+            LogisticaPnlNavegador.Width = contraer
+                ? LogisticaAnchoContraido : LogisticaAnchoExpandido;
+
+            // Con la barra compacta recortar el fondo en lugar de estirarlo.
+            LogisticaPnlNavegador.BackgroundImageLayout = contraer
+                ? ImageLayout.None : LogisticaDisposicionOriginalFondo;
+
+            // Restaurar siempre la posición original, sin sumar
+            // desplazamientos acumulativos después de varios clics.
+            int desplazamiento = LogisticaPnlNavegador.Width -
+                LogisticaAnchoExpandido;
+            foreach (KeyValuePair<Control, Point> elemento in
+                     LogisticaUbicacionesOriginales)
+            {
+                elemento.Key.Location = new Point(
+                    elemento.Value.X + desplazamiento,
+                    elemento.Value.Y);
+            }
+
+            LogisticaPnlNavegador.AutoScrollPosition = Point.Empty;
+            LogisticaMetAplicarVisibilidadSubMenus();
+            MetOrganizarMenu();
+        }
+
+        private void LogisticaMetPosicionarSubMenuEmergente()
+        {
+            if (LogisticaPnlSubMenuEmergente == null ||
+                !LogisticaMenuContraido || LogisticaIndiceAbierto < 0)
+                return;
+
+            Panel subMenu = LogisticaPanelesMenu[LogisticaIndiceAbierto];
+            Button boton = LogisticaBotonesMenu[LogisticaIndiceAbierto];
+
+            // Vista emergente de ancho completo: el contenido original
+            // permanece accesible, incluso si tiene muchos botones.
+            int alturaDisponible = Math.Max(90,
+                LogisticaPnlMDI.ClientSize.Height - 48);
+            int alto = Math.Min(subMenu.Height + 10, alturaDisponible);
+            int ancho = 293;
+
+            LogisticaPnlSubMenuEmergente.SuspendLayout();
+            LogisticaPnlSubMenuEmergente.Size = new Size(ancho, alto);
+            LogisticaPnlSubMenuEmergente.AutoScrollMinSize = Size.Empty;
+            subMenu.Location = new Point(4, 4);
+            LogisticaPnlSubMenuEmergente.AutoScrollMinSize =
+                new Size(0, subMenu.Height + 10);
+            LogisticaPnlSubMenuEmergente.ResumeLayout(true);
+
+            // Posición respecto del encabezado que activó el submenú.
+            Point puntoBoton = LogisticaPnlMDI.PointToClient(
+                boton.PointToScreen(Point.Empty));
+            int superior = Math.Max(34, Math.Min(puntoBoton.Y,
+                Math.Max(34, LogisticaPnlMDI.ClientSize.Height - alto - 5)));
+            int izquierda = LogisticaPnlNavegador.Right + 3;
+
+            LogisticaPnlSubMenuEmergente.Location =
+                new Point(izquierda, superior);
+            LogisticaPnlSubMenuEmergente.Visible = true;
+            LogisticaPnlSubMenuEmergente.BringToFront();
+        }
+
+        // ============================================
         // EVENTOS DE LOS ENCABEZADOS
-        // ========================================================
+        // ============================================
 
         private void LogisticaMetClickInventario(object sender, EventArgs e)
         {
@@ -402,87 +514,6 @@ namespace CapaVista_Logistica.Formularios
         }
 
         // ========================================================
-        // HAMBURGUESA: preservar el submenú abierto y los botones.
-        // ========================================================
-
-        // Un submenú visible mantiene todo su ancho aun con la barra
-        // de navegación contraída (64 px).
-        private void LogisticaMetPosicionarSubMenuFlotante()
-        {
-            if (!LogisticaMenuContraido || LogisticaPanelesMenu == null)
-                return;
-
-            for (int i = 0; i < LogisticaPanelesMenu.Length; i++)
-            {
-                Panel panel = LogisticaPanelesMenu[i];
-                if (!panel.Visible || panel.Parent != LogisticaPnlMDI)
-                    continue;
-
-                Button boton = LogisticaBotonesMenu[i];
-                Point origen = LogisticaPnlMDI.PointToClient(
-                    boton.PointToScreen(Point.Empty));
-
-                int izquierda = LogisticaPnlNavegador.Right + 6;
-                int superior = Math.Max(4, Math.Min(origen.Y,
-                    Math.Max(4, LogisticaPnlMDI.ClientSize.Height - panel.Height - 4)));
-
-                panel.Location = new Point(izquierda, superior);
-                panel.BorderStyle = BorderStyle.FixedSingle;
-                panel.BringToFront();
-            }
-        }
-
-        private void LogisticaMetCambiarNavegador(bool contraer)
-        {
-            if (contraer == LogisticaMenuContraido)
-                return;
-
-            // Identificar el submenú abierto. NO lo ocultamos.
-            Panel abierto = null;
-            foreach (Panel panel in LogisticaPanelesMenu)
-            {
-                if (panel.Visible)
-                {
-                    abierto = panel;
-                    break;
-                }
-            }
-
-            LogisticaMenuContraido = contraer;
-
-            if (abierto != null)
-            {
-                // Al reducir, mostrar las opciones completas al costado;
-                // al expandir, regresarlas a su contenedor original.
-                abierto.Parent = contraer
-                    ? LogisticaPnlMDI : LogisticaPnlNavegador;
-                abierto.Visible = true;
-            }
-
-            LogisticaPnlNavegador.Width = contraer
-                ? LogisticaAnchoContraido : LogisticaAnchoExpandido;
-            LogisticaPbLogo.Visible = !contraer;
-
-            // Se respeta el posicionamiento que tenía tu botón
-            // hamburguesa desde el comienzo.
-            int desplazamiento = contraer ? 73 : 279;
-            LogisticaPnlBanner.Location = new Point(desplazamiento, 34);
-            LogisticaBtnHamburguesa.Location =
-                new Point(desplazamiento, 8);
-
-            LogisticaLblTextoUsuario.Location =
-                new Point(contraer ? 128 : 334, 8);
-            LogisticaLblUsuario.Location =
-                new Point(contraer ? 228 : 434, 9);
-            LogisticaLblTextoRol.Location =
-                new Point(contraer ? 500 : 706, 9);
-            LogisticaLblRolUsuario.Location =
-                new Point(contraer ? 546 : 752, 9);
-
-            MetOrganizarMenu();
-        }
-
-        // ========================================================
         // CONEXIONES DE FORMULARIOS: conservan métodos originales.
         // ========================================================
 
@@ -494,7 +525,7 @@ namespace CapaVista_Logistica.Formularios
             LogisticaMetConectarClick(LogisticaBtnLinea, LogisticaBtnLinea_Click);
             LogisticaMetConectarClick(LogisticaBtnMarca, LogisticaBtnMarca_Click);
             LogisticaMetConectarClick(LogisticaBtnDetalleMovimiento, LogisticaBtnDetalleMovimiento_Click);
-            LogisticaMetConectarClick(LogisticaTipoMovimiento, LogisticaTipoMovimiento_Click);
+            LogisticaMetConectarClick(LogisticaBtnTipoMovimiento, LogisticaTipoMovimiento_Click);
             LogisticaMetConectarClick(LogisticaBtnCamaraRefrigeración, LogisticaBtnCamaraRefrigeración_Click);
             LogisticaMetConectarClick(LogisticaBtnConductor, LogisticaBtnConductor_Click);
             LogisticaMetConectarClick(LogisticaBtnEstadoTransporte, LogisticaBtnEstadoTransporte_Click);
@@ -672,7 +703,7 @@ namespace CapaVista_Logistica.Formularios
 
         private void LogisticaBtnTelemetriaTransporte_Click(object sender, EventArgs e)
         {
-
+            LogisticaMetAbrirFormulario(new FrmTelemetriaTransporte());
         }
 
         private void LogisticaBtnAlertaCadenaFrio_Click(object sender, EventArgs e)
@@ -686,11 +717,85 @@ namespace CapaVista_Logistica.Formularios
             LogisticaMetAbrirFormulario(new FrmMantenimientoProducto());
         }
 
-        /*
-        private void LogisticaBtnTraslados_Click(object sender, EventArgs e)
+        private void LogisticaBtnMovimientoInventario_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmMantenimientoMovimientoInventario());
+        }
+
+        private void LogisticaBtnSaldos_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogisticaBtnHistoricoInventario_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogisticaBtnCierreInventario_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmCierreInventario());
+        }
+
+        private void LogisticaBtnConsultaCierre_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmConsultaCierres());
+        }
+
+        private void LogisticaBtnMuestreoyAuditoria_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmAuditoriaInventario());
+        }
+
+        private void LogisticaBtnDetalleMuestreo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogisticaBtnTraslado_Click(object sender, EventArgs e)
         {
             LogisticaMetAbrirFormulario(new FrmTraslados());
         }
-        */
+
+        private void LogisticaBtnDetalleTraslado_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmDetalleTraslados());
+        }
+
+        private void LogisticaBtnTipodeTraslado_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmTipoTraslado());
+        }
+
+        private void LogisticaBtnProductoTraslado_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmProductosATrasladar());
+        }
+
+        private void LogisticaBtnRegistroTransporteExterno_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmRegistroTransporteExterno());
+        }
+
+        private void LogisticaBtnRutaSeguimiento_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmRutaYSeguimiento());
+        }
+
+        private void LogisticaBtnCostoyPago_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmCostosYPagosDelServicio());
+        }
+
+        private void LogisticaBtnIndecencia_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmIncidenciasEHistorial());
+        }
+
+        private void LogisticaBtnListadoTransporteExterno_Click(object sender, EventArgs e)
+        {
+            LogisticaMetAbrirFormulario(new FrmListadoTransporteExterno());
+        }
+
     }
 }
