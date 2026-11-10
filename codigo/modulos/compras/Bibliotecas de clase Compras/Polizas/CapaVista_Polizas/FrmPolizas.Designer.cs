@@ -19,7 +19,6 @@ namespace CapaVista_Polizas
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPolizas));
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
-            this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "Polizas.html";
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
             this.ComprasGbxDetalle = new CapaVista_Componentes.Componentes.ClsGroupBoxCompras();
             this.ComprasLblDiferencia = new CapaVista_Componentes.Componentes.ComprasUsrLabel();

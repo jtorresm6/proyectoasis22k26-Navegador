@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_Polizas", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_Polizas", "CapaModelo_Polizas\CapaModelo_Polizas.csproj", "{792B454F-D625-4232-A49F-6AE556D7A53D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebaUnitaria_Polizas", "PruebaUnitaria_Polizas\PruebaUnitaria_Polizas.csproj", "{4AA8B3C3-914B-4FD8-8B56-BA5A1ACDD6F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{792B454F-D625-4232-A49F-6AE556D7A53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{792B454F-D625-4232-A49F-6AE556D7A53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{792B454F-D625-4232-A49F-6AE556D7A53D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AA8B3C3-914B-4FD8-8B56-BA5A1ACDD6F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AA8B3C3-914B-4FD8-8B56-BA5A1ACDD6F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AA8B3C3-914B-4FD8-8B56-BA5A1ACDD6F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AA8B3C3-914B-4FD8-8B56-BA5A1ACDD6F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
