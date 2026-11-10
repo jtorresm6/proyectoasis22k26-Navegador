@@ -18,6 +18,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using CapaControlador_CierreBancario;
+using CapaVista_CierreBancario.frmReportes;
 
 namespace CapaVista_CierreBancario.Formularios
 {
@@ -408,6 +409,14 @@ namespace CapaVista_CierreBancario.Formularios
 
         private void BancosBtnReporte_Click(object sender, EventArgs e)
         {
+            using (FrmReporteCierreBancario Reporte = new FrmReporteCierreBancario())
+            {
+                Reporte.ShowDialog(this);
+            }
+        }
+
+        private void BancosBtnExportar_Click(object sender, EventArgs e)
+        {
             DataGridView Grilla = BancosTabCierre.SelectedTab == BancosTabHistorico
                 ? BancosDgvHistorico
                 : BancosDgvResumenCuentas;
@@ -473,12 +482,19 @@ namespace CapaVista_CierreBancario.Formularios
 
         private void BancosBtnAyuda_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "1. Seleccione el tipo de período y revise las fechas.\n" +
-                "2. Consulte las conciliaciones registradas.\n" +
-                "3. Valide que el período no tenga cierres previos, que todas las conciliaciones estén completas y que no existan diferencias.\n" +
-                "4. Confirme el cierre. El resultado se guarda en el historial.",
-                "Ayuda de cierre bancario", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DirectoryInfo Directorio = new DirectoryInfo(Application.StartupPath);
+            while (Directorio != null)
+            {
+                string Ruta = Path.Combine(Directorio.FullName, "ayuda", "modulos", "bancos", "BancosAyudas", "BancosAyudas.chm");
+                if (File.Exists(Ruta))
+                {
+                    Help.ShowHelp(this, Ruta, HelpNavigator.Topic, "CierreBancario_Bancos.html");
+                    return;
+                }
+                Directorio = Directorio.Parent;
+            }
+            MessageBox.Show("No se encontró el archivo de ayuda del módulo de Bancos.", "Ayuda de cierre bancario",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BancosBtnSalir_Click(object sender, EventArgs e)

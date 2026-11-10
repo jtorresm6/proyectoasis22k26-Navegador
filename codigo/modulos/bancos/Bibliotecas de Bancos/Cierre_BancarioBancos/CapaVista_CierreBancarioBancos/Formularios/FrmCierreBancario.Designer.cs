@@ -556,6 +556,7 @@ namespace CapaVista_CierreBancario.Formularios
             this.BancosBtnReporte.Size = new System.Drawing.Size(64, 56);
             this.BancosBtnReporte.TabIndex = 7;
             this.BancosBtnReporte.UseVisualStyleBackColor = true;
+            this.BancosBtnReporte.Click += new System.EventHandler(this.BancosBtnReporte_Click);
             // 
             // BancosBtnValidarCierre
             // 
@@ -611,7 +612,7 @@ namespace CapaVista_CierreBancario.Formularios
             this.BancosBtnExportar.Name = "BancosBtnExportar";
             this.BancosBtnExportar.Size = new System.Drawing.Size(65, 56);
             this.BancosBtnExportar.TabIndex = 3;
-            this.BancosBtnExportar.Click += new System.EventHandler(this.BancosBtnReporte_Click);
+            this.BancosBtnExportar.Click += new System.EventHandler(this.BancosBtnExportar_Click);
             // 
             // BancosBtnLimpiar
             // 
