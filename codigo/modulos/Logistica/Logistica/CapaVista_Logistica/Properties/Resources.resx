@@ -121,178 +121,307 @@
   <data name="resumenCierreInventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\resumenCierreInventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="resumenUbi1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenUbi1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="banner" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\banner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="nota" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\nota.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Enlace_de_integracion" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Enlace_de_integracion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnCerrarSesion" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnCerrarSesion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="resumenCierreInventario1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenCierreInventario1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnAuditoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnAuditoria.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FondoNavegado2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FondoNavegado2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_hamburguesa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_hamburguesa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cerrar_sesion" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cerrar_sesion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FondoNavegador" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FondoNavegador.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Ubicaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Ubicaciones.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="resumenInventario1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenInventario1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnEstructurayUbicaciones1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnEstructurayUbicaciones1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="resumenTraslado" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenTraslado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BannerRedimensionado" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BannerRedimensionado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Gestion_de_Transporte" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Gestion_de_Transporte.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Btn_Marca" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Marca.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ResumenAuditoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ResumenAuditoria.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="resumenUbi" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenUbi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnhamburguesa3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnhamburguesa3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="resumenCatalogo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenCatalogo1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnEnlace" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnEnlace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Inventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Inventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnhamburguesa2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnhamburguesa2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnInventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnInventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="71" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\71.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnhamburguesa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnhamburguesa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="resumenEnlace" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenEnlace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="resumenEnlace1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenEnlace1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="panelestandarizado" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\panelestandarizado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Gestion_de_Traslado" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Gestion_de_Traslado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnTraslado" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnTraslado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="resumenTransporte" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenTransporte.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Hamburguesa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Hamburguesa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_ayuda" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_ayuda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="imgnota" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\imgnota.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="panel_fondo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\panel_fondo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Cierre_de_inventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Cierre_de_inventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FondoNavegador1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FondoNavegador1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="resumenTransporte1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenTransporte1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnCatalogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnCatalogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Auditoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Auditoria.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FondoPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FondoPanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn_menuN1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn_menuN1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btnEstructurayUbicaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btnEstructurayUbicaciones.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Btn_Linea" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Linea.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btnTransporte" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btnTransporte.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="7" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ResumenAuditoria1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ResumenAuditoria1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="banner_radio" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\banner_radio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="resumenInventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenInventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Catalogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Catalogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Cierre_de_inventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Cierre_de_inventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="btn_menuN" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btn_menuN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="resumenInventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenInventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Telemetria_del_Transporte" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Telemetria_del_Transporte.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenInventario1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenInventario1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenUbi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenUbi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_ayuda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_ayuda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Detalle_de_Movimiento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Detalle_de_Movimiento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FondoPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FondoPanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BannerRedimensionado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BannerRedimensionado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FondoNavegador" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FondoNavegador.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="banner_radio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\banner_radio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenCierreInventario1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenCierreInventario1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Tipo_de_Transporte" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Tipo_de_Transporte.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Cierre_de_Inventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Cierre_de_Inventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnEnlace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnEnlace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenUbi1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenUbi1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Tipo_de_Movimiento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Tipo_de_Movimiento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenCatalogo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenCatalogo1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Productos_a_Traslados" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Productos_a_Traslados.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ResumenAuditoria1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ResumenAuditoria1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Historico" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Historico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Detalle_De_Traslado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Detalle_De_Traslado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ubicaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Ubicaciones.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btnCierre" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btnCierre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="resumenCatalogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\resumenCatalogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Hamburguesa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Hamburguesa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Alerta_Cadena_Frio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Alerta_Cadena_Frio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Inventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Inventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Registro_Transporte_Externo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Registro_Transporte_Externo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnhamburguesa3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnhamburguesa3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FondoNavegador1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FondoNavegador1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Enlaces_y_otros_modulos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Enlaces_y_otros_modulos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Transporte_externo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Transporte_externo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Encabezado_Viaje" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Encabezado_Viaje.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Enlace_de_integracion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Enlace_de_integracion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="71" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\71.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cerrar_sesion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Cerrar_sesion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Categoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Categoria.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Traslado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Traslado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Transporte" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Transporte.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnCierreyAditoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnCierreyAditoria.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Sucursales" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Sucursales.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenTransporte1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenTransporte1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnAuditoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnAuditoria.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Auditoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Auditoria.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenEnlace1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenEnlace1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Detalle_Viaje_Producto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Detalle_Viaje_Producto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_menuN1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_menuN1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnGestionViajesDespacho" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnGestionViajesDespacho.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnAdministracionCostosIncidencia" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnAdministracionCostosIncidencia.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BtnGestionInventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnGestionInventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Ruta_y_Seguimiento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Ruta_y_Seguimiento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenTraslado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenTraslado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnhamburguesa2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnhamburguesa2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Movimiento_de_Inventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Movimiento_de_Inventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Saldos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Saldos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="resumenTraslado1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\resumenTraslado1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="panel_fondo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\panel_fondo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Conductor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Conductor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnEstructurayUbicaciones1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnEstructurayUbicaciones1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btn_hamburguesa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_hamburguesa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FondoNavegado2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FondoNavegado2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Muestreo_y_Auditoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Muestreo_y_Auditoria.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Tipo_Traslado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Tipo_Traslado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Consulta_Cierres" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Consulta_Cierres.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnCatalogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnCatalogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenCatalogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenCatalogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Gestion_de_Traslado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Gestion_de_Traslado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenTransporte" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenTransporte.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Stock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Stock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnInventario" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnInventario.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resumenEnlace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\resumenEnlace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Costo_y_Pago_del_servicio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Costo_y_Pago_del_servicio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nota" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nota.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Bodegas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Bodegas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="panelestandarizado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\panelestandarizado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnMantenimientos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnMantenimientos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnGestionTraslados" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnGestionTraslados.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Detalle_de_Muestreo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Detalle_de_Muestreo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btnhamburguesa_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btnhamburguesa_menu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnhamburguesa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnhamburguesa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Gestion_de_Transporte" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Gestion_de_Transporte.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Producto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Producto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnEstructurayUbicaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnEstructurayUbicaciones.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="banner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\banner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Estado_de_Transporte" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Estado_de_Transporte.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Catalogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Catalogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Indicencia_e_Historial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Indicencia_e_Historial.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ResumenAuditoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ResumenAuditoria.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnTraslado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btnTraslado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Detalle_Viaje" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Detalle_Viaje.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BtnGestionTransporteExternoYMonitoreo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BtnGestionTransporteExternoYMonitoreo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Btn_Camara_de_Refrigeracion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Btn_Camara_de_Refrigeracion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgnota" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\imgnota.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CerrarSesionBoton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CerrarSesionBoton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

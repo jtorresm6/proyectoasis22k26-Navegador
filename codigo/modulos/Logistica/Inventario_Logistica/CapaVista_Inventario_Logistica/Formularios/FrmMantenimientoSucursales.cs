@@ -31,21 +31,7 @@ namespace CapaVista_Inventario_Logistica.Formularios
                 "tblSucursal", 4, 6);
         }
 
-        // Procedimiento para abrir el mantenimiento de bodegas.
-        private void LogisticaProcAbrirMantenimientoBodegas()
-        {
-            using (FrmMantenimientoBodegas FrmBodega =
-                new FrmMantenimientoBodegas())
-            {
-                FrmBodega.ShowDialog(this);
-            }
-        }
 
-        // Evento del botón de mantenimiento de bodegas.
-        private void LogisticaBtnBodega_Click(
-            object sender, EventArgs e)
-        {
-            LogisticaProcAbrirMantenimientoBodegas();
-        }
+
     }
 }

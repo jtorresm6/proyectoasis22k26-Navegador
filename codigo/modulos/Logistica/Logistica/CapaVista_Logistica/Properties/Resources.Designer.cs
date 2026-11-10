@@ -133,6 +133,16 @@ namespace CapaVista_Logistica.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Btn_Alerta_Cadena_Frio {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Alerta_Cadena_Frio", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_ayuda {
             get {
                 object obj = ResourceManager.GetObject("btn_ayuda", resourceCulture);
@@ -143,9 +153,199 @@ namespace CapaVista_Logistica.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Btn_Bodegas {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Bodegas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Camara_de_Refrigeracion {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Camara_de_Refrigeracion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Categoria {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Categoria", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Cierre_de_Inventario {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Cierre_de_Inventario", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Conductor {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Conductor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Consulta_Cierres {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Consulta_Cierres", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Costo_y_Pago_del_servicio {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Costo_y_Pago_del_servicio", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Detalle_de_Movimiento {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Detalle_de_Movimiento", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Detalle_de_Muestreo {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Detalle_de_Muestreo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Detalle_De_Traslado {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Detalle_De_Traslado", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Detalle_Viaje {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Detalle_Viaje", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Detalle_Viaje_Producto {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Detalle_Viaje_Producto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Encabezado_Viaje {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Encabezado_Viaje", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Enlaces_y_otros_modulos {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Enlaces_y_otros_modulos", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Estado_de_Transporte {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Estado_de_Transporte", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_hamburguesa {
             get {
                 object obj = ResourceManager.GetObject("btn_hamburguesa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Historico {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Historico", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Indicencia_e_Historial {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Indicencia_e_Historial", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Linea {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Linea", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Marca {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Marca", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,6 +373,176 @@ namespace CapaVista_Logistica.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Btn_Movimiento_de_Inventario {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Movimiento_de_Inventario", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Muestreo_y_Auditoria {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Muestreo_y_Auditoria", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Producto {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Producto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Productos_a_Traslados {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Productos_a_Traslados", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Registro_Transporte_Externo {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Registro_Transporte_Externo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Ruta_y_Seguimiento {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Ruta_y_Seguimiento", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Saldos {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Saldos", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Stock {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Stock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Sucursales {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Sucursales", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Telemetria_del_Transporte {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Telemetria_del_Transporte", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Tipo_de_Movimiento {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Tipo_de_Movimiento", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Tipo_de_Transporte {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Tipo_de_Transporte", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Tipo_Traslado {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Tipo_Traslado", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Transporte {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Transporte", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Transporte_externo {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Transporte_externo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Btn_Traslado {
+            get {
+                object obj = ResourceManager.GetObject("Btn_Traslado", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BtnAdministracionCostosIncidencia {
+            get {
+                object obj = ResourceManager.GetObject("BtnAdministracionCostosIncidencia", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btnAuditoria {
             get {
                 object obj = ResourceManager.GetObject("btnAuditoria", resourceCulture);
@@ -193,9 +563,9 @@ namespace CapaVista_Logistica.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap btnCerrarSesion {
+        internal static System.Drawing.Bitmap btnCierre {
             get {
-                object obj = ResourceManager.GetObject("btnCerrarSesion", resourceCulture);
+                object obj = ResourceManager.GetObject("btnCierre", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +573,9 @@ namespace CapaVista_Logistica.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap btnCierre {
+        internal static System.Drawing.Bitmap BtnCierreyAditoria {
             get {
-                object obj = ResourceManager.GetObject("btnCierre", resourceCulture);
+                object obj = ResourceManager.GetObject("BtnCierreyAditoria", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -236,6 +606,46 @@ namespace CapaVista_Logistica.Properties {
         internal static System.Drawing.Bitmap btnEstructurayUbicaciones1 {
             get {
                 object obj = ResourceManager.GetObject("btnEstructurayUbicaciones1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BtnGestionInventario {
+            get {
+                object obj = ResourceManager.GetObject("BtnGestionInventario", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BtnGestionTransporteExternoYMonitoreo {
+            get {
+                object obj = ResourceManager.GetObject("BtnGestionTransporteExternoYMonitoreo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BtnGestionTraslados {
+            get {
+                object obj = ResourceManager.GetObject("BtnGestionTraslados", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BtnGestionViajesDespacho {
+            get {
+                object obj = ResourceManager.GetObject("BtnGestionViajesDespacho", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -293,6 +703,16 @@ namespace CapaVista_Logistica.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BtnMantenimientos {
+            get {
+                object obj = ResourceManager.GetObject("BtnMantenimientos", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btnTransporte {
             get {
                 object obj = ResourceManager.GetObject("btnTransporte", resourceCulture);
@@ -326,6 +746,16 @@ namespace CapaVista_Logistica.Properties {
         internal static System.Drawing.Bitmap Cerrar_sesion {
             get {
                 object obj = ResourceManager.GetObject("Cerrar_sesion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CerrarSesionBoton {
+            get {
+                object obj = ResourceManager.GetObject("CerrarSesionBoton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
