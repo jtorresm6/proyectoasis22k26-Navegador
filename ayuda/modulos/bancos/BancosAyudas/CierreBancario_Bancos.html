@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <title>Ayudas - Cierre Bancario</title>
+</head>
+
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png">
+        <img class="imgButti" src="Imagenes/LogoYMascota/butti3.png">
+        <h1>Proceso</h1>
+        <h1>Ayudas - Cierre Bancario</h1>
+    </center>
+    <br>
+    <div class="container">
+        <h2>Cierre Bancario</h2>
+        <p> Esta es la ventana del proceso de Cierre Bancario del módulo de Bancos. Sirve para cerrar un período (un mes, un trimestre, un
+            semestre o un año): al cerrarlo, todas las conciliaciones bancarias de ese período pasan al estado CERRADA y ya no pueden
+            volver a cerrarse. Cada cierre queda guardado en un historial que se puede consultar, exportar o imprimir en un reporte.
+            En las imágenes de esta ayuda, los números rojos indican el orden en que se explica cada elemento.
+        </p>
+        <br><br><br>
+
+        <h2>¿Cómo abrir la ventana de Cierre Bancario?</h2>
+        <p> 1. En el menú del MDI de Bancos busque la sección "Procesos". </p>
+        <p> 2. Seleccione la opción "Cierre Bancario". Se abrirá la ventana "8013 – CierreBancario". </p>
+        <p> Si no ve la opción, solicite al administrador del sistema que le asigne el permiso para este proceso. </p>
+        <br><br><br>
+
+        <h2>Conozca la ventana</h2>
+        <p> 1. Encabezado; muestra el nombre del proceso, "Cierre Bancario". </p>
+        <p> 2. Pestañas; la ventana tiene dos pestañas: "Cierre de período", donde se consulta, valida y cierra un período, e "Historial de cierres",
+            donde se ven los cierres que ya se hicieron. </p>
+        <p> 3. Datos del período; aquí se elige el tipo de período, las fechas y se presiona "Consultar". </p>
+        <p> 4. Conciliaciones incluidas en el cierre; es la tabla con las conciliaciones que entran en el período consultado. </p>
+        <p> 5. Requisitos para cerrar; muestra si el período cumple las condiciones para poder cerrarse. </p>
+        <p> 6. Botones; son las acciones del proceso (validar, cerrar, ver el historial, exportar, limpiar, ayuda, reporte y salir). </p>
+        <img class="imgVentanaMDI" src="Imagenes/CierreBancario/CierreBancario_general.png">
+        <br><br><br>
+
+        <h2>Datos del período</h2>
+        <p> 1. Tipo de período; es la lista donde se elige cada cuánto se hace el cierre. </p>
+        <p> 2. Fecha inicial; primer día del período, con el formato dd/MM/aaaa (por ejemplo 01/10/2026). </p>
+        <p> 3. Fecha final; último día del período, con el mismo formato (por ejemplo 31/10/2026). Puede escribir las fechas a mano si necesita un rango distinto. </p>
+        <p> 4. Consultar; busca las conciliaciones que están dentro de las fechas indicadas y las muestra en la tabla. </p>
+        <p> 5. Estado; es un campo que no se escribe. Indica en qué situación está el período consultado (ver "Estados del período"). </p>
+        <p> 6. Alcance; es un campo que no se escribe. Muestra el rango de fechas que se consultó, por ejemplo "01/01/2025 al 31/12/2025". </p>
+        <img class="imgVentanaMDI" src="Imagenes/CierreBancario/CierreBancario_periodo.png">
+        <br><br><br>
+
+        <h2 id="tipo">Tipo de período</h2>
+        <p> 1. Despliegue la lista "Tipo de período" y elija una opción: "Mensual", "Trimestral", "Semestral" o "Anual". Al elegirla, las fechas se llenan solas con el
+            último período completo que ya terminó. Por ejemplo, si hoy fuera noviembre de 2026, "Mensual" propone del 01/10/2026 al 31/10/2026 y "Anual"
+            propone del 01/01/2025 al 31/12/2025 si se está en 2026. </p>
+        <p> Si cambia el tipo de período, la tabla, los requisitos y el estado se reinician y debe volver a presionar "Consultar". </p>
+        <img class="imgVentanaMDI" src="Imagenes/CierreBancario/CierreBancario_tipos.png">
+        <br><br><br>
+
+        <h2>Consultar</h2>
+        <p> 1. Elija el tipo de período y revise las fechas. </p>
+        <p> 2. Presione el botón "Consultar". La tabla se llena con las conciliaciones del período, el campo "Estado" indica su situación y el campo "Alcance" muestra el
+            rango consultado. </p>
+        <p> Si una fecha está mal escrita, el sistema muestra el mensaje "Ingrese ambas fechas con el formato dd/MM/aaaa". Si la fecha inicial es posterior a la final, muestra
+            "La fecha inicial debe ser anterior o igual a la fecha final". Si en esas fechas no hay conciliaciones, muestra "No hay conciliaciones registradas en el período
+            seleccionado" y el estado queda en "Sin conciliaciones". </p>
+        <br><br><br>
+
+        <h2>Tabla de conciliaciones</h2>
+        <p> 1. Encabezado de la tabla; tiene estas columnas: "Fecha de corte" es la fecha de la conciliación; "Cuenta bancaria" es el nombre de la cuenta; "Número de cuenta"
+            es el número de la cuenta; "Moneda" es la moneda de la cuenta; "Estado" es el estado de la conciliación (CONCILIADA, CON_DIFERENCIAS, CERRADA, etc.);
+            "Saldo en libros" es el saldo según los registros de la empresa; "Saldo bancario" es el saldo según el banco y "Diferencia" es la resta entre ambos. </p>
+        <p> 2. Filas; cada fila es una conciliación. La fila resaltada es la que está seleccionada. </p>
+        <p> 3. Barra de desplazamiento; permite bajar para ver todas las conciliaciones cuando son más de las que caben en pantalla. </p>
+        <img class="imgVentanaMDI" src="Imagenes/CierreBancario/CierreBancario_tabla.png">
+        <br><br><br>
+
+        <h2>Estados del período</h2>
+        <p> El campo "Estado" puede mostrar: </p>
+        <p> - "Sin consultar"; todavía no se ha presionado "Consultar". </p>
+        <p> - "Sin conciliaciones"; no hay conciliaciones en las fechas indicadas. </p>
+        <p> - "Cierre previo detectado"; alguna conciliación del rango ya está CERRADA, por lo que ese período no se puede cerrar de nuevo. </p>
+        <p> - "Hay diferencias por resolver"; alguna conciliación tiene el estado CON_DIFERENCIAS. </p>
+        <p> - "Hay conciliaciones pendientes"; alguna conciliación todavía no está completada. </p>
+        <p> - "Conciliaciones listas para validar"; todas las conciliaciones están completadas y se puede presionar "Validar Cierre". </p>
+        <p> - "Error de consulta"; ocurrió un problema al consultar. El sistema muestra un mensaje con el detalle. </p>
+        <br><br><br>
+
+        <h2 id="requisitos">Requisitos para cerrar</h2>
+        <p> 1. Casillas de requisitos; son tres y se marcan al presionar "Validar Cierre". Para poder cerrar el período las tres deben estar marcadas: </p>
+        <p> &nbsp;&nbsp;&nbsp;a. "No hay un cierre previo para el período"; ninguna conciliación del rango está CERRADA. </p>
+        <p> &nbsp;&nbsp;&nbsp;b. "Todas las conciliaciones están completadas"; todas las conciliaciones del rango están en estado CONCILIADA. </p>
+        <p> &nbsp;&nbsp;&nbsp;c. "Los saldos están completos y sin diferencias"; todas las conciliaciones tienen saldo en libros y saldo bancario, y la diferencia es 0. </p>
+        <p> Las casillas no se marcan a mano; solo el sistema las marca. </p>
+        <p> 2. Resultado de la validación; es el recuadro de abajo. Al principio dice "Pendiente de consulta y validación". Después de validar dice "Validación aprobada. El período
+            puede cerrarse." (en verde) o "No se puede cerrar: revise los requisitos pendientes." (en anaranjado). </p>
+        <p> 3. Aviso; recuerda que al confirmar el cierre las conciliaciones del período pasarán a estado CERRADA. </p>
+        <img class="imgVentanaMDI" src="Imagenes/CierreBancario/CierreBancario_requisitos.png">
+        <br><br><br>
+
+        <h2>Los botones</h2>
+        <p> 1. Validar Cierre; revisa los tres requisitos del período consultado. </p>
+        <p> 2. Cerrar Período; cierra el período. Está deshabilitado hasta que la validación sea aprobada. </p>
+        <p> 3. Ver histórico; abre la pestaña "Historial de cierres" con los cierres ya realizados. </p>
+        <p> 4. Exportar; guarda en un archivo CSV la tabla que se está viendo. </p>
+        <p> 5. Limpiar; deja la ventana como al inicio: vuelve a llenar las fechas según el tipo de período, vacía la tabla y desmarca los requisitos. No modifica ninguna conciliación. </p>
+        <p> 6. Ayuda; ayuda rápida de la ventana. </p>
+        <p> 7. Reporte; abre el reporte del historial de cierres bancarios. </p>
+        <p> 8. Salir; cierra la ventana de Cierre Bancario. </p>
+        <img class="imgVentanaMDI" src="Imagenes/CierreBancario/CierreBancario_botones.png">
+        <br><br><br>
+
+        <h2 id="validar">Validar Cierre</h2>
+        <p> 1. Después de consultar el período, presione "Validar Cierre". Si todavía no consultó, el sistema muestra "Consulte un período con conciliaciones antes de validar". </p>
+        <p> 2. El sistema marca las casillas de los requisitos que se cumplen y muestra el resultado de la validación. </p>
+        <p> 3. Si los tres requisitos se cumplen, el botón "Cerrar Período" se habilita. Si falta alguno, queda deshabilitado; corrija lo que falta (por ejemplo,
+            complete la conciliación pendiente o resuelva la diferencia en el proceso de Conciliación), vuelva a presionar "Consultar" y luego "Validar Cierre". </p>
+        <p> En el ejemplo de la imagen, el período anual tiene conciliaciones con diferencias por resolver: solo se marcó "No hay un cierre previo para el período", las otras dos
+            casillas quedaron sin marcar y el sistema muestra "No se puede cerrar: revise los requisitos". </p>
+        <img class="imgVentanaMDI" src="Imagenes/CierreBancario/CierreBancario_diferencias.png">
+        <br><br><br>
+
+        <h2 id="cerrar">Cerrar Período</h2>
+        <p> 1. Con la validación aprobada, presione "Cerrar Período". </p>
+        <p> 2. El sistema pregunta "¿Confirma el cierre de las conciliaciones entre [fecha inicial] y [fecha final]?" y aclara que las conciliaciones pasarán a estado CERRADA y no podrán
+            volver a cerrarse. Presione "Sí" para confirmar o "No" para cancelar. </p>
+        <p> 3. Si confirma, aparece el mensaje "El período se cerró correctamente". Al presionar "Aceptar", el sistema abre la pestaña "Historial de cierres" donde ya aparece el nuevo cierre. </p>
+        <p> Si ocurre algún problema, el sistema muestra el mensaje "No se completó el cierre" con el motivo y vuelve a consultar el período. </p>
+        <p> Importante: un cierre no se puede deshacer desde esta ventana. Revise bien el período antes de confirmar. </p>
+        <br><br><br>
+
+        <h2 id="historial">Historial de cierres</h2>
+        <p> Esta pestaña se abre al presionar "Ver histórico" o al terminar un cierre. Si todavía no hay cierres registrados muestra el mensaje "Todavía no hay cierres registrados". </p>
+        <p> 1. Pestañas; para regresar a la consulta presione la pestaña "Cierre de período". </p>
+        <p> 2. Botones de navegación; "Inicio" se posiciona en el primer cierre de la tabla; "Anterior" retrocede un cierre; "Siguiente" avanza un cierre; "Fin" se posiciona en el último cierre
+            y "Actualizar Historial" vuelve a cargar la tabla con los datos más recientes. Los botones se deshabilitan cuando no hay más cierres hacia ese lado. </p>
+        <p> 3. Encabezado de la tabla; tiene estas columnas: "Fecha inicial" y "Fecha final" son los límites del período cerrado; "Conciliaciones" es la cantidad de conciliaciones que se cerraron
+            y "FechaCierre" es el día y la hora en que se hizo el cierre. </p>
+        <p> 4. Filas; cada fila es un cierre realizado. La fila resaltada es la seleccionada. </p>
+        <img class="imgVentanaMDI" src="Imagenes/CierreBancario/CierreBancario_historial.png">
+        <br><br><br>
+
+        <h2 id="exportar">Exportar</h2>
+        <p> 1. Presione el botón "Exportar". Se exporta la tabla de la pestaña que esté viendo: el resumen de conciliaciones en "Cierre de período" o el historial en "Historial de cierres".
+            Si la tabla está vacía, el sistema muestra "No hay información para exportar". </p>
+        <p> 2. Se abre la ventana "Guardar como". Elija la carpeta donde quiere guardar el archivo (por ejemplo Descargas). </p>
+        <p> 3. Nombre de archivo; el sistema propone "ResumenCierreBancario" (o "HistorialCierresBancarios" si está en el historial). Puede cambiarlo. </p>
+        <p> 4. Tipo; el archivo se guarda en formato CSV, que se puede abrir con Excel. </p>
+        <p> 5. Presione "Guardar" para crear el archivo o "Cancelar" para salir sin guardar. </p>
+        <img class="imgVentanaMDI" src="Imagenes/CierreBancario/CierreBancario_exportar.png">
+        <br><br><br>
+
+        <h2 id="reporte">Reporte</h2>
+        <p> 1. Presione el botón "Reporte". Se abre la ventana "8013 – FrmReporteCierreBancario" con el listado de los cierres realizados: número de cierre, fecha inicial, fecha final,
+            conciliaciones cerradas y fecha de cierre. </p>
+        <p> 2. Desde la barra del reporte puede cambiar de página, hacer zoom, imprimir y guardar el reporte como archivo (por ejemplo PDF, Word o Excel). </p>
+        <br><br><br>
+
+        <h2>Limpiar</h2>
+        <p> 1. Presione "Limpiar" si desea empezar de nuevo. La tabla se vacía, las casillas de requisitos se desmarcan, el estado vuelve a "Sin consultar" y las fechas se llenan otra vez
+            según el tipo de período elegido. Este botón no cierra ni modifica ninguna conciliación. </p>
+        <br><br><br>
+
+        <h2>Ayuda</h2>
+        <p> 1. Presione "Ayuda" para ver un resumen de los pasos del cierre: elegir el período, consultar, validar y confirmar el cierre. </p>
+        <br><br><br>
+
+        <h2>Salir</h2>
+        <p> 1. Presione "Salir" para cerrar la ventana de Cierre Bancario. Los cierres ya confirmados quedan guardados; lo que solo estaba consultado en pantalla no se guarda. </p>
+        <br><br><br>
+    </div>
+</body>
+</html>
