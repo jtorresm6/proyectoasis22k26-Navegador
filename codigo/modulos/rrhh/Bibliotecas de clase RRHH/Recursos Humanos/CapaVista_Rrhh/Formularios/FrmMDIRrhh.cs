@@ -28,6 +28,7 @@ using CapaVista_Empleado.Formularios;
 using CapaVista_EvaluacionDesempeño.Formularios;
 using CapaVista_Liquidacion_Rrhh.Formularios;
 using CapaVista_Nomina.Formularios;
+using CapaVista_Seguridad;
 using CapaVista_PermisosVacaciones.Formularios;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace CapaVista_Rrhh.Formularios
 {
     public partial class FrmMDIRrhh : Form
     {
+
         private bool _NavegadorColapsado;
         private int _AnchoNavegador;
 
@@ -516,12 +518,15 @@ namespace CapaVista_Rrhh.Formularios
             this.ResumeLayout();
         }
 
+
         // Inicio cambio - Byron Alexander Chiquito Paredes - 0901-23-3747
         // Ventanas de RRHH que usan el Navegador; se abren desde el desplegable de Catálogos.
         private void RrhhMetCrearCatalogos()
         {
             var Catalogos = new List<Tuple<string, int, Func<Form>>>
             {
+
+                Tuple.Create<string, int, Func<Form>>("Empleados", 4, () => new CapaVista_Seguridad.FrmEmpleadosNavegador()),
                 Tuple.Create<string, int, Func<Form>>("Departamentos", 9002, () => new FrmDepartamentosNavegador()),
                 Tuple.Create<string, int, Func<Form>>("Tipos de Puesto", 9003, () => new FrmTipoPuestosNavegador()),
                 Tuple.Create<string, int, Func<Form>>("Puestos", 9004, () => new FrmPuestosNavegador()),

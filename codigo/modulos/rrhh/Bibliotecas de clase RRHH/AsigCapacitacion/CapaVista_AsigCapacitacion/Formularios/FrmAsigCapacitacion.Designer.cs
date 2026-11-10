@@ -229,6 +229,7 @@
             this.RrhhiBtnReporteAsigCap.Size = new System.Drawing.Size(93, 86);
             this.RrhhiBtnReporteAsigCap.TabIndex = 13;
             this.RrhhiBtnReporteAsigCap.UseVisualStyleBackColor = true;
+            this.RrhhiBtnReporteAsigCap.Click += new System.EventHandler(this.RrhhBtnReporte_Click);
             // 
             // RrhhiBtnAyudaAsigCap
             // 

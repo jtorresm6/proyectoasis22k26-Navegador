@@ -1,7 +1,9 @@
 ﻿using CapaControlador_AsigCapacitacion.Modelos_de_Controladores;
 using CapaControlador_Seguridad;
 using CapaControlador_Seguridad.Objetos_de_valor;
+using CapaVista_AsigCapacitacion.FrmReporte;
 using CapaVista_Seguridad.Ayudas;
+using CapaVista_Seguridad.frmReportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,6 +36,7 @@ namespace CapaVista_AsigCapacitacion.Formularios
         private ClsModeloAsigCapacitacion _Asignacion = new ClsModeloAsigCapacitacion();
         private int _IdAsignacionSeleccionada = 0;
         private ClsPermisoAplicacion _MisPermisos;
+        private FrmReporteAsigCapacitacion reporteAsigCapacitacion;
 
         private const int ID_MODULO = 9000;
         private const int ID_APLICACION = 9305;
@@ -354,6 +357,25 @@ namespace CapaVista_AsigCapacitacion.Formularios
             RrhhMetReinicio();
             RrhhMetListarAsignaciones();
             RrhhCboEmpleado.Focus();
+        }
+        private void RrhhBtnReporte_Click(object sender, EventArgs e)
+        {
+            if (reporteAsigCapacitacion == null ||
+               reporteAsigCapacitacion.IsDisposed)
+            {
+                reporteAsigCapacitacion =
+                    new FrmReporteAsigCapacitacion();
+
+                reporteAsigCapacitacion.FormClosed +=
+                    (s, args) => reporteAsigCapacitacion = null;
+
+                reporteAsigCapacitacion.Show();
+            }
+            else
+            {
+                reporteAsigCapacitacion.BringToFront();
+                reporteAsigCapacitacion.Activate();
+            }
         }
     }
 }

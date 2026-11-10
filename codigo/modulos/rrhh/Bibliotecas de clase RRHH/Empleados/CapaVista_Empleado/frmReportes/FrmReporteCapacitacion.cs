@@ -29,7 +29,5 @@ namespace CapaVista_Empleado.frmReportes
                 MessageBox.Show(ex.ToString());
             }
         }
-
-
     }
 }

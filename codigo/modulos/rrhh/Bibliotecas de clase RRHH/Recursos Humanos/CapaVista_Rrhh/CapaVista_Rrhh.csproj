@@ -58,6 +58,10 @@
     <Reference Include="CapaVista_PermisosVacaciones">
       <HintPath>..\..\PermisosVacaciones\CapaVista_PermisosVacaciones\bin\Debug\CapaVista_PermisosVacaciones.dll</HintPath>
     </Reference>
+    <Reference Include="CapaVista_Seguridad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -130,4 +134,4 @@
     <Folder Include="Ayudas\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-</Project>
+</Project>
