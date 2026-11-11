@@ -8,6 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Ejecucion_Compras</RootNamespace>
     <AssemblyName>Ejecucion_Compras</AssemblyName>
+    <ApplicationIcon>Compras.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -33,11 +34,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Compras.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="CapaControlador_Compras">
-      <HintPath>..\..\Compras\CapaControlador_Compras\bin\$(Configuration)\CapaControlador_Compras.dll</HintPath>
+      <HintPath>..\..\Bibliotecas de clase Compras\Compras\CapaControlador_Compras\bin\$(Configuration)\CapaControlador_Compras.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Compras">
-      <HintPath>..\..\Compras\CapaVista_Compras\bin\$(Configuration)\CapaVista_Compras.dll</HintPath>
+      <HintPath>..\..\Bibliotecas de clase Compras\Compras\CapaVista_Compras\bin\$(Configuration)\CapaVista_Compras.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Seguridad">
+      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

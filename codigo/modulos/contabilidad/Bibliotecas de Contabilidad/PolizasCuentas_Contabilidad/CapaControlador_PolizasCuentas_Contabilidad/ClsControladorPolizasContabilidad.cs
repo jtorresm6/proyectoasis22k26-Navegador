@@ -84,6 +84,32 @@ namespace CapaControlador_Contabilidad
             return Fecha.ToString("yyyy-MM");
         }
 
+        // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+        // El sistema empezó a operar en octubre de 2026
+        public static readonly DateTime InicioSistema = new DateTime(2026, 10, 1);
+        private const string _ErrorInicioSistema = "La fecha no es correcta: el sistema inició en octubre de 2026.";
+
+        // Último día que se puede elegir
+        public DateTime ContabilidadFuncFechaMaxima()
+        {
+            DateTime Mes = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            return Mes.AddMonths(1).AddDays(-1);
+        }
+
+        // Error de una fecha suelta
+        public string ContabilidadFuncErrorFecha(DateTime Fecha)
+        {
+            return Fecha.Date < InicioSistema ? _ErrorInicioSistema : string.Empty;
+        }
+
+        // Error de un rango de fechas
+        public string ContabilidadFuncErrorFechas(DateTime Inicio, DateTime Fin)
+        {
+            if (Inicio.Date < InicioSistema || Fin.Date < InicioSistema) return _ErrorInicioSistema;
+            return ClsValidacionDatosContabilidad.ContabilidadFuncErrorRangoFechas(Inicio, Fin);
+        }
+        // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+
         // Inicio de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026
         public decimal ContabilidadFuncTotalDebe(IEnumerable<ClsModeloLineaPolizaContabilidad> Lineas)
         // Fin de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026
@@ -199,11 +225,14 @@ namespace CapaControlador_Contabilidad
                 Mensaje = "El tipo de período '" + TipoPeriodo + "' no es válido.";
                 return -1;
             }
-            if (Hasta.Date < Desde.Date)
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            string ErrorFechas = ContabilidadFuncErrorFechas(Desde, Hasta);
+            if (ErrorFechas != string.Empty)
             {
-                Mensaje = "La fecha final no puede ser menor que la inicial.";
+                Mensaje = ErrorFechas;
                 return -1;
             }
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
             try
             {
                 int Procesadas = _Repositorio.ContabilidadFuncActualizarSaldos("BATCH", TipoPeriodo, Desde.Date, Hasta.Date, 0,
@@ -243,6 +272,13 @@ namespace CapaControlador_Contabilidad
                 Mensaje = "La póliza debe indicar el módulo que la origina.";
                 return false;
             }
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            if (Estado != EstadoEntidadContabilidad.Borrar)
+            {
+                Mensaje = ContabilidadFuncErrorFecha(Modelo.Fecha);
+                if (Mensaje != string.Empty) return false;
+            }
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
 
             if (Modelo.Lineas.GroupBy(Linea => Linea.IdCuenta).Any(Grupo => Grupo.Count() > 1))
             {
