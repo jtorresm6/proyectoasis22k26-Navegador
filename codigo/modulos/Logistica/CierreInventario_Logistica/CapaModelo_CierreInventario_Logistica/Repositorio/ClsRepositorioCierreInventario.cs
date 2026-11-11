@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Odbc;
 using CapaModelo_CierreInventario_Logistica.Contratos;
 using CapaModelo_CierreInventario_Logistica.Entidad;
+using CapaModelo_CierreInventario_Logistica.Validaciones;
 
 namespace CapaModelo_CierreInventario_Logistica.Repositorio
 {
@@ -116,8 +117,11 @@ namespace CapaModelo_CierreInventario_Logistica.Repositorio
         private string Validar(OdbcConnection cn, OdbcTransaction tx,
             int sucursal, DateTime inicio, DateTime fin, DataTable detalle)
         {
-            if (fin >= DateTime.Today)
+            if (!ClsValidacionCierreInventario.ValidarPeriodoFinalizado(
+                inicio.Year, inicio.Month, DateTime.Today))
+            {
                 return "El mes todavía no ha finalizado.";
+            }
             if (detalle.Rows.Count == 0)
                 return "La sucursal no tiene existencias registradas.";
 
@@ -139,15 +143,22 @@ namespace CapaModelo_CierreInventario_Logistica.Repositorio
                     AND esCierreAnualCierreInventario=0", sucursal, fin) > 0)
                 return "El cierre del período ya existe.";
 
+
             foreach (DataRow fila in detalle.Rows)
             {
-                if (Convert.ToInt64(fila["Diferencia"]) != 0)
-                    return "Hay diferencias en los saldos. Revise el detalle.";
-                if (Convert.ToInt64(fila["Anterior"]) < 0 ||
-                    Convert.ToInt64(fila["Cargos"]) < 0 ||
-                    Convert.ToInt64(fila["Abonos"]) < 0)
-                    return "El inventario contiene cantidades negativas.";
+                long anterior = Convert.ToInt64(fila["Anterior"]);
+                long cargos = Convert.ToInt64(fila["Cargos"]);
+                long abonos = Convert.ToInt64(fila["Abonos"]);
+                long actual = Convert.ToInt64(fila["Actual"]);
+
+                if (!ClsValidacionCierreInventario.ValidarCuadratura(
+                    anterior, cargos, abonos, actual))
+                {
+                    return "El inventario contiene cantidades negativas " +
+                           "o diferencias en los saldos.";
+                }
             }
+
 
             // No cerrar meses anteriores cuando el stock ya incorporó movimientos nuevos.
             int posteriores = Contar(cn, tx, @"SELECT COUNT(*) FROM tblMovimientoInventario m
