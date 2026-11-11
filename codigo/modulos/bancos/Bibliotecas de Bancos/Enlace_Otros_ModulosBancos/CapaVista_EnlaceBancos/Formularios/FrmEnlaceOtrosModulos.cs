@@ -1,198 +1,60 @@
 using System;
-using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 using CapaControlador_EnlaceB;
+using CapaModelo_EnlaceB.Entidades;
 
 namespace CapaVista_EnlaceB.Formularios
 {
     public partial class FrmEnlaceOtrosModulos : Form
     {
         private readonly ClsControladorEnlaceB _Controlador;
-
-        public FrmEnlaceOtrosModulos()
+        public FrmEnlaceOtrosModulos() : this(new ClsControladorEnlaceB()) { }
+        public FrmEnlaceOtrosModulos(ClsControladorEnlaceB Controlador)
         {
+            this._Controlador = Controlador ?? throw new ArgumentNullException(nameof(Controlador));
             InitializeComponent();
-
-            _Controlador = new ClsControladorEnlaceB();
-
-            // DataPropertyName — BancDgvMovimientos
-            Estatus.DataPropertyName     = "Estatus";
-            Estatus.TrueValue            = 1;
-            Estatus.FalseValue           = 0;
-            Fecha.DataPropertyName       = "FechaPoliza";
-            Referencia.DataPropertyName  = "ReferenciaPoliza";
-            Concepto.DataPropertyName    = "ConceptoPoliza";
-            Póliza.DataPropertyName      = "NumeroPoliza";
-            Importe_GTQ.DataPropertyName = "ImporteTotalPoliza";
-
-            // DataPropertyName — BancDgvPartidaContable
-            Código_de_Cuenta.DataPropertyName = "CodigoCuentaDetallePartida";
-            Nombre_de_cuenta.DataPropertyName = "NombreCuentaDetallePartida";
-            Debe.DataPropertyName             = "DebeDetallePartida";
-            Haber.DataPropertyName            = "HaberDetallePartida";
-
-            // Grids de sólo lectura
-            BancDgvMovimientos.ReadOnly     = true;
-            BancDgvPartidaContable.ReadOnly = true;
-
-            // Suscripción de eventos
-            BancBtnConsultarMovimientos.Click   += BancBtnConsultarMovimientos_Click;
-            BancBtnGenerarPartida.Click         += BancBtnGenerarPartida_Click;
-            BancosBtnEnviar.Click               += BancosBtnEnviar_Click;
-            BancosBtnLimpiar.Click              += BancosBtnLimpiar_Click;
-            BancBtnCerrar.Click                 += BancBtnCerrar_Click;
-            BancCbxPeriodo.SelectedIndexChanged += BancCbxPeriodo_SelectedIndexChanged;
-        }
-
-        // ----------------------------------------------------------------
-        // Consultar movimientos del período
-        // ----------------------------------------------------------------
-        private void BancBtnConsultarMovimientos_Click(object sender, EventArgs e)
-        {
-            string Error = _Controlador.BancosMetConsultarMovimientos(
-                dateTimePicker1.Value, dateTimePicker2.Value, out DataTable Tabla);
-
-            if (!string.IsNullOrEmpty(Error))
+            foreach (Control Elemento in Controls) Elemento.Visible = false;
+            ClientSize = new Size(1050, 690); AutoScaleMode = AutoScaleMode.None;
+            Text = "8008 – EnlaceOtrosModulos"; StartPosition = FormStartPosition.CenterParent;
+            BackgroundImage = Properties.Resources.FondoEnlaceotrosModulo; BackgroundImageLayout = ImageLayout.Stretch;
+            var BancarioTlpLayout = new TableLayoutPanel { Dock = DockStyle.Fill, BackColor = Color.Transparent,
+                Padding = new Padding(20), ColumnCount = 2, RowCount = 3 };
+            BancarioTlpLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 72)); BancarioTlpLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 28));
+            BancarioTlpLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 72)); BancarioTlpLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100)); BancarioTlpLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 94));
+            var BancarioLblTitulo = new Label { Text = "Enlace con otros módulos", ForeColor = ClsEstiloEnlace.Verde,
+                Font = new Font("Lucida Bright", 26, FontStyle.Bold), Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
+            BancarioTlpLayout.Controls.Add(BancarioLblTitulo, 0, 0); BancarioTlpLayout.SetColumnSpan(BancarioLblTitulo, 2);
+            var BancarioTlpLista = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 5, BackColor = Color.Transparent };
+            BancarioTlpLista.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130)); BancarioTlpLista.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            string[] Nombres = { "Logística", "Compras", "Ventas", "Recursos Humanos", "Contabilidad" };
+            string[] Detalles = { "Solicitudes de transporte, costos y órdenes bancarias.", "Órdenes de compra y recepción en Bancos.",
+                "Depósitos y movimientos bancarios asociados.", "Planillas recibidas, beneficiarios y órdenes de pago.", "Partidas mensuales y traslado a Contabilidad." };
+            for (int Indice = 0; Indice < Nombres.Length; Indice++)
             {
-                MessageBox.Show(Error, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                int Modulo = Indice; BancarioTlpLista.RowStyles.Add(new RowStyle(SizeType.Percent, 20));
+                var BancarioBtnBoton = ClsEstiloEnlace.BancarioMetBoton(Nombres[Indice], (Remitente, Argumentos) => BancarioMetAbrir(Modulo));
+                BancarioBtnBoton.Size = new Size(90, 90);
+                BancarioBtnBoton.Anchor = AnchorStyles.Left; BancarioBtnBoton.Margin = new Padding(0, 2, 18, 2); BancarioBtnBoton.AccessibleName = "Abrir " + Nombres[Indice];
+                BancarioTlpLista.Controls.Add(BancarioBtnBoton, 0, Indice);
+                BancarioTlpLista.Controls.Add(new Label { Text = Detalles[Indice], Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft,
+                    ForeColor = ClsEstiloEnlace.Verde, Font = new Font("Segoe UI", 11), Padding = new Padding(4) }, 1, Indice);
             }
-
-            BancDgvMovimientos.DataSource = Tabla;
+            BancarioTlpLayout.Controls.Add(BancarioTlpLista, 0, 1);
+            BancarioTlpLayout.Controls.Add(new PictureBox { Image = Properties.Resources.Mascota_bancaria, SizeMode = PictureBoxSizeMode.Zoom,
+                Dock = DockStyle.Fill, Margin = new Padding(20, 20, 0, 20), BackColor = Color.Transparent }, 1, 1);
+            var BancarioBtnVolver = ClsEstiloEnlace.BancarioMetBoton("Cerrar", (Remitente, Argumentos) => Close()); BancarioBtnVolver.Anchor = AnchorStyles.Right;
+            BancarioTlpLayout.Controls.Add(BancarioBtnVolver, 1, 2);
+            BancarioTlpLayout.Controls.Add(new Label { Text = "Seleccione el módulo que desea consultar.", Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleLeft, ForeColor = ClsEstiloEnlace.Verde, Font = new Font("Segoe UI", 10) }, 0, 2);
+            Controls.Add(BancarioTlpLayout); BancarioTlpLayout.BringToFront();
+            ClsEstiloEnlace.BancarioMetVentana(this);
         }
-
-        // ----------------------------------------------------------------
-        // Generar partida consolidada
-        // ----------------------------------------------------------------
-        private void BancBtnGenerarPartida_Click(object sender, EventArgs e)
+        private void BancarioMetAbrir(int Modulo)
         {
-            string Error = _Controlador.BancosMetGenerarPartida(
-                dateTimePicker1.Value, dateTimePicker2.Value, out DataTable Detalle);
-
-            if (!string.IsNullOrEmpty(Error))
-            {
-                MessageBox.Show(Error, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            BancDgvPartidaContable.DataSource = Detalle;
-            BancosActualizarTotales(Detalle);
-
-            // Refrescar grilla de movimientos para reflejar estado PENDIENTE_ENVIO
-            _Controlador.BancosMetConsultarMovimientos(
-                dateTimePicker1.Value, dateTimePicker2.Value, out DataTable Movimientos);
-            BancDgvMovimientos.DataSource = Movimientos;
+            if (Modulo == 4) { using (var Formulario = new FrmEnlaceContabilidad(_Controlador)) Formulario.ShowDialog(this); }
+            else { using (var Formulario = new FrmEnlaceModulo((ModuloEnlace)Modulo, _Controlador)) Formulario.ShowDialog(this); }
         }
-
-        // ----------------------------------------------------------------
-        // Enviar partida a Contabilidad
-        // ----------------------------------------------------------------
-        private void BancosBtnEnviar_Click(object sender, EventArgs e)
-        {
-            if (_Controlador.BancsFuncObtenerPkPartidaActual() <= 0)
-            {
-                MessageBox.Show(
-                    "Debe generar la partida contable antes de enviar.",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            DialogResult Confirmacion = MessageBox.Show(
-                "¿Confirma el traslado de la partida a Contabilidad?",
-                "Confirmar traslado",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (Confirmacion != DialogResult.Yes)
-                return;
-
-            string Error = _Controlador.BancosMetEnviarPartida(
-                dateTimePicker1.Value, dateTimePicker2.Value);
-
-            if (!string.IsNullOrEmpty(Error))
-            {
-                MessageBox.Show(Error, "Error al enviar", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            MessageBox.Show(
-                "Partida trasladada correctamente a Contabilidad.",
-                "Operación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            BancosBtnLimpiar_Click(sender, e);
-        }
-
-        // ----------------------------------------------------------------
-        // Limpiar formulario
-        // ----------------------------------------------------------------
-        private void BancosBtnLimpiar_Click(object sender, EventArgs e)
-        {
-            BancDgvMovimientos.DataSource     = null;
-            BancDgvPartidaContable.DataSource = null;
-            BancLblTotalDebe.Text             = "Total Debe";
-            BancLblTotalHaber.Text            = "Total Haber";
-            BancLblDiferencia.Text            = "Diferencia";
-            dateTimePicker1.Value             = DateTime.Today;
-            dateTimePicker2.Value             = DateTime.Today;
-            BancCbxPeriodo.SelectedIndex      = -1;
-        }
-
-        // ----------------------------------------------------------------
-        // Cerrar formulario
-        // ----------------------------------------------------------------
-        private void BancBtnCerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        // ----------------------------------------------------------------
-        // Ajustar fechas automáticamente según el tipo de período
-        // ----------------------------------------------------------------
-        private void BancCbxPeriodo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (BancCbxPeriodo.SelectedIndex < 0) return;
-
-            DateTime Hoy = DateTime.Today;
-
-            if (BancCbxPeriodo.SelectedItem.ToString() == "Mensual")
-            {
-                dateTimePicker1.Value = new DateTime(Hoy.Year, Hoy.Month, 1);
-                dateTimePicker2.Value = new DateTime(Hoy.Year, Hoy.Month,
-                    DateTime.DaysInMonth(Hoy.Year, Hoy.Month));
-            }
-            else if (BancCbxPeriodo.SelectedItem.ToString() == "Anual")
-            {
-                dateTimePicker1.Value = new DateTime(Hoy.Year, 1, 1);
-                dateTimePicker2.Value = new DateTime(Hoy.Year, 12, 31);
-            }
-        }
-
-        // ----------------------------------------------------------------
-        // Actualizar etiquetas de totales
-        // ----------------------------------------------------------------
-        private void BancosActualizarTotales(DataTable Detalle)
-        {
-            decimal TotalDebe  = 0;
-            decimal TotalHaber = 0;
-
-            foreach (DataRow Fila in Detalle.Rows)
-            {
-                TotalDebe  += Convert.ToDecimal(Fila["DebeDetallePartida"]);
-                TotalHaber += Convert.ToDecimal(Fila["HaberDetallePartida"]);
-            }
-
-            decimal Diferencia = TotalDebe - TotalHaber;
-
-            BancLblTotalDebe.Text  = $"Total Debe: {TotalDebe:N2}";
-            BancLblTotalHaber.Text = $"Total Haber: {TotalHaber:N2}";
-            BancLblDiferencia.Text = $"Diferencia: {Diferencia:N2}";
-        }
-
-        // ----------------------------------------------------------------
-        // Stub existente — sin funcionalidad adicional
-        // ----------------------------------------------------------------
-        private void BancDgvPartidaContable_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
+        private void BancarioMetBancDgvPartidaContable_CellContentClick(object Sender, DataGridViewCellEventArgs Argumentos) { }
     }
 }

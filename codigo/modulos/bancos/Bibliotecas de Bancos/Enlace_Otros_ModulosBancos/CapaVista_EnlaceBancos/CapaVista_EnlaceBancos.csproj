@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -31,13 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaControlador_Seguridad">
-      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaVista_Navegador, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -50,18 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formularios\FrmBancoNavegador.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formularios\FrmBancoNavegador.Designer.cs">
-      <DependentUpon>FrmBancoNavegador.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ayudas\" />
@@ -69,13 +50,6 @@
     <Folder Include="Reportes\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Formularios\FrmBancoNavegador.resx">
-      <DependentUpon>FrmBancoNavegador.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\FondoEnlaceotrosModulo.jpg" />
@@ -129,4 +103,45 @@
     <None Include="Resources\btn_ayudaB.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="Formularios\ClsEstiloEnlace.cs" />
+    <Compile Include="Formularios\FrmBancoNavegador.cs" />
+    <Compile Include="Formularios\FrmEnlaceContabilidad.cs" />
+    <Compile Include="Formularios\FrmEnlaceContabilidad.Designer.cs" />
+    <Compile Include="Formularios\FrmEnlaceModulo.cs" />
+    <Compile Include="Formularios\FrmEnlaceOtrosModulos.cs" />
+    <Compile Include="Formularios\FrmEnlaceOtrosModulos.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="Formularios\FrmEnlaceOtrosModulos.resx" />
+    <EmbeddedResource Include="Formularios\FrmEnlaceContabilidad.resx" />
+    <ProjectReference Include="..\CapaModelo_EnlaceBancos\CapaModelo_EnlaceBancos.csproj">
+      <Name>CapaModelo_EnlaceBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CapaControlador_EnlaceBancos\CapaControlador_EnlaceBancos.csproj">
+      <Name>CapaControlador_EnlaceBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\CapaControlador_Seguridad.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Estandarizados\Compras.png">
+      <LogicalName>Enlace.Iconos.Compras.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Estandarizados\Logistica.png">
+      <LogicalName>Enlace.Iconos.Logistica.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Estandarizados\Historial.png">
+      <LogicalName>Enlace.Iconos.Historial.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Estandarizados\Personal.png">
+      <LogicalName>Enlace.Iconos.Personal.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Estandarizados\Actualizar.png">
+      <LogicalName>Enlace.Iconos.Actualizar.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Estandarizados\Seleccionar.png">
+      <LogicalName>Enlace.Iconos.Seleccionar.png</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
