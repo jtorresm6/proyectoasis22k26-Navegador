@@ -1,4 +1,4 @@
-﻿using CapaVista_Seguridad.Ayudas;
+﻿
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -29,22 +29,9 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
 
         private void FrmEvaluacionDesempeño_Load(object sender, EventArgs e)
         {
-            RrhhMetAplicarAcceso(RrhhBtnAbrirRealizarEvaluacion, 9402);
-            RrhhMetAplicarAcceso(RrhhBtnAbrirPlanMejora, 9403);
-            RrhhMetAplicarAcceso(RrhhBtnAbrirVerEvaluaciones, 9404);
+
         }
 
-        private void RrhhMetAplicarAcceso(Button Boton, int IdAplicacion)
-        {
-            if (ClsSeguridadFormHelper.SeguridadMetTieneAcceso(ID_MODULO, IdAplicacion)) return;
-            Boton.Enabled = false;
-            Boton.BackColor = Color.FromArgb(200, 200, 200);
-        }
-
-               private void RrhhBtnAbrirRealizarEvaluacion_Click(object sender, EventArgs e)
-        {
-            
-        }
 
         private void RrhhBtnAbrirPlanMejora_Click(object sender, EventArgs e)
         {
@@ -60,6 +47,11 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             {
                 RrhhFrmVer.ShowDialog(this);
             }
+        }
+
+        private void btnAyudaEvaluacion_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

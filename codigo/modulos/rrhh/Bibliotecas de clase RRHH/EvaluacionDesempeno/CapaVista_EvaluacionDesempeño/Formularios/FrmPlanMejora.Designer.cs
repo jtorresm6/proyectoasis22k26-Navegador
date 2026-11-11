@@ -63,15 +63,6 @@
             this.RrhhColNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RrhhColEmpleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RrhhColCiclo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RrhhPnlEncabezado.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconoPlanMejora)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RrhhPbMascota)).BeginInit();
-            this.RrhhPnlSeccion.SuspendLayout();
-            this.RrhhPnlDatos.SuspendLayout();
-            this.RrhhPnlDatosEncabezado.SuspendLayout();
-            this.RrhhPnlRegistrados.SuspendLayout();
-            this.RrhhPnlRegistradosEncabezado.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RrhhDgvPlanes)).BeginInit();
             this.RrhhPnlBotones = new System.Windows.Forms.Panel();
             this.RrhhBtnNuevo = new System.Windows.Forms.Button();
             this.RrhhBtnGuardar = new System.Windows.Forms.Button();
@@ -86,6 +77,15 @@
             this.RrhhBtnFin = new System.Windows.Forms.Button();
             this.RrhhBtnAyuda = new System.Windows.Forms.Button();
             this.RrhhBtnSalir = new System.Windows.Forms.Button();
+            this.RrhhPnlEncabezado.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconoPlanMejora)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RrhhPbMascota)).BeginInit();
+            this.RrhhPnlSeccion.SuspendLayout();
+            this.RrhhPnlDatos.SuspendLayout();
+            this.RrhhPnlDatosEncabezado.SuspendLayout();
+            this.RrhhPnlRegistrados.SuspendLayout();
+            this.RrhhPnlRegistradosEncabezado.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RrhhDgvPlanes)).BeginInit();
             this.RrhhPnlBotones.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,10 +98,10 @@
             this.RrhhPnlEncabezado.Controls.Add(this.RrhhLblTitulo);
             this.RrhhPnlEncabezado.Controls.Add(this.RrhhLblSubtitulo);
             this.RrhhPnlEncabezado.Controls.Add(this.RrhhPbMascota);
-            this.RrhhPnlEncabezado.Location = new System.Drawing.Point(9, 9);
-            this.RrhhPnlEncabezado.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhPnlEncabezado.Location = new System.Drawing.Point(10, 11);
+            this.RrhhPnlEncabezado.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhPnlEncabezado.Name = "RrhhPnlEncabezado";
-            this.RrhhPnlEncabezado.Size = new System.Drawing.Size(1274, 207);
+            this.RrhhPnlEncabezado.Size = new System.Drawing.Size(1433, 258);
             this.RrhhPnlEncabezado.TabIndex = 0;
             // 
             // RrhhPbIconoPlanMejora
@@ -109,10 +109,10 @@
             this.RrhhPbIconoPlanMejora.BackColor = System.Drawing.Color.Transparent;
             this.RrhhPbIconoPlanMejora.BackgroundImage = global::CapaVista_EvaluacionDesempeño.Properties.Resources.btn_plan;
             this.RrhhPbIconoPlanMejora.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.RrhhPbIconoPlanMejora.Location = new System.Drawing.Point(30, 43);
-            this.RrhhPbIconoPlanMejora.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhPbIconoPlanMejora.Location = new System.Drawing.Point(34, 54);
+            this.RrhhPbIconoPlanMejora.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhPbIconoPlanMejora.Name = "RrhhPbIconoPlanMejora";
-            this.RrhhPbIconoPlanMejora.Size = new System.Drawing.Size(135, 135);
+            this.RrhhPbIconoPlanMejora.Size = new System.Drawing.Size(152, 169);
             this.RrhhPbIconoPlanMejora.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.RrhhPbIconoPlanMejora.TabIndex = 0;
             this.RrhhPbIconoPlanMejora.TabStop = false;
@@ -122,10 +122,9 @@
             this.RrhhLblTitulo.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblTitulo.Font = new System.Drawing.Font("Lucida Bright", 21.11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblTitulo.Location = new System.Drawing.Point(170, 43);
-            this.RrhhLblTitulo.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblTitulo.Location = new System.Drawing.Point(191, 54);
             this.RrhhLblTitulo.Name = "RrhhLblTitulo";
-            this.RrhhLblTitulo.Size = new System.Drawing.Size(604, 63);
+            this.RrhhLblTitulo.Size = new System.Drawing.Size(680, 79);
             this.RrhhLblTitulo.TabIndex = 1;
             this.RrhhLblTitulo.Text = "Plan de Mejora";
             // 
@@ -134,10 +133,9 @@
             this.RrhhLblSubtitulo.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblSubtitulo.Font = new System.Drawing.Font("Tahoma", 10.76F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblSubtitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.RrhhLblSubtitulo.Location = new System.Drawing.Point(172, 106);
-            this.RrhhLblSubtitulo.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblSubtitulo.Location = new System.Drawing.Point(194, 132);
             this.RrhhLblSubtitulo.Name = "RrhhLblSubtitulo";
-            this.RrhhLblSubtitulo.Size = new System.Drawing.Size(798, 33);
+            this.RrhhLblSubtitulo.Size = new System.Drawing.Size(898, 41);
             this.RrhhLblSubtitulo.TabIndex = 2;
             this.RrhhLblSubtitulo.Text = "Gestiona los planes de mejora para el desarrollo de los colaboradores.";
             // 
@@ -146,10 +144,10 @@
             this.RrhhPbMascota.BackColor = System.Drawing.Color.Transparent;
             this.RrhhPbMascota.BackgroundImage = global::CapaVista_EvaluacionDesempeño.Properties.Resources.mascota;
             this.RrhhPbMascota.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhPbMascota.Location = new System.Drawing.Point(1000, 10);
-            this.RrhhPbMascota.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhPbMascota.Location = new System.Drawing.Point(1125, 12);
+            this.RrhhPbMascota.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhPbMascota.Name = "RrhhPbMascota";
-            this.RrhhPbMascota.Size = new System.Drawing.Size(145, 196);
+            this.RrhhPbMascota.Size = new System.Drawing.Size(163, 245);
             this.RrhhPbMascota.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.RrhhPbMascota.TabIndex = 3;
             this.RrhhPbMascota.TabStop = false;
@@ -159,10 +157,10 @@
             this.RrhhPnlSeccion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
             this.RrhhPnlSeccion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RrhhPnlSeccion.Controls.Add(this.RrhhLblSeccion);
-            this.RrhhPnlSeccion.Location = new System.Drawing.Point(9, 221);
-            this.RrhhPnlSeccion.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhPnlSeccion.Location = new System.Drawing.Point(10, 276);
+            this.RrhhPnlSeccion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhPnlSeccion.Name = "RrhhPnlSeccion";
-            this.RrhhPnlSeccion.Size = new System.Drawing.Size(1274, 45);
+            this.RrhhPnlSeccion.Size = new System.Drawing.Size(1433, 56);
             this.RrhhPnlSeccion.TabIndex = 1;
             // 
             // RrhhLblSeccion
@@ -170,10 +168,9 @@
             this.RrhhLblSeccion.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblSeccion.Font = new System.Drawing.Font("Tahoma", 13.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblSeccion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblSeccion.Location = new System.Drawing.Point(19, 6);
-            this.RrhhLblSeccion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblSeccion.Location = new System.Drawing.Point(21, 8);
             this.RrhhLblSeccion.Name = "RrhhLblSeccion";
-            this.RrhhLblSeccion.Size = new System.Drawing.Size(588, 33);
+            this.RrhhLblSeccion.Size = new System.Drawing.Size(662, 41);
             this.RrhhLblSeccion.TabIndex = 0;
             this.RrhhLblSeccion.Text = "Información del Plan de Mejora";
             // 
@@ -192,10 +189,10 @@
             this.RrhhPnlDatos.Controls.Add(this.RrhhCboEmpleado);
             this.RrhhPnlDatos.Controls.Add(this.RrhhLblEvaluacion);
             this.RrhhPnlDatos.Controls.Add(this.RrhhCboEvaluacion);
-            this.RrhhPnlDatos.Location = new System.Drawing.Point(9, 275);
-            this.RrhhPnlDatos.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhPnlDatos.Location = new System.Drawing.Point(10, 344);
+            this.RrhhPnlDatos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhPnlDatos.Name = "RrhhPnlDatos";
-            this.RrhhPnlDatos.Size = new System.Drawing.Size(650, 455);
+            this.RrhhPnlDatos.Size = new System.Drawing.Size(731, 568);
             this.RrhhPnlDatos.TabIndex = 2;
             // 
             // RrhhPnlDatosEncabezado
@@ -203,9 +200,9 @@
             this.RrhhPnlDatosEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(236)))), ((int)(((byte)(243)))));
             this.RrhhPnlDatosEncabezado.Controls.Add(this.RrhhLblDatosTitulo);
             this.RrhhPnlDatosEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.RrhhPnlDatosEncabezado.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhPnlDatosEncabezado.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhPnlDatosEncabezado.Name = "RrhhPnlDatosEncabezado";
-            this.RrhhPnlDatosEncabezado.Size = new System.Drawing.Size(648, 28);
+            this.RrhhPnlDatosEncabezado.Size = new System.Drawing.Size(729, 35);
             this.RrhhPnlDatosEncabezado.TabIndex = 0;
             // 
             // RrhhLblDatosTitulo
@@ -213,10 +210,9 @@
             this.RrhhLblDatosTitulo.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblDatosTitulo.Font = new System.Drawing.Font("Tahoma", 7.87F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblDatosTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblDatosTitulo.Location = new System.Drawing.Point(14, 3);
-            this.RrhhLblDatosTitulo.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblDatosTitulo.Location = new System.Drawing.Point(16, 4);
             this.RrhhLblDatosTitulo.Name = "RrhhLblDatosTitulo";
-            this.RrhhLblDatosTitulo.Size = new System.Drawing.Size(337, 23);
+            this.RrhhLblDatosTitulo.Size = new System.Drawing.Size(379, 29);
             this.RrhhLblDatosTitulo.TabIndex = 0;
             this.RrhhLblDatosTitulo.Text = "Datos del Plan de Mejora";
             // 
@@ -225,10 +221,9 @@
             this.RrhhLblNombrePlan.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblNombrePlan.Font = new System.Drawing.Font("Tahoma", 7.87F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblNombrePlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.RrhhLblNombrePlan.Location = new System.Drawing.Point(23, 50);
-            this.RrhhLblNombrePlan.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblNombrePlan.Location = new System.Drawing.Point(26, 62);
             this.RrhhLblNombrePlan.Name = "RrhhLblNombrePlan";
-            this.RrhhLblNombrePlan.Size = new System.Drawing.Size(114, 25);
+            this.RrhhLblNombrePlan.Size = new System.Drawing.Size(142, 31);
             this.RrhhLblNombrePlan.TabIndex = 1;
             this.RrhhLblNombrePlan.Text = "Nombre del Plan:";
             // 
@@ -237,10 +232,9 @@
             this.RrhhLblAsteriscoNombrePlan.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblAsteriscoNombrePlan.Font = new System.Drawing.Font("Tahoma", 8.69F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblAsteriscoNombrePlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.RrhhLblAsteriscoNombrePlan.Location = new System.Drawing.Point(139, 50);
-            this.RrhhLblAsteriscoNombrePlan.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblAsteriscoNombrePlan.Location = new System.Drawing.Point(156, 62);
             this.RrhhLblAsteriscoNombrePlan.Name = "RrhhLblAsteriscoNombrePlan";
-            this.RrhhLblAsteriscoNombrePlan.Size = new System.Drawing.Size(11, 25);
+            this.RrhhLblAsteriscoNombrePlan.Size = new System.Drawing.Size(12, 31);
             this.RrhhLblAsteriscoNombrePlan.TabIndex = 2;
             this.RrhhLblAsteriscoNombrePlan.Text = "*";
             // 
@@ -250,10 +244,10 @@
             this.RrhhTxtNombrePlan.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RrhhTxtNombrePlan.Font = new System.Drawing.Font("Segoe UI", 9.11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhTxtNombrePlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.RrhhTxtNombrePlan.Location = new System.Drawing.Point(175, 41);
-            this.RrhhTxtNombrePlan.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhTxtNombrePlan.Location = new System.Drawing.Point(197, 51);
+            this.RrhhTxtNombrePlan.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhTxtNombrePlan.Name = "RrhhTxtNombrePlan";
-            this.RrhhTxtNombrePlan.Size = new System.Drawing.Size(448, 26);
+            this.RrhhTxtNombrePlan.Size = new System.Drawing.Size(504, 32);
             this.RrhhTxtNombrePlan.TabIndex = 3;
             // 
             // RrhhLblDescripcion
@@ -261,10 +255,9 @@
             this.RrhhLblDescripcion.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblDescripcion.Font = new System.Drawing.Font("Tahoma", 7.87F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.RrhhLblDescripcion.Location = new System.Drawing.Point(23, 106);
-            this.RrhhLblDescripcion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblDescripcion.Location = new System.Drawing.Point(26, 132);
             this.RrhhLblDescripcion.Name = "RrhhLblDescripcion";
-            this.RrhhLblDescripcion.Size = new System.Drawing.Size(84, 25);
+            this.RrhhLblDescripcion.Size = new System.Drawing.Size(100, 31);
             this.RrhhLblDescripcion.TabIndex = 4;
             this.RrhhLblDescripcion.Text = "Descripción:";
             // 
@@ -273,10 +266,9 @@
             this.RrhhLblAsteriscoDescripcion.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblAsteriscoDescripcion.Font = new System.Drawing.Font("Tahoma", 8.69F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblAsteriscoDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.RrhhLblAsteriscoDescripcion.Location = new System.Drawing.Point(109, 106);
-            this.RrhhLblAsteriscoDescripcion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblAsteriscoDescripcion.Location = new System.Drawing.Point(123, 132);
             this.RrhhLblAsteriscoDescripcion.Name = "RrhhLblAsteriscoDescripcion";
-            this.RrhhLblAsteriscoDescripcion.Size = new System.Drawing.Size(11, 25);
+            this.RrhhLblAsteriscoDescripcion.Size = new System.Drawing.Size(12, 31);
             this.RrhhLblAsteriscoDescripcion.TabIndex = 5;
             this.RrhhLblAsteriscoDescripcion.Text = "*";
             // 
@@ -286,12 +278,12 @@
             this.RrhhTxtDescripcion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RrhhTxtDescripcion.Font = new System.Drawing.Font("Segoe UI", 9.11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhTxtDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.RrhhTxtDescripcion.Location = new System.Drawing.Point(175, 88);
-            this.RrhhTxtDescripcion.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhTxtDescripcion.Location = new System.Drawing.Point(197, 110);
+            this.RrhhTxtDescripcion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhTxtDescripcion.Multiline = true;
             this.RrhhTxtDescripcion.Name = "RrhhTxtDescripcion";
             this.RrhhTxtDescripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.RrhhTxtDescripcion.Size = new System.Drawing.Size(448, 88);
+            this.RrhhTxtDescripcion.Size = new System.Drawing.Size(504, 110);
             this.RrhhTxtDescripcion.TabIndex = 6;
             // 
             // RrhhLblEmpleado
@@ -299,26 +291,24 @@
             this.RrhhLblEmpleado.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblEmpleado.Font = new System.Drawing.Font("Tahoma", 7.87F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblEmpleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.RrhhLblEmpleado.Location = new System.Drawing.Point(23, 197);
-            this.RrhhLblEmpleado.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblEmpleado.Location = new System.Drawing.Point(26, 246);
             this.RrhhLblEmpleado.Name = "RrhhLblEmpleado";
-            this.RrhhLblEmpleado.Size = new System.Drawing.Size(72, 25);
+            this.RrhhLblEmpleado.Size = new System.Drawing.Size(81, 31);
             this.RrhhLblEmpleado.TabIndex = 7;
             this.RrhhLblEmpleado.Text = "Empleado:";
             // 
             // RrhhCboEmpleado
             // 
-            this.RrhhCboEmpleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.RrhhCboEmpleado.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.RrhhCboEmpleado.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.RrhhCboEmpleado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.RrhhCboEmpleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.RrhhCboEmpleado.Font = new System.Drawing.Font("Segoe UI", 9.11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhCboEmpleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.RrhhCboEmpleado.FormattingEnabled = true;
-            this.RrhhCboEmpleado.Location = new System.Drawing.Point(175, 190);
-            this.RrhhCboEmpleado.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhCboEmpleado.Location = new System.Drawing.Point(197, 238);
+            this.RrhhCboEmpleado.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhCboEmpleado.Name = "RrhhCboEmpleado";
-            this.RrhhCboEmpleado.Size = new System.Drawing.Size(448, 26);
+            this.RrhhCboEmpleado.Size = new System.Drawing.Size(504, 33);
             this.RrhhCboEmpleado.TabIndex = 9;
             // 
             // RrhhLblEvaluacion
@@ -326,10 +316,9 @@
             this.RrhhLblEvaluacion.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblEvaluacion.Font = new System.Drawing.Font("Tahoma", 7.87F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblEvaluacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.RrhhLblEvaluacion.Location = new System.Drawing.Point(23, 242);
-            this.RrhhLblEvaluacion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblEvaluacion.Location = new System.Drawing.Point(26, 302);
             this.RrhhLblEvaluacion.Name = "RrhhLblEvaluacion";
-            this.RrhhLblEvaluacion.Size = new System.Drawing.Size(143, 48);
+            this.RrhhLblEvaluacion.Size = new System.Drawing.Size(161, 60);
             this.RrhhLblEvaluacion.TabIndex = 11;
             this.RrhhLblEvaluacion.Text = "Relacionado con\r\nEvaluación:";
             // 
@@ -340,10 +329,10 @@
             this.RrhhCboEvaluacion.Font = new System.Drawing.Font("Segoe UI", 9.11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhCboEvaluacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.RrhhCboEvaluacion.FormattingEnabled = true;
-            this.RrhhCboEvaluacion.Location = new System.Drawing.Point(175, 239);
-            this.RrhhCboEvaluacion.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhCboEvaluacion.Location = new System.Drawing.Point(197, 299);
+            this.RrhhCboEvaluacion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhCboEvaluacion.Name = "RrhhCboEvaluacion";
-            this.RrhhCboEvaluacion.Size = new System.Drawing.Size(448, 26);
+            this.RrhhCboEvaluacion.Size = new System.Drawing.Size(504, 33);
             this.RrhhCboEvaluacion.TabIndex = 12;
             // 
             // RrhhPnlRegistrados
@@ -355,10 +344,10 @@
             this.RrhhPnlRegistrados.Controls.Add(this.RrhhTxtBuscar);
             this.RrhhPnlRegistrados.Controls.Add(this.RrhhBtnBuscar);
             this.RrhhPnlRegistrados.Controls.Add(this.RrhhDgvPlanes);
-            this.RrhhPnlRegistrados.Location = new System.Drawing.Point(671, 275);
-            this.RrhhPnlRegistrados.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhPnlRegistrados.Location = new System.Drawing.Point(755, 344);
+            this.RrhhPnlRegistrados.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhPnlRegistrados.Name = "RrhhPnlRegistrados";
-            this.RrhhPnlRegistrados.Size = new System.Drawing.Size(612, 455);
+            this.RrhhPnlRegistrados.Size = new System.Drawing.Size(688, 568);
             this.RrhhPnlRegistrados.TabIndex = 8;
             // 
             // RrhhPnlRegistradosEncabezado
@@ -366,9 +355,9 @@
             this.RrhhPnlRegistradosEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(236)))), ((int)(((byte)(243)))));
             this.RrhhPnlRegistradosEncabezado.Controls.Add(this.RrhhLblRegistradosTitulo);
             this.RrhhPnlRegistradosEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.RrhhPnlRegistradosEncabezado.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhPnlRegistradosEncabezado.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhPnlRegistradosEncabezado.Name = "RrhhPnlRegistradosEncabezado";
-            this.RrhhPnlRegistradosEncabezado.Size = new System.Drawing.Size(610, 28);
+            this.RrhhPnlRegistradosEncabezado.Size = new System.Drawing.Size(686, 35);
             this.RrhhPnlRegistradosEncabezado.TabIndex = 0;
             // 
             // RrhhLblRegistradosTitulo
@@ -376,10 +365,9 @@
             this.RrhhLblRegistradosTitulo.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblRegistradosTitulo.Font = new System.Drawing.Font("Tahoma", 7.87F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblRegistradosTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblRegistradosTitulo.Location = new System.Drawing.Point(14, 3);
-            this.RrhhLblRegistradosTitulo.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblRegistradosTitulo.Location = new System.Drawing.Point(16, 4);
             this.RrhhLblRegistradosTitulo.Name = "RrhhLblRegistradosTitulo";
-            this.RrhhLblRegistradosTitulo.Size = new System.Drawing.Size(337, 23);
+            this.RrhhLblRegistradosTitulo.Size = new System.Drawing.Size(379, 29);
             this.RrhhLblRegistradosTitulo.TabIndex = 0;
             this.RrhhLblRegistradosTitulo.Text = "Planes de Mejora Registrados";
             // 
@@ -388,10 +376,9 @@
             this.RrhhLblBuscar.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblBuscar.Font = new System.Drawing.Font("Tahoma", 7.87F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.RrhhLblBuscar.Location = new System.Drawing.Point(18, 56);
-            this.RrhhLblBuscar.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.RrhhLblBuscar.Location = new System.Drawing.Point(20, 70);
             this.RrhhLblBuscar.Name = "RrhhLblBuscar";
-            this.RrhhLblBuscar.Size = new System.Drawing.Size(54, 25);
+            this.RrhhLblBuscar.Size = new System.Drawing.Size(61, 31);
             this.RrhhLblBuscar.TabIndex = 1;
             this.RrhhLblBuscar.Text = "Buscar:";
             // 
@@ -401,28 +388,28 @@
             this.RrhhTxtBuscar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RrhhTxtBuscar.Font = new System.Drawing.Font("Segoe UI", 9.11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhTxtBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.RrhhTxtBuscar.Location = new System.Drawing.Point(75, 43);
-            this.RrhhTxtBuscar.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhTxtBuscar.Location = new System.Drawing.Point(84, 54);
+            this.RrhhTxtBuscar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhTxtBuscar.Name = "RrhhTxtBuscar";
-            this.RrhhTxtBuscar.Size = new System.Drawing.Size(455, 26);
+            this.RrhhTxtBuscar.Size = new System.Drawing.Size(512, 32);
             this.RrhhTxtBuscar.TabIndex = 2;
             // 
             // RrhhBtnBuscar
             // 
             this.RrhhBtnBuscar.BackColor = System.Drawing.Color.Transparent;
+            this.RrhhBtnBuscar.BackgroundImage = global::CapaVista_EvaluacionDesempeño.Properties.Resources.btn_consultar;
+            this.RrhhBtnBuscar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.RrhhBtnBuscar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.RrhhBtnBuscar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(180)))), ((int)(((byte)(184)))));
+            this.RrhhBtnBuscar.FlatAppearance.BorderSize = 0;
             this.RrhhBtnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RrhhBtnBuscar.Font = new System.Drawing.Font("Segoe UI", 7.87F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhBtnBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.RrhhBtnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.RrhhBtnBuscar.Location = new System.Drawing.Point(540, 43);
-            this.RrhhBtnBuscar.Margin = new System.Windows.Forms.Padding(3);
-            this.RrhhBtnBuscar.BackgroundImage = global::CapaVista_EvaluacionDesempeño.Properties.Resources.btn_consultar;
-            this.RrhhBtnBuscar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.RrhhBtnBuscar.FlatAppearance.BorderSize = 0;
+            this.RrhhBtnBuscar.Location = new System.Drawing.Point(608, 54);
+            this.RrhhBtnBuscar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnBuscar.Name = "RrhhBtnBuscar";
-            this.RrhhBtnBuscar.Size = new System.Drawing.Size(48, 43);
+            this.RrhhBtnBuscar.Size = new System.Drawing.Size(54, 54);
             this.RrhhBtnBuscar.TabIndex = 3;
             this.RrhhBtnBuscar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.RrhhBtnBuscar.UseVisualStyleBackColor = false;
@@ -434,6 +421,7 @@
             this.RrhhDgvPlanes.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(246)))), ((int)(((byte)(247)))));
             this.RrhhDgvPlanes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.RrhhDgvPlanes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.RrhhDgvPlanes.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
@@ -459,57 +447,49 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.RrhhDgvPlanes.DefaultCellStyle = dataGridViewCellStyle3;
             this.RrhhDgvPlanes.EnableHeadersVisualStyles = false;
-            this.RrhhDgvPlanes.Location = new System.Drawing.Point(11, 97);
-            this.RrhhDgvPlanes.Margin = new System.Windows.Forms.Padding(3);
+            this.RrhhDgvPlanes.Location = new System.Drawing.Point(12, 121);
+            this.RrhhDgvPlanes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhDgvPlanes.MultiSelect = false;
-            this.RrhhDgvPlanes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.RrhhDgvPlanes.Name = "RrhhDgvPlanes";
             this.RrhhDgvPlanes.ReadOnly = true;
             this.RrhhDgvPlanes.RowHeadersVisible = false;
             this.RrhhDgvPlanes.RowHeadersWidth = 35;
             this.RrhhDgvPlanes.RowTemplate.Height = 21;
             this.RrhhDgvPlanes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.RrhhDgvPlanes.Size = new System.Drawing.Size(587, 345);
+            this.RrhhDgvPlanes.Size = new System.Drawing.Size(660, 431);
             this.RrhhDgvPlanes.TabIndex = 4;
             // 
             // RrhhColId
             // 
+            this.RrhhColId.FillWeight = 32F;
             this.RrhhColId.HeaderText = "ID";
             this.RrhhColId.MinimumWidth = 4;
-            this.RrhhColId.FillWeight = 32F;
             this.RrhhColId.Name = "RrhhColId";
             this.RrhhColId.ReadOnly = true;
-            this.RrhhColId.Width = 32;
             // 
             // RrhhColNombre
             // 
+            this.RrhhColNombre.FillWeight = 80F;
             this.RrhhColNombre.HeaderText = "Nombre del Plan";
             this.RrhhColNombre.MinimumWidth = 4;
-            this.RrhhColNombre.FillWeight = 80F;
             this.RrhhColNombre.Name = "RrhhColNombre";
             this.RrhhColNombre.ReadOnly = true;
-            this.RrhhColNombre.Width = 80;
             // 
             // RrhhColEmpleado
             // 
+            this.RrhhColEmpleado.FillWeight = 70F;
             this.RrhhColEmpleado.HeaderText = "Empleado";
             this.RrhhColEmpleado.MinimumWidth = 4;
-            this.RrhhColEmpleado.FillWeight = 70F;
             this.RrhhColEmpleado.Name = "RrhhColEmpleado";
             this.RrhhColEmpleado.ReadOnly = true;
-            this.RrhhColEmpleado.Width = 70;
             // 
             // RrhhColCiclo
             // 
+            this.RrhhColCiclo.FillWeight = 43F;
             this.RrhhColCiclo.HeaderText = "Fecha Evaluación";
             this.RrhhColCiclo.MinimumWidth = 4;
-            this.RrhhColCiclo.FillWeight = 43F;
             this.RrhhColCiclo.Name = "RrhhColCiclo";
             this.RrhhColCiclo.ReadOnly = true;
-            this.RrhhColCiclo.Width = 43;
-            // 
-            // FrmPlanMejora
-            // 
             // 
             // RrhhPnlBotones
             // 
@@ -527,9 +507,10 @@
             this.RrhhPnlBotones.Controls.Add(this.RrhhBtnFin);
             this.RrhhPnlBotones.Controls.Add(this.RrhhBtnAyuda);
             this.RrhhPnlBotones.Controls.Add(this.RrhhBtnSalir);
-            this.RrhhPnlBotones.Location = new System.Drawing.Point(9, 741);
+            this.RrhhPnlBotones.Location = new System.Drawing.Point(10, 926);
+            this.RrhhPnlBotones.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhPnlBotones.Name = "RrhhPnlBotones";
-            this.RrhhPnlBotones.Size = new System.Drawing.Size(1274, 68);
+            this.RrhhPnlBotones.Size = new System.Drawing.Size(1433, 85);
             this.RrhhPnlBotones.TabIndex = 20;
             // 
             // RrhhBtnNuevo
@@ -543,8 +524,9 @@
             this.RrhhBtnNuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnNuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RrhhBtnNuevo.Location = new System.Drawing.Point(3, 1);
+            this.RrhhBtnNuevo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnNuevo.Name = "RrhhBtnNuevo";
-            this.RrhhBtnNuevo.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnNuevo.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnNuevo.TabIndex = 0;
             this.RrhhBtnNuevo.UseVisualStyleBackColor = false;
             // 
@@ -558,9 +540,10 @@
             this.RrhhBtnGuardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnGuardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnGuardar.Location = new System.Drawing.Point(77, 1);
+            this.RrhhBtnGuardar.Location = new System.Drawing.Point(87, 1);
+            this.RrhhBtnGuardar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnGuardar.Name = "RrhhBtnGuardar";
-            this.RrhhBtnGuardar.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnGuardar.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnGuardar.TabIndex = 1;
             this.RrhhBtnGuardar.UseVisualStyleBackColor = false;
             // 
@@ -574,9 +557,10 @@
             this.RrhhBtnModificar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnModificar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnModificar.Location = new System.Drawing.Point(151, 1);
+            this.RrhhBtnModificar.Location = new System.Drawing.Point(170, 1);
+            this.RrhhBtnModificar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnModificar.Name = "RrhhBtnModificar";
-            this.RrhhBtnModificar.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnModificar.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnModificar.TabIndex = 2;
             this.RrhhBtnModificar.UseVisualStyleBackColor = false;
             // 
@@ -590,9 +574,10 @@
             this.RrhhBtnEliminar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnEliminar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnEliminar.Location = new System.Drawing.Point(225, 1);
+            this.RrhhBtnEliminar.Location = new System.Drawing.Point(253, 1);
+            this.RrhhBtnEliminar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnEliminar.Name = "RrhhBtnEliminar";
-            this.RrhhBtnEliminar.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnEliminar.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnEliminar.TabIndex = 3;
             this.RrhhBtnEliminar.UseVisualStyleBackColor = false;
             // 
@@ -606,9 +591,10 @@
             this.RrhhBtnCancelar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnCancelar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnCancelar.Location = new System.Drawing.Point(299, 1);
+            this.RrhhBtnCancelar.Location = new System.Drawing.Point(336, 1);
+            this.RrhhBtnCancelar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnCancelar.Name = "RrhhBtnCancelar";
-            this.RrhhBtnCancelar.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnCancelar.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnCancelar.TabIndex = 4;
             this.RrhhBtnCancelar.UseVisualStyleBackColor = false;
             // 
@@ -622,9 +608,10 @@
             this.RrhhBtnRefrescar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnRefrescar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnRefrescar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnRefrescar.Location = new System.Drawing.Point(373, 1);
+            this.RrhhBtnRefrescar.Location = new System.Drawing.Point(420, 1);
+            this.RrhhBtnRefrescar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnRefrescar.Name = "RrhhBtnRefrescar";
-            this.RrhhBtnRefrescar.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnRefrescar.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnRefrescar.TabIndex = 5;
             this.RrhhBtnRefrescar.UseVisualStyleBackColor = false;
             // 
@@ -638,9 +625,10 @@
             this.RrhhBtnImprimir.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnImprimir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnImprimir.Location = new System.Drawing.Point(447, 1);
+            this.RrhhBtnImprimir.Location = new System.Drawing.Point(503, 1);
+            this.RrhhBtnImprimir.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnImprimir.Name = "RrhhBtnImprimir";
-            this.RrhhBtnImprimir.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnImprimir.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnImprimir.TabIndex = 6;
             this.RrhhBtnImprimir.UseVisualStyleBackColor = false;
             // 
@@ -654,9 +642,10 @@
             this.RrhhBtnInicio.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnInicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnInicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnInicio.Location = new System.Drawing.Point(521, 1);
+            this.RrhhBtnInicio.Location = new System.Drawing.Point(586, 1);
+            this.RrhhBtnInicio.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnInicio.Name = "RrhhBtnInicio";
-            this.RrhhBtnInicio.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnInicio.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnInicio.TabIndex = 8;
             this.RrhhBtnInicio.UseVisualStyleBackColor = false;
             // 
@@ -670,9 +659,10 @@
             this.RrhhBtnAnterior.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnAnterior.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnAnterior.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnAnterior.Location = new System.Drawing.Point(595, 1);
+            this.RrhhBtnAnterior.Location = new System.Drawing.Point(669, 1);
+            this.RrhhBtnAnterior.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnAnterior.Name = "RrhhBtnAnterior";
-            this.RrhhBtnAnterior.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnAnterior.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnAnterior.TabIndex = 9;
             this.RrhhBtnAnterior.UseVisualStyleBackColor = false;
             // 
@@ -686,9 +676,10 @@
             this.RrhhBtnSiguiente.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnSiguiente.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnSiguiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnSiguiente.Location = new System.Drawing.Point(669, 1);
+            this.RrhhBtnSiguiente.Location = new System.Drawing.Point(753, 1);
+            this.RrhhBtnSiguiente.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnSiguiente.Name = "RrhhBtnSiguiente";
-            this.RrhhBtnSiguiente.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnSiguiente.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnSiguiente.TabIndex = 10;
             this.RrhhBtnSiguiente.UseVisualStyleBackColor = false;
             // 
@@ -702,9 +693,10 @@
             this.RrhhBtnFin.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnFin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnFin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnFin.Location = new System.Drawing.Point(743, 1);
+            this.RrhhBtnFin.Location = new System.Drawing.Point(836, 1);
+            this.RrhhBtnFin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnFin.Name = "RrhhBtnFin";
-            this.RrhhBtnFin.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnFin.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnFin.TabIndex = 11;
             this.RrhhBtnFin.UseVisualStyleBackColor = false;
             // 
@@ -718,9 +710,10 @@
             this.RrhhBtnAyuda.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnAyuda.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnAyuda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnAyuda.Location = new System.Drawing.Point(817, 1);
+            this.RrhhBtnAyuda.Location = new System.Drawing.Point(919, 1);
+            this.RrhhBtnAyuda.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnAyuda.Name = "RrhhBtnAyuda";
-            this.RrhhBtnAyuda.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnAyuda.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnAyuda.TabIndex = 13;
             this.RrhhBtnAyuda.UseVisualStyleBackColor = false;
             // 
@@ -734,16 +727,20 @@
             this.RrhhBtnSalir.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.RrhhBtnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RrhhBtnSalir.Location = new System.Drawing.Point(891, 1);
+            this.RrhhBtnSalir.Location = new System.Drawing.Point(1002, 1);
+            this.RrhhBtnSalir.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.RrhhBtnSalir.Name = "RrhhBtnSalir";
-            this.RrhhBtnSalir.Size = new System.Drawing.Size(66, 66);
+            this.RrhhBtnSalir.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnSalir.TabIndex = 14;
             this.RrhhBtnSalir.UseVisualStyleBackColor = false;
             this.RrhhBtnSalir.Click += new System.EventHandler(this.RrhhBtnSalir_Click);
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            // 
+            // FrmPlanMejora
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
-            this.ClientSize = new System.Drawing.Size(1292, 815);
+            this.ClientSize = new System.Drawing.Size(1454, 1019);
             this.Controls.Add(this.RrhhPnlBotones);
             this.Controls.Add(this.RrhhPnlEncabezado);
             this.Controls.Add(this.RrhhPnlSeccion);
@@ -751,7 +748,7 @@
             this.Controls.Add(this.RrhhPnlRegistrados);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.Name = "FrmPlanMejora";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
