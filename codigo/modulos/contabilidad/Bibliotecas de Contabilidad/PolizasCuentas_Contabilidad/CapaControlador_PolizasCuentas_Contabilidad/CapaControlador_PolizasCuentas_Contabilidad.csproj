@@ -52,9 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClsCodigoCuentaContabilidad.cs" />
+    <Compile Include="ClsControladorIntegracionContabilidad.cs" />
+    <Compile Include="ClsEjemploIntegracionContabilidad.cs" />
     <Compile Include="ClsControladorPolizasContabilidad.cs" />
     <!-- Inicio de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026 -->
     <Compile Include="Modelos\ClsModeloCuentaPolizaContabilidad.cs" />
+    <Compile Include="Modelos\ClsModeloLineaIntegracionContabilidad.cs" />
     <Compile Include="Modelos\ClsModeloLineaPolizaContabilidad.cs" />
     <!-- Fin de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026 -->
     <Compile Include="Modelos\ClsModeloCuentaContabilidad.cs" />

@@ -1,0 +1,32 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=..\MovimientosClientes.chm
+Contents file=MovimientosClientes.hhc
+Index file=MovimientosClientes.hhk
+Default topic=html\Movimientos_General.html
+Display compile progress=No
+Full-text search=Yes
+Language=0x100a Spanish (Guatemala)
+Title=Ayuda de Movimientos de clientes
+
+[FILES]
+css\estilos.css
+html\Cargos_Ajustes.html
+html\Consulta_Recibos.html
+html\Depositos_Bancos.html
+html\Estado_Cuenta.html
+html\Movimientos_Botones.html
+html\Movimientos_Errores.html
+html\Movimientos_General.html
+html\Recepcion_Pagos.html
+imagenes\cargos_ajustes.png
+imagenes\consulta_recibos.png
+imagenes\depositos_bancos.png
+imagenes\estado_cuenta.png
+imagenes\logoEmpresa.png
+imagenes\mascotaVentas.png
+imagenes\recepcion_pagos.png
+imagenes\botones\botonAyudaVentas.png
+imagenes\botones\iconoAyudaVentas.png
+
+[INFOTYPES]

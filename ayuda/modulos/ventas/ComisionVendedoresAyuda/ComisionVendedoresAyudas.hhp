@@ -1,0 +1,31 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=comisionvendedores.chm
+Contents file=ComisionVendedoresAyudas.hhc
+Index file=ComisionVendedoresAyudas.hhk
+Default topic=html\ComisionVendedores_General.html
+Title=Ayuda - ComisionVendedores
+Language=0x40A Spanish (Traditional Sort)
+Display compile progress=No
+Full-text search=Yes
+
+[FILES]
+css\estilos.css
+html\ComisionVendedores_General.html
+html\ComisionVendedores_Calcular.html
+html\ComisionVendedores_AsignarFactura.html
+html\ComisionVendedores_Mantenimiento.html
+html\ComisionVendedores_Emitidas.html
+html\ComisionVendedores_Botones.html
+imagenes\logoEmpresa.png
+imagenes\mascotaVentas.png
+imagenes\botones\iconoAyudaVentas.png
+imagenes\calcular_comisiones.png
+imagenes\selector_factura.png
+imagenes\selector_vendedor.png
+imagenes\asignar_confirmacion.png
+imagenes\asignar_exito.png
+imagenes\mantenimiento_tipo.png
+imagenes\mantenimiento_elemento.png
+imagenes\mantenimiento_porcentajes.png
+imagenes\comisiones_emitidas.png
