@@ -166,6 +166,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RpReporteDetalleMovimiento.rdlc" />
+    <EmbeddedResource Include="Reportes\RpReporteSucursal.rdlc" />
     <EmbeddedResource Include="Reportes\RpReporteTipoMovimiento.rdlc" />
   </ItemGroup>
   <ItemGroup>

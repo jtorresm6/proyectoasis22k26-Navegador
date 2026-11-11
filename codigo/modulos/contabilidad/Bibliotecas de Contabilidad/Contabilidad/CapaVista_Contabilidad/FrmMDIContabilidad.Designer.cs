@@ -162,11 +162,10 @@ namespace CapaVista_Contabilidad
             this.ContabilidadLblUsuario.Size = new System.Drawing.Size(129, 18);
             this.ContabilidadLblUsuario.TabIndex = 2;
             this.ContabilidadLblUsuario.Text = "Usuario: Sin sesión";
-<<<<<<< HEAD:codigo/modulos/contabilidad/Contabilidad/CapaVista_Contabilidad/FrmMDIContabilidad.Designer.cs
             // 
             // ContabilidadPnlDashboard
             // 
-=======
+
             this.ContabilidadPnlLateral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
             this.ContabilidadPnlLateral.Controls.Add(this.ContabilidadPnlNavegador);
             this.ContabilidadPnlLateral.Controls.Add(this.ContabilidadVsbMenu);
@@ -399,7 +398,6 @@ namespace CapaVista_Contabilidad
             this.ContabilidadPbLogo.Size = new System.Drawing.Size(133, 127);
             this.ContabilidadPbLogo.TabIndex = 0;
             this.ContabilidadPbLogo.TabStop = false;
->>>>>>> upstream/main:codigo/modulos/contabilidad/Bibliotecas de Contabilidad/Contabilidad/CapaVista_Contabilidad/FrmMDIContabilidad.Designer.cs
             this.ContabilidadPnlDashboard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
