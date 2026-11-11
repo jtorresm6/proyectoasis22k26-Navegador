@@ -51,7 +51,7 @@
       <HintPath>..\..\..\consultas\Consultas\CapaVista_Consultas\bin\Debug\CapaVista_Consultas.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Contabilidad">
-      <HintPath>..\..\..\..\modulos\contabilidad\Contabilidad\CapaVista_Contabilidad\bin\Debug\CapaVista_Contabilidad.dll</HintPath>
+      <HintPath>..\..\..\..\modulos\contabilidad\Bibliotecas de Contabilidad\Contabilidad\CapaVista_Contabilidad\bin\Debug\CapaVista_Contabilidad.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Logistica">
       <HintPath>..\..\..\..\modulos\Logistica\Logistica\CapaVista_Logistica\bin\Debug\CapaVista_Logistica.dll</HintPath>

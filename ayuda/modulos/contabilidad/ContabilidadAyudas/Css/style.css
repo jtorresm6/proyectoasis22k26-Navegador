@@ -1,0 +1,57 @@
+/* Paleta del modulo de Contabilidad: azul marino, azul pizarra y dorado */
+* {
+    background-color: rgb(246,247,248);
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(35,50,61);
+}
+
+.container {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+h1 {
+    color: rgb(28,45,59);
+    text-align: center;
+    font-family: 'Lucida Bright', Georgia, serif;
+    font-size: 45px;
+    border-bottom: 4px solid rgb(197,143,62);
+    margin: 0px 15%;
+}
+
+h2 {
+    color: rgb(70,104,125);
+    text-align: center;
+    font-size: 30px;
+}
+
+p {
+    font-size: 20px;
+    text-align: justify;
+    padding: 20px;
+}
+
+b {
+    color: rgb(182,129,54);
+}
+
+.imgLogo {
+    width: 200px;
+}
+
+.imgButti {
+    width: 150px;
+}
+
+.imgVentana{
+    width: 500px;
+    border: 2px solid rgb(212,222,228);
+}
+
+.imgVentanaMDI{
+    width: 900px;
+    border: 2px solid rgb(212,222,228);
+}
