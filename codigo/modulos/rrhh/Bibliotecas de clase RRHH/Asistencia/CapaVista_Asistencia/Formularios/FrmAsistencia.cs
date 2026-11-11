@@ -25,7 +25,7 @@
  *  (módulo 9000, aplicación 9101). El botón Horas extra abre la
  *  ventana 9102 con la asistencia seleccionada. Reporte muestra
  *  RpAsistencia.rdlc con lo que la lista tiene filtrado, sin pasar por
- *  el Reporteador. Ayuda abre su página en RrhhAyudas.chm.
+ *  el Reporteador. Ayuda abre su página en RrhhAyudas.chm del repo.
  *  Es ventana secundaria, no se puede maximizar.
  * ===================================================================
 */
@@ -41,6 +41,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -206,10 +207,27 @@ namespace CapaVista_Asistencia.Formularios
             }
         }
 
-        // Abre la ayuda de esta ventana dentro del .chm de RRHH, igual que en Seguridad
         private void RrhhBtnAyuda_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this, "C:/RrhhAyudas/RrhhAyudas.chm", "Ayudas_Asistencia.html");
+            RrhhMetAbrirAyuda(this, "Ayudas_Asistencia.html");
+        }
+
+        // Busca el .chm de RRHH subiendo carpetas desde donde corre el programa, así abre
+        // desde cualquier computadora que tenga el repo sin copiarlo a otro lado
+        internal static void RrhhMetAbrirAyuda(Control Ventana, string Pagina)
+        {
+            const string Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\RrhhAyudas.chm";
+            for (var Carpeta = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory); Carpeta != null; Carpeta = Carpeta.Parent)
+            {
+                string Ruta = Path.Combine(Carpeta.FullName, Ayuda);
+                if (File.Exists(Ruta))
+                {
+                    Help.ShowHelp(Ventana, Ruta, Pagina);
+                    return;
+                }
+            }
+            MessageBox.Show("No se encontró el archivo de ayuda de RRHH.", "Ayuda",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void RrhhBtnHorasExtra_Click(object sender, EventArgs e)
