@@ -42,25 +42,15 @@
     <!-- El control de usuario (Navegador) y toda la parametrización de seguridad/bitácora ya viven
          adentro de esta única DLL: la solución "Navegador" (antes repartida entre "Modelo_MVC" y
          "Navegador") es la única que este ejecutor referencia. -->
-    <!-- ===================== INICIO CAMBIO COMPONENTE NAVEGADOR =====================
-         Se CORRIGIERON los HintPath de las 4 DLL de Consultas de abajo (CapaControlador_Consultas, CapaModelo_Consultas,
-         CapaVista_Componentes y CapaVista_Mantenimiento). ANTES apuntaban todas a
-         ..\..\..\consultas\Consultas\CapaVista_Consultas\bin\Debug\ ; AHORA cada una apunta al bin\Debug de su propio proyecto.
-         ====================== FIN CAMBIO COMPONENTE NAVEGADOR ======================= -->
+    <!-- Consultas utiliza sus capas Modelo, Controlador y Vista actuales. -->
     <Reference Include="CapaControlador_Consultas">
       <HintPath>..\..\..\consultas\Consultas\CapaControlador_Consultas\bin\Debug\CapaControlador_Consultas.dll</HintPath>
     </Reference>
     <Reference Include="CapaModelo_Consultas">
       <HintPath>..\..\..\consultas\Consultas\CapaModelo_Consultas\bin\Debug\CapaModelo_Consultas.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_Componentes">
-      <HintPath>..\..\..\consultas\Consultas_Componentes\CapaVista_Componentes\bin\Debug\CapaVista_Componentes.dll</HintPath>
-    </Reference>
     <Reference Include="CapaVista_Consultas">
       <HintPath>..\..\..\consultas\Consultas\CapaVista_Consultas\bin\Debug\CapaVista_Consultas.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaVista_Mantenimiento">
-      <HintPath>..\..\..\consultas\Consultas_Mantenimiento\CapaVista_Mantenimiento\bin\Debug\CapaVista_Mantenimiento.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Navegador">
       <HintPath>..\..\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>

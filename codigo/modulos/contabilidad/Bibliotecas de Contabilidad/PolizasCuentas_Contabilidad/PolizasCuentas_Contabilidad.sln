@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_PolizasCuentas_Co
 		{905988AF-1C5B-4094-A5AA-3D86EB11DEF2} = {905988AF-1C5B-4094-A5AA-3D86EB11DEF2}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPolizasCuentas_Contabilidad", "TestPolizasCuentas_Contabilidad\TestPolizasCuentas_Contabilidad.csproj", "{AB978FE5-E25A-4F27-A0AE-0E450C88B780}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{DD36217C-800F-463A-BA90-58B9B99BAA81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD36217C-800F-463A-BA90-58B9B99BAA81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD36217C-800F-463A-BA90-58B9B99BAA81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB978FE5-E25A-4F27-A0AE-0E450C88B780}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB978FE5-E25A-4F27-A0AE-0E450C88B780}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB978FE5-E25A-4F27-A0AE-0E450C88B780}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB978FE5-E25A-4F27-A0AE-0E450C88B780}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

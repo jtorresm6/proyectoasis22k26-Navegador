@@ -33,6 +33,9 @@ namespace CapaVista_Contabilidad
         private readonly ClsControladorPolizasContabilidad _Controlador = new ClsControladorPolizasContabilidad();
         private readonly CultureInfo _Cultura = CultureInfo.GetCultureInfo("es-GT");
         private List<ClsModeloPolizaContabilidad> _Polizas = new List<ClsModeloPolizaContabilidad>();
+        // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+        private readonly ClsValidacionContabilidad _Validacion = new ClsValidacionContabilidad();
+        // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
 
         public FrmPolizas() : this(ClsModeloPermisosPantallaContabilidad.Total, 1)
         {
@@ -58,9 +61,22 @@ namespace CapaVista_Contabilidad
             // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 02/11/2026
             ClsPermisosMenuContabilidad.ContabilidadMetRestringir(ContabilidadBtnNueva, Permisos.PuedeInsertar);
             ClsPermisosMenuContabilidad.ContabilidadMetRestringir(ContabilidadBtnActualizarSaldos, Permisos.PuedeEditar);
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            foreach (Button Boton in new[] { ContabilidadBtnNueva, ContabilidadBtnAbrir, ContabilidadBtnActualizarSaldos })
+                ClsPermisosMenuContabilidad.ContabilidadMetGrisAlDeshabilitar(Boton);
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
 
             ContabilidadCboEstado.DataSource = new[] { _Todos, "BORRADOR", "VALIDADA", "APLICADA" };
             ContabilidadCboTipoPeriodo.DataSource = _Controlador.ContabilidadFuncObtenerTiposPeriodo();
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            ContabilidadDtpDesde.MaxDate = _Controlador.ContabilidadFuncFechaMaxima();
+            ContabilidadDtpHasta.MaxDate = _Controlador.ContabilidadFuncFechaMaxima();
+            _Validacion.ContabilidadFuncValidar(ContabilidadDtpDesde, null);
+            _Validacion.ContabilidadFuncValidar(ContabilidadDtpHasta, null);
+            ContabilidadMetAnchoError(ContabilidadDtpDesde, 380);
+            ContabilidadMetAnchoError(ContabilidadDtpHasta, 440);
+            Disposed += (Remitente, Argumentos) => _Validacion.Dispose();
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
             ContabilidadDtpDesde.Value = DateTime.Today;
             ContabilidadMetCalcularRango(this, EventArgs.Empty);
 
@@ -69,6 +85,9 @@ namespace CapaVista_Contabilidad
             ContabilidadChkPendientes.CheckedChanged += ContabilidadMetFiltrar;
             ContabilidadCboTipoPeriodo.SelectedIndexChanged += ContabilidadMetCalcularRango;
             ContabilidadDtpDesde.ValueChanged += ContabilidadMetCalcularRango;
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            ContabilidadDtpHasta.ValueChanged += (Remitente, Argumentos) => ContabilidadFuncValidarFechas();
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
             ContabilidadDgvEncabezados.CellDoubleClick += (Remitente, Argumentos) => { if (Argumentos.RowIndex >= 0) ContabilidadMetAbrirSeleccionada(Remitente, Argumentos); };
             ContabilidadDgvEncabezados.CellFormatting += ContabilidadMetColorearEstado;
             ContabilidadBtnAbrir.Click += ContabilidadMetAbrirSeleccionada;
@@ -184,18 +203,52 @@ namespace CapaVista_Contabilidad
             string Tipo = Convert.ToString(ContabilidadCboTipoPeriodo.SelectedItem);
             bool Rango = Tipo == "RANGO";
             ContabilidadDtpHasta.Enabled = Rango;
-            if (Rango) return;
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            if (Rango)
+            {
+                ContabilidadFuncValidarFechas();
+                return;
+            }
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
             DateTime Desde, Hasta;
             DateTime Referencia = Remitente == ContabilidadDtpDesde ? ContabilidadDtpDesde.Value : DateTime.Today;
             _Controlador.ContabilidadMetCalcularRango(Tipo, Referencia, out Desde, out Hasta);
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            if (Hasta > ContabilidadDtpHasta.MaxDate) Hasta = ContabilidadDtpHasta.MaxDate;
+            if (Desde < ClsControladorPolizasContabilidad.InicioSistema && Hasta >= ClsControladorPolizasContabilidad.InicioSistema)
+                Desde = ClsControladorPolizasContabilidad.InicioSistema;
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
             ContabilidadDtpDesde.ValueChanged -= ContabilidadMetCalcularRango;
             ContabilidadDtpDesde.Value = Desde;
             ContabilidadDtpHasta.Value = Hasta;
             ContabilidadDtpDesde.ValueChanged += ContabilidadMetCalcularRango;
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            ContabilidadFuncValidarFechas();
         }
+
+        // Marca en rojo la fecha que no cuadra
+        private bool ContabilidadFuncValidarFechas()
+        {
+            string Error = _Controlador.ContabilidadFuncErrorFechas(ContabilidadDtpDesde.Value, ContabilidadDtpHasta.Value);
+            bool DesdeMal = Error != string.Empty && ContabilidadDtpDesde.Value.Date < ClsControladorPolizasContabilidad.InicioSistema;
+            _Validacion.ContabilidadFuncValidar(ContabilidadDtpDesde, DesdeMal ? Error : null);
+            _Validacion.ContabilidadFuncValidar(ContabilidadDtpHasta, DesdeMal ? null : Error);
+            return Error == string.Empty;
+        }
+
+        // Da espacio al aviso de error bajo la fecha
+        private static void ContabilidadMetAnchoError(Control Campo, int Ancho)
+        {
+            Control Error = Campo.Parent.Controls["ContabilidadLblError" + Campo.Name];
+            if (Error != null) Error.Width = Ancho;
+        }
+        // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
 
         private void ContabilidadMetActualizarSaldos(object Remitente, EventArgs Argumentos)
         {
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            if (!ContabilidadFuncValidarFechas()) return;
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
             DateTime Desde = ContabilidadDtpDesde.Value.Date;
             DateTime Hasta = ContabilidadDtpHasta.Value.Date;
             if (!ClsDialogosContabilidad.ContabilidadFuncConfirmar(this,

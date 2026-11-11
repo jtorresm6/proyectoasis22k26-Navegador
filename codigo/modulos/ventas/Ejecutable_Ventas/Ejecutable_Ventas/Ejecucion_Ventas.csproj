@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -15,7 +15,8 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +26,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -36,9 +38,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Odbc, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.Odbc.8.0.1\lib\net462\System.Data.Odbc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,7 +60,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -80,9 +78,20 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\VentasYCxC\CapaVista_Ventas\CapaVista_Ventas.csproj">
+    <ProjectReference Include="..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj">
+      <Project>{F7AD1A78-73BD-4D8F-87D1-1C5B495D1160}</Project>
+      <Name>CapaVista_Seguridad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaVista_Ventas\CapaVista_Ventas.csproj">
       <Project>{9496BD61-6249-436E-B168-BB5C8C6ABFB0}</Project>
       <Name>CapaVista_Ventas</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\CapaVista_CierreMovimientos.csproj" Condition=" '$(Configuration)' == 'Debug' ">
+      <Project>{2AC893AF-20AB-5159-BF28-32D0AA59D794}</Project>
+      <Name>CapaVista_CierreMovimientos</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Data.Odbc" Version="8.0.1" />
   </ItemGroup>
 </Project>

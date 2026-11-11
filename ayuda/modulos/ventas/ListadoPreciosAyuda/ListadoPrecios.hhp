@@ -1,0 +1,26 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=..\ListadoPrecios.chm
+Contents file=ListadoPrecios.hhc
+Index file=ListadoPrecios.hhk
+Default topic=html\ListadoPrecios_General.html
+Display compile progress=No
+Full-text search=Yes
+Language=0x100a Spanish (Guatemala)
+Title=Ayuda de Listado de precios
+
+[FILES]
+css\estilos.css
+html\ListadoPrecios_Botones.html
+html\ListadoPrecios_Consultar.html
+html\ListadoPrecios_Errores.html
+html\ListadoPrecios_General.html
+html\ListadoPrecios_Guardar.html
+html\ListadoPrecios_Modificar.html
+imagenes\listadoprecios.png
+imagenes\logoEmpresa.png
+imagenes\mascotaVentas.png
+imagenes\botones\botonAyudaVentas.png
+imagenes\botones\iconoAyudaVentas.png
+
+[INFOTYPES]

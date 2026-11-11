@@ -4,13 +4,14 @@
 :: Doble clic: compilar con menu. /auto: terminar con codigo 0 o 1.
 :: Requiere Visual Studio/Build Tools y desarrollo de escritorio .NET.
 :: Compila Debug, restaura NuGet y reintenta hasta tres rondas.
-:: Logs: logs\build_rrhh junto al .bat; cada proyecto tiene su propio log.
+:: Archivos auxiliares temporales; se eliminan al terminar.
 :: Conserva copias Debug en bin\Release para referencias heredadas.
 :: MSBUILD_MANUAL puede indicar una ruta alternativa a MSBuild.exe.
 :: Modificado por: Byron Alexander Chiquito Paredes 0901-23-3747 (02/11/2026)
 :: Omite los proyectos MSTest, solo restaura NuGet donde hay paquetes,
 :: las rondas 2 y 3 solo repiten lo que fallo y el menu final abre el login.
 setlocal EnableExtensions DisableDelayedExpansion
+set "LOG_DIR="
 chcp 65001 >nul
 color 0A
 title Compilacion global - Consultas, Navegador, Seguridad, Logistica y RRHH
@@ -44,7 +45,8 @@ echo ============================================
 :: --------------------------------------------------------------------------
 set "ROOT_DIR=%~dp0"
 :: Las rutas se resuelven desde el .bat sin cambiar el directorio de la consola.
-set "LOG_DIR=%ROOT_DIR%logs\build_rrhh"
+call :LimpiarTemporales
+set "LOG_DIR=%TEMP%\asis_rrhh_%RANDOM%_%RANDOM%"
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%"
 if not exist "%LOG_DIR%\" goto FIN_ERROR
 set "LOG_FILE=%LOG_DIR%\build_log.txt"
@@ -189,13 +191,14 @@ echo COMPILACION GLOBAL FINALIZADA
 echo Total de proyectos: %total%
 echo Correctos: %ok%
 echo Con errores: %fail%
-echo Log completo: %LOG_FILE%
+echo Los archivos auxiliares se eliminan al terminar.
 echo ============================================
 if exist "%FALLIDOS%" echo.
 if exist "%FALLIDOS%" echo PROYECTOS QUE NO COMPILARON:
 if exist "%FALLIDOS%" type "%FALLIDOS%"
-if exist "%FALLIDOS%" echo (errores por ronda y paso en "%LOG_DIR%")
+if exist "%FALLIDOS%" echo (revise los errores mostrados arriba)
 
+call :LimpiarTemporales
 :: --------------------------------------------------------------------------
 if /I "%~1"=="/auto" goto FIN_OK
 
@@ -227,9 +230,11 @@ goto MENU
 set "EXIT_CODE=0"
 if %fail% GTR 0 set "EXIT_CODE=1"
 if %total% EQU 0 set "EXIT_CODE=1"
+call :LimpiarTemporales
 endlocal & exit /b %EXIT_CODE%
 
 :FIN_ERROR
+call :LimpiarTemporales
 echo.
 if /I not "%~1"=="/auto" pause
 endlocal
@@ -306,7 +311,7 @@ set "EFILE=%LOG_DIR%\errores_ronda_%RONDA%_paso_%PASO%.txt"
 findstr /i /c:": error " /c:"error MSB" /c:"error NU" /c:"MSB3245" /c:"MSB3243" "%PLOG%" > "%EFILE%"
 :: Mostrar errores; el log por paso conserva toda la salida.
 type "%EFILE%"
-echo   Detalle: "%PLOG%"
+echo   Revise los errores mostrados arriba.
 >>"%FALL_PASS%" echo "%PROJ%"
 set /a P_FAIL+=1
 exit /b 1
@@ -479,4 +484,9 @@ set /a PF_ANTES=P_FAIL
 call :Vistas "%COMPONENTES_DIR%\seguridad"
 set "TIPO_BUILD=%TIPO_PREV%"
 if %P_FAIL% EQU %PF_ANTES% set "OK_SEGFULL=1"
+:LimpiarTemporales
+if defined LOG_DIR if exist "%LOG_DIR%\" (
+    del /q "%LOG_DIR%\*" >nul 2>&1
+    rd "%LOG_DIR%" >nul 2>&1
+)
 exit /b 0

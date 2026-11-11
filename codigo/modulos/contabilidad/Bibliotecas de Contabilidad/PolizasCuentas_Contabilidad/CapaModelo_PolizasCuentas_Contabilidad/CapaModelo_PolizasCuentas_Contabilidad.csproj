@@ -50,6 +50,7 @@
     <Compile Include="Entidades\ClsPolizaDetalleContabilidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\ClsRepositorioCuentasContabilidad.cs" />
+    <Compile Include="Repositorios\ClsRepositorioIntegracionContabilidad.cs" />
     <Compile Include="Repositorios\ClsRepositorioPolizasContabilidad.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

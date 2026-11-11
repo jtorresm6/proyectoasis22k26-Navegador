@@ -1,4 +1,5 @@
 using CapaVista_Compras;
+using CapaVista_Seguridad;
 using System;
 using System.Windows.Forms;
 
@@ -14,7 +15,7 @@ namespace Ejecucion_Compras
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMDICompras());
+            Application.Run(new FrmLogin());
         }
     }
 }
