@@ -121,13 +121,12 @@ namespace TestCierreMovimientos
             var Controlador = typeof(ClsCierreControlador).Assembly;
             //Act
             var Referencias = Controlador.GetReferencedAssemblies();
-            var Paises = new ClsCierreControlador().VentasFuncPaisesContables();
+            var MetodoPaises = typeof(ClsCierreControlador).GetMethod("VentasFuncPaisesContables", Type.EmptyTypes);
             //Assert
             Assert.IsFalse(Array.Exists(Referencias,
                 Referencia => Referencia.Name.IndexOf("Contabilidad", StringComparison.OrdinalIgnoreCase) >= 0));
-            CollectionAssert.AreEquivalent(new[] { "Id", "Nombre" },
-                new[] { Paises.Columns[0].ColumnName, Paises.Columns[1].ColumnName });
-            Assert.AreEqual(0, Paises.Rows.Count);
+            Assert.IsNotNull(MetodoPaises);
+            Assert.AreEqual(typeof(DataTable), MetodoPaises.ReturnType);
         }
 
         [TestMethod]

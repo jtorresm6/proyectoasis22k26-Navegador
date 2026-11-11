@@ -120,21 +120,10 @@ namespace CapaControlador_CierreMovimientos
             throw new FileNotFoundException("No se encontró ayuda\\modulos\\ventas\\CierreMovimientos.chm desde la carpeta del programa.");
         }
 
-        public DataTable VentasFuncPaisesContables(bool ConsultarContabilidad = false)
+        public DataTable VentasFuncPaisesContables()
         {
-            DataTable Paises = new DataTable();
-            Paises.Columns.Add("Id", typeof(int));
-            Paises.Columns.Add("Nombre", typeof(string));
-            if (!ConsultarContabilidad)
-                return Paises;
-            object Contabilidad = VentasFuncCrearControladorContable("ClsControladorPolizasContabilidad");
-            MethodInfo ObtenerPaises = Contabilidad.GetType().GetMethod("ContabilidadFuncObtenerPaises", Type.EmptyTypes);
-            if (ObtenerPaises == null)
-                throw new InvalidOperationException("La DLL de Contabilidad no ofrece ContabilidadFuncObtenerPaises.");
-            foreach (object Pais in (IEnumerable)VentasFuncInvocar(ObtenerPaises, Contabilidad, new object[0]))
-                Paises.Rows.Add(Pais.GetType().GetProperty("Key").GetValue(Pais, null),
-                    Pais.GetType().GetProperty("Value").GetValue(Pais, null));
-            return Paises;
+            using (var Repositorio = new CapaModelo_CierreMovimientos.ClsCierreRepositorio())
+                return Repositorio.VentasFuncPaisesContables();
         }
         public bool VentasFuncEsDocumentoDemo(string Documento)
         {

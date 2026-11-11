@@ -49,6 +49,12 @@ namespace CapaModelo_CierreMovimientos
             return _Datos.VentasFuncCatalogo(Nombre);
         }
 
+        // Natali Montenegro: el país se consulta en la base compartida; no requiere la DLL contable.
+        public DataTable VentasFuncPaisesContables()
+        {
+            return _Datos.VentasFuncTabla("SELECT idPais Id, nombrePais Nombre FROM tblPais WHERE is_active=1 ORDER BY nombrePais");
+        }
+
         public int VentasFuncObtenerId()
         {
             return _Datos.VentasFuncObtenerId();

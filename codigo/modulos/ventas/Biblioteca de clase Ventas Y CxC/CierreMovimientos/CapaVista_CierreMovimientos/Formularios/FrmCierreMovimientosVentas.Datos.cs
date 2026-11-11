@@ -87,8 +87,8 @@ namespace CapaVista_CierreMovimientos
                     this.VentasCboMonedaCierre.SelectedValue = Quetzal == null ? Monedas.Rows[0]["Id"] : Quetzal["Id"];
                 this.VentasCboTipoCierre.SelectedIndex = 0;
                 this.VentasCboMesCierre.SelectedIndex = DateTime.Today.Month - 1;
-                // Natali Sofía Montenegro Portillo | 0901-23-10017 | Contabilidad define el catálogo de países usado por la póliza.
-                DataTable Paises = this._Controlador.VentasFuncPaisesContables(this.EnlaceContable != null);
+                // Natali Sofía Montenegro Portillo | 0901-23-10017 | El país se obtiene de tblPais aun sin la DLL contable.
+                DataTable Paises = this._Controlador.VentasFuncPaisesContables();
                 DataRow Guatemala = Paises.AsEnumerable().FirstOrDefault(Fila => Convert.ToString(Fila["Nombre"]).IndexOf("Guatemala", StringComparison.OrdinalIgnoreCase) >= 0);
                 DataRow Seleccione = Paises.NewRow();
                 Seleccione["Id"] = 0;
