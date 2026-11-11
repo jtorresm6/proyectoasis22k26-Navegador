@@ -1,11 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text.RegularExpressions;
 
 namespace CapaModelo_EnlaceB.Entidades
 {
-    public enum ModuloEnlace { Logistica, Compras, Ventas, RecursosHumanos }
+    public enum ModuloEnlace
+    {
+        Logistica,
+        Compras,
+        Ventas,
+        RecursosHumanos
+    }
 
     public sealed class ClsContextoPartida
     {
@@ -31,15 +37,18 @@ namespace CapaModelo_EnlaceB.Entidades
     {
         public static void BancarioMetValidarFechas(DateTime Inicio, DateTime Fin, bool Mensual)
         {
-            if (Inicio.Date > Fin.Date) throw new ArgumentException("La fecha inicial no puede ser mayor que la final.");
-            if (Fin.Year >= 9999) throw new ArgumentException("Seleccione un año anterior a 9999.");
+            if (Inicio.Date > Fin.Date)
+                throw new ArgumentException("La fecha inicial no puede ser mayor que la final.");
+            if (Fin.Year >= 9999)
+                throw new ArgumentException("Seleccione un año anterior a 9999.");
             if (Mensual && (Inicio.Day != 1 || Fin.Date != new DateTime(Inicio.Year, Inicio.Month, DateTime.DaysInMonth(Inicio.Year, Inicio.Month))))
                 throw new ArgumentException("La partida debe comprender un mes calendario completo.");
         }
 
         public static void BancarioMetValidarContexto(ClsContextoPartida Contexto)
         {
-            if (Contexto == null) throw new ArgumentException("Faltan los datos de la partida.");
+            if (Contexto == null)
+                throw new ArgumentException("Faltan los datos de la partida.");
             BancarioMetValidarFechas(Contexto.Inicio, Contexto.Fin, true);
             if (Contexto.Empresa <= 0 || Contexto.Pais <= 0 || Contexto.ModuloContable <= 0)
                 throw new ArgumentException("Seleccione empresa, país y módulo contable.");
@@ -49,7 +58,8 @@ namespace CapaModelo_EnlaceB.Entidades
 
         public static DataTable BancarioMetPrepararLineasContables(DataTable Detalle)
         {
-            if (Detalle == null || Detalle.Rows.Count == 0) throw new ArgumentException("La partida no tiene detalle.");
+            if (Detalle == null || Detalle.Rows.Count == 0)
+                throw new ArgumentException("La partida no tiene detalle.");
             var Resultado = new DataTable();
             Resultado.Columns.Add("Codigo", typeof(string));
             Resultado.Columns.Add("Debe", typeof(decimal));
@@ -61,13 +71,22 @@ namespace CapaModelo_EnlaceB.Entidades
                 string Codigo = Convert.ToString(Fila["CodigoCuentaDetallePartida"]);
                 decimal ImporteDebe = Convert.ToDecimal(Fila["DebeDetallePartida"]);
                 decimal ImporteHaber = Convert.ToDecimal(Fila["HaberDetallePartida"]);
-                if (!Regex.IsMatch(Codigo, @"^[1-6]\.[0-9]{2}\.[0-9]{2}\.[0-9]{3}$") || !Codigos.Add(Codigo) || ImporteDebe < 0 || ImporteHaber < 0 || (ImporteDebe == 0 && ImporteHaber == 0))
-                    throw new ArgumentException("Use cuentas aprobadas con formato C.GG.CC.SSS, sin duplicados, e importes válidos.");
-                if (ImporteDebe > 99999999.9999m || ImporteHaber > 99999999.9999m) throw new ArgumentException("El importe supera la capacidad de la base de datos.");
-                if (ImporteDebe > 0) Resultado.Rows.Add(Codigo, ImporteDebe, 0m);
-                if (ImporteHaber > 0) Resultado.Rows.Add(Codigo, 0m, ImporteHaber);
-                Debe += ImporteDebe; Haber += ImporteHaber;
+                if (!Regex.IsMatch(Codigo, @"^[1-6]\.[0-9]{2}\.[0-9]{2}\.[0-9]{3}\z"))
+                    throw new ArgumentException("Use una cuenta con formato C.GG.CC.SSS.");
+                if (!Codigos.Add(Codigo))
+                    throw new ArgumentException("La partida contiene una cuenta duplicada.");
+                if (ImporteDebe < 0 || ImporteHaber < 0 || (ImporteDebe == 0 && ImporteHaber == 0))
+                    throw new ArgumentException("La cuenta debe tener importes válidos.");
+                if (ImporteDebe > 99999999.9999m || ImporteHaber > 99999999.9999m)
+                    throw new ArgumentException("El importe supera la capacidad de la base de datos.");
+                if (ImporteDebe > 0)
+                    Resultado.Rows.Add(Codigo, ImporteDebe, 0m);
+                if (ImporteHaber > 0)
+                    Resultado.Rows.Add(Codigo, 0m, ImporteHaber);
+                Debe += ImporteDebe;
+                Haber += ImporteHaber;
             }
+
             if (Debe <= 0 || Debe != Haber || Debe > 99999999.9999m)
                 throw new ArgumentException("La partida debe cuadrar, tener importes positivos y respetar la capacidad de la base de datos.");
             return Resultado;
