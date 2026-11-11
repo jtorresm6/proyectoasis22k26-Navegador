@@ -1,0 +1,16 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=ComisionVendedoresAyudas.chm
+Contents file=ComisionVendedoresAyudas.hhc
+Index file=ComisionVendedoresAyudas.hhk
+Default topic=FrmComisionVendedores_ComisionVendedores.htm
+Title=Ayuda - ComisionVendedores
+Language=0x40A Spanish (Traditional Sort)
+Display compile progress=No
+Full-text search=Yes
+
+[FILES]
+FrmComisionVendedores_ComisionVendedores.htm
+FrmPagoFacturaTemporal_ComisionVendedores.htm
+..\Resources\Ayudas\logoEmpresa.png
+..\Resources\Ayudas\mascotaVentas.png

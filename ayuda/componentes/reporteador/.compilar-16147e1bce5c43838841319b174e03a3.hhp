@@ -1,0 +1,24 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=C:\Users\josej\AppData\Local\Temp\asis_general_b1478834c57947c396a5590a44a2d34d\temporal-16147e1bce5c43838841319b174e03a3.chm
+Contents file=AyudaReporteador.hhc
+Default Window=AyudaReporteador
+Default topic=Ayuda_General\Ayuda_General_Reporteador.html
+Display compile progress=No
+Language=0x80a Español (México)
+
+[WINDOWS]
+AyudaReporteador="Ayude de gestion de Reporteador","AyudaReporteador.hhc",,"Ayuda_General\Ayuda_General_Reporteador.html","Ayuda_General\Ayuda_General_Reporteador.html","AyudaBtn_Ruta\AyudaBtn_Ruta.html","Ayuda_General_Reporteador","AyudaBtn_Guardar\AyudaBtn_Guardar.html","Ruta",0x23520,,0xc387e,,,,,,,,0
+
+
+[FILES]
+Ayuda_General\Ayuda_General_Reporteador.html
+AyudaBtn_Actualizar\Actualizar.html
+AyudaBtn_Buscar\AyudaBtn_Buscar.html
+AyudaBtn_Eliminar\AyudaBtn_Eliminar.html
+AyudaBtn_Guardar\AyudaBtn_Guardar.html
+AyudaBtn_Limpiar\AyudaBtn_Limpiar.html
+AyudaBtn_Ruta\AyudaBtn_Ruta.html
+
+[INFOTYPES]
+
