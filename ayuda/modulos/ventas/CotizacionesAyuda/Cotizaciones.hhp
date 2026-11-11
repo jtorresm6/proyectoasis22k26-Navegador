@@ -1,0 +1,26 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=..\Cotizaciones.chm
+Contents file=Cotizaciones.hhc
+Index file=Cotizaciones.hhk
+Default topic=html\Cotizaciones_General.html
+Display compile progress=No
+Full-text search=Yes
+Language=0x100a Spanish (Guatemala)
+Title=Ayuda de Cotizaciones
+
+[FILES]
+css\estilos.css
+html\Cotizaciones_Botones.html
+html\Cotizaciones_Consultar.html
+html\Cotizaciones_Crear.html
+html\Cotizaciones_Errores.html
+html\Cotizaciones_General.html
+html\Cotizaciones_Pedido.html
+imagenes\cotizaciones.png
+imagenes\logoEmpresa.png
+imagenes\mascotaVentas.png
+imagenes\botones\botonAyudaVentas.png
+imagenes\botones\iconoAyudaVentas.png
+
+[INFOTYPES]
