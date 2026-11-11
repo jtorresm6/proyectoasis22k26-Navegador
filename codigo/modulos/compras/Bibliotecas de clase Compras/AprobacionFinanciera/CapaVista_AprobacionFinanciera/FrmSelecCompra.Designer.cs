@@ -34,7 +34,6 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasTlpContenidoVisible = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasDgvOrdenesDisponibles = new CapaVista_Componentes.Componentes.ComprasUsrDataGridView();
             this.ComprasTlpAcciones = new System.Windows.Forms.TableLayoutPanel();
-            this.ComprasBtnVer = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnEvaluar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnRegresar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
@@ -42,6 +41,8 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
             this.ComprasPnlDesplazamiento = new CapaVista_Componentes.Componentes.ClsPanelVerticalCompras();
             this.ComprasLblTitulo = new CapaVista_Componentes.Componentes.ClsEtiquetaCompras();
+            this.ComprasLblValuacion = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
+            this.ComprasCboValuacion = new CapaVista_Componentes.Componentes.ComprasUsrComboBox();
             this.ComprasTlpContenidoVisible.SuspendLayout();
             this.ComprasTlpAcciones.SuspendLayout();
             this.ComprasTlpFormulario.SuspendLayout();
@@ -79,13 +80,15 @@ namespace CapaVista_AprobacionFinanciera
             // 
             // ComprasTlpAcciones
             // 
-            this.ComprasTlpAcciones.ColumnCount = 3;
+            this.ComprasTlpAcciones.ColumnCount = 4;
+            this.ComprasTlpAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 209F));
             this.ComprasTlpAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.ComprasTlpAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.ComprasTlpAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.ComprasTlpAcciones.Controls.Add(this.ComprasBtnVer, 0, 0);
-            this.ComprasTlpAcciones.Controls.Add(this.ComprasBtnEvaluar, 1, 0);
-            this.ComprasTlpAcciones.Controls.Add(this.ComprasBtnRegresar, 2, 0);
+            this.ComprasTlpAcciones.Controls.Add(this.ComprasBtnEvaluar, 2, 0);
+            this.ComprasTlpAcciones.Controls.Add(this.ComprasBtnRegresar, 3, 0);
+            this.ComprasTlpAcciones.Controls.Add(this.ComprasLblValuacion, 0, 0);
+            this.ComprasTlpAcciones.Controls.Add(this.ComprasCboValuacion, 1, 0);
             this.ComprasTlpAcciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasTlpAcciones.Location = new System.Drawing.Point(10, 440);
             this.ComprasTlpAcciones.Margin = new System.Windows.Forms.Padding(0);
@@ -95,31 +98,6 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasTlpAcciones.Size = new System.Drawing.Size(1280, 100);
             this.ComprasTlpAcciones.TabIndex = 1;
             // 
-            // ComprasBtnVer
-            // 
-            this.ComprasBtnVer.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ComprasBtnVer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(220)))), ((int)(((byte)(239)))));
-            this.ComprasBtnVer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnVer.BackgroundImage")));
-            this.ComprasBtnVer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ComprasBtnVer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComprasBtnVer.EsActivo = true;
-            this.ComprasBtnVer.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnVer.FlatAppearance.BorderSize = 0;
-            this.ComprasBtnVer.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(173)))), ((int)(((byte)(213)))));
-            this.ComprasBtnVer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(182)))), ((int)(((byte)(193)))), ((int)(((byte)(224)))));
-            this.ComprasBtnVer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComprasBtnVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ComprasBtnVer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnVer.ImagenDeshabilitado = ((System.Drawing.Image)(resources.GetObject("ComprasBtnVer.ImagenDeshabilitado")));
-            this.ComprasBtnVer.Location = new System.Drawing.Point(173, 10);
-            this.ComprasBtnVer.Margin = new System.Windows.Forms.Padding(0);
-            this.ComprasBtnVer.MaximumSize = new System.Drawing.Size(80, 80);
-            this.ComprasBtnVer.MinimumSize = new System.Drawing.Size(80, 80);
-            this.ComprasBtnVer.Name = "ComprasBtnVer";
-            this.ComprasBtnVer.Size = new System.Drawing.Size(80, 80);
-            this.ComprasBtnVer.TabIndex = 2;
-            this.ComprasBtnVer.UseVisualStyleBackColor = false;
-            // 
             // ComprasBtnEvaluar
             // 
             this.ComprasBtnEvaluar.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -127,7 +105,6 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasBtnEvaluar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnEvaluar.BackgroundImage")));
             this.ComprasBtnEvaluar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasBtnEvaluar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComprasBtnEvaluar.EsActivo = true;
             this.ComprasBtnEvaluar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasBtnEvaluar.FlatAppearance.BorderSize = 0;
             this.ComprasBtnEvaluar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(173)))), ((int)(((byte)(213)))));
@@ -136,7 +113,7 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasBtnEvaluar.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnEvaluar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasBtnEvaluar.ImagenDeshabilitado = ((System.Drawing.Image)(resources.GetObject("ComprasBtnEvaluar.ImagenDeshabilitado")));
-            this.ComprasBtnEvaluar.Location = new System.Drawing.Point(599, 10);
+            this.ComprasBtnEvaluar.Location = new System.Drawing.Point(704, 10);
             this.ComprasBtnEvaluar.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasBtnEvaluar.MaximumSize = new System.Drawing.Size(80, 80);
             this.ComprasBtnEvaluar.MinimumSize = new System.Drawing.Size(80, 80);
@@ -144,6 +121,7 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasBtnEvaluar.Size = new System.Drawing.Size(80, 80);
             this.ComprasBtnEvaluar.TabIndex = 3;
             this.ComprasBtnEvaluar.UseVisualStyleBackColor = false;
+            this.ComprasBtnEvaluar.Click += new System.EventHandler(this.ComprasBtnEvaluar_Click);
             // 
             // ComprasBtnRegresar
             // 
@@ -159,7 +137,7 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasBtnRegresar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasBtnRegresar.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnRegresar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasBtnRegresar.Location = new System.Drawing.Point(1026, 10);
+            this.ComprasBtnRegresar.Location = new System.Drawing.Point(1061, 10);
             this.ComprasBtnRegresar.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasBtnRegresar.MaximumSize = new System.Drawing.Size(80, 80);
             this.ComprasBtnRegresar.MinimumSize = new System.Drawing.Size(80, 80);
@@ -189,8 +167,7 @@ namespace CapaVista_AprobacionFinanciera
             // 
             this.ComprasUsrEncabezadoFormulario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasUsrEncabezadoFormulario.Codigo = "6005";
-            this.ComprasUsrEncabezadoFormulario.Descripcion = "Consulta las órdenes de compra pendientes y selecciona una para revisar su aproba" +
-    "ción financiera.";
+            this.ComprasUsrEncabezadoFormulario.Descripcion = "Comprovación de compra realizada";
             this.ComprasUsrEncabezadoFormulario.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasUsrEncabezadoFormulario.Location = new System.Drawing.Point(10, 10);
             this.ComprasUsrEncabezadoFormulario.Margin = new System.Windows.Forms.Padding(10);
@@ -200,7 +177,7 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1280, 130);
             this.ComprasUsrEncabezadoFormulario.TabIndex = 0;
             this.ComprasUsrEncabezadoFormulario.TabStop = false;
-            this.ComprasUsrEncabezadoFormulario.Titulo = "Aprobación financiera";
+            this.ComprasUsrEncabezadoFormulario.Titulo = "Compra";
             // 
             // ComprasPnlContenido
             // 
@@ -234,6 +211,33 @@ namespace CapaVista_AprobacionFinanciera
             this.ComprasLblTitulo.TabIndex = 1;
             this.ComprasLblTitulo.Text = "Aprobacion Financiera";
             // 
+            // ComprasLblValuacion
+            // 
+            this.ComprasLblValuacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasLblValuacion.Font = new System.Drawing.Font("Tahoma", 13F);
+            this.ComprasLblValuacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasLblValuacion.Location = new System.Drawing.Point(3, 3);
+            this.ComprasLblValuacion.MaximumSize = new System.Drawing.Size(1125, 0);
+            this.ComprasLblValuacion.MostrarAsterisco = false;
+            this.ComprasLblValuacion.Name = "ComprasLblValuacion";
+            this.ComprasLblValuacion.Size = new System.Drawing.Size(202, 21);
+            this.ComprasLblValuacion.TabIndex = 5;
+            this.ComprasLblValuacion.TabStop = false;
+            this.ComprasLblValuacion.Text = "Valuación de inventario";
+            this.ComprasLblValuacion.Texto = "Valuación de inventario";
+            // 
+            // ComprasCboValuacion
+            // 
+            this.ComprasCboValuacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasCboValuacion.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.ComprasCboValuacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            this.ComprasCboValuacion.Location = new System.Drawing.Point(209, 0);
+            this.ComprasCboValuacion.Margin = new System.Windows.Forms.Padding(0);
+            this.ComprasCboValuacion.MaxLength = 0;
+            this.ComprasCboValuacion.Name = "ComprasCboValuacion";
+            this.ComprasCboValuacion.Size = new System.Drawing.Size(174, 66);
+            this.ComprasCboValuacion.TabIndex = 6;
+            // 
             // FrmAprobacionFinanciera
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -244,12 +248,11 @@ namespace CapaVista_AprobacionFinanciera
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "FrmAprobacionFinanciera";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "6005 – AprobacionFinanciera";
+            this.Text = "6005 – Compras";
+            this.Load += new System.EventHandler(this.FrmAprobacionFinanciera_Load);
             this.ComprasTlpContenidoVisible.ResumeLayout(false);
             this.ComprasTlpAcciones.ResumeLayout(false);
             this.ComprasTlpFormulario.ResumeLayout(false);
@@ -267,8 +270,9 @@ namespace CapaVista_AprobacionFinanciera
         private CapaVista_Componentes.Componentes.ComprasUsrEncabezado ComprasUsrEncabezadoFormulario;
         private CapaVista_Componentes.Componentes.ComprasUsrDataGridView ComprasDgvOrdenesDisponibles;
         private CapaVista_Componentes.Componentes.ClsEtiquetaCompras ComprasLblTitulo;
-        private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnVer;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnEvaluar;
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnRegresar;
+        private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblValuacion;
+        private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboValuacion;
     }
 }
