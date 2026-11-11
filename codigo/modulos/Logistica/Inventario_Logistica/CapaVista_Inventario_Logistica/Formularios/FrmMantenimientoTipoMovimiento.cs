@@ -13,21 +13,27 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using CapaControlador_Inventario_Logistica;
+using CapaControlador_Inventario_Logistica.Modelos_de_Controladores;
 
 namespace CapaVista_Inventario_Logistica.Formularios
 {
     public partial class FrmMantenimientoTipoMovimiento : Form
     {
+        ClsModelosTipoMovimiento _DatosTipoMovimiento = new ClsModelosTipoMovimiento();
+        Dictionary<string, object> _FuenteReporteTipoMovimiento = new Dictionary<string, object>();
+
         // Constructor del formulario.
         public FrmMantenimientoTipoMovimiento()
         {
             InitializeComponent();
+            _FuenteReporteTipoMovimiento.Add("DsMantenimientoTipoMovimiento", _DatosTipoMovimiento.LogisticaMetObtenerTodos());
 
             // Configuración del navegador para
             // tipos de movimiento de inventario.
-            LogisticaNavTipoMovimiento.NavegadorMetConfigurar(
-                "tblTipoMovimiento", 4, 6);
+            LogisticaNavTipoMovimiento.NavegadorMetConfigurar("tblTipoMovimiento", 4, 6, _FuenteReporteTipoMovimiento);
         }
     }
 }
