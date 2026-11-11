@@ -29,9 +29,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(ContabilidadHabilitada)' == 'true'">
-    <DefineConstants>$(DefineConstants);CONTABILIDAD</DefineConstants>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />

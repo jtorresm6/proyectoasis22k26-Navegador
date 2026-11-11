@@ -45,9 +45,14 @@ namespace CapaControlador_Pedidos
         public string VentasFuncRutaAyuda(Assembly BibliotecaVista)
         {
             if (BibliotecaVista == null) throw new ArgumentNullException(nameof(BibliotecaVista));
-            const string AyudaVentas = @"C:\proyectoasis22k26-Navegador\ayuda\modulos\ventas\Pedidos.chm";
-            if (File.Exists(AyudaVentas)) return AyudaVentas;
-            throw new FileNotFoundException("No se encontró la ayuda de pedidos en " + AyudaVentas, AyudaVentas);
+            // Natali Montenegro: buscar el manual desde el ejecutable o la DLL, sin depender de la letra de unidad.
+            foreach (string Origen in new[] { AppDomain.CurrentDomain.BaseDirectory, Path.GetDirectoryName(BibliotecaVista.Location) })
+                for (DirectoryInfo Carpeta = new DirectoryInfo(Origen); Carpeta != null; Carpeta = Carpeta.Parent)
+                {
+                    string Manual = Path.Combine(Carpeta.FullName, "ayuda", "modulos", "ventas", "Pedidos.chm");
+                    if (File.Exists(Manual)) return Manual;
+                }
+            throw new FileNotFoundException("No se encontró ayuda\\modulos\\ventas\\Pedidos.chm desde la carpeta del programa.");
         }
 
         public static DataTable VentasFuncLineas()

@@ -36,17 +36,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <!-- Natali Montenegro: para probar el método de Contabilidad después de integrar su DLL,
-       compilar ambas capas con /p:ContabilidadHabilitada=true. Sin esa opción, Cierre es independiente. -->
-  <PropertyGroup Condition="'$(ContabilidadHabilitada)' == 'true'">
-    <DefineConstants>$(DefineConstants);CONTABILIDAD</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(ContabilidadHabilitada)' == 'true'">
-    <Reference Include="CapaControlador_PolizasCuentas_Contabilidad">
-      <HintPath>..\..\..\..\contabilidad\PolizasCuentas_Contabilidad\CapaControlador_PolizasCuentas_Contabilidad\bin\$(Configuration)\CapaControlador_PolizasCuentas_Contabilidad.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controladores\ClsCierreControlador.cs" />

@@ -9,18 +9,17 @@
 using System.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.IO;
 using System.Linq;
-#if CONTABILIDAD
-using CapaControlador_Contabilidad;
-#endif
+using System.Reflection;
 
 namespace CapaControlador_CierreMovimientos
 {
     public sealed class ClsCierreControlador
     {
-#if CONTABILIDAD
         private const string ModuloContable = "MOD-VENTA";
-#endif
+        private const string DllContable = "CapaControlador_PolizasCuentas_Contabilidad.dll";
 
         // Natali Sofía Montenegro Portillo | 0901-23-10017 | Equivalencias limitadas a cierres V16-DEMO.
         private static readonly Dictionary<string, string> CuentasDemo = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
@@ -39,20 +38,27 @@ namespace CapaControlador_CierreMovimientos
         // Natali Sofía Montenegro Portillo | 0901-23-10017 | El país elegido determina las cuentas permitidas y la póliza recibida.
         public string VentasFuncRegistrarContabilidad(string Documento, int Moneda, DateTime Fecha, DataTable Partida, int Pais)
         {
-#if CONTABILIDAD
             if (Moneda <= 0)
                 throw new InvalidOperationException("Seleccione la moneda del cierre antes de enviar la póliza.");
             if (Pais <= 0)
                 throw new InvalidOperationException("Seleccione el país de Contabilidad antes de enviar la póliza.");
             if (Partida == null || Partida.Rows.Count == 0)
                 throw new InvalidOperationException("La póliza no tiene líneas para enviar.");
-            var Contabilidad = new ClsControladorIntegracionContabilidad();
-            var Permitidas = new HashSet<string>(Contabilidad.ContabilidadFuncCuentasPermitidas(ModuloContable, Pais)
-                .Select(Cuenta => Cuenta.Codigo), StringComparer.OrdinalIgnoreCase);
+            // Natali Montenegro: equivale a ContabilidadFuncCuentasPermitidas("MOD-VENTA", Pais)
+            // y ContabilidadFuncRecibirPoliza("MOD-VENTA", Pais, Documento, Fecha, Descripcion, Lineas, out Codigo, out Estado, out Mensaje).
+            // Se invocan desde la DLL instalada con Ventas para no exigir una referencia en el proyecto.
+            object Contabilidad = VentasFuncCrearControladorContable("ClsControladorIntegracionContabilidad");
+            MethodInfo ConsultarCuentas = Contabilidad.GetType().GetMethod("ContabilidadFuncCuentasPermitidas", new[] { typeof(string), typeof(int) });
+            if (ConsultarCuentas == null)
+                throw new InvalidOperationException("La DLL de Contabilidad no ofrece ContabilidadFuncCuentasPermitidas.");
+            var Permitidas = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (object Cuenta in (IEnumerable)VentasFuncInvocar(ConsultarCuentas, Contabilidad, new object[] { ModuloContable, Pais }))
+                Permitidas.Add(Convert.ToString(Cuenta.GetType().GetProperty("Codigo").GetValue(Cuenta, null)));
             if (Permitidas.Count == 0)
                 throw new InvalidOperationException("Contabilidad no tiene cuentas permitidas para Ventas.");
             bool EsDemo = _Servicio.VentasFuncEsDocumentoDemo(Documento);
-            var Lineas = new List<ClsModeloLineaIntegracionContabilidad>();
+            Type TipoLinea = Contabilidad.GetType().Assembly.GetType("CapaControlador_Contabilidad.ClsModeloLineaIntegracionContabilidad", true);
+            IList Lineas = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(TipoLinea));
             foreach (DataRow Fila in Partida.Rows)
             {
                 string Cuenta = Convert.ToString(Fila["Cuenta"]).Trim();
@@ -61,37 +67,73 @@ namespace CapaControlador_CierreMovimientos
                     Cuenta = Equivalente;
                 if (!Permitidas.Contains(Cuenta))
                     throw new InvalidOperationException("La cuenta " + Cuenta + " no está permitida para Ventas en Contabilidad. Revise la configuración de cuentas del movimiento.");
-                Lineas.Add(new ClsModeloLineaIntegracionContabilidad
-                {
-                    CodigoCuenta = Cuenta,
-                    Debe = Convert.ToDecimal(Fila["Debe"]),
-                    Haber = Convert.ToDecimal(Fila["Haber"]),
-                    Descripcion = Convert.ToString(Fila["Descripcion"])
-                });
+                object Linea = Activator.CreateInstance(TipoLinea);
+                TipoLinea.GetProperty("CodigoCuenta").SetValue(Linea, Cuenta, null);
+                TipoLinea.GetProperty("Debe").SetValue(Linea, Convert.ToDecimal(Fila["Debe"]), null);
+                TipoLinea.GetProperty("Haber").SetValue(Linea, Convert.ToDecimal(Fila["Haber"]), null);
+                TipoLinea.GetProperty("Descripcion").SetValue(Linea, Convert.ToString(Fila["Descripcion"]), null);
+                Lineas.Add(Linea);
             }
-            string Codigo, Estado, Mensaje;
-            if (!Contabilidad.ContabilidadFuncRecibirPoliza(ModuloContable, Pais, Documento, Fecha,
-                "Cierre de movimientos CxC " + Documento, Lineas, out Codigo, out Estado, out Mensaje))
-                throw new InvalidOperationException(Mensaje);
+            MethodInfo RecibirPoliza = Contabilidad.GetType().GetMethods().SingleOrDefault(Metodo =>
+                Metodo.Name == "ContabilidadFuncRecibirPoliza" && Metodo.GetParameters().Length == 9 &&
+                Metodo.GetParameters()[1].ParameterType == typeof(int));
+            if (RecibirPoliza == null)
+                throw new InvalidOperationException("La DLL de Contabilidad no ofrece ContabilidadFuncRecibirPoliza con país.");
+            object[] Argumentos = { ModuloContable, Pais, Documento, Fecha,
+                "Cierre de movimientos CxC " + Documento, Lineas, null, null, null };
+            bool Aceptada = (bool)VentasFuncInvocar(RecibirPoliza, Contabilidad, Argumentos);
+            string Codigo = Convert.ToString(Argumentos[6]);
+            if (!Aceptada)
+                throw new InvalidOperationException(Convert.ToString(Argumentos[8]));
             if (string.IsNullOrWhiteSpace(Codigo))
                 throw new InvalidOperationException("Contabilidad aceptó la póliza sin devolver un código.");
             return Codigo;
-#else
-            // Natali Montenegro: el cierre se puede revisar y confirmar sin la DLL del equipo de Contabilidad.
-            throw new InvalidOperationException("El enlace con Contabilidad está desactivado en esta compilación de prueba.");
-#endif
+        }
+
+        private static object VentasFuncCrearControladorContable(string Nombre)
+        {
+            string Ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DllContable);
+            if (!File.Exists(Ruta))
+                throw new InvalidOperationException("Falta " + DllContable + " junto al ejecutable que inicia Ventas. Compile Contabilidad y copie su DLL y dependencias antes de activar el envío.");
+            Assembly Biblioteca = Assembly.LoadFrom(Ruta);
+            Type Controlador = Biblioteca.GetType("CapaControlador_Contabilidad." + Nombre, true);
+            return Activator.CreateInstance(Controlador);
+        }
+
+        private static object VentasFuncInvocar(MethodInfo Metodo, object Controlador, object[] Argumentos)
+        {
+            try { return Metodo.Invoke(Controlador, Argumentos); }
+            catch (TargetInvocationException Error) { throw Error.InnerException ?? Error; }
         }
 
         private readonly ClsCierreServicio _Servicio = new ClsCierreServicio();
-        public DataTable VentasFuncPaisesContables()
+        public string VentasFuncRutaAyuda(Assembly BibliotecaVista)
+        {
+            if (BibliotecaVista == null) throw new ArgumentNullException(nameof(BibliotecaVista));
+            // Natali Montenegro: la ayuda acompaña al ejecutable o al repositorio, sin ruta absoluta fija.
+            foreach (string Origen in new[] { AppDomain.CurrentDomain.BaseDirectory, Path.GetDirectoryName(BibliotecaVista.Location) })
+                for (DirectoryInfo Carpeta = new DirectoryInfo(Origen); Carpeta != null; Carpeta = Carpeta.Parent)
+                {
+                    string Manual = Path.Combine(Carpeta.FullName, "ayuda", "modulos", "ventas", "CierreMovimientos.chm");
+                    if (File.Exists(Manual)) return Manual;
+                }
+            throw new FileNotFoundException("No se encontró ayuda\\modulos\\ventas\\CierreMovimientos.chm desde la carpeta del programa.");
+        }
+
+        public DataTable VentasFuncPaisesContables(bool ConsultarContabilidad = false)
         {
             DataTable Paises = new DataTable();
             Paises.Columns.Add("Id", typeof(int));
             Paises.Columns.Add("Nombre", typeof(string));
-#if CONTABILIDAD
-            foreach (var Pais in new ClsControladorPolizasContabilidad().ContabilidadFuncObtenerPaises())
-                Paises.Rows.Add(Pais.Key, Pais.Value);
-#endif
+            if (!ConsultarContabilidad)
+                return Paises;
+            object Contabilidad = VentasFuncCrearControladorContable("ClsControladorPolizasContabilidad");
+            MethodInfo ObtenerPaises = Contabilidad.GetType().GetMethod("ContabilidadFuncObtenerPaises", Type.EmptyTypes);
+            if (ObtenerPaises == null)
+                throw new InvalidOperationException("La DLL de Contabilidad no ofrece ContabilidadFuncObtenerPaises.");
+            foreach (object Pais in (IEnumerable)VentasFuncInvocar(ObtenerPaises, Contabilidad, new object[0]))
+                Paises.Rows.Add(Pais.GetType().GetProperty("Key").GetValue(Pais, null),
+                    Pais.GetType().GetProperty("Value").GetValue(Pais, null));
             return Paises;
         }
         public bool VentasFuncEsDocumentoDemo(string Documento)

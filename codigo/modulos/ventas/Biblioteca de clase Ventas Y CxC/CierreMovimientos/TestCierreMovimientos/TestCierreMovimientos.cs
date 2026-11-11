@@ -96,7 +96,7 @@ namespace TestCierreMovimientos
         }
 
         [TestMethod]
-        public void Poliza_SinEnlaceContable_NoSeEnvia()
+        public void Poliza_SinPais_NoSeEnvia()
         {
             //Arrange
             var Controlador = new ClsCierreControlador();
@@ -111,7 +111,7 @@ namespace TestCierreMovimientos
             var Error = Assert.ThrowsException<InvalidOperationException>(() =>
                 Controlador.VentasFuncRegistrarContabilidad("PRUEBA", 1, new DateTime(2026, 10, 31), Partida, 0));
             //Assert
-            StringAssert.Contains(Error.Message, "desactivado");
+            StringAssert.Contains(Error.Message, "país");
         }
 
         [TestMethod]

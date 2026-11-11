@@ -18,7 +18,6 @@
  * Propósito: Cierre transaccional por moneda, histórico y bloqueo de períodos.
  */
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace CapaVista_CierreMovimientos
@@ -29,20 +28,24 @@ namespace CapaVista_CierreMovimientos
         {
             InitializeComponent();
             VentasMetConectarEventos();
-            // Natali Montenegro: este bloque se activa con ContabilidadHabilitada=true al probar la DLL integrada.
-#if CONTABILIDAD
+            // Natali Montenegro: descomente esta línea cuando instale la DLL de Contabilidad junto al ejecutable que inicia Ventas.
+            // VentasMetHabilitarEnlaceContable();
+            VentasBtnAyuda.Click += (Origen, Evento) => VentasMetAbrirAyuda();
+        }
+
+        private void VentasMetHabilitarEnlaceContable()
+        {
             VentasMetConfigurarEnlaceContable((Documento, Moneda, Fecha, Partida) =>
                 _Controlador.VentasFuncRegistrarContabilidad(Documento, Moneda, Fecha, Partida, PaisContable));
-#endif
-            VentasBtnAyuda.Click += (Origen, Evento) => VentasMetAbrirAyuda();
         }
 
         private void VentasMetAbrirAyuda()
         {
-            const string Manual = @"C:\proyectoasis22k26-Navegador\ayuda\modulos\ventas\CierreMovimientos.chm";
-            if (!File.Exists(Manual))
+            string Manual;
+            try { Manual = _Controlador.VentasFuncRutaAyuda(typeof(FrmCierreMovimientosVentas).Assembly); }
+            catch (System.IO.FileNotFoundException Error)
             {
-                MessageBox.Show(this, "No se encontró la ayuda en " + Manual, "Ayuda de cierre", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, Error.Message, "Ayuda de cierre", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             string Tema = VentasTbcCierre.SelectedTab == VentasTbpContabilidad ? "html/02_traslado.html"
