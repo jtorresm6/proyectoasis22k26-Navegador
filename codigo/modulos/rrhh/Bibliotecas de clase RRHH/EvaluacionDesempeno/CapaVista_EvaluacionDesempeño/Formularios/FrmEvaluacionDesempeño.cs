@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using CapaVista_EvaluacionDesempeño.Utilidades;
 
 /*
  * ==================================================================
@@ -51,7 +52,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
 
         private void btnAyudaEvaluacion_Click(object sender, EventArgs e)
         {
-            
+            ClsAccionesVista.RrhhMetMostrarAyuda(this, "Ayudas_EvaluacionDesempeno.html");
         }
     }
 }

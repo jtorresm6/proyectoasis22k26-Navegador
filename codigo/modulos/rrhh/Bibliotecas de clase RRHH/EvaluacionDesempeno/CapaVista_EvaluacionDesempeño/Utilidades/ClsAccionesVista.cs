@@ -1,7 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Printing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -11,10 +8,11 @@ using System.Windows.Forms;
  * Autor : Daniella Jurado
  * Carné : 0901-23-3679
  * Fecha : 02/11/2026
+ * Modificado por : Daniella Jurado 0901-23-3679 (11/11/2026)
  * ==================================================================
  * Propósito :
  *  Acciones comunes de las ventanas de Evaluación de Desempeño:
- *  imprimir lo que se ve en la ventana y abrir la ayuda del módulo.
+ *  abrir la página de ayuda de cada ventana en RrhhAyudas.chm.
  * ===================================================================
 */
 
@@ -22,49 +20,23 @@ namespace CapaVista_EvaluacionDesempeño.Utilidades
 {
     public static class ClsAccionesVista
     {
-        private const string _Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\Ayudas_EvaluacionDesempeno.html";
+        private const string _Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\RrhhAyudas.chm";
 
-        // Toma una imagen de la ventana y la muestra en vista previa de impresión, ajustada a la hoja.
-        public static void RrhhMetImprimir(Form Ventana)
+        // Busca el .chm de RRHH subiendo carpetas desde donde corre el programa y abre la página indicada.
+        public static void RrhhMetMostrarAyuda(Control Ventana, string Pagina)
         {
-            Bitmap Captura = new Bitmap(Ventana.ClientSize.Width, Ventana.ClientSize.Height);
-            Ventana.DrawToBitmap(Captura, new Rectangle(Point.Empty, Ventana.ClientSize));
-
-            using (var Documento = new PrintDocument())
-            using (var Vista = new PrintPreviewDialog())
-            {
-                Documento.DocumentName = Ventana.Text;
-                Documento.DefaultPageSettings.Landscape = true;
-                Documento.PrintPage += (Remitente, Evento) =>
-                {
-                    Rectangle Area = Evento.MarginBounds;
-                    float Escala = Math.Min((float)Area.Width / Captura.Width, (float)Area.Height / Captura.Height);
-                    Evento.Graphics.DrawImage(Captura, Area.X, Area.Y, Captura.Width * Escala, Captura.Height * Escala);
-                };
-                Vista.Document = Documento;
-                Vista.WindowState = FormWindowState.Maximized;
-                Vista.ShowDialog(Ventana);
-            }
-            Captura.Dispose();
-        }
-
-        // La ayuda está en la carpeta "ayuda" del repositorio: se busca subiendo desde el ejecutable.
-        public static void RrhhMetMostrarAyuda(Form Ventana)
-        {
-            DirectoryInfo Carpeta = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-            while (Carpeta != null)
+            for (var Carpeta = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory); Carpeta != null; Carpeta = Carpeta.Parent)
             {
                 string Ruta = Path.Combine(Carpeta.FullName, _Ayuda);
                 if (File.Exists(Ruta))
                 {
-                    Process.Start(Ruta);
+                    Help.ShowHelp(Ventana, Ruta, Pagina);
                     return;
                 }
-                Carpeta = Carpeta.Parent;
             }
 
-            MessageBox.Show(Ventana, "No se encontró el archivo de ayuda de Evaluación de Desempeño.",
-                "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("No se encontró el archivo de ayuda de RRHH.", "Ayuda",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
