@@ -4,6 +4,10 @@
  * ARCHIVO: ClsUniTestInventarioLogistica.cs
  * DESCRIPCIÓN: Pruebas unitarias de los controladores de Producto y Stock.
  * Utiliza repositorios falsos para no modificar la base de datos.
+ * 
+ * Responsable: Velveth Saraí Chavez Mejía
+ * Carné: 0901 23 6269
+ * Fecha de creación: 10/11/2026s
  * ============================================================================
  */
 
