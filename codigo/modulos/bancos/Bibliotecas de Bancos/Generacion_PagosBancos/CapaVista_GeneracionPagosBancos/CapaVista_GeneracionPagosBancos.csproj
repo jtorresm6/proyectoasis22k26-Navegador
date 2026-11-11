@@ -52,9 +52,6 @@
     <Reference Include="CapaControlador_GeneracionPagosBancos">
       <HintPath>..\CapaControlador_GeneracionPagosBancos\bin\Debug\CapaControlador_GeneracionPagosBancos.dll</HintPath>
     </Reference>
-    <Reference Include="CapaModelo_GeneracionPagosBancos">
-      <HintPath>..\CapaModelo_GeneracionPagosBancos\bin\Debug\CapaModelo_GeneracionPagosBancos.dll</HintPath>
-    </Reference>
     <Reference Include="CapaControlador_Seguridad">
       <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
     </Reference>
