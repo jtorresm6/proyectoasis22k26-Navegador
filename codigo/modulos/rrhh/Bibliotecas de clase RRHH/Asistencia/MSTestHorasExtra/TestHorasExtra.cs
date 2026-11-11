@@ -43,14 +43,42 @@ namespace MSTestHorasExtra
         // ---------- CÁLCULOS
 
         [DataTestMethod]
-        [DataRow(4500, 18.75)]
-        [DataRow(3600, 15.00)]
-        [DataRow(0, 0)]
-        [DataRow(-100, 0)]
-        public void RrhhMetCalcularValorHora_Salario_DevuelveSalarioEntre30Entre8(double Salario, double Esperado)
+        [DataRow(8, 0, 17, 0, 8)]
+        [DataRow(6, 0, 18, 0, 8)]
+        [DataRow(14, 0, 21, 0, 7)]
+        [DataRow(15, 0, 23, 0, 6)]
+        [DataRow(22, 0, 6, 0, 6)]
+        [DataRow(18, 0, 0, 0, 6)]
+        public void RrhhMetHorasJornadaLegal_HorarioDeLaJornada_DevuelveDiurnaMixtaONocturna(int HoraInicio, int MinInicio,
+                                                                                           int HoraFin, int MinFin, int Esperado)
         {
             // Act
-            decimal Resultado = ClsModeloHoraExtra.RrhhMetCalcularValorHora((decimal)Salario);
+            int Resultado = ClsModeloHoraExtra.RrhhMetHorasJornadaLegal(new TimeSpan(HoraInicio, MinInicio, 0),
+                                                                      new TimeSpan(HoraFin, MinFin, 0));
+
+            // Assert
+            Assert.AreEqual(Esperado, Resultado);
+        }
+
+        [DataTestMethod]
+        [DataRow(8, 240)]
+        [DataRow(7, 300)]
+        [DataRow(6, 360)]
+        public void RrhhMetTopeExtra_HorasDeJornada_NoPasaDe12HorasEnElDia(int HorasJornada, int Esperado)
+        {
+            Assert.AreEqual(Esperado, ClsModeloHoraExtra.RrhhMetTopeExtra(HorasJornada));
+        }
+
+        [DataTestMethod]
+        [DataRow(4500, 8, 18.75)]
+        [DataRow(4200, 7, 20.00)]
+        [DataRow(4500, 6, 25.00)]
+        [DataRow(0, 8, 0)]
+        [DataRow(-100, 8, 0)]
+        public void RrhhMetCalcularValorHora_SalarioYJornada_DevuelveSalarioEntre30EntreHoras(double Salario, int Horas, double Esperado)
+        {
+            // Act
+            decimal Resultado = ClsModeloHoraExtra.RrhhMetCalcularValorHora((decimal)Salario, Horas);
 
             // Assert
             Assert.AreEqual((decimal)Esperado, Resultado);
@@ -83,16 +111,19 @@ namespace MSTestHorasExtra
         }
 
         [DataTestMethod]
-        [DataRow(18, 30, 17, 0, 90)]
-        [DataRow(17, 0, 17, 0, 0)]
-        [DataRow(16, 0, 17, 0, 0)]
-        [DataRow(23, 59, 8, 0, 360)]
-        public void RrhhMetDuracionSugerida_SalidaYFinDeJornada_DevuelveMinutosConTope(int HoraSalida, int MinSalida,
-                                                                                      int HoraFin, int MinFin, int Esperado)
+        [DataRow(18, 30, 8, 17, 90)]
+        [DataRow(17, 0, 8, 17, 0)]
+        [DataRow(16, 0, 8, 17, 0)]
+        [DataRow(23, 59, 8, 17, 240)]
+        [DataRow(23, 59, 12, 19, 299)]
+        [DataRow(11, 0, 22, 4, 360)]
+        public void RrhhMetDuracionSugerida_SalidaYJornada_DevuelveMinutosConTopeDe12Horas(int HoraSalida, int MinSalida,
+                                                                                          int HoraInicio, int HoraFin, int Esperado)
         {
             // Act
             int Resultado = ClsModeloHoraExtra.RrhhMetDuracionSugerida(new TimeSpan(HoraSalida, MinSalida, 0),
-                                                                     new TimeSpan(HoraFin, MinFin, 0));
+                                                                     new TimeSpan(HoraInicio, 0, 0),
+                                                                     new TimeSpan(HoraFin, 0, 0));
 
             // Assert
             Assert.AreEqual(Esperado, Resultado);

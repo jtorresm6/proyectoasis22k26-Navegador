@@ -1,0 +1,32 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=RrhhAyudas.chm
+Contents file=RrhhAyudas.hhc
+Default Window=RrhhAyudas
+Default topic=Ayudas_Asistencia.html
+Display compile progress=No
+Full-text search=Yes
+Language=0x100a Español (Guatemala)
+Title=Ayudas - Recursos Humanos
+
+[WINDOWS]
+RrhhAyudas="Ayudas del módulo de Recursos Humanos","RrhhAyudas.hhc",,"Ayudas_Asistencia.html","Ayudas_Asistencia.html",,,,,0x23520,,0x3006,,,,,,,,0
+
+[FILES]
+Ayudas_Asistencia.html
+Ayudas_HorasExtra.html
+Ayudas_AsigCapacitacion.html
+Ayudas_EvaluacionDesempeno.html
+Ayudas_Nomina.html
+Ayudas_NominaEncabezado.html
+Ayudas_NominaDetalle.html
+Ayudas_AsignacionConceptos.html
+Ayudas_PercepcionDeduccion.html
+Ayudas_Rangos.html
+Ayudas_CierreNominas.html
+Ayudas_LiquidacionEmpleado.html
+Ayudas_BajaEmpleado.html
+Ayudas_Catalogos.html
+Ayudas_PermisosVacaciones.html
+
+[INFOTYPES]

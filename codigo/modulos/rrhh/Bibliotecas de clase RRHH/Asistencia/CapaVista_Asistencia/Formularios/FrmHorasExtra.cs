@@ -4,22 +4,23 @@
  * Autor : Byron Alexander Chiquito Paredes
  * Carné : 0901-23-3747
  * Fecha : 02/11/2026
+ * Última modificación : 10/11/2026
  * ==================================================================
  * Propósito :
  *  Formulario 9102 de Horas Extra. Se abre con el botón Horas extra de
  *  la ventana de Asistencia. Registra la hora extra de una asistencia
  *  en la que el empleado salió después de su jornada, calcula el pago
- *  y lleva su aprobación. Reporte muestra RpHorasExtra.rdlc como en
- *  Seguridad; Imprimir abre el Reporteador con la aplicación 9102,
- *  donde se registra ese reporte. Los dos usan lo que la lista tiene
- *  filtrado. Generar queda sin uso por ahora.
+ *  y lleva su aprobación. Reporte muestra RpHorasExtra.rdlc con lo que
+ *  la lista tiene filtrado, sin pasar por el Reporteador. Ayuda abre
+ *  su página en RrhhAyudas.chm.
  * Reglas especificas:
  *  Solo salen asistencias Presente o Tardanza con salida después del
  *  fin de la jornada y antes de la baja del empleado; los días de
  *  permiso o vacaciones quedan fuera porque su asistencia es Permiso.
- *  La duración no pasa de lo trabajado después de la jornada ni de
- *  360 minutos. El valor de la hora es el salario / 30 / 8 y el
- *  recargo por defecto es 50 %. Lo que Nómina ya tomó queda solo para
+ *  El valor de la hora es el salario / 30 / horas de la jornada
+ *  (8 diurna, 7 mixta, 6 nocturna) y el recargo por defecto es 50 %.
+ *  La duración no pasa de lo trabajado después de la jornada ni de lo
+ *  que falta para llegar a 12 horas en el día. Lo que Nómina ya tomó queda solo para
  *  consulta. Los botones se habilitan según los permisos del usuario
  *  en sesión (módulo 9000, aplicación 9102). Es ventana secundaria,
  *  no se puede maximizar.
@@ -30,7 +31,6 @@ using CapaControlador_Asistencia.Modelos_de_Controladores;
 using CapaControlador_Seguridad;
 using CapaControlador_Seguridad.Objetos_de_valor;
 using CapaVista_Asistencia.frmReportes;
-using CapaVista_Reporteador;
 using CapaVista_Seguridad.Ayudas;
 using System;
 using System.Collections.Generic;
@@ -145,8 +145,6 @@ namespace CapaVista_Asistencia.Formularios
                 { RrhhBtnGuardar, TipoPermiso.Insertar },
                 { RrhhBtnModificar, TipoPermiso.Editar },
                 { RrhhBtnEliminar, TipoPermiso.Eliminar },
-                { RrhhBtnGenerar, TipoPermiso.Imprimir },
-                { RrhhBtnImprimir, TipoPermiso.Imprimir },
                 { RrhhBtnReporte, TipoPermiso.Imprimir }
             };
             _MisPermisos = ClsSeguridadFormHelper.SeguridadMetInicializarSeguridad(
@@ -578,7 +576,7 @@ namespace CapaVista_Asistencia.Formularios
             if (RrhhNudDuracion.Value <= 0)
                 RrhhMetMarcarError(RrhhNudDuracion, "La duración debe ser mayor a 0 minutos.");
             else if (Asistencia != null && RrhhNudDuracion.Value > (int)Asistencia["minutosExtra"])
-                RrhhMetMarcarError(RrhhNudDuracion, $"Máximo {(int)Asistencia["minutosExtra"]} min (lo trabajado después de la jornada).");
+                RrhhMetMarcarError(RrhhNudDuracion, $"Máximo {(int)Asistencia["minutosExtra"]} min (lo trabajado después de la jornada, hasta 12 h en el día).");
             else if (Asistencia != null && RrhhMetValorHoraActual() <= 0)
                 RrhhMetMarcarError(RrhhNudDuracion, "El empleado no tiene salario registrado.");
 
@@ -747,23 +745,10 @@ namespace CapaVista_Asistencia.Formularios
             }
         }
 
-        // Abre el Reporteador con la aplicación 9102 y los datos filtrados; ahí se registra el .rdlc de reportes\modulos\rrhh
-        private void RrhhBtnImprimir_Click(object sender, EventArgs e)
+        // Abre la ayuda de esta ventana dentro del .chm de RRHH, igual que en Seguridad
+        private void RrhhBtnAyuda_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var Fuentes = new Dictionary<string, object> { { "DsHorasExtra", RrhhMetDatosReporte() } };
-                using (var Reporteador = new FrmReportes())
-                {
-                    Reporteador.ReporteadorMetCargarReportes(ClsModeloHoraExtra.IdAplicacion, Fuentes);
-                    Reporteador.ShowDialog(this);
-                }
-            }
-            catch (Exception Ex)
-            {
-                MessageBox.Show("No se pudo abrir el Reporteador.\n" + Ex.Message, "Horas Extra",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            Help.ShowHelp(this, "C:/RrhhAyudas/RrhhAyudas.chm", "Ayudas_HorasExtra.html");
         }
 
         private void RrhhMetGrabar(ClsModeloHoraExtra HoraExtra)

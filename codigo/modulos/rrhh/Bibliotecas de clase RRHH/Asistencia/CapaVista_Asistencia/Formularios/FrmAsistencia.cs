@@ -4,7 +4,7 @@
  * Autor : Byron Alexander
  * Carné : 0901-23-3747
  * Fecha : 11/10/2026
- * Última modificación : 02/11/2026
+ * Última modificación : 10/11/2026
  * ==================================================================
  * Propósito :
  *  Formulario 9101 de Asistencia. Muestra el detalle de la asistencia
@@ -20,13 +20,12 @@
  *  de tiempo que cubre. Los días de capacitación cuentan como día
  *  trabajado. No se registra asistencia desde la fecha de baja. Las
  *  horas trabajadas y las incidencias se calculan con la jornada y la
- *  tolerancia del empleado. Los botones Guardar, Modificar, Eliminar,
- *  Imprimir y Reporte se habilitan según los permisos del usuario en
- *  sesión (módulo 9000, aplicación 9101). El botón Horas extra abre la
+ *  tolerancia del empleado. Los botones Guardar, Modificar, Eliminar
+ *  y Reporte se habilitan según los permisos del usuario en sesión
+ *  (módulo 9000, aplicación 9101). El botón Horas extra abre la
  *  ventana 9102 con la asistencia seleccionada. Reporte muestra
- *  RpAsistencia.rdlc como en Seguridad; Imprimir abre el Reporteador
- *  con la aplicación 9101, donde se registra ese reporte. Los dos usan
- *  lo que la lista tiene filtrado. Generar queda sin uso por ahora.
+ *  RpAsistencia.rdlc con lo que la lista tiene filtrado, sin pasar por
+ *  el Reporteador. Ayuda abre su página en RrhhAyudas.chm.
  *  Es ventana secundaria, no se puede maximizar.
  * ===================================================================
 */
@@ -35,7 +34,6 @@ using CapaControlador_Asistencia.Modelos_de_Controladores;
 using CapaControlador_Seguridad;
 using CapaControlador_Seguridad.Objetos_de_valor;
 using CapaVista_Asistencia.frmReportes;
-using CapaVista_Reporteador;
 using CapaVista_Seguridad.Ayudas;
 using System;
 using System.Collections.Generic;
@@ -143,8 +141,6 @@ namespace CapaVista_Asistencia.Formularios
                 { RrhhBtnGuardar, TipoPermiso.Insertar },
                 { RrhhBtnModificar, TipoPermiso.Editar },
                 { RrhhBtnEliminar, TipoPermiso.Eliminar },
-                { RrhhBtnGenerar, TipoPermiso.Imprimir },
-                { RrhhBtnImprimir, TipoPermiso.Imprimir },
                 { RrhhBtnReporte, TipoPermiso.Imprimir }
             };
             _MisPermisos = ClsSeguridadFormHelper.SeguridadMetInicializarSeguridad(
@@ -210,23 +206,10 @@ namespace CapaVista_Asistencia.Formularios
             }
         }
 
-        // Abre el Reporteador con la aplicación 9101 y los datos filtrados; ahí se registra el .rdlc de reportes\modulos\rrhh
-        private void RrhhBtnImprimir_Click(object sender, EventArgs e)
+        // Abre la ayuda de esta ventana dentro del .chm de RRHH, igual que en Seguridad
+        private void RrhhBtnAyuda_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var Fuentes = new Dictionary<string, object> { { "DsAsistencia", RrhhMetDatosReporte() } };
-                using (var Reporteador = new FrmReportes())
-                {
-                    Reporteador.ReporteadorMetCargarReportes(ClsModeloAsistencia.IdAplicacion, Fuentes);
-                    Reporteador.ShowDialog(this);
-                }
-            }
-            catch (Exception Ex)
-            {
-                MessageBox.Show("No se pudo abrir el Reporteador.\n" + Ex.Message, "Asistencia",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            Help.ShowHelp(this, "C:/RrhhAyudas/RrhhAyudas.chm", "Ayudas_Asistencia.html");
         }
 
         private void RrhhBtnHorasExtra_Click(object sender, EventArgs e)
