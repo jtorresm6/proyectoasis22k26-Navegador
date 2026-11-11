@@ -130,6 +130,7 @@
             this.BancosBtnAyudaS.Size = new System.Drawing.Size(75, 81);
             this.BancosBtnAyudaS.TabIndex = 22;
             this.BancosBtnAyudaS.UseVisualStyleBackColor = true;
+            this.BancosBtnAyudaS.Click += new System.EventHandler(this.BancosBtnAyudaS_Click);
             // 
             // BancosBtnLimpiar
             // 

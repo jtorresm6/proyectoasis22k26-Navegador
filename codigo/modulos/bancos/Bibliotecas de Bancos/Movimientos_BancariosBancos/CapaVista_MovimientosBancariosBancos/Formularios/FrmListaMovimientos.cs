@@ -1,5 +1,6 @@
 ﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
 using CapaControlador_MovimientosBancarios.Modelo_de_Controladores;
+using CapaVista_MovimientosBancarios.FrmReportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,6 +45,12 @@ namespace CapaVista_MovimientosBancarios.Formularios
             {
                 MessageBox.Show("No se pudieron cargar los movimientos:\n" + Ex.Message, "Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
+        }
+
+        private void BancosBtnReportes_Click(object sender, EventArgs e)
+        {
+            FrmReporteMovimientoBancario reporte = new FrmReporteMovimientoBancario();
+            reporte.Show();
         }
     }
 }
