@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -26,9 +26,10 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
         private readonly Label _mensajeCompromisos = new Label();
         private CancellationTokenSource _consulta;
         private int _versionConsulta;
-        private bool _inicializando = true, _cargandoCatalogos;
+        private bool _inicializando = true, _cargandoCatalogos, _actualizandoAutomatico;
         private ClsCatalogosDisponibilidad _catalogos;
         private ClsConsultaDisponibilidad _resultado;
+        private ClsResultadoActualizacionDisponibilidad _ultimoResultadoAutomatico;
         private DataTable _detalle;
 
         public FrmDisponibilidadDiaria() : this(new ClsControladorDisponibilidad()) { }
@@ -41,7 +42,14 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             InitializeComponent();
             BancosMetInicializarFormulario();
             ClsControladorMonedaBanguat.BancosCatalogoMonedaActualizado += BancosCatalogoMoneda_Actualizado;
-            Shown += async (s, e) => { if (await BancosMetCargarCatalogosAsync()) await BancosMetConsultarAsync(); };
+            Shown += async (s, e) =>
+            {
+                if (await BancosMetCargarCatalogosAsync())
+                {
+                    await BancosMetActualizarCalculosAsync(false);
+                    await BancosMetConsultarAsync();
+                }
+            };
             FormClosing += (s, e) => { _cierre.Cancel(); _consulta?.Cancel(); };
             FormClosed += (s, e) =>
             {
@@ -119,14 +127,20 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
                 valor.Height = 23;
             }
             _registrar.Name = "BancosBtnRegistrarDisponibilidad";
-            _registrar.Text = "Registrar / editar";
-            _registrar.Size = new Size(140, 33);
-            _registrar.Location = new Point(848, 25);
-            _registrar.BackColor = Color.FromArgb(28, 74, 48);
-            _registrar.ForeColor = Color.White;
+            _registrar.Text = string.Empty;
+            _registrar.Size = new Size(58, 58);
+            _registrar.Location = new Point(857, 15);
+            _registrar.BackColor = Color.Transparent;
+            _registrar.BackgroundImage = global::CapaVista_DisponibilidadDiaria.Properties.Resources.btn_actualizarDisponibilidad;
+            _registrar.BackgroundImageLayout = ImageLayout.Zoom;
+            _registrar.Cursor = Cursors.Hand;
+            _registrar.FlatAppearance.BorderSize = 0;
+            _registrar.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            _registrar.FlatAppearance.MouseOverBackColor = Color.Transparent;
             _registrar.FlatStyle = FlatStyle.Flat;
             _registrar.Enabled = false;
             _registrar.Click += BancosBtnRegistrar_Click;
+            _informacion.SetToolTip(_registrar, "Actualizar Disponibilidad");
             BancosPnlFiltros.Controls.Add(_registrar);
             BancosMetLimpiarConsulta("Consulta pendiente.");
             _inicializando = false;
@@ -175,7 +189,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
                     BancosMetCargarCuentas();
                 }
                 finally { _inicializando = false; }
-                _registrar.Enabled = catalogos.Cuentas.Count > 0;
+                BancosMetActualizarEstadoBotonCalculo();
                 BancosMetEstado("Catálogos conectados", catalogos.Mensaje);
                 return true;
             }
@@ -220,7 +234,20 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
         {
             BancosCboBanco_SelectedIndexChanged(sender, e);
         }
-        private void BancosFiltros_Changed(object sender, EventArgs e) { if (!_inicializando) BancosMetInvalidarConsulta(); }
+        private void BancosFiltros_Changed(object sender, EventArgs e)
+        {
+            if (!_inicializando)
+            {
+                BancosMetActualizarEstadoBotonCalculo();
+                BancosMetInvalidarConsulta();
+            }
+        }
+        private void BancosMetActualizarEstadoBotonCalculo()
+        {
+            _registrar.Enabled = !_cargandoCatalogos && !_actualizandoAutomatico &&
+                _catalogos != null && _catalogos.Cuentas.Count > 0 &&
+                BancosDtpFechaCorte.Value.Date == DateTime.Today;
+        }
         private void BancosMetInvalidarConsulta()
         {
             ++_versionConsulta;
@@ -232,6 +259,8 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
         private async void BancosBtnConsultar_Click(object sender, EventArgs e)
         {
             if (_catalogos == null && !await BancosMetCargarCatalogosAsync()) return;
+            if (BancosDtpFechaCorte.Value.Date == DateTime.Today)
+                await BancosMetActualizarCalculosAsync(false);
             await BancosMetConsultarAsync();
         }
 
@@ -260,6 +289,8 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
                 BancosBtnExportar.Enabled = BancosBtnFooterReporte.Enabled = _detalle.Rows.Count > 0;
                 string informacion = string.IsNullOrWhiteSpace(resultado.Mensaje)
                     ? "No hay disponibilidades registradas para los filtros seleccionados." : resultado.Mensaje;
+                if (fecha == DateTime.Today && _ultimoResultadoAutomatico != null)
+                    informacion += " " + _ultimoResultadoAutomatico.Mensaje;
                 BancosMetEstado(resultado.TieneTabla ? (_detalle.Rows.Count > 0 ? "Consulta completada" : "Sin registros")
                     : "Sin disponibilidades", informacion);
                 BancosLblStatusLine.Text = _detalle.Rows.Count > 0
@@ -280,6 +311,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             finally
             {
                 if (!BancosMetCerrando() && version == _versionConsulta) BancosBtnConsultar.Enabled = true;
+                BancosMetActualizarEstadoBotonCalculo();
                 if (ReferenceEquals(_consulta, consulta)) _consulta = null;
                 consulta.Dispose();
             }
@@ -299,8 +331,20 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
                     cuenta.TipoCuenta, cuenta.Moneda, cuenta.SaldoInicial, cuenta.Ingresos, cuenta.Egresos,
                     cuenta.Comprometido, cuenta.Restringido, cuenta.Disponible,
                     cuenta.DisponibleGtq.HasValue ? (object)cuenta.DisponibleGtq.Value : DBNull.Value,
-                    cuenta.TipoCambioAplicado.HasValue ? (object)cuenta.TipoCambioAplicado.Value : DBNull.Value, cuenta.Fuente);
+                    cuenta.TipoCambioAplicado.HasValue ? (object)cuenta.TipoCambioAplicado.Value : DBNull.Value,
+                    BancosMetFormatearFuente(cuenta.Fuente));
             return tabla;
+        }
+
+        private static string BancosMetFormatearFuente(string fuente)
+        {
+            if (string.IsNullOrWhiteSpace(fuente)) return "Cálculo automático";
+            string limpia = fuente.Trim();
+            if (limpia.StartsWith("AUTO", StringComparison.OrdinalIgnoreCase))
+                return "Cálculo automático";
+            if (limpia.StartsWith("MANUAL", StringComparison.OrdinalIgnoreCase))
+                return "Registro manual";
+            return limpia;
         }
 
         private void BancosMetActualizarResumen(ClsResumenDisponibilidad resumen)
@@ -451,11 +495,11 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
         private void BancosBtnFooterAyuda_Click(object sender, EventArgs e)
         {
             MessageBox.Show(this, "DISPONIBILIDAD DIARIA\n\n" +
-                "Selecciona fecha, banco, cuenta y moneda; pulsa Consultar para ver los saldos registrados.\n\n" +
+                "Selecciona fecha, banco, cuenta y moneda; pulsa Consultar para ver el corte. La consulta de hoy recalcula primero los datos operativos.\n\n" +
                 "Disponible = saldo inicial + ingresos - egresos - comprometido - restringido.\n\n" +
-                "Registrar / editar permite guardar importes por cuenta y fecha, indicando su respaldo. El registro queda identificado como manual.\n\n" +
-                "Los importes y tasas se presentan con cuatro decimales. Para nuevos cortes en moneda extranjera, Banguat proporciona la tasa de la fecha seleccionada; GTQ utiliza 1. Los cortes guardados conservan su tasa aplicada.\n\n" +
-                "Si modificas una captura, el formulario solicita confirmación antes de descartarla al cambiar cuenta, fecha o cerrar.\n\n" +
+                "Actualizar cálculos reconstruye el día actual: apertura desde el último corte, conciliación, extracto o saldo inicial de la cuenta; ingresos y egresos desde movimientos; comprometido desde reservas y órdenes aún no ejecutadas.\n\n" +
+                "El saldo inicial se registra en Mantenimiento de Cuenta Bancaria y sólo se usa antes del primer corte. Los fondos restringidos muestran cero mientras no exista un proceso operativo que los suministre.\n\n" +
+                "Banguat proporciona la tasa de la fecha para moneda extranjera; GTQ utiliza 1. Los cortes anteriores son históricos y no se recalculan.\n\n" +
                 "El detalle mantiene su moneda original. El consolidado en GTQ requiere tipos de cambio para todas las cuentas.\n\n" +
                 "Selecciona una fila para ver su resumen y compromisos detallados disponibles. Exportar guarda CSV y Reporte abre la vista previa para imprimir.",
                 "Ayuda · 8009 Disponibilidad Diaria", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -466,32 +510,51 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
 
         private async void BancosBtnRegistrar_Click(object sender, EventArgs e)
         {
-            if (_catalogos == null || _catalogos.Cuentas.Count == 0 || BancosMetCerrando()) return;
-            if (ClsNavegadorSesion.NavegadorFuncHaySesion())
-                _controlador.BancosMetEstablecerUsuarioRegistro(ClsNavegadorSesion.NavegadorFuncIdUsuario(),
-                    ClsNavegadorSesion.NavegadorFuncNombreUsuario());
-            long? cuentaId = BancosMetIdSeleccionado(BancosCboCuenta);
-            var seleccionada = BancosDgvDisponibilidad.SelectedRows.Count > 0
-                ? BancosDgvDisponibilidad.SelectedRows[0].DataBoundItem as DataRowView : null;
-            if (seleccionada != null) cuentaId = Convert.ToInt64(seleccionada["CuentaId"]);
-            var previo = cuentaId.HasValue && _resultado != null ? _resultado.Detalle.FirstOrDefault(d => d.CuentaId == cuentaId.Value) : null;
-            using (var captura = new BancosFrmCapturaDisponibilidad(_controlador, _catalogos.Cuentas, BancosDtpFechaCorte.Value.Date, cuentaId, previo))
-            {
-                if (captura.ShowDialog(this) != DialogResult.OK || BancosMetCerrando()) return;
-                long guardadaId = captura.CuentaGuardadaId; DateTime guardadaFecha = captura.FechaGuardada;
-                if (!await BancosMetCargarCatalogosAsync()) return;
-                _inicializando = true;
-                try
-                {
-                    var guardada = _catalogos.Cuentas.First(c => c.Id == guardadaId);
-                    BancosCboBanco.SelectedItem = _catalogos.Bancos.FirstOrDefault(b => b.Id == guardada.BancoId);
-                    BancosCboMoneda.SelectedItem = _catalogos.Monedas.FirstOrDefault(m => m.Codigo == guardada.Moneda);
-                    BancosMetCargarCuentas();
-                    BancosCboCuenta.SelectedItem = _catalogos.Cuentas.FirstOrDefault(c => c.Id == guardadaId);
-                    BancosDtpFechaCorte.Value = guardadaFecha;
-                }
-                finally { _inicializando = false; }
+            if (await BancosMetActualizarCalculosAsync(true))
                 await BancosMetConsultarAsync();
+        }
+
+        private async Task<bool> BancosMetActualizarCalculosAsync(bool informar)
+        {
+            if (_actualizandoAutomatico || BancosMetCerrando() || _catalogos == null ||
+                BancosDtpFechaCorte.Value.Date != DateTime.Today) return false;
+            _actualizandoAutomatico = true;
+            BancosBtnConsultar.Enabled = false;
+            BancosMetActualizarEstadoBotonCalculo();
+            BancosMetEstado("Calculando…", "Reconstruyendo el corte desde movimientos, reservas, conciliaciones y extractos.");
+            try
+            {
+                _ultimoResultadoAutomatico = null;
+                if (ClsNavegadorSesion.NavegadorFuncHaySesion())
+                    _controlador.BancosMetEstablecerUsuarioRegistro(ClsNavegadorSesion.NavegadorFuncIdUsuario(),
+                        ClsNavegadorSesion.NavegadorFuncNombreUsuario());
+                _ultimoResultadoAutomatico = await _controlador.BancosMetActualizarAutomaticamenteAsync(
+                    DateTime.Today, _cierre.Token);
+                BancosMetEstado("Cálculo actualizado", _ultimoResultadoAutomatico.Mensaje);
+                BancosLblStatusLine.Text = _ultimoResultadoAutomatico.Mensaje;
+                if (informar)
+                {
+                    string mensaje = _ultimoResultadoAutomatico.Mensaje;
+                    if (_ultimoResultadoAutomatico.CuentasPendientes.Count > 0)
+                        mensaje += "\n\nCuentas pendientes:\n• " +
+                            string.Join("\n• ", _ultimoResultadoAutomatico.CuentasPendientes.ToArray());
+                    MessageBox.Show(this, mensaje, "Disponibilidad diaria",
+                        MessageBoxButtons.OK, _ultimoResultadoAutomatico.CuentasPendientes.Count > 0
+                            ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
+                }
+                return true;
+            }
+            catch (OperationCanceledException) when (_cierre.IsCancellationRequested) { return false; }
+            catch (Exception ex)
+            {
+                if (!BancosMetCerrando()) BancosMetMostrarError("No se pudo actualizar el cálculo automático.", ex);
+                return false;
+            }
+            finally
+            {
+                _actualizandoAutomatico = false;
+                if (!BancosMetCerrando()) BancosBtnConsultar.Enabled = true;
+                BancosMetActualizarEstadoBotonCalculo();
             }
         }
 

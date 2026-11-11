@@ -108,6 +108,7 @@
     <None Include="Resouces\kpiComprometido.png" />
     <None Include="Resouces\kpiRestringido.png" />
     <None Include="Resouces\kpiDisponible.png" />
+    <None Include="Resouces\btn_actualizarDisponibilidad.png" />
     <None Include="Resouces\btn_consultarB.png" />
     <None Include="Resouces\btn_exportarsinN.jpeg" />
     <None Include="Resouces\btn_exportar.png" />
