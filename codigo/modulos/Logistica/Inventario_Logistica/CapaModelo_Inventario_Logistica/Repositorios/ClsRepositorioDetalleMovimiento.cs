@@ -17,7 +17,16 @@ namespace CapaModelo_Inventario_Logistica.Repositorios
 
         public ClsRepositorioDetalleMovimiento()
         {
-            _SelectAll = "SELECT * FROM tblDetalleMovimiento";
+            _SelectAll =
+                "SELECT d.idDetalleMovimiento AS Pk_DetalleMovimiento, " +
+                "d.Fk_Movimiento_Inventario_Codigo AS Fk_MovimientoInventario_Codigo, " +
+                "l.codigoLoteProducto AS LoteMovimientoInventario, " +
+                "d.Fk_Producto_Codigo AS Fk_Producto_Codigo, " +
+                "d.cantidadDetalleMovimiento AS CantidadDetalleMovimiento, " +
+                "d.precioCostoDetalleMovimiento AS PrecioCompraDetalleMovimiento, " +
+                "d.created_at AS CreatedAt, d.updated_at AS UpdatedAt " +
+                "FROM tblDetalleMovimiento d " +
+                "LEFT JOIN tblLoteProducto l ON d.Fk_Lote_Producto_Codigo = l.idLoteProducto";
         }
 
         public IEnumerable<ClsDetalleMovimiento> LogisticaMetObtenerTodos()
@@ -28,14 +37,14 @@ namespace CapaModelo_Inventario_Logistica.Repositorios
             {
                 var DetalleMovimiento = new ClsDetalleMovimiento
                 {
-                    Pk_DetalleMovimiento = Convert.ToInt32(Fila[0]),
-                    Fk_MovimientoInventario_Codigo = Convert.ToInt32(Fila[1]),
-                    LoteMovimientoInventario = Fila[2].ToString(),
-                    Fk_Producto_Codigo = Convert.ToInt32(Fila[3]),
-                    CantidadDetalleMovimiento = Convert.ToInt32(Fila[4]),
-                    PrecioCompraDetalleMovimiento = Convert.ToDecimal(Fila[5]),
-                    CreatedAt = Convert.ToDateTime(Fila[6]),
-                    UpdatedAt = Convert.ToDateTime(Fila[7])
+                    Pk_DetalleMovimiento = Convert.ToInt32(Fila["Pk_DetalleMovimiento"]),
+                    Fk_MovimientoInventario_Codigo = Convert.ToInt32(Fila["Fk_MovimientoInventario_Codigo"]),
+                    LoteMovimientoInventario = Fila["LoteMovimientoInventario"].ToString(),
+                    Fk_Producto_Codigo = Convert.ToInt32(Fila["Fk_Producto_Codigo"]),
+                    CantidadDetalleMovimiento = Convert.ToInt32(Fila["CantidadDetalleMovimiento"]),
+                    PrecioCompraDetalleMovimiento = Convert.ToDecimal(Fila["PrecioCompraDetalleMovimiento"]),
+                    CreatedAt = Convert.ToDateTime(Fila["CreatedAt"]),
+                    UpdatedAt = Convert.ToDateTime(Fila["UpdatedAt"])
                 };
                 ListaDetalleMovimiento.Add(DetalleMovimiento);
             }
