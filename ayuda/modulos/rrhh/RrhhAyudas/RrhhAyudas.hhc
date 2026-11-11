@@ -34,8 +34,13 @@
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="N&#243;mina">
-			<param name="Local" value="Ayudas_Nomina.html">
+			<param name="Name" value="Plan de Mejora">
+			<param name="Local" value="Ayudas_PlanMejora.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Ver Evaluaciones">
+			<param name="Local" value="Ayudas_VerEvaluaciones.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
@@ -87,11 +92,6 @@
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Cat&#225;logos">
 			<param name="Local" value="Ayudas_Catalogos.html">
-			<param name="ImageNumber" value="11">
-			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Permisos y Vacaciones">
-			<param name="Local" value="Ayudas_PermisosVacaciones.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 	</UL>
