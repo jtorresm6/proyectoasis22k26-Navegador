@@ -41,6 +41,20 @@ namespace CapaVista_Contabilidad
             Boton.EnabledChanged += (Remitente, Evento) => { if (Boton.Enabled) Boton.Enabled = false; };
         }
 
+        // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+        // Pone el ícono en gris mientras el botón esté deshabilitado
+        public static void ContabilidadMetGrisAlDeshabilitar(Button Boton)
+        {
+            Image Original = Boton.BackgroundImage;
+            if (Original == null) return;
+            Image Gris = ContabilidadFuncConvertirGris(Original);
+            EventHandler Cambiar = (Remitente, Evento) => Boton.BackgroundImage = Boton.Enabled ? Original : Gris;
+            Boton.EnabledChanged += Cambiar;
+            Boton.Disposed += (Remitente, Evento) => Gris.Dispose();
+            Cambiar(Boton, EventArgs.Empty);
+        }
+        // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+
         private static Image ContabilidadFuncConvertirGris(Image Imagen)
         {
             Bitmap Gris = new Bitmap(Imagen.Width, Imagen.Height);

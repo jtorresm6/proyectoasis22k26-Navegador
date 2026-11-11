@@ -30,6 +30,8 @@ namespace CapaVista_Contabilidad
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.ContabilidadTtpBotones = new System.Windows.Forms.ToolTip(this.components);
             this.ContabilidadPnlPrincipal = new CapaVista_Contabilidad.Componentes.ClsPanelRedondeadoContabilidad();
             this.ContabilidadLblTitulo = new System.Windows.Forms.Label();
             this.ContabilidadLblModo = new System.Windows.Forms.Label();
@@ -38,8 +40,8 @@ namespace CapaVista_Contabilidad
             this.ContabilidadLblEstado = new System.Windows.Forms.Label();
             this.ContabilidadCboEstado = new System.Windows.Forms.ComboBox();
             this.ContabilidadChkPendientes = new System.Windows.Forms.CheckBox();
-            this.ContabilidadBtnNueva = new CapaVista_Contabilidad.Componentes.ClsBotonContabilidad();
-            this.ContabilidadBtnAbrir = new CapaVista_Contabilidad.Componentes.ClsBotonContabilidad();
+            this.ContabilidadBtnNueva = new System.Windows.Forms.Button();
+            this.ContabilidadBtnAbrir = new System.Windows.Forms.Button();
             this.ContabilidadDgvEncabezados = new CapaVista_Contabilidad.Componentes.ClsTablaContabilidad();
             this.ContabilidadLblTotal = new System.Windows.Forms.Label();
             this.ContabilidadPnlBatch = new CapaVista_Contabilidad.Componentes.ClsPanelRedondeadoContabilidad();
@@ -50,7 +52,7 @@ namespace CapaVista_Contabilidad
             this.ContabilidadDtpDesde = new System.Windows.Forms.DateTimePicker();
             this.ContabilidadLblHasta = new System.Windows.Forms.Label();
             this.ContabilidadDtpHasta = new System.Windows.Forms.DateTimePicker();
-            this.ContabilidadBtnActualizarSaldos = new CapaVista_Contabilidad.Componentes.ClsBotonContabilidad();
+            this.ContabilidadBtnActualizarSaldos = new System.Windows.Forms.Button();
             this.ContabilidadPnlPrincipal.SuspendLayout();
             this.ContabilidadPnlBatch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContabilidadDgvEncabezados)).BeginInit();
@@ -128,25 +130,31 @@ namespace CapaVista_Contabilidad
             this.ContabilidadChkPendientes.TabIndex = 3;
             this.ContabilidadChkPendientes.Text = "Solo pendientes de batch";
             this.ContabilidadChkPendientes.UseVisualStyleBackColor = false;
+            this.ContabilidadBtnNueva.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnNueva.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.btn_nuevo;
+            this.ContabilidadBtnNueva.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ContabilidadBtnNueva.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ContabilidadBtnNueva.Estilo = CapaVista_Contabilidad.Componentes.EstiloBotonContabilidad.Acento;
+            this.ContabilidadBtnNueva.FlatAppearance.BorderSize = 0;
+            this.ContabilidadBtnNueva.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnNueva.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnNueva.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ContabilidadBtnNueva.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ContabilidadBtnNueva.Icono = global::CapaVista_Contabilidad.Properties.Resources.ico_mas;
-            this.ContabilidadBtnNueva.Location = new System.Drawing.Point(812, 86);
+            this.ContabilidadBtnNueva.Location = new System.Drawing.Point(976, 76);
             this.ContabilidadBtnNueva.Name = "ContabilidadBtnNueva";
-            this.ContabilidadBtnNueva.Size = new System.Drawing.Size(150, 42);
+            this.ContabilidadBtnNueva.Size = new System.Drawing.Size(60, 60);
             this.ContabilidadBtnNueva.TabIndex = 4;
-            this.ContabilidadBtnNueva.Text = "Nueva póliza";
             this.ContabilidadBtnNueva.UseVisualStyleBackColor = false;
+            this.ContabilidadBtnAbrir.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnAbrir.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.btn_ver;
+            this.ContabilidadBtnAbrir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ContabilidadBtnAbrir.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ContabilidadBtnAbrir.FlatAppearance.BorderSize = 0;
+            this.ContabilidadBtnAbrir.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnAbrir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnAbrir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ContabilidadBtnAbrir.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ContabilidadBtnAbrir.Location = new System.Drawing.Point(974, 86);
+            this.ContabilidadBtnAbrir.Location = new System.Drawing.Point(1048, 76);
             this.ContabilidadBtnAbrir.Name = "ContabilidadBtnAbrir";
-            this.ContabilidadBtnAbrir.Size = new System.Drawing.Size(134, 42);
+            this.ContabilidadBtnAbrir.Size = new System.Drawing.Size(60, 60);
             this.ContabilidadBtnAbrir.TabIndex = 5;
-            this.ContabilidadBtnAbrir.Text = "Abrir póliza";
             this.ContabilidadBtnAbrir.UseVisualStyleBackColor = false;
             this.ContabilidadDgvEncabezados.AllowUserToAddRows = false;
             this.ContabilidadDgvEncabezados.AllowUserToDeleteRows = false;
@@ -178,7 +186,7 @@ namespace CapaVista_Contabilidad
             this.ContabilidadPnlBatch.Controls.Add(this.ContabilidadBtnActualizarSaldos);
             this.ContabilidadPnlBatch.Location = new System.Drawing.Point(24, 510);
             this.ContabilidadPnlBatch.Name = "ContabilidadPnlBatch";
-            this.ContabilidadPnlBatch.Size = new System.Drawing.Size(1084, 110);
+            this.ContabilidadPnlBatch.Size = new System.Drawing.Size(1084, 126);
             this.ContabilidadPnlBatch.TabIndex = 7;
             this.ContabilidadLblBatch.BackColor = System.Drawing.Color.White;
             this.ContabilidadLblBatch.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
@@ -233,19 +241,24 @@ namespace CapaVista_Contabilidad
             this.ContabilidadDtpHasta.Name = "ContabilidadDtpHasta";
             this.ContabilidadDtpHasta.Size = new System.Drawing.Size(180, 30);
             this.ContabilidadDtpHasta.TabIndex = 2;
+            this.ContabilidadBtnActualizarSaldos.BackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnActualizarSaldos.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.btn_aceptar;
+            this.ContabilidadBtnActualizarSaldos.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ContabilidadBtnActualizarSaldos.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ContabilidadBtnActualizarSaldos.Estilo = CapaVista_Contabilidad.Componentes.EstiloBotonContabilidad.Dorado;
+            this.ContabilidadBtnActualizarSaldos.FlatAppearance.BorderSize = 0;
+            this.ContabilidadBtnActualizarSaldos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ContabilidadBtnActualizarSaldos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.ContabilidadBtnActualizarSaldos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ContabilidadBtnActualizarSaldos.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ContabilidadBtnActualizarSaldos.Icono = global::CapaVista_Contabilidad.Properties.Resources.ico_aplicar;
-            this.ContabilidadBtnActualizarSaldos.Location = new System.Drawing.Point(864, 58);
+            this.ContabilidadBtnActualizarSaldos.Location = new System.Drawing.Point(1004, 38);
             this.ContabilidadBtnActualizarSaldos.Name = "ContabilidadBtnActualizarSaldos";
-            this.ContabilidadBtnActualizarSaldos.Size = new System.Drawing.Size(200, 42);
+            this.ContabilidadBtnActualizarSaldos.Size = new System.Drawing.Size(60, 60);
             this.ContabilidadBtnActualizarSaldos.TabIndex = 3;
-            this.ContabilidadBtnActualizarSaldos.Text = "Actualizar saldos";
             this.ContabilidadBtnActualizarSaldos.UseVisualStyleBackColor = false;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
+            this.ContabilidadTtpBotones.SetToolTip(this.ContabilidadBtnNueva, "Nueva póliza");
+            this.ContabilidadTtpBotones.SetToolTip(this.ContabilidadBtnAbrir, "Abrir la póliza seleccionada");
+            this.ContabilidadTtpBotones.SetToolTip(this.ContabilidadBtnActualizarSaldos, "Actualizar saldos con las pólizas validadas");
             this.ClientSize = new System.Drawing.Size(1180, 688);
             this.Controls.Add(this.ContabilidadPnlPrincipal);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -265,6 +278,8 @@ namespace CapaVista_Contabilidad
 
         #endregion
 
+        private System.Windows.Forms.ToolTip ContabilidadTtpBotones;
+
         private Componentes.ClsPanelRedondeadoContabilidad ContabilidadPnlPrincipal;
         private System.Windows.Forms.Label ContabilidadLblTitulo;
         private System.Windows.Forms.Label ContabilidadLblModo;
@@ -273,8 +288,8 @@ namespace CapaVista_Contabilidad
         private System.Windows.Forms.Label ContabilidadLblEstado;
         private System.Windows.Forms.ComboBox ContabilidadCboEstado;
         private System.Windows.Forms.CheckBox ContabilidadChkPendientes;
-        private Componentes.ClsBotonContabilidad ContabilidadBtnNueva;
-        private Componentes.ClsBotonContabilidad ContabilidadBtnAbrir;
+        private System.Windows.Forms.Button ContabilidadBtnNueva;
+        private System.Windows.Forms.Button ContabilidadBtnAbrir;
         private Componentes.ClsTablaContabilidad ContabilidadDgvEncabezados;
         private System.Windows.Forms.Label ContabilidadLblTotal;
         private Componentes.ClsPanelRedondeadoContabilidad ContabilidadPnlBatch;
@@ -285,6 +300,6 @@ namespace CapaVista_Contabilidad
         private System.Windows.Forms.DateTimePicker ContabilidadDtpDesde;
         private System.Windows.Forms.Label ContabilidadLblHasta;
         private System.Windows.Forms.DateTimePicker ContabilidadDtpHasta;
-        private Componentes.ClsBotonContabilidad ContabilidadBtnActualizarSaldos;
+        private System.Windows.Forms.Button ContabilidadBtnActualizarSaldos;
     }
 }
