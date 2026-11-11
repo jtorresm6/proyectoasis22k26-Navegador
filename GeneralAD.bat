@@ -340,7 +340,7 @@ try {
         for ($i = 0; $i -lt $plan.Count; $i++) { Write-Status ('{0:D3} {1}' -f ($i + 1), $plan[$i].Relative) }
         exit 0
     }
-    $logDirectory = Join-Path $repo 'logs\build_proyecto'
+    $logDirectory = Join-Path ([IO.Path]::GetTempPath()) ('asis_general_' + [guid]::NewGuid().ToString('N'))
     [void][IO.Directory]::CreateDirectory($logDirectory)
     $script:globalLog = Join-Path $logDirectory 'build_log.txt'
     $script:failedFile = Join-Path $logDirectory 'fallidos.txt'
@@ -420,7 +420,7 @@ try {
     }
     [IO.File]::WriteAllLines($script:failedFile, [string[]]@($pending | ForEach-Object { $_.Relative }), $utf8)
     Write-Status "Resultado: $completed correctos, $($pending.Count) con errores, $($plan.Count) en total."
-    Write-Status "Log completo: $script:globalLog"
+    Write-Status 'Los archivos auxiliares se eliminan al terminar.'
     if ($pending.Count -gt 0) {
         foreach ($project in $pending) {
             Write-Status "PENDIENTE $($project.Relative)"
@@ -439,4 +439,14 @@ try {
         try { [IO.File]::AppendAllText($script:failedFile, $errorMessage + [Environment]::NewLine, $utf8) } catch {}
     }
     exit 1
+}
+ finally {
+    if ($logDirectory -and (Test-Path -LiteralPath $logDirectory)) {
+        $temporaryRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath()).TrimEnd('\') + '\'
+        $resolved = [IO.Path]::GetFullPath($logDirectory)
+        if ($resolved.StartsWith($temporaryRoot, [StringComparison]::OrdinalIgnoreCase) -and [IO.Path]::GetFileName($resolved).StartsWith('asis_general_')) {
+            Get-ChildItem -LiteralPath $resolved -File | Remove-Item -Force
+            Remove-Item -LiteralPath $resolved -Force
+        }
+    }
 }
