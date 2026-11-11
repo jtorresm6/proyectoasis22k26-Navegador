@@ -2,7 +2,7 @@
 -- 1. EMPRESA TRANSPORTISTA
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblEmpresaTransportista (
-    Pk_EmpresaTransportista INT AUTO_INCREMENT PRIMARY KEY,
+    idEmpresaTransportista INT NOT NULL AUTO_INCREMENT,
     nombreEmpresaTransportista VARCHAR(100) NOT NULL,
     contactoEmpresaTransportista VARCHAR(100),
     telefonoEmpresaTransportista VARCHAR(30),
@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS tblEmpresaTransportista (
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_EmpresaTransportista PRIMARY KEY (idEmpresaTransportista),
     CONSTRAINT uqEmpresaTransportistaNombre UNIQUE (nombreEmpresaTransportista)
 ) ENGINE=InnoDB;
 
@@ -18,11 +19,12 @@ CREATE TABLE IF NOT EXISTS tblEmpresaTransportista (
 -- 2. TIPO SERVICIO
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblTipoServicio (
-    Pk_TipoServicio INT AUTO_INCREMENT PRIMARY KEY,
+    idTipoServicio INT NOT NULL AUTO_INCREMENT,
     nombreTipoServicio VARCHAR(100) NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_TipoServicio PRIMARY KEY (idTipoServicio),
     CONSTRAINT uqTipoServicioNombre UNIQUE (nombreTipoServicio)
 ) ENGINE=InnoDB;
 
@@ -30,11 +32,12 @@ CREATE TABLE IF NOT EXISTS tblTipoServicio (
 -- 3. TARIFA TRANSPORTE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblTarifaTransporte (
-    Pk_TarifaTransporte INT AUTO_INCREMENT PRIMARY KEY,
+    idTarifaTransporte INT NOT NULL AUTO_INCREMENT,
     nombreTarifaTransporte VARCHAR(100) NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_TarifaTransporte PRIMARY KEY (idTarifaTransporte),
     CONSTRAINT uqTarifaTransporteNombre UNIQUE (nombreTarifaTransporte)
 ) ENGINE=InnoDB;
 
@@ -42,7 +45,7 @@ CREATE TABLE IF NOT EXISTS tblTarifaTransporte (
 -- 4. SERVICIO TRANSPORTE EXTERNO
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblServicioTransporteExterno (
-    Pk_ServicioTransporteExterno INT AUTO_INCREMENT PRIMARY KEY,
+    idServicioTransporteExterno INT NOT NULL AUTO_INCREMENT,
     Fk_EmpresaTransportista_Codigo INT NOT NULL,
     Fk_TipoServicio_Codigo INT NOT NULL,
     Fk_Traslado_IdTraslado INT NULL,
@@ -57,11 +60,12 @@ CREATE TABLE IF NOT EXISTS tblServicioTransporteExterno (
     fechaEntregaRealServicioTransporteExterno DATE NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_ServicioTransporteExterno PRIMARY KEY (idServicioTransporteExterno),
     CONSTRAINT uqServicioNumeroGuia UNIQUE (numeroGuiaServicioTransporteExterno),
     CONSTRAINT ckServicioEstado CHECK (estadoServicioTransporteExterno IN ('Programado','En tránsito','Entregado','Cancelado')),
     CONSTRAINT ckServicioFechas CHECK (fechaEstimadaEntregaServicioTransporteExterno >= fechaContratacionServicioTransporteExterno),
-    CONSTRAINT fkServicioEmpresa FOREIGN KEY (Fk_EmpresaTransportista_Codigo) REFERENCES tblEmpresaTransportista(Pk_EmpresaTransportista),
-    CONSTRAINT fkServicioTipo FOREIGN KEY (Fk_TipoServicio_Codigo) REFERENCES tblTipoServicio(Pk_TipoServicio),
+    CONSTRAINT fkServicioEmpresa FOREIGN KEY (Fk_EmpresaTransportista_Codigo) REFERENCES tblEmpresaTransportista(idEmpresaTransportista),
+    CONSTRAINT fkServicioTipo FOREIGN KEY (Fk_TipoServicio_Codigo) REFERENCES tblTipoServicio(idTipoServicio),
     CONSTRAINT fkServicioTraslado FOREIGN KEY (Fk_Traslado_IdTraslado) REFERENCES tbltraslado(idTraslado)
 ) ENGINE=InnoDB;
 
@@ -69,7 +73,7 @@ CREATE TABLE IF NOT EXISTS tblServicioTransporteExterno (
 -- 5. COSTO TRANSPORTE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblCostoTransporte (
-    Pk_CostoTransporte INT AUTO_INCREMENT PRIMARY KEY,
+    idCostoTransporte INT NOT NULL AUTO_INCREMENT,
     Fk_ServicioTransporteExterno_Codigo INT NOT NULL,
     Fk_TarifaTransporte_Codigo INT NOT NULL,
     cantidadCostoTransporte DECIMAL(12,4) NOT NULL,
@@ -79,57 +83,61 @@ CREATE TABLE IF NOT EXISTS tblCostoTransporte (
     tipoPagoCostoTransporte VARCHAR(30) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_CostoTransporte PRIMARY KEY (idCostoTransporte),
     CONSTRAINT uqCostoServicio UNIQUE (Fk_ServicioTransporteExterno_Codigo),
     CONSTRAINT ckCostoCantidad CHECK (cantidadCostoTransporte > 0),
     CONSTRAINT ckCostoUnitario CHECK (costoUnitarioTransporte >= 0),
     CONSTRAINT ckCostoMoneda CHECK (monedaCostoTransporte IN ('GTQ','USD')),
     CONSTRAINT ckCostoTipoPago CHECK (tipoPagoCostoTransporte IN ('Transferencia','Efectivo')),
-    CONSTRAINT fkCostoServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(Pk_ServicioTransporteExterno),
-    CONSTRAINT fkCostoTarifa FOREIGN KEY (Fk_TarifaTransporte_Codigo) REFERENCES tblTarifaTransporte(Pk_TarifaTransporte)
+    CONSTRAINT fkCostoServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno),
+    CONSTRAINT fkCostoTarifa FOREIGN KEY (Fk_TarifaTransporte_Codigo) REFERENCES tblTarifaTransporte(idTarifaTransporte)
 ) ENGINE=InnoDB;
 
 -- ============================================================
 -- 6. VEHICULO TRANSPORTE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblVehiculoTransporte (
-    Pk_VehiculoTransporte INT AUTO_INCREMENT PRIMARY KEY,
+    idVehiculoTransporte INT NOT NULL AUTO_INCREMENT,
     Fk_ServicioTransporteExterno_Codigo INT NOT NULL,
     placaVehiculoTransporte VARCHAR(30),
     tipoVehiculoTransporte VARCHAR(100),
     capacidadVehiculoTransporte VARCHAR(100),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_VehiculoTransporte PRIMARY KEY (idVehiculoTransporte),
     CONSTRAINT uqVehiculoServicio UNIQUE (Fk_ServicioTransporteExterno_Codigo),
-    CONSTRAINT fkVehiculoServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(Pk_ServicioTransporteExterno)
+    CONSTRAINT fkVehiculoServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno)
 ) ENGINE=InnoDB;
 
 -- ============================================================
 -- 7. CONDUCTOR TRANSPORTE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblConductorTransporte (
-    Pk_ConductorTransporte INT AUTO_INCREMENT PRIMARY KEY,
+    idConductorTransporte INT NOT NULL AUTO_INCREMENT,
     Fk_ServicioTransporteExterno_Codigo INT NOT NULL,
     nombreConductorTransporte VARCHAR(100),
     telefonoConductorTransporte VARCHAR(30),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_ConductorTransporte PRIMARY KEY (idConductorTransporte),
     CONSTRAINT uqConductorServicio UNIQUE (Fk_ServicioTransporteExterno_Codigo),
-    CONSTRAINT fkConductorServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(Pk_ServicioTransporteExterno)
+    CONSTRAINT fkConductorServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno)
 ) ENGINE=InnoDB;
 
 -- ============================================================
 -- 8. PRODUCTO TRANSPORTE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblProductoTransporte (
-    Pk_ProductoTransporte INT AUTO_INCREMENT PRIMARY KEY,
+    idProductoTransporte INT NOT NULL AUTO_INCREMENT,
     Fk_ServicioTransporteExterno_Codigo INT NOT NULL,
     Fk_Producto_IdProducto INT NOT NULL,
     cantidadProductoTransporte DECIMAL(12,4) NOT NULL,
     unidadMedidaProductoTransporte VARCHAR(30),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_ProductoTransporte PRIMARY KEY (idProductoTransporte),
     CONSTRAINT ckProductoCantidad CHECK (cantidadProductoTransporte > 0),
-    CONSTRAINT fkProductoServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(Pk_ServicioTransporteExterno),
+    CONSTRAINT fkProductoServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno),
     CONSTRAINT fkProductoCatalogo FOREIGN KEY (Fk_Producto_IdProducto) REFERENCES tblproducto(idProducto)
 ) ENGINE=InnoDB;
 
@@ -137,13 +145,14 @@ CREATE TABLE IF NOT EXISTS tblProductoTransporte (
 -- 9. UBICACION TRANSPORTE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblUbicacionTransporte (
-    Pk_UbicacionTransporte INT AUTO_INCREMENT PRIMARY KEY,
+    idUbicacionTransporte INT NOT NULL AUTO_INCREMENT,
     Fk_ServicioTransporteExterno_Codigo INT NOT NULL,
     ubicacionActualTransporte VARCHAR(500) NOT NULL,
     fechaActualizacionUbicacionTransporte DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fkUbicacionServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(Pk_ServicioTransporteExterno),
+    CONSTRAINT Pk_UbicacionTransporte PRIMARY KEY (idUbicacionTransporte),
+    CONSTRAINT fkUbicacionServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno),
     INDEX idxUbicacionServicioFecha (Fk_ServicioTransporteExterno_Codigo, fechaActualizacionUbicacionTransporte)
 ) ENGINE=InnoDB;
 
@@ -151,7 +160,7 @@ CREATE TABLE IF NOT EXISTS tblUbicacionTransporte (
 -- 10. INCIDENCIA TRANSPORTE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblIncidenciaTransporte (
-    Pk_IncidenciaTransporte INT AUTO_INCREMENT PRIMARY KEY,
+    idIncidenciaTransporte INT NOT NULL AUTO_INCREMENT,
     Fk_ServicioTransporteExterno_Codigo INT NOT NULL,
     codigoIncidenciaTransporte VARCHAR(30) NOT NULL,
     fechaIncidenciaTransporte DATETIME NOT NULL,
@@ -161,15 +170,16 @@ CREATE TABLE IF NOT EXISTS tblIncidenciaTransporte (
     estadoIncidenciaTransporte VARCHAR(30) NOT NULL DEFAULT 'Pendiente',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_IncidenciaTransporte PRIMARY KEY (idIncidenciaTransporte),
     CONSTRAINT uqIncidenciaCodigo UNIQUE (codigoIncidenciaTransporte),
-    CONSTRAINT fkIncidenciaServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(Pk_ServicioTransporteExterno)
+    CONSTRAINT fkIncidenciaServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno)
 ) ENGINE=InnoDB;
 
 -- ============================================================
 -- 11. HISTORIAL TRANSPORTE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblHistorialTransporte (
-    Pk_HistorialTransporte INT AUTO_INCREMENT PRIMARY KEY,
+    idHistorialTransporte INT NOT NULL AUTO_INCREMENT,
     Fk_ServicioTransporteExterno_Codigo INT NOT NULL,
     fechaMovimientoHistorial DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     tipoMovimientoHistorial VARCHAR(100) NOT NULL,
@@ -177,14 +187,15 @@ CREATE TABLE IF NOT EXISTS tblHistorialTransporte (
     estadoTransporteHistorial VARCHAR(30),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fkHistorialServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(Pk_ServicioTransporteExterno)
+    CONSTRAINT Pk_HistorialTransporte PRIMARY KEY (idHistorialTransporte),
+    CONSTRAINT fkHistorialServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno)
 ) ENGINE=InnoDB;
 
 -- ============================================================
 -- 12. FACTURA TRANSPORTE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblFacturaTransporte (
-    Pk_FacturaTransporte INT AUTO_INCREMENT PRIMARY KEY,
+    idFacturaTransporte INT NOT NULL AUTO_INCREMENT,
     Fk_ServicioTransporteExterno_Codigo INT NOT NULL,
     Fk_Plazo_IdPlazo INT NOT NULL,
 
@@ -201,6 +212,7 @@ CREATE TABLE IF NOT EXISTS tblFacturaTransporte (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
+    CONSTRAINT Pk_FacturaTransporte PRIMARY KEY (idFacturaTransporte),
     CONSTRAINT uqFacturaServicio UNIQUE (Fk_ServicioTransporteExterno_Codigo),
 
     CONSTRAINT uqFacturaCuentaPorPagar UNIQUE (
@@ -215,7 +227,7 @@ CREATE TABLE IF NOT EXISTS tblFacturaTransporte (
 
     CONSTRAINT fkFacturaServicio
         FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo)
-        REFERENCES tblServicioTransporteExterno(Pk_ServicioTransporteExterno),
+        REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno),
 
     CONSTRAINT fkFacturaPlazo
         FOREIGN KEY (Fk_Plazo_IdPlazo)
@@ -238,7 +250,7 @@ CREATE TABLE IF NOT EXISTS tblFacturaTransporte (
 -- 13. SOLICITUD PAGO TRANSPORTE
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblSolicitudPagoTransporte (
-    Pk_SolicitudPagoTransporte INT AUTO_INCREMENT PRIMARY KEY,
+    idSolicitudPagoTransporte INT NOT NULL AUTO_INCREMENT,
     Fk_ServicioTransporteExterno_Codigo INT NOT NULL,
     codigoSolicitudPagoTransporte VARCHAR(30) NULL,
     estadoSolicitudPagoTransporte VARCHAR(30) NOT NULL DEFAULT 'Solicitado',
@@ -246,10 +258,11 @@ CREATE TABLE IF NOT EXISTS tblSolicitudPagoTransporte (
     fechaPagoSolicitudPagoTransporte DATE NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_SolicitudPagoTransporte PRIMARY KEY (idSolicitudPagoTransporte),
     CONSTRAINT uqSolicitudServicio UNIQUE (Fk_ServicioTransporteExterno_Codigo),
     CONSTRAINT uqSolicitudCodigo UNIQUE (codigoSolicitudPagoTransporte),
     CONSTRAINT fkSolicitudServicio FOREIGN KEY (Fk_ServicioTransporteExterno_Codigo)
-        REFERENCES tblServicioTransporteExterno(Pk_ServicioTransporteExterno)
+        REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno)
 ) ENGINE=InnoDB;
 
 -- ============================================================
@@ -273,13 +286,13 @@ SELECT
     s.referenciaBancariaSolicitudPagoTransporte AS referenciaBancaria
 FROM tblServicioTransporteExterno t
 INNER JOIN tblEmpresaTransportista e
-    ON e.Pk_EmpresaTransportista = t.Fk_EmpresaTransportista_Codigo
+    ON e.idEmpresaTransportista = t.Fk_EmpresaTransportista_Codigo
 INNER JOIN tblTipoServicio ts
-    ON ts.Pk_TipoServicio = t.Fk_TipoServicio_Codigo
+    ON ts.idTipoServicio = t.Fk_TipoServicio_Codigo
 INNER JOIN tblCostoTransporte c
-    ON c.Fk_ServicioTransporteExterno_Codigo = t.Pk_ServicioTransporteExterno
+    ON c.Fk_ServicioTransporteExterno_Codigo = t.idServicioTransporteExterno
 INNER JOIN tblSolicitudPagoTransporte s
-    ON s.Fk_ServicioTransporteExterno_Codigo = t.Pk_ServicioTransporteExterno;
+    ON s.Fk_ServicioTransporteExterno_Codigo = t.idServicioTransporteExterno;
 
 DROP PROCEDURE IF EXISTS spGenerarSolicitudPagoTransporte;
 DELIMITER $$
@@ -314,7 +327,7 @@ BEGIN
 
     UPDATE tblSolicitudPagoTransporte
     SET codigoSolicitudPagoTransporte = CONCAT('SP-', LPAD(vId, 6, '0'))
-    WHERE Pk_SolicitudPagoTransporte = vId;
+    WHERE idSolicitudPagoTransporte = vId;
 
     COMMIT;
 
@@ -362,7 +375,7 @@ BEGIN
 
     SELECT nombreEmpresaTransportista INTO vEmpresa
     FROM tblEmpresaTransportista
-    WHERE Pk_EmpresaTransportista = pEmpresa
+    WHERE idEmpresaTransportista = pEmpresa
       AND is_active = TRUE;
 
     IF vEmpresa IS NULL THEN
@@ -402,7 +415,7 @@ BEGIN
 
     UPDATE tblServicioTransporteExterno
     SET numeroGuiaServicioTransporteExterno = vGuia
-    WHERE Pk_ServicioTransporteExterno = vId;
+    WHERE idServicioTransporteExterno = vId;
 
     INSERT INTO tblCostoTransporte (
         Fk_ServicioTransporteExterno_Codigo,
@@ -429,7 +442,7 @@ DELIMITER ;
 -- TABLA: CUENTA BANCARIA TRANSPORTISTA
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tblCuentaBancariaTransportista (
-    Pk_Cuenta_Bancaria_Transportista INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idCuentaBancariaTransportista INT NOT NULL AUTO_INCREMENT,
     Fk_Empresa_Transportista_Codigo INT NOT NULL,
     Fk_Banco_Codigo BIGINT NOT NULL,
     Fk_TipoCuentaBancaria_Codigo BIGINT NOT NULL,
@@ -442,12 +455,14 @@ CREATE TABLE IF NOT EXISTS tblCuentaBancariaTransportista (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
 
+    CONSTRAINT Pk_Cuenta_Bancaria_Transportista PRIMARY KEY (idCuentaBancariaTransportista),
+
     CONSTRAINT uqCuentaBancariaTransportista
         UNIQUE (Fk_Banco_Codigo, numeroCuentaBancariaTransportista),
 
     CONSTRAINT Fk_CuentaTransportista_Empresa
         FOREIGN KEY (Fk_Empresa_Transportista_Codigo)
-        REFERENCES tblEmpresaTransportista(Pk_EmpresaTransportista)
+        REFERENCES tblEmpresaTransportista(idEmpresaTransportista)
         ON DELETE RESTRICT,
 
     CONSTRAINT Fk_CuentaTransportista_Banco
