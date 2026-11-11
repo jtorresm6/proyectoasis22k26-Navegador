@@ -1,0 +1,48 @@
+/* Paleta del componente Navegador (EST-10, 11.4) */
+* {
+    background-color: #F2E9D9;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+h1 {
+    color: #611A1B;
+    text-align: center;
+    font-family: 'Lucida Bright', Georgia, serif;
+    font-size: 45px;
+}
+
+h2 {
+    color: #A13F39;
+    text-align: center;
+    font-size: 30px;
+}
+
+p {
+    font-size: 20px;
+    text-align: justify;
+    padding: 20px;
+}
+
+.imgLogo {
+    width: 200px;
+}
+
+.imgButti {
+    width: 150px;
+}
+
+.imgVentana{
+    width: 500px;
+}
+
+.imgVentanaMDI{
+    width: 900px;
+}

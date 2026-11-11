@@ -666,5 +666,10 @@ namespace CapaVista_MovimientosBancarios.Formularios
                 principal.MostrarFormulario(new FrmListaMovimientos());
             }
         }
+
+        private void BancosBtnAyudaS_Click(object sender, EventArgs e)
+        {
+            Help.ShowHelp(this, "C:/BancosAyudas/BancosAyudas.chm", "MovimientoBancario_Bancos.html");
+        }
     }
 }

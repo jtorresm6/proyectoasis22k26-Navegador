@@ -123,6 +123,16 @@ namespace CapaVista_MovimientosBancarios.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_reporteB1 {
+            get {
+                object obj = ResourceManager.GetObject("btn_reporteB1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_salirB {
             get {
                 object obj = ResourceManager.GetObject("btn_salirB", resourceCulture);

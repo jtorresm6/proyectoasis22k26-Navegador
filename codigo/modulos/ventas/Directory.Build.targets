@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Visual Studio no compila los proyectos externos a la solucion abierta.
+       Usar el mismo orden de dependencias que el BAT, sin cargar otras areas
+       en las soluciones MVC ni ejecutar la preparacion en IntelliSense. -->
+  <PropertyGroup>
+    <ProyectoCompilacionVentas>$(MSBuildThisFileDirectory)Compilacion_Ventas\build_ventas.proj</ProyectoCompilacionVentas>
+    <PropiedadesPreparacionVentas>Configuration=$(Configuration);BuildingInsideVisualStudio=false;BuildProjectReferences=false;VentasDependenciasPreparadas=true</PropiedadesPreparacionVentas>
+    <PropiedadesSolucionVentas>SolutionDir;SolutionPath;SolutionName;SolutionFileName;SolutionExt;CurrentSolutionConfigurationContents;BuildingSolutionFile</PropiedadesSolucionVentas>
+  </PropertyGroup>
+  <Target Name="PrepararVentasDesdeVisualStudio" BeforeTargets="ResolveProjectReferences"
+          Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(DesignTimeBuild)' != 'true' and '$(TargetFrameworkVersion)' == 'v4.8' and '$(VentasDependenciasPreparadas)' != 'true'">
+    <Message Text="Preparando las dependencias de Ventas antes de compilar la solucion abierta..." Importance="high" />
+    <MSBuild Projects="$(ProyectoCompilacionVentas)" Targets="PrepararDependenciasVentas"
+             Properties="$(PropiedadesPreparacionVentas)"
+             RemoveProperties="$(PropiedadesSolucionVentas)" />
+  </Target>
+  <Target Name="ReunirVentasDesdeVisualStudio" AfterTargets="Build"
+          Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(DesignTimeBuild)' != 'true' and '$(MSBuildProjectName)' == 'Ejecucion_Ventas' and '$(VentasDependenciasPreparadas)' != 'true'">
+    <MSBuild Projects="$(ProyectoCompilacionVentas)" Targets="ReunirBibliotecas"
+             Properties="$(PropiedadesPreparacionVentas)"
+             RemoveProperties="$(PropiedadesSolucionVentas)" />
+  </Target>
+</Project>
