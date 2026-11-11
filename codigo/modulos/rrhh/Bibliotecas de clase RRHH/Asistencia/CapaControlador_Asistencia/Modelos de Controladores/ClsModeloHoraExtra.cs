@@ -14,11 +14,15 @@ using System.Globalization;
  * Autor : Byron Alexander Chiquito Paredes
  * Carné : 0901-23-3747
  * Fecha : 02/11/2026
+ * Última modificación : 10/11/2026
  * ==================================================================
  * Propósito :
  *  Controlador de la ventana 9102 de Horas Extra, que se abre desde
  *  Asistencia. Calcula el pago (valor de la hora ordinaria por la
- *  duración y el recargo), valida contra la asistencia de donde sale
+ *  duración y el recargo). La hora ordinaria es el salario de
+ *  tblEmpleado / 30 / horas de la jornada (8 diurna, 7 mixta y 6
+ *  nocturna, arts. 116 y 117 del Código de Trabajo) y la hora extra no
+ *  deja pasar de 12 horas en el día (art. 122). Valida contra la asistencia de donde sale
  *  la hora extra y graba en tblHoraExtra. Al aprobar o rechazar guarda
  *  quién lo hizo y cuándo. Lo que Nómina ya tomó no se puede cambiar.
  * ===================================================================
@@ -30,10 +34,11 @@ namespace CapaControlador_Asistencia.Modelos_de_Controladores
     {
         public const int IdModulo = 9000;
         public const int IdAplicacion = 9102;
+        // Tope absoluto (jornada nocturna de 6 h + 6 h extra = 12 h), igual que el CHECK de la tabla
         public const int DuracionMaxima = 360;
         public const decimal RecargoPorDefecto = 0.50m;
-        // Jornada ordinaria diaria que se toma para sacar el valor de la hora
-        private const int HorasOrdinariasDia = 8;
+        // Código de Trabajo, art. 122: jornada ordinaria más extraordinaria no pasa de 12 horas al día
+        public const int HorasMaximasDia = 12;
         private const int DiasMes = 30;
 
         private static readonly string[] EstadosEditables = { "PENDIENTE", "APROBADA", "RECHAZADA" };
@@ -101,10 +106,36 @@ namespace CapaControlador_Asistencia.Modelos_de_Controladores
 
         // ---------- Cálculos ----------
 
-        public static decimal RrhhMetCalcularValorHora(decimal SalarioMensual)
+        // Horas ordinarias de la jornada según el Código de Trabajo (arts. 116 y 117):
+        // diurna 8 (entre 6:00 y 18:00), nocturna 6 (entre 18:00 y 6:00) y mixta 7.
+        // Si la mixta tiene 4 horas o más de noche se toma como nocturna.
+        public static int RrhhMetHorasJornadaLegal(TimeSpan Inicio, TimeSpan Fin)
         {
-            if (SalarioMensual <= 0) return 0m;
-            return Math.Round(SalarioMensual / DiasMes / HorasOrdinariasDia, 4);
+            int Desde = (int)Inicio.TotalMinutes;
+            int Hasta = (int)Fin.TotalMinutes;
+            if (Hasta <= Desde) Hasta += 1440;   // la jornada pasa de medianoche
+
+            int Total = Hasta - Desde, Noche = 0;
+            for (int Minuto = Desde; Minuto < Hasta; Minuto++)
+            {
+                int Reloj = Minuto % 1440;
+                if (Reloj < 360 || Reloj >= 1080) Noche++;
+            }
+            if (Noche == 0) return 8;
+            if (Noche == Total || Noche >= 240) return 6;
+            return 7;
+        }
+
+        public static decimal RrhhMetCalcularValorHora(decimal SalarioMensual, int HorasJornada)
+        {
+            if (SalarioMensual <= 0 || HorasJornada <= 0) return 0m;
+            return Math.Round(SalarioMensual / DiasMes / HorasJornada, 4);
+        }
+
+        // Lo que le falta a la jornada para llegar a 12 horas: diurna 240, mixta 300, nocturna 360
+        public static int RrhhMetTopeExtra(int HorasJornada)
+        {
+            return Math.Min(DuracionMaxima, Math.Max(0, (HorasMaximasDia - HorasJornada) * 60));
         }
 
         public static decimal RrhhMetCalcularTotal(int DuracionMinutos, decimal ValorHora, decimal Recargo)
@@ -113,11 +144,12 @@ namespace CapaControlador_Asistencia.Modelos_de_Controladores
             return Math.Round(DuracionMinutos / 60m * ValorHora * (1 + Recargo), 2);
         }
 
-        // Minutos trabajados después del fin de la jornada, con el tope de la tabla
-        public static int RrhhMetDuracionSugerida(TimeSpan HoraSalida, TimeSpan HoraFinJornada)
+        // Minutos trabajados después del fin de la jornada, sin pasar de las 12 horas del día
+        public static int RrhhMetDuracionSugerida(TimeSpan HoraSalida, TimeSpan HoraInicioJornada, TimeSpan HoraFinJornada)
         {
             int Minutos = (int)(HoraSalida - HoraFinJornada).TotalMinutes;
-            return Math.Max(0, Math.Min(DuracionMaxima, Minutos));
+            int Tope = RrhhMetTopeExtra(RrhhMetHorasJornadaLegal(HoraInicioJornada, HoraFinJornada));
+            return Math.Max(0, Math.Min(Tope, Minutos));
         }
 
         // ---------- Grabar ----------
@@ -270,9 +302,10 @@ namespace CapaControlador_Asistencia.Modelos_de_Controladores
             if (Asistencia.IdHoraExtra.HasValue && Asistencia.IdHoraExtra.Value != _IdHoraExtra)
                 return "Esa asistencia ya tiene una hora extra registrada.";
 
-            int Disponible = RrhhMetDuracionSugerida(Asistencia.HoraSalidaAsistenciaEmpleado, Asistencia.HoraFinJornada);
+            int Disponible = RrhhMetDuracionSugerida(Asistencia.HoraSalidaAsistenciaEmpleado,
+                                                     Asistencia.HoraInicioJornada, Asistencia.HoraFinJornada);
             if (_Duracion > Disponible)
-                return $"La duración no puede pasar de {Disponible} minutos, que es lo que trabajó después de su jornada.";
+                return $"La duración no puede pasar de {Disponible} minutos (lo trabajado después de su jornada, sin pasar de 12 horas en el día).";
             return null;
         }
 
@@ -362,14 +395,15 @@ namespace CapaControlador_Asistencia.Modelos_de_Controladores
 
             foreach (ClsAsistenciaHoraExtra Item in _RepositorioHoraExtra.RrhhMetObtenerAsistenciasConExtra())
             {
-                int Minutos = RrhhMetDuracionSugerida(Item.HoraSalidaAsistenciaEmpleado, Item.HoraFinJornada);
+                int HorasJornada = RrhhMetHorasJornadaLegal(Item.HoraInicioJornada, Item.HoraFinJornada);
+                int Minutos = RrhhMetDuracionSugerida(Item.HoraSalidaAsistenciaEmpleado, Item.HoraInicioJornada, Item.HoraFinJornada);
                 Tabla.Rows.Add(Item.IdAsistenciaEmpleado, Item.IdEmpleado, Item.FechaAsistenciaEmpleado.Date,
                                $"{Item.FechaAsistenciaEmpleado:dd/MM/yyyy}  ({Minutos} min extra)",
                                Item.HoraEntradaAsistenciaEmpleado.HasValue ? (object)Item.HoraEntradaAsistenciaEmpleado.Value : DBNull.Value,
                                Item.HoraSalidaAsistenciaEmpleado,
                                $"{Item.NombreJornada} ({Item.HoraInicioJornada:hh\\:mm} - {Item.HoraFinJornada:hh\\:mm})",
                                Item.HoraInicioJornada, Item.HoraFinJornada,
-                               RrhhMetCalcularValorHora(Item.SalarioEmpleado), Minutos,
+                               RrhhMetCalcularValorHora(Item.SalarioEmpleado, HorasJornada), Minutos,
                                Item.IdHoraExtra.HasValue ? (object)Item.IdHoraExtra.Value : DBNull.Value);
             }
             return Tabla;

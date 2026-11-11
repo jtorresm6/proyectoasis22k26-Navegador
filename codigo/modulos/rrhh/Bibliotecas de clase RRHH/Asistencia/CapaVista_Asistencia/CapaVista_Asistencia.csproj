@@ -135,9 +135,6 @@
     <Reference Include="CapaVista_Seguridad">
       <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_Reporteador">
-      <HintPath>..\..\..\..\..\componentes\reporteador\Reporteador\CapaVista_Reporteador\bin\Debug\CapaVista_Reporteador.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

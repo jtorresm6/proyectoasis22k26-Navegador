@@ -315,9 +315,7 @@ namespace CapaVista_Rrhh.Formularios
         {
             var Iconos = new Dictionary<Button, Image>
             {
-                { RrhhBtnEmpleados, Properties.Resources.btn_empleados },
                 { RrhhBtnAsistencia, Properties.Resources.btn_asistencia },
-                { RrhhBtnPermisosVacaciones, Properties.Resources.btn_permisos },
                 { RrhhBtnAsigCapacitacion, Properties.Resources.btn_capacitaciones },
                 { RrhhBtnEvaluacionDesempeno, Properties.Resources.btn_evaluacion },
                 { RrhhBtnNomina, Properties.Resources.btn_nomina },
@@ -363,9 +361,7 @@ namespace CapaVista_Rrhh.Formularios
         {
             var MapaBotonesMDI = new Dictionary<Button, int>
             {
-                { RrhhBtnEmpleados, 0 },
                 { RrhhBtnAsistencia, 0 },
-                { RrhhBtnPermisosVacaciones, 0 },
                 { RrhhBtnAsigCapacitacion, 0 },
                 { RrhhBtnEvaluacionDesempeno, 0 },
                 { RrhhBtnNomina, 0 },
@@ -648,20 +644,6 @@ namespace CapaVista_Rrhh.Formularios
                 : new[] { new Point(X + 2, Y - 6), new Point(X + 2, Y + 6), new Point(X + 9, Y) };
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             using (SolidBrush Pincel = new SolidBrush(RrhhBtnCatalogos.ForeColor)) e.Graphics.FillPolygon(Pincel, Flecha);
-        }
-        // Fin cambio - Byron Alexander Chiquito Paredes - 0901-23-3747
-
-        // Inicio cambio - Byron Alexander Chiquito Paredes - 0901-23-3747
-        // Se quitó el llamado: las ventanas de Empleados están en Catálogos.
-        // El botón se deja por si se le asigna otra ventana.
-        private void RrhhBtnEmpleados_Click(object sender, EventArgs e)
-        {
-        }
-
-        // Se quitó el llamado: Permisos y Vacaciones están en Catálogos.
-        // El botón se deja por si se le asigna otra ventana.
-        private void RrhhBtnPermisosVacaciones_Click(object sender, EventArgs e)
-        {
         }
         // Fin cambio - Byron Alexander Chiquito Paredes - 0901-23-3747
 
