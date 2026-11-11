@@ -240,8 +240,8 @@ namespace CapaControlador_TransporteInterno_Logistica.Modelos_de_Controladores
         {
             if (Datos == null)
             {
-                throw new ValidationException(
-                    "Complete todos los campos obligatorios.");
+                ClsValidacionesEncabezadoViaje
+        .LogisticaProcValidar(Datos);
             }
 
             // Validaciones DataAnnotations.

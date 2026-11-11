@@ -224,10 +224,32 @@ namespace CapaControlador_TransporteInterno_Logistica.Modelos_de_Controladores
         private void LogisticaProcValidar(
             ClsDatosDetalleViajeLoteProducto Datos)
         {
-            if (Datos == null)
+            
             {
-                throw new ValidationException(
-                    "Complete todos los campos obligatorios.");
+                ClsValidacionesDetalleViajeLoteProducto
+                .LogisticaProcValidar(Datos);
+
+                // Verificar que el lote no esté asignado
+                // al mismo detalle de viaje.
+                bool ExisteLoteAsignado = _Repositorio
+                    .LogisticaMetObtenerTodos()
+                    .Any(A =>
+                        A.Fk_Detalle_Viaje_Codigo ==
+                            Datos.FkDetalleViajeCodigo &&
+
+                        A.Fk_Lote_Producto_Codigo ==
+                            Datos.FkLoteProductoCodigo &&
+
+                        A.IdDetalleViajeLoteProducto !=
+                            Datos.IdDetalleViajeLoteProducto);
+
+                if (ExisteLoteAsignado)
+                {
+                    throw new ValidationException(
+                        "Este lote ya está asignado " +
+                        "al detalle de viaje seleccionado.");
+                }
+
             }
 
             var Contexto = new ValidationContext(Datos);

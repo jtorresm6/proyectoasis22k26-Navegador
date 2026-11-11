@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><meta name="GENERATOR" content="Microsoft HTML Help Workshop"></HEAD><BODY>
+<OBJECT type="text/site properties"><param name="ImageType" value="Folder"></OBJECT>
+<UL><LI><OBJECT type="text/sitemap"><param name="Name" value="Logistica - Transporte Interno"><param name="Local" value="FrmTransporteInterno_Logistica.htm"></OBJECT>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="1. Introducción"><param name="Local" value="FrmTransporteInterno_Logistica.htm#introduccion"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="2. Ingresar un transporte"><param name="Local" value="FrmTransporteInterno_Logistica.htm#ingresar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="3. Completar los datos del vehículo"><param name="Local" value="FrmTransporteInterno_Logistica.htm#campos"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="4. Confirmar el guardado"><param name="Local" value="FrmTransporteInterno_Logistica.htm#confirmar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="5. Mensaje de guardado exitoso"><param name="Local" value="FrmTransporteInterno_Logistica.htm#exito"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="6. Verificar el registro en la tabla"><param name="Local" value="FrmTransporteInterno_Logistica.htm#resultado"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="7. Consultar transportes"><param name="Local" value="FrmTransporteInterno_Logistica.htm#consultar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="8. Utilizar la ventana de consultas"><param name="Local" value="FrmTransporteInterno_Logistica.htm#filtros"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="9. Revisar resultados filtrados"><param name="Local" value="FrmTransporteInterno_Logistica.htm#resultadofiltro"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="10. Modificar un transporte"><param name="Local" value="FrmTransporteInterno_Logistica.htm#modificar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="11. Eliminar un transporte"><param name="Local" value="FrmTransporteInterno_Logistica.htm#eliminar"></OBJECT>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="5016 - Conductores"><param name="Local" value="FrmConductor_Logistica.htm"></OBJECT>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="1. Introducción"><param name="Local" value="FrmConductor_Logistica.htm#introduccion"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="2. Ingresar un conductor"><param name="Local" value="FrmConductor_Logistica.htm#ingresar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="3. Completar los datos del conductor"><param name="Local" value="FrmConductor_Logistica.htm#campos"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="4. Confirmar el ingreso"><param name="Local" value="FrmConductor_Logistica.htm#confirmar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="5. Verificar el guardado exitoso"><param name="Local" value="FrmConductor_Logistica.htm#exito"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="6. Revisar el nuevo registro en la tabla"><param name="Local" value="FrmConductor_Logistica.htm#resultado"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="7. Consultar conductores"><param name="Local" value="FrmConductor_Logistica.htm#consultar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="8. Modificar un conductor"><param name="Local" value="FrmConductor_Logistica.htm#modificar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="9. Confirmar una modificación exitosa"><param name="Local" value="FrmConductor_Logistica.htm#modificacionguardada"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="10. Eliminar un conductor"><param name="Local" value="FrmConductor_Logistica.htm#eliminar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Referencia de campos"><param name="Local" value="FrmConductor_Logistica.htm#referencia"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Otros botones"><param name="Local" value="FrmConductor_Logistica.htm#botones"></OBJECT>
+</UL>
+
+<LI><OBJECT type="text/sitemap"><param name="Name" value="5028 - Cámaras de Refrigeración"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm"></OBJECT>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="1. Introducción"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#introduccion"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="2. Ingresar una cámara de refrigeración"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#ingresar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="3. Completar los campos"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#campos"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="4. Confirmar el ingreso"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#confirmar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="5. Mensaje de guardado exitoso"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#exito"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="6. Verificar la cámara en el listado"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#resultado"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="7. Consultar cámaras con filtros"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#consultar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="8. Modificar una cámara de refrigeración"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#modificar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="9. Eliminar una cámara"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#eliminar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="10. Referencia de campos"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#referencia"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="11. Otros botones y recomendaciones"><param name="Local" value="FrmCamaraRefrigeracion_Logistica.htm#botones"></OBJECT>
+</UL>
+
+<LI><OBJECT type="text/sitemap"><param name="Name" value="5015 - Tipos de Transporte"><param name="Local" value="FrmTipoTransporte_Logistica.htm"></OBJECT>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="1. Introducción"><param name="Local" value="FrmTipoTransporte_Logistica.htm#introduccion"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="2. Ingresar un tipo de transporte"><param name="Local" value="FrmTipoTransporte_Logistica.htm#ingresar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="3. Completar los datos"><param name="Local" value="FrmTipoTransporte_Logistica.htm#campos"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="4. Confirmar el ingreso"><param name="Local" value="FrmTipoTransporte_Logistica.htm#confirmar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="5. Mensaje de guardado exitoso"><param name="Local" value="FrmTipoTransporte_Logistica.htm#exito"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="6. Verificar el registro en el listado"><param name="Local" value="FrmTipoTransporte_Logistica.htm#resultado"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="7. Consultar tipos de transporte"><param name="Local" value="FrmTipoTransporte_Logistica.htm#consultar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="8. Modificar un tipo de transporte"><param name="Local" value="FrmTipoTransporte_Logistica.htm#modificar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="9. Eliminar un tipo de transporte"><param name="Local" value="FrmTipoTransporte_Logistica.htm#eliminar"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="10. Referencia de campos"><param name="Local" value="FrmTipoTransporte_Logistica.htm#referencia"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="11. Otros botones y recomendaciones"><param name="Local" value="FrmTipoTransporte_Logistica.htm#botones"></OBJECT>
+</UL>
+</UL></BODY></HTML>

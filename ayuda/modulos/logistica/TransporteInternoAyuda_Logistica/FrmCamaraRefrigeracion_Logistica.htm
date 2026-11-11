@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Ayuda: Cámaras de Refrigeración | Logística</title>
+<style type="text/css">
+body{font-family:Arial,Helvetica,sans-serif;color:#342c26;background:#FAF7F2;margin:0;padding:0;line-height:1.55}
+.contenido{max-width:960px;margin:0 auto;padding:18px 24px 44px;background:#FAF7F2}
+.portada{text-align:center;margin:0 auto 22px}.portada img{width:100%;max-width:440px;height:auto;border:0}
+h1{color:#348F8D;font-size:27px;margin:12px 0 7px}h2{color:#348F8D;font-size:20px;margin:0 0 12px}
+p{margin:10px 0 14px}.subtitulo{font-weight:bold;color:#70341f}.indice{padding:12px 18px;background:#f2e9d9;border-left:4px solid #D96E35;margin:20px 0 24px}
+.indice a{color:#71321b;text-decoration:underline}.indice li{padding:2px 0}
+section{margin:22px 0 32px;padding:13px 14px;background:#fff;border:1px solid #dfd1c4}
+section img{display:block;width:100%;max-width:900px;height:auto;border:1px solid #ddd;margin-top:12px}
+.nota{background:#F2E9D9;border-left:4px solid #348F8D;padding:10px 14px;margin:12px 0}
+.tabla{border-collapse:collapse;width:100%;background:#fff}.tabla td,.tabla th{padding:7px;border:1px solid #d8c6b7;text-align:left;vertical-align:top}.tabla th{background:#348F8D;color:#fff}
+.pie{color:#71321b;font-size:12px;border-top:2px solid #D96E35;padding-top:8px;margin-top:30px}
+</style>
+</head>
+<body><div class="contenido">
+<div class="portada"><img src="Imagenes/portada.png" alt="Embutidos de Calidad, S. A. - Manual de Ayudas"></div>
+<h1>Ayuda: Cámaras de Refrigeración</h1>
+<p class="subtitulo">Módulo Logística | Formulario 5028 – Cámaras de Refrigeración | tblCamaraRefrigeracion</p>
+<p>Esta ayuda explica paso a paso el uso del mantenimiento de equipos de refrigeración, mediante capturas reales del sistema.</p>
+<div class="indice"><strong>Contenido</strong><ol>
+<li><a href="#introduccion">1. Introducción</a></li>
+<li><a href="#ingresar">2. Ingresar una cámara de refrigeración</a></li>
+<li><a href="#campos">3. Completar los campos</a></li>
+<li><a href="#confirmar">4. Confirmar el ingreso</a></li>
+<li><a href="#exito">5. Mensaje de guardado exitoso</a></li>
+<li><a href="#resultado">6. Verificar la cámara en el listado</a></li>
+<li><a href="#consultar">7. Consultar cámaras con filtros</a></li>
+<li><a href="#modificar">8. Modificar una cámara de refrigeración</a></li>
+<li><a href="#eliminar">9. Eliminar una cámara</a></li>
+<li><a href="#referencia">10. Referencia de campos</a></li>
+<li><a href="#botones">11. Otros botones y recomendaciones</a></li>
+</ol></div>
+<section id="introduccion">
+<h2>1. Introducción</h2>
+<p>El mantenimiento de Cámaras de Refrigeración permite administrar equipos de refrigeración asociados a vehículos de transporte interno, sus rangos de temperatura y su estado operativo. En la barra superior están las funciones del Navegador y el listado aparece en la parte inferior.</p>
+<img src="Imagenes/22_camaras_inicio.png" alt="Pantalla principal del mantenimiento 5028 – Cámaras de Refrigeración.">
+<p><em>Pantalla principal del mantenimiento 5028 – Cámaras de Refrigeración.</em></p>
+</section>
+<section id="ingresar">
+<h2>2. Ingresar una cámara de refrigeración</h2>
+<p>Presione <strong>Ingresar</strong> para abrir el formulario <strong>Nuevo registro – tblCamaraRefrigeracion</strong>. En el área de captura se muestran los campos disponibles; debajo puede consultar los registros existentes.</p>
+<img src="Imagenes/23_camaras_ingresar.png" alt="Formulario vacío para registrar una cámara de refrigeración.">
+<p><em>Formulario vacío para registrar una cámara de refrigeración.</em></p>
+</section>
+<section id="campos">
+<h2>3. Completar los campos</h2>
+<p>Seleccione el transporte en <strong>Fk_Transporte_Codigo</strong>. Ingrese la marca del equipo, la temperatura mínima y máxima en grados Celsius y el estado operativo. Compruebe que la temperatura mínima sea coherente con la máxima. El campo <strong>idCamaraRefrigeracion</strong> identifica el registro; revise el valor que presenta el sistema.</p>
+<img src="Imagenes/23_camaras_ingresar.png" alt="Campos del mantenimiento de cámaras de refrigeración.">
+<p><em>Campos del mantenimiento de cámaras de refrigeración.</em></p>
+</section>
+<section id="confirmar">
+<h2>4. Confirmar el ingreso</h2>
+<p>Después de verificar la información, pulse <strong>Guardar</strong>. Aparecerá un mensaje de confirmación que resume los datos a ingresar en <strong>tblCamaraRefrigeracion</strong>. Seleccione <strong>Sí</strong> para confirmar o <strong>No</strong> para cancelar.</p>
+<img src="Imagenes/24_camaras_confirmar.png" alt="Cuadro de confirmación antes de guardar la cámara.">
+<p><em>Cuadro de confirmación antes de guardar la cámara.</em></p>
+</section>
+<section id="exito">
+<h2>5. Mensaje de guardado exitoso</h2>
+<p>Si el registro se guarda correctamente, el sistema muestra <strong>Registro guardado correctamente</strong>. Pulse <strong>OK</strong> para continuar.</p>
+<img src="Imagenes/25_camaras_guardado_exitoso.png" alt="Mensaje de guardado exitoso del equipo.">
+<p><em>Mensaje de guardado exitoso del equipo.</em></p>
+</section>
+<section id="resultado">
+<h2>6. Verificar la cámara en el listado</h2>
+<p>Después de guardar, compruebe que la cámara aparezca en la tabla inferior con el transporte asociado, la marca del equipo, su temperatura mínima, máxima y estado operativo. En la captura aparece el registro de ejemplo <strong>ThermoKing 11</strong>.</p>
+<img src="Imagenes/26_camaras_listado.png" alt="Listado de cámaras tras el registro.">
+<p><em>Listado de cámaras tras el registro.</em></p>
+</section>
+<section id="consultar">
+<h2>7. Consultar cámaras con filtros</h2>
+<p>Presione <strong>Consultar</strong> para abrir la ventana <strong>4000 – Consultas</strong>. Elija el <strong>Campo</strong>, <strong>Operador</strong> y <strong>Valor</strong>; luego presione <strong>Buscar</strong>. En el ejemplo se busca el identificador <strong>idCamaraRefrigeracion = 2</strong> y se muestra un resultado.</p>
+<img src="Imagenes/27_camaras_consulta.png" alt="Consulta filtrada por identificador de cámara.">
+<p><em>Consulta filtrada por identificador de cámara.</em></p>
+</section>
+<section id="modificar">
+<h2>8. Modificar una cámara de refrigeración</h2>
+<p>Seleccione el registro de la tabla y presione <strong>Modificar</strong>. El formulario mostrará los datos del registro seleccionado. Actualice los campos permitidos y pulse <strong>Guardar</strong> para aplicar los cambios. El identificador principal permanece como referencia del registro.</p>
+<img src="Imagenes/28_camaras_modificar.png" alt="Formulario para modificar una cámara existente.">
+<p><em>Formulario para modificar una cámara existente.</em></p>
+</section>
+<section id="eliminar">
+<h2>9. Eliminar una cámara</h2>
+<p>Seleccione la cámara correspondiente y presione <strong>Eliminar</strong>. Confirme la operación solo si el registro seleccionado es el correcto. La imagen muestra el mensaje <strong>Registro eliminado correctamente</strong> después de la eliminación. Tenga presente que las relaciones con otros registros pueden impedir eliminar una cámara en algunos casos.</p>
+<img src="Imagenes/29_camaras_eliminacion_exitosa.png" alt="Mensaje de eliminación exitosa.">
+<p><em>Mensaje de eliminación exitosa.</em></p>
+</section>
+<section id="referencia"><h2>10. Referencia de campos</h2>
+<table class="tabla"><tr><th>Campo</th><th>Función</th></tr>
+<tr><td><code>idCamaraRefrigeracion</code></td><td>Identificador principal de la cámara.</td></tr>
+<tr><td><code>Fk_Transporte_Codigo</code></td><td>Vehículo al que se encuentra asociado el equipo de refrigeración.</td></tr>
+<tr><td><code>marcaEquipoCamaraRefrigeracion</code></td><td>Marca o nombre comercial del equipo.</td></tr>
+<tr><td><code>tempMinimaCelsiusCamaraRefrigeracion</code></td><td>Límite inferior de temperatura indicado en grados Celsius.</td></tr>
+<tr><td><code>tempMaximaCelsiusCamaraRefrigeracion</code></td><td>Límite superior de temperatura indicado en grados Celsius.</td></tr>
+<tr><td><code>estadoOperativoCamaraRefrigeracion</code></td><td>Condición operativa registrada para el equipo.</td></tr>
+<tr><td><code>created_at / updated_at</code></td><td>Fechas de creación y actualización del registro, según la tabla y el sistema.</td></tr>
+</table></section>
+<section id="botones"><h2>11. Otros botones y recomendaciones</h2>
+<p><strong>Cancelar:</strong> interrumpe una captura o edición. <strong>Refrescar:</strong> actualiza el listado. <strong>Inicio, Anterior, Siguiente y Fin:</strong> permiten recorrer registros. <strong>Imprimir:</strong> accede a la impresión disponible en el Navegador. <strong>Ayuda:</strong> abre la documentación del formulario. <strong>Salir:</strong> cierra el mantenimiento.</p>
+<div class="nota"><strong>Recomendaciones:</strong> seleccione correctamente el transporte, verifique la temperatura mínima y máxima, revise el estado operativo y confirme el registro en la tabla antes de salir. Al eliminar, asegúrese de haber seleccionado la cámara correcta.</div>
+</section>
+<div class="pie">Embutidos de Calidad, S. A. · Proyecto Terminus · Ayudas de Logística</div>
+</div></body></html>

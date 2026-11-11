@@ -54,6 +54,11 @@
     <Compile Include="Modelos de Controladores\ClsDatosTelemetriaTemperatura.cs" />
     <Compile Include="Modelos de Controladores\ClsOpcionCatalogo.cs" />
     <Compile Include="Modelos de Controladores\ClsOpcionCatalogoLote.cs" />
+    <Compile Include="Modelos de Controladores\ClsValidacionesAlertaCadenaFrio.cs" />
+    <Compile Include="Modelos de Controladores\ClsValidacionesDetalleViaje.cs" />
+    <Compile Include="Modelos de Controladores\ClsValidacionesDetalleViajeLoteProducto.cs" />
+    <Compile Include="Modelos de Controladores\ClsValidacionesEncabezadoViaje.cs" />
+    <Compile Include="Modelos de Controladores\ClsValidacionesTelemetria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
