@@ -1,0 +1,34 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=..\CierreMovimientos.chm
+Contents file=CierreMovimientos.hhc
+Index file=CierreMovimientos.hhk
+Default topic=html\00_inicio.html
+Display compile progress=No
+Full-text search=Yes
+Language=0x100a Spanish (Guatemala)
+Title=Ayuda de Cierre de Movimientos
+Default Window=Ayuda Cierre
+
+[WINDOWS]
+Ayuda Cierre="Ayuda de Cierre de Movimientos","CierreMovimientos.hhc","CierreMovimientos.hhk","html\00_inicio.html",,,,,,0x23520,,0xc387e,,,,,,,,0
+
+[FILES]
+css\estilos.css
+html\00_inicio.html
+html\01_confirmar.html
+html\02_traslado.html
+html\03_errores.html
+html\04_historial.html
+imagenes\iconoCierreMovimientosVentas.png
+imagenes\logoEmpresa.png
+imagenes\mascotaVentas.png
+imagenes\botones\OriginalRefrescarVentas.png
+imagenes\botones\OriginalGuardarVentas.png
+imagenes\botones\OriginalImprimirVentas.png
+imagenes\capturas\01_periodo.png
+imagenes\capturas\02_revision.png
+imagenes\capturas\03_poliza.png
+imagenes\capturas\04_historial.png
+
+[INFOTYPES]

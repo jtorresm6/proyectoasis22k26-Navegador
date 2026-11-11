@@ -39,15 +39,11 @@ namespace CapaVista_Ventas
 #else
                 const string Configuracion = "Release";
 #endif
-                string RutaModulo = Path.GetFullPath(Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory,
-                    @"..\..\..\..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin\" +
-                    Configuracion + @"\CapaVista_CierreMovimientos.dll"));
+                string RutaModulo = VentasFuncRutaModuloCierre(Configuracion);
 
-                if (!File.Exists(RutaModulo))
+                if (RutaModulo == null)
                     throw new FileNotFoundException(
-                        "No se encontró la DLL de Cierre de movimientos. Compile el módulo de Cierre de Ventas.",
-                        RutaModulo);
+                        "No se encontró CapaVista_CierreMovimientos.dll. Compile Cierre de movimientos y ejecute Ventas desde Seguridad con las DLL del módulo disponibles.");
 
                 _DirectorioCierreMovimientos = Path.GetDirectoryName(RutaModulo);
                 if (!_ResolverCierreRegistrado)
@@ -76,6 +72,45 @@ namespace CapaVista_Ventas
 
                 return _ModuloCierreMovimientos;
             }
+        }
+
+        // Seguridad puede iniciar Ventas desde otra carpeta; se busca la solución MVC desde ambos ensamblados.
+        private static string VentasFuncRutaModuloCierre(string Configuracion)
+        {
+            const string Archivo = "CapaVista_CierreMovimientos.dll";
+            string[] Bases =
+            {
+                AppDomain.CurrentDomain.BaseDirectory,
+                Path.GetDirectoryName(typeof(FrmMdiVentas).Assembly.Location)
+            };
+            string[] RutasModulo =
+            {
+                @"codigo\modulos\ventas\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin",
+                @"modulos\ventas\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin",
+                @"ventas\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin",
+                @"Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin",
+                @"CierreMovimientos\CapaVista_CierreMovimientos\bin"
+            };
+
+            foreach (string Base in Bases)
+            {
+                if (String.IsNullOrWhiteSpace(Base)) continue;
+                for (DirectoryInfo Carpeta = new DirectoryInfo(Base); Carpeta != null; Carpeta = Carpeta.Parent)
+                    foreach (string Ruta in RutasModulo)
+                    {
+                        string Candidato = Path.Combine(Carpeta.FullName, Ruta, Configuracion, Archivo);
+                        if (File.Exists(Candidato)) return Candidato;
+                    }
+            }
+
+            foreach (string Base in Bases)
+                if (!String.IsNullOrWhiteSpace(Base))
+                {
+                    string Local = Path.Combine(Base, Archivo);
+                    if (File.Exists(Local)) return Local;
+                }
+
+            return null;
         }
 
         private static Assembly VentasMetResolverEnsambladoCierre(object Origen, ResolveEventArgs Argumentos)

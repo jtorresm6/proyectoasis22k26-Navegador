@@ -357,4 +357,10 @@
         keQ1bJERAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="BotonOriginalImprimirVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\ImprimirVentas.png;System.Drawing.Bitmap, System.Drawing</value>
+  </data>
+  <data name="BotonOriginalCancelarVentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\..\..\..\..\recursos\modulos\ventas\botones\referencias\CancelarVentas.png;System.Drawing.Bitmap, System.Drawing</value>
+  </data>
 </root>
