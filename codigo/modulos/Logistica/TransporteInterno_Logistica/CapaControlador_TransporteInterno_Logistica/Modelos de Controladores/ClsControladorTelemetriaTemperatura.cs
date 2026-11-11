@@ -104,7 +104,7 @@ namespace CapaControlador_TransporteInterno_Logistica.Modelos_de_Controladores
         public string LogisticaFuncAgregar(
             ClsDatosTelemetriaTemperatura Datos)
         {
-            LogisticaProcValidar(Datos);
+            ClsValidacionesTelemetria.LogisticaProcValidar(Datos);
 
             ClsTelemetriaTemperatura Entidad =
                 LogisticaFuncConvertirEntidad(Datos);
@@ -135,7 +135,7 @@ namespace CapaControlador_TransporteInterno_Logistica.Modelos_de_Controladores
                     "Seleccione un registro de telemetría válido.");
             }
 
-            LogisticaProcValidar(Datos);
+            ClsValidacionesTelemetria.LogisticaProcValidar(Datos);
 
             ClsTelemetriaTemperatura Entidad =
                 LogisticaFuncConvertirEntidad(Datos);

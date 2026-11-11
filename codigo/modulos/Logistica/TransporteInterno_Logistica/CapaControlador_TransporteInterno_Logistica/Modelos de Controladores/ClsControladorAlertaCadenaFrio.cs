@@ -195,8 +195,7 @@ namespace CapaControlador_TransporteInterno_Logistica.Modelos_de_Controladores
         {
             if (Datos == null)
             {
-                throw new ValidationException(
-                    "Complete los datos de la alerta.");
+                ClsValidacionesAlertaCadenaFrio.LogisticaProcValidar(Datos);
             }
 
             var Contexto = new ValidationContext(Datos);
