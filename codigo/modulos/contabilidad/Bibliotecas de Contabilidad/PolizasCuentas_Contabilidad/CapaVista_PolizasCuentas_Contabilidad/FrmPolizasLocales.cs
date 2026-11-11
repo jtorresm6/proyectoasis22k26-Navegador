@@ -93,6 +93,13 @@ namespace CapaVista_Contabilidad
             // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 02/11/2026
             foreach (Control Campo in new Control[] { ContabilidadTxtDescripcion, ContabilidadDtpFecha, ContabilidadCboEstado, ContabilidadCboOrigen, ContabilidadCboCuenta })
                 _Validacion.ContabilidadMetObligatorio(Campo);
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            _Validacion.ContabilidadFuncValidar(ContabilidadDtpFecha, null);
+            Control ErrorFecha = ContabilidadPnlEncabezado.Controls["ContabilidadLblError" + ContabilidadDtpFecha.Name];
+            if (ErrorFecha != null) ErrorFecha.Width = 460;
+            ContabilidadDtpFecha.ValueChanged += (Remitente, Argumentos) => ContabilidadFuncValidarFecha();
+            ContabilidadTxtDescripcion.TextChanged += (Remitente, Argumentos) => ContabilidadMetActualizarContador();
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
             // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 28/10/2026
             Disposed += (Remitente, Argumentos) => { _Validacion.Dispose(); _PermisosBotones.Dispose(); };
             // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 28/10/2026
@@ -147,6 +154,10 @@ namespace CapaVista_Contabilidad
             // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 28/10/2026
             ClsPermisosMenuContabilidad.ContabilidadMetRestringir(ContabilidadBtnAplicar, Permisos.PuedeEditar);
             ClsPermisosMenuContabilidad.ContabilidadMetRestringir(ContabilidadBtnLimpiarDetalle, Permisos.PuedeEliminar);
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            foreach (Button Boton in new[] { ContabilidadBtnAgregar, ContabilidadBtnAplicar, ContabilidadBtnLimpiarDetalle })
+                ClsPermisosMenuContabilidad.ContabilidadMetGrisAlDeshabilitar(Boton);
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
         }
 
         private void ContabilidadMetCargarCatalogos()
@@ -186,6 +197,24 @@ namespace CapaVista_Contabilidad
         {
             ContabilidadTxtPeriodo.Text = _Controlador.ContabilidadFuncObtenerPeriodo(ContabilidadDtpFecha.Value);
         }
+
+        // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+        // Marca la fecha si queda antes del arranque del sistema
+        private bool ContabilidadFuncValidarFecha()
+        {
+            if (!_Editando) return true;
+            return _Validacion.ContabilidadFuncValidar(ContabilidadDtpFecha, _Controlador.ContabilidadFuncErrorFecha(ContabilidadDtpFecha.Value));
+        }
+
+        // Cuenta los caracteres de la descripción
+        private void ContabilidadMetActualizarContador()
+        {
+            int Usados = ContabilidadTxtDescripcion.TextLength;
+            ContabilidadLblContadorDescripcion.Text = Usados + " / " + ContabilidadTxtDescripcion.MaxLength;
+            ContabilidadLblContadorDescripcion.ForeColor = Usados >= ContabilidadTxtDescripcion.MaxLength
+                ? Color.Firebrick : ContabilidadLblDescripcion.ForeColor;
+        }
+        // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
 
         private void ContabilidadMetAgregarCuenta(object Remitente, EventArgs Argumentos)
         {
@@ -340,6 +369,9 @@ namespace CapaVista_Contabilidad
             _Editando = _Permisos.PuedeInsertar;
             // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 28/10/2026
             ContabilidadMetLimpiarDetalle(Remitente, Argumentos);
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            ContabilidadDtpFecha.MaxDate = _Controlador.ContabilidadFuncFechaMaxima();
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
             ContabilidadDtpFecha.Value = DateTime.Today;
             ContabilidadMetActualizarPeriodo(this, EventArgs.Empty);
             ContabilidadCboEstado.SelectedItem = "BORRADOR";
@@ -385,6 +417,10 @@ namespace CapaVista_Contabilidad
             foreach (ClsModeloLineaPolizaContabilidad Linea in Poliza.Lineas) _Lineas.Add(Linea);
             _Lineas.RaiseListChangedEvents = true;
             _Lineas.ResetBindings();
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            DateTime Maxima = _Controlador.ContabilidadFuncFechaMaxima();
+            ContabilidadDtpFecha.MaxDate = Poliza.Fecha > Maxima ? Poliza.Fecha : Maxima;
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
             ContabilidadDtpFecha.Value = Poliza.Fecha;
             ContabilidadTxtPeriodo.Text = Poliza.Periodo;
             ContabilidadCboEstado.SelectedItem = Poliza.Estado;
@@ -499,6 +535,9 @@ namespace CapaVista_Contabilidad
 
             if (!_Validacion.ContabilidadFuncValidar(ContabilidadTxtDescripcion,
                 string.IsNullOrWhiteSpace(ContabilidadTxtDescripcion.Text) ? "Escriba la descripción de la póliza." : null)) return;
+            // Inicio de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
+            if (!ContabilidadFuncValidarFecha()) return;
+            // Fin de cambio: Oskar Cermeño - 0901-23-15379 - 10/11/2026
 
             string Motivo = _Controlador.ContabilidadFuncValidar(ContabilidadTxtDescripcion.Text, _Lineas);
             if (!string.IsNullOrEmpty(Motivo))

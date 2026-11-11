@@ -34,128 +34,9 @@
             }
         }
 
-        internal static System.Drawing.Bitmap ico_aplicar {
-            get {
-                object obj = ResourceManager.GetObject("ico_aplicar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
         internal static System.Drawing.Bitmap ico_guardar {
             get {
                 object obj = ResourceManager.GetObject("ico_guardar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap ico_limpiar_oscuro {
-            get {
-                object obj = ResourceManager.GetObject("ico_limpiar_oscuro", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_ingresar {
-            get {
-                object obj = ResourceManager.GetObject("nav_ingresar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_consultar {
-            get {
-                object obj = ResourceManager.GetObject("nav_consultar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_modificar {
-            get {
-                object obj = ResourceManager.GetObject("nav_modificar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_eliminar {
-            get {
-                object obj = ResourceManager.GetObject("nav_eliminar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_guardar {
-            get {
-                object obj = ResourceManager.GetObject("nav_guardar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_cancelar {
-            get {
-                object obj = ResourceManager.GetObject("nav_cancelar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_refrescar {
-            get {
-                object obj = ResourceManager.GetObject("nav_refrescar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_imprimir {
-            get {
-                object obj = ResourceManager.GetObject("nav_imprimir", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_ayuda {
-            get {
-                object obj = ResourceManager.GetObject("nav_ayuda", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_inicio {
-            get {
-                object obj = ResourceManager.GetObject("nav_inicio", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_anterior {
-            get {
-                object obj = ResourceManager.GetObject("nav_anterior", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_siguiente {
-            get {
-                object obj = ResourceManager.GetObject("nav_siguiente", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_fin {
-            get {
-                object obj = ResourceManager.GetObject("nav_fin", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap nav_salir {
-            get {
-                object obj = ResourceManager.GetObject("nav_salir", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
-        internal static System.Drawing.Bitmap ico_mas {
-            get {
-                object obj = ResourceManager.GetObject("ico_mas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -178,6 +59,132 @@
             get {
                 object obj = ResourceManager.GetObject("Icono_Contabilidad", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_aceptar {
+            get {
+                object obj = ResourceManager.GetObject("btn_aceptar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_anterior {
+            get {
+                object obj = ResourceManager.GetObject("btn_anterior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_ayuda {
+            get {
+                object obj = ResourceManager.GetObject("btn_ayuda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_cancelar {
+            get {
+                object obj = ResourceManager.GetObject("btn_cancelar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_consultar {
+            get {
+                object obj = ResourceManager.GetObject("btn_consultar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_descartar {
+            get {
+                object obj = ResourceManager.GetObject("btn_descartar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_eliminar {
+            get {
+                object obj = ResourceManager.GetObject("btn_eliminar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_fin {
+            get {
+                object obj = ResourceManager.GetObject("btn_fin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_guardar {
+            get {
+                object obj = ResourceManager.GetObject("btn_guardar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_imprimir {
+            get {
+                object obj = ResourceManager.GetObject("btn_imprimir", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_ingresar {
+            get {
+                object obj = ResourceManager.GetObject("btn_ingresar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_inicio {
+            get {
+                object obj = ResourceManager.GetObject("btn_inicio", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_modificar {
+            get {
+                object obj = ResourceManager.GetObject("btn_modificar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_nuevo {
+            get {
+                object obj = ResourceManager.GetObject("btn_nuevo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_refrescar {
+            get {
+                object obj = ResourceManager.GetObject("btn_refrescar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_salir {
+            get {
+                object obj = ResourceManager.GetObject("btn_salir", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_siguiente {
+            get {
+                object obj = ResourceManager.GetObject("btn_siguiente", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap btn_ver {
+            get {
+                object obj = ResourceManager.GetObject("btn_ver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
