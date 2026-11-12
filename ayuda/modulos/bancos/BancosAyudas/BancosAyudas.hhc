@@ -69,6 +69,14 @@
 			<param name="Name" value="MovimientoBancario_Bancos">
 			<param name="Local" value="MovimientoBancario_Bancos.html">
 			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="DisponibilidadDiaria_Bancos">
+			<param name="Local" value="DisponibilidadDiaria_Bancos.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="TipoCambio_Bancos">
+			<param name="Local" value="TipoCambio_Bancos.html">
+			</OBJECT>
 	</UL>
 </UL>
 </BODY></HTML>

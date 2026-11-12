@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using CapaControlador_DisponibilidadDiariaBancos;
 using CapaControlador_TipoCambio;
 using CapaVista_Navegador;
+using CapaVista_DisponibilidadDiaria.FrmReportes;
 using CapaModelo_DisponibilidadDiariaBancos.Entidades;
 
 namespace CapaVista_DisponibilidadDiaria.Formularios
@@ -490,7 +491,10 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
         {
             DataTable tabla = BancosMetTablaExportable();
             if (tabla != null && tabla.Rows.Count > 0)
-                BancosMetVistaPrevia(tabla, "Disponibilidad diaria · " + _resultado.Fecha.ToString("dd/MM/yyyy"));
+            {
+                using (var reporte = new FrmReporteDisponibilidadDiaria(tabla, "Disponibilidad diaria · " + _resultado.Fecha.ToString("dd/MM/yyyy")))
+                    reporte.ShowDialog(this);
+            }
         }
         private void BancosBtnFooterAyuda_Click(object sender, EventArgs e)
         {

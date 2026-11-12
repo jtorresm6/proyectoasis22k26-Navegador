@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link href="Css/style.css" rel="stylesheet" type="text/css">
+    <title>Ayudas - Tipo de Cambio</title>
+</head>
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png">
+        <img class="imgButti" src="Imagenes/LogoYMascota/butti2.png">
+        <h1>Procesos</h1>
+        <h1>Ayudas - Tipo de Cambio</h1>
+    </center>
+    <br>
+    <div class="container">
+        <h2>Descripción</h2>
+        <p>El proceso <strong>Tipo de Cambio</strong> permite consultar las cotizaciones del Banco de Guatemala, analizar su comportamiento histórico y convertir importes entre monedas. La ventana corresponde al proceso 8010.</p>
+        <p>La tasa se muestra en GTQ por una unidad de la moneda seleccionada. Cuando existe una cotización directa se identifica como <strong>DIRECTA</strong>; para otras monedas se calcula un cruce con el promedio de compra y venta y la referencia USD/GTQ de la misma fecha.</p>
+
+        <h2>Tasas actuales: consulta general</h2>
+        <p>1. Abra la pestaña <strong>Tasas actuales</strong>.</p>
+        <p>2. Seleccione la fecha de consulta, la moneda o “Todas las monedas” y la moneda base.</p>
+        <p>3. Presione <strong>Consultar</strong>. El sistema muestra el total de tasas disponibles, la moneda base, la fecha consultada y la tabla de tasas publicadas y calculadas.</p>
+        <p>4. La tabla identifica código, nombre, tasa en GTQ, fecha, fuente, estado y método.</p>
+        <img class="imgVentanaMDI" src="Imagenes/TipoCambio/TasasActuales_Todas.png">
+        <br><br><br>
+
+        <h2>Consulta de una moneda</h2>
+        <p>Para revisar una sola moneda, elija el código en el selector y presione <strong>Consultar</strong>. El detalle inferior muestra el código, nombre, tasa, fecha, fuente y método de cálculo.</p>
+        <img class="imgVentanaMDI" src="Imagenes/TipoCambio/TasasActuales_USD.png">
+        <br><br><br>
+
+        <h2>Buscar moneda o categoría</h2>
+        <p>Escriba el código o parte del nombre en <strong>Buscar moneda / categoría</strong>. El selector permite conservar todas las categorías, y la casilla <strong>Mostrar monedas sin tasa</strong> incluye las monedas que no tienen cotización para la fecha consultada.</p>
+        <img class="imgVentanaMDI" src="Imagenes/TipoCambio/TasasActuales_Busqueda.png">
+        <br><br><br>
+
+        <h2>Actualizar desde Banguat</h2>
+        <p>Presione el botón <strong>Actualizar desde Banguat</strong> para consultar nuevamente la fuente oficial. La fecha, hora de última consulta y fuente aparecen en el panel derecho. Después de actualizar, vuelva a presionar <strong>Consultar</strong> para refrescar la tabla de la pestaña.</p>
+        <p>La actualización necesita conexión a internet. Si el servicio no responde, conserve las tasas históricas disponibles y vuelva a intentar más tarde.</p>
+
+        <h2>Histórico</h2>
+        <p>La pestaña <strong>Histórico</strong> permite estudiar un par de monedas dentro de un rango de fechas.</p>
+        <p>1. Seleccione las fechas <strong>Desde</strong> y <strong>Hasta</strong>.</p>
+        <p>2. Seleccione moneda origen y moneda destino.</p>
+        <p>3. Presione <strong>Consultar</strong>.</p>
+        <p>4. Revise los indicadores <strong>Mínima</strong>, <strong>Máxima</strong> y <strong>Variación</strong>. La variación corresponde a la última tasa menos la primera tasa del período.</p>
+        <p>5. La tabla conserva fecha, moneda origen, moneda destino, tasa, fuente, estado y método.</p>
+        <img class="imgVentanaMDI" src="Imagenes/TipoCambio/Historico.png">
+        <br><br><br>
+
+        <h2>Conversor de moneda</h2>
+        <p>Use la pestaña <strong>Conversor</strong> para convertir un importe con una tasa de una fecha específica.</p>
+        <p>1. Escriba el <strong>importe</strong>.</p>
+        <p>2. Seleccione la <strong>moneda origen</strong>.</p>
+        <p>3. Seleccione la <strong>moneda destino</strong>.</p>
+        <p>4. Seleccione la <strong>fecha de la tasa</strong>.</p>
+        <p>5. Presione <strong>Calcular</strong>. El resultado muestra el importe convertido, la tasa aplicada, el par, la fecha, la fuente y la disponibilidad.</p>
+        <p>El botón <strong>Intercambiar</strong> cambia moneda origen por moneda destino. Si no existe una cotización válida para la fecha, el sistema no calcula y solicita corregir la selección.</p>
+        <img class="imgVentanaMDI" src="Imagenes/TipoCambio/Conversor.png">
+        <br><br><br>
+
+        <h2>Reglas de cálculo</h2>
+        <p><strong>GTQ:</strong> utiliza la identidad 1 a 1.</p>
+        <p><strong>USD/GTQ:</strong> utiliza la referencia directa publicada.</p>
+        <p><strong>Otros cruces:</strong> utiliza el promedio de compra y venta junto con la referencia USD/GTQ de la misma fecha.</p>
+        <p>Todos los importes y tasas se muestran con cuatro decimales. La columna <strong>Método</strong> permite distinguir una referencia directa de una tasa cruzada.</p>
+
+        <h2>Exportar y reporte</h2>
+        <p><strong>Exportar</strong> guarda en CSV la información visible de la pestaña actual. <strong>Reporte</strong> abre el formulario de reporte del módulo con la tabla consultada y su vista previa de impresión.</p>
+        <p>Si no hay registros consultados, primero debe realizar una consulta antes de generar el reporte.</p>
+
+        <h2>Ayuda y salir</h2>
+        <p><strong>Ayuda</strong> abre esta guía. <strong>Salir</strong> cierra la ventana de Tipo de Cambio.</p>
+    </div>
+</body>
+</html>

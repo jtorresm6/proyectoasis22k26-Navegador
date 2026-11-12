@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common">
+      <HintPath>..\..\..\..\..\componentes\reporteador\Reporteador\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms">
+      <HintPath>..\..\..\..\..\componentes\reporteador\Reporteador\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -59,6 +67,12 @@
     <Compile Include="Formularios\FrmTipoCambio.Designer.cs">
       <DependentUpon>FrmTipoCambio.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmReportes\FrmReporteTipoCambio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReportes\FrmReporteTipoCambio.Designer.cs">
+      <DependentUpon>FrmReporteTipoCambio.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -70,6 +84,10 @@
     <EmbeddedResource Include="Formularios\FrmTipoCambio.resx">
       <DependentUpon>FrmTipoCambio.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmReportes\FrmReporteTipoCambio.resx">
+      <DependentUpon>FrmReporteTipoCambio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpReporteTipoCambio.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
