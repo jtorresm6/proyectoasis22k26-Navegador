@@ -1,4 +1,4 @@
-/*namespace CapaVista_Seguridad
+namespace CapaVista_Seguridad
 {
     partial class FrmMantenimientoEmpleado
     {
@@ -1161,4 +1161,3 @@
         private System.Windows.Forms.Panel panel1;
     }
 }
-*/

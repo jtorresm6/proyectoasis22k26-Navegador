@@ -1,0 +1,33 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=..\Pedidos.chm
+Contents file=Pedidos.hhc
+Index file=Pedidos.hhk
+Default topic=html\Pedidos_Formulario.html
+Display compile progress=No
+Full-text search=Yes
+Language=0x100a Spanish (Guatemala)
+Title=Ayuda de Pedidos
+
+[FILES]
+css\estilos.css
+html\Pedidos_Formulario.html
+html\Seguimiento_Formulario.html
+imagenes\logoEmpresa.png
+imagenes\mascotaVentas.png
+imagenes\pedidos.png
+imagenes\seguimiento.png
+imagenes\botones\iconoAyudaVentas.png
+imagenes\botones\OriginalIngresarVentas.png
+imagenes\botones\OriginalConsultarVentas.png
+imagenes\botones\OriginalModificarVentas.png
+imagenes\botones\OriginalEliminarVentas.png
+imagenes\botones\OriginalRefrescarVentas.png
+imagenes\botones\OriginalImprimirVentas.png
+imagenes\botones\OriginalAyudaVentas.png
+imagenes\botones\OriginalGuardarVentas.png
+imagenes\botones\OriginalCancelarVentas.png
+imagenes\botones\OriginalSalirVentas.png
+imagenes\botones\botonesSeguimiento.png
+
+[INFOTYPES]

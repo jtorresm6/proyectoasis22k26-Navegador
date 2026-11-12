@@ -1,4 +1,11 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 23/10/2026
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 09/11/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Guardar y consultar los cierres de movimientos.
+ */
+// Natali Sofía Montenegro Portillo | Carné 0901-23-10017 | Cierre de movimientos | 09/11/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 23/10/2026
 using System.Data;
 using System;
 using VentasDatos;
@@ -40,6 +47,12 @@ namespace CapaModelo_CierreMovimientos
         public DataTable VentasFuncCatalogo(string Nombre)
         {
             return _Datos.VentasFuncCatalogo(Nombre);
+        }
+
+        // Natali Montenegro: el país se consulta en la base compartida; no requiere la DLL contable.
+        public DataTable VentasFuncPaisesContables()
+        {
+            return _Datos.VentasFuncTabla("SELECT idPais Id, nombrePais Nombre FROM tblPais WHERE is_active=1 ORDER BY nombrePais");
         }
 
         public int VentasFuncObtenerId()
@@ -167,6 +180,27 @@ namespace CapaModelo_CierreMovimientos
         {
             const string Consulta = @"UPDATE tblCierreMovimientoCxCEncabezado SET documentosRevisadosCierreMovimientoCxCEncabezado=1,idUsuarioResponsable=? WHERE idCierreMovimientoCxCEncabezado=?";
             return _Datos.VentasFuncEjecutar(Consulta, Parametros);
+        }
+
+        // Natali Sofía Montenegro Portillo | 0901-23-10017 | Sustituye la instantánea y la póliza preparadas de un borrador.
+        public int VentasFuncConfirmarLimpiarTrasladoDetalle(int IdCierre)
+        {
+            return _Datos.VentasFuncEjecutar(@"DELETE d FROM tblTrasladoCxCDetalle d JOIN tblTrasladoCxCEncabezado t ON t.idTrasladoCxCEncabezado=d.idTrasladoCxCEncabezado WHERE t.idCierreMovimientoCxCEncabezado=? AND t.estadoTrasladoCxCEncabezado='PREPARADO'", IdCierre);
+        }
+
+        public int VentasFuncConfirmarLimpiarTraslado(int IdCierre)
+        {
+            return _Datos.VentasFuncEjecutar(@"DELETE FROM tblTrasladoCxCEncabezado WHERE idCierreMovimientoCxCEncabezado=? AND estadoTrasladoCxCEncabezado='PREPARADO'", IdCierre);
+        }
+
+        public int VentasFuncConfirmarLimpiarSaldos(int IdCierre)
+        {
+            return _Datos.VentasFuncEjecutar(@"DELETE FROM tblCierreSaldoCliente WHERE idCierreMovimientoCxCEncabezado=?", IdCierre);
+        }
+
+        public int VentasFuncConfirmarLimpiarDetalle(int IdCierre)
+        {
+            return _Datos.VentasFuncEjecutar(@"DELETE FROM tblCierreMovimientoCxCDetalle WHERE idCierreMovimientoCxCEncabezado=?", IdCierre);
         }
 
         public int VentasFuncConfirmarInsertarCierremovimientos(params object[] Parametros)

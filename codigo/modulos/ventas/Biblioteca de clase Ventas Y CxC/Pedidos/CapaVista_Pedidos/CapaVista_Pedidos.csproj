@@ -203,9 +203,6 @@
     <EmbeddedResource Include="Controles\VentasUsrCliente.resx">
       <DependentUpon>VentasUsrCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ayudas\Pedidos.chm">
-      <LogicalName>CapaVista_Pedidos.Ayudas.Pedidos.chm</LogicalName>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RpReporteSeguimientoPedidos.rdlc" />
   </ItemGroup>
   <ItemGroup>

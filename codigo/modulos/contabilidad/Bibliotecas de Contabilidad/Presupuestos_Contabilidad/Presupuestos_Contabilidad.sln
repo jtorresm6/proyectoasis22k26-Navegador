@@ -14,6 +14,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_Presupuestos_Cont
 		{2676C937-C0E2-469E-B0E4-BE165DD1F08B} = {2676C937-C0E2-469E-B0E4-BE165DD1F08B}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas_Presupuestos_Contabilidad", "Pruebas_Presupuestos_Contabilidad\Pruebas_Presupuestos_Contabilidad.csproj", "{7B1F3C4D-5A62-49E8-9D30-6C5F21A4B8E3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2676C937-C0E2-469E-B0E4-BE165DD1F08B} = {2676C937-C0E2-469E-B0E4-BE165DD1F08B}
+		{92316EDC-4BFE-4CA0-A33B-812F84B029AA} = {92316EDC-4BFE-4CA0-A33B-812F84B029AA}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +38,10 @@ Global
 		{92316EDC-4BFE-4CA0-A33B-812F84B029AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92316EDC-4BFE-4CA0-A33B-812F84B029AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92316EDC-4BFE-4CA0-A33B-812F84B029AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B1F3C4D-5A62-49E8-9D30-6C5F21A4B8E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B1F3C4D-5A62-49E8-9D30-6C5F21A4B8E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B1F3C4D-5A62-49E8-9D30-6C5F21A4B8E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B1F3C4D-5A62-49E8-9D30-6C5F21A4B8E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

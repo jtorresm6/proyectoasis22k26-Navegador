@@ -45,11 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modelos de controladores\ClsModeloAutorizacionOrdenCompra.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloCuentaDisponible.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloOrdenCompra.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloTipoCuentaBancaria.cs" />
+    <Compile Include="Objetos de valor\EstadoEntidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modelos de controladores\" />
-    <Folder Include="Objetos de valor\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

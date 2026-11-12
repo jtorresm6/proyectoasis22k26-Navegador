@@ -1,4 +1,11 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 23/10/2026
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 09/11/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Preparar la partida y su estado de traslado.
+ */
+// Consulta del estado contable: Natali Sofía Montenegro Portillo | 0901-23-10017 | 09/11/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 23/10/2026
 using System.Data;
 using System;
 using VentasDatos;
@@ -12,6 +19,21 @@ namespace CapaModelo_CierreMovimientos
         internal ClsContabilidadCierre(ClsDatosVentas Datos)
         {
             _Datos = Datos;
+        }
+
+        public object VentasFuncEstadoCierre(int IdCierre)
+        {
+            return _Datos.VentasFuncEscalar(@"SELECT estadoCierreMovimientoCxCEncabezado FROM tblCierreMovimientoCxCEncabezado WHERE idCierreMovimientoCxCEncabezado=?", IdCierre);
+        }
+
+        public object VentasFuncNumeroCierre(int IdCierre)
+        {
+            return _Datos.VentasFuncEscalar(@"SELECT numeroCierreMovimientoCxCEncabezado FROM tblCierreMovimientoCxCEncabezado WHERE idCierreMovimientoCxCEncabezado=?", IdCierre);
+        }
+
+        public object VentasFuncNumeroCierrePorDocumento(string Documento)
+        {
+            return _Datos.VentasFuncEscalar(@"SELECT c.numeroCierreMovimientoCxCEncabezado FROM tblTrasladoCxCEncabezado t JOIN tblCierreMovimientoCxCEncabezado c ON c.idCierreMovimientoCxCEncabezado=t.idCierreMovimientoCxCEncabezado WHERE t.claveIntegracionTrasladoCxCEncabezado=?", Documento);
         }
 
         // PrepararTraslado: consultas parametrizadas.
@@ -67,7 +89,7 @@ namespace CapaModelo_CierreMovimientos
         // EstadoTraslado: consultas parametrizadas.
         public DataTable VentasFuncEstadoTrasladoConsultarTrasladocxc(params object[] Parametros)
         {
-            const string Consulta = @"SELECT idCierreMovimientoCxCEncabezado idCierre,claveIntegracionTrasladoCxCEncabezado claveIntegracion,estadoTrasladoCxCEncabezado estado,referenciaContableTrasladoCxCEncabezado referenciaContable FROM tblTrasladoCxCEncabezado WHERE idCierreMovimientoCxCEncabezado=?";
+            const string Consulta = @"SELECT idCierreMovimientoCxCEncabezado idCierre,claveIntegracionTrasladoCxCEncabezado claveIntegracion,estadoTrasladoCxCEncabezado estado,referenciaContableTrasladoCxCEncabezado referenciaContable,fechaConfirmacionTrasladoCxCEncabezado fechaConfirmacion FROM tblTrasladoCxCEncabezado WHERE idCierreMovimientoCxCEncabezado=?";
             return _Datos.VentasFuncTabla(Consulta, Parametros);
         }
 

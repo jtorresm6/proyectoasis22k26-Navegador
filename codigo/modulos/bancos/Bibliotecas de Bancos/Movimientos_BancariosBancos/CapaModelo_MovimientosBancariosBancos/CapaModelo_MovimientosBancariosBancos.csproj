@@ -41,12 +41,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contratos\IRepositorioBeneficiario.cs" />
+    <Compile Include="Contratos\IRepositorioConceptoBancario.cs" />
+    <Compile Include="Contratos\IRepositorioCuentaBancariaEmpresa.cs" />
+    <Compile Include="Contratos\IRepositorioGenerico.cs" />
+    <Compile Include="Contratos\IRepositorioMetodoPago.cs" />
+    <Compile Include="Contratos\IRepositorioMovimientoBancario.cs" />
+    <Compile Include="Contratos\IRepositorioTipoTransaccion.cs" />
+    <Compile Include="Entidades\ClsBeneficiario.cs" />
+    <Compile Include="Entidades\ClsConceptoBancario.cs" />
+    <Compile Include="Entidades\ClsCuentaBancariaEmpresa.cs" />
+    <Compile Include="Entidades\ClsCuentaBancariaTercero.cs" />
+    <Compile Include="Entidades\ClsMetodoPago.cs" />
+    <Compile Include="Entidades\ClsRegistroMovimientoBancario.cs" />
+    <Compile Include="Entidades\ClsTipoTransaccion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\ClsConexion.cs" />
+    <Compile Include="Repositorio\ClsRepositorioBeneficiario.cs" />
+    <Compile Include="Repositorio\ClsRepositorioConceptoBancario.cs" />
+    <Compile Include="Repositorio\ClsRepositorioCuentaBancariaEmpresa.cs" />
+    <Compile Include="Repositorio\ClsRepositorioMetodoPago.cs" />
+    <Compile Include="Repositorio\ClsRepositorioMovimientoBancario.cs" />
+    <Compile Include="Repositorio\ClsRepositorioTipoTransaccion.cs" />
+    <Compile Include="Repositorio\ClsSentencias.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Contratos\" />
-    <Folder Include="Entidades\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

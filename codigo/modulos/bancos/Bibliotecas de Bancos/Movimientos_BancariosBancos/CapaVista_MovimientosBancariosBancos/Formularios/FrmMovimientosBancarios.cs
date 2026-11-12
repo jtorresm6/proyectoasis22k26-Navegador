@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*Oscar Emilio Morales Lemus; 9959-23-3070*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,11 +29,7 @@ namespace CapaVista_MovimientosBancarios.Formularios
             MostrarFormulario(new FrmMovimientos());
         }
 
-        private void BancosBtnCheques_Click(object sender, EventArgs e)
-        {
-            MostrarFormulario(new FrmCheques());
-        }
-        private void MostrarFormulario(Form frm)
+        public void MostrarFormulario(Form frm)
         {
             BancosScContenedor.Panel2.Controls.Clear();
             frm.TopLevel = false;

@@ -20,14 +20,19 @@ namespace CapaModelo_Contabilidad.Entidades
     public class ClsActivoFijoContabilidad
     {
         public int IdActivo { get; set; }
+        // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+        public string Codigo { get; set; }
+        // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         public string Descripcion { get; set; }
-        public string Centro { get; set; }
         public string Modulo { get; set; }
         public string Tipo { get; set; }
         public DateTime Adquisicion { get; set; }
         public DateTime Inicio { get; set; }
         public decimal Compra { get; set; }
         public decimal Residual { get; set; }
+        // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+        public decimal ValorEnLibros { get; set; }
+        // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         public int Meses { get; set; }
     }
 
@@ -37,4 +42,22 @@ namespace CapaModelo_Contabilidad.Entidades
         public string Nombre { get; set; }
         public int Meses { get; set; }
     }
+
+    // Inicio de cambio: Gabriel Guillén - 0901-23-1998 - 10/11/2026
+    // Cuota del mes de un activo
+    public class ClsCuotaDepreciacionContabilidad
+    {
+        public int IdActivo { get; set; }
+        public decimal Monto { get; set; }
+    }
+
+    // Línea de la póliza de depreciación
+    public class ClsLineaDepreciacionContabilidad
+    {
+        public string CodigoCuenta { get; set; }
+        public decimal Debe { get; set; }
+        public decimal Haber { get; set; }
+        public string Descripcion { get; set; }
+    }
+    // Fin de cambio: Gabriel Guillén - 0901-23-1998 - 10/11/2026
 }
