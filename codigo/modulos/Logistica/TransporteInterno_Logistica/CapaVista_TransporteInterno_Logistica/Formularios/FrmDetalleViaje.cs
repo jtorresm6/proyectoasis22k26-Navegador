@@ -1,14 +1,14 @@
-﻿using System;
+﻿using CapaControlador_TransporteInterno_Logistica.Modelos_de_Controladores;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using CapaControlador_TransporteInterno_Logistica.Modelos_de_Controladores;
 
 namespace CapaVista_TransporteInterno_Logistica.Formularios
 {
@@ -534,13 +534,72 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
             LogisticaBtnGuardar.Enabled = false;
         }
 
+        // =====================================================
+        // OBTENER DATOS PARA EL REPORTE DE DETALLE DE VIAJE
+        // =====================================================
+
+        private DataTable LogisticaMetObtenerDatosReporte()
+        {
+            DataTable Tabla = new DataTable();
+
+            var Controlador =
+                new ClsControladorDetalleViaje();
+
+            var Registros =
+                Controlador.LogisticaFuncObtenerTodos();
+
+            // Crear columnas utilizando los nombres
+            // reales de las propiedades del controlador.
+            PropertyInfo[] Propiedades =
+                typeof(ClsDatosDetalleViaje).GetProperties(
+                    BindingFlags.Public |
+                    BindingFlags.Instance);
+
+            foreach (PropertyInfo Propiedad in Propiedades)
+            {
+                if (!Propiedad.CanRead)
+                {
+                    continue;
+                }
+
+                Type TipoColumna =
+                    Nullable.GetUnderlyingType(
+                        Propiedad.PropertyType)
+                    ?? Propiedad.PropertyType;
+
+                Tabla.Columns.Add(
+                    Propiedad.Name,
+                    TipoColumna);
+            }
+
+            // Agregar todos los registros.
+            foreach (var Detalle in Registros)
+            {
+                DataRow Fila = Tabla.NewRow();
+
+                foreach (PropertyInfo Propiedad in Propiedades)
+                {
+                    if (!Propiedad.CanRead)
+                    {
+                        continue;
+                    }
+
+                    object Valor =
+                        Propiedad.GetValue(Detalle, null);
+
+                    Fila[Propiedad.Name] =
+                        Valor ?? DBNull.Value;
+                }
+
+                Tabla.Rows.Add(Fila);
+            }
+
+            return Tabla;
+        }
+
         private void LogisticaBtnImprimir_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "El reporte de Detalle de Viaje está pendiente.",
-                "Logística",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+           
         }
 
         private void LogisticaBtnAyuda_Click(object sender, EventArgs e)
@@ -559,6 +618,29 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
                 "Error - Logística",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
+        }
+
+        private void LogisticaBtnImprimir_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable TablaDatos =
+                    LogisticaMetObtenerDatosReporte();
+
+                using (FrmReporteDetalleViaje Formulario =
+                    new FrmReporteDetalleViaje(TablaDatos))
+                {
+                    Formulario.ShowDialog(this);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(
+                    "No se pudo generar el reporte:\n" + Ex.Message,
+                    "Reporte de Detalle de Viaje",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
     }
 }

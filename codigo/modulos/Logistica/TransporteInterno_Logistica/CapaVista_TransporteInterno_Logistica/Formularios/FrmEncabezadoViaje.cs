@@ -895,11 +895,7 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
         private void LogisticaBtnImprimir_Click(
             object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "El reporte de viajes está pendiente de integrar.",
-                "Logística",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+           
         }
 
         // =====================================================
@@ -917,6 +913,91 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
                 MessageBoxIcon.Information);
         }
 
+
+        private DataTable LogisticaMetObtenerDatosReporte()
+        {
+            // Crear tabla para el ReportViewer.
+            DataTable Tabla = new DataTable();
+
+            // Definir columnas del reporte.
+            Tabla.Columns.Add("CodigoViaje", typeof(string));
+            Tabla.Columns.Add("FechaDocumento", typeof(DateTime));
+            Tabla.Columns.Add("FechaSalida", typeof(DateTime));
+            Tabla.Columns.Add("FechaLlegada", typeof(DateTime));
+            Tabla.Columns.Add("Transporte", typeof(string));
+            Tabla.Columns.Add("Conductor", typeof(string));
+            Tabla.Columns.Add("EstadoViaje", typeof(string));
+            Tabla.Columns.Add("PesoTotal", typeof(decimal));
+
+            Tabla.Columns.Add("CadenaFrio", typeof(string));
+            Tabla.Columns.Add("IdTransporte", typeof(int));
+            Tabla.Columns.Add("IdConductor", typeof(int));
+            Tabla.Columns.Add("FechaCreacion", typeof(DateTime));
+            Tabla.Columns.Add("FechaActualizacion", typeof(DateTime));
+
+            // Utilizar el controlador existente.
+            ClsControladorEncabezadoViaje Controlador =
+                new ClsControladorEncabezadoViaje();
+
+            // Obtener todos los registros de MySQL.
+            var Registros = Controlador.LogisticaFuncObtenerTodos();
+
+            // Recorrer los registros.
+            foreach (var Viaje in Registros)
+            {
+                DataRow Fila = Tabla.NewRow();
+
+                Fila["CodigoViaje"] =
+                    Viaje.IdEncabezadoViaje.ToString();
+
+                Fila["FechaDocumento"] =
+                    Viaje.FechaDocumentoEncabezadoViaje;
+
+                Fila["FechaSalida"] =
+                    Viaje.HoraSalidaEncabezadoViaje;
+
+                // La fecha de llegada puede estar vacía.
+                Fila["FechaLlegada"] =
+                    Viaje.HoraLlegadaEncabezadoViaje.HasValue
+                    ? (object)Viaje.HoraLlegadaEncabezadoViaje.Value
+                    : DBNull.Value;
+
+                Fila["Transporte"] =
+                    Viaje.PlacaTransporte ?? "";
+
+                Fila["Conductor"] =
+                    Viaje.NombreConductor ?? "";
+
+                Fila["EstadoViaje"] =
+                    Viaje.EstadoViajeEncabezadoViaje ?? "";
+
+                Fila["PesoTotal"] =
+                    Viaje.PesoTotalEncabezadoViaje;
+
+                Fila["CadenaFrio"] =
+                    Viaje.RequiereCadenaFrioEncabezadoViaje
+                    ? "Sí"
+                    : "No";
+
+                Fila["IdTransporte"] =
+                    Viaje.Fk_Transporte_Codigo;
+
+                Fila["IdConductor"] =
+                    Viaje.Fk_Conductor_Codigo;
+
+                Fila["FechaCreacion"] =
+                    Viaje.CreatedAt;
+
+                Fila["FechaActualizacion"] =
+                    Viaje.UpdatedAt;
+
+                Tabla.Rows.Add(Fila);
+            }
+
+            return Tabla;
+        }
+
+
         // =====================================================
         // MOSTRAR ERRORES
         // =====================================================
@@ -928,6 +1009,31 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
                 "Error - Logística",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
+        }
+
+        private void LogisticaBtnImprimir_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                // Obtener los registros desde el controlador.
+                DataTable TablaDatos =
+                    LogisticaMetObtenerDatosReporte();
+
+                // Abrir la ventana del reporte.
+                using (FrmReporteEncabezadoViaje Formulario =
+                    new FrmReporteEncabezadoViaje(TablaDatos))
+                {
+                    Formulario.ShowDialog(this);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(
+                    "No se pudo generar el reporte:\n" + Ex.Message,
+                    "Reporte de Encabezado de Viaje",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
     }
 }
