@@ -62,12 +62,13 @@
             // ComprasUsrEncabezadoFormulario
             //
             this.ComprasUsrEncabezadoFormulario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
-            this.ComprasUsrEncabezadoFormulario.Codigo = "6010";
+            this.ComprasUsrEncabezadoFormulario.Codigo = "6015";
             this.ComprasUsrEncabezadoFormulario.Descripcion = "Consulta tipos de cambio, convierte montos y elige la moneda en la que se muestran los montos de Compras.";
             this.ComprasUsrEncabezadoFormulario.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasUsrEncabezadoFormulario.Margin = new System.Windows.Forms.Padding(10);
             this.ComprasUsrEncabezadoFormulario.MaximumSize = new System.Drawing.Size(1500, 130);
             this.ComprasUsrEncabezadoFormulario.MinimumSize = new System.Drawing.Size(0, 130);
+            this.ComprasUsrEncabezadoFormulario.MostrarReportes = false;
             this.ComprasUsrEncabezadoFormulario.Name = "ComprasUsrEncabezadoFormulario";
             this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1280, 130);
             this.ComprasUsrEncabezadoFormulario.TabIndex = 0;
