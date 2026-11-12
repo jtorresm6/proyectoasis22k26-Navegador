@@ -14,10 +14,19 @@ namespace CapaVista_Ventas
         private readonly List<Button> _Opciones = new List<Button>();
         private readonly HashSet<Button> _Abiertos = new HashSet<Button>();
         private readonly Dictionary<Button, List<Button>> _Grupos = new Dictionary<Button, List<Button>>();
+        private readonly Dictionary<Button, int> _AplicacionPorOpcion = new Dictionary<Button, int>();
+        private readonly Func<int, bool> _TieneAccesoAplicacion;
+        private readonly Action<int, string> _MostrarAccesoDenegado;
+        private readonly Action<Button, bool> _AplicarEstadoAcceso;
 
-        internal ClsMenuProcesosVentas(TableLayoutPanel Menu, Button Movimientos, Button Pagos, Button Pedidos, Action<Form> Abrir, Func<int> Usuario)
+        internal ClsMenuProcesosVentas(TableLayoutPanel Menu, Button Movimientos, Button Pagos, Button Pedidos,
+            Action<Form> Abrir, Func<int> Usuario, Func<int, bool> TieneAccesoAplicacion,
+            Action<int, string> MostrarAccesoDenegado, Action<Button, bool> AplicarEstadoAcceso)
         {
             _Menu = Menu;
+            _TieneAccesoAplicacion = TieneAccesoAplicacion;
+            _MostrarAccesoDenegado = MostrarAccesoDenegado;
+            _AplicarEstadoAcceso = AplicarEstadoAcceso;
             // Evita pintar cada fila por separado durante la expansion y el desplazamiento.
             typeof(Control).GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
                 .SetValue(Menu, true, null);
@@ -51,6 +60,7 @@ namespace CapaVista_Ventas
                 foreach (string Titulo in Titulos)
                 {
                     string Opcion = Titulo;
+                    int IdAplicacion = VentasFuncIdAplicacion(Opcion);
                     var Boton = new Button
                     {
                         Text = Titulo, Name = "VentasBtnProceso" + _Opciones.Count,
@@ -58,8 +68,15 @@ namespace CapaVista_Ventas
                         BackColor = Color.FromArgb(59, 29, 74), ForeColor = Color.White,
                         TextAlign = ContentAlignment.MiddleLeft, Visible = false, Tag = false
                     };
+                    _AplicacionPorOpcion.Add(Boton, IdAplicacion);
                     Boton.Click += (Origen, Evento) =>
                     {
+                        if (!_TieneAccesoAplicacion(IdAplicacion))
+                        {
+                            _MostrarAccesoDenegado(IdAplicacion, Opcion);
+                            return;
+                        }
+
                         using (var Formulario = VentasFuncCrear(Opcion))
                         {
                             var Movimiento = Formulario as FrmMovimientosClientesVentas;
@@ -93,13 +110,19 @@ namespace CapaVista_Ventas
 
         internal void VentasMetAlternar(Button Padre)
         {
+            if (!_Grupos.TryGetValue(Padre, out List<Button> Opciones))
+                return;
+
+            bool Abierto = !_Abiertos.Contains(Padre);
+
             _Menu.SuspendLayout();
             try
             {
-            bool Abierto = !_Abiertos.Contains(Padre);
             if (Abierto) _Abiertos.Add(Padre); else _Abiertos.Remove(Padre);
-            foreach (var Boton in _Grupos[Padre])
+            foreach (var Boton in Opciones)
             {
+                bool TieneAcceso = _TieneAccesoAplicacion(_AplicacionPorOpcion[Boton]);
+                _AplicarEstadoAcceso(Boton, TieneAcceso);
                 Boton.Tag = Abierto;
                 Boton.Visible = Abierto;
             }
@@ -113,6 +136,36 @@ namespace CapaVista_Ventas
                 _Menu.Parent.Invalidate(true);
                 _Menu.Update();
             }
+        }
+
+        internal void VentasMetActualizarPermisos()
+        {
+            foreach (var Grupo in _Grupos)
+            {
+                bool TieneAlgunaAplicacion = Grupo.Value.Any(Boton =>
+                    _TieneAccesoAplicacion(_AplicacionPorOpcion[Boton]));
+                _AplicarEstadoAcceso(Grupo.Key, TieneAlgunaAplicacion);
+                Grupo.Key.Enabled = true;
+                foreach (var Boton in Grupo.Value)
+                {
+                    _AplicarEstadoAcceso(Boton,
+                        _TieneAccesoAplicacion(_AplicacionPorOpcion[Boton]));
+                }
+            }
+        }
+
+        internal bool VentasMetEsGrupo(Button Boton)
+        {
+            return _Grupos.ContainsKey(Boton);
+        }
+
+        internal bool VentasMetTieneAccesoGrupo(Button Boton)
+        {
+            if (!_Grupos.TryGetValue(Boton, out List<Button> Opciones))
+                return true;
+
+            return Opciones.Any(Opcion =>
+                _TieneAccesoAplicacion(_AplicacionPorOpcion[Opcion]));
         }
 
         private void VentasMetAcomodar()
@@ -136,6 +189,23 @@ namespace CapaVista_Ventas
                 case "Seguimiento de pedidos": return new FrmSeguimientoPedidos();
                 case "Nuevo pedido": return new FrmPedidoVentas();
                 default: return new FrmConsultaRecibosVentas();
+            }
+        }
+
+        private static int VentasFuncIdAplicacion(string Opcion)
+        {
+            switch (Opcion)
+            {
+                case "Estado de cuenta": return 7003;
+                case "Cargos y ajustes": return 7014;
+                case "Recepción de pagos": return 7005;
+                case "Depósitos a Bancos": return 7015;
+                case "Consulta de recibos": return 7005;
+                case "Seguimiento de pedidos": return 7004;
+                case "Nuevo pedido": return 7004;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Opcion), Opcion,
+                        "La opción de Ventas no tiene una aplicación de permisos asignada.");
             }
         }
     }

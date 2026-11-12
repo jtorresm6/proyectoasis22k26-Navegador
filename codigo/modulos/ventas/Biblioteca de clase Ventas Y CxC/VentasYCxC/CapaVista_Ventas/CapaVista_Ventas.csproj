@@ -90,6 +90,10 @@
       <Project>{A4A82D84-ABF2-4CE9-9CEA-273B6365A352}</Project>
       <Name>CapaControlador_Ventas</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\CapaControlador_Seguridad.csproj">
+      <Project>{1B52C554-A105-4583-B9E2-D96F342AD1D8}</Project>
+      <Name>CapaControlador_Seguridad</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

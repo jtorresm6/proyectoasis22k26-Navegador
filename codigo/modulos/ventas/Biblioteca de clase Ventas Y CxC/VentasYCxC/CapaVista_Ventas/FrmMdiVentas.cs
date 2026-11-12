@@ -11,13 +11,26 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
+using CapaControlador_Seguridad;
+using CapaControlador_Seguridad.Objetos_de_valor;
 
 namespace CapaVista_Ventas
 {
     public partial class FrmMdiVentas : Form
     {
+        private const int VentasIdModuloPermisos = 7000;
         private readonly int _IdUsuario;
         private readonly ClsMenuProcesosVentas _MenuProcesos;
+        private ClsModeloAsigAppPerf _ModeloPermisosVentas;
+        private bool _PermisosVentasCargados;
+        private Exception _ErrorCargaPermisosVentas;
+        private readonly System.Collections.Generic.Dictionary<int, bool> _AccesosAplicacionesVentas =
+            new System.Collections.Generic.Dictionary<int, bool>();
+        private readonly System.Collections.Generic.Dictionary<Button, int> _AplicacionesMenuDirectas =
+            new System.Collections.Generic.Dictionary<Button, int>();
+        private readonly System.Collections.Generic.Dictionary<Image, Image> _ImagenesMenuGrises =
+            new System.Collections.Generic.Dictionary<Image, Image>();
         private static Assembly _ModuloCierreMovimientos;
         private static string _DirectorioCierreMovimientos;
         private static bool _ResolverCierreRegistrado;
@@ -106,7 +119,12 @@ namespace CapaVista_Ventas
             InitializeComponent();
             VentasMetAjustarIconoMantenimientos();
             VentasMetAjustarBotonMantenimientos();
-            _MenuProcesos = new ClsMenuProcesosVentas(VentasTlpMenu, VentasBtnMovimientosClientes, VentasBtnRecepcionPagos, VentasBtnPedidos, VentasMetAbrirFormulario, () => _IdUsuario);
+            VentasMetConfigurarAplicacionesDirectas();
+            _MenuProcesos = new ClsMenuProcesosVentas(VentasTlpMenu, VentasBtnMovimientosClientes,
+                VentasBtnRecepcionPagos, VentasBtnPedidos, VentasMetAbrirFormulario,
+                () => _IdUsuario, VentasMetTieneAccesoAplicacion, VentasMetMostrarAccesoDenegado,
+                VentasMetAplicarEstadoAccesoMenu);
+            Load += VentasMetAplicarPermisosMenu;
             // El doble búfer reduce el parpadeo al redimensionar la ventana.
             DoubleBuffered = true;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer |
@@ -182,6 +200,160 @@ namespace CapaVista_Ventas
             VentasLblRol.Text = "Rol: " + (string.IsNullOrWhiteSpace(RolUsuario) ? "Sin asignar" : RolUsuario);
         }
 
+        // Carga una sola vez los permisos del usuario autenticado, siguiendo el modelo que usa Seguridad.
+        private bool VentasMetCargarPermisos()
+        {
+            if (_PermisosVentasCargados)
+                return _ModeloPermisosVentas != null;
+
+            _PermisosVentasCargados = true;
+            if (_IdUsuario <= 0 || !ClsSesionSeguridad.HaySesionActiva ||
+                ClsSesionSeguridad.IdUsuario != _IdUsuario)
+                return false;
+
+            try
+            {
+                _ModeloPermisosVentas = new ClsModeloAsigAppPerf();
+                _ModeloPermisosVentas.SeguridadMetObtenerTodos();
+                return true;
+            }
+            catch (Exception Error)
+            {
+                _ModeloPermisosVentas = null;
+                _ErrorCargaPermisosVentas = Error;
+                return false;
+            }
+        }
+
+        // Un permiso solo habilita la opción cuando coincide el módulo Ventas y su aplicación.
+        private bool VentasMetTieneAccesoAplicacion(int IdAplicacion)
+        {
+            if (_AccesosAplicacionesVentas.TryGetValue(IdAplicacion, out bool TieneAcceso))
+                return TieneAcceso;
+
+            TieneAcceso = false;
+            if (VentasMetCargarPermisos())
+            {
+                var Permisos = _ModeloPermisosVentas.SeguridadMetObtenerPermisosSesion(
+                    VentasIdModuloPermisos, IdAplicacion);
+                TieneAcceso = Permisos != null && Permisos.TieneAcceso;
+            }
+
+            _AccesosAplicacionesVentas[IdAplicacion] = TieneAcceso;
+            return TieneAcceso;
+        }
+
+        private void VentasMetAplicarPermisosMenu(object Origen, EventArgs Evento)
+        {
+            foreach (var Aplicacion in _AplicacionesMenuDirectas)
+                VentasMetAplicarEstadoAccesoMenu(
+                    Aplicacion.Key, VentasMetTieneAccesoAplicacion(Aplicacion.Value));
+
+            _MenuProcesos.VentasMetActualizarPermisos();
+
+            if (_IdUsuario > 0 && ClsSesionSeguridad.IdUsuario == _IdUsuario &&
+                _ErrorCargaPermisosVentas != null)
+            {
+                MessageBox.Show(this,
+                    "No se pudieron cargar los permisos de Ventas. Las opciones permanecerán bloqueadas.\r\n\r\n" +
+                    _ErrorCargaPermisosVentas.Message,
+                    "Permisos de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private bool VentasMetExigirAccesoAplicacion(int IdAplicacion, Button Opcion)
+        {
+            if (VentasMetTieneAccesoAplicacion(IdAplicacion))
+                return true;
+
+            VentasMetMostrarAccesoDenegado(IdAplicacion, Opcion == null ? "esta aplicación" : Opcion.Text.Trim());
+            return false;
+        }
+
+        private void VentasMetMostrarAccesoDenegado(int IdAplicacion, string NombreAplicacion)
+        {
+            if (_ErrorCargaPermisosVentas != null)
+            {
+                MessageBox.Show(this,
+                    "No fue posible verificar el permiso para " + NombreAplicacion + ". Las opciones están bloqueadas.\r\n\r\n" +
+                    _ErrorCargaPermisosVentas.Message,
+                    "Permisos de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            MessageBox.Show(this,
+                "No tienes acceso a la aplicación " + NombreAplicacion + " del módulo de Ventas.",
+                "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void VentasMetConfigurarAplicacionesDirectas()
+        {
+            _AplicacionesMenuDirectas.Add(VentasBtnListadoPrecios, 7002);
+            // El informe de antigüedad corresponde a la consulta de movimientos de CxC.
+            _AplicacionesMenuDirectas.Add(VentasBtnReportes, 7003);
+            _AplicacionesMenuDirectas.Add(VentasBtnCotizaciones, 7011);
+            _AplicacionesMenuDirectas.Add(VentasBtnFacturas, 7007);
+            _AplicacionesMenuDirectas.Add(VentasBtnComisionesVendedores, 7013);
+            _AplicacionesMenuDirectas.Add(VentasBtnMantenimientos, 7009);
+            _AplicacionesMenuDirectas.Add(VentasBtnCierreMovimientos, 7010);
+        }
+
+        // Mantiene los accesos visibles y muestra en gris los que no tienen autorización, como Seguridad.
+        private void VentasMetAplicarEstadoAccesoMenu(Button Boton, bool TieneAcceso)
+        {
+            Boton.Enabled = true;
+            if (Boton.BackgroundImage != null &&
+                !Boton.Name.StartsWith("VentasBtnProceso", StringComparison.Ordinal))
+            {
+                Image FondoNormal = CapaVista_Ventas.Properties.Resources.BotonMenuNormalVentas;
+                Boton.BackgroundImage = TieneAcceso ? FondoNormal : VentasMetObtenerImagenGris(FondoNormal);
+                Boton.ForeColor = TieneAcceso ? Color.FromArgb(248, 245, 249) : Color.Gainsboro;
+            }
+            else
+            {
+                Boton.BackColor = TieneAcceso ? Color.FromArgb(59, 29, 74) : Color.Gray;
+                Boton.ForeColor = TieneAcceso ? Color.White : Color.Gainsboro;
+                Boton.FlatAppearance.BorderColor = TieneAcceso ? Color.White : Color.DarkGray;
+            }
+        }
+
+        private Image VentasMetObtenerImagenGris(Image ImagenOriginal)
+        {
+            if (_ImagenesMenuGrises.TryGetValue(ImagenOriginal, out Image ImagenGris))
+                return ImagenGris;
+
+            var Resultado = new Bitmap(ImagenOriginal.Width, ImagenOriginal.Height);
+            using (Graphics Graficos = Graphics.FromImage(Resultado))
+            using (var Atributos = new ImageAttributes())
+            {
+                var Matriz = new ColorMatrix(new float[][]
+                {
+                    new float[] { .3f, .3f, .3f, 0, 0 },
+                    new float[] { .59f, .59f, .59f, 0, 0 },
+                    new float[] { .11f, .11f, .11f, 0, 0 },
+                    new float[] { 0, 0, 0, 1, 0 },
+                    new float[] { 0, 0, 0, 0, 1 }
+                });
+                Atributos.SetColorMatrix(Matriz);
+                Graficos.DrawImage(ImagenOriginal,
+                    new Rectangle(0, 0, Resultado.Width, Resultado.Height),
+                    0, 0, ImagenOriginal.Width, ImagenOriginal.Height,
+                    GraphicsUnit.Pixel, Atributos);
+            }
+
+            _ImagenesMenuGrises.Add(ImagenOriginal, Resultado);
+            return Resultado;
+        }
+
+        private bool VentasMetTienePermisoVisual(Button Boton)
+        {
+            if (_AplicacionesMenuDirectas.TryGetValue(Boton, out int IdAplicacion))
+                return VentasMetTieneAccesoAplicacion(IdAplicacion);
+
+            return _MenuProcesos == null || !_MenuProcesos.VentasMetEsGrupo(Boton) ||
+                _MenuProcesos.VentasMetTieneAccesoGrupo(Boton);
+        }
+
         // Actualiza directamente los seis labels del diseñador con datos proporcionados por el controlador.
         public void VentasMetActualizarIndicadores(decimal VentasDia, decimal SaldoCxC, int ClientesActivos,
             int FacturasPendientes, decimal PagosDia, int PedidosPendientes)
@@ -224,6 +396,11 @@ namespace CapaVista_Ventas
         private void VentasMetAplicarEstadoBoton(Button Boton, bool Sobre)
         {
             bool Activo = Boton == VentasBtnInicio;
+            if (!VentasMetTienePermisoVisual(Boton))
+            {
+                VentasMetAplicarEstadoAccesoMenu(Boton, false);
+                return;
+            }
             // Efecto de difuminado (hover): al pasar el cursor se sustituye el fondo por un tono
             // morado más suave. No altera el icono Image ni el texto Text del botón.
             Boton.BackgroundImage = Activo ? CapaVista_Ventas.Properties.Resources.BotonMenuActivoVentas :
@@ -246,6 +423,7 @@ namespace CapaVista_Ventas
         // Abre el listado de precios de escritorio sobre el MDI.
         private void VentasMetBtnListadoPreciosClick(object Origen, EventArgs Evento)
         {
+            if (!VentasMetExigirAccesoAplicacion(7002, VentasBtnListadoPrecios)) return;
             using (var Formulario = new CapaVista_ListadoPrecios.FrmListadoPrecios())
                 VentasMetAbrirFormulario(Formulario);
         }
@@ -263,12 +441,14 @@ namespace CapaVista_Ventas
         // Abre la opción de reportes de Ventas.
         private void VentasMetBtnReportesClick(object Origen, EventArgs Evento)
         {
+            if (!VentasMetExigirAccesoAplicacion(7003, VentasBtnReportes)) return;
             CapaVista_Reportes.ClsDocumentoAntiguedad.VentasMetAbrir(this);
         }
 
         // Abre el formulario independiente de cotizaciones.
         private void VentasMetBtnCotizacionesClick(object Origen, EventArgs Evento)
         {
+            if (!VentasMetExigirAccesoAplicacion(7011, VentasBtnCotizaciones)) return;
             using (var Formulario = new CapaVista_Cotizaciones.FrmCotizacionVentas() { VentasIdUsuario = _IdUsuario })
                 VentasMetAbrirFormulario(Formulario);
         }
@@ -282,6 +462,7 @@ namespace CapaVista_Ventas
         // Abre el formulario independiente de facturas.
         private void VentasMetBtnFacturasClick(object Origen, EventArgs Evento)
         {
+            if (!VentasMetExigirAccesoAplicacion(7007, VentasBtnFacturas)) return;
             using (var Formulario = new CapaVista_Facturas.FrmFacturas() { VentasIdUsuario = _IdUsuario })
                 VentasMetAbrirFormulario(Formulario);
         }
@@ -289,6 +470,7 @@ namespace CapaVista_Ventas
         // Abre la opción de comisiones de vendedores.
         private void VentasMetBtnComisionesVendedoresClick(object Origen, EventArgs Evento)
         {
+            if (!VentasMetExigirAccesoAplicacion(7013, VentasBtnComisionesVendedores)) return;
             using (var Formulario = new CapaVista_ComisionVendedores.FrmComisionesVendedoresVentas())
                 VentasMetAbrirFormulario(Formulario);
         }
@@ -296,6 +478,7 @@ namespace CapaVista_Ventas
         // Abre la opción de mantenimientos del módulo.
         private void VentasMetBtnMantenimientosClick(object Origen, EventArgs Evento)
         {
+            if (!VentasMetExigirAccesoAplicacion(7009, VentasBtnMantenimientos)) return;
             using (var Formulario = new CapaVista_Mantenimientos.FrmMantenimientosVentas())
                 VentasMetAbrirFormulario(Formulario);
         }
@@ -303,6 +486,7 @@ namespace CapaVista_Ventas
         // Abre la opción de cierre de movimientos.
         private void VentasMetBtnCierreMovimientosClick(object Origen, EventArgs Evento)
         {
+            if (!VentasMetExigirAccesoAplicacion(7010, VentasBtnCierreMovimientos)) return;
             try
             {
                 Assembly ModuloCierre = VentasMetCargarEnsambladoCierreMovimientos();
