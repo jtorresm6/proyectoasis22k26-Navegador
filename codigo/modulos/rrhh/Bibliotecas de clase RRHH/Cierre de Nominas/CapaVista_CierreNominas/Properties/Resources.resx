@@ -136,6 +136,9 @@
   <data name="Icn_Verificacion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icn_Verificacion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Icn_Empleados" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icn_Empleados.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Pnl_fondo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Pnl_fondo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -178,7 +181,7 @@
   <data name="btn_refrescar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btn_refrescar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Icn_Empleados" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icn_Empleados.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btn_ayuda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\btn_ayuda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
