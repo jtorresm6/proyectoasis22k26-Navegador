@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN"><HTML><HEAD><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></HEAD><BODY><UL>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Bodegas"><param name="Local" value="Bodegas_Logistica.html"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Categorías"><param name="Local" value="Categoria_Logistica.html"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Cierre de inventario"><param name="Local" value="CierreInventario_Logistica.html"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Conductores"><param name="Local" value="Conductor_Logistica.htm"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Cámaras de refrigeración"><param name="Local" value="CamaraRefrigeracion_Logistica.htm"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Detalle de movimientos"><param name="Local" value="DetalleMovimiento_Logistica.html"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Gestión de viajes"><param name="Local" value="GestionViaje_Logistica.html"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Marcas"><param name="Local" value="Marca_Logistica.html"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Pantalla principal de Logística"><param name="Local" value="MDI_Logistica.html"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Productos"><param name="Local" value="Producto_Logistica.html"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Sucursales"><param name="Local" value="Sucursales_Logistica.html"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Tipos de movimiento"><param name="Local" value="TipoMovimiento_Logistica.html"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Tipos de transporte"><param name="Local" value="TipoTransporte_Logistica.htm"></OBJECT>
+<LI> <OBJECT type="text/sitemap"><param name="Name" value="Transporte interno"><param name="Local" value="TransporteInterno_Logistica.htm"></OBJECT>
+</UL></BODY></HTML>
