@@ -21,6 +21,10 @@ namespace CapaModelo_Contabilidad.Entidades
     public class ClsPresupuestoContabilidad
     {
         public int IdPresupuesto { get; set; }
+        // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+        public string Nombre { get; set; }
+        public decimal Total { get; set; }
+        // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
         public DateTime FechaInicio { get; set; }
         public DateTime? FechaCierre { get; set; }
         public decimal Gastado { get; set; }

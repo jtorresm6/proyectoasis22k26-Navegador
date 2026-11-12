@@ -41,6 +41,12 @@ namespace CapaControlador_Contabilidad
     {
         public int IdPresupuesto { get; set; }
 
+        // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+        [Required(ErrorMessage = "Escriba el nombre del presupuesto.")]
+        [MaxLength(100, ErrorMessage = "El nombre del presupuesto admite hasta 100 caracteres.")]
+        public string Nombre { get; set; }
+        // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+
         public DateTime FechaInicio { get; set; }
 
         public DateTime? FechaCierre { get; set; }
