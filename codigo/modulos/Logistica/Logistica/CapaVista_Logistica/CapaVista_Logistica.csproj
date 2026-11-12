@@ -37,7 +37,8 @@
     <Reference Include="CapaVista_CierreInventario_Logistica">
       <HintPath>..\..\CierreInventario_Logistica\CapaVista_CierreInventario_Logistica\bin\Debug\CapaVista_CierreInventario_Logistica.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_Enlace_Logistica">
+    <Reference Include="CapaVista_Enlace_Logistica, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Enlace_OtrosModulos_Logistica\CapaVista_Enlace_Logistica\bin\Debug\CapaVista_Enlace_Logistica.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Inventario_Logistica">

@@ -165,6 +165,7 @@
             this.LogisticaBtnVistaPrevia.TabIndex = 12;
             this.LogisticaBtnVistaPrevia.Text = "Vista Previa";
             this.LogisticaBtnVistaPrevia.UseVisualStyleBackColor = false;
+            this.LogisticaBtnVistaPrevia.Click += new System.EventHandler(this.LogisticaBtnVistaPrevia_Click);
             // 
             // LogisticaBtnLimpiar
             // 
@@ -507,11 +508,11 @@
             // LogisticaLblDocumentosRespaldo
             // 
             this.LogisticaLblDocumentosRespaldo.AutoSize = true;
-            this.LogisticaLblDocumentosRespaldo.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblDocumentosRespaldo.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblDocumentosRespaldo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(44)))), ((int)(((byte)(18)))));
             this.LogisticaLblDocumentosRespaldo.Location = new System.Drawing.Point(717, 62);
             this.LogisticaLblDocumentosRespaldo.Name = "LogisticaLblDocumentosRespaldo";
-            this.LogisticaLblDocumentosRespaldo.Size = new System.Drawing.Size(324, 21);
+            this.LogisticaLblDocumentosRespaldo.Size = new System.Drawing.Size(278, 18);
             this.LogisticaLblDocumentosRespaldo.TabIndex = 9;
             this.LogisticaLblDocumentosRespaldo.Text = "Documentos de Respaldo (Opcional)";
             this.LogisticaLblDocumentosRespaldo.Click += new System.EventHandler(this.lblDocumentosRespaldo_Click);
@@ -734,6 +735,7 @@
             this.LogisticaPbAyuda.Size = new System.Drawing.Size(80, 81);
             this.LogisticaPbAyuda.TabIndex = 5;
             this.LogisticaPbAyuda.TabStop = false;
+            this.LogisticaPbAyuda.Click += new System.EventHandler(this.LogisticaPbAyuda_Click);
             // 
             // LogisticaPnlInformacionTransportista
             // 
