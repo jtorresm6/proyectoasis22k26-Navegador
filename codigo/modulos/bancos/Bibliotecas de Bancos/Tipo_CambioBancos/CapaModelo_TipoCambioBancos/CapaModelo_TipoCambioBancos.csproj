@@ -43,7 +43,13 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entidades\ClsTipoCambio.cs" />
+    <Compile Include="Entidades\ClsMoneda.cs" />
+    <Compile Include="Entidades\ClsCatalogoMonedasBanguat.cs" />
+    <Compile Include="Entidades\ClsMonedaCatalogoLocal.cs" />
+    <Compile Include="Entidades\ClsResultadoConversion.cs" />
     <Compile Include="Repositorio\ClsRepositorioTipoCambio.cs" />
+    <Compile Include="Repositorio\ClsRepositorioMonedaBanguat.cs" />
+    <Compile Include="Servicios\ClsServicioBanguat.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

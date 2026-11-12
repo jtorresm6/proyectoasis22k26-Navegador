@@ -34,9 +34,30 @@
             }
         }
 
+        internal static System.Drawing.Bitmap ico_aplicar {
+            get {
+                object obj = ResourceManager.GetObject("ico_aplicar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
         internal static System.Drawing.Bitmap ico_guardar {
             get {
                 object obj = ResourceManager.GetObject("ico_guardar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap ico_nuevo_oscuro {
+            get {
+                object obj = ResourceManager.GetObject("ico_nuevo_oscuro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap ico_quitar_oscuro {
+            get {
+                object obj = ResourceManager.GetObject("ico_quitar_oscuro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

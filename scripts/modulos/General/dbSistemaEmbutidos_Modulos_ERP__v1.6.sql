@@ -845,7 +845,8 @@ DROP TABLE tblPeriodoVacacion, tblTipoPermiso;
 -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ Bancos !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 
 CREATE TABLE tblMoneda (
-    Pk_Moneda BIGINT NOT NULL AUTO_INCREMENT,
+    -- Identificador oficial de Banguat; el catálogo se sincroniza desde la API.
+    Pk_Moneda BIGINT NOT NULL,
     codigoMoneda CHAR(3) NOT NULL,
     nombreMoneda VARCHAR(255) NOT NULL,
     simboloMoneda VARCHAR(8) NOT NULL,

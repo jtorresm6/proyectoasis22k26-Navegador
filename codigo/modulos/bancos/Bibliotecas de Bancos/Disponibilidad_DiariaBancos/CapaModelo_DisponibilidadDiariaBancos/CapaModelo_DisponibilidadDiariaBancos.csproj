@@ -45,7 +45,19 @@
     <Compile Include="Entidades\ClsDisponibilidad.cs" />
     <Compile Include="Entidades\ClsCompromiso.cs" />
     <Compile Include="Entidades\ClsResumenCuenta.cs" />
+    <Compile Include="Entidades\ClsConsultaDisponibilidad.cs" />
     <Compile Include="Repositorio\ClsRepositorioDisponibilidad.cs" />
+    <Compile Include="Servicios\ClsProveedorTipoCambioDisponibilidad.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Tipo_CambioBancos\CapaModelo_TipoCambioBancos\CapaModelo_TipoCambioBancos.csproj">
+      <Project>{D4E5F6A7-B8C9-4D0E-1F2A-3B4C5D6E7F8A}</Project>
+      <Name>CapaModelo_TipoCambioBancos</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\001_DisponibilidadDiaria.sql" />
+    <None Include="Scripts\002_AuditoriaDisponibilidadDiaria.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

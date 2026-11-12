@@ -17,7 +17,7 @@
     <br>
     <div class="container">
         <h2>Descripci&#243;n general</h2>
-        <p> Registro de los activos fijos de la empresa. Cada activo recibe un c&#243;digo AF-#### y se deprecia por el m&#233;todo de l&#237;nea recta. La tabla de abajo muestra los activos registrados con su valor de compra y su valor en libros.
+        <p> Registro de los activos fijos de la empresa. Cada activo recibe un c&#243;digo AF-#### y se deprecia por el m&#233;todo de l&#237;nea recta. La tabla de abajo muestra los activos registrados con su valor de compra, su depreciaci&#243;n acumulada y su valor en libros.
         </p>
         <img class="imgVentana" src="Imagenes/ActivosFijos/ActivosFijos.png">
         <br><br><br>
@@ -29,6 +29,15 @@
 
         <h2>Modificar o dar de baja</h2>
         <p> 1. Seleccione el activo en la tabla <b>Activos registrados</b>; sus datos pasan al formulario.<br>2. Cambie lo necesario y presione <b>Guardar activo</b>.<br>3. Para darlo de baja presione <b>Eliminar activo</b> y confirme. El activo no se borra: queda inactivo.
+        </p>
+        <br><br><br>
+
+        <h2>Depreciar el mes</h2>
+        <p> 1. En <b>Mes</b> elija el mes que va a depreciar.<br>2. Presione <b>Depreciar mes</b>. El sistema indica cu&#225;ntos activos se deprecian y el total en quetzales.<br>3. Confirme. Se genera la p&#243;liza de depreciaci&#243;n del mes (documento DEP-AAAA-MM) en estado VALIDADA y baja el valor en libros de cada activo.<br>4. La p&#243;liza se aplica a los saldos desde <b>P&#243;lizas locales</b>, con la actualizaci&#243;n de saldos.
+        </p>
+        <p> La cuota mensual es (valor de compra - valor residual) / vida &#250;til en meses. Se deprecia desde el mes del inicio de uso y el valor en libros nunca baja del valor residual. Cada tipo de activo carga su cuenta de gasto por depreciaci&#243;n y abona su cuenta de depreciaci&#243;n acumulada.
+        </p>
+        <p> Cada mes se deprecia una sola vez. No se puede depreciar un mes futuro ni un per&#237;odo cerrado. Si modifica un activo ya depreciado, su depreciaci&#243;n acumulada se conserva.
         </p>
         <br><br><br>
 

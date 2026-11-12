@@ -31,12 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaControlador_TipoCambioBancos">
-      <HintPath>..\CapaControlador_TipoCambioBancos\bin\Debug\CapaControlador_TipoCambioBancos.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaModelo_TipoCambio">
-      <HintPath>..\CapaModelo_TipoCambio\bin\Debug\CapaModelo_TipoCambio.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -47,6 +41,16 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CapaModelo_TipoCambioBancos\CapaModelo_TipoCambioBancos.csproj">
+      <Project>{D4E5F6A7-B8C9-4D0E-1F2A-3B4C5D6E7F8A}</Project>
+      <Name>CapaModelo_TipoCambioBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CapaControlador_TipoCambioBancos\CapaControlador_TipoCambioBancos.csproj">
+      <Project>{E5F6A7B8-C9D0-4E1F-2A3B-4C5D6E7F8A9B}</Project>
+      <Name>CapaControlador_TipoCambioBancos</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Formularios\FrmTipoCambio.cs">
@@ -86,6 +90,9 @@
     <None Include="Resouces\Banderas\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Resouces\Banderas\LICENSE-circle-flags.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
