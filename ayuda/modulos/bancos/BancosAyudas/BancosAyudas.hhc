@@ -17,6 +17,10 @@
 			<param name="Name" value="MDI_Bancos">
 			<param name="Local" value="MDI_Bancos.html">
 			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Navegador_Ayuda">
+			<param name="Local" value="Navegador_Ayuda.html">
+			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Mantenimientos">
@@ -56,6 +60,10 @@
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="CierreBancario_Bancos">
 			<param name="Local" value="CierreBancario_Bancos.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="GeneracionPagos_Bancos">
+			<param name="Local" value="GeneracionPagos_Bancos.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="MovimientoBancario_Bancos">
