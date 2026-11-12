@@ -25,5 +25,14 @@ namespace CapaModelo_Contabilidad.Contratos
         string[] ContabilidadFuncObtenerModulos();
 
         List<ClsVidaUtilContabilidad> ContabilidadFuncObtenerVidaUtil();
+
+        // Inicio de cambio: Gabriel Guillén - 0901-23-1998 - 10/11/2026
+        // Indica si el mes ya tiene póliza de depreciación
+        bool ContabilidadFuncPeriodoDepreciado(string Periodo);
+
+        // Graba la póliza del mes y baja el valor en libros
+        string ContabilidadFuncRegistrarDepreciacion(string Periodo, System.DateTime Fecha, string Descripcion,
+            List<ClsCuotaDepreciacionContabilidad> Cuotas, List<ClsLineaDepreciacionContabilidad> Lineas);
+        // Fin de cambio: Gabriel Guillén - 0901-23-1998 - 10/11/2026
     }
 }

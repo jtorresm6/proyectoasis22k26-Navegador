@@ -339,5 +339,75 @@ namespace CapaVista_TipoCambio.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        internal static System.Drawing.Bitmap PLN {
+            get {
+                object obj = ResourceManager.GetObject("PLN", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap ATS {
+            get {
+                object obj = ResourceManager.GetObject("ATS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap BEF {
+            get {
+                object obj = ResourceManager.GetObject("BEF", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap BID {
+            get {
+                object obj = ResourceManager.GetObject("BID", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap DEM {
+            get {
+                object obj = ResourceManager.GetObject("DEM", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap ESP {
+            get {
+                object obj = ResourceManager.GetObject("ESP", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap FRF {
+            get {
+                object obj = ResourceManager.GetObject("FRF", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap ITL {
+            get {
+                object obj = ResourceManager.GetObject("ITL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap NLG {
+            get {
+                object obj = ResourceManager.GetObject("NLG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        internal static System.Drawing.Bitmap PTE {
+            get {
+                object obj = ResourceManager.GetObject("PTE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

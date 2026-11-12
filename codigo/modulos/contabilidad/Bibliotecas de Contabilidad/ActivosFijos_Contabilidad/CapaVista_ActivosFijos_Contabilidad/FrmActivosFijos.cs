@@ -1,5 +1,5 @@
 ﻿/* Área: Contabilidad. Autor: Dylan Hernández. Carné: 0901-23-519.
- * Fecha: 14/10/2026. Propósito: ficha y cálculo de ejemplo sin persistencia. Responsable: Dylan. */
+ * Fecha: 14/10/2026. Propósito: registrar, consultar, modificar y dar de baja activos fijos. Responsable: Dylan. */
 using System;
 using System.Data;
 using System.Drawing;
@@ -20,6 +20,10 @@ namespace CapaVista_Contabilidad
     {
         private readonly ClsControladorActivosFijosContabilidad _Controlador = new ClsControladorActivosFijosContabilidad();
         private DataTable _Catalogo;
+        // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+        private DataTable _Activos;
+        private int _IdActivo;
+        // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         private readonly ClsValidacionContabilidad _Validacion = new ClsValidacionContabilidad();
         private readonly ClsPaginacionContabilidad _Paginacion;
         private bool _CargandoDatos;
@@ -38,24 +42,51 @@ namespace CapaVista_Contabilidad
             ContabilidadMetAplicarPermisos(Permisos);
             ClsPresentacionContabilidad.ContabilidadMetPrepararVentana(this, "Activos fijos", new Size(1180, 688));
             _Paginacion = new ClsPaginacionContabilidad(ContabilidadDgvCatalogo);
-            foreach (Control Campo in new Control[] { ContabilidadTxtDescripcion, ContabilidadTxtCentro, ContabilidadCboModulo,
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            foreach (Control Campo in new Control[] { ContabilidadTxtDescripcion, ContabilidadCboModulo,
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
                 ContabilidadCboTipo, ContabilidadDtpAdquisicion, ContabilidadDtpInicio, ContabilidadNudCompra, ContabilidadNudMeses })
                 _Validacion.ContabilidadMetObligatorio(Campo);
             Disposed += (Remitente, Argumentos) => { _Validacion.Dispose(); _Paginacion.Dispose(); };
-            ContabilidadCboModulo.DataSource = _Controlador.ContabilidadFuncModulos();
-            _Catalogo = _Controlador.ContabilidadFuncVidaUtil();
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            try
+            {
+                ContabilidadCboModulo.DataSource = _Controlador.ContabilidadFuncModulos();
+                _Catalogo = _Controlador.ContabilidadFuncVidaUtil();
+            }
+            catch (Exception Excepcion)
+            {
+                _Catalogo = new DataTable();
+                ClsDialogosContabilidad.ContabilidadMetError(this, "No se pudieron cargar los catálogos: " + Excepcion.Message);
+            }
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
             ContabilidadCboTipo.DisplayMember = "Nombre";
             ContabilidadCboTipo.ValueMember = "Tipo";
             ContabilidadCboTipo.DataSource = _Catalogo;
-            _Paginacion.ContabilidadMetCargar(_Catalogo);
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            ContabilidadDgvCatalogo.CellClick += (Remitente, Argumentos) =>
+            {
+                if (Argumentos.RowIndex < 0) return;
+                DataRow Fila = _Paginacion.ContabilidadFuncFilaActual();
+                if (Fila != null) ContabilidadMetCargar(Fila);
+            };
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
             ContabilidadCboTipo.SelectedIndexChanged += (Remitente, Argumentos) => ContabilidadMetTipo();
             ContabilidadNudCompra.ValueChanged += (Remitente, Argumentos) => ContabilidadMetActualizar();
             ContabilidadNudResidual.ValueChanged += (Remitente, Argumentos) => ContabilidadMetActualizar();
             ContabilidadNudMeses.ValueChanged += (Remitente, Argumentos) => ContabilidadMetActualizar();
-            ContabilidadBtnNueva.Click += (Remitente, Argumentos) => ContabilidadMetCargar(false);
-            ContabilidadBtnEjemplo.Click += (Remitente, Argumentos) => ContabilidadMetCargar(true);
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            ContabilidadBtnNueva.Click += (Remitente, Argumentos) => ContabilidadMetCargar(null);
+            ContabilidadBtnEliminar.Click += ContabilidadMetEliminar;
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
             ContabilidadBtnGuardar.Click += ContabilidadMetValidar;
-            foreach (Control Campo in new Control[] { ContabilidadTxtDescripcion, ContabilidadTxtCentro, ContabilidadCboModulo, ContabilidadCboTipo,
+            // Inicio de cambio: Gabriel Guillén - 0901-23-1998 - 10/11/2026
+            ContabilidadDtpMesDepreciacion.Value = DateTime.Today;
+            ContabilidadBtnDepreciar.Click += ContabilidadMetDepreciar;
+            // Fin de cambio: Gabriel Guillén - 0901-23-1998 - 10/11/2026
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            foreach (Control Campo in new Control[] { ContabilidadTxtDescripcion, ContabilidadCboModulo, ContabilidadCboTipo,
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
                 ContabilidadDtpAdquisicion, ContabilidadDtpInicio, ContabilidadNudCompra, ContabilidadNudResidual, ContabilidadNudMeses })
             {
                 if (Campo is DateTimePicker) ((DateTimePicker)Campo).ValueChanged += ContabilidadMetCambiarFicha;
@@ -63,7 +94,44 @@ namespace CapaVista_Contabilidad
                 else if (Campo is ComboBox) ((ComboBox)Campo).SelectedIndexChanged += ContabilidadMetCambiarFicha;
                 else Campo.TextChanged += ContabilidadMetCambiarFicha;
             }
-            ContabilidadMetCargar(true);
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            ContabilidadMetCargarLista();
+            ContabilidadMetCargar(null);
+        }
+
+        private void ContabilidadMetCargarLista()
+        {
+            DataTable Anterior = _Activos;
+            try
+            {
+                _Activos = _Controlador.ContabilidadFuncActivos();
+            }
+            catch (Exception Excepcion)
+            {
+                _Activos = new DataTable();
+                ClsDialogosContabilidad.ContabilidadMetError(this, "No se pudieron consultar los activos: " + Excepcion.Message);
+            }
+            _Paginacion.ContabilidadMetCargar(_Activos);
+            if (Anterior != null) Anterior.Dispose();
+        }
+
+        private void ContabilidadMetEliminar(object Remitente, EventArgs Argumentos)
+        {
+            if (_IdActivo == 0) return;
+            if (!ClsDialogosContabilidad.ContabilidadFuncConfirmar(this,
+                    "¿Desea eliminar el activo " + ContabilidadTxtDescripcion.Text + "? Se dará de baja del registro.", "Sí, eliminar"))
+                return;
+            string Mensaje;
+            int IdActivo = _IdActivo;
+            bool Eliminado = _Controlador.ContabilidadFuncGrabarCambios(EstadoEntidadContabilidad.Borrar, ref IdActivo, ContabilidadTxtDescripcion.Text,
+                ContabilidadCboModulo.Text, Convert.ToString(ContabilidadCboTipo.SelectedValue),
+                ContabilidadDtpAdquisicion.Value, ContabilidadDtpInicio.Value, ContabilidadNudCompra.Value,
+                ContabilidadNudResidual.Value, (int)ContabilidadNudMeses.Value, out Mensaje);
+            Diseno.ContabilidadMetAviso(this, Eliminado ? string.Empty : Mensaje, Mensaje);
+            if (!Eliminado) return;
+            ContabilidadMetCargarLista();
+            ContabilidadMetCargar(null);
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         }
 
         // Inicio de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026
@@ -71,9 +139,41 @@ namespace CapaVista_Contabilidad
         // Fin de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026
         {
             ClsPermisosMenuContabilidad.ContabilidadMetRestringir(ContabilidadBtnNueva, Permisos.PuedeInsertar);
-            ClsPermisosMenuContabilidad.ContabilidadMetRestringir(ContabilidadBtnEjemplo, Permisos.PuedeInsertar);
-            ClsPermisosMenuContabilidad.ContabilidadMetRestringir(ContabilidadBtnGuardar, Permisos.PuedeInsertar);
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            ClsPermisosMenuContabilidad.ContabilidadMetRestringir(ContabilidadBtnEliminar, Permisos.PuedeEliminar);
+            ClsPermisosMenuContabilidad.ContabilidadMetRestringir(ContabilidadBtnGuardar, Permisos.PuedeInsertar || Permisos.PuedeEditar);
+            // Inicio de cambio: Gabriel Guillén - 0901-23-1998 - 10/11/2026
+            ClsPermisosMenuContabilidad.ContabilidadMetRestringir(ContabilidadBtnDepreciar, Permisos.PuedeInsertar);
+            // Fin de cambio: Gabriel Guillén - 0901-23-1998 - 10/11/2026
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         }
+
+        // Inicio de cambio: Gabriel Guillén - 0901-23-1998 - 10/11/2026
+        // Genera la póliza de depreciación del mes elegido
+        private void ContabilidadMetDepreciar(object Remitente, EventArgs Argumentos)
+        {
+            DateTime Mes = ContabilidadDtpMesDepreciacion.Value;
+            int Cantidad;
+            decimal Total;
+            string Error = _Controlador.ContabilidadFuncResumenDepreciacion(Mes, out Cantidad, out Total);
+            if (Error != string.Empty)
+            {
+                ClsDialogosContabilidad.ContabilidadMetError(this, Error);
+                return;
+            }
+            if (!ClsDialogosContabilidad.ContabilidadFuncConfirmar(this, "Se depreciarán " + Cantidad + " activo(s) del mes " +
+                    Mes.ToString("MM/yyyy") + " por Q " + Total.ToString("#,##0.00") + " y se generará su póliza. ¿Desea continuar?", "Sí, depreciar"))
+                return;
+            string Mensaje;
+            bool Depreciado = _Controlador.ContabilidadFuncDepreciarMes(Mes, out Mensaje);
+            Diseno.ContabilidadMetAviso(this, Depreciado ? string.Empty : Mensaje, Mensaje);
+            if (!Depreciado) return;
+            int IdActivo = _IdActivo;
+            ContabilidadMetCargarLista();
+            DataRow[] Seleccionado = _Activos.Select("IdActivo = " + IdActivo);
+            ContabilidadMetCargar(Seleccionado.Length > 0 ? Seleccionado[0] : null);
+        }
+        // Fin de cambio: Gabriel Guillén - 0901-23-1998 - 10/11/2026
 
         private void ContabilidadMetCambiarFicha(object Remitente, EventArgs Argumentos)
         {
@@ -88,37 +188,65 @@ namespace CapaVista_Contabilidad
 
         private void ContabilidadMetValidar(object Remitente, EventArgs Argumentos)
         {
-            var Errores = _Controlador.ContabilidadFuncErroresActivo(ContabilidadTxtDescripcion.Text, ContabilidadTxtCentro.Text,
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            var Errores = _Controlador.ContabilidadFuncErroresActivo(ContabilidadTxtDescripcion.Text,
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
                 ContabilidadDtpAdquisicion.Value, ContabilidadDtpInicio.Value, ContabilidadNudCompra.Value,
                 ContabilidadNudResidual.Value, (int)ContabilidadNudMeses.Value);
             var Campos = new System.Collections.Generic.Dictionary<string, Control>
             {
-                { "Descripcion", ContabilidadTxtDescripcion }, { "Centro", ContabilidadTxtCentro }, { "Inicio", ContabilidadDtpInicio },
+                // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+                { "Descripcion", ContabilidadTxtDescripcion }, { "Inicio", ContabilidadDtpInicio },
+                // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
                 { "Compra", ContabilidadNudCompra }, { "Residual", ContabilidadNudResidual }, { "Meses", ContabilidadNudMeses }
             };
             foreach (var Campo in Campos) _Validacion.ContabilidadFuncValidar(Campo.Value, Errores.ContainsKey(Campo.Key) ? Errores[Campo.Key] : null);
             if (Errores.Count > 0) return;
             string Mensaje;
-            bool Grabado = _Controlador.ContabilidadFuncGrabarCambios(EstadoEntidadContabilidad.Agregar, ContabilidadTxtDescripcion.Text,
-                ContabilidadTxtCentro.Text, ContabilidadCboModulo.Text, Convert.ToString(ContabilidadCboTipo.SelectedValue),
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            int IdActivo = _IdActivo;
+            bool Grabado = _Controlador.ContabilidadFuncGrabarCambios(
+                _IdActivo == 0 ? EstadoEntidadContabilidad.Agregar : EstadoEntidadContabilidad.Modificar, ref IdActivo, ContabilidadTxtDescripcion.Text,
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+                // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+                ContabilidadCboModulo.Text, Convert.ToString(ContabilidadCboTipo.SelectedValue),
+                // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
                 ContabilidadDtpAdquisicion.Value, ContabilidadDtpInicio.Value, ContabilidadNudCompra.Value,
                 ContabilidadNudResidual.Value, (int)ContabilidadNudMeses.Value, out Mensaje);
             Diseno.ContabilidadMetAviso(this, Grabado ? string.Empty : Mensaje, Mensaje);
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            if (!Grabado) return;
+            ContabilidadMetCargarLista();
+            DataRow[] Guardado = _Activos.Select("IdActivo = " + IdActivo);
+            ContabilidadMetCargar(Guardado.Length > 0 ? Guardado[0] : null);
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         }
 
-        private void ContabilidadMetCargar(bool Ejemplo)
+        // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+        private void ContabilidadMetCargar(DataRow Activo)
+        // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         {
             _CargandoDatos = true;
             _Validacion.ContabilidadMetLimpiar();
-            ContabilidadTxtDescripcion.Text = Ejemplo ? "Vehículo de reparto" : string.Empty;
-            ContabilidadTxtCentro.Text = Ejemplo ? "DISTRIBUCION" : string.Empty;
-            ContabilidadCboModulo.SelectedIndex = Ejemplo ? 1 : 0;
-            ContabilidadCboTipo.SelectedIndex = 0;
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            _IdActivo = Activo == null ? 0 : (int)Activo["IdActivo"];
+            DateTime Hoy = DateTime.Today;
+            ContabilidadTxtDescripcion.Text = Activo == null ? string.Empty : (string)Activo["Descripcion"];
+            if (Activo == null) ContabilidadCboModulo.SelectedIndex = ContabilidadCboModulo.Items.Count > 0 ? 0 : -1;
+            else ContabilidadCboModulo.SelectedItem = (string)Activo["Modulo"];
+            if (Activo == null) ContabilidadCboTipo.SelectedIndex = ContabilidadCboTipo.Items.Count > 0 ? 0 : -1;
+            else ContabilidadCboTipo.SelectedValue = (string)Activo["TipoCodigo"];
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
             ContabilidadMetTipo();
-            ContabilidadDtpAdquisicion.Value = new DateTime(2026, 10, 1);
-            ContabilidadDtpInicio.Value = new DateTime(2026, 10, 2);
-            ContabilidadNudCompra.Value = Ejemplo ? 120000m : 0m;
-            ContabilidadNudResidual.Value = Ejemplo ? 12000m : 0m;
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            ContabilidadDtpAdquisicion.Value = Activo == null ? Hoy : (DateTime)Activo["Adquisicion"];
+            ContabilidadDtpInicio.Value = Activo == null ? Hoy : (DateTime)Activo["Inicio"];
+            ContabilidadNudCompra.Value = Activo == null ? 0m : (decimal)Activo["Compra"];
+            ContabilidadNudResidual.Value = Activo == null ? 0m : (decimal)Activo["Residual"];
+            if (Activo != null) ContabilidadNudMeses.Value = (int)Activo["Meses"];
+            ContabilidadBtnEliminar.Enabled = _IdActivo > 0;
+            ContabilidadBtnGuardar.Text = _IdActivo > 0 ? "Guardar cambios" : "Guardar activo";
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
             _CargandoDatos = false;
             ContabilidadBtnGuardar.Enabled = false;
             ContabilidadMetActualizar();
@@ -128,19 +256,11 @@ namespace CapaVista_Contabilidad
         {
             decimal Compra = ContabilidadNudCompra.Value;
             decimal Residual = ContabilidadNudResidual.Value;
-            string ErrorResidual;
-            var Errores = _Controlador.ContabilidadFuncErroresActivo(ContabilidadTxtDescripcion.Text, ContabilidadTxtCentro.Text,
-                ContabilidadDtpAdquisicion.Value, ContabilidadDtpInicio.Value, Compra, Residual, (int)ContabilidadNudMeses.Value);
-            if (Errores.TryGetValue("Residual", out ErrorResidual))
-            {
-                ContabilidadLblResumen.Text = "El valor residual no puede superar el valor de compra.";
-                ContabilidadLblResumen.ForeColor = Color.FromArgb(197, 143, 62);
-                return;
-            }
-            ContabilidadLblResumen.ForeColor = Color.FromArgb(35, 50, 61);
-            ContabilidadLblResumen.Text = "Base depreciable: " + Diseno.ContabilidadFuncMoneda(_Controlador.ContabilidadFuncBaseDepreciable(Compra, Residual))
-                + "     Cuota mensual: " + Diseno.ContabilidadFuncMoneda(_Controlador.ContabilidadFuncDepreciacion(Compra, Residual, (int)ContabilidadNudMeses.Value))
-                + "     Valor inicial en libros: " + Diseno.ContabilidadFuncMoneda(Compra);
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+            if (_CargandoDatos) return;
+            _Validacion.ContabilidadFuncValidar(ContabilidadNudResidual,
+                Residual > Compra ? "El valor residual no puede superar el valor de compra." : null);
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
         }
     }
 }
