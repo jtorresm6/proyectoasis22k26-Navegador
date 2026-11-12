@@ -61,4 +61,35 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Entidades
         public string MonedaResumen { get; set; }
         public ClsResumenDisponibilidad Resumen { get; set; }
     }
+
+    // Resultado intermedio del motor diario. Los registros contienen únicamente
+    // datos reconstruidos desde operaciones reales; las cuentas sin un saldo de
+    // apertura verificable se informan y no se guardan con importes inventados.
+    public class ClsCalculoAutomaticoDisponibilidad
+    {
+        public List<ClsDisponibilidad> Registros { get; set; } = new List<ClsDisponibilidad>();
+        public List<string> CuentasPendientes { get; set; } = new List<string>();
+    }
+
+    public class ClsResultadoActualizacionDisponibilidad
+    {
+        public int CuentasCalculadas { get; set; }
+        public int CuentasActualizadas { get; set; }
+        public int CuentasSinCambios { get; set; }
+        public List<string> CuentasPendientes { get; set; } = new List<string>();
+
+        public string Mensaje
+        {
+            get
+            {
+                string texto = CuentasCalculadas + " cuenta(s) calculada(s); " +
+                    CuentasActualizadas + " corte(s) actualizado(s) y " +
+                    CuentasSinCambios + " sin cambios.";
+                if (CuentasPendientes.Count > 0)
+                    texto += " " + CuentasPendientes.Count +
+                        " cuenta(s) pendientes de un saldo inicial proveniente de cuenta, corte, conciliación o extracto.";
+                return texto;
+            }
+        }
+    }
 }

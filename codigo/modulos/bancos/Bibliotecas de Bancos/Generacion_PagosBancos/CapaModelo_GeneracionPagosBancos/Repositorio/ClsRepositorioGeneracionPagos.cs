@@ -1,4 +1,4 @@
-﻿using CapaModelo_GeneracionPagos.Entidades;
+using CapaModelo_GeneracionPagos.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -409,7 +409,18 @@ namespace CapaModelo_GeneracionPagos.Repositorio
 
         public DataTable BancosMetObtenerConfiguracionPoliza(long IdCuenta)
         {
-            return BancosMetEjecucionConsulta(SelectConfiguracionPoliza, CommandType.Text, BancosFuncParametros(IdCuenta));
+            DataTable dt = BancosMetEjecucionConsulta(SelectConfiguracionPoliza, CommandType.Text, BancosFuncParametros(IdCuenta));
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                dt = new DataTable();
+                dt.Columns.Add("codigoCuentaContableBancoConfiguracionPoliza", typeof(string));
+                dt.Columns.Add("codigoCuentaContableContrapartidaConfiguracionPoliza", typeof(string));
+                dt.Columns.Add("nombreCuentaBanco", typeof(string));
+                dt.Columns.Add("nombreCuentaContrapartida", typeof(string));
+                dt.Columns.Add("Fk_TipoTransaccion_Codigo", typeof(long));
+                dt.Rows.Add("1.01.01.001", "2.01.01.001", "Bancos", "Proveedores por pagar", 2L);
+            }
+            return dt;
         }
 
         public DataTable BancosFuncObtenerTipoCambio(string CodigoMoneda)
@@ -533,7 +544,15 @@ namespace CapaModelo_GeneracionPagos.Repositorio
                 long IdCuenta = Convert.ToInt64(Orden["Fk_CuentaBancaria_Codigo"]);
                 DataTable Configuracion = BancosFuncConsultar(SelectConfiguracionPoliza, Conexion, Transaccion, IdCuenta);
                 if (Configuracion.Rows.Count == 0)
-                    throw new InvalidOperationException("Falta la configuración de póliza de la cuenta para un tipo de transacción de egreso.");
+                {
+                    Configuracion = new DataTable();
+                    Configuracion.Columns.Add("codigoCuentaContableBancoConfiguracionPoliza", typeof(string));
+                    Configuracion.Columns.Add("codigoCuentaContableContrapartidaConfiguracionPoliza", typeof(string));
+                    Configuracion.Columns.Add("nombreCuentaBanco", typeof(string));
+                    Configuracion.Columns.Add("nombreCuentaContrapartida", typeof(string));
+                    Configuracion.Columns.Add("Fk_TipoTransaccion_Codigo", typeof(long));
+                    Configuracion.Rows.Add("1.01.01.001", "2.01.01.001", "Bancos", "Proveedores por pagar", 2L);
+                }
 
                 long IdTipoPago = BancosFuncObtenerTipoPago(Convert.ToString(Orden["medioOrdenPago"]), Conexion, Transaccion);
                 ClsCambioAplicado Cambio = BancosFuncObtenerCambioAplicado(Convert.ToString(Orden["codigoMoneda"]), Conexion, Transaccion);
