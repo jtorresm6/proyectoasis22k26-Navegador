@@ -1,10 +1,28 @@
-using CapaModelo_AutorizacionOrdenes.Contratos;
+﻿using CapaModelo_AutorizacionOrdenes.Contratos;
 using CapaModelo_AutorizacionOrdenes.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
 using System.Linq;
+
+/*
+ * ==================================================================
+ * Área : Bancos
+ * Autor : Andy Alfonso Garcia Lopez
+ * Carné : 9959-23-1494
+ * Fecha : 28/10/2026
+ * ==================================================================
+ * Propósito :
+ *  La clase Repositorio de Autorización de Orden de Compra se encarga de
+ *  registrar, mediante ODBC y una transacción, la decisión de Tesorería sobre
+ *  una orden de compra (autorizar o rechazar). Al autorizar guarda la evidencia
+ *  de fondos y crea las reservas por cuenta que Disponibilidad Diaria toma como
+ *  monto comprometido; al rechazar actualiza el estado de la orden. También
+ *  consulta las autorizaciones registradas y la empresa activa de tblEmpresa.
+ *  Hereda de ClsSentencias e implementa IRepositorioAutorizacionOrdenCompra.
+ * ===================================================================
+*/
 
 namespace CapaModelo_AutorizacionOrdenes.Repositorios
 {
@@ -15,9 +33,13 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
     public class ClsRepositorioAutorizacionOrdenCompra : ClsSentencias, IRepositorioAutorizacionOrdenCompra
     {
         private const string SelectAll =
-            "SELECT Pk_AutOrdenCompra, Fk_OrdenCompraRecibida_Codigo, identificadorEmpresaAutOrdenCompra, " +
-            "estadoAutOrdenCompra, identificadorUsuarioAutorizaAutOrdenCompra, fechaDecisionAutOrdenCompra, " +
-            "comentarioAutOrdenCompra, motivoRechazoAutOrdenCompra, created_at, updated_at FROM tblAutOrdenCompra";
+            "SELECT a.Pk_AutOrdenCompra, a.Fk_OrdenCompraRecibida_Codigo, a.identificadorEmpresaAutOrdenCompra, " +
+            "a.estadoAutOrdenCompra, a.identificadorUsuarioAutorizaAutOrdenCompra, a.fechaDecisionAutOrdenCompra, " +
+            "a.comentarioAutOrdenCompra, a.motivoRechazoAutOrdenCompra, a.created_at, a.updated_at, " +
+            "u.nombreUsuario, COALESCE(e.nombreComercialEmpresa, e.razonSocialEmpresa) " +
+            "FROM tblAutOrdenCompra a " +
+            "LEFT JOIN tblUsuario u ON u.idUsuario = a.identificadorUsuarioAutorizaAutOrdenCompra " +
+            "LEFT JOIN tblEmpresa e ON e.idEmpresa = a.identificadorEmpresaAutOrdenCompra";
 
         private const string InsertEncabezado =
             "INSERT INTO tblAutOrdenCompra (Fk_OrdenCompraRecibida_Codigo, identificadorEmpresaAutOrdenCompra, " +
@@ -39,9 +61,8 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
             "UPDATE tblOrdenCompraRecibida SET estadoOrdenCompraRecibida = 'RECHAZADA' " +
             "WHERE Pk_OrdenCompraRecibida = ? AND UPPER(estadoOrdenCompraRecibida) = 'APROBADA'";
 
-        private const string InsertBitacora =
-            "INSERT INTO tblBitacora (idUsuario, accionBitacora, tablaBitacora, idRegistroBitacora, " +
-            "detallesBitacora, ipBitacora, fechaHoraBitacora) VALUES (?, ?, ?, ?, ?, ?, NOW())";
+        private const string SelectEmpresa =
+            "SELECT idEmpresa FROM tblEmpresa WHERE is_active = 1 ORDER BY idEmpresa LIMIT 1";
 
         private const string SelectSaldoActual =
             "SELECT (d.saldoInicialDisponibilidadDiaria + d.ingresosDisponibilidadDiaria - " +
@@ -100,9 +121,9 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
                                     evidencia.IdMonedaOrigen, evidencia.IdMonedaDestino,
                                     evidencia.TipoCambioDisponibilidadFondos, Db(evidencia.IdTipoCambio),
                                     "DISPONIBILIDAD_DIARIA_AUTOMATICA");
-                                long idEvidencia = UltimoId(conexion, transaccion);
-                                Ejecutar(conexion, transaccion, InsertReserva,
-                                    idEvidencia, detalle.MontoAsignadoPagoOrden);
+                                    long idEvidencia = UltimoId(conexion, transaccion);
+                                    Ejecutar(conexion, transaccion, InsertReserva,
+                                        idEvidencia, detalle.MontoAsignadoPagoOrden);
                             }
                         }
                         else if (Ejecutar(conexion, transaccion, RechazarOrden, entidad.IdOrdenCompra) != 1)
@@ -110,11 +131,6 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
                             throw new InvalidOperationException("La orden ya no se encuentra disponible para rechazo.");
                         }
 
-                        Ejecutar(conexion, transaccion, InsertBitacora,
-                            entidad.IdUsuarioAutoriza.Value, autoriza ? "AUTORIZAR_OC" : "RECHAZAR_OC",
-                            "tblAutOrdenCompra", Convert.ToInt32(idAutorizacion),
-                            "Orden recibida " + entidad.IdOrdenCompra,
-                            string.IsNullOrWhiteSpace(entidad.Ip) ? "127.0.0.1" : entidad.Ip);
                         transaccion.Commit();
                         return Convert.ToInt32(idAutorizacion);
                     }
@@ -125,6 +141,16 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
                     }
                 }
             }
+        }
+
+        public int BancosMetObtenerIdEmpresa()
+        {
+            DataTable tabla = BancosMetEjecucionConsulta(SelectEmpresa, CommandType.Text);
+            if (tabla.Rows.Count == 0 || tabla.Rows[0][0] == DBNull.Value)
+            {
+                return 0;
+            }
+            return Convert.ToInt32(tabla.Rows[0][0]);
         }
 
         public int BancosMetEditar(ClsAutorizacionOrdenCompra entidad)
@@ -154,7 +180,9 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
                     ComentarioAutorizacionOrden = Convert.ToString(row[6]),
                     MotivoRechazoAutorizacionOrden = Convert.ToString(row[7]),
                     CreatedAt = Convert.ToDateTime(row[8]),
-                    UpdatedAt = Convert.ToDateTime(row[9])
+                    UpdatedAt = Convert.ToDateTime(row[9]),
+                    NombreUsuarioAutoriza = Convert.ToString(row[10]),
+                    NombreEmpresaAutorizacionOrden = Convert.ToString(row[11])
                 });
             }
             return lista;

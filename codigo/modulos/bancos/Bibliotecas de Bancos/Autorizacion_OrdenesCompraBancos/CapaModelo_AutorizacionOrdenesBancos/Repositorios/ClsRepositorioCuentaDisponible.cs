@@ -8,17 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
- * ==================================================================
+ * ============================================================================
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
  * Fecha : 28/10/2026
- * ==================================================================
+ * ============================================================================
  * Propósito :
  *  La clase Repositorio de Cuenta Disponible se encarga de consultar mediante
  *  ODBC las cuentas bancarias activas con disponibilidad del día, heredando de
  *  ClsSentencias e implementando la interfaz IRepositorioCuentaDisponible.
- * ===================================================================
+ * ============================================================================
 */
 
 namespace CapaModelo_AutorizacionOrdenes.Repositorios
