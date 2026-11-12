@@ -73,7 +73,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             RrhhBtnAnterior.Click += (Remitente, Evento) => RrhhMetMostrarSeleccionada(RrhhCboResumenCiclo.SelectedIndex - 1);
             RrhhBtnSiguiente.Click += (Remitente, Evento) => RrhhMetMostrarSeleccionada(RrhhCboResumenCiclo.SelectedIndex + 1);
             RrhhBtnFin.Click += (Remitente, Evento) => RrhhMetMostrarSeleccionada(_MisEvaluaciones.Count - 1);
-            RrhhBtnAyuda.Click += (Remitente, Evento) => ClsAccionesVista.RrhhMetMostrarAyuda(this, "Ayudas_VerEvaluaciones.html");
+            RrhhBtnAyuda.Click += (Remitente, Evento) => ClsAccionesVista.RrhhMetMostrarAyuda(this, "VerEvaluaciones__RecursosHumanos.html");
         }
 
         private void FrmVerEvaluaciones_Load(object sender, EventArgs e)
@@ -198,6 +198,11 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
         private void RrhhBtnSalir_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void RrhhBtnImprimir_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1098,7 +1098,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             // RrhhBtnImprimir
             // 
             this.RrhhBtnImprimir.BackColor = System.Drawing.Color.Transparent;
-            this.RrhhBtnImprimir.BackgroundImage = global::CapaVista_EvaluacionDesempeño.Properties.Resources.btn_imprimir;
+            this.RrhhBtnImprimir.BackgroundImage = global::CapaVista_EvaluacionDesempeño.Properties.Resources.btn_reporte;
             this.RrhhBtnImprimir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.RrhhBtnImprimir.Cursor = System.Windows.Forms.Cursors.Hand;
             this.RrhhBtnImprimir.FlatAppearance.BorderSize = 0;
@@ -1111,6 +1111,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhBtnImprimir.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnImprimir.TabIndex = 1;
             this.RrhhBtnImprimir.UseVisualStyleBackColor = false;
+            this.RrhhBtnImprimir.Click += new System.EventHandler(this.RrhhBtnImprimir_Click);
             // 
             // RrhhBtnInicio
             // 

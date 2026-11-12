@@ -618,7 +618,7 @@
             // RrhhBtnImprimir
             // 
             this.RrhhBtnImprimir.BackColor = System.Drawing.Color.Transparent;
-            this.RrhhBtnImprimir.BackgroundImage = global::CapaVista_EvaluacionDesempeño.Properties.Resources.btn_imprimir;
+            this.RrhhBtnImprimir.BackgroundImage = global::CapaVista_EvaluacionDesempeño.Properties.Resources.btn_reporte;
             this.RrhhBtnImprimir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.RrhhBtnImprimir.Cursor = System.Windows.Forms.Cursors.Hand;
             this.RrhhBtnImprimir.FlatAppearance.BorderSize = 0;

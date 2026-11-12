@@ -77,7 +77,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             RrhhBtnAnterior.Click += (Remitente, Evento) => RrhhMetIrAFila(RrhhMetFilaActual() - 1);
             RrhhBtnSiguiente.Click += (Remitente, Evento) => RrhhMetIrAFila(RrhhMetFilaActual() + 1);
             RrhhBtnFin.Click += (Remitente, Evento) => RrhhMetIrAFila(RrhhDgvPlanes.Rows.Count - 1);
-            RrhhBtnAyuda.Click += (Remitente, Evento) => ClsAccionesVista.RrhhMetMostrarAyuda(this, "Ayudas_PlanMejora.html");
+            RrhhBtnAyuda.Click += (Remitente, Evento) => ClsAccionesVista.RrhhMetMostrarAyuda(this, "PlanMejora__RecursosHumanos.html");
         }
 
         private void FrmPlanMejora_Load(object sender, EventArgs e)

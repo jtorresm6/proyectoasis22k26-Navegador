@@ -52,7 +52,7 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
 
         private void btnAyudaEvaluacion_Click(object sender, EventArgs e)
         {
-            ClsAccionesVista.RrhhMetMostrarAyuda(this, "Ayudas_EvaluacionDesempeno.html");
+            ClsAccionesVista.RrhhMetMostrarAyuda(this, "EvaluacionDesempeno__RecursosHumanos.html");
         }
     }
 }
