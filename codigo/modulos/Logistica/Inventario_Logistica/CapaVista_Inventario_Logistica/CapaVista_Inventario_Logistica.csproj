@@ -167,12 +167,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RpReporteBodega.rdlc" />
     <EmbeddedResource Include="Reportes\RpReporteDetalleMovimiento.rdlc" />
+    <EmbeddedResource Include="Reportes\RpReporteProducto.rdlc" />
     <EmbeddedResource Include="Reportes\RpReporteStock.rdlc" />
     <EmbeddedResource Include="Reportes\RpReporteSucursal.rdlc" />
     <EmbeddedResource Include="Reportes\RpReporteTipoMovimiento.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\CapaControlador_Inventario_Logistica.Modelos_de_Controladores.ClsDatosProducto.datasource" />
     <None Include="Properties\DataSources\CapaControlador_Inventario_Logistica.Modelos_de_Controladores.ClsModeloBodega.datasource" />
     <None Include="Properties\DataSources\CapaControlador_Inventario_Logistica.Modelos_de_Controladores.ClsModeloProducto.datasource" />
     <None Include="Properties\DataSources\CapaControlador_Inventario_Logistica.Modelos_de_Controladores.ClsModelosDetalleMovimiento.datasource" />
