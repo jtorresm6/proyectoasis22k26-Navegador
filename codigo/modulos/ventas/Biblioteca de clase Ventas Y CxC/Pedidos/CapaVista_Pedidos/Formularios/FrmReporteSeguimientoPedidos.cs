@@ -1,3 +1,9 @@
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 22/10/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Mostrar el reporte estándar de seguimiento de pedidos.
+ */
 using System;
 using System.Data;
 using System.Windows.Forms;

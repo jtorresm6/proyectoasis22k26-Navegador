@@ -35,5 +35,9 @@ namespace CapaVista_CierreMovimientos.Properties
         { get { return ((global::System.Drawing.Bitmap)(ResourceManager.GetObject("BotonOriginalEliminarVentas", resourceCulture))); } }
         internal static global::System.Drawing.Bitmap BotonOriginalRefrescarVentas
         { get { return ((global::System.Drawing.Bitmap)(ResourceManager.GetObject("BotonOriginalRefrescarVentas", resourceCulture))); } }
+        internal static global::System.Drawing.Bitmap BotonCierreContable
+        { get { return ((global::System.Drawing.Bitmap)(ResourceManager.GetObject("BotonCierreContable", resourceCulture))); } }
+        internal static global::System.Drawing.Bitmap BotonOriginalAyudaVentas
+        { get { return ((global::System.Drawing.Bitmap)(ResourceManager.GetObject("BotonOriginalAyudaVentas", resourceCulture))); } }
     }
 }

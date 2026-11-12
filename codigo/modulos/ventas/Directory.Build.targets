@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!-- Visual Studio no compila los proyectos externos a la solucion abierta.
-       Usar el mismo orden de dependencias que el BAT, sin cargar otras areas
-       en las soluciones MVC ni ejecutar la preparacion en IntelliSense. -->
+  <!-- Las soluciones MVC de Pedidos y Cierre ya declaran sus referencias.
+       Su Build no debe preparar todos los componentes de Ventas y otros modulos. -->
   <PropertyGroup>
     <ProyectoCompilacionVentas>$(MSBuildThisFileDirectory)Compilacion_Ventas\build_ventas.proj</ProyectoCompilacionVentas>
     <PropiedadesPreparacionVentas>Configuration=$(Configuration);BuildingInsideVisualStudio=false;BuildProjectReferences=false;VentasDependenciasPreparadas=true</PropiedadesPreparacionVentas>
     <PropiedadesSolucionVentas>SolutionDir;SolutionPath;SolutionName;SolutionFileName;SolutionExt;CurrentSolutionConfigurationContents;BuildingSolutionFile</PropiedadesSolucionVentas>
   </PropertyGroup>
   <Target Name="PrepararVentasDesdeVisualStudio" BeforeTargets="ResolveProjectReferences"
-          Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(DesignTimeBuild)' != 'true' and '$(TargetFrameworkVersion)' == 'v4.8' and '$(VentasDependenciasPreparadas)' != 'true'">
+          Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(DesignTimeBuild)' != 'true' and '$(TargetFrameworkVersion)' == 'v4.8' and '$(VentasDependenciasPreparadas)' != 'true' and '$(SolutionName)' != 'CierreMovimientos' and '$(SolutionName)' != 'Pedidos'">
     <Message Text="Preparando las dependencias de Ventas antes de compilar la solucion abierta..." Importance="high" />
     <MSBuild Projects="$(ProyectoCompilacionVentas)" Targets="PrepararDependenciasVentas"
              Properties="$(PropiedadesPreparacionVentas)"
