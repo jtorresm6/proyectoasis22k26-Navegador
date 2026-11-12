@@ -377,7 +377,7 @@
             this._BancarioLblAvisoTraslado.Location = new System.Drawing.Point(26, 610);
             this._BancarioLblAvisoTraslado.Size = new System.Drawing.Size(680, 50);
             this._BancarioLblAvisoTraslado.TabIndex = 31;
-            this._BancarioLblAvisoTraslado.Text = "GTQ. El envío registra una póliza BORRADOR, sin aplicar saldos.";
+            this._BancarioLblAvisoTraslado.Text = "GTQ. Contabilidad valida la póliza y puede aplicarla a saldos al recibirla.";
             this._BancarioLblAvisoTraslado.BackColor = System.Drawing.Color.Transparent;
             this._BancarioLblAvisoTraslado.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular);
             this._BancarioLblAvisoTraslado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

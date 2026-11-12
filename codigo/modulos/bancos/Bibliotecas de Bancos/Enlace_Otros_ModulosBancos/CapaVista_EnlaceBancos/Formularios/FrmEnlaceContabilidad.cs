@@ -132,12 +132,12 @@ namespace CapaVista_EnlaceB.Formularios
                     return;
                 var Contexto = BancarioMetContexto();
                 long Id = _Partida;
-                if (MessageBox.Show(this, "¿Confirma el envío de la partida " + Id + " a Contabilidad como BORRADOR? No se aplicarán saldos.", "Confirmar traslado", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                if (MessageBox.Show(this, "¿Confirma el envío de la partida " + Id + " a Contabilidad? Según la configuración del módulo, puede aplicarse a saldos de inmediato.", "Confirmar traslado", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
-                string Referencia = await Task.Run(() => _Controlador.BancarioMetEnviar(Id, Contexto));
+                var Resultado = await Task.Run(() => _Controlador.BancarioMetEnviarConResultado(Id, Contexto));
                 BancarioMetMostrar(await Task.Run(() => _Controlador.BancarioMetObtener(Id)));
-                _BancarioLblResultado.Text = "Recibida en Contabilidad: " + Referencia + ". Sin aplicar saldos.";
-                ClsEstiloEnlace.BancarioMetExito(this, "Partida recibida en Contabilidad: " + Referencia);
+                _BancarioLblResultado.Text = "Póliza " + Resultado.Codigo + " · " + Resultado.Estado;
+                ClsEstiloEnlace.BancarioMetExito(this, Resultado.Mensaje);
             });
         }
 

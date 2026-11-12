@@ -86,7 +86,7 @@ namespace CapaModelo_EnlaceB.Repositorio
                 case "pais":
                     return BancarioMetLeer("SELECT idPais AS Id, CONCAT(nombrePais,' (',codigoMonedaPais,')') AS Nombre FROM tblPais WHERE is_active=1 ORDER BY nombrePais");
                 case "modulo":
-                    return BancarioMetLeer("SELECT idModuloContable AS Id, CONCAT(codigoModuloContable,' - ',nombreModuloContable) AS Nombre FROM tblModuloContable WHERE is_active=1 ORDER BY nombreModuloContable");
+                    return BancarioMetLeer("SELECT idModuloContable AS Id, CONCAT(codigoModuloContable,' - ',nombreModuloContable) AS Nombre FROM tblModuloContable WHERE is_active=1 AND UPPER(codigoModuloContable) IN ('MOD-BANCO','BANCOS','BAN','8000') ORDER BY nombreModuloContable");
                 default:
                     throw new ArgumentException("Catálogo no permitido.");
             }
@@ -251,8 +251,8 @@ namespace CapaModelo_EnlaceB.Repositorio
             var Pais = BancarioMetTabla(Conexion, Transaccion, "SELECT codigoMonedaPais FROM tblPais WHERE idPais=? AND is_active=1", Contexto.Pais);
             if (Pais.Rows.Count != 1 || Convert.ToString(Pais.Rows[0][0]) != "GTQ")
                 throw new InvalidOperationException("Esta operación requiere país con moneda GTQ; otras monedas necesitan una política acordada.");
-            if (Convert.ToInt32(BancarioMetEscalar(Conexion, Transaccion, "SELECT COUNT(*) FROM tblModuloContable WHERE idModuloContable=? AND is_active=1 AND UPPER(codigoModuloContable) IN ('BANCOS','BAN','8000')", Contexto.ModuloContable)) != 1)
-                throw new InvalidOperationException("Seleccione el módulo contable de Bancos (código BANCOS, BAN u 8000), según el catálogo existente.");
+            if (Convert.ToInt32(BancarioMetEscalar(Conexion, Transaccion, "SELECT COUNT(*) FROM tblModuloContable WHERE idModuloContable=? AND is_active=1 AND UPPER(codigoModuloContable) IN ('MOD-BANCO','BANCOS','BAN','8000')", Contexto.ModuloContable)) != 1)
+                throw new InvalidOperationException("Seleccione el módulo contable de Bancos (código MOD-BANCO, BANCOS, BAN u 8000), según el catálogo existente.");
             object Moneda = BancarioMetEscalar(Conexion, Transaccion, "SELECT idMoneda FROM tblMoneda WHERE codigoMoneda='GTQ' AND is_active=1");
             if (Moneda == null)
                 throw new InvalidOperationException("No existe la moneda GTQ activa.");
@@ -397,71 +397,110 @@ namespace CapaModelo_EnlaceB.Repositorio
             return true;
         }
 
-        public string BancarioMetEnviarPartida(long Id, ClsContextoPartida Contexto)
+        public ClsResultadoEnvioContable BancarioMetEnviarPartida(long Id, ClsContextoPartida Contexto, Func<ClsEnvioContable, ClsResultadoEnvioContable> Recibir)
         {
+            ClsEnvioContable Envio;
+            var Existente = BancarioMetRevisarEnvio(Id, Contexto, null, out Envio);
+            if (Existente != null) return Existente;
+
+            // Contabilidad confirma su propia transacción. Libere primero los bloqueos de Bancos.
+            var Respuesta = Recibir(Envio);
+            try
+            {
+                return BancarioMetRevisarEnvio(Id, Contexto, Respuesta, out Envio);
+            }
+            catch (Exception Ex)
+            {
+                throw new InvalidOperationException("Contabilidad respondió con la póliza " + Respuesta.Codigo
+                    + ". Falta confirmar el traslado en Bancos. Reintente la misma partida. " + Ex.Message, Ex);
+            }
+        }
+
+        private ClsResultadoEnvioContable BancarioMetRevisarEnvio(long Id, ClsContextoPartida Contexto,
+            ClsResultadoEnvioContable Respuesta, out ClsEnvioContable Envio)
+        {
+            Envio = null;
             using (var Conexion = new OdbcConnection(_Conexion))
             {
                 Conexion.Open();
                 using (var Transaccion = Conexion.BeginTransaction(IsolationLevel.Serializable))
                 {
-                    try
-                    {
-                        long Moneda = BancarioMetValidarOperacion(Conexion, Transaccion, Contexto, true);
-                        var TablaDatos = BancarioMetTabla(Conexion, Transaccion, "SELECT * FROM tblPartidaConsolidada WHERE Pk_PartidaConsolidada=? FOR UPDATE", Id);
-                        if (TablaDatos.Rows.Count != 1)
-                            throw new InvalidOperationException("No existe la partida seleccionada.");
-                        var Parametro = TablaDatos.Rows[0];
-                        string Estado = Convert.ToString(Parametro["estadoPartidaConsolidada"]);
-                        if (Convert.ToInt32(Parametro["identificadorEmpresaPartidaConsolidada"]) != Contexto.Empresa || Convert.ToDateTime(Parametro["fechaInicioPartidaConsolidada"]).Date != Contexto.Inicio.Date || Convert.ToInt64(Parametro["Fk_Moneda_Codigo"]) != Moneda)
-                            throw new InvalidOperationException("La selección no coincide con la empresa, moneda y mes de la partida.");
-                        string Origen = "BANC-PC-" + Id.ToString(CultureInfo.InvariantCulture);
-                        string Codigo = Origen;
-                        var Recibida = BancarioMetTabla(Conexion, Transaccion, "SELECT idPolizaEncabezado,codigoPolizaEncabezado,estadoPolizaEncabezado,periodoContablePolizaEncabezado,idPais FROM tblPolizaEncabezado WHERE idModuloContable=? AND documentoOrigenPolizaEncabezado=? FOR UPDATE", Contexto.ModuloContable, Origen);
-                        if (Estado != "VALIDADA" && Estado != "ERROR" && Estado != "TRASLADADA")
-                            throw new InvalidOperationException("La partida no está lista para enviar.");
-                        var Detalle = BancarioMetDetalle(Conexion, Transaccion, Id);
-                        var Lineas = ClsReglasEnlace.BancarioMetPrepararLineasContables(Detalle);
-                        if (BancarioMetSumar(Detalle, "DebeDetallePartida") != Convert.ToDecimal(Parametro["totalDebePartidaConsolidada"]) || BancarioMetSumar(Detalle, "HaberDetallePartida") != Convert.ToDecimal(Parametro["totalHaberPartidaConsolidada"]))
-                            throw new InvalidOperationException("Los totales no coinciden con el detalle guardado.");
-                        if (Estado == "TRASLADADA")
-                        {
-                            if (Recibida.Rows.Count != 1 || Convert.ToString(Recibida.Rows[0]["codigoPolizaEncabezado"]) != Convert.ToString(Parametro["referenciaContabilidadPartidaConsolidada"]))
-                                throw new InvalidOperationException("No se pudo verificar el receptor de la partida trasladada.");
-                        }
-                        else
-                        {
-                            BancarioMetValidarFuentes(Conexion, Transaccion, Id, Moneda, Contexto, Detalle);
-                        }
-
-                        var Cuentas = BancarioMetObtenerCuentasAbiertas(Conexion, Transaccion, Lineas, Contexto);
-                        if (Recibida.Rows.Count > 1)
-                            throw new InvalidOperationException("Hay varias pólizas receptoras para el mismo origen.");
-                        if (Recibida.Rows.Count == 1)
-                        {
-                            Codigo = BancarioMetVerificarReceptor(Conexion, Transaccion, Recibida, Detalle, Cuentas, Contexto);
-                        }
-                        else
-                        {
-                            if (Estado == "TRASLADADA")
-                                throw new InvalidOperationException("Falta el receptor de una partida trasladada.");
-                            BancarioMetRegistrarBorrador(Conexion, Transaccion, Id, Origen, Parametro, Lineas, Cuentas, Contexto);
-                        }
-
-                        if (Estado != "TRASLADADA")
-                        {
-                            BancarioMetRegistrarTraslado(Conexion, Transaccion, Id, Codigo, Contexto);
-                        }
-
-                        Transaccion.Commit();
-                        return Codigo;
-                    }
-                    catch
-                    {
-                        Transaccion.Rollback();
-                        throw;
-                    }
+                    var Resultado = BancarioMetPrepararOConfirmar(Conexion, Transaccion, Id, Contexto, Respuesta, out Envio);
+                    Transaccion.Commit();
+                    return Resultado;
                 }
             }
+        }
+
+        private static ClsResultadoEnvioContable BancarioMetPrepararOConfirmar(OdbcConnection Conexion, OdbcTransaction Transaccion,
+            long Id, ClsContextoPartida Contexto, ClsResultadoEnvioContable Respuesta, out ClsEnvioContable Envio)
+        {
+            Envio = null;
+            long Moneda = BancarioMetValidarOperacion(Conexion, Transaccion, Contexto, true);
+            var TablaDatos = BancarioMetTabla(Conexion, Transaccion, "SELECT * FROM tblPartidaConsolidada WHERE Pk_PartidaConsolidada=? FOR UPDATE", Id);
+            if (TablaDatos.Rows.Count != 1)
+                throw new InvalidOperationException("No existe la partida seleccionada.");
+            var Parametro = TablaDatos.Rows[0];
+            string Estado = Convert.ToString(Parametro["estadoPartidaConsolidada"]);
+            if (Convert.ToInt32(Parametro["identificadorEmpresaPartidaConsolidada"]) != Contexto.Empresa || Convert.ToDateTime(Parametro["fechaInicioPartidaConsolidada"]).Date != Contexto.Inicio.Date || Convert.ToInt64(Parametro["Fk_Moneda_Codigo"]) != Moneda)
+                throw new InvalidOperationException("La selección no coincide con la empresa, moneda y mes de la partida.");
+            string Origen = "BANC-PC-" + Id.ToString(CultureInfo.InvariantCulture);
+            var Recibida = BancarioMetTabla(Conexion, Transaccion, "SELECT idPolizaEncabezado,codigoPolizaEncabezado,estadoPolizaEncabezado,periodoContablePolizaEncabezado,idPais FROM tblPolizaEncabezado WHERE idModuloContable=? AND documentoOrigenPolizaEncabezado=? FOR UPDATE", Contexto.ModuloContable, Origen);
+            if (Estado != "VALIDADA" && Estado != "ERROR" && Estado != "TRASLADADA")
+                throw new InvalidOperationException("La partida no está lista para enviar.");
+            var Detalle = BancarioMetDetalle(Conexion, Transaccion, Id);
+            var Lineas = ClsReglasEnlace.BancarioMetPrepararLineasContables(Detalle);
+            if (BancarioMetSumar(Detalle, "DebeDetallePartida") != Convert.ToDecimal(Parametro["totalDebePartidaConsolidada"]) || BancarioMetSumar(Detalle, "HaberDetallePartida") != Convert.ToDecimal(Parametro["totalHaberPartidaConsolidada"]))
+                throw new InvalidOperationException("Los totales no coinciden con el detalle guardado.");
+            if (Estado == "TRASLADADA")
+            {
+                if (Recibida.Rows.Count != 1 || Convert.ToString(Recibida.Rows[0]["codigoPolizaEncabezado"]) != Convert.ToString(Parametro["referenciaContabilidadPartidaConsolidada"]))
+                    throw new InvalidOperationException("No se pudo verificar el receptor de la partida trasladada.");
+            }
+            else
+            {
+                BancarioMetValidarFuentes(Conexion, Transaccion, Id, Moneda, Contexto, Detalle);
+            }
+
+            if (Recibida.Rows.Count > 1)
+                throw new InvalidOperationException("Hay varias pólizas receptoras para el mismo origen.");
+
+            var Cuentas = BancarioMetObtenerCuentas(Conexion, Transaccion, Lineas, Contexto, Recibida.Rows.Count == 0);
+            if (Recibida.Rows.Count == 0)
+            {
+                if (Respuesta != null)
+                    throw new InvalidOperationException("La póliza recibida no aparece en la base conectada a Bancos.");
+                Envio = new ClsEnvioContable
+                {
+                    CodigoModulo = Convert.ToString(BancarioMetEscalar(Conexion, Transaccion,
+                        "SELECT codigoModuloContable FROM tblModuloContable WHERE idModuloContable=?", Contexto.ModuloContable)),
+                    Pais = Contexto.Pais,
+                    Fecha = Contexto.Fin.Date,
+                    DocumentoOrigen = Origen,
+                    Concepto = Convert.ToString(Parametro["conceptoPartidaConsolidada"]),
+                    Lineas = Lineas
+                };
+                return null;
+            }
+
+            string Codigo = BancarioMetVerificarReceptor(Conexion, Transaccion, Recibida, Detalle, Cuentas, Contexto);
+            string EstadoContable = Convert.ToString(Recibida.Rows[0]["estadoPolizaEncabezado"]);
+            if (Estado != "TRASLADADA" && EstadoContable != "VALIDADA" && EstadoContable != "APLICADA")
+                throw new InvalidOperationException("El documento ya existe en Contabilidad con estado " + EstadoContable
+                    + ". Revise esa póliza antes de confirmar el traslado.");
+            if (Respuesta != null && !string.Equals(Codigo, Respuesta.Codigo, StringComparison.OrdinalIgnoreCase))
+                throw new InvalidOperationException("La referencia recibida no coincide con la póliza del documento.");
+
+            var Resultado = new ClsResultadoEnvioContable
+            {
+                Codigo = Codigo,
+                Estado = EstadoContable,
+                Mensaje = Respuesta != null && Respuesta.Estado == EstadoContable
+                    ? Respuesta.Mensaje : "Póliza " + Codigo + " registrada en Contabilidad. Estado: " + EstadoContable + "."
+            };
+            if (Estado != "TRASLADADA")
+                BancarioMetRegistrarTraslado(Conexion, Transaccion, Id, Codigo, EstadoContable, Contexto);
+            return Resultado;
         }
 
         private static void BancarioMetValidarFuentes(OdbcConnection Conexion, OdbcTransaction Transaccion, long Id, long Moneda, ClsContextoPartida Contexto, DataTable Detalle)
@@ -478,7 +517,7 @@ namespace CapaModelo_EnlaceB.Repositorio
                 throw new InvalidOperationException("Las pólizas fuente cambiaron después de generar la partida.");
         }
 
-        private static Dictionary<string, int> BancarioMetObtenerCuentasAbiertas(OdbcConnection Conexion, OdbcTransaction Transaccion, DataTable Lineas, ClsContextoPartida Contexto)
+        private static Dictionary<string, int> BancarioMetObtenerCuentas(OdbcConnection Conexion, OdbcTransaction Transaccion, DataTable Lineas, ClsContextoPartida Contexto, bool ValidarPeriodo)
         {
             var Cuentas = new Dictionary<string, int>();
             foreach (DataRow Linea in Lineas.Rows)
@@ -488,6 +527,7 @@ namespace CapaModelo_EnlaceB.Repositorio
                     Cuentas[Codigo] = Convert.ToInt32(BancarioMetCuenta(Conexion, Transaccion, Codigo, Contexto.ModuloContable, Contexto.Pais)["Id"]);
             }
 
+            if (!ValidarPeriodo) return Cuentas;
             foreach (int Cuenta in Cuentas.Values)
                 if (Convert.ToInt32(BancarioMetEscalar(Conexion, Transaccion, "SELECT COUNT(*) FROM tblSaldoCuentaPeriodo WHERE idCuenta=? AND periodoContableSaldoCuentaPeriodo=? AND estadoSaldoCuentaPeriodo='CERRADO'", Cuenta, Contexto.Inicio.ToString("yyyy-MM"))) > 0)
                     throw new InvalidOperationException("Hay cuentas con período contable cerrado.");
@@ -516,26 +556,15 @@ namespace CapaModelo_EnlaceB.Repositorio
             return Codigo;
         }
 
-        private static void BancarioMetRegistrarBorrador(OdbcConnection Conexion, OdbcTransaction Transaccion, long Id, string Origen, DataRow Parametro, DataTable Lineas, Dictionary<string, int> Cuentas, ClsContextoPartida Contexto)
-        {
-            BancarioMetEjecutar(Conexion, Transaccion, @"INSERT INTO tblPolizaEncabezado (idModuloContable,idPais,codigoPolizaEncabezado,fechaPolizaEncabezado,
-                periodoContablePolizaEncabezado,estadoPolizaEncabezado,documentoOrigenPolizaEncabezado,descripcionPolizaEncabezado)
-                VALUES (?,?,?,?,?,'BORRADOR',?,?)", Contexto.ModuloContable, Contexto.Pais, Origen, Contexto.Fin.Date, Contexto.Inicio.ToString("yyyy-MM"), Origen, Convert.ToString(Parametro["conceptoPartidaConsolidada"]));
-            long Receptor = Convert.ToInt64(BancarioMetEscalar(Conexion, Transaccion, "SELECT LAST_INSERT_ID()"));
-            int Numero = 0;
-            foreach (DataRow Linea in Lineas.Rows)
-                BancarioMetEjecutar(Conexion, Transaccion, "INSERT INTO tblPolizaDetalle (idPolizaEncabezado,idCuenta,lineaPolizaDetalle,debePolizaDetalle,haberPolizaDetalle,descripcionPolizaDetalle) VALUES (?,?,?,?,?,?)", Receptor, Cuentas[Convert.ToString(Linea["Codigo"])], ++Numero, Convert.ToDecimal(Linea["Debe"]), Convert.ToDecimal(Linea["Haber"]), "Partida bancaria " + Id);
-        }
-
-        private static void BancarioMetRegistrarTraslado(OdbcConnection Conexion, OdbcTransaction Transaccion, long Id, string Codigo, ClsContextoPartida Contexto)
+        private static void BancarioMetRegistrarTraslado(OdbcConnection Conexion, OdbcTransaction Transaccion, long Id, string Codigo, string EstadoContable, ClsContextoPartida Contexto)
         {
             BancarioMetEjecutar(Conexion, Transaccion, @"UPDATE tblPartidaConsolidada SET estadoPartidaConsolidada='TRASLADADA',
                 identificadorUsuarioTrasladaPartidaConsolidada=?,fechaTrasladoPartidaConsolidada=CURRENT_TIMESTAMP,
-                referenciaContabilidadPartidaConsolidada=?,mensajeResultadoTrasladoPartidaConsolidada=? WHERE Pk_PartidaConsolidada=?", Contexto.Responsable, Codigo, "Recibida en Contabilidad; no aplicada a saldos.", Id);
+                referenciaContabilidadPartidaConsolidada=?,mensajeResultadoTrasladoPartidaConsolidada=? WHERE Pk_PartidaConsolidada=?", Contexto.Responsable, Codigo, "Estado en Contabilidad: " + EstadoContable, Id);
             BancarioMetEjecutar(Conexion, Transaccion, @"UPDATE tblPolizaBancaria pb JOIN tblPartidaConsolidadaPolizaBancaria v ON v.Fk_PolizaBancaria_Codigo=pb.idPolizaBancaria
                 SET pb.estadoPolizaBancaria='ACEPTADA',pb.referenciaContabilidadPolizaBancaria=?,pb.fechaEnvioContabilidadPolizaBancaria=CURRENT_TIMESTAMP
                 WHERE v.Fk_PartidaConsolidada_Codigo=?", Codigo, Id);
-            BancarioMetAuditar(Conexion, Transaccion, Contexto, Id, "ENVIAR_PARTIDA", "Recibida como " + Codigo + "; sin aplicar saldos.");
+            BancarioMetAuditar(Conexion, Transaccion, Contexto, Id, "ENVIAR_PARTIDA", "Recibida como " + Codigo + ". Estado: " + EstadoContable);
         }
     }
 }

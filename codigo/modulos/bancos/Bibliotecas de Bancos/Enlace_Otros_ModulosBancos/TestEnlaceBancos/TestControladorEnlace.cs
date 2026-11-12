@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Linq;
 using CapaModelo_EnlaceB.Contratos;
@@ -152,8 +152,27 @@ namespace TestEnlaceBancos
         public void BancarioMetEnviarValido_DevuelveReferenciaReal()
         {
             var Registro = new ClsRepositorioFalso();
-            Assert.AreEqual("BANC-PC-25", new ClsControladorEnlaceB(Registro).BancarioMetEnviar(25, BancarioMetContexto()));
+            Assert.AreEqual("POL-25", new ClsControladorEnlaceB(Registro).BancarioMetEnviar(25, BancarioMetContexto()));
             Assert.AreEqual(25L, Registro.Id);
+        }
+
+        [TestMethod]
+        public void BancarioMetEnviarConResultado_ConservaEstadoYMensajeContables()
+        {
+            var Controlador = new ClsControladorEnlaceB(new ClsRepositorioFalso());
+            var Resultado = Controlador.BancarioMetEnviarConResultado(25, BancarioMetContexto());
+            Assert.AreEqual("POL-25", Resultado.Codigo);
+            Assert.AreEqual("VALIDADA", Resultado.Estado);
+            Assert.AreEqual("Registrada.", Resultado.Mensaje);
+        }
+
+        [TestMethod]
+        public void BancarioMetEnviarRechazado_PropagaMotivo()
+        {
+            var Controlador = new ClsControladorEnlaceB(new ClsRepositorioFalso { Error = true });
+            var Rechazo = Assert.ThrowsException<InvalidOperationException>(
+                () => Controlador.BancarioMetEnviarConResultado(25, BancarioMetContexto()));
+            Assert.AreEqual("Cuenta rechazada.", Rechazo.Message);
         }
 
         [TestMethod]
@@ -308,11 +327,12 @@ namespace TestEnlaceBancos
                 };
             }
 
-            public string BancarioMetEnviarPartida(long Id, ClsContextoPartida Elemento)
+            public ClsResultadoEnvioContable BancarioMetEnviarPartida(long Id, ClsContextoPartida Elemento, Func<ClsEnvioContable, ClsResultadoEnvioContable> Recibir)
             {
                 Llamadas++;
                 this.Id = Id;
-                return "BANC-PC-25";
+                if (Error) throw new InvalidOperationException("Cuenta rechazada.");
+                return new ClsResultadoEnvioContable { Codigo = "POL-25", Estado = "VALIDADA", Mensaje = "Registrada." };
             }
         }
     }

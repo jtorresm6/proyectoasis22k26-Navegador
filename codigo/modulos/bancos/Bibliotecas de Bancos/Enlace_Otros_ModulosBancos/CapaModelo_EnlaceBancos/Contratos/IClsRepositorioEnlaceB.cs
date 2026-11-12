@@ -12,6 +12,6 @@ namespace CapaModelo_EnlaceB.Contratos
         DataTable BancarioMetConsultarHistorico();
         ClsPartidaEnlace BancarioMetGenerarPartida(ClsContextoPartida Contexto);
         ClsPartidaEnlace BancarioMetObtenerPartida(long Id);
-        string BancarioMetEnviarPartida(long Id, ClsContextoPartida Contexto);
+        ClsResultadoEnvioContable BancarioMetEnviarPartida(long Id, ClsContextoPartida Contexto, Func<ClsEnvioContable, ClsResultadoEnvioContable> Recibir);
     }
 }

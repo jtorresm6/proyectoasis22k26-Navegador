@@ -33,6 +33,23 @@ namespace CapaModelo_EnlaceB.Entidades
         public DataTable Detalle { get; set; }
     }
 
+    public sealed class ClsEnvioContable
+    {
+        public string CodigoModulo { get; set; }
+        public int Pais { get; set; }
+        public string DocumentoOrigen { get; set; }
+        public DateTime Fecha { get; set; }
+        public string Concepto { get; set; }
+        public DataTable Lineas { get; set; }
+    }
+
+    public sealed class ClsResultadoEnvioContable
+    {
+        public string Codigo { get; set; }
+        public string Estado { get; set; }
+        public string Mensaje { get; set; }
+    }
+
     public static class ClsReglasEnlace
     {
         public static void BancarioMetValidarFechas(DateTime Inicio, DateTime Fin, bool Mensual)

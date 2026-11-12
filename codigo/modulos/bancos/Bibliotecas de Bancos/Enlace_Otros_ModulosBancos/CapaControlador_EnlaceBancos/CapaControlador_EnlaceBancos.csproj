@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaControlador_PolizasCuentas_Contabilidad">
+      <HintPath>..\..\..\..\contabilidad\Bibliotecas de Contabilidad\PolizasCuentas_Contabilidad\CapaControlador_PolizasCuentas_Contabilidad\bin\$(Configuration)\CapaControlador_PolizasCuentas_Contabilidad.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
