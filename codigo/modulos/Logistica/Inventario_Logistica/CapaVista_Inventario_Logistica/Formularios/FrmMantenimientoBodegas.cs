@@ -1,28 +1,56 @@
-﻿/*
- * Responsable: Velveth Saraí Chavez Mejía
- * Carné: 0901 23 6269
+﻿
+/*
+ * ============================================================================
+ * MÓDULO: LOGÍSTICA - INVENTARIO
+ * ARCHIVO: FrmMantenimientoBodegas.cs
  *
- * Descripción:
+ * REALIZADO POR: VELVETH SARAÍ CHÁVEZ MEJÍA
+ * CARNÉ: 0901 23 6269
+ *
+ * DESCRIPCIÓN:
  * Formulario de mantenimiento de bodegas.
- * Permite ingresar, guardar, modificar y eliminar bodegas
- * mediante el navegador, incluyendo la búsqueda y
- * filtrado de registros.
- *
- * Fecha: 25/10/2026
+ * Permite gestionar los registros mediante el Navegador
+ * y generar reportes con los datos registrados.
+ * ============================================================================
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using CapaControlador_Inventario_Logistica;
+using CapaControlador_Inventario_Logistica.Modelos_de_Controladores;
 
 namespace CapaVista_Inventario_Logistica.Formularios
 {
     public partial class FrmMantenimientoBodegas : Form
     {
+        private readonly ClsModeloBodega _DatosBodega =
+            new ClsModeloBodega();
+
+        private readonly Dictionary<string, object> _FuentesReporteBodega =
+            new Dictionary<string, object>();
+
         public FrmMantenimientoBodegas()
         {
             InitializeComponent();
 
-            LogisticaNavBodega.NavegadorMetConfigurar("tblBodega", 4, 6);
+            
+                // ================================================
+                // OBTENER LOS REGISTROS DE BODEGAS
+                // ================================================
+
+                List<ClsModeloBodega> ListaBodegas =
+                    _DatosBodega.LogisticaMetObtenerTodos();
+
+                _FuentesReporteBodega.Add("DsReporteBodega", ListaBodegas);
+
+                // ================================================
+                // CONFIGURAR EL NAVEGADOR
+                // ================================================
+
+                LogisticaNavBodega.NavegadorMetConfigurar("tblBodega",4,4,_FuentesReporteBodega );
+            }
+           
         }
-    }
 }
+

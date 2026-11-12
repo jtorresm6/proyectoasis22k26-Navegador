@@ -624,7 +624,7 @@
   <Width>8.675in</Width>
   <Page>
     <PageHeader>
-      <Height>2.46944cm</Height>
+      <Height>2.54cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -651,7 +651,7 @@ DETALLE DE MOVIMIENTO</Value>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.59973cm</Top>
+          <Top>0.67029cm</Top>
           <Left>3.64067cm</Left>
           <Height>1.69333cm</Height>
           <Width>13.60805cm</Width>
