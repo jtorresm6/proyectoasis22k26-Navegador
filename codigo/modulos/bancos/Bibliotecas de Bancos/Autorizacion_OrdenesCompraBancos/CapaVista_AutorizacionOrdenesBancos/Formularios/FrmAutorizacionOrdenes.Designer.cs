@@ -617,6 +617,7 @@
             this.BancosBtnAyuda.Size = new System.Drawing.Size(65, 65);
             this.BancosBtnAyuda.TabIndex = 4;
             this.BancosBtnAyuda.UseVisualStyleBackColor = false;
+            this.BancosBtnAyuda.Click += new System.EventHandler(this.BancosBtnAyuda_Click);
             // 
             // BancosPnlAsignacionCuenta
             // 

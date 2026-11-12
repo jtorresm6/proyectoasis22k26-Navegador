@@ -38,12 +38,12 @@ namespace CapaModelo_Bancos.Repositorios
 
         public ClsRepositorioTipoCuentaBancaria()
         {
-            _SelectAll = "SELECT Pk_TipoCuentaBancaria, codigoTipoCuentaBancaria, nombreTipoCuentaBancaria, " +
+            _SelectAll = "SELECT idTipoCuentaBancaria, codigoTipoCuentaBancaria, nombreTipoCuentaBancaria, " +
                                       "is_active, created_at, updated_at " +
                                       "FROM tblTipoCuentaBancaria";
             _Insert = "INSERT INTO tblTipoCuentaBancaria VALUES (DEFAULT, ?, ?, ?, DEFAULT, DEFAULT)";
-            _Update = "UPDATE tblTipoCuentaBancaria SET codigoTipoCuentaBancaria=?, nombreTipoCuentaBancaria=?, is_active=? WHERE Pk_TipoCuentaBancaria=?";
-            _Delete = "DELETE FROM tblTipoCuentaBancaria WHERE Pk_TipoCuentaBancaria=?";
+            _Update = "UPDATE tblTipoCuentaBancaria SET codigoTipoCuentaBancaria=?, nombreTipoCuentaBancaria=?, is_active=? WHERE idTipoCuentaBancaria=?";
+            _Delete = "DELETE FROM tblTipoCuentaBancaria WHERE idTipoCuentaBancaria=?";
         }
 
         public int BancosMetAgregar(ClsTipoCuentaBancaria Entidad)

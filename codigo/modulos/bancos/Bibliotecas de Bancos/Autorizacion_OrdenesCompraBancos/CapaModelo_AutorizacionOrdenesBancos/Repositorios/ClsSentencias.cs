@@ -8,17 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
- * ==================================================================
+ * ==========================================================================
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
  * Fecha : 28/10/2026
- * ==================================================================
+ * ==========================================================================
  * Propósito :
  *  La clase ClsSentencias centraliza la ejecución de comandos SQL por ODBC
- *  (consultas, comandos sin retorno y escalares, con o sin transacción) para
- *  que los repositorios hereden de ella.
- * ===================================================================
+ *  para que los repositorios hereden de ella.
+ * ===========================================================================
 */
 
 namespace CapaModelo_AutorizacionOrdenes.Repositorios

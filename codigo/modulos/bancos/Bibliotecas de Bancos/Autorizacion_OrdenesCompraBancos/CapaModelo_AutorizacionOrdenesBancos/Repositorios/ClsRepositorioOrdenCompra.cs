@@ -8,17 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
- * ==================================================================
+ * =========================================================================
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
  * Fecha : 4/11/2026
- * ==================================================================
+ * =========================================================================
  * Propósito :
  *  La clase Repositorio de Orden de Compra se encarga de consultar mediante
  *  ODBC las órdenes de compra pendientes de autorización, heredando de
  *  ClsSentencias e implementando la interfaz IRepositorioOrdenCompra.
- * ===================================================================
+ * =========================================================================
 */
 
 namespace CapaModelo_AutorizacionOrdenes.Repositorios

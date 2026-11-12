@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
- * ==================================================================
+ * ======================================================================
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
  * Fecha : 28/10/2026
- * ==================================================================
+ * ======================================================================
  * Propósito :
  *  La entidad ClsOrdenCompra representa una orden de compra recibida del
  *  módulo de Compras (tabla tblOrdenCompraRecibida).
- * ===================================================================
+ * =======================================================================
 */
 
 namespace CapaModelo_AutorizacionOrdenes.Entidades

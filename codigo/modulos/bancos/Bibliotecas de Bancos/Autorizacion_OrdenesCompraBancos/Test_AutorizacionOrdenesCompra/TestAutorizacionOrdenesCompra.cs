@@ -1,103 +1,114 @@
-﻿using System;
+﻿/*
+ * ================================================================
+ * Área   : Bancos
+ * Autor  : Andy Alfonso Garcia Lopez
+ * Carné  : 9959-23-1494
+ * Fecha  : 11/11/2026
+ * ================================================================
+ * Propósito :
+ *  PRUEBAS UNITARIAS DE AUTORIZACIÓN DE ÓRDENES DE COMPRA
+ * ================================================================
+ */
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CapaControlador_AutorizacionOrdenes;
 using CapaControlador_AutorizacionOrdenes.Modelos_de_controladores;
 using CapaModelo_AutorizacionOrdenes.Entidades;
 using CapaModelo_AutorizacionOrdenes.Repositorios;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TestAutorizacionOrdenes
+namespace Test_AutorizacionOrdenesCompra
 {
     [TestClass]
-    public class TestControladorAutorizacionOrdenes
+    public class TestAutorizacionOrdenesCompra
     {
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Test_RepositorioCuentaDisponible_Agregar_NoSoportado()
         {
             //Arrange: repositorio de solo lectura
             var Repositorio = new ClsRepositorioCuentaDisponible();
             //Act: intentar agregar un registro
-            Repositorio.BancosMetAgregar(new ClsCuentaDisponible());
+            Action Accion = () => Repositorio.BancosMetAgregar(new ClsCuentaDisponible());
             //Assert: debe lanzar NotSupportedException
+            Assert.ThrowsException<NotSupportedException>(Accion);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Test_RepositorioCuentaDisponible_Editar_NoSoportado()
         {
             //Arrange: repositorio de solo lectura
             var Repositorio = new ClsRepositorioCuentaDisponible();
             //Act: intentar editar un registro
-            Repositorio.BancosMetEditar(new ClsCuentaDisponible());
+            Action Accion = () => Repositorio.BancosMetEditar(new ClsCuentaDisponible());
             //Assert: debe lanzar NotSupportedException
+            Assert.ThrowsException<NotSupportedException>(Accion);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Test_RepositorioCuentaDisponible_Remover_NoSoportado()
         {
             //Arrange: repositorio de solo lectura
             var Repositorio = new ClsRepositorioCuentaDisponible();
             //Act: intentar remover un registro
-            Repositorio.BancosMetRemover(new ClsCuentaDisponible());
+            Action Accion = () => Repositorio.BancosMetRemover(new ClsCuentaDisponible());
             //Assert: debe lanzar NotSupportedException
+            Assert.ThrowsException<NotSupportedException>(Accion);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Test_RepositorioOrdenCompra_Agregar_NoSoportado()
         {
             //Arrange: repositorio de solo lectura
             var Repositorio = new ClsRepositorioOrdenCompra();
             //Act: intentar agregar un registro
-            Repositorio.BancosMetAgregar(new ClsOrdenCompra());
+            Action Accion = () => Repositorio.BancosMetAgregar(new ClsOrdenCompra());
             //Assert: debe lanzar NotSupportedException
+            Assert.ThrowsException<NotSupportedException>(Accion);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Test_RepositorioOrdenCompra_Editar_NoSoportado()
         {
             //Arrange: repositorio de solo lectura
             var Repositorio = new ClsRepositorioOrdenCompra();
             //Act: intentar editar un registro
-            Repositorio.BancosMetEditar(new ClsOrdenCompra());
+            Action Accion = () => Repositorio.BancosMetEditar(new ClsOrdenCompra());
             //Assert: debe lanzar NotSupportedException
+            Assert.ThrowsException<NotSupportedException>(Accion);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Test_RepositorioOrdenCompra_Remover_NoSoportado()
         {
             //Arrange: repositorio de solo lectura
             var Repositorio = new ClsRepositorioOrdenCompra();
             //Act: intentar remover un registro
-            Repositorio.BancosMetRemover(new ClsOrdenCompra());
+            Action Accion = () => Repositorio.BancosMetRemover(new ClsOrdenCompra());
             //Assert: debe lanzar NotSupportedException
+            Assert.ThrowsException<NotSupportedException>(Accion);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Test_RepositorioAutorizacionOrdenCompra_Editar_NoSoportado()
         {
             //Arrange: repositorio de autorizaciones, que no se editan ni se eliminan
             var Repositorio = new ClsRepositorioAutorizacionOrdenCompra();
             //Act: intentar editar una autorización
-            Repositorio.BancosMetEditar(new ClsAutorizacionOrdenCompra());
+            Action Accion = () => Repositorio.BancosMetEditar(new ClsAutorizacionOrdenCompra());
             //Assert: debe lanzar NotSupportedException
+            Assert.ThrowsException<NotSupportedException>(Accion);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
         public void Test_RepositorioAutorizacionOrdenCompra_Remover_NoSoportado()
         {
             //Arrange: repositorio de autorizaciones, que no se editan ni se eliminan
             var Repositorio = new ClsRepositorioAutorizacionOrdenCompra();
             //Act: intentar eliminar una autorización
-            Repositorio.BancosMetRemover(new ClsAutorizacionOrdenCompra());
+            Action Accion = () => Repositorio.BancosMetRemover(new ClsAutorizacionOrdenCompra());
             //Assert: debe lanzar NotSupportedException
+            Assert.ThrowsException<NotSupportedException>(Accion);
         }
 
         [TestMethod]
