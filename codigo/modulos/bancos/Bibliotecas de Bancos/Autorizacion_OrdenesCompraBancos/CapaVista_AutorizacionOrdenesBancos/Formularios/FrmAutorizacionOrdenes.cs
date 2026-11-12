@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaVista_Navegador;
 
 /*
  * ==================================================================
@@ -30,8 +31,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
 {
     public partial class FrmAutorizacionOrdenes : Form
     {
-        private const int ID_EMPRESA_PRUEBA = 1;
-        private const int ID_USUARIO_PRUEBA = 1;
+        private const int ID_EMPRESA = 1;
 
         private ClsModeloOrdenCompra _ModeloOrdenCompra = new ClsModeloOrdenCompra();
         private ClsModeloCuentaDisponible _ModeloCuentaDisponible = new ClsModeloCuentaDisponible();
@@ -333,9 +333,15 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
 
                 _ModeloAutorizacionOrdenCompra = new ClsModeloAutorizacionOrdenCompra();
                 _ModeloAutorizacionOrdenCompra.IdOrdenCompra = IdOrdenCompra;
-                _ModeloAutorizacionOrdenCompra.IdEmpresaAutorizacionOrden = ID_EMPRESA_PRUEBA;
+                if (!ClsNavegadorSesion.NavegadorFuncHaySesion())
+                {
+                    MessageBox.Show("Debe iniciar sesión para autorizar o rechazar una orden.");
+                    return;
+                }
+
+                _ModeloAutorizacionOrdenCompra.IdEmpresaAutorizacionOrden = ID_EMPRESA;
                 _ModeloAutorizacionOrdenCompra.EstadoAutorizacionOrden = Estado;
-                _ModeloAutorizacionOrdenCompra.IdUsuarioAutoriza = ID_USUARIO_PRUEBA;
+                _ModeloAutorizacionOrdenCompra.IdUsuarioAutoriza = ClsNavegadorSesion.NavegadorFuncIdUsuario();
                 _ModeloAutorizacionOrdenCompra.FechaDecisionAutorizacionOrden = DateTime.Now;
                 _ModeloAutorizacionOrdenCompra.Ip = "127.0.0.1";
 

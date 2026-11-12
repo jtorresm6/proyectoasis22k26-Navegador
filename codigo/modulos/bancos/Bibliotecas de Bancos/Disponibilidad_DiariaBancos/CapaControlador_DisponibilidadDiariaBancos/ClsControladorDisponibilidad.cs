@@ -78,6 +78,58 @@ namespace CapaControlador_DisponibilidadDiariaBancos
             }, token);
         }
 
+        public async Task<ClsResultadoActualizacionDisponibilidad> BancosMetActualizarAutomaticamenteAsync(
+            DateTime fecha, CancellationToken token)
+        {
+            ValidarConsulta(fecha, null, null, null);
+            if (fecha.Date != DateTime.Today)
+                throw new InvalidOperationException("Sólo la disponibilidad de hoy se actualiza desde los procesos. Los cortes anteriores permanecen históricos.");
+
+            Task<ClsCalculoAutomaticoDisponibilidad> tareaCalculo = Task.Run(
+                () => _repositorio.BancosMetCalcularAutomaticamente(fecha.Date, token), token);
+            Task<ClsConsultaDisponibilidad> tareaActuales = Task.Run(
+                () => _repositorio.BancosMetConsultar(fecha.Date, null, null, null, token), token);
+            await Task.WhenAll(tareaCalculo, tareaActuales);
+            token.ThrowIfCancellationRequested();
+
+            ClsCalculoAutomaticoDisponibilidad calculo = tareaCalculo.Result;
+            var resultado = new ClsResultadoActualizacionDisponibilidad
+            {
+                CuentasCalculadas = calculo.Registros.Count,
+                CuentasPendientes = calculo.CuentasPendientes
+            };
+
+            var tasas = new Dictionary<string, ClsCotizacionDisponibilidad>(StringComparer.OrdinalIgnoreCase);
+            foreach (string moneda in calculo.Registros.Select(r => r.Moneda).Distinct(StringComparer.OrdinalIgnoreCase))
+            {
+                token.ThrowIfCancellationRequested();
+                tasas[moneda] = await _tiposCambio.BancosMetObtenerTasaAsync(moneda, fecha.Date, token);
+            }
+
+            Dictionary<long, ClsDisponibilidad> actuales = tareaActuales.Result.Detalle.ToDictionary(r => r.CuentaId);
+            foreach (ClsDisponibilidad registro in calculo.Registros)
+            {
+                token.ThrowIfCancellationRequested();
+                ClsCotizacionDisponibilidad cotizacion = tasas[registro.Moneda];
+                registro.TipoCambioAplicado = cotizacion.TasaAplicada;
+                registro.DisponibleGtq = Math.Round(registro.Disponible * cotizacion.TasaAplicada, 4,
+                    MidpointRounding.AwayFromZero);
+                registro.Fuente += string.Equals(registro.Moneda, "GTQ", StringComparison.OrdinalIgnoreCase)
+                    ? ";TC:GTQ" : ";TC:" + cotizacion.Fecha.ToString("yyyyMMdd");
+
+                ClsDisponibilidad actual;
+                bool existe = actuales.TryGetValue(registro.CuentaId, out actual);
+                if (existe && CoincideCalculo(actual, registro))
+                {
+                    resultado.CuentasSinCambios++;
+                    continue;
+                }
+                await BancosMetGuardarAsync(registro, existe, token);
+                resultado.CuentasActualizadas++;
+            }
+            return resultado;
+        }
+
         public Task BancosMetGuardarAsync(ClsDisponibilidad registro, bool reemplazar, CancellationToken token)
         {
             ClsRepositorioDisponibilidad.BancosMetValidarRegistro(registro);
@@ -94,6 +146,15 @@ namespace CapaControlador_DisponibilidadDiariaBancos
                 UsuarioRegistroId = _usuarioRegistroId, UsuarioRegistro = _usuarioRegistro
             };
             return Task.Run(() => _repositorio.BancosMetGuardar(copia, reemplazar, token), token);
+        }
+
+        private static bool CoincideCalculo(ClsDisponibilidad actual, ClsDisponibilidad calculado)
+        {
+            return actual.SaldoInicial == calculado.SaldoInicial && actual.Ingresos == calculado.Ingresos &&
+                actual.Egresos == calculado.Egresos && actual.Comprometido == calculado.Comprometido &&
+                actual.Restringido == calculado.Restringido && actual.TipoCambioAplicado == calculado.TipoCambioAplicado &&
+                string.Equals(actual.Moneda, calculado.Moneda, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(actual.Fuente, calculado.Fuente, StringComparison.Ordinal);
         }
 
         private static ClsResumenDisponibilidad CalcularResumen(

@@ -1,0 +1,24 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)'==''">Debug</Configuration>
+    <Platform Condition="'$(Platform)'==''">AnyCPU</Platform>
+    <ProjectGuid>{9FB514D2-B672-42DD-A27F-0DBE3878F901}</ProjectGuid>
+    <OutputType>Library</OutputType><TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <AssemblyName>TestEnlaceBancos</AssemblyName><RootNamespace>TestEnlaceBancos</RootNamespace>
+    <OutputPath>bin\$(Configuration)\</OutputPath><DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" /><Reference Include="System.Core" /><Reference Include="System.Data" />
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework">
+      <HintPath>$(UserProfile)\.nuget\packages\mstest.testframework\2.2.10\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions">
+      <HintPath>$(UserProfile)\.nuget\packages\mstest.testframework\2.2.10\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
+    </Reference>
+    <ProjectReference Include="..\CapaModelo_EnlaceBancos\CapaModelo_EnlaceBancos.csproj" />
+    <ProjectReference Include="..\CapaControlador_EnlaceBancos\CapaControlador_EnlaceBancos.csproj" />
+    <Compile Include="TestControladorEnlace.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

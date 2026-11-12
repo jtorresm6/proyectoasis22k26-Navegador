@@ -57,25 +57,29 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Servicios
                 throw new InvalidOperationException(
                     "La moneda " + codigo + " no está disponible en el servicio de Banguat.");
 
+            // Banguat no publica todos los días (fines de semana y feriados).
+            // Para un corte contable se conserva la última referencia oficial
+            // disponible, nunca una tasa inventada ni una cotización futura.
+            DateTime desde = fecha.AddDays(-10);
+            if (desde < new DateTime(1000, 1, 1)) desde = new DateTime(1000, 1, 1);
             var tasas = await _servicio.BancosMetObtenerTasasEnGtqAsync(
-                fecha, fecha, new[] { moneda }, token).ConfigureAwait(false);
+                desde, fecha, new[] { moneda }, token).ConfigureAwait(false);
             token.ThrowIfCancellationRequested();
-            if (tasas == null || tasas.Count != 1)
+            var tasa = tasas == null ? null : tasas
+                .Where(t => t != null && t.Tasa > 0m &&
+                    !string.Equals(t.Estado, "Sin tasa", StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(t => t.FechaTasa)
+                .FirstOrDefault();
+            if (tasa == null)
                 throw new InvalidOperationException(
-                    "Banguat no devolvió una única cotización para la fecha y moneda elegidas.");
-
-            var tasa = tasas[0];
-            if (tasa == null || tasa.FechaTasa.Date != fecha ||
+                    "Banguat no publicó una cotización para " + codigo + " en los diez días anteriores al " +
+                    fecha.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + ".");
+            if (tasa.FechaTasa.Date > fecha ||
                 !string.Equals(tasa.CodigoMoneda, codigo, StringComparison.OrdinalIgnoreCase) ||
                 !string.Equals(tasa.MonedaOrigen, codigo, StringComparison.OrdinalIgnoreCase) ||
                 !string.Equals(tasa.MonedaDestino, "GTQ", StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException(
                     "La cotización recibida no corresponde a la fecha y moneda seleccionadas.");
-            if (tasa.Tasa <= 0m || string.Equals(tasa.Estado, "Sin tasa", StringComparison.OrdinalIgnoreCase))
-                throw new InvalidOperationException(
-                    "Banguat no publicó una cotización para " + codigo + " el " +
-                    fecha.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) +
-                    ". Selecciona una fecha con publicación.");
 
             // El esquema del corte conserva cuatro decimales. El mismo valor
             // visible se aplica al cálculo y al guardado, sin tasas ocultas.
@@ -87,11 +91,13 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Servicios
             return new ClsCotizacionDisponibilidad
             {
                 Moneda = codigo,
-                Fecha = fecha,
+                Fecha = tasa.FechaTasa.Date,
                 TasaOriginal = tasa.Tasa,
                 TasaAplicada = aplicada,
-                Fuente = "Banco de Guatemala",
-                Metodo = tasa.Metodo
+                Fuente = tasa.FechaTasa.Date == fecha ? "Banco de Guatemala" :
+                    "Banco de Guatemala - última publicación",
+                Metodo = tasa.FechaTasa.Date == fecha ? tasa.Metodo :
+                    tasa.Metodo + "; ÚLTIMA PUBLICACIÓN"
             };
         }
 

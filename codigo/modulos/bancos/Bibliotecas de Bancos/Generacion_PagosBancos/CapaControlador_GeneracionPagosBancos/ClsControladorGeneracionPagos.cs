@@ -3,6 +3,7 @@ using CapaModelo_GeneracionPagos.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Odbc;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
@@ -62,7 +63,6 @@ namespace CapaControlador_GeneracionPagos
             return _Repositorio.BancosMetConsultarMonedas();
         }
 
-        // Tipos de pago activos del catálogo que una orden puede usar; son los mismos para compras, planillas y transporte
         public DataTable BancosMetObtenerTiposPago(string TipoOrigen)
         {
             DataTable Catalogo = _Repositorio.BancosMetConsultarTiposPago();
@@ -87,6 +87,42 @@ namespace CapaControlador_GeneracionPagos
             return _Repositorio.BancosMetConsultarOrdenes();
         }
 
+        public string BancosMetConsultarReporteOrdenes(out DataTable Resultado)
+        {
+            Resultado = null;
+            try
+            {
+                Resultado = _Repositorio.BancosMetConsultarReporteOrdenes();
+                return string.Empty;
+            }
+            catch (OdbcException)
+            {
+                return "Error de base de datos al consultar las órdenes de pago.";
+            }
+            catch (Exception)
+            {
+                return "Error inesperado al consultar las órdenes de pago.";
+            }
+        }
+
+        public string BancosMetConsultarReporteMonedas(out DataTable Resultado)
+        {
+            Resultado = null;
+            try
+            {
+                Resultado = _Repositorio.BancosMetConsultarReporteMonedas();
+                return string.Empty;
+            }
+            catch (OdbcException)
+            {
+                return "Error de base de datos al consultar las monedas.";
+            }
+            catch (Exception)
+            {
+                return "Error inesperado al consultar las monedas.";
+            }
+        }
+
         public DataTable BancosMetObtenerDatosOrden(long IdOrden)
         {
             return _Repositorio.BancosMetObtenerDatosOrden(IdOrden);
@@ -107,14 +143,12 @@ namespace CapaControlador_GeneracionPagos
             return _Repositorio.BancosMetObtenerChequeraDisponible(IdCuenta);
         }
 
-        // Devuelve 0 cuando no hay una política vigente para el monto y la moneda
         public int BancosFuncObtenerAprobacionesRequeridas(decimal Importe, long IdMoneda)
         {
             DataTable Politica = _Repositorio.BancosMetObtenerPolitica(Importe, IdMoneda);
             return Politica.Rows.Count == 0 ? 0 : Convert.ToInt32(Politica.Rows[0]["cantidadAprobacionesPoliticaAprobacion"]);
         }
 
-        // Devuelve 0 cuando no hay tipo de cambio vigente
         public decimal BancosFuncObtenerTipoCambio(string CodigoMoneda)
         {
             if (CodigoMoneda == MonedaBase)
@@ -135,15 +169,12 @@ namespace CapaControlador_GeneracionPagos
             return Simbolo + Importe.ToString("N2", CultureInfo.InvariantCulture);
         }
 
-        // Obligaciones pendientes que ya vencieron, vencen hoy o vencen dentro de los días de aviso,
-        // sin importar los filtros que tenga la vista
         public ClsResumenVencimientos BancosMetConsultarVencimientos()
         {
             DataTable Obligaciones = BancosMetConsultarObligaciones(TodosLosOrigenes, TodasLasMonedas, "");
             return BancosFuncResumirVencimientos(Obligaciones, DateTime.Today);
         }
 
-        // Las obligaciones sin fecha de vencimiento no se avisan. El detalle sale ordenado de la más atrasada a la más próxima.
         public ClsResumenVencimientos BancosFuncResumirVencimientos(DataTable Obligaciones, DateTime Hoy)
         {
             var Avisos = new List<ClsAvisoVencimiento>();
