@@ -1,0 +1,24 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=AyudaLogistica.chm
+Contents file=Contenido.hhc
+Index file=Indice.hhk
+Default topic=Solicitud_Pago.html
+Display compile progress=Yes
+Full-text search=Yes
+Language=0xC0A Spanish (Modern Sort)
+Title=Manual de Usuario - Solicitud de Pago
+
+[FILES]
+Solicitud_Pago.html
+imagenes\\botones.jpg
+imagenes\\detalle_servicio.jpg
+imagenes\\formulario_vacio.jpg
+imagenes\\informacion_pago.jpg
+imagenes\\informacion_transportista.jpg
+imagenes\\lista_servicios.jpg
+imagenes\\portada.png
+imagenes\\resumen_solicitud.jpg
+imagenes\\seleccion_servicio.jpg
+imagenes\\servicio_seleccionado.jpg
+imagenes\\vista_previa.jpg

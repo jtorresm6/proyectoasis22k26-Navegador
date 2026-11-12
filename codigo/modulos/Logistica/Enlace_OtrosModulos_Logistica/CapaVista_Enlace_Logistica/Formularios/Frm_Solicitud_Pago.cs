@@ -11,6 +11,10 @@ using System.Windows.Forms;
 
 using CapaContralador_Enlace_Logistica;
 using CapaModelo_Enlace_Logistica.Entidades;
+using System.IO;
+using System.Globalization;
+using System.Reflection;
+using CapaVista_Reporteador.Formas;
 
 namespace CapaVista_Enlace_Logistica.Formas
 {
@@ -42,6 +46,7 @@ namespace CapaVista_Enlace_Logistica.Formas
 
             ConfigurarEventos();
             InicializarFormulario();
+
         }
 
         // ==========================================
@@ -74,9 +79,58 @@ namespace CapaVista_Enlace_Logistica.Formas
             LogisticaRdoDolares.CheckedChanged
                 += Moneda_CheckedChanged;
 
-            LogisticaBtnLimpiar.Click
-                += LogisticaBtnLimpiar_Click;
+            LogisticaPbAyuda.Click += (sender, e) =>
+                 LogisticaMetMostrarAyuda();
+
+            // El botón Limpiar se conecta desde el diseñador.
+            // No se suscribe nuevamente para evitar dos ejecuciones.
         }
+
+        private void LimpiarFormulario()
+        {
+            // 1. Deseleccionar el servicio de transporte.
+            // Las guías cargadas permanecen disponibles.
+            LogisticaCboServicioTransporte.SelectedIndex = -1;
+
+            // 2. Limpiar información del servicio.
+            LogisticaTxtNumeroServicio.Clear();
+            LogisticaTxtNumeroGuia.Clear();
+            LogisticaTxtFechaServicio.Clear();
+
+            // 3. Limpiar información del transportista.
+            LogisticaTxtNombreTransportista.Clear();
+            LogisticaTxtNitTransportista.Clear();
+            LogisticaTxtDireccionTransportista.Clear();
+
+            // 4. Limpiar información bancaria.
+            LogisticaCboBancoBeneficiario.SelectedIndex = -1;
+            LogisticaCboTipoCuenta.SelectedIndex = -1;
+            LogisticaTxtNumeroCuenta.Clear();
+
+            // 5. Limpiar detalle del servicio.
+            if (LogisticaDgvDetalleServicio.DataSource != null)
+            {
+                LogisticaDgvDetalleServicio.DataSource = null;
+            }
+
+            LogisticaDgvDetalleServicio.Rows.Clear();
+
+            // 6. Limpiar información del pago.
+            LogisticaTxtMontoPagar.Clear();
+            LogisticaTxtConceptoPago.Clear();
+
+            // 7. Restablecer moneda predeterminada.
+            LogisticaRdoQuetzales.Checked = true;
+            LogisticaRdoDolares.Checked = false;
+            LogisticaLblMonedaMonto.Text = "GTQ";
+
+            // 8. Actualizar el resumen.
+            ActualizarResumenSolicitud();
+
+            // 9. Regresar el cursor a la selección del servicio.
+            LogisticaCboServicioTransporte.Focus();
+        }
+
 
         // ==========================================
         // INICIALIZAR FORMULARIO
@@ -255,31 +309,6 @@ namespace CapaVista_Enlace_Logistica.Formas
             ActualizarResumenSolicitud();
         }
 
-        // ==========================================
-        // LIMPIAR FORMULARIO
-        // ==========================================
-
-        private void LimpiarFormulario()
-        {
-            // Deseleccionar guia sin borrar los servicios.
-            LogisticaCboServicioTransporte.SelectedIndex = -1;
-
-            // Limpiar informacion del servicio.
-            LimpiarDatosServicio();
-
-            // Limpiar datos bancarios.
-            LogisticaCboBancoBeneficiario.SelectedIndex = -1;
-            LogisticaCboTipoCuenta.SelectedIndex = -1;
-
-            LogisticaTxtNumeroCuenta.Clear();
-
-            // Restablecer moneda.
-            LogisticaRdoQuetzales.Checked = true;
-            LogisticaRdoDolares.Checked = false;
-
-            ActualizarMoneda();
-            ActualizarResumenSolicitud();
-        }
 
         // ==========================================
         // BOTON LIMPIAR
@@ -389,6 +418,308 @@ namespace CapaVista_Enlace_Logistica.Formas
                 : texto.Trim();
         }
 
+
+        // ==========================================
+        // MOSTRAR VISTA PREVIA
+        // ==========================================
+
+        private void MostrarVistaPrevia()
+        {
+            ClsServicioTransporte servicio =
+                LogisticaCboServicioTransporte.SelectedItem
+                    as ClsServicioTransporte;
+
+            if (servicio == null)
+            {
+                MessageBox.Show(
+                    "Seleccione un servicio de transporte.",
+                    "Vista Previa",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                LogisticaCboServicioTransporte.Focus();
+                return;
+            }
+
+            decimal montoTotal;
+
+            if (!ObtenerDecimalVistaPrevia(
+                LogisticaTxtMontoPagar.Text, out montoTotal))
+            {
+                MessageBox.Show(
+                    "El monto a pagar no tiene un formato válido.",
+                    "Vista Previa",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                LogisticaTxtMontoPagar.Focus();
+                return;
+            }
+
+            try
+            {
+                string rutaReporte = ObtenerRutaReporteSolicitudPago();
+
+                if (!File.Exists(rutaReporte))
+                {
+                    MessageBox.Show(
+                        "No se encontró el reporte:\n" + rutaReporte +
+                        "\n\nVerifique que el RDLC tenga la propiedad " +
+                        "'Copiar si es posterior'.",
+                        "Vista Previa",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+
+                    return;
+                }
+
+                ClsSolicitudPagoVistaPrevia solicitud =
+                    PrepararDatosVistaPrevia(servicio, montoTotal);
+
+                List<ClsSolicitudPagoVistaPrevia> datosReporte =
+                    new List<ClsSolicitudPagoVistaPrevia>();
+
+                datosReporte.Add(solicitud);
+
+                Dictionary<string, object> fuentesDeDatos =
+                    new Dictionary<string, object>();
+
+                fuentesDeDatos.Add(
+                    "DsSolicitudPago",
+                    datosReporte
+                );
+
+                using (FrmVistaReportes formularioReporte =
+                    new FrmVistaReportes(
+                        rutaReporte,
+                        fuentesDeDatos))
+                {
+                    formularioReporte.ShowDialog(this);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No fue posible mostrar la vista previa:\n" +
+                    ex.Message,
+                    "Vista Previa",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
+
+        private string ObtenerRutaReporteSolicitudPago()
+        {
+            Assembly ensamblado = typeof(Frm_Solicitud_Pago).Assembly;
+
+            string nombreRecurso =
+                "CapaVista_Enlace_Logistica.Reportes.SolicitudPagoTransporte.rdlc";
+
+            using (Stream recurso =
+                ensamblado.GetManifestResourceStream(nombreRecurso))
+            {
+                if (recurso == null)
+                {
+                    throw new FileNotFoundException(
+                        "No se encontró el recurso RDLC: " + nombreRecurso);
+                }
+
+                string rutaTemporal = Path.Combine(
+                    Path.GetTempPath(),
+                    "SolicitudPagoTransporte_" +
+                    Guid.NewGuid().ToString("N") + ".rdlc"
+                );
+
+                using (FileStream archivo = File.Create(rutaTemporal))
+                {
+                    recurso.CopyTo(archivo);
+                }
+
+                return rutaTemporal;
+            }
+        }
+
+        // ==========================================
+        // PREPARAR DATOS DEL REPORTE
+        // ==========================================
+
+        private ClsSolicitudPagoVistaPrevia PrepararDatosVistaPrevia(
+            ClsServicioTransporte servicio,
+            decimal montoTotal)
+        {
+            ClsSolicitudPagoVistaPrevia solicitud =
+                new ClsSolicitudPagoVistaPrevia();
+
+            solicitud.IdServicio = servicio.IdServicio;
+
+            solicitud.NumeroGuia =
+                LogisticaTxtNumeroGuia.Text.Trim();
+
+            solicitud.FechaServicio =
+                LogisticaTxtFechaServicio.Text.Trim();
+
+            solicitud.NombreTransportista =
+                LogisticaTxtNombreTransportista.Text.Trim();
+
+            solicitud.NitTransportista =
+                LogisticaTxtNitTransportista.Text.Trim();
+
+            solicitud.DireccionTransportista =
+                LogisticaTxtDireccionTransportista.Text.Trim();
+
+            solicitud.BancoBeneficiario =
+                LogisticaCboBancoBeneficiario.SelectedIndex >= 0
+                    ? LogisticaCboBancoBeneficiario.Text
+                    : "Pendiente";
+
+            solicitud.TipoCuenta =
+                LogisticaCboTipoCuenta.SelectedIndex >= 0
+                    ? LogisticaCboTipoCuenta.Text
+                    : "Pendiente";
+
+            solicitud.NumeroCuenta =
+                string.IsNullOrWhiteSpace(
+                    LogisticaTxtNumeroCuenta.Text)
+                    ? "Pendiente"
+                    : LogisticaTxtNumeroCuenta.Text.Trim();
+
+            solicitud.Moneda =
+                LogisticaRdoDolares.Checked
+                    ? "USD"
+                    : "GTQ";
+
+            solicitud.MontoTotal = montoTotal;
+
+            solicitud.ConceptoPago =
+                LogisticaTxtConceptoPago.Text.Trim();
+
+            solicitud.DescripcionServicio =
+                servicio.TipoServicio ?? string.Empty;
+
+            solicitud.Cantidad = servicio.Cantidad;
+
+            solicitud.CostoUnitario = servicio.CostoUnitario;
+
+            
+            foreach (DataGridViewRow fila in
+                LogisticaDgvDetalleServicio.Rows)
+            {
+                if (fila.IsNewRow)
+                {
+                    continue;
+                }
+
+                solicitud.DescripcionServicio =
+                    Convert.ToString(fila.Cells[1].Value)
+                    ?? string.Empty;
+
+                decimal cantidad;
+                decimal costoUnitario;
+
+                if (ObtenerDecimalVistaPrevia(
+                    Convert.ToString(fila.Cells[2].Value),
+                    out cantidad))
+                {
+                    solicitud.Cantidad = cantidad;
+                }
+
+                if (ObtenerDecimalVistaPrevia(
+                    Convert.ToString(fila.Cells[3].Value),
+                    out costoUnitario))
+                {
+                    solicitud.CostoUnitario = costoUnitario;
+                }
+
+                // Actualmente el formulario genera una sola fila.
+                break;
+            }
+
+            return solicitud;
+        }
+
+        // ==========================================
+        // CONVERTIR VALORES DECIMALES
+        // ==========================================
+
+        private bool ObtenerDecimalVistaPrevia(
+            string texto,
+            out decimal valor)
+        {
+            valor = 0m;
+
+            if (string.IsNullOrWhiteSpace(texto))
+            {
+                return false;
+            }
+
+            NumberStyles estilo =
+                NumberStyles.Number;
+
+            if (decimal.TryParse(
+                texto.Trim(),
+                estilo,
+                CultureInfo.CurrentCulture,
+                out valor))
+            {
+                return true;
+            }
+
+            return decimal.TryParse(
+                texto.Trim(),
+                estilo,
+                CultureInfo.InvariantCulture,
+                out valor
+            );
+        }
+
+        // Mostrar Ayudas//
+
+
+
+        private void LogisticaMetMostrarAyuda()
+        {
+            DirectoryInfo directorioActual =
+                new DirectoryInfo(
+                    AppDomain.CurrentDomain.BaseDirectory);
+
+            while (directorioActual != null)
+            {
+                string rutaAyuda = Path.Combine(
+                    directorioActual.FullName,
+                    "ayuda",
+                    "modulos",
+                    "logistica",
+                    "SolicitudPagoAyuda_Logistica",
+                    "AyudaLogistica.chm"
+                );
+
+                if (File.Exists(rutaAyuda))
+                {
+                    Help.ShowHelp(
+                        this,
+                        rutaAyuda,
+                        "Solicitud_Pago.html"
+                    );
+
+                    return;
+                }
+
+                directorioActual = directorioActual.Parent;
+            }
+
+            MessageBox.Show(
+                "No se encontró el archivo AyudaLogistica.chm.",
+                "Ayuda de Logística",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
+        }
+
+
         // ==========================================
         // EVENTOS EXISTENTES DEL DESIGNER
         // ==========================================
@@ -486,7 +817,17 @@ namespace CapaVista_Enlace_Logistica.Formas
 
         private void LogisticaBtnLimpiar_Click_1(object sender, EventArgs e)
         {
+            LimpiarFormulario();
+        }
 
+        private void LogisticaBtnVistaPrevia_Click(object sender, EventArgs e)
+        {
+            MostrarVistaPrevia();
+        }
+
+        private void LogisticaPbAyuda_Click(object sender, EventArgs e)
+        {
+            LogisticaMetMostrarAyuda();
         }
     }
 }
