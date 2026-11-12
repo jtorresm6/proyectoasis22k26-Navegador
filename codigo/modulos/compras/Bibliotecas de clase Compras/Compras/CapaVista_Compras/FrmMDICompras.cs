@@ -34,10 +34,6 @@ namespace CapaVista_Compras
         private System.Drawing.Rectangle _LimitesAnteriores;
         private readonly Dictionary<TableLayoutPanel, ColumnStyle> _ColumnasNavegador =
             new Dictionary<TableLayoutPanel, ColumnStyle>();
-        // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "29/10/26"
-        // Permite que Seguridad personalice la creación de su FrmBitacora.
-        public Func<Form> CrearBitacora { get; set; }
-        // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "29/10/26"
         public FrmMDICompras()
         {
             InitializeComponent();
@@ -207,7 +203,7 @@ namespace CapaVista_Compras
             ComprasTlpRegistrosCompra.Enabled = ComprasTlpOrdenesCompra.Enabled;
             ComprasTlpCatalogos.Enabled = ComprasTlpProveedores.Enabled || ComprasTlpMantenimiento2.Enabled || ComprasTlpMantenimiento3.Enabled;
             ComprasTlpBitacora.Enabled = AccesoMdi && TieneAcceso(4, 12);
-            ComprasTlpHerramientas.Enabled = false;
+            ComprasTlpHerramientas.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.HerramientasMoneda);
             return AccesoMdi;
         }
         private void ComprasMetConfigurarEstadosTab(Control Elemento, CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras Panel)

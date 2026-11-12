@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
 using CapaModelo_CierreMovimientos.Entidades;
+using CapaModelo_Componentes.Repositorios;
 
 /*
  * ==================================================================
@@ -21,14 +22,15 @@ using CapaModelo_CierreMovimientos.Entidades;
 
 namespace CapaModelo_CierreMovimientos.Repositorios
 {
-    public class ClsConsultasCierreMovimientos : ClsRepositorioMaestroCierreMovimientos
+    public class ClsConsultasCierreMovimientos : ClsRepositorioMaestroCompras
     {
         private const string _CamposPeriodo =
             "SELECT idPeriodoCompras, anioPeriodoCompras, mesPeriodoCompras, fechaInicioPeriodoCompras, " +
             "fechaFinPeriodoCompras, estadoPeriodoCompras FROM tblPeriodoCompras ";
 
-        // Monto del documento en moneda local, con signo según la naturaleza del concepto.
-        private const string _MontoLocal = "x.montoTotalCuentaPorPagar * x.tipoCambioCuentaPorPagar";
+        // Monto del documento en moneda local. El signo lo da la naturaleza del concepto (Cargo / Abono),
+        // como en Movimientos de proveedores; ABS evita sumar al revés un abono guardado en negativo.
+        private const string _MontoLocal = "ABS(x.montoTotalCuentaPorPagar) * x.tipoCambioCuentaPorPagar";
 
         public List<ClsPeriodoCompras> ComprasFuncObtenerPeriodosAbiertos()
         {
@@ -50,13 +52,14 @@ namespace CapaModelo_CierreMovimientos.Repositorios
             }
         }
 
-        public DateTime? ComprasFuncObtenerUltimaFechaCerrada()
-        {
-            object Valor = ComprasFuncEjecucionEscalar(
-                "SELECT MAX(fechaFinPeriodoCompras) FROM tblPeriodoCompras WHERE estadoPeriodoCompras = 'Cerrado'",
-                null, CommandType.Text);
-            return Valor == null || Valor == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(Valor);
-        }
+        // Pendiente para el 100 %: la usa ClsValidadorPeriodoCompras (comentado).
+        // public DateTime? ComprasFuncObtenerUltimaFechaCerrada()
+        // {
+        //     object Valor = ComprasFuncEjecucionEscalar(
+        //         "SELECT MAX(fechaFinPeriodoCompras) FROM tblPeriodoCompras WHERE estadoPeriodoCompras = 'Cerrado'",
+        //         null, CommandType.Text);
+        //     return Valor == null || Valor == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(Valor);
+        // }
 
         public long ComprasFuncObtenerIdMoneda(string Codigo)
         {
@@ -113,26 +116,48 @@ namespace CapaModelo_CierreMovimientos.Repositorios
             return Saldos;
         }
 
+        // Saldo de cada factura a la fecha de corte, igual que la antigüedad de Ventas (saldo histórico):
+        // al saldo actual se le devuelven los pagos aplicados después del corte. Los pagos "Pagado" y
+        // "Programado" son los que descuentan saldo en Pagos a proveedores; su monto se expresa en la
+        // moneda de la factura con la misma conversión que usa ese submódulo.
         public List<ClsDocumentoPendiente> ComprasFuncObtenerDocumentosPendientes(DateTime FechaCorte)
         {
             string Consulta =
-                "SELECT x.idProveedor, x.fechaVencimientoCuentaPorPagar, " +
-                "x.saldoActualCuentaPorPagar * x.tipoCambioCuentaPorPagar AS saldoLocal " +
+                "SELECT x.idProveedor, p.nombreProveedor, x.fechaVencimientoCuentaPorPagar, x.tipoCambioCuentaPorPagar, " +
+                "LEAST(x.montoTotalCuentaPorPagar, x.saldoActualCuentaPorPagar + COALESCE((" +
+                "   SELECT SUM(CASE WHEN e.idMoneda = x.idMoneda OR x.tipoCambioCuentaPorPagar <= 0 " +
+                "                   THEN d.montoAplicadoDetallePago " +
+                "                   ELSE d.montoAplicadoDetallePago * e.tipoCambioPagoProveedor / x.tipoCambioCuentaPorPagar END) " +
+                "   FROM tblDetallePagoProveedor d " +
+                "   INNER JOIN tblEncabezadoPagoProveedor e ON e.idPagoProveedor = d.idPagoProveedor " +
+                "   WHERE e.idProveedor = x.idProveedor AND d.serieDocumentoCuentaPorPagar = x.serieDocumentoCuentaPorPagar " +
+                "     AND d.numeroDocumentoCuentaPorPagar = x.numeroDocumentoCuentaPorPagar " +
+                "     AND d.idConceptoProveedor = x.idConceptoProveedor " +
+                "     AND e.estadoPagoProveedor IN ('Pagado','Programado') AND e.fechaPagoProveedor > ?), 0)) AS saldoCorte " +
                 "FROM tblCuentaPorPagar x INNER JOIN tblConceptoProveedor c ON c.idConceptoProveedor = x.idConceptoProveedor " +
-                "WHERE c.naturalezaConceptoProveedor = 'Cargo' AND x.estadoCuentaPorPagar IN ('Pendiente','Parcial') " +
-                "AND x.saldoActualCuentaPorPagar > 0 AND x.fechaEmisionCuentaPorPagar <= ?";
+                "INNER JOIN tblProveedor p ON p.idProveedor = x.idProveedor " +
+                "WHERE c.naturalezaConceptoProveedor = 'Cargo' AND x.estadoCuentaPorPagar <> 'Anulada' " +
+                "AND x.fechaEmisionCuentaPorPagar <= ? " +
+                "HAVING saldoCorte > 0";
+
+            var Parametros = new List<OdbcParameter>
+            {
+                ComprasFuncFecha("CortePagos", FechaCorte),
+                ComprasFuncFecha("CorteEmision", FechaCorte)
+            };
 
             var Documentos = new List<ClsDocumentoPendiente>();
-            using (DataTable Datos = ComprasFuncEjecucionConsulta(Consulta, CommandType.Text,
-                new List<OdbcParameter> { ComprasFuncFecha("Corte", FechaCorte) }))
+            using (DataTable Datos = ComprasFuncEjecucionConsulta(Consulta, CommandType.Text, Parametros))
             {
                 foreach (DataRow Fila in Datos.Rows)
                 {
                     Documentos.Add(new ClsDocumentoPendiente
                     {
                         IdProveedor = Convert.ToInt32(Fila["idProveedor"]),
+                        NombreProveedor = Convert.ToString(Fila["nombreProveedor"]),
                         FechaVencimiento = Convert.ToDateTime(Fila["fechaVencimientoCuentaPorPagar"]),
-                        SaldoLocal = Math.Round(Convert.ToDecimal(Fila["saldoLocal"]), 2)
+                        SaldoLocal = Math.Round(Convert.ToDecimal(Fila["saldoCorte"]) *
+                            Convert.ToDecimal(Fila["tipoCambioCuentaPorPagar"]), 2)
                     });
                 }
             }

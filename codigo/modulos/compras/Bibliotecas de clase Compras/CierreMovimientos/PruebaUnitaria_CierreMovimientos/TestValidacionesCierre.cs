@@ -10,11 +10,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
  * Área : Compras
  * Autor : José Pablo Cano Cóbar
  * Carné : 0901-23-1727
- * Fecha : 04/11/2026
+ * Fecha : 04/11/2026 - 11/11/2026 (AAA)
  * ==================================================================
  * Propósito :
  *  Verifica las validaciones previas del cierre: qué casos bloquean el cierre
  *  y cuáles solo generan advertencias.
+ *  Cada prueba sigue el patrón Arrange / Act / Assert.
  * ===================================================================
 */
 
@@ -54,9 +55,15 @@ namespace PruebaUnitaria_CierreMovimientos
         [TestMethod]
         public void ComprasProcSinPendientesPermiteCerrar()
         {
-            List<ClsValidacionCierre> Validaciones = ComprasFuncEvaluar(ComprasFuncIndicadoresLimpios());
+            // Arrange
+            ClsIndicadoresCierre Indicadores = ComprasFuncIndicadoresLimpios();
 
-            Assert.IsTrue(ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(Validaciones));
+            // Act
+            List<ClsValidacionCierre> Validaciones = ComprasFuncEvaluar(Indicadores);
+            bool PuedeCerrar = ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(Validaciones);
+
+            // Assert
+            Assert.IsTrue(PuedeCerrar);
             Assert.AreEqual(0, ComprasFuncContar(Validaciones, ComprasEnumEstadoValidacion.Bloqueante));
             Assert.AreEqual(0, ComprasFuncContar(Validaciones, ComprasEnumEstadoValidacion.Advertencia));
         }
@@ -64,14 +71,17 @@ namespace PruebaUnitaria_CierreMovimientos
         [TestMethod]
         public void ComprasProcPagosProgramadosBloquean()
         {
+            // Arrange
             ClsIndicadoresCierre Indicadores = ComprasFuncIndicadoresLimpios();
             Indicadores.PagosProgramados = 2;
             Indicadores.MontoPagosProgramados = 6000m;
 
+            // Act
             List<ClsValidacionCierre> Validaciones = ComprasFuncEvaluar(Indicadores);
-
-            Assert.IsFalse(ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(Validaciones));
             ClsValidacionCierre Pagos = Validaciones.Single(Validacion => Validacion.Origen == "3.5 Pagos a proveedores");
+
+            // Assert
+            Assert.IsFalse(ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(Validaciones));
             Assert.AreEqual(ComprasEnumEstadoValidacion.Bloqueante, Pagos.Estado);
             StringAssert.Contains(Pagos.Validacion, "2 pago(s)");
         }
@@ -79,47 +89,74 @@ namespace PruebaUnitaria_CierreMovimientos
         [TestMethod]
         public void ComprasProcPeriodoAnteriorAbiertoBloquea()
         {
+            // Arrange
             ClsIndicadoresCierre Indicadores = ComprasFuncIndicadoresLimpios();
             Indicadores.PeriodosAbiertosAnteriores = 1;
 
-            Assert.IsFalse(ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(ComprasFuncEvaluar(Indicadores)));
+            // Act
+            bool PuedeCerrar = ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(ComprasFuncEvaluar(Indicadores));
+
+            // Assert
+            Assert.IsFalse(PuedeCerrar);
         }
 
         [TestMethod]
         public void ComprasProcMesSinTerminarBloquea()
         {
+            // Arrange
             ClsIndicadoresCierre Indicadores = ComprasFuncIndicadoresLimpios();
 
-            Assert.IsFalse(ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(
-                ComprasFuncEvaluar(Indicadores, Hoy: new DateTime(2026, 10, 31))));
-            Assert.IsTrue(ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(
-                ComprasFuncEvaluar(Indicadores, Hoy: new DateTime(2026, 11, 1))));
+            // Act
+            bool UltimoDiaDelMes = ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(
+                ComprasFuncEvaluar(Indicadores, Hoy: new DateTime(2026, 10, 31)));
+            bool DiaSiguiente = ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(
+                ComprasFuncEvaluar(Indicadores, Hoy: new DateTime(2026, 11, 1)));
+
+            // Assert
+            Assert.IsFalse(UltimoDiaDelMes);
+            Assert.IsTrue(DiaSiguiente);
         }
 
         [TestMethod]
         public void ComprasProcPeriodoCerradoBloquea()
         {
-            Assert.IsFalse(ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(
-                ComprasFuncEvaluar(ComprasFuncIndicadoresLimpios(), ComprasFuncOctubre("Cerrado"))));
+            // Arrange
+            ClsPeriodoCompras Cerrado = ComprasFuncOctubre("Cerrado");
+
+            // Act
+            bool PuedeCerrar = ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(
+                ComprasFuncEvaluar(ComprasFuncIndicadoresLimpios(), Cerrado));
+
+            // Assert
+            Assert.IsFalse(PuedeCerrar);
         }
 
         [TestMethod]
         public void ComprasProcSinRangosDeAntiguedadBloquea()
         {
-            Assert.IsFalse(ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(
-                ComprasFuncEvaluar(new ClsIndicadoresCierre { RangosAntiguedadActivos = 0 })));
+            // Arrange
+            var Indicadores = new ClsIndicadoresCierre { RangosAntiguedadActivos = 0 };
+
+            // Act
+            bool PuedeCerrar = ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(ComprasFuncEvaluar(Indicadores));
+
+            // Assert
+            Assert.IsFalse(PuedeCerrar);
         }
 
         [TestMethod]
         public void ComprasProcAdvertenciasNoBloquean()
         {
+            // Arrange
             ClsIndicadoresCierre Indicadores = ComprasFuncIndicadoresLimpios();
             Indicadores.OrdenesPendientes = 2;
             Indicadores.ComprasSinCuentaPorPagar = 1;
             Indicadores.DocumentosMonedaExtranjera = 3;
 
+            // Act
             List<ClsValidacionCierre> Validaciones = ComprasFuncEvaluar(Indicadores, Proveedores: 0, HaySesion: false);
 
+            // Assert
             Assert.IsTrue(ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(Validaciones));
             Assert.AreEqual(5, ComprasFuncContar(Validaciones, ComprasEnumEstadoValidacion.Advertencia));
         }
@@ -127,14 +164,27 @@ namespace PruebaUnitaria_CierreMovimientos
         [TestMethod]
         public void ComprasProcSinValidacionesNoPermiteCerrar()
         {
-            Assert.IsFalse(ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(null));
+            // Arrange
+            List<ClsValidacionCierre> SinValidaciones = null;
+
+            // Act
+            bool PuedeCerrar = ClsReglasCierreMovimientos.ComprasFuncPuedeCerrar(SinValidaciones);
+
+            // Assert
+            Assert.IsFalse(PuedeCerrar);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ComprasProcPeriodoNuloLanzaExcepcion()
         {
-            ClsReglasCierreMovimientos.ComprasFuncEvaluarValidaciones(null, ComprasFuncIndicadoresLimpios(), 0, true, _Hoy);
+            // Arrange
+            ClsIndicadoresCierre Indicadores = ComprasFuncIndicadoresLimpios();
+
+            // Act
+            ClsReglasCierreMovimientos.ComprasFuncEvaluarValidaciones(null, Indicadores, 0, true, _Hoy);
+
+            // Assert: lo verifica ExpectedException (ArgumentNullException).
         }
     }
 }

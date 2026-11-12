@@ -10,11 +10,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
  * Área : Compras
  * Autor : José Pablo Cano Cóbar
  * Carné : 0901-23-1727
- * Fecha : 04/11/2026
+ * Fecha : 04/11/2026 - 11/11/2026 (AAA)
  * ==================================================================
  * Propósito :
  *  Verifica la clasificación de los documentos pendientes por rango de
- *  antigüedad (límites de cada rango, agrupación y casos de error).
+ *  antigüedad (límites de cada rango, agrupación, nombres para el reporte
+ *  y casos de error).
+ *  Cada prueba sigue el patrón Arrange / Act / Assert.
  * ===================================================================
 */
 
@@ -42,6 +44,7 @@ namespace PruebaUnitaria_CierreMovimientos
             return new ClsDocumentoPendiente
             {
                 IdProveedor = IdProveedor,
+                NombreProveedor = "Proveedor " + IdProveedor,
                 FechaVencimiento = _Corte.AddDays(-DiasVencidos),
                 SaldoLocal = Saldo
             };
@@ -56,19 +59,21 @@ namespace PruebaUnitaria_CierreMovimientos
         [TestMethod]
         public void ComprasProcRespetaLimitesDeCadaRango()
         {
-            Assert.AreEqual(1, ComprasFuncRangoDe(-15));
-            Assert.AreEqual(1, ComprasFuncRangoDe(0));
-            Assert.AreEqual(2, ComprasFuncRangoDe(1));
-            Assert.AreEqual(2, ComprasFuncRangoDe(30));
-            Assert.AreEqual(3, ComprasFuncRangoDe(31));
-            Assert.AreEqual(4, ComprasFuncRangoDe(90));
-            Assert.AreEqual(5, ComprasFuncRangoDe(91));
-            Assert.AreEqual(5, ComprasFuncRangoDe(400));
+            // Arrange
+            int[] DiasVencidos = { -15, 0, 1, 30, 31, 90, 91, 400 };
+            int[] RangosEsperados = { 1, 1, 2, 2, 3, 4, 5, 5 };
+
+            // Act
+            int[] RangosObtenidos = DiasVencidos.Select(ComprasFuncRangoDe).ToArray();
+
+            // Assert
+            CollectionAssert.AreEqual(RangosEsperados, RangosObtenidos);
         }
 
         [TestMethod]
         public void ComprasProcAgrupaPorProveedorYRango()
         {
+            // Arrange
             var Documentos = new[]
             {
                 ComprasFuncDocumento(1, 10, 9000m),
@@ -77,11 +82,13 @@ namespace PruebaUnitaria_CierreMovimientos
                 ComprasFuncDocumento(2, 45, 1200.50m)
             };
 
+            // Act
             List<ClsAntiguedadCierre> Antiguedad =
                 ClsReglasCierreMovimientos.ComprasFuncCalcularAntiguedad(Documentos, ComprasFuncRangos(), _Corte);
-
-            Assert.AreEqual(3, Antiguedad.Count);
             ClsAntiguedadCierre UnoATreinta = Antiguedad.Single(Fila => Fila.IdProveedor == 1 && Fila.IdRango == 2);
+
+            // Assert
+            Assert.AreEqual(3, Antiguedad.Count);
             Assert.AreEqual(9350m, UnoATreinta.Monto);
             Assert.AreEqual(2, UnoATreinta.CantidadDocumentos);
             Assert.AreEqual(1200.50m, Antiguedad.Single(Fila => Fila.IdProveedor == 2).Monto);
@@ -89,27 +96,60 @@ namespace PruebaUnitaria_CierreMovimientos
         }
 
         [TestMethod]
+        public void ComprasProcConservaNombresParaElReporte()
+        {
+            // Arrange
+            var Documentos = new[] { ComprasFuncDocumento(7, 45, 500m) };
+
+            // Act
+            ClsAntiguedadCierre Fila = ClsReglasCierreMovimientos.ComprasFuncCalcularAntiguedad(
+                Documentos, ComprasFuncRangos(), _Corte).Single();
+
+            // Assert
+            Assert.AreEqual("Proveedor 7", Fila.NombreProveedor);
+            Assert.AreEqual("31 a 60 días", Fila.NombreRango);
+        }
+
+        [TestMethod]
         public void ComprasProcIgnoraDocumentosSinSaldo()
         {
+            // Arrange
             var Documentos = new[] { ComprasFuncDocumento(1, 10, 0m), ComprasFuncDocumento(1, 10, -50m) };
 
-            Assert.AreEqual(0, ClsReglasCierreMovimientos.ComprasFuncCalcularAntiguedad(Documentos, ComprasFuncRangos(), _Corte).Count);
+            // Act
+            List<ClsAntiguedadCierre> Antiguedad =
+                ClsReglasCierreMovimientos.ComprasFuncCalcularAntiguedad(Documentos, ComprasFuncRangos(), _Corte);
+
+            // Assert
+            Assert.AreEqual(0, Antiguedad.Count);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ComprasProcSinRangosLanzaExcepcion()
         {
-            ClsReglasCierreMovimientos.ComprasFuncCalcularAntiguedad(
-                new[] { ComprasFuncDocumento(1, 10, 100m) }, new List<ClsRangoAntiguedad>(), _Corte);
+            // Arrange
+            var Documentos = new[] { ComprasFuncDocumento(1, 10, 100m) };
+            var SinRangos = new List<ClsRangoAntiguedad>();
+
+            // Act
+            ClsReglasCierreMovimientos.ComprasFuncCalcularAntiguedad(Documentos, SinRangos, _Corte);
+
+            // Assert: lo verifica ExpectedException (InvalidOperationException).
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ComprasProcRangosConHuecoLanzaExcepcion()
         {
+            // Arrange
             List<ClsRangoAntiguedad> Rangos = ComprasFuncRangos().Where(Rango => Rango.IdRango != 3).ToList();
-            ClsReglasCierreMovimientos.ComprasFuncCalcularAntiguedad(new[] { ComprasFuncDocumento(1, 45, 100m) }, Rangos, _Corte);
+            var Documentos = new[] { ComprasFuncDocumento(1, 45, 100m) };
+
+            // Act
+            ClsReglasCierreMovimientos.ComprasFuncCalcularAntiguedad(Documentos, Rangos, _Corte);
+
+            // Assert: lo verifica ExpectedException (InvalidOperationException).
         }
     }
 }

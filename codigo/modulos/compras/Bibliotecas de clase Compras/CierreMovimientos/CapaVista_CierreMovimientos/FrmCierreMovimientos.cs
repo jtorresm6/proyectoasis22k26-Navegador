@@ -1,21 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using CapaControlador_CierreMovimientos;
+using CapaControlador_Herramientas;
 using CapaVista_Componentes.Componentes;
+using Microsoft.Reporting.WinForms;
 
 /*
  * ==================================================================
  * Área : Compras
  * Autor : José Pablo Cano Cóbar
  * Carné : 0901-23-1727
- * Fecha : 24/10/2026 (prototipo) - 04/11/2026 (datos reales y cierre)
+ * Fecha : 24/10/2026 (prototipo) - 04/11/2026 (datos reales y cierre) - 11/11/2026 (reporte y ayuda)
  * ==================================================================
  * Propósito :
  *  Presenta el período, las validaciones y los saldos del cierre de movimientos
- *  y coordina las acciones de la pantalla: validar el período con datos reales
+ *  y coordina las acciones de la pantalla: validar el período con datos reales,
+ *  imprimir la vista previa (saldos, antigüedad y validaciones), abrir la ayuda
  *  y, si no hay validaciones bloqueantes, ejecutar el cierre.
+ *  Si en Herramientas se eligió otra moneda de visualización, las etiquetas de
+ *  los totales muestran también su equivalente con el tipo de cambio de Bancos.
  * ===================================================================
 */
 
@@ -28,18 +34,25 @@ namespace CapaVista_CierreMovimientos
         private static readonly Color _ColorCorrecta = Color.FromArgb(34, 120, 70);
 
         private readonly ClsCierreMovimientos _Controlador = new ClsCierreMovimientos();
+        private readonly ClsControladorMoneda _ControladorMoneda = new ClsControladorMoneda();
+        private readonly Dictionary<ComprasUsrLabel, string> _EtiquetasTotales = new Dictionary<ComprasUsrLabel, string>();
+        private ClsResumenCierre _Resumen;
 
         public FrmCierreMovimientos()
         {
             InitializeComponent();
-            ComprasBtnImprimir.Enabled = false;
-            ComprasBtnAyuda.Enabled = false;
             ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
             ComprasProcConfigurarTablas();
+            _EtiquetasTotales.Add(ComprasLblEtiquetaTotalCargos, ComprasLblEtiquetaTotalCargos.Texto);
+            _EtiquetasTotales.Add(ComprasLblEtiquetaTotalAbonos, ComprasLblEtiquetaTotalAbonos.Texto);
+            _EtiquetasTotales.Add(ComprasLblEtiquetaSaldoFinal, ComprasLblEtiquetaSaldoFinal.Texto);
 
             Load += ComprasMetCargar;
             ComprasBtnValidar.Click += ComprasMetValidar;
             ComprasBtnEjecutarCierre.Click += ComprasMetEjecutarCierre;
+            ComprasBtnImprimir.Click += ComprasMetImprimir;
+            ComprasBtnAyuda.Click += ComprasMetAyuda;
+            ComprasUsrEncabezadoFormulario.PrepararReporte += ComprasMetPrepararReporte;
             ComprasBtnSalir.Click += ComprasMetSalir;
             ComprasCboPeriodo.SelectedIndexChanged += ComprasMetPeriodoCambiado;
             ComprasDgvValidaciones.Tabla.CellFormatting += ComprasMetFormatearValidacion;
@@ -113,12 +126,12 @@ namespace CapaVista_CierreMovimientos
                 Cursor = Cursors.Default;
             }
 
+            _Resumen = Resumen;
             ComprasDgvValidaciones.DataSource = Resumen.Validaciones;
             ComprasDgvSaldos.DataSource = Resumen.SaldosProveedor;
-            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtTotalCargos, Resumen.TotalCargos);
-            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtTotalAbonos, Resumen.TotalAbonos);
-            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtSaldoFinal, Resumen.SaldoFinal);
+            ComprasProcMostrarTotales(Resumen.TotalCargos, Resumen.TotalAbonos, Resumen.SaldoFinal, Resumen.FechaCorte);
             ComprasBtnEjecutarCierre.Enabled = Resumen.PuedeCerrar;
+            ComprasBtnImprimir.Enabled = true;
 
             if (!Resumen.PuedeCerrar)
                 MessageBox.Show(Resumen.Periodo + " tiene validaciones bloqueantes. Corríjalas y vuelva a validar.",
@@ -153,6 +166,83 @@ namespace CapaVista_CierreMovimientos
             ComprasProcCargarPeriodos();
         }
 
+        private void ComprasMetImprimir(object Remitente, EventArgs Evento)
+        {
+            ComprasProcAbrirDesdeEncabezado(ComprasUsrEncabezadoFormulario.AbrirReporte);
+        }
+
+        private void ComprasMetAyuda(object Remitente, EventArgs Evento)
+        {
+            ComprasProcAbrirDesdeEncabezado(ComprasUsrEncabezadoFormulario.AbrirAyuda);
+        }
+
+        // El reporte y la ayuda los abre el encabezado de Componentes; aquí solo se muestran sus errores.
+        private void ComprasProcAbrirDesdeEncabezado(Action Abrir)
+        {
+            try
+            {
+                Abrir();
+            }
+            catch (Exception Error)
+            {
+                ComprasProcMostrarError(Error.Message);
+            }
+        }
+
+        private void ComprasMetPrepararReporte(object Remitente, ComprasReporteEventArgs Evento)
+        {
+            if (_Resumen == null)
+                throw new InvalidOperationException("Valide el período antes de generar el reporte del cierre.");
+
+            Evento.Reporte.DataSources.Clear();
+            Evento.Reporte.DataSources.Add(new ReportDataSource("DsSaldos", _Resumen.SaldosProveedor));
+            Evento.Reporte.DataSources.Add(new ReportDataSource("DsAntiguedad", _Resumen.Antiguedad));
+            Evento.Reporte.DataSources.Add(new ReportDataSource("DsValidaciones", _Resumen.Validaciones));
+            Evento.Reporte.SetParameters(new[]
+            {
+                new ReportParameter("Periodo", _Resumen.Periodo),
+                new ReportParameter("FechaCorte", _Resumen.FechaCorte.ToString("dd/MM/yyyy")),
+                new ReportParameter("Estado", _Resumen.PuedeCerrar ? "Listo para cerrar" : "Con validaciones bloqueantes")
+            });
+        }
+
+        private void ComprasProcMostrarTotales(decimal TotalCargos, decimal TotalAbonos, decimal SaldoFinal, DateTime? FechaCorte)
+        {
+            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtTotalCargos, TotalCargos);
+            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtTotalAbonos, TotalAbonos);
+            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtSaldoFinal, SaldoFinal);
+
+            ClsMonedaCompras MonedaLocal = FechaCorte.HasValue ? ComprasFuncObtenerMonedaLocal() : null;
+            bool MostrarEquivalente = ClsPreferenciaMonedaCompras.ComprasFuncUsaOtraMoneda(MonedaLocal);
+            var Montos = new Dictionary<ComprasUsrLabel, decimal>
+            {
+                { ComprasLblEtiquetaTotalCargos, TotalCargos },
+                { ComprasLblEtiquetaTotalAbonos, TotalAbonos },
+                { ComprasLblEtiquetaSaldoFinal, SaldoFinal }
+            };
+            foreach (KeyValuePair<ComprasUsrLabel, decimal> Total in Montos)
+            {
+                string Texto = _EtiquetasTotales[Total.Key];
+                if (MostrarEquivalente)
+                    Texto += "  ≈ " + ClsPreferenciaMonedaCompras.ComprasFuncFormatearDesdeLocal(
+                        Total.Value, FechaCorte.Value, _ControladorMoneda, MonedaLocal);
+                Total.Key.Texto = Texto;
+            }
+        }
+
+        // Si Bancos no responde, los totales se quedan solo en quetzales.
+        private ClsMonedaCompras ComprasFuncObtenerMonedaLocal()
+        {
+            try
+            {
+                return _ControladorMoneda.ComprasFuncObtenerMonedaLocal(_ControladorMoneda.ComprasFuncObtenerMonedas());
+            }
+            catch (InvalidOperationException)
+            {
+                return null;
+            }
+        }
+
         private void ComprasMetFormatearValidacion(object Remitente, DataGridViewCellFormattingEventArgs Evento)
         {
             DataGridView Tabla = ComprasDgvValidaciones.Tabla;
@@ -178,12 +268,12 @@ namespace CapaVista_CierreMovimientos
 
         private void ComprasProcLimpiarResumen()
         {
+            _Resumen = null;
             ComprasDgvValidaciones.DataSource = null;
             ComprasDgvSaldos.DataSource = null;
-            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtTotalCargos, 0);
-            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtTotalAbonos, 0);
-            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtSaldoFinal, 0);
+            ComprasProcMostrarTotales(0, 0, 0, null);
             ComprasBtnEjecutarCierre.Enabled = false;
+            ComprasBtnImprimir.Enabled = false;
         }
 
         private static void ComprasProcMostrarError(string Mensaje)

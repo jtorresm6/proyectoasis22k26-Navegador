@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CapaControlador_CierreMovimientos</RootNamespace>
-    <AssemblyName>CapaControlador_CierreMovimientos</AssemblyName>
+    <AssemblyName>CapaControlador_CierreMovimientosCompras</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -44,8 +44,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo_CierreMovimientos">
-      <HintPath>..\CapaModelo_CierreMovimientos\bin\$(Configuration)\CapaModelo_CierreMovimientos.dll</HintPath>
+    <Reference Include="CapaModelo_CierreMovimientosCompras">
+      <HintPath>..\CapaModelo_CierreMovimientos\bin\$(Configuration)\CapaModelo_CierreMovimientosCompras.dll</HintPath>
     </Reference>
     <Reference Include="CapaModelo_Componentes">
       <HintPath>..\..\Componentes\CapaModelo_Componentes\bin\$(Configuration)\CapaModelo_Componentes.dll</HintPath>
