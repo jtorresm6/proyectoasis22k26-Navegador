@@ -10,6 +10,14 @@
 		<param name="Local" value="AutorizacionOrdenCompra_Bancos.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Autorizar orden de pago">
+		<param name="Local" value="GeneracionPagos_Bancos.html#autorizar">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Aviso de vencimientos">
+		<param name="Local" value="GeneracionPagos_Bancos.html#aviso">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Banco">
 		<param name="Local" value="Bancos_Bancos.html">
 		</OBJECT>
@@ -26,8 +34,16 @@
 		<param name="Local" value="CuentaBancaria_Bancos.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Emitir cheque o transferencia">
+		<param name="Local" value="GeneracionPagos_Bancos.html#emitir">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Exportar cierre a CSV">
 		<param name="Local" value="CierreBancario_Bancos.html#exportar">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Generación de pagos">
+		<param name="Local" value="GeneracionPagos_Bancos.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Historial de cierres">
@@ -46,8 +62,32 @@
 		<param name="Local" value="MovimientoBancario_Bancos.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Navegador de botones (Ingresar, Consultar, Modificar, Eliminar)">
+		<param name="Local" value="Navegador_Ayuda.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Obligaciones por pagar">
+		<param name="Local" value="GeneracionPagos_Bancos.html#obligaciones">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Órdenes de pago">
+		<param name="Local" value="GeneracionPagos_Bancos.html#ordenes">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Preparar orden de pago">
+		<param name="Local" value="GeneracionPagos_Bancos.html#preparar">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Registrar movimiento bancario">
+		<param name="Local" value="GeneracionPagos_Bancos.html#registrar">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Reporte de cierre bancario">
 		<param name="Local" value="CierreBancario_Bancos.html#reporte">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Reporte de generación de pagos">
+		<param name="Local" value="GeneracionPagos_Bancos.html#reporte">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Requisitos para cerrar un período">

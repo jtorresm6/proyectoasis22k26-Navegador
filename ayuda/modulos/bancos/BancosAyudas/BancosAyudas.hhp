@@ -14,6 +14,7 @@ BancosAyudas="Ayudas generales del módulo de Bancos.","BancosAyudas.hhc","Bancos
 
 [FILES]
 MDI_Bancos.html
+Navegador_Ayuda.html
 Bancos_Bancos.html
 CuentaBancaria_Bancos.html
 Moneda_Bancos.html
@@ -22,5 +23,6 @@ TipoTransaccion_Bancos.html
 AutorizacionOrdenCompra_Bancos.html
 CierreBancario_Bancos.html
 MovimientoBancario_Bancos.html
+GeneracionPagos_Bancos.html
 
 [INFOTYPES]
