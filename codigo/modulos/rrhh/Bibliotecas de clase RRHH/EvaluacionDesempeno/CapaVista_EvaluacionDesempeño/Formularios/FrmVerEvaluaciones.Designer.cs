@@ -1111,7 +1111,6 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhBtnImprimir.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnImprimir.TabIndex = 1;
             this.RrhhBtnImprimir.UseVisualStyleBackColor = false;
-            this.RrhhBtnImprimir.Click += new System.EventHandler(this.RrhhBtnImprimir_Click);
             // 
             // RrhhBtnInicio
             // 
@@ -1197,7 +1196,6 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             this.RrhhBtnAyuda.Size = new System.Drawing.Size(74, 82);
             this.RrhhBtnAyuda.TabIndex = 7;
             this.RrhhBtnAyuda.UseVisualStyleBackColor = false;
-            this.RrhhBtnAyuda.Click += new System.EventHandler(this.RrhhBtnAyuda_Click);
             // 
             // RrhhBtnSalir
             // 

@@ -12,7 +12,7 @@ using System.Windows.Forms;
  * ==================================================================
  * Propósito :
  *  Acciones comunes de las ventanas de Evaluación de Desempeño:
- *  abrir la página de ayuda de cada ventana en RrhhAyudas.chm.
+ *  abrir la página de ayuda de cada ventana en RecursosHumanosAyudas.chm.
  * ===================================================================
 */
 
@@ -20,7 +20,7 @@ namespace CapaVista_EvaluacionDesempeño.Utilidades
 {
     public static class ClsAccionesVista
     {
-        private const string _Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\RrhhAyudas.chm";
+        private const string _Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\RecursosHumanosAyudas.chm";
 
         // Busca el .chm de RRHH subiendo carpetas desde donde corre el programa y abre la página indicada.
         public static void RrhhMetMostrarAyuda(Control Ventana, string Pagina)
