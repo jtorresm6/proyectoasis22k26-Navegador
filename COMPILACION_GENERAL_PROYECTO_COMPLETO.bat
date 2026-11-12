@@ -70,8 +70,7 @@ echo Busca el repositorio desde la ubicacion del BAT, sin rutas de usuario fijas
 echo Requiere Windows, Visual Studio 2022 o Build Tools actualizado con
 echo desarrollo de escritorio .NET, .NET Framework 4.8 y SDK .NET 8 o posterior
 echo compatible con MSBuild. NuGet puede necesitar Internet.
-echo Variables opcionales: MSBUILD_MANUAL, HHC_MANUAL y COMPILAR_PARALELO
-echo (maximo de proyectos a la vez; por defecto, el numero de nucleos).
+echo Variables opcionales: MSBUILD_MANUAL y HHC_MANUAL.
 set "BUILD_EXIT=0"
 set "AUTO=1"
 
@@ -97,9 +96,6 @@ $script:compileDrive = $null
 $script:substPath = Join-Path $env:SystemRoot 'System32\subst.exe'
 $script:referenceOverrides = New-Object 'System.Collections.Generic.List[object]'
 $script:restoreForImports = $false
-$script:importDirs = New-Object 'System.Collections.Generic.List[string]'
-$script:viewerDirectory = $null
-$script:viewerSearched = $false
 $script:forceCycles = $false
 $script:timer = [Diagnostics.Stopwatch]::StartNew()
 $script:useColor = -not $SinColor -and -not [Console]::IsOutputRedirected -and -not $env:NO_COLOR
@@ -243,7 +239,7 @@ function Get-SourceProjects([string]$Directory) {
                     $queue.Enqueue($entry.FullName)
                 }
             } elseif ($entry.Name -like '*.csproj') { $entry }
-            elseif ($entry.Name -match '^Directory\.Build\.(props|targets)$') { $script:importDirs.Add($entry.DirectoryName + '\') }
+            elseif ($entry.Name -match '^Directory\.Build\.(props|targets)$') { $script:restoreForImports = $true }
         }
     }
 }
@@ -278,10 +274,6 @@ function Get-ProjectInfo([IO.FileInfo]$File) {
             $path -match '[\\/]Microsoft\.(Common\.props|CSharp\.targets)$'
         if (-not $known) { $needsRestore = $true }
     }
-    # Directory.Build.* solo afecta a los proyectos que estan debajo de su carpeta.
-    foreach ($importDir in $script:importDirs) {
-        if (($File.DirectoryName + '\').StartsWith($importDir, [StringComparison]::OrdinalIgnoreCase)) { $needsRestore = $true }
-    }
     $extension = '.dll'
     if ($type -match '^(WinExe|Exe)$' -and -not $isSdk) { $extension = '.exe' }
     $outputDirectory = Join-Path $File.DirectoryName 'bin\Debug'
@@ -295,6 +287,7 @@ function Get-ProjectInfo([IO.FileInfo]$File) {
         LastErrors = @(); ReferenceErrors = New-Object 'System.Collections.Generic.List[string]'
         State = 'Pendiente'; Attempts = 0; Duration = 0.0; Log = ''
         SharedOutput = $false; NeedsRestore = [bool]$needsRestore; SeedOnly = $false
+        Sdk = [bool]($isSdk -or $null -ne $xml.SelectSingleNode("//*[local-name()='PackageReference']"))
         Dependencies = New-Object 'System.Collections.Generic.HashSet[string]' ([StringComparer]::OrdinalIgnoreCase)
     }
 }
@@ -585,7 +578,7 @@ function Build-SeguridadSeed($Project, [int]$Round) {
         $seedArguments = @((Get-CompilePath $Project.Path), ('/p:SolutionDir=' + (ConvertTo-MSBuildLiteral (Get-CompilePath $solution))),
             ('/p:CustomAfterMicrosoftCommonTargets=' + (ConvertTo-MSBuildLiteral (Get-CompilePath $seedTargets))),
             '/t:Build', '/p:Configuration=Debug', '/p:BuildProjectReferences=false',
-            '/p:UseSharedCompilation=false', '/nr:false', '/nologo', '/verbosity:minimal')
+            '/nr:true', '/nologo', '/verbosity:minimal')
         if ($Project.NeedsRestore -or $script:restoreForImports) { $seedArguments += @('/restore', '/p:RestorePackagesConfig=true') }
         Push-Location -LiteralPath (Get-CompilePath $Project.Directory)
         try { $seedCode = Invoke-Logged $msbuild $seedArguments $seedLog }
@@ -641,93 +634,6 @@ function Invoke-Logged([string]$Executable, [string[]]$Arguments, [string]$LogPa
     return $code
 }
 
-function ConvertTo-ArgumentString([string[]]$Arguments) {
-    # Reglas de comillas de CommandLineToArgvW.
-    return (@($Arguments | ForEach-Object {
-        if ($_ -notmatch '[\s";]') { $_ }
-        else { '"' + (($_ -replace '(\\*)"', '$1$1\"') -replace '(\\+)$', '$1$1') + '"' }
-    }) -join ' ')
-}
-
-function Start-ProjectBuild($Project, [string[]]$Arguments, [string]$LogPath) {
-    # MSBuild escribe su propio log (UTF-8); sin tuberias para no esperar a procesos hijos.
-    if (Test-Path -LiteralPath $LogPath) { Remove-Item -LiteralPath $LogPath -Force }
-    $all = $Arguments + @('/noconsolelogger', ('/flp:logfile=' + $LogPath + ';verbosity=minimal;encoding=utf-8'))
-    $info = New-Object Diagnostics.ProcessStartInfo $msbuild, (ConvertTo-ArgumentString $all)
-    $info.UseShellExecute = $false
-    $info.CreateNoWindow = $true
-    $info.WorkingDirectory = Get-CompilePath $Project.Directory
-    return [Diagnostics.Process]::Start($info)
-}
-
-function Get-ProjectArguments($Project) {
-    $solution = (Get-SolutionDirectory $Project.Directory).TrimEnd('\', '/') + '/'
-    $target = 'Build'
-    if ($RecompilarTodo -or $Project.SharedOutput -or $Project.SeedOnly) { $target = 'Rebuild' }
-    $arguments = @((Get-CompilePath $Project.Path), ('/p:SolutionDir=' + (ConvertTo-MSBuildLiteral (Get-CompilePath $solution))),
-        ('/p:CustomAfterMicrosoftCommonTargets=' + (ConvertTo-MSBuildLiteral (Get-CompilePath $legacyTargets))),
-        ('/t:' + $target), '/p:Configuration=Debug', '/p:BuildProjectReferences=false',
-        '/warnAsError:MSB3245,MSB3243', '/nr:false', '/nologo')
-    if ($RecompilarTodo -or $Project.NeedsRestore -or $script:restoreForImports) {
-        $arguments += @('/restore', '/p:RestorePackagesConfig=true')
-    }
-    return ,$arguments
-}
-
-function Get-ProjectLocks($Project) {
-    # Recursos que no pueden usar dos MSBuild a la vez: carpeta (obj), salida y packages de la solucion.
-    $locks = @('dir:' + $Project.Directory, 'out:' + $Project.Output)
-    if (Test-Path -LiteralPath (Join-Path $Project.Directory 'packages.config')) {
-        $locks += 'pkg:' + (Get-SolutionDirectory $Project.Directory)
-    }
-    return $locks
-}
-
-function Complete-ProjectBuild($Job) {
-    $project = $Job.Project
-    $code = $Job.Process.ExitCode
-    $Job.Process.Dispose()
-    if (Test-Path -LiteralPath $Job.Log) {
-        [IO.File]::AppendAllText($script:globalLog, [IO.File]::ReadAllText($Job.Log) + [Environment]::NewLine, $utf8)
-    }
-    if ($code -ne 0 -and -not $Job.Retried -and (Test-ReportViewerFailure $Job.Log)) {
-        if (-not $script:viewerSearched) { $script:viewerDirectory = Find-ReportViewerFolder; $script:viewerSearched = $true }
-        if ($script:viewerDirectory) {
-            Write-Status "[AJUSTE] $($project.Name): al proyecto le falta la referencia a ReportViewer; se reemplaza solo para compilar por la de $($script:viewerDirectory). Conviene corregir el .csproj."
-            $Job.Log = $Job.Log -replace '\.log$', '_reportviewer.log'
-            $project.Log = $Job.Log
-            $Job.Retried = $true
-            $retry = $Job.Arguments + @('/p:SeguridadReportViewerDir=' + (ConvertTo-MSBuildLiteral (Get-CompilePath $script:viewerDirectory)))
-            $Job.Process = Start-ProjectBuild $project $retry $Job.Log
-            return $false
-        }
-        Write-Status "[AVISO] $($project.Name): falta la referencia a ReportViewer y no se encontro Microsoft.ReportViewer.WinForms.dll. Agregue el paquete NuGet Microsoft.ReportingServices.ReportViewerControl.Winforms al proyecto."
-    }
-    $Job.Timer.Stop()
-    $project.Duration += $Job.Timer.Elapsed.TotalSeconds
-    if ($code -eq 0) {
-        Copy-LegacyDlls $project
-        $project.State = 'Correcto'
-        return $true
-    }
-    $project.State = 'Error'
-    $project.LastErrors = @("MSBuild termino con codigo $code. Log: $($Job.Log)")
-    if (Test-Path -LiteralPath $Job.Log) {
-        $lines = [IO.File]::ReadAllLines($Job.Log)
-        $diagnostics = @($lines | Where-Object { $_ -match '(?i)\berror\b' } | Select-Object -First 12)
-        if ($diagnostics.Count -eq 0) { $diagnostics = @($lines | Where-Object { $_ -match 'MSB3245|MSB3243' } | Select-Object -First 12) }
-        $project.LastErrors += $diagnostics
-    } else { [IO.File]::WriteAllLines($Job.Log, [string[]]$project.LastErrors, $utf8) }
-    return $true
-}
-
-function Register-Finished($Project, $Settled, $Failed, [int]$Total) {
-    $Settled[$Project.Path] = $true
-    if ($Project.State -ne 'Correcto') { $Failed.Add($Project) }
-    Write-ProjectResult $Project $Settled.Count $Total
-    if ($Project.State -eq 'Error') { $Project.LastErrors | Select-Object -First 3 | ForEach-Object { Write-Status ('  ' + $_) } }
-}
-
 function Copy-LegacyDlls($Project) {
     $debug = Join-Path $Project.Directory 'bin\Debug'
     if (-not (Test-Path -LiteralPath $debug -PathType Container)) { return }
@@ -743,6 +649,52 @@ function Copy-LegacyDlls($Project) {
         }
         Copy-Item -LiteralPath $dll.FullName -Destination $destination -Force
     }
+}
+
+function Get-StampPath($Project) { return Join-Path $Project.Directory 'obj\compilacion_ok.stamp' }
+
+function Test-UpToDate($Project) {
+    # Como la revision rapida de Visual Studio: si nada cambio desde la ultima
+    # compilacion correcta, no se llama a MSBuild.
+    # ponytail: solo mira archivos dentro de la carpeta del proyecto; un archivo enlazado desde otra carpeta necesita /rebuild
+    if ($RecompilarTodo -or $Project.SharedOutput -or $Project.SeedOnly) { return $false }
+    $stamp = Get-StampPath $Project
+    if (-not (Test-Path -LiteralPath $stamp -PathType Leaf) -or -not (Test-Path -LiteralPath $Project.Output -PathType Leaf)) { return $false }
+    $limit = [IO.File]::GetLastWriteTimeUtc($stamp)
+    foreach ($dependency in $Project.Dependencies) {
+        $producer = $byPath[$dependency]
+        # En el ciclo Seguridad <-> RRHH cada uno se compila despues del otro; se ignora el par
+        if ($producer.Dependencies.Contains($Project.Path)) { continue }
+        if (-not (Test-Path -LiteralPath $producer.Output -PathType Leaf) -or
+            [IO.File]::GetLastWriteTimeUtc($producer.Output) -gt $limit) { return $false }
+    }
+    $queue = New-Object 'System.Collections.Generic.Queue[string]'
+    $queue.Enqueue($Project.Directory)
+    while ($queue.Count -gt 0) {
+        $directory = $queue.Dequeue()
+        foreach ($file in [IO.Directory]::EnumerateFiles($directory)) {
+            if ([IO.File]::GetLastWriteTimeUtc($file) -gt $limit) { return $false }
+        }
+        foreach ($child in [IO.Directory]::EnumerateDirectories($directory)) {
+            if ([IO.Path]::GetFileName($child) -notmatch '^(bin|obj|packages|logs|node_modules|\.git|\.vs)$') { $queue.Enqueue($child) }
+        }
+    }
+    return $true
+}
+
+function Test-NeedsRestore($Project, [int]$Round, [string]$Solution) {
+    # NuGet solo cuando faltan paquetes; en los reintentos siempre por si el error era de un paquete
+    if ($Round -gt 1) { return $true }
+    if ($Project.Sdk -and -not (Test-Path -LiteralPath (Join-Path $Project.Directory 'obj\project.assets.json'))) { return $true }
+    $config = Join-Path $Project.Directory 'packages.config'
+    if (Test-Path -LiteralPath $config -PathType Leaf) {
+        $packages = Join-Path $Solution 'packages'
+        foreach ($package in ([xml][IO.File]::ReadAllText($config)).SelectNodes("//*[local-name()='package']")) {
+            $folder = Join-Path $packages ($package.GetAttribute('id') + '.' + $package.GetAttribute('version'))
+            if (-not (Test-Path -LiteralPath $folder -PathType Container)) { return $true }
+        }
+    }
+    return $false
 }
 
 function Get-HelpInfo([IO.FileInfo]$File) {
@@ -881,6 +833,11 @@ try {
     Write-Status "Proyectos: $($plan.Count). Registros: $logDirectory"
     Write-Status ('Modo: {0}' -f $(if ($RecompilarTodo) { 'Rebuild' } else { 'Build incremental' }))
     Write-Reports $plan $logDirectory
+    $oldBats = @('Estos BAT no son invocados por el compilador global. Revisar sus opciones antes de retirarlos.', '')
+    $oldBats += @(Get-ChildItem -LiteralPath $repo -Filter '*.bat' -Recurse -File |
+        Where-Object { $_.FullName -notmatch '[\\/](bin|obj|packages|logs|\.git)[\\/]' -and $_.FullName -ne $env:SEGURIDAD_SELF } |
+        Sort-Object FullName | ForEach-Object { $_.FullName.Substring($repo.Length + 1) })
+    [IO.File]::WriteAllLines((Join-Path $logDirectory 'bat_anteriores.txt'), [string[]]$oldBats, $utf8)
     $msbuild = Find-Tool 'MSBUILD'
     Write-Status "MSBuild: $msbuild"
     Initialize-CompileDrive
@@ -909,88 +866,99 @@ try {
     $pending = $plan
     $byPath = @{}
     foreach ($project in $plan) { $byPath[$project.Path] = $project }
-    $indexOf = @{}
-    for ($i = 0; $i -lt $plan.Count; $i++) { $indexOf[$plan[$i].Path] = $i + 1 }
-    $maxParallel = [Environment]::ProcessorCount
-    if ($env:COMPILAR_PARALELO -match '^\d+$' -and [int]$env:COMPILAR_PARALELO -gt 0) { $maxParallel = [int]$env:COMPILAR_PARALELO }
-    Write-Status "Compilacion en paralelo: hasta $maxParallel proyectos a la vez."
     for ($round = 1; $round -le 5 -and $pending.Count -gt 0; $round++) {
         Write-Status "Ronda $round de 5: $($pending.Count) proyectos pendientes."
         $failed = New-Object 'System.Collections.Generic.List[object]'
-        $waiting = New-Object 'System.Collections.Generic.List[object]'
-        $inRound = @{}
-        foreach ($project in $pending) { $waiting.Add($project); $inRound[$project.Path] = $true }
-        $settled = @{}
-        $locks = @{}
-        $running = New-Object 'System.Collections.Generic.List[object]'
-        while ($waiting.Count -gt 0 -or $running.Count -gt 0) {
-            $changed = $false
-            foreach ($job in $running.ToArray()) {
-                if (-not $job.Process.HasExited) { continue }
-                $changed = $true
-                if (-not (Complete-ProjectBuild $job)) { continue }  # reintento de ReportViewer en curso
-                [void]$running.Remove($job)
-                foreach ($key in $job.Locks) { $locks.Remove($key) }
-                Register-Finished $job.Project $settled $failed $pending.Count
+        foreach ($project in $pending) {
+            $index = [array]::IndexOf($plan, $project) + 1
+            $safeName = $project.Name -replace '[^a-zA-Z0-9_.-]', '_'
+            $log = Join-Path $logDirectory ('ronda_{0}_proyecto_{1:D3}_{2}.log' -f $round, $index, $safeName)
+            [IO.File]::AppendAllText($script:globalLog, "[$index/$($plan.Count)] $($project.Relative)" + [Environment]::NewLine, $utf8)
+            if ($script:useColor) {
+                Write-Progress -Activity 'Compilando componentes y modulos' -Status ($project.Group + ' > ' + $project.Name) -PercentComplete ([int](100 * ($index - 1) / $plan.Count))
             }
-            foreach ($project in $waiting.ToArray()) {
-                if ($running.Count -ge $maxParallel) { break }
-                $index = $indexOf[$project.Path]
-                # Igual que el orden secuencial: solo se espera a dependencias anteriores en el plan.
-                $wait = $false
-                foreach ($dependency in $project.Dependencies) {
-                    if ($inRound.ContainsKey($dependency) -and -not $settled.ContainsKey($dependency) -and $indexOf[$dependency] -lt $index) { $wait = $true; break }
-                }
-                if ($wait) { continue }
-                $safeName = $project.Name -replace '[^a-zA-Z0-9_.-]', '_'
-                $log = Join-Path $logDirectory ('ronda_{0}_proyecto_{1:D3}_{2}.log' -f $round, $index, $safeName)
-                $unavailable = @($project.Dependencies | Where-Object {
-                    $dependency = $byPath[$_]
-                    if ($dependency.State -eq 'Correcto') { $false }
-                    elseif ($dependency.SeedOnly -and (Test-Path -LiteralPath $dependency.Output -PathType Leaf)) { $false }
-                    else { $true }
-                })
-                $projectLocks = @()
-                if ($unavailable.Count -eq 0 -and $project.ReferenceErrors.Count -eq 0) {
-                    $projectLocks = @(Get-ProjectLocks $project)
-                    if (@($projectLocks | Where-Object { $locks.ContainsKey($_) }).Count -gt 0) { continue }
-                }
-                [void]$waiting.Remove($project)
-                $changed = $true
-                $project.Log = $log
+            $project.Log = $log
+            if ($project.ReferenceErrors.Count -eq 0 -and (Test-UpToDate $project)) {
+                [IO.File]::WriteAllText($log, 'Sin cambios desde la ultima compilacion correcta; no se llamo a MSBuild.', $utf8)
+                $project.State = 'Correcto'
+                Write-ProjectResult $project $index $plan.Count
+                continue
+            }
+            $unavailable = @($project.Dependencies | Where-Object {
+                $dependency = $byPath[$_]
+                if ($dependency.State -eq 'Correcto') { $false }
+                elseif ($dependency.SeedOnly -and (Test-Path -LiteralPath $dependency.Output -PathType Leaf)) { $false }
+                else { $true }
+            })
+            if ($unavailable.Count -gt 0) {
+                if ($project.Name -eq 'CapaVista_Seguridad' -and -not $project.SeedOnly) { Build-SeguridadSeed $project $round }
+                $project.State = 'Bloqueado'
+                $project.LastErrors = @($unavailable | ForEach-Object { 'Dependencia sin compilar: ' + $byPath[$_].Relative })
+                [IO.File]::WriteAllLines($log, [string[]]$project.LastErrors, $utf8)
+                $failed.Add($project)
+                Write-ProjectResult $project $index $plan.Count
+                continue
+            }
+            $attemptTimer = [Diagnostics.Stopwatch]::StartNew()
+            try {
                 $project.LastErrors = @()
-                [IO.File]::AppendAllText($script:globalLog, "[$index/$($plan.Count)] $($project.Relative)" + [Environment]::NewLine, $utf8)
-                if ($unavailable.Count -gt 0) {
-                    if ($project.Name -eq 'CapaVista_Seguridad' -and -not $project.SeedOnly) { Build-SeguridadSeed $project $round }
-                    $project.State = 'Bloqueado'
-                    $project.LastErrors = @($unavailable | ForEach-Object { 'Dependencia sin compilar: ' + $byPath[$_].Relative })
-                    [IO.File]::WriteAllLines($log, [string[]]$project.LastErrors, $utf8)
-                    Register-Finished $project $settled $failed $pending.Count
-                    continue
-                }
-                if ($project.ReferenceErrors.Count -gt 0) {
-                    $project.State = 'Error'
-                    $project.LastErrors = @($project.ReferenceErrors -join ' ')
-                    [IO.File]::WriteAllLines($log, [string[]]$project.LastErrors, $utf8)
-                    Register-Finished $project $settled $failed $pending.Count
-                    continue
+                if ($project.ReferenceErrors.Count -gt 0) { throw ($project.ReferenceErrors -join ' ') }
+                $project.Attempts++
+                $solution = (Get-SolutionDirectory $project.Directory).TrimEnd('\', '/') + '/'
+                $target = 'Build'
+                if ($RecompilarTodo -or $project.SharedOutput -or $project.SeedOnly) { $target = 'Rebuild' }
+                $arguments = @((Get-CompilePath $project.Path), ('/p:SolutionDir=' + (ConvertTo-MSBuildLiteral (Get-CompilePath $solution))),
+                    ('/p:CustomAfterMicrosoftCommonTargets=' + (ConvertTo-MSBuildLiteral (Get-CompilePath $legacyTargets))),
+                    ('/t:' + $target), '/p:Configuration=Debug', '/p:BuildProjectReferences=false',
+                    '/warnAsError:MSB3245,MSB3243', '/nr:true', '/nologo', '/verbosity:minimal')
+                if ($RecompilarTodo -or (($project.NeedsRestore -or $script:restoreForImports) -and (Test-NeedsRestore $project $round $solution))) {
+                    $arguments += @('/restore', '/p:RestorePackagesConfig=true')
                 }
                 if ($project.Xml.SelectSingleNode("//*[local-name()='Compile' and @Include='Class1.cs']") -and
                     -not (Test-Path -LiteralPath (Join-Path $project.Directory 'Class1.cs'))) {
                     Write-Status '[AJUSTE] Se omite la referencia a Class1.cs ausente sin modificar el proyecto.'
                 }
-                $project.Attempts++
-                $arguments = Get-ProjectArguments $project
-                foreach ($key in $projectLocks) { $locks[$key] = $true }
-                $running.Add([pscustomobject]@{
-                    Project = $project; Arguments = $arguments; Log = $log; Locks = $projectLocks
-                    Retried = $false; Timer = [Diagnostics.Stopwatch]::StartNew(); Process = (Start-ProjectBuild $project $arguments $log)
-                })
+                Push-Location -LiteralPath (Get-CompilePath $project.Directory)
+                try {
+                    $code = Invoke-Logged $msbuild $arguments $log
+                    if ($code -ne 0 -and (Test-ReportViewerFailure $log)) {
+                        $viewerDirectory = Find-ReportViewerFolder
+                        if ($viewerDirectory) {
+                            Write-Status "[AJUSTE] $($project.Name): al proyecto le falta la referencia a ReportViewer; se reemplaza solo para compilar por la de $viewerDirectory. Conviene corregir el .csproj."
+                            $log = $log -replace '\.log$', '_reportviewer.log'
+                            $project.Log = $log
+                            $retryArguments = $arguments + @('/p:SeguridadReportViewerDir=' + (ConvertTo-MSBuildLiteral (Get-CompilePath $viewerDirectory)))
+                            $code = Invoke-Logged $msbuild $retryArguments $log
+                        } else {
+                            Write-Status "[AVISO] $($project.Name): falta la referencia a ReportViewer y no se encontro Microsoft.ReportViewer.WinForms.dll. Agregue el paquete NuGet Microsoft.ReportingServices.ReportViewerControl.Winforms al proyecto."
+                        }
+                    }
+                } finally { Pop-Location }
+                if ($code -ne 0) { throw "MSBuild termino con codigo $code. Log: $log" }
+                Copy-LegacyDlls $project
+                [void][IO.Directory]::CreateDirectory((Join-Path $project.Directory 'obj'))
+                [IO.File]::WriteAllText((Get-StampPath $project), (Get-Date -Format o), $utf8)
+                $project.State = 'Correcto'
+            } catch {
+                Remove-Item -LiteralPath (Get-StampPath $project) -Force -ErrorAction SilentlyContinue
+                $project.State = 'Error'
+                $failed.Add($project)
+                $project.LastErrors = @($_.Exception.Message)
+                if (Test-Path -LiteralPath $log) {
+                    $diagnostics = @(Get-Content -LiteralPath $log | Where-Object { $_ -match '(?i)\berror\b' } | Select-Object -First 12)
+                    if ($diagnostics.Count -eq 0) {
+                        $diagnostics = @(Get-Content -LiteralPath $log | Where-Object { $_ -match 'MSB3245|MSB3243' } | Select-Object -First 12)
+                    }
+                    $project.LastErrors += $diagnostics
+                } else { [IO.File]::WriteAllLines($log, [string[]]$project.LastErrors, $utf8) }
+            } finally {
+                $attemptTimer.Stop()
+                $project.Duration += $attemptTimer.Elapsed.TotalSeconds
             }
-            if ($script:useColor -and $changed) {
-                Write-Progress -Activity 'Compilando componentes y modulos' -Status ("{0}/{1} listos, {2} en paralelo" -f $settled.Count, $pending.Count, $running.Count) -PercentComplete ([int](100 * $settled.Count / $pending.Count))
+            Write-ProjectResult $project $index $plan.Count
+            if ($project.State -eq 'Error') {
+                $project.LastErrors | Select-Object -First 3 | ForEach-Object { Write-Status ('  ' + $_) }
             }
-            if (-not $changed) { Start-Sleep -Milliseconds 100 }
         }
         if ($script:useColor) { Write-Progress -Activity 'Compilando componentes y modulos' -Completed }
         Write-Reports $plan $logDirectory
