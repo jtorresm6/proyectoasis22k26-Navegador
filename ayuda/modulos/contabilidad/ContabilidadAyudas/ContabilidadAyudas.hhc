@@ -76,6 +76,11 @@
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Crear o modificar presupuesto">
+			<param name="Local" value="PresupuestoEdicion_Contabilidad.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Activos fijos">
 			<param name="Local" value="ActivosFijos_Contabilidad.html">
 			<param name="ImageNumber" value="11">

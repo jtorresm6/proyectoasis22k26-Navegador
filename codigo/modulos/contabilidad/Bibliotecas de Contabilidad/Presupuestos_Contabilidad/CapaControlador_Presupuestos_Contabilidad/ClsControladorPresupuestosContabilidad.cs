@@ -38,15 +38,29 @@ namespace CapaControlador_Contabilidad
             return _Repositorio.ContabilidadFuncObtenerModulos();
         }
 
-        public DataTable ContabilidadFuncPresupuesto()
+        // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+        public List<ClsModeloPresupuestoContabilidad> ContabilidadFuncPresupuestos()
+        {
+            return _Repositorio.ContabilidadFuncObtenerTodos().Select(Presupuesto => new ClsModeloPresupuestoContabilidad
+            {
+                IdPresupuesto = Presupuesto.IdPresupuesto, Nombre = Presupuesto.Nombre, FechaInicio = Presupuesto.FechaInicio,
+                FechaCierre = Presupuesto.FechaCierre, Gastado = Presupuesto.Gastado,
+                Partidas = Presupuesto.Detalle.Select(Partida => new ClsModeloPartidaPresupuestoContabilidad
+                    { Nombre = Partida.Nombre, Modulo = Partida.Modulo, Cantidad = Partida.Cantidad }).ToList()
+            }).ToList();
+        }
+
+        public DataTable ContabilidadFuncPresupuesto(ClsModeloPresupuestoContabilidad Presupuesto)
+        // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
         {
             DataTable Tabla = new DataTable();
             Tabla.Columns.Add("Nombre", typeof(string));
             Tabla.Columns.Add("Modulo", typeof(string));
             Tabla.Columns.Add("Cantidad", typeof(decimal));
-            ClsPresupuestoContabilidad Presupuesto = _Repositorio.ContabilidadFuncObtenerTodos().FirstOrDefault();
             if (Presupuesto != null)
-                foreach (ClsPresupuestoDetalleContabilidad Partida in Presupuesto.Detalle)
+                // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+                foreach (ClsModeloPartidaPresupuestoContabilidad Partida in Presupuesto.Partidas)
+                // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
                     Tabla.Rows.Add(Partida.Nombre, Partida.Modulo, Partida.Cantidad);
             return Tabla;
         }
@@ -66,11 +80,6 @@ namespace CapaControlador_Contabilidad
             return ClsValidacionDatosContabilidad.ContabilidadFuncErrorRangoFechas(Inicio, Fin);
         }
 
-        public decimal ContabilidadFuncRestante(DataTable Detalle, decimal Gastado)
-        {
-            return ContabilidadFuncTotalPresupuesto(Detalle) - Gastado;
-        }
-
         public decimal ContabilidadFuncTotalPresupuesto(DataTable Detalle)
         {
             decimal Total = 0m;
@@ -78,9 +87,44 @@ namespace CapaControlador_Contabilidad
             return Total;
         }
 
-        private ClsModeloPresupuestoContabilidad ContabilidadFuncCrearModelo(DateTime Inicio, DateTime? Cierre, decimal Gastado, DataTable Detalle)
+        // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+        public DataTable ContabilidadFuncEjecucion(DateTime Inicio, DateTime? Cierre, DataTable Detalle)
         {
-            ClsModeloPresupuestoContabilidad Modelo = new ClsModeloPresupuestoContabilidad { FechaInicio = Inicio, FechaCierre = Cierre, Gastado = Gastado };
+            DataTable Tabla = new DataTable();
+            Tabla.Columns.Add("Modulo", typeof(string));
+            Tabla.Columns.Add("Asignado", typeof(decimal));
+            Tabla.Columns.Add("Ejecutado", typeof(decimal));
+            Tabla.Columns.Add("Porcentaje", typeof(decimal));
+            Tabla.Columns.Add("Restante", typeof(decimal));
+            if (Detalle == null || Detalle.Rows.Count == 0) return Tabla;
+            DateTime Hasta = Cierre.HasValue ? Cierre.Value : DateTime.Today;
+            Dictionary<string, decimal> Ejecutado = Hasta.Date < Inicio.Date ? new Dictionary<string, decimal>()
+                : _Repositorio.ContabilidadFuncObtenerEjecutado(Inicio, Hasta);
+            foreach (var Modulo in Detalle.Rows.Cast<DataRow>()
+                .GroupBy(Fila => Convert.ToString(Fila["Modulo"]), Fila => Convert.ToDecimal(Fila["Cantidad"])).OrderBy(Grupo => Grupo.Key))
+            {
+                decimal Asignado = Modulo.Sum();
+                decimal Usado = Ejecutado.ContainsKey(Modulo.Key) ? Ejecutado[Modulo.Key] : 0m;
+                Tabla.Rows.Add(Modulo.Key, Asignado, Usado, Asignado == 0m ? 0m : Usado / Asignado, Asignado - Usado);
+            }
+            return Tabla;
+        }
+
+        public decimal ContabilidadFuncTotalEjecutado(DataTable Ejecucion)
+        {
+            return Ejecucion == null ? 0m : Ejecucion.Rows.Cast<DataRow>().Sum(Fila => (decimal)Fila["Ejecutado"]);
+        }
+        // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+
+        // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+        private ClsModeloPresupuestoContabilidad ContabilidadFuncCrearModelo(DateTime Inicio, DateTime? Cierre, decimal Gastado, DataTable Detalle,
+            int IdPresupuesto = 0, string Nombre = "Presupuesto")
+        // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+        {
+            // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+            ClsModeloPresupuestoContabilidad Modelo = new ClsModeloPresupuestoContabilidad
+                { IdPresupuesto = IdPresupuesto, Nombre = Nombre, FechaInicio = Inicio, FechaCierre = Cierre, Gastado = Gastado };
+            // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
             foreach (DataRow Fila in Detalle.Rows)
                 Modelo.Partidas.Add(new ClsModeloPartidaPresupuestoContabilidad
                 {
@@ -94,16 +138,24 @@ namespace CapaControlador_Contabilidad
             return ClsValidacionDatosContabilidad.ContabilidadFuncPrimerError(ContabilidadFuncCrearModelo(Inicio, Cierre, 0m, Detalle));
         }
 
-        public bool ContabilidadFuncGrabarCambios(EstadoEntidadContabilidad Estado, DateTime Inicio, DateTime? Cierre, decimal Gastado,
-            DataTable Detalle, out string Mensaje)
+        // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+        public bool ContabilidadFuncGrabarCambios(EstadoEntidadContabilidad Estado, ref int IdPresupuesto, string Nombre, DateTime Inicio,
+            DateTime? Cierre, decimal Gastado, DataTable Detalle, out string Mensaje)
+        // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
         {
-            ClsModeloPresupuestoContabilidad Modelo = ContabilidadFuncCrearModelo(Inicio, Cierre, Gastado, Detalle);
-            Mensaje = ClsValidacionDatosContabilidad.ContabilidadFuncPrimerError(Modelo);
+            // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+            ClsModeloPresupuestoContabilidad Modelo = ContabilidadFuncCrearModelo(Inicio, Cierre, Gastado, Detalle, IdPresupuesto,
+                string.IsNullOrWhiteSpace(Nombre) ? null : Nombre.Trim());
+            Mensaje = Estado == EstadoEntidadContabilidad.Borrar ? string.Empty : ClsValidacionDatosContabilidad.ContabilidadFuncPrimerError(Modelo);
+            // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
             if (Mensaje != string.Empty) return false;
 
             ClsPresupuestoContabilidad Entidad = new ClsPresupuestoContabilidad
             {
-                IdPresupuesto = Modelo.IdPresupuesto, FechaInicio = Modelo.FechaInicio, FechaCierre = Modelo.FechaCierre, Gastado = Modelo.Gastado,
+                // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+                IdPresupuesto = Modelo.IdPresupuesto, Nombre = Modelo.Nombre, Total = Modelo.Partidas.Sum(Partida => Partida.Cantidad),
+                FechaInicio = Modelo.FechaInicio, FechaCierre = Modelo.FechaCierre, Gastado = Modelo.Gastado,
+                // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
                 Detalle = Modelo.Partidas.Select(Partida => new ClsPresupuestoDetalleContabilidad
                     { Nombre = Partida.Nombre.Trim(), Modulo = Partida.Modulo, Cantidad = Partida.Cantidad }).ToList()
             };
@@ -113,14 +165,30 @@ namespace CapaControlador_Contabilidad
                 {
                     case EstadoEntidadContabilidad.Agregar:
                         _Repositorio.ContabilidadFuncAgregar(Entidad);
-                        Mensaje = "Presupuesto validado correctamente.";
+                        // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+                        IdPresupuesto = Entidad.IdPresupuesto;
+                        Mensaje = "Presupuesto guardado correctamente.";
+                        // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
                         break;
                     case EstadoEntidadContabilidad.Modificar:
-                        _Repositorio.ContabilidadFuncEditar(Entidad);
+                        // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+                        if (_Repositorio.ContabilidadFuncEditar(Entidad) == 0)
+                        {
+                            Mensaje = "El presupuesto ya no existe o fue eliminado.";
+                            return false;
+                        }
+                        // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
                         Mensaje = "Presupuesto actualizado correctamente.";
                         break;
                     case EstadoEntidadContabilidad.Borrar:
-                        _Repositorio.ContabilidadFuncEliminar(Entidad);
+                        // Inicio de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
+                        if (_Repositorio.ContabilidadFuncEliminar(Entidad) == 0)
+                        {
+                            Mensaje = "El presupuesto ya no existe o fue eliminado.";
+                            return false;
+                        }
+                        IdPresupuesto = 0;
+                        // Fin de cambio: Mario Taracena - 0901-23-9335 - 28/10/2026
                         Mensaje = "Presupuesto eliminado correctamente.";
                         break;
                 }
