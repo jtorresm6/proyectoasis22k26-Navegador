@@ -53,10 +53,12 @@
     <Compile Include="Modelos de Controladores\ClsDatosProducto.cs" />
     <Compile Include="Modelos de Controladores\ClsDatosStock.cs" />
     <Compile Include="Modelos de Controladores\ClsEstadoEntidad.cs" />
+    <Compile Include="Modelos de Controladores\ClsModeloBodega.cs" />
     <Compile Include="Modelos de Controladores\ClsModeloProducto.cs" />
     <Compile Include="Modelos de Controladores\ClsModelosDetalleMovimiento.cs" />
     <Compile Include="Modelos de Controladores\ClsModelosTipoMovimiento.cs" />
     <Compile Include="Modelos de Controladores\ClsModeloStock.cs" />
+    <Compile Include="Modelos de Controladores\ClsModeloSucursal.cs" />
     <Compile Include="Modelos de Controladores\ClsOpcionCatalogo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
