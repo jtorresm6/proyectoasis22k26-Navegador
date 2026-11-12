@@ -182,4 +182,34 @@
   <data name="XDR" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resouces\Banderas\XDR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PLN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\Banderas\PLN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ATS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\Banderas\ATS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BEF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\Banderas\BEF.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\Banderas\BID.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DEM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\Banderas\DEM.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ESP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\Banderas\ESP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FRF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\Banderas\FRF.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ITL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\Banderas\ITL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\Banderas\NLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PTE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resouces\Banderas\PTE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

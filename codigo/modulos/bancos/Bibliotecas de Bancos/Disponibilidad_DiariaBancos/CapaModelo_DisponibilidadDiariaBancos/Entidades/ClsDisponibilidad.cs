@@ -2,8 +2,15 @@ using System;
 
 namespace CapaModelo_DisponibilidadDiariaBancos.Entidades
 {
+    public class ClsConflictoDisponibilidadException : InvalidOperationException
+    {
+        public ClsConflictoDisponibilidadException(string mensaje) : base(mensaje) { }
+    }
+
     public class ClsDisponibilidad
     {
+        public long CuentaId { get; set; }
+        public long BancoId { get; set; }
         public string Banco { get; set; }
         public string NumeroCuenta { get; set; }
         public string TipoCuenta { get; set; }  // "Monetaria", "Ahorro", etc.
@@ -16,6 +23,15 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Entidades
         public decimal Egresos { get; set; }
         public decimal Comprometido { get; set; }
         public decimal Restringido { get; set; }
+        public decimal? TipoCambioAplicado { get; set; }
+        public decimal? DisponibleGtq { get; set; }
+        public string Fuente { get; set; }
+        public DateTime FechaGeneracion { get; set; }
+        // Version abierta por el usuario; cambia en cada guardado, incluso en el mismo segundo.
+        public long VersionRegistro { get; set; }
+        public int? UsuarioRegistroId { get; set; }
+        public string UsuarioRegistro { get; set; }
+        public DateTime? FechaActualizacion { get; set; }
 
       
         // Disponible = SaldoInicial + Ingresos − Egresos − Comprometido − Restringido.

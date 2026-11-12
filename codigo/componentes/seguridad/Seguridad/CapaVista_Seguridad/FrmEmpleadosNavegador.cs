@@ -15,13 +15,13 @@ namespace CapaVista_Seguridad
     public partial class FrmEmpleadosNavegador : Form
     {
         ClsModeloEmpleado datos = new ClsModeloEmpleado();
-        //ClsModeloMantenimientoApp datos2 = new ClsModeloMantenimientoApp();
+        ClsModeloMantenimientoApp datos2 = new ClsModeloMantenimientoApp();
         public FrmEmpleadosNavegador()
         {
             InitializeComponent();
             Dictionary<string, object> fuentes = new Dictionary<string, object>();
             fuentes.Add("DsMantenimientoEmpleado", datos.SeguridadMetObtenerTodos());
-            fuentes.Add("RpReporteMantenimientoEmpleado", datos.SeguridadMetObtenerTodos());
+            fuentes.Add("RpReporteMantenimientoAplicacion", datos2.SeguridadMetObtenerTodos());
             navegador1.NavegadorMetConfigurar("tblempleado", 4, 4, fuentes);
         }
 

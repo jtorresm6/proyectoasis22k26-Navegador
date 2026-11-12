@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaVista_Seguridad;
 using CapaVista_Bancos.Formularios;
+using CapaVista_Seguridad;
 
 namespace Ejecucion_Bancos
-{
+{           
     internal static class Program
     {
         /// <summary>
@@ -17,7 +19,7 @@ namespace Ejecucion_Bancos
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMDIBancos());
+            Application.Run(new FrmLogin());
         }
     }
 }

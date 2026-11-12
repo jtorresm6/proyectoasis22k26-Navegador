@@ -524,7 +524,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DsMantenimientoAplicacion</DataSetName>
+        <DataSetName>RpReporteMantenimientoAplicacion</DataSetName>
         <Top>1.13453cm</Top>
         <Left>0.28787cm</Left>
         <Height>3.02034cm</Height>
@@ -620,7 +620,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DsMantenimientoAplicacion">
+    <DataSet Name="RpReporteMantenimientoAplicacion">
       <Query>
         <DataSourceName>CapaControlador_SeguridadModelos_de_controladores</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
