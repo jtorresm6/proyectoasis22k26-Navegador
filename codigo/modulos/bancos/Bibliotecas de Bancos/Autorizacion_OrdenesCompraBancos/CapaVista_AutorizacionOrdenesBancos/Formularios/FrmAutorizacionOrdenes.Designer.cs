@@ -422,7 +422,7 @@
             this.BancosLblTitulo.AutoSize = true;
             this.BancosLblTitulo.Font = new System.Drawing.Font("Lucida Fax", 20F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BancosLblTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(248)))), ((int)(((byte)(243)))));
-            this.BancosLblTitulo.Location = new System.Drawing.Point(166, 26);
+            this.BancosLblTitulo.Location = new System.Drawing.Point(135, 26);
             this.BancosLblTitulo.Name = "BancosLblTitulo";
             this.BancosLblTitulo.Size = new System.Drawing.Size(650, 40);
             this.BancosLblTitulo.TabIndex = 10;
@@ -433,7 +433,7 @@
             this.BancosLblSubtitulo.AutoSize = true;
             this.BancosLblSubtitulo.Font = new System.Drawing.Font("Tahoma", 13.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BancosLblSubtitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(248)))), ((int)(((byte)(243)))));
-            this.BancosLblSubtitulo.Location = new System.Drawing.Point(168, 79);
+            this.BancosLblSubtitulo.Location = new System.Drawing.Point(141, 78);
             this.BancosLblSubtitulo.Name = "BancosLblSubtitulo";
             this.BancosLblSubtitulo.Size = new System.Drawing.Size(281, 27);
             this.BancosLblSubtitulo.TabIndex = 11;
