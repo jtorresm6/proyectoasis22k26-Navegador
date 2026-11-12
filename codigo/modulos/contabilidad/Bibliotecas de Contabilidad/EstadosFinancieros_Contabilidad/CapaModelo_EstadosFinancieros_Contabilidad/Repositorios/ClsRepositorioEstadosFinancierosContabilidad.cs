@@ -141,5 +141,23 @@ namespace CapaModelo_Contabilidad.Repositorios
             return Tipos;
         }
         // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 29/10/2026
+
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+        // Guarda un estado financiero emitido; sin país es el de todos
+        public void ContabilidadMetRegistrarEmision(string Tipo, DateTime Desde, DateTime Hasta, int IdPais, string Moneda)
+        {
+            ContabilidadFuncEjecutarNonQuery(
+                "INSERT INTO tblEstadoFinancieroEmitido (idPais, tipoEstadoFinancieroEmitido, fechaDesdeEstadoFinancieroEmitido, " +
+                "fechaHastaEstadoFinancieroEmitido, monedaEstadoFinancieroEmitido) VALUES (?, ?, ?, ?, ?)",
+                new List<OdbcParameter>
+                {
+                    new OdbcParameter("Pais", OdbcType.Int) { Value = IdPais > 0 ? (object)IdPais : DBNull.Value },
+                    new OdbcParameter("Tipo", Tipo),
+                    new OdbcParameter("Desde", OdbcType.Date) { Value = Desde.Date },
+                    new OdbcParameter("Hasta", OdbcType.Date) { Value = Hasta.Date },
+                    new OdbcParameter("Moneda", Moneda)
+                }, CommandType.Text);
+        }
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
     }
 }

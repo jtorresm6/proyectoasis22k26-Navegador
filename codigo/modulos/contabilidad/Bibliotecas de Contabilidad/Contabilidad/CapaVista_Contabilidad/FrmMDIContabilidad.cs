@@ -14,7 +14,8 @@
  * Reglas especificas:
  *  El MDI lee la sesión y los permisos mediante el Controlador; no toca el Modelo.
  *  Las cinco pantallas son ventanas modales con su propio controlador.
- *  Los indicadores son valores de presentación.
+ *  Los indicadores se leen de la base mediante el Controlador y se
+ *  actualizan al cerrar cada pantalla.
  *  Los procesos contables reales y el Reporteador todavía no se implementan.
  * ===================================================================
 */
@@ -108,7 +109,30 @@ namespace CapaVista_Contabilidad
         {
             ContabilidadMetActualizarSeguridad(true);
             ContabilidadMetAcomodarDashboard();
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            ContabilidadMetActualizarIndicadores();
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
         }
+
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+        // Lee los seis indicadores; el que no se pudo leer muestra una raya
+        private void ContabilidadMetActualizarIndicadores()
+        {
+            ClsModeloIndicadoresContabilidad Indicadores = new ClsControladorIndicadoresContabilidad().ContabilidadFuncObtener();
+            ContabilidadLblKPIResp1.Text = ContabilidadFuncTextoIndicador(Indicadores.Polizas);
+            ContabilidadLblKPIResp2.Text = ContabilidadFuncTextoIndicador(Indicadores.PresupuestosVigentes);
+            ContabilidadLblKPIResp3.Text = ContabilidadFuncTextoIndicador(Indicadores.ActivosFijos);
+            ContabilidadLblKPIResp4.Text = ContabilidadFuncTextoIndicador(Indicadores.PeriodosCerrados);
+            ContabilidadLblKPIResp5.Text = ContabilidadFuncTextoIndicador(Indicadores.EstadosEmitidos);
+            ContabilidadLblKPIResp6.Text = ContabilidadFuncTextoIndicador(Indicadores.Cuentas);
+        }
+
+        // Texto de un indicador
+        private static string ContabilidadFuncTextoIndicador(int? Valor)
+        {
+            return Valor.HasValue ? Valor.Value.ToString("N0") : "—";
+        }
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
 
         public void ContabilidadMetActualizarInfoUsuario(string NombreEmpleado, string Roles)
         {
@@ -459,6 +483,9 @@ namespace CapaVista_Contabilidad
                 // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
                 Formulario.ShowDialog(this);
             }
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            ContabilidadMetActualizarIndicadores();
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
         }
 
         // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
