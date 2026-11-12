@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -101,7 +101,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>EMBUTIDOS DE CALIDAD, S.A.</Value>
+                    <Value>=Parameters!Empresa.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -114,7 +114,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>"Calidad que da confianza"</Value>
+                    <Value>=Parameters!DireccionEmisor.Value</Value>
                     <Style>
                       <FontStyle>Italic</FontStyle>
                       <FontSize>7.5pt</FontSize>
@@ -128,7 +128,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>NIT Emisor: 25103 • Guatemala, C.A.</Value>
+                    <Value>="NIT Emisor: " &amp; Parameters!NitEmisor.Value</Value>
                     <Style>
                       <FontSize>7pt</FontSize>
                       <Color>#333333</Color>
@@ -157,7 +157,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>DOCUMENTO TRIBUTARIO ELECTRÓNICO (DTE)</Value>
+                        <Value>FACTURA LOCAL — SIN CERTIFICACIÓN FEL</Value>
                         <Style>
                           <FontSize>6.8pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -172,7 +172,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>FACTURA CAMBIARIA</Value>
+                        <Value>="Condición de pago: " &amp; Parameters!Condicion.Value</Value>
                         <Style>
                           <FontSize>7.5pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -186,7 +186,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>AUTORIZACIÓN: 76153569-4BB0-4D40-9879-2EF61535E072</Value>
+                        <Value>="Autorización local: " &amp; Parameters!Autorizacion.Value</Value>
                         <Style>
                           <FontSize>5.8pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -200,7 +200,7 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>Serie: 76153569   No. DTE: 1269845312</Value>
+                        <Value>="Serie: " &amp; Parameters!Serie.Value &amp; "   Número: " &amp; Parameters!Numero.Value</Value>
                         <Style>
                           <FontSize>6.5pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -320,7 +320,7 @@
                         </Style>
                       </TextRun>
                       <TextRun>
-                        <Value>=Globals!ExecutionTime</Value>
+                        <Value>=Parameters!Fecha.Value</Value>
                         <Style>
                           <FontSize>6.5pt</FontSize>
                           <Format>dd/MM/yyyy HH:mm</Format>
@@ -342,7 +342,7 @@
                         </Style>
                       </TextRun>
                       <TextRun>
-                        <Value>GTQ</Value>
+                        <Value>=Parameters!Moneda.Value</Value>
                         <Style>
                           <FontSize>6.5pt</FontSize>
                         </Style>
@@ -500,9 +500,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Precio Unit. (Q)</Value>
+                                  <Value>Precio Unitario</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>7pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>White</Color>
                                   </Style>
@@ -516,7 +516,7 @@
                           <Style>
                             <BackgroundColor>#4a2559</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>6pt</PaddingRight>
+                            <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
@@ -560,7 +560,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Total (Q)</Value>
+                                  <Value>="Total (" &amp; Parameters!Moneda.Value &amp; ")"</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -679,7 +679,7 @@
                                   <Value>=Fields!PrecioUnitario.Value</Value>
                                   <Style>
                                     <FontSize>7.5pt</FontSize>
-                                    <Format>Q #,##0.00</Format>
+                                    <Format>=Chr(34) &amp; Parameters!Moneda.Value &amp; Chr(34) &amp; " #,##0.0000"</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -707,7 +707,7 @@
                                   <Value>=Fields!Descuento.Value</Value>
                                   <Style>
                                     <FontSize>7.5pt</FontSize>
-                                    <Format>Q #,##0.00</Format>
+                                    <Format>=Chr(34) &amp; Parameters!Moneda.Value &amp; Chr(34) &amp; " #,##0.0000"</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -736,7 +736,7 @@
                                   <Style>
                                     <FontSize>7.5pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>Q #,##0.00</Format>
+                                    <Format>=Chr(34) &amp; Parameters!Moneda.Value &amp; Chr(34) &amp; " #,##0.0000"</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -796,7 +796,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>* Sujeto a pagos trimestrales ISR</Value>
+                    <Value>Documento generado por el sistema de facturación</Value>
                     <Style>
                       <FontStyle>Italic</FontStyle>
                       <FontSize>7pt</FontSize>
@@ -809,7 +809,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Certificador SAT NIT: 16693949</Value>
+                    <Value>UUID local; sin certificador FEL</Value>
                     <Style>
                       <FontSize>6.5pt</FontSize>
                       <Color>#888888</Color>
@@ -845,7 +845,7 @@
                         <Value>=Sum(Fields!Subtotal.Value, "dsDetalle")</Value>
                         <Style>
                           <FontSize>7.5pt</FontSize>
-                          <Format>Q #,##0.00</Format>
+                          <Format>=Chr(34) &amp; Parameters!Moneda.Value &amp; Chr(34) &amp; " #,##0.0000"</Format>
                         </Style>
                       </TextRun>
                     </TextRuns>
@@ -865,7 +865,7 @@
                         <Value>=Sum(Fields!Impuesto.Value, "dsDetalle")</Value>
                         <Style>
                           <FontSize>7.5pt</FontSize>
-                          <Format>Q #,##0.00</Format>
+                          <Format>=Chr(34) &amp; Parameters!Moneda.Value &amp; Chr(34) &amp; " #,##0.0000"</Format>
                         </Style>
                       </TextRun>
                     </TextRuns>
@@ -888,7 +888,7 @@
                         <Style>
                           <FontSize>8.5pt</FontSize>
                           <FontWeight>Bold</FontWeight>
-                          <Format>Q #,##0.00</Format>
+                          <Format>=Chr(34) &amp; Parameters!Moneda.Value &amp; Chr(34) &amp; " #,##0.0000"</Format>
                           <Color>#4a2559</Color>
                         </Style>
                       </TextRun>
@@ -935,12 +935,6 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParametersLayout>
-    <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
-    </GridLayoutDefinition>
-  </ReportParametersLayout>
   <EmbeddedImages>
     <EmbeddedImage Name="logoEmpresa">
       <MIMEType>image/png</MIMEType>
@@ -3460,4 +3454,42 @@ DXTabJlp35IcPnPBXn/72XPreRtu3QL96BHoawfz/vzoEej2Keibu/bYwQF0UejHNi6P8bmfV33/Tq/Y
   </EmbeddedImages>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>c7d8e9f0-1a2b-3c4d-5e6f-7a8b9c0d1e2f</rd:ReportID>
+  <ReportParameters>
+    <ReportParameter Name="Autorizacion">
+      <DataType>String</DataType>
+      <Prompt>Autorizacion</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Serie">
+      <DataType>String</DataType>
+      <Prompt>Serie</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Numero">
+      <DataType>String</DataType>
+      <Prompt>Numero</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Moneda">
+      <DataType>String</DataType>
+      <Prompt>Moneda</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Fecha">
+      <DataType>String</DataType>
+      <Prompt>Fecha</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Empresa">
+      <DataType>String</DataType>
+      <Prompt>Empresa</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="NitEmisor">
+      <DataType>String</DataType>
+      <Prompt>NitEmisor</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="DireccionEmisor">
+      <DataType>String</DataType>
+      <Prompt>DireccionEmisor</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Condicion">
+      <DataType>String</DataType>
+      <Prompt>Condicion</Prompt>
+    </ReportParameter>
+  </ReportParameters>
 </Report>

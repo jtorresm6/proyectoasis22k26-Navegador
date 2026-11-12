@@ -1,34 +1,21 @@
 using System;
 using System.Data;
 using CapaModelo_Facturas;
-
 namespace CapaControlador_Facturas
 {
     public sealed class ClsFacturaOrigenControlador
     {
-        private readonly ClsFacturaOrigenRepositorio _Repositorio = new ClsFacturaOrigenRepositorio();
-
-        public DataTable VentasFuncOrigenes(bool Pedido)
-        {
-            return _Repositorio.VentasFuncOrigenes(Pedido);
-        }
-
-        public DataTable VentasFuncSucursales()
-        {
-            return _Repositorio.VentasFuncSucursales();
-        }
-
-        public DataSet VentasFuncCargar(bool Pedido, int Id)
-        {
-            return _Repositorio.VentasFuncCargar(Pedido, Id);
-        }
-
-        public int VentasFuncRegistrar(bool Pedido, int Id, int Sucursal, int Usuario, string Condicion, out DataSet Documento)
-        {
-            if (Id <= 0) throw new ArgumentException("Cargue primero una cotización o un pedido.");
-            if (Condicion != "CONTADO" && Condicion != "CREDITO")
-                throw new ArgumentException("Seleccione una condición de pago.");
-            return _Repositorio.VentasFuncRegistrar(Pedido, Id, Sucursal, Usuario, Condicion, out Documento);
-        }
+        private readonly ClsFacturaOrigenRepositorio repositorio = new ClsFacturaOrigenRepositorio();
+        public DataTable VentasFuncOrigenes(bool pedido) { return repositorio.VentasFuncOrigenes(pedido); }
+        public DataTable VentasFuncSucursales() { return repositorio.VentasFuncSucursales(); }
+        public DataSet VentasFuncCargar(bool pedido,int id) { return repositorio.VentasFuncCargar(pedido,id); }
+        public DataTable Monedas() { return repositorio.Monedas(); }
+        public DataTable Empresas() { return repositorio.Empresas(); }
+        public DataTable FormasPago() { return repositorio.FormasPago(); }
+        public DataTable BuscarCliente(string valor,bool codigo) { return repositorio.BuscarCliente(valor,codigo); }
+        public DataTable Productos(int cliente) { return repositorio.Productos(cliente); }
+        public DataTable Existencias(int producto) { return repositorio.Existencias(producto); }
+        public DataTable DetalleOrigen(bool pedido,int id) { return repositorio.PrepararDetalleOrigen(pedido,id); }
+        public FacturaRegistrada Registrar(SolicitudFactura solicitud,Action<FacturaRegistrada> guardarPdf) { return repositorio.Registrar(solicitud,guardarPdf); }
     }
 }
