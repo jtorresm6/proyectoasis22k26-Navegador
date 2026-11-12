@@ -6,7 +6,7 @@
  * Fecha : 21/10/2026
  * ==================================================================
  * Propósito :
- *  Muestra el reporte de tblJornada (aplicación 9005).
+ *  Muestra el reporte de tblJornada (aplicación 9003).
  * ===================================================================
 */
 

@@ -25,7 +25,7 @@
  *  (módulo 9000, aplicación 9101). El botón Horas extra abre la
  *  ventana 9102 con la asistencia seleccionada. Reporte muestra
  *  RpAsistencia.rdlc con lo que la lista tiene filtrado, sin pasar por
- *  el Reporteador. Ayuda abre su página en RrhhAyudas.chm del repo.
+ *  el Reporteador. Ayuda abre su página en RecursosHumanosAyudas.chm del repo.
  *  Es ventana secundaria, no se puede maximizar.
  * ===================================================================
 */
@@ -209,14 +209,14 @@ namespace CapaVista_Asistencia.Formularios
 
         private void RrhhBtnAyuda_Click(object sender, EventArgs e)
         {
-            RrhhMetAbrirAyuda(this, "Ayudas_Asistencia.html");
+            RrhhMetAbrirAyuda(this, "Asistencia__RecursosHumanos.html");
         }
 
         // Busca el .chm de RRHH subiendo carpetas desde donde corre el programa, así abre
         // desde cualquier computadora que tenga el repo sin copiarlo a otro lado
         internal static void RrhhMetAbrirAyuda(Control Ventana, string Pagina)
         {
-            const string Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\RrhhAyudas.chm";
+            const string Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\RecursosHumanosAyudas.chm";
             for (var Carpeta = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory); Carpeta != null; Carpeta = Carpeta.Parent)
             {
                 string Ruta = Path.Combine(Carpeta.FullName, Ayuda);

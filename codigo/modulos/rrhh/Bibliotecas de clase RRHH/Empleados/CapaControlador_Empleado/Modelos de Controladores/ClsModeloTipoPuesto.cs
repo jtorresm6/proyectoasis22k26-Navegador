@@ -6,7 +6,7 @@
  * Fecha : 21/10/2026
  * ==================================================================
  * Propósito :
- *  Modelo del controlador de tblTipoPuesto. Arma la lista que usa el reporte de la aplicación 9003.
+ *  Modelo del controlador de tblTipoPuesto. Arma la lista que usa el reporte de la aplicación 9005.
  * ===================================================================
 */
 

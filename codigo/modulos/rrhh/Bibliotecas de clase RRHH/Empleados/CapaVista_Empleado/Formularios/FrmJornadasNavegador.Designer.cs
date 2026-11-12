@@ -39,7 +39,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmJornadasNavegador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "9005 – Jornadas";
+            this.Text = "9003 – Jornadas";
             this.ResumeLayout(false);
 
         }
