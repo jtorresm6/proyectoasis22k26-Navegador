@@ -1,32 +1,45 @@
 [OPTIONS]
 Compatibility=1.1 or later
-Compiled file=RrhhAyudas.chm
-Contents file=RrhhAyudas.hhc
-Default Window=RrhhAyudas
-Default topic=Ayudas_Asistencia.html
+Compiled file=RecursosHumanosAyudas.chm
+Contents file=RecursosHumanosAyudas.hhc
+Default Window=RecursosHumanosAyudas
+Default topic=Asistencia__RecursosHumanos.html
 Display compile progress=No
 Full-text search=Yes
 Language=0x100a Español (Guatemala)
 Title=Ayudas - Recursos Humanos
 
 [WINDOWS]
-RrhhAyudas="Ayudas del módulo de Recursos Humanos","RrhhAyudas.hhc",,"Ayudas_Asistencia.html","Ayudas_Asistencia.html",,,,,0x23520,,0x3006,,,,,,,,0
+RecursosHumanosAyudas="Ayudas del módulo de Recursos Humanos","RecursosHumanosAyudas.hhc",,"Asistencia__RecursosHumanos.html","Asistencia__RecursosHumanos.html",,,,,0x23520,,0x3006,,,,,,,,0
 
 [FILES]
-Ayudas_Asistencia.html
-Ayudas_HorasExtra.html
-Ayudas_AsigCapacitacion.html
-Ayudas_EvaluacionDesempeno.html
-Ayudas_PlanMejora.html
-Ayudas_VerEvaluaciones.html
-Ayudas_NominaEncabezado.html
-Ayudas_NominaDetalle.html
-Ayudas_AsignacionConceptos.html
-Ayudas_PercepcionDeduccion.html
-Ayudas_Rangos.html
-Ayudas_CierreNominas.html
-Ayudas_LiquidacionEmpleado.html
-Ayudas_BajaEmpleado.html
-Ayudas_Catalogos.html
+Asistencia__RecursosHumanos.html
+HorasExtra__RecursosHumanos.html
+AsigCapacitacion_RecursosHumanos.html
+EvaluacionDesempeno__RecursosHumanos.html
+PlanMejora__RecursosHumanos.html
+VerEvaluaciones__RecursosHumanos.html
+NominaEncabezado__RecursosHumanos.html
+NominaDetalle__RecursosHumanos.html
+AsignacionConceptos_RecursosHumanos.html
+PercepcionDeduccion__RecursosHumanos.html
+Rangos__RecursosHumanos.html
+CierreNominas__RecursosHumanos.html
+LiquidacionEmpleado__RecursosHumanos.html
+BajaEmpleado__RecursosHumanos.html
+Catalogos__RecursosHumanos.html
+Departamentos__RecursosHumanos.html
+TipoPuestos__RecursosHumanos.html
+Puestos__RecursosHumanos.html
+Jornadas__RecursosHumanos.html
+AsignacionPuestos__RecursosHumanos.html
+Permisos__RecursosHumanos.html
+Vacaciones__RecursosHumanos.html
+Capacitaciones__RecursosHumanos.html
+Instructores__RecursosHumanos.html
+Evaluaciones__RecursosHumanos.html
+RealizarEvaluacionDesempeno__RecursosHumanos.html
+MotivoBaja__RecursosHumanos.html
+ParametrosLey__RecursosHumanos.html
 
 [INFOTYPES]

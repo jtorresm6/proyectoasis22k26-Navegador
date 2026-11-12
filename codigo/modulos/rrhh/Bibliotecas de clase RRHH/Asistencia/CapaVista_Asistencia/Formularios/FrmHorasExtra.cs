@@ -12,7 +12,7 @@
  *  en la que el empleado salió después de su jornada, calcula el pago
  *  y lleva su aprobación. Reporte muestra RpHorasExtra.rdlc con lo que
  *  la lista tiene filtrado, sin pasar por el Reporteador. Ayuda abre
- *  su página en RrhhAyudas.chm del repo.
+ *  su página en RecursosHumanosAyudas.chm del repo.
  * Reglas especificas:
  *  Solo salen asistencias Presente o Tardanza con salida después del
  *  fin de la jornada y antes de la baja del empleado; los días de
@@ -747,7 +747,7 @@ namespace CapaVista_Asistencia.Formularios
 
         private void RrhhBtnAyuda_Click(object sender, EventArgs e)
         {
-            FrmAsistencia.RrhhMetAbrirAyuda(this, "Ayudas_HorasExtra.html");
+            FrmAsistencia.RrhhMetAbrirAyuda(this, "HorasExtra__RecursosHumanos.html");
         }
 
         private void RrhhMetGrabar(ClsModeloHoraExtra HoraExtra)

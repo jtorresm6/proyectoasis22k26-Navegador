@@ -6,7 +6,7 @@
  * Fecha : 21/10/2026
  * ==================================================================
  * Propósito :
- *  Formulario 9005 - Jornadas. Mantenimiento de tblJornada con el Navegador.
+ *  Formulario 9003 - Jornadas. Mantenimiento de tblJornada con el Navegador.
  *  Jornadas laborales con su horario y minutos de tolerancia.
  * ===================================================================
 */
@@ -22,7 +22,7 @@ namespace CapaVista_Empleado.Formularios
         public FrmJornadasNavegador()
         {
             InitializeComponent();
-            RrhhNavJornadas.NavegadorMetConfigurar("tblJornada", 9000, 9005);
+            RrhhNavJornadas.NavegadorMetConfigurar("tblJornada", 9000, 9003);
         }
 
     }

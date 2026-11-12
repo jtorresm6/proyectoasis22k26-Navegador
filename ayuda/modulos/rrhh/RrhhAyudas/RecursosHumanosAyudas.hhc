@@ -15,72 +15,72 @@
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Asistencia">
-			<param name="Local" value="Ayudas_Asistencia.html">
+			<param name="Local" value="Asistencia__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Horas Extra">
-			<param name="Local" value="Ayudas_HorasExtra.html">
+			<param name="Local" value="HorasExtra__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Asignaci&#243;n de Capacitaci&#243;n">
-			<param name="Local" value="Ayudas_AsigCapacitacion.html">
+			<param name="Local" value="AsigCapacitacion_RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Evaluaci&#243;n de Desempe&#241;o">
-			<param name="Local" value="Ayudas_EvaluacionDesempeno.html">
+			<param name="Local" value="EvaluacionDesempeno__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Plan de Mejora">
-			<param name="Local" value="Ayudas_PlanMejora.html">
+			<param name="Local" value="PlanMejora__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Ver Evaluaciones">
-			<param name="Local" value="Ayudas_VerEvaluaciones.html">
+			<param name="Local" value="VerEvaluaciones__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="N&#243;mina Encabezado">
-			<param name="Local" value="Ayudas_NominaEncabezado.html">
+			<param name="Local" value="NominaEncabezado__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="N&#243;mina Detalle">
-			<param name="Local" value="Ayudas_NominaDetalle.html">
+			<param name="Local" value="NominaDetalle__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Asignaci&#243;n de Conceptos">
-			<param name="Local" value="Ayudas_AsignacionConceptos.html">
+			<param name="Local" value="AsignacionConceptos_RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Percepci&#243;n y Deducci&#243;n">
-			<param name="Local" value="Ayudas_PercepcionDeduccion.html">
+			<param name="Local" value="PercepcionDeduccion__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Rangos">
-			<param name="Local" value="Ayudas_Rangos.html">
+			<param name="Local" value="Rangos__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Cierre de N&#243;minas">
-			<param name="Local" value="Ayudas_CierreNominas.html">
+			<param name="Local" value="CierreNominas__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Liquidaci&#243;n del Empleado">
-			<param name="Local" value="Ayudas_LiquidacionEmpleado.html">
+			<param name="Local" value="LiquidacionEmpleado__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Baja de Empleado">
-			<param name="Local" value="Ayudas_BajaEmpleado.html">
+			<param name="Local" value="BajaEmpleado__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 	</UL>
@@ -90,8 +90,73 @@
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Cat&#225;logos">
-			<param name="Local" value="Ayudas_Catalogos.html">
+			<param name="Name" value="Cat&#225;logos (general)">
+			<param name="Local" value="Catalogos__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Departamentos">
+			<param name="Local" value="Departamentos__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Tipos de Puesto">
+			<param name="Local" value="TipoPuestos__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Puestos">
+			<param name="Local" value="Puestos__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Jornadas">
+			<param name="Local" value="Jornadas__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Asignaci&#243;n de Puestos">
+			<param name="Local" value="AsignacionPuestos__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Permisos">
+			<param name="Local" value="Permisos__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Vacaciones">
+			<param name="Local" value="Vacaciones__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Capacitaciones">
+			<param name="Local" value="Capacitaciones__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Instructores">
+			<param name="Local" value="Instructores__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Evaluaciones de Capacitaci&#243;n">
+			<param name="Local" value="Evaluaciones__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Realizar Evaluaci&#243;n de Desempe&#241;o">
+			<param name="Local" value="RealizarEvaluacionDesempeno__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Motivos de Baja">
+			<param name="Local" value="MotivoBaja__RecursosHumanos.html">
+			<param name="ImageNumber" value="11">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Par&#225;metros de Ley">
+			<param name="Local" value="ParametrosLey__RecursosHumanos.html">
 			<param name="ImageNumber" value="11">
 			</OBJECT>
 	</UL>

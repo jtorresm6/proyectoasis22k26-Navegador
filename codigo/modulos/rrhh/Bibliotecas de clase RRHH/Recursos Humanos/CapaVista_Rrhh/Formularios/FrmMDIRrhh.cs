@@ -524,9 +524,9 @@ namespace CapaVista_Rrhh.Formularios
 
                 Tuple.Create<string, int, Func<Form>>("Empleados", 4, () => new CapaVista_Seguridad.FrmEmpleadosNavegador()),
                 Tuple.Create<string, int, Func<Form>>("Departamentos", 9002, () => new FrmDepartamentosNavegador()),
-                Tuple.Create<string, int, Func<Form>>("Tipos de Puesto", 9003, () => new FrmTipoPuestosNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Tipos de Puesto", 9005, () => new FrmTipoPuestosNavegador()),
                 Tuple.Create<string, int, Func<Form>>("Puestos", 9004, () => new FrmPuestosNavegador()),
-                Tuple.Create<string, int, Func<Form>>("Jornadas", 9005, () => new FrmJornadasNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Jornadas", 9003, () => new FrmJornadasNavegador()),
                 Tuple.Create<string, int, Func<Form>>("Asignación de Puestos", 9006, () => new FrmAsigPuestosNavegador()),
                 Tuple.Create<string, int, Func<Form>>("Permisos", 9202, () => new FrmPermisos()),
                 Tuple.Create<string, int, Func<Form>>("Vacaciones", 9203, () => new FrmVacaciones()),
