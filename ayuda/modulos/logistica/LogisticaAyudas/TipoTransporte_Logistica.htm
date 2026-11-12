@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Ayuda: Tipos de Transporte | Logística</title>
+<style type="text/css">
+body{font-family:Arial,Helvetica,sans-serif;color:#342c26;background:#FAF7F2;margin:0;padding:0;line-height:1.55}
+.contenido{max-width:960px;margin:0 auto;padding:18px 24px 44px;background:#FAF7F2}
+.portada{text-align:center;margin:0 auto 22px}.portada img{width:100%;max-width:440px;height:auto;border:0}
+h1{color:#348F8D;font-size:27px;margin:12px 0 7px}h2{color:#348F8D;font-size:20px;margin:0 0 12px}
+p{margin:10px 0 14px}.subtitulo{font-weight:bold;color:#70341f}.indice{padding:12px 18px;background:#f2e9d9;border-left:4px solid #D96E35;margin:20px 0 24px}
+.indice a{color:#71321b;text-decoration:underline}.indice li{padding:2px 0}
+section{margin:22px 0 32px;padding:13px 14px;background:#fff;border:1px solid #dfd1c4}
+section img{display:block;width:100%;max-width:900px;height:auto;border:1px solid #ddd;margin-top:12px}
+.nota{background:#F2E9D9;border-left:4px solid #348F8D;padding:10px 14px;margin:12px 0}
+.tabla{border-collapse:collapse;width:100%;background:#fff}.tabla td,.tabla th{padding:7px;border:1px solid #d8c6b7;text-align:left;vertical-align:top}.tabla th{background:#348F8D;color:#fff}
+.pie{color:#71321b;font-size:12px;border-top:2px solid #D96E35;padding-top:8px;margin-top:30px}
+</style>
+</head>
+<body><div class="contenido">
+<div class="portada"><img src="Imagenes/TransporteInterno/portada.png" alt="Embutidos de Calidad, S. A. - Manual de Ayudas"></div>
+<h1>Ayuda: Tipos de Transporte</h1>
+<p class="subtitulo">Módulo Logística | Formulario 5015 – Tipos de Transporte | tblTipoTransporte</p>
+<p>Este manual explica paso a paso el uso del mantenimiento de tipos de transporte mediante las capturas originales del sistema.</p>
+<div class="indice"><strong>Contenido</strong><ol>
+<li><a href="#introduccion">1. Introducción</a></li>
+<li><a href="#ingresar">2. Ingresar un tipo de transporte</a></li>
+<li><a href="#campos">3. Completar los datos</a></li>
+<li><a href="#confirmar">4. Confirmar el ingreso</a></li>
+<li><a href="#exito">5. Mensaje de guardado exitoso</a></li>
+<li><a href="#resultado">6. Verificar el registro en el listado</a></li>
+<li><a href="#consultar">7. Consultar tipos de transporte</a></li>
+<li><a href="#modificar">8. Modificar un tipo de transporte</a></li>
+<li><a href="#eliminar">9. Eliminar un tipo de transporte</a></li>
+<li><a href="#referencia">10. Referencia de campos</a></li>
+<li><a href="#botones">11. Otros botones y recomendaciones</a></li>
+</ol></div>
+<section id="introduccion">
+<h2>1. Introducción</h2>
+<p>El mantenimiento <strong>5015 – Tipos de Transporte</strong> permite registrar y administrar las categorías que clasifican los vehículos de las operaciones logísticas. La barra superior contiene las opciones del Navegador y el listado muestra los registros disponibles.</p>
+<img src="Imagenes/TransporteInterno/30_tipos_inicio.png" alt="Pantalla principal del mantenimiento de Tipos de Transporte.">
+<p><em>Pantalla principal del mantenimiento de Tipos de Transporte.</em></p>
+</section>
+<section id="ingresar">
+<h2>2. Ingresar un tipo de transporte</h2>
+<p>Presione <strong>Ingresar</strong> para abrir el panel <strong>Nuevo registro – tblTipoTransporte</strong>. Aparecerán los campos del tipo de transporte y, debajo, la tabla de registros existentes.</p>
+<img src="Imagenes/TransporteInterno/31_tipos_formulario.png" alt="Formulario para ingresar un tipo de transporte.">
+<p><em>Formulario para ingresar un tipo de transporte.</em></p>
+</section>
+<section id="campos">
+<h2>3. Completar los datos</h2>
+<p>Escriba el nombre del tipo de transporte en <strong>nombreTipoTransporte</strong> (por ejemplo, Bus, Camión o Camioneta). El campo <strong>idTipoTransporte</strong> es la clave primaria. Revise los campos de fecha <strong>created_at</strong> y <strong>updated_at</strong> como los presenta el formulario. Antes de continuar, verifique que el nombre sea correcto y no represente una categoría duplicada.</p>
+<img src="Imagenes/TransporteInterno/32_tipos_datos.png" alt="Ejemplo de captura de los datos del tipo de transporte.">
+<p><em>Ejemplo de captura de los datos del tipo de transporte.</em></p>
+</section>
+<section id="confirmar">
+<h2>4. Confirmar el ingreso</h2>
+<p>Presione <strong>Guardar</strong>. El sistema mostrará una confirmación con el identificador y el nombre que se pretende registrar. Seleccione <strong>Yes / Sí</strong> para confirmar o <strong>No</strong> para regresar sin confirmar la operación.</p>
+<img src="Imagenes/TransporteInterno/33_tipos_confirmacion.png" alt="Cuadro de confirmación previo al ingreso en tblTipoTransporte.">
+<p><em>Cuadro de confirmación previo al ingreso en tblTipoTransporte.</em></p>
+</section>
+<section id="exito">
+<h2>5. Mensaje de guardado exitoso</h2>
+<p>Cuando se completa el registro aparece <strong>Registro guardado correctamente</strong>. Presione <strong>OK</strong> para cerrar el mensaje. Las capturas corresponden a ejemplos de ingreso distintos: el ejemplo guardado muestra el nombre <strong>Bus</strong>.</p>
+<img src="Imagenes/TransporteInterno/34_tipos_exito.png" alt="Notificación de guardado exitoso.">
+<p><em>Notificación de guardado exitoso.</em></p>
+</section>
+<section id="resultado">
+<h2>6. Verificar el registro en el listado</h2>
+<p>Revise la tabla inferior para comprobar que el tipo de transporte aparezca con su identificador, nombre y fechas de creación y actualización. En la captura se observa el registro <strong>Bus</strong> con identificador 11.</p>
+<img src="Imagenes/TransporteInterno/35_tipos_listado.png" alt="Resultado del registro de Bus en el listado.">
+<p><em>Resultado del registro de Bus en el listado.</em></p>
+</section>
+<section id="consultar">
+<h2>7. Consultar tipos de transporte</h2>
+<p>Presione <strong>Consultar</strong> para abrir la ventana <strong>4000 – Consultas</strong>. Seleccione el <strong>Campo</strong> (por ejemplo, nombreTipoTransporte), indique el <strong>Operador</strong> y escriba el <strong>Valor</strong> de búsqueda. Pulse <strong>Buscar</strong> y seleccione un resultado de la tabla. <strong>Refrescar</strong> actualiza la consulta; <strong>Salir</strong> cierra esta ventana.</p>
+<img src="Imagenes/TransporteInterno/36_tipos_consulta.png" alt="Consulta filtrada por nombreTipoTransporte = Bus.">
+<p><em>Consulta filtrada por nombreTipoTransporte = Bus.</em></p>
+</section>
+<section id="modificar">
+<h2>8. Modificar un tipo de transporte</h2>
+<p>Seleccione el registro que desea actualizar y pulse <strong>Modificar</strong>. El sistema abrirá <strong>Modificar registro – tblTipoTransporte</strong>, con el identificador sin edición. Actualice <strong>nombreTipoTransporte</strong> si es necesario y presione <strong>Guardar</strong>. Confirme los cambios cuando el sistema lo solicite y compruebe el resultado en el listado.</p>
+<img src="Imagenes/TransporteInterno/37_tipos_modificar.png" alt="Pantalla para modificar el nombre de un tipo de transporte.">
+<p><em>Pantalla para modificar el nombre de un tipo de transporte.</em></p>
+</section>
+<section id="eliminar">
+<h2>9. Eliminar un tipo de transporte</h2>
+<p>Seleccione el registro que desea quitar y presione <strong>Eliminar</strong>. Cuando aparezca la pregunta <strong>¿Desea eliminar el registro seleccionado de la tabla tblTipoTransporte?</strong>, pulse <strong>Yes / Sí</strong> para confirmar o <strong>No</strong> para cancelar. La imagen muestra la confirmación previa, no una eliminación ya completada. Si el registro está relacionado con vehículos, la base de datos podría impedir la operación.</p>
+<img src="Imagenes/TransporteInterno/38_tipos_eliminar.png" alt="Ventana de confirmación de eliminación de un tipo de transporte.">
+<p><em>Ventana de confirmación de eliminación de un tipo de transporte.</em></p>
+</section>
+<section id="referencia"><h2>10. Referencia de campos</h2>
+<table class="tabla"><tr><th>Campo</th><th>Descripción</th></tr>
+<tr><td><code>idTipoTransporte</code></td><td>Identificador principal o llave primaria del tipo de transporte.</td></tr>
+<tr><td><code>nombreTipoTransporte</code></td><td>Nombre de la categoría para clasificar vehículos.</td></tr>
+<tr><td><code>created_at</code></td><td>Fecha registrada para la creación del registro.</td></tr>
+<tr><td><code>updated_at</code></td><td>Fecha registrada para su última actualización.</td></tr>
+</table></section>
+<section id="botones"><h2>11. Otros botones y recomendaciones</h2>
+<p><strong>Cancelar:</strong> abandona la captura o modificación en curso. <strong>Refrescar:</strong> actualiza la tabla. <strong>Imprimir:</strong> utiliza la opción de impresión del Navegador. <strong>Ayuda:</strong> abre la documentación del formulario. <strong>Inicio, Anterior, Siguiente y Fin:</strong> permiten recorrer registros. <strong>Salir:</strong> cierra el mantenimiento.</p><div class="nota"><strong>Recomendaciones:</strong> utilice nombres claros para clasificar los vehículos, revise si el tipo ya existe antes de ingresarlo y no elimine tipos utilizados por transportes relacionados.</div>
+</section>
+<div class="pie">Embutidos de Calidad, S. A. · Proyecto Terminus · Ayudas de Logística</div>
+</div></body></html>
