@@ -28,7 +28,7 @@ namespace CapaVista_CierreMovimientos
         {
             InitializeComponent();
             VentasMetConectarEventos();
-            // Natali Montenegro: descomente esta línea cuando instale la DLL de Contabilidad junto al ejecutable que inicia Ventas.
+            // Natali Montenegro: agregue la DLL de Pólizas al controlador de Cierre y descomente la línea para habilitar el envío.
             // VentasMetHabilitarEnlaceContable();
             VentasBtnAyuda.Click += (Origen, Evento) => VentasMetAbrirAyuda();
         }

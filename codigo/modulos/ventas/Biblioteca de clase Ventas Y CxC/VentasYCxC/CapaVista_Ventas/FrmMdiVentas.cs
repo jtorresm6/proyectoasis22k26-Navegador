@@ -7,7 +7,7 @@
 using System;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
+using CapaVista_CierreMovimientos;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Windows.Forms;
@@ -18,119 +18,6 @@ namespace CapaVista_Ventas
     {
         private readonly int _IdUsuario;
         private readonly ClsMenuProcesosVentas _MenuProcesos;
-        private static Assembly _ModuloCierreMovimientos;
-        private static string _DirectorioCierreMovimientos;
-        private static bool _ResolverCierreRegistrado;
-        private static readonly object _BloqueoCargaCierre = new object();
-
-        // El MDI carga Cierre de movimientos al abrir la opción, desde la salida actual de su MVC.
-        private static Assembly VentasMetCargarEnsambladoCierreMovimientos()
-        {
-            if (_ModuloCierreMovimientos != null)
-                return _ModuloCierreMovimientos;
-
-            lock (_BloqueoCargaCierre)
-            {
-                if (_ModuloCierreMovimientos != null)
-                    return _ModuloCierreMovimientos;
-
-#if DEBUG
-                const string Configuracion = "Debug";
-#else
-                const string Configuracion = "Release";
-#endif
-                string RutaModulo = VentasFuncRutaModuloCierre(Configuracion);
-
-                if (RutaModulo == null)
-                    throw new FileNotFoundException(
-                        "No se encontró CapaVista_CierreMovimientos.dll. Compile Cierre de movimientos y ejecute Ventas desde Seguridad con las DLL del módulo disponibles.");
-
-                _DirectorioCierreMovimientos = Path.GetDirectoryName(RutaModulo);
-                if (!_ResolverCierreRegistrado)
-                {
-                    AppDomain.CurrentDomain.AssemblyResolve += VentasMetResolverEnsambladoCierre;
-                    _ResolverCierreRegistrado = true;
-                }
-
-                // Precarga primero las dependencias directas de la vista desde la misma salida MVC.
-                // Esto evita que el CLR elija una copia antigua junto al ejecutable.
-                string RutaModelo = Path.Combine(_DirectorioCierreMovimientos, "CapaModelo_CierreMovimientos.dll");
-                string RutaControlador = Path.Combine(_DirectorioCierreMovimientos, "CapaControlador_CierreMovimientos.dll");
-                if (!File.Exists(RutaModelo))
-                    throw new FileNotFoundException("No se encontró el modelo MVC de Cierre de movimientos.", RutaModelo);
-                if (!File.Exists(RutaControlador))
-                    throw new FileNotFoundException("No se encontró el controlador MVC de Cierre de movimientos.", RutaControlador);
-
-                Assembly.LoadFrom(RutaModelo);
-                Assembly.LoadFrom(RutaControlador);
-                Assembly ModuloCierre = Assembly.LoadFrom(RutaModulo);
-                if (ModuloCierre.GetType("CapaVista_CierreMovimientos.FrmCierreMovimientosVentas", false) == null)
-                    throw new TypeLoadException(
-                        "La DLL de Cierre no contiene FrmCierreMovimientosVentas: " + RutaModulo);
-
-                _ModuloCierreMovimientos = ModuloCierre;
-
-                return _ModuloCierreMovimientos;
-            }
-        }
-
-        // Seguridad puede iniciar Ventas desde otra carpeta; se busca la solución MVC desde ambos ensamblados.
-        private static string VentasFuncRutaModuloCierre(string Configuracion)
-        {
-            const string Archivo = "CapaVista_CierreMovimientos.dll";
-            string[] Bases =
-            {
-                AppDomain.CurrentDomain.BaseDirectory,
-                Path.GetDirectoryName(typeof(FrmMdiVentas).Assembly.Location)
-            };
-            string[] RutasModulo =
-            {
-                @"codigo\modulos\ventas\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin",
-                @"modulos\ventas\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin",
-                @"ventas\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin",
-                @"Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin",
-                @"CierreMovimientos\CapaVista_CierreMovimientos\bin"
-            };
-
-            foreach (string Base in Bases)
-            {
-                if (String.IsNullOrWhiteSpace(Base)) continue;
-                for (DirectoryInfo Carpeta = new DirectoryInfo(Base); Carpeta != null; Carpeta = Carpeta.Parent)
-                    foreach (string Ruta in RutasModulo)
-                    {
-                        string Candidato = Path.Combine(Carpeta.FullName, Ruta, Configuracion, Archivo);
-                        if (File.Exists(Candidato)) return Candidato;
-                    }
-            }
-
-            foreach (string Base in Bases)
-                if (!String.IsNullOrWhiteSpace(Base))
-                {
-                    string Local = Path.Combine(Base, Archivo);
-                    if (File.Exists(Local)) return Local;
-                }
-
-            return null;
-        }
-
-        private static Assembly VentasMetResolverEnsambladoCierre(object Origen, ResolveEventArgs Argumentos)
-        {
-            Assembly ModuloCierre = _ModuloCierreMovimientos;
-            string NombreEnsamblado = new AssemblyName(Argumentos.Name).Name;
-            if (ModuloCierre != null && String.Equals(NombreEnsamblado,
-                "CapaVista_CierreMovimientos", StringComparison.OrdinalIgnoreCase))
-                return ModuloCierre;
-
-            if (!String.IsNullOrEmpty(_DirectorioCierreMovimientos))
-            {
-                string RutaDependencia = Path.Combine(_DirectorioCierreMovimientos, NombreEnsamblado + ".dll");
-                if (File.Exists(RutaDependencia))
-                    return Assembly.LoadFrom(RutaDependencia);
-            }
-
-            return null;
-        }
-
         // WM_SETREDRAW agrupa los cambios de tamaño para evitar imágenes superpuestas al contraer el menú.
         private const int _WmSetRedraw = 0x000B;
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -340,15 +227,11 @@ namespace CapaVista_Ventas
         {
             try
             {
-                Assembly ModuloCierre = VentasMetCargarEnsambladoCierreMovimientos();
-                Type TipoFormulario = ModuloCierre.GetType("CapaVista_CierreMovimientos.FrmCierreMovimientosVentas", true);
-                Form Formulario = (Form)Activator.CreateInstance(TipoFormulario);
-                var PropiedadUsuario = TipoFormulario.GetProperty("VentasIdUsuario");
-                if (PropiedadUsuario != null && PropiedadUsuario.CanWrite)
-                    PropiedadUsuario.SetValue(Formulario, _IdUsuario, null);
-
-                using (Formulario)
+                using (var Formulario = new FrmCierreMovimientosVentas())
+                {
+                    Formulario.VentasIdUsuario = _IdUsuario;
                     VentasMetAbrirFormulario(Formulario);
+                }
             }
             catch (Exception Error)
             {

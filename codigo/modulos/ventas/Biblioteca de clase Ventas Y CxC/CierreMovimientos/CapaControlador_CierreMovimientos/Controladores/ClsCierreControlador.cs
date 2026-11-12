@@ -92,9 +92,9 @@ namespace CapaControlador_CierreMovimientos
 
         private static object VentasFuncCrearControladorContable(string Nombre)
         {
-            string Ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DllContable);
+            string Ruta = Path.Combine(Path.GetDirectoryName(typeof(ClsCierreControlador).Assembly.Location), DllContable);
             if (!File.Exists(Ruta))
-                throw new InvalidOperationException("Falta " + DllContable + " junto al ejecutable que inicia Ventas. Compile Contabilidad y copie su DLL y dependencias antes de activar el envío.");
+                throw new InvalidOperationException("Falta " + DllContable + " junto a CapaControlador_CierreMovimientos.dll. Compile Contabilidad y copie su DLL y dependencias antes de activar el envío.");
             Assembly Biblioteca = Assembly.LoadFrom(Ruta);
             Type Controlador = Biblioteca.GetType("CapaControlador_Contabilidad." + Nombre, true);
             return Activator.CreateInstance(Controlador);
