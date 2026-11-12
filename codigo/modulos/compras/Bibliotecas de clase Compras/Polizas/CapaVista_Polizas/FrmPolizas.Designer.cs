@@ -16,16 +16,20 @@ namespace CapaVista_Polizas
 
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPolizas));
             this.ComprasTlpFormulario = new System.Windows.Forms.TableLayoutPanel();
             this.ComprasUsrEncabezadoFormulario = new CapaVista_Componentes.Componentes.ComprasUsrEncabezado();
             this.ComprasPnlContenido = new System.Windows.Forms.Panel();
             this.ComprasGbxDetalle = new CapaVista_Componentes.Componentes.ClsGroupBoxCompras();
             this.ComprasDgvLineasPoliza = new System.Windows.Forms.DataGridView();
-            this.ComprasColCuenta = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ComprasColDebe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComprasColHaber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComprasColDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cuenta = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Debe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Haber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ComprasLblDiferencia = new CapaVista_Componentes.Componentes.ComprasUsrLabel();
             this.ComprasBtnEnviar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
             this.ComprasBtnGuardar = new CapaVista_Componentes.Componentes.ClsButtonCompras();
@@ -82,6 +86,7 @@ namespace CapaVista_Polizas
             this.ComprasUsrEncabezadoFormulario.Margin = new System.Windows.Forms.Padding(10);
             this.ComprasUsrEncabezadoFormulario.MaximumSize = new System.Drawing.Size(1500, 130);
             this.ComprasUsrEncabezadoFormulario.MinimumSize = new System.Drawing.Size(0, 130);
+            this.ComprasUsrEncabezadoFormulario.MostrarReportes = false;
             this.ComprasUsrEncabezadoFormulario.Name = "ComprasUsrEncabezadoFormulario";
             this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1259, 130);
             this.ComprasUsrEncabezadoFormulario.TabIndex = 0;
@@ -118,6 +123,74 @@ namespace CapaVista_Polizas
             this.ComprasGbxDetalle.Size = new System.Drawing.Size(1255, 410);
             this.ComprasGbxDetalle.TabIndex = 9;
             this.ComprasGbxDetalle.TabStop = false;
+            // 
+            // ComprasDgvLineasPoliza
+            // 
+            this.ComprasDgvLineasPoliza.AllowUserToAddRows = false;
+            this.ComprasDgvLineasPoliza.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasDgvLineasPoliza.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.ComprasDgvLineasPoliza.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComprasDgvLineasPoliza.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ComprasDgvLineasPoliza.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            this.ComprasDgvLineasPoliza.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.ComprasDgvLineasPoliza.ColumnHeadersHeight = 36;
+            this.ComprasDgvLineasPoliza.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.ComprasDgvLineasPoliza.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Cuenta,
+            this.Debe,
+            this.Haber,
+            this.Descripcion});
+            this.ComprasDgvLineasPoliza.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.ComprasDgvLineasPoliza.EnableHeadersVisualStyles = false;
+            this.ComprasDgvLineasPoliza.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(220)))), ((int)(((byte)(239)))));
+            this.ComprasDgvLineasPoliza.Location = new System.Drawing.Point(10, 145);
+            this.ComprasDgvLineasPoliza.Name = "ComprasDgvLineasPoliza";
+            this.ComprasDgvLineasPoliza.RowHeadersVisible = false;
+            this.ComprasDgvLineasPoliza.RowHeadersWidth = 51;
+            this.ComprasDgvLineasPoliza.RowTemplate.Height = 32;
+            this.ComprasDgvLineasPoliza.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.ComprasDgvLineasPoliza.Size = new System.Drawing.Size(1220, 165);
+            this.ComprasDgvLineasPoliza.TabIndex = 15;
+            // 
+            // Cuenta
+            // 
+            this.Cuenta.HeaderText = "Cuenta";
+            this.Cuenta.MinimumWidth = 6;
+            this.Cuenta.Name = "Cuenta";
+            this.Cuenta.ReadOnly = true;
+            this.Cuenta.Width = 270;
+            // 
+            // Debe
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N2";
+            this.Debe.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Debe.HeaderText = "Debe";
+            this.Debe.MinimumWidth = 6;
+            this.Debe.Name = "Debe";
+            this.Debe.Width = 140;
+            // 
+            // Haber
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N2";
+            this.Haber.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Haber.HeaderText = "Haber";
+            this.Haber.MinimumWidth = 6;
+            this.Haber.Name = "Haber";
+            this.Haber.Width = 140;
+            // 
+            // Descripcion
+            // 
+            this.Descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Descripcion.HeaderText = "Descripción";
+            this.Descripcion.MinimumWidth = 6;
+            this.Descripcion.Name = "Descripcion";
             // 
             // ComprasLblDiferencia
             // 
@@ -246,62 +319,6 @@ namespace CapaVista_Polizas
             this.ComprasCboCuenta.Name = "ComprasCboCuenta";
             this.ComprasCboCuenta.Size = new System.Drawing.Size(289, 45);
             this.ComprasCboCuenta.TabIndex = 9;
-            // 
-            // ComprasDgvLineasPoliza
-            // 
-            this.ComprasDgvLineasPoliza.AllowUserToAddRows = false;
-            this.ComprasDgvLineasPoliza.AllowUserToDeleteRows = true;
-            this.ComprasDgvLineasPoliza.AllowUserToResizeRows = false;
-            this.ComprasDgvLineasPoliza.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.ComprasDgvLineasPoliza.BackgroundColor = System.Drawing.Color.FromArgb(246, 247, 250);
-            this.ComprasDgvLineasPoliza.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ComprasDgvLineasPoliza.ColumnHeadersHeight = 36;
-            this.ComprasDgvLineasPoliza.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.ComprasDgvLineasPoliza.EnableHeadersVisualStyles = false;
-            this.ComprasDgvLineasPoliza.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.ComprasDgvLineasPoliza.GridColor = System.Drawing.Color.FromArgb(213, 220, 239);
-            this.ComprasDgvLineasPoliza.Location = new System.Drawing.Point(10, 145);
-            this.ComprasDgvLineasPoliza.Name = "ComprasDgvLineasPoliza";
-            this.ComprasDgvLineasPoliza.RowHeadersVisible = false;
-            this.ComprasDgvLineasPoliza.RowTemplate.Height = 32;
-            this.ComprasDgvLineasPoliza.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.ComprasDgvLineasPoliza.Size = new System.Drawing.Size(1220, 165);
-            this.ComprasDgvLineasPoliza.TabIndex = 15;
-            this.ComprasColCuenta.HeaderText = "Cuenta";
-            this.ComprasColCuenta.Name = "Cuenta";
-            this.ComprasColCuenta.ReadOnly = true;
-            this.ComprasColCuenta.Width = 270;
-            this.ComprasColDebe.HeaderText = "Debe";
-            this.ComprasColDebe.Name = "Debe";
-            this.ComprasColDebe.Width = 140;
-            this.ComprasColDebe.DefaultCellStyle = new System.Windows.Forms.DataGridViewCellStyle();
-            this.ComprasColDebe.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.ComprasColDebe.DefaultCellStyle.Format = "N2";
-            this.ComprasColHaber.HeaderText = "Haber";
-            this.ComprasColHaber.Name = "Haber";
-            this.ComprasColHaber.Width = 140;
-            this.ComprasColHaber.DefaultCellStyle = new System.Windows.Forms.DataGridViewCellStyle();
-            this.ComprasColHaber.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.ComprasColHaber.DefaultCellStyle.Format = "N2";
-            this.ComprasColDescripcion.HeaderText = "Descripción";
-            this.ComprasColDescripcion.Name = "Descripcion";
-            this.ComprasColDescripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ComprasDgvLineasPoliza.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ComprasColCuenta,
-            this.ComprasColDebe,
-            this.ComprasColHaber,
-            this.ComprasColDescripcion});
-            this.ComprasDgvLineasPoliza.ColumnHeadersDefaultCellStyle = new System.Windows.Forms.DataGridViewCellStyle();
-            this.ComprasDgvLineasPoliza.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(30, 42, 90);
-            this.ComprasDgvLineasPoliza.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
-            this.ComprasDgvLineasPoliza.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.ComprasDgvLineasPoliza.DefaultCellStyle = new System.Windows.Forms.DataGridViewCellStyle();
-            this.ComprasDgvLineasPoliza.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            this.ComprasDgvLineasPoliza.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(30, 42, 90);
-            this.ComprasDgvLineasPoliza.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(213, 220, 239);
-            this.ComprasDgvLineasPoliza.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(30, 42, 90);
-            this.ComprasDgvLineasPoliza.AlternatingRowsDefaultCellStyle = new System.Windows.Forms.DataGridViewCellStyle();
-            this.ComprasDgvLineasPoliza.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(246, 247, 250);
             // 
             // ComprasLblCuenta
             // 
@@ -558,8 +575,8 @@ namespace CapaVista_Polizas
             this.Text = "6002 – Polizas";
             this.ComprasTlpFormulario.ResumeLayout(false);
             this.ComprasPnlContenido.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ComprasDgvLineasPoliza)).EndInit();
             this.ComprasGbxDetalle.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ComprasDgvLineasPoliza)).EndInit();
             this.ComprasGbxEncabezado.ResumeLayout(false);
             this.ComprasPnlDesplazamiento.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -591,5 +608,9 @@ namespace CapaVista_Polizas
         private CapaVista_Componentes.Componentes.ClsButtonCompras ComprasBtnIngresarCuenta;
         private CapaVista_Componentes.Componentes.ComprasUsrComboBox ComprasCboCuenta;
         private CapaVista_Componentes.Componentes.ComprasUsrLabel ComprasLblCuenta;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Cuenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Debe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Haber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Descripcion;
     }
 }
