@@ -51,10 +51,10 @@ namespace CapaVista_AsigCapacitacion.Formularios
         {
             var MapaBotones = new Dictionary<Control, TipoPermiso>
     {
-        { RrhhiBtnGuardarAsigCap,   TipoPermiso.Insertar },
-        { RrhhiBtnModificarAsigCap, TipoPermiso.Editar },
-        { RrhhiBtnEliminarAsigCap,  TipoPermiso.Eliminar },
-        { RrhhiBtnReporteAsigCap,  TipoPermiso.Imprimir }
+        { RrhhBtnGuardarAsigCap,   TipoPermiso.Insertar },
+        { RrhhBtnModificarAsigCap, TipoPermiso.Editar },
+        { RrhhBtnEliminarAsigCap,  TipoPermiso.Eliminar },
+        { RrhhBtnReporteAsigCap,  TipoPermiso.Imprimir }
     };
 
             _MisPermisos = ClsSeguridadFormHelper.SeguridadMetInicializarSeguridad(
@@ -350,7 +350,7 @@ namespace CapaVista_AsigCapacitacion.Formularios
 
         private void RrhhBtnAyuda_Click(object sender, EventArgs e)
         {
-            
+            Help.ShowHelp(this, "C:/RrhhAyudas/RecursosHumanosAyudas.chm", "AsigCapacitacion_RecursosHumanos.html");
         }
         private void RrhhMetLimpiarCampos()
         {
