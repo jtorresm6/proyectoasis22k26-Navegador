@@ -89,6 +89,7 @@ namespace CapaVista_CierreMovimientos
             this.ComprasUsrEncabezadoFormulario.MaximumSize = new System.Drawing.Size(1500, 130);
             this.ComprasUsrEncabezadoFormulario.MinimumSize = new System.Drawing.Size(0, 130);
             this.ComprasUsrEncabezadoFormulario.Name = "ComprasUsrEncabezadoFormulario";
+            this.ComprasUsrEncabezadoFormulario.RutaReporte = "RpReporteCierreMovimientos.rdlc";
             this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1259, 130);
             this.ComprasUsrEncabezadoFormulario.TabIndex = 0;
             this.ComprasUsrEncabezadoFormulario.TabStop = false;

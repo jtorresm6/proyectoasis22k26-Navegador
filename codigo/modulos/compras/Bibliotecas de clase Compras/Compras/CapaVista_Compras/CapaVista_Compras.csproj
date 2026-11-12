@@ -61,8 +61,8 @@
     <Reference Include="CapaVista_AprobacionFinanciera">
       <HintPath>..\..\AprobacionFinanciera\CapaVista_AprobacionFinanciera\bin\$(Configuration)\CapaVista_AprobacionFinanciera.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_CierreMovimientos">
-      <HintPath>..\..\CierreMovimientos\CapaVista_CierreMovimientos\bin\$(Configuration)\CapaVista_CierreMovimientos.dll</HintPath>
+    <Reference Include="CapaVista_CierreMovimientosCompras">
+      <HintPath>..\..\CierreMovimientos\CapaVista_CierreMovimientos\bin\$(Configuration)\CapaVista_CierreMovimientosCompras.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Herramientas">
       <HintPath>..\..\Herramientas\CapaVista_Herramientas\bin\$(Configuration)\CapaVista_Herramientas.dll</HintPath>

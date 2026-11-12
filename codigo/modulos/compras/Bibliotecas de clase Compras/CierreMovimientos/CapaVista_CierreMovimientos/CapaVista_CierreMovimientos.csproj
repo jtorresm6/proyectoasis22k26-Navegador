@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CapaVista_CierreMovimientos</RootNamespace>
-    <AssemblyName>CapaVista_CierreMovimientos</AssemblyName>
+    <AssemblyName>CapaVista_CierreMovimientosCompras</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -51,14 +51,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CapaControlador_CierreMovimientos">
-      <HintPath>..\CapaControlador_CierreMovimientos\bin\$(Configuration)\CapaControlador_CierreMovimientos.dll</HintPath>
+    <Reference Include="CapaControlador_CierreMovimientosCompras">
+      <HintPath>..\CapaControlador_CierreMovimientos\bin\$(Configuration)\CapaControlador_CierreMovimientosCompras.dll</HintPath>
     </Reference>
-    <Reference Include="CapaModelo_CierreMovimientos">
-      <HintPath>..\CapaModelo_CierreMovimientos\bin\$(Configuration)\CapaModelo_CierreMovimientos.dll</HintPath>
+    <Reference Include="CapaModelo_CierreMovimientosCompras">
+      <HintPath>..\CapaModelo_CierreMovimientos\bin\$(Configuration)\CapaModelo_CierreMovimientosCompras.dll</HintPath>
     </Reference>
     <Reference Include="CapaModelo_Componentes">
       <HintPath>..\..\Componentes\CapaModelo_Componentes\bin\$(Configuration)\CapaModelo_Componentes.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaControlador_Herramientas">
+      <HintPath>..\..\Herramientas\CapaControlador_Herramientas\bin\$(Configuration)\CapaControlador_Herramientas.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaModelo_Herramientas">
+      <HintPath>..\..\Herramientas\CapaModelo_Herramientas\bin\$(Configuration)\CapaModelo_Herramientas.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +87,9 @@
     </Compile>
     <EmbeddedResource Include="FrmCierreMovimientos.resx">
       <DependentUpon>FrmCierreMovimientos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpReporteCierreMovimientos.rdlc">
+      <LogicalName>CapaVista_CierreMovimientosCompras.Reportes.RpReporteCierreMovimientos.rdlc</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

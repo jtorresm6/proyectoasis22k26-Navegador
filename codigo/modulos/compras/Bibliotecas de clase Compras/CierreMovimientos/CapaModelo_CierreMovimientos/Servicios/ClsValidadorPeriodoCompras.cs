@@ -1,5 +1,5 @@
-using System;
-using CapaModelo_CierreMovimientos.Repositorios;
+// using System;
+// using CapaModelo_CierreMovimientos.Repositorios;
 
 /*
  * ==================================================================
@@ -18,44 +18,49 @@ using CapaModelo_CierreMovimientos.Repositorios;
  *
  *  Una fecha está cerrada si es igual o anterior al último día del último
  *  período cerrado (los cierres son consecutivos).
+ *
+ *  PENDIENTE PARA EL 100 %: la clase queda comentada hasta que el módulo acuerde
+ *  que los demás submódulos la llamen. Mientras tanto, los documentos de los
+ *  períodos cerrados quedan protegidos con los campos "bloqueado" que marca el
+ *  cierre (Órdenes de compra ya los respeta).
  * ===================================================================
 */
 
-namespace CapaModelo_CierreMovimientos.Servicios
-{
-    public class ClsValidadorPeriodoCompras
-    {
-        private readonly ClsConsultasCierreMovimientos _Consultas;
-
-        public ClsValidadorPeriodoCompras() : this(new ClsConsultasCierreMovimientos()) { }
-
-        public ClsValidadorPeriodoCompras(ClsConsultasCierreMovimientos Consultas)
-        {
-            _Consultas = Consultas ?? throw new ArgumentNullException(nameof(Consultas));
-        }
-
-        public DateTime? ComprasFuncObtenerUltimaFechaCerrada()
-        {
-            return _Consultas.ComprasFuncObtenerUltimaFechaCerrada();
-        }
-
-        public bool ComprasFuncFechaCerrada(DateTime Fecha)
-        {
-            return ComprasFuncFechaCerrada(Fecha, ComprasFuncObtenerUltimaFechaCerrada());
-        }
-
-        public static bool ComprasFuncFechaCerrada(DateTime Fecha, DateTime? UltimaFechaCerrada)
-        {
-            return UltimaFechaCerrada.HasValue && Fecha.Date <= UltimaFechaCerrada.Value.Date;
-        }
-
-        public void ComprasProcValidarFechaAbierta(DateTime Fecha, string Documento = "el documento")
-        {
-            DateTime? UltimaFechaCerrada = ComprasFuncObtenerUltimaFechaCerrada();
-            if (ComprasFuncFechaCerrada(Fecha, UltimaFechaCerrada))
-                throw new InvalidOperationException("No se puede registrar ni modificar " + Documento + " con fecha " +
-                    Fecha.ToString("dd/MM/yyyy") + ": Compras está cerrado hasta el " +
-                    UltimaFechaCerrada.Value.ToString("dd/MM/yyyy") + ".");
-        }
-    }
-}
+// namespace CapaModelo_CierreMovimientos.Servicios
+// {
+//     public class ClsValidadorPeriodoCompras
+//     {
+//         private readonly ClsConsultasCierreMovimientos _Consultas;
+//
+//         public ClsValidadorPeriodoCompras() : this(new ClsConsultasCierreMovimientos()) { }
+//
+//         public ClsValidadorPeriodoCompras(ClsConsultasCierreMovimientos Consultas)
+//         {
+//             _Consultas = Consultas ?? throw new ArgumentNullException(nameof(Consultas));
+//         }
+//
+//         public DateTime? ComprasFuncObtenerUltimaFechaCerrada()
+//         {
+//             return _Consultas.ComprasFuncObtenerUltimaFechaCerrada();
+//         }
+//
+//         public bool ComprasFuncFechaCerrada(DateTime Fecha)
+//         {
+//             return ComprasFuncFechaCerrada(Fecha, ComprasFuncObtenerUltimaFechaCerrada());
+//         }
+//
+//         public static bool ComprasFuncFechaCerrada(DateTime Fecha, DateTime? UltimaFechaCerrada)
+//         {
+//             return UltimaFechaCerrada.HasValue && Fecha.Date <= UltimaFechaCerrada.Value.Date;
+//         }
+//
+//         public void ComprasProcValidarFechaAbierta(DateTime Fecha, string Documento = "el documento")
+//         {
+//             DateTime? UltimaFechaCerrada = ComprasFuncObtenerUltimaFechaCerrada();
+//             if (ComprasFuncFechaCerrada(Fecha, UltimaFechaCerrada))
+//                 throw new InvalidOperationException("No se puede registrar ni modificar " + Documento + " con fecha " +
+//                     Fecha.ToString("dd/MM/yyyy") + ": Compras está cerrado hasta el " +
+//                     UltimaFechaCerrada.Value.ToString("dd/MM/yyyy") + ".");
+//         }
+//     }
+// }

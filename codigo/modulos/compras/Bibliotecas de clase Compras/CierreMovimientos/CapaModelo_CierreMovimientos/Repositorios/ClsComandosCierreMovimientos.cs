@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Odbc;
 using System.Linq;
 using CapaModelo_CierreMovimientos.Entidades;
+using CapaModelo_Componentes.Repositorios;
 using CapaModelo_Seguridad.Entidades;
 using CapaModelo_Seguridad.Repositorios;
 
@@ -27,14 +28,14 @@ using CapaModelo_Seguridad.Repositorios;
 
 namespace CapaModelo_CierreMovimientos.Repositorios
 {
-    public class ClsComandosCierreMovimientos : ClsRepositorioMaestroCierreMovimientos
+    public class ClsComandosCierreMovimientos : ClsRepositorioMaestroCompras
     {
         private const string _AccionBitacora = "Cierre de período";
         private const string _TablaBitacora = "tblPeriodoCompras";
 
         // Movimientos posteriores al cierre (ya registrados) que forman el mes en curso del proveedor.
         private const string _MovimientosPosteriores =
-            "(SELECT COALESCE(SUM(x.montoTotalCuentaPorPagar * x.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar x " +
+            "(SELECT COALESCE(SUM(ABS(x.montoTotalCuentaPorPagar) * x.tipoCambioCuentaPorPagar), 0) FROM tblCuentaPorPagar x " +
             "INNER JOIN tblConceptoProveedor c ON c.idConceptoProveedor = x.idConceptoProveedor " +
             "WHERE x.idProveedor = p.idProveedor AND x.estadoCuentaPorPagar <> 'Anulada' " +
             "AND c.naturalezaConceptoProveedor = '{0}' AND x.fechaEmisionCuentaPorPagar > ?)";

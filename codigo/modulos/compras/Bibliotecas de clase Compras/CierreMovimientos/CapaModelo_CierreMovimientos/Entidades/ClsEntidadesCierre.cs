@@ -73,6 +73,7 @@ namespace CapaModelo_CierreMovimientos.Entidades
     public class ClsDocumentoPendiente
     {
         public int IdProveedor { get; set; }
+        public string NombreProveedor { get; set; }
         public DateTime FechaVencimiento { get; set; }
         public decimal SaldoLocal { get; set; }
     }
@@ -80,7 +81,9 @@ namespace CapaModelo_CierreMovimientos.Entidades
     public class ClsAntiguedadCierre
     {
         public int IdProveedor { get; set; }
+        public string NombreProveedor { get; set; }
         public int IdRango { get; set; }
+        public string NombreRango { get; set; }
         public decimal Monto { get; set; }
         public int CantidadDocumentos { get; set; }
     }

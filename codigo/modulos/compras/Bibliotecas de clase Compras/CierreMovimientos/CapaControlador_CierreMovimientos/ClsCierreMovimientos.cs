@@ -5,7 +5,7 @@ using System.Linq;
 using CapaControlador_Seguridad.Objetos_de_valor;
 using CapaModelo_CierreMovimientos.Entidades;
 using CapaModelo_CierreMovimientos.Servicios;
-using CapaModelo_CierreMovimientos.Repositorios;
+using CapaModelo_Componentes.Repositorios;
 
 /*
  * ==================================================================
@@ -16,8 +16,9 @@ using CapaModelo_CierreMovimientos.Repositorios;
  * ==================================================================
  * Propósito :
  *  Controlador del cierre de movimientos. Obtiene los períodos abiertos, arma
- *  la vista previa del cierre (validaciones, saldos por proveedor y totales)
- *  y ejecuta el cierre con el usuario y la IP de la sesión de Seguridad.
+ *  la vista previa del cierre (validaciones, saldos por proveedor, antigüedad
+ *  de saldos y totales, que también alimentan el reporte) y ejecuta el cierre
+ *  con el usuario y la IP de la sesión de Seguridad.
  *  La lógica de negocio está en CapaModelo_CierreMovimientos.
  * ===================================================================
 */
@@ -28,6 +29,8 @@ namespace CapaControlador_CierreMovimientos
     {
         public DataTable Validaciones { get; set; }
         public DataTable SaldosProveedor { get; set; }
+        public DataTable Antiguedad { get; set; }
+        public DateTime FechaCorte { get; set; }
         public decimal TotalCargos { get; set; }
         public decimal TotalAbonos { get; set; }
         public decimal SaldoFinal { get; set; }
@@ -77,10 +80,20 @@ namespace CapaControlador_CierreMovimientos
             foreach (ClsSaldoProveedorCierre Saldo in Preparacion.Saldos)
                 Saldos.Rows.Add(Saldo.NombreProveedor, Saldo.SaldoInicial, Saldo.Cargos, Saldo.Abonos, Saldo.SaldoFinal);
 
+            var Antiguedad = new DataTable();
+            Antiguedad.Columns.Add("cmp_proveedor", typeof(string));
+            Antiguedad.Columns.Add("cmp_rango", typeof(string));
+            Antiguedad.Columns.Add("cmp_documentos", typeof(int));
+            Antiguedad.Columns.Add("cmp_monto", typeof(decimal));
+            foreach (ClsAntiguedadCierre Fila in Preparacion.Antiguedad)
+                Antiguedad.Rows.Add(Fila.NombreProveedor, Fila.NombreRango, Fila.CantidadDocumentos, Fila.Monto);
+
             return new ClsResumenCierre
             {
                 Validaciones = Validaciones,
                 SaldosProveedor = Saldos,
+                Antiguedad = Antiguedad,
+                FechaCorte = Preparacion.Periodo.FechaFin,
                 TotalCargos = Preparacion.Saldos.Sum(Saldo => Saldo.Cargos),
                 TotalAbonos = Preparacion.Saldos.Sum(Saldo => Saldo.Abonos),
                 SaldoFinal = Preparacion.Saldos.Sum(Saldo => Saldo.SaldoFinal),
