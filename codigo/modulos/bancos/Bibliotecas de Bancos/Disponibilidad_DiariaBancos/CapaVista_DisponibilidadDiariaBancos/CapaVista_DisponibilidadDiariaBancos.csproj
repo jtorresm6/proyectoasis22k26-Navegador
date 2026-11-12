@@ -2,6 +2,7 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <PlatformTarget>x64</PlatformTarget>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C3D4E5F6-A7B8-4C9D-0E1F-2A3B4C5D6E7F}</ProjectGuid>
@@ -31,6 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common">
+      <HintPath>..\..\..\..\..\componentes\reporteador\Reporteador\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms">
+      <HintPath>..\..\..\..\..\componentes\reporteador\Reporteador\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CapaControlador_Seguridad">
       <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
     </Reference>
@@ -80,6 +89,12 @@
     <Compile Include="Formularios\FrmDisponibilidadDiaria.Designer.cs">
       <DependentUpon>FrmDisponibilidadDiaria.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmReportes\FrmReporteDisponibilidadDiaria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReportes\FrmReporteDisponibilidadDiaria.Designer.cs">
+      <DependentUpon>FrmReporteDisponibilidadDiaria.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -94,6 +109,10 @@
     <EmbeddedResource Include="Formularios\FrmDisponibilidadDiaria.resx">
       <DependentUpon>FrmDisponibilidadDiaria.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmReportes\FrmReporteDisponibilidadDiaria.resx">
+      <DependentUpon>FrmReporteDisponibilidadDiaria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpReporteDisponibilidadDiaria.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
