@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CapaModelo_Traslados_Logistica\CapaModelo_Traslados_Logistica.csproj">
+      <Project>{816F09C4-15BD-43CE-BE25-5D144624CB43}</Project>
+      <Name>CapaModelo_Traslados_Logistica</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="CapaControlador_Traslados_Logistica">
       <HintPath>..\CapaControlador_Traslados_Logistica\bin\Debug\CapaControlador_Traslados_Logistica.dll</HintPath>
     </Reference>
@@ -71,10 +77,10 @@
     <Compile Include="Formularios\FrmDetalleTraslados.Designer.cs">
       <DependentUpon>FrmDetalleTraslados.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\FrmReporteTraslados.cs">
+    <Compile Include="frmReportes\FrmReporteTraslados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\FrmReporteTraslados.Designer.cs">
+    <Compile Include="frmReportes\FrmReporteTraslados.Designer.cs">
       <DependentUpon>FrmReporteTraslados.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\FrmTraslados.cs">
@@ -93,14 +99,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reportes\" />
+    <Folder Include="frmReportes\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Reportes\RpReporteTraslados.rdlc" />
     <EmbeddedResource Include="Formularios\FrmDetalleTraslados.resx">
       <DependentUpon>FrmDetalleTraslados.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmReporteTraslados.resx">
-      <DependentUpon>FrmReporteTraslados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmTraslados.resx">
       <DependentUpon>FrmTraslados.cs</DependentUpon>

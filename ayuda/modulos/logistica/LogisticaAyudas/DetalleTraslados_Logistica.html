@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ayuda - Detalle de traslado</title>
+    <style>
+      html {
+        background: #fdf6e7;
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #412c20;
+        margin: 0;
+        padding: 0 0 46px;
+        background: #fdf6e7;
+        line-height: 1.55;
+      }
+      .portada {
+        margin: 0 0 27px;
+        width: 100%;
+      }
+      .portada img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border: none;
+      }
+      .contenido {
+        max-width: 950px;
+        margin: 0 auto;
+        padding: 0 18px;
+      }
+      h1 {
+        color: #64250e;
+        font-size: 26px;
+        margin: 24px 0 20px;
+      }
+      h2 {
+        color: #71321b;
+        font-size: 20px;
+        margin: 0 0 9px;
+      }
+      p {
+        margin: 0 0 14px;
+      }
+      section {
+        margin: 30px 0 40px;
+      }
+      ol {
+        padding-left: 24px;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+      a {
+        color: #71321b;
+      }
+    </style>
+<link rel="stylesheet" href="LogisticaAyudas.css">
+  </head>
+  <body>
+    <div class="portada">
+      <img
+        src="Imagenes/Traslados_Logistica/portada.png"
+        alt="Portada del Manual de Ayudas de Embutidos de Calidad, S. A."
+      />
+    </div>
+    <main class="contenido">
+      <h1>Ayuda: Detalle de traslado</h1>
+      <p>
+        Esta ventana presenta en modo de solo lectura la información del traslado
+        seleccionado y el desglose de los productos incluidos.
+      </p>
+
+      <section>
+        <h2>1. Abrir el detalle</h2>
+        <ol>
+          <li>
+            En el formulario <a href="Traslados_Logistica.html">Traslados entre bodegas</a>,
+            seleccione una fila de la lista.
+          </li>
+          <li>
+            Presione <strong>Ver detalle</strong>. Se abrirá esta ventana con la
+            información correspondiente al traslado seleccionado.
+          </li>
+          <li>
+            Si no selecciona una fila antes de presionar el botón, el formulario
+            principal le pedirá que seleccione un traslado.
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>2. Consultar los datos generales</h2>
+        <p>
+          En la parte superior se muestran el código y estado del traslado, las
+          bodegas de origen y destino, la fecha de solicitud, la fecha de salida
+          y la fecha de recibido. Cuando alguna fecha todavía no existe, aparece
+          como <strong>Pendiente</strong>.
+        </p>
+        <p>
+          También se presentan el código y la placa del transporte, el tipo de
+          transporte, el conductor y las observaciones. Si no hay un transporte,
+          conductor o dato asociado, se muestra <strong>Sin asignar</strong>;
+          cuando no hay observaciones, se muestra <strong>Sin observaciones</strong>.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Revisar los productos</h2>
+        <p>
+          La tabla inferior contiene una fila por producto y muestra su código,
+          nombre, descripción, cantidad, peso unitario, peso total, precio
+          unitario y precio total. Revise las cantidades y los importes para
+          consultar la composición del traslado.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Interpretar los totales</h2>
+        <p>
+          Debajo de la tabla se presentan el número de productos distintos, el
+          total de unidades, el peso acumulado en kilogramos y el costo total de
+          los productos del traslado.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Cerrar el detalle</h2>
+        <p>
+          La información no se edita desde esta ventana. Para volver a la lista
+          de traslados, cierre la ventana con el botón <strong>X</strong> de la
+          barra de título.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

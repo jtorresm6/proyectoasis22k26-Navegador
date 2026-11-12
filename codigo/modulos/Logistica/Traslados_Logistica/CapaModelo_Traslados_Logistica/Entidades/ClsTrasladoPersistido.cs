@@ -1,3 +1,15 @@
+/*
+ * ==================================================================
+ * Área : Logística
+ * Autor : José Xavier Bolaños Tenas
+ * Carné : 0901-23-2128
+ * Fecha : 11/11/2026
+ * ==================================================================
+ * Propósito :
+ * Contiene los datos actuales de un traslado almacenado.
+ * ===================================================================
+ */
+
 namespace CapaModelo_Traslados_Logistica.Entidades
 {
     public class ClsTrasladoPersistido

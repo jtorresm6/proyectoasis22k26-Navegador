@@ -1,7 +1,19 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
+
+/*
+ * ==================================================================
+ * Área : Logística
+ * Autor : José Xavier Bolaños Tenas
+ * Carné : 0901-23-2128
+ * Fecha : 11/11/2026
+ * ==================================================================
+ * Propósito :
+ * Presenta el reporte de traslados entre bodegas.
+ * ===================================================================
+ */
 
 namespace CapaVista_Traslados_Logistica.Formularios
 {
@@ -22,10 +34,12 @@ namespace CapaVista_Traslados_Logistica.Formularios
             }
 
             InitializeComponent();
+            Icon = (System.Drawing.Icon)new System.ComponentModel.ComponentResourceManager(
+                typeof(FrmTraslados)).GetObject("$this.Icon");
             _Traslados = Traslados;
         }
 
-        private void FrmReporteTraslados_Load(object Sender, EventArgs E)
+        private void LogisticaProcCargarReporteTraslados(object Sender, EventArgs E)
         {
             var Fuente = new ReportDataSource("DsTraslados", _Traslados);
             LogisticaRvReporteTraslados.LocalReport.ReportEmbeddedResource =

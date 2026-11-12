@@ -1,3 +1,15 @@
+/*
+ * ==================================================================
+ * Área : Logística
+ * Autor : José Xavier Bolaños Tenas
+ * Carné : 0901-23-2128
+ * Fecha : 11/11/2026
+ * ==================================================================
+ * Propósito :
+ * Representa un producto y sus cantidades dentro de un traslado.
+ * ===================================================================
+ */
+
 namespace CapaModelo_Traslados_Logistica.Entidades
 {
     public class ClsProductoTrasladoDetalle
@@ -8,11 +20,7 @@ namespace CapaModelo_Traslados_Logistica.Entidades
         public string Descripcion { get; set; }
         public int Cantidad { get; set; }
         public int ExistenciasDisponibles { get; set; }
-        public decimal PesoUnitario { get; set; }
+        public double PesoUnitario { get; set; }
 
-        public decimal PesoTotal
-        {
-            get { return PesoUnitario * Cantidad; }
-        }
     }
 }

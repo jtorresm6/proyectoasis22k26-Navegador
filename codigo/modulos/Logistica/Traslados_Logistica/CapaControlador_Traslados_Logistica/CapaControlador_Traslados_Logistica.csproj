@@ -31,9 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo_Traslados_Logistica">
-      <HintPath>..\CapaModelo_Traslados_Logistica\bin\Debug\CapaModelo_Traslados_Logistica.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\CapaModelo_Traslados_Logistica\CapaModelo_Traslados_Logistica.csproj">
+      <Project>{816F09C4-15BD-43CE-BE25-5D144624CB43}</Project>
+      <Name>CapaModelo_Traslados_Logistica</Name>
+    </ProjectReference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +47,10 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modelos de controladores\ClsModeloTraslado.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloProcesosTraslados.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloInventariosTraslados.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloValidacionesTraslados.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloNavegacionTraslados.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

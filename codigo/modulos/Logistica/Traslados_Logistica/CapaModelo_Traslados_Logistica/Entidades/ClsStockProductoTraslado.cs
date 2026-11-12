@@ -1,3 +1,15 @@
+/*
+ * ==================================================================
+ * Área : Logística
+ * Autor : José Xavier Bolaños Tenas
+ * Carné : 0901-23-2128
+ * Fecha : 11/11/2026
+ * ==================================================================
+ * Propósito :
+ * Representa las existencias de un producto en una bodega.
+ * ===================================================================
+ */
+
 namespace CapaModelo_Traslados_Logistica.Entidades
 {
     public class ClsStockProductoTraslado
@@ -10,9 +22,5 @@ namespace CapaModelo_Traslados_Logistica.Entidades
         public bool EstadoVenta { get; set; }
         public bool EstadoCompra { get; set; }
 
-        public int Disponible
-        {
-            get { return StockActual - Apartados; }
-        }
     }
 }

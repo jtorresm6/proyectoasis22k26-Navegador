@@ -21,7 +21,7 @@ using CapaModelo_Traslados_Logistica.Repositorios;
 
 namespace CapaControlador_Traslados_Logistica
 {
-    public class ClsModeloTraslado
+    public partial class ClsModeloTraslado
     {
         private readonly IRepositorioTraslado _RepositorioTraslado;
         private readonly List<ClsProductoTrasladoDetalle> _Detalles;
@@ -60,34 +60,132 @@ namespace CapaControlador_Traslados_Logistica
 
         public DataTable LogisticaMetObtenerConductoresDisponibles(string CodigoTrasladoExcluir)
         {
-            return _RepositorioTraslado.LogisticaMetObtenerConductoresDisponibles(
-                CodigoTrasladoExcluir);
+            var Disponibles = new DataTable();
+            Disponibles.Columns.Add("CodigoConductor", typeof(int));
+            Disponibles.Columns.Add("NombreConductor", typeof(string));
+            DataTable Conductores = _RepositorioTraslado.LogisticaMetObtenerConductores();
+            var Agregados = new HashSet<int>();
+
+            foreach (DataRow Conductor in Conductores.Rows)
+            {
+                if (!string.Equals(Convert.ToString(Conductor["EstadoConductor"]),
+                    "DISPONIBLE", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(Convert.ToString(Conductor["EstadoViaje"]),
+                        "EN_CURSO", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                int CodigoConductor = Convert.ToInt32(Conductor["CodigoConductor"]);
+                if (Agregados.Add(CodigoConductor))
+                {
+                    Disponibles.Rows.Add(CodigoConductor, Conductor["NombreConductor"]);
+                }
+            }
+
+            return Disponibles;
         }
 
         public DataTable LogisticaMetObtenerTransportesDisponibles(
             int CodigoTipoTransporte, string CodigoTrasladoExcluir)
         {
+            var Disponibles = new DataTable();
+            Disponibles.Columns.Add("CodigoTransporte", typeof(int));
+            Disponibles.Columns.Add("PlacaTransporte", typeof(string));
             if (CodigoTipoTransporte <= 0)
             {
-                return LogisticaMetCrearTablaVacia("CodigoTransporte", "PlacaTransporte");
+                return Disponibles;
             }
 
-            return _RepositorioTraslado.LogisticaMetObtenerTransportesDisponibles(
-                CodigoTipoTransporte, CodigoTrasladoExcluir);
+            DataTable Transportes = _RepositorioTraslado.LogisticaMetObtenerTransportes();
+            var Agregados = new HashSet<int>();
+            foreach (DataRow Transporte in Transportes.Rows)
+            {
+                int Codigo = Convert.ToInt32(Transporte["CodigoTransporte"]);
+                if (!Agregados.Add(Codigo) ||
+                    Convert.ToInt32(Transporte["CodigoTipoTransporte"]) != CodigoTipoTransporte)
+                {
+                    continue;
+                }
+
+                bool Disponible = string.Equals(
+                    Convert.ToString(Transporte["EstadoTransporte"]),
+                    "DISPONIBLE", StringComparison.OrdinalIgnoreCase);
+                bool AsignadoAlTraslado = false;
+                bool TieneOtroTrasladoActivo = false;
+                foreach (DataRow Asignacion in Transportes.Rows)
+                {
+                    if (Convert.ToInt32(Asignacion["CodigoTransporte"]) != Codigo)
+                    {
+                        continue;
+                    }
+
+                    string CodigoTrasladoAsignado =
+                        Convert.ToString(Asignacion["CodigoTrasladoAsignado"]);
+                    if (!string.IsNullOrWhiteSpace(CodigoTrasladoExcluir) &&
+                        string.Equals(CodigoTrasladoAsignado, CodigoTrasladoExcluir,
+                            StringComparison.OrdinalIgnoreCase))
+                    {
+                        AsignadoAlTraslado = true;
+                    }
+
+                    if (LogisticaMetEsEstadoActivo(
+                        Convert.ToString(Asignacion["EstadoTrasladoAsignado"])) &&
+                        !string.Equals(CodigoTrasladoAsignado, CodigoTrasladoExcluir,
+                            StringComparison.OrdinalIgnoreCase))
+                    {
+                        TieneOtroTrasladoActivo = true;
+                        break;
+                    }
+                }
+
+                if ((Disponible || AsignadoAlTraslado) && !TieneOtroTrasladoActivo)
+                {
+                    Disponibles.Rows.Add(Codigo, Transporte["PlacaTransporte"]);
+                }
+            }
+
+            return Disponibles;
         }
 
         public DataTable LogisticaMetObtenerProductosDisponibles(
             int CodigoBodega, string CodigoTrasladoExcluir)
         {
+            var Disponibles = new DataTable();
+            Disponibles.Columns.Add("CodigoProducto", typeof(int));
+            Disponibles.Columns.Add("SKU", typeof(string));
+            Disponibles.Columns.Add("Nombre", typeof(string));
+            Disponibles.Columns.Add("Descripcion", typeof(string));
+            Disponibles.Columns.Add("PesoUnitario", typeof(double));
+            Disponibles.Columns.Add("ExistenciasDisponibles", typeof(int));
+            Disponibles.Columns.Add("ProductoMostrar", typeof(string));
             if (CodigoBodega <= 0)
             {
-                return LogisticaMetCrearTablaVacia(
-                    "CodigoProducto", "SKU", "Nombre", "Descripcion", "PesoUnitario",
-                    "ExistenciasDisponibles", "ProductoMostrar");
+                return Disponibles;
             }
 
-            return _RepositorioTraslado.LogisticaMetObtenerProductosDisponibles(
+            DataTable Productos = _RepositorioTraslado.LogisticaMetObtenerStockProductos(
                 CodigoBodega, CodigoTrasladoExcluir);
+            foreach (DataRow Producto in Productos.Rows)
+            {
+                int Existencias = Convert.ToInt32(Producto["StockActual"]) -
+                    Convert.ToInt32(Producto["CantidadApartada"]) +
+                    Convert.ToInt32(Producto["CantidadReservada"]);
+                if (Existencias <= 0)
+                {
+                    continue;
+                }
+
+                string SKU = Convert.ToString(Producto["SKU"]);
+                string Nombre = Convert.ToString(Producto["Nombre"]);
+                Disponibles.Rows.Add(
+                    Convert.ToInt32(Producto["CodigoProducto"]), SKU, Nombre,
+                    Convert.ToString(Producto["Descripcion"]),
+                    Convert.ToDouble(Producto["PesoUnitario"]), Existencias,
+                    SKU + " - " + Nombre);
+            }
+
+            return Disponibles;
         }
 
         public void LogisticaMetCargarDetalleTraslado(string CodigoTraslado)
@@ -97,8 +195,7 @@ namespace CapaControlador_Traslados_Logistica
                 throw new ArgumentException("Seleccione un traslado válido.", "CodigoTraslado");
             }
 
-            DataTable TablaDetalle = _RepositorioTraslado.LogisticaMetObtenerDetalleTraslado(
-                CodigoTraslado);
+            DataTable TablaDetalle = LogisticaMetObtenerDetalleTraslado(CodigoTraslado);
             _Detalles.Clear();
             foreach (DataRow Fila in TablaDetalle.Rows)
             {
@@ -109,7 +206,7 @@ namespace CapaControlador_Traslados_Logistica
                     Nombre = Convert.ToString(Fila["Nombre"]),
                     Descripcion = Convert.ToString(Fila["Descripcion"]),
                     Cantidad = Convert.ToInt32(Fila["Cantidad"]),
-                    PesoUnitario = Convert.ToDecimal(Fila["PesoUnitario"]),
+                    PesoUnitario = Convert.ToDouble(Fila["PesoUnitario"]),
                     ExistenciasDisponibles = Convert.ToInt32(Fila["ExistenciasDisponibles"])
                 });
             }
@@ -122,7 +219,41 @@ namespace CapaControlador_Traslados_Logistica
                 throw new ArgumentException("Seleccione un traslado válido.", "CodigoTraslado");
             }
 
-            return _RepositorioTraslado.LogisticaMetObtenerDetalleTraslado(CodigoTraslado);
+            DataTable DatosDetalle = _RepositorioTraslado.LogisticaMetObtenerDetalleTraslado(
+                CodigoTraslado);
+            var Detalle = new DataTable();
+            Detalle.Columns.Add("CodigoProducto", typeof(int));
+            Detalle.Columns.Add("SKU", typeof(string));
+            Detalle.Columns.Add("Nombre", typeof(string));
+            Detalle.Columns.Add("Descripcion", typeof(string));
+            Detalle.Columns.Add("Cantidad", typeof(int));
+            Detalle.Columns.Add("PesoUnitario", typeof(double));
+            Detalle.Columns.Add("PesoTotal", typeof(double));
+            Detalle.Columns.Add("PrecioUnitario", typeof(decimal));
+            Detalle.Columns.Add("PrecioTotal", typeof(decimal));
+            Detalle.Columns.Add("ExistenciasDisponibles", typeof(int));
+
+            foreach (DataRow Fila in DatosDetalle.Rows)
+            {
+                int Cantidad = Convert.ToInt32(Fila["Cantidad"]);
+                double PesoUnitario = Convert.ToDouble(Fila["PesoUnitario"]);
+                decimal PrecioUnitario = Convert.ToDecimal(Fila["PrecioUnitario"]);
+                int ExistenciasDisponibles = Convert.ToInt32(Fila["StockActual"]) -
+                    Convert.ToInt32(Fila["CantidadApartada"]) + Cantidad;
+                Detalle.Rows.Add(
+                    Convert.ToInt32(Fila["CodigoProducto"]),
+                    Convert.ToString(Fila["SKU"]),
+                    Convert.ToString(Fila["Nombre"]),
+                    Convert.ToString(Fila["Descripcion"]),
+                    Cantidad,
+                    PesoUnitario,
+                    PesoUnitario * Cantidad,
+                    PrecioUnitario,
+                    PrecioUnitario * Cantidad,
+                    ExistenciasDisponibles);
+            }
+
+            return Detalle;
         }
 
         public DataTable LogisticaMetObtenerDetalle()
@@ -133,7 +264,7 @@ namespace CapaControlador_Traslados_Logistica
             Tabla.Columns.Add("Nombre", typeof(string));
             Tabla.Columns.Add("Descripcion", typeof(string));
             Tabla.Columns.Add("Cantidad", typeof(int));
-            Tabla.Columns.Add("PesoTotal", typeof(decimal));
+            Tabla.Columns.Add("PesoTotal", typeof(double));
 
             foreach (ClsProductoTrasladoDetalle Detalle in _Detalles)
             {
@@ -143,7 +274,7 @@ namespace CapaControlador_Traslados_Logistica
                     Detalle.Nombre,
                     Detalle.Descripcion,
                     Detalle.Cantidad,
-                    Detalle.PesoTotal);
+                    LogisticaMetCalcularPesoTotal(Detalle));
             }
 
             return Tabla;
@@ -182,7 +313,7 @@ namespace CapaControlador_Traslados_Logistica
                     SKU = Convert.ToString(Producto["SKU"]),
                     Nombre = Convert.ToString(Producto["Nombre"]),
                     Descripcion = Convert.ToString(Producto["Descripcion"]),
-                    PesoUnitario = Convert.ToDecimal(Producto["PesoUnitario"]),
+                    PesoUnitario = Convert.ToDouble(Producto["PesoUnitario"]),
                     ExistenciasDisponibles = ExistenciasDisponibles,
                     Cantidad = Cantidad
                 });
@@ -210,220 +341,5 @@ namespace CapaControlador_Traslados_Logistica
             _Detalles.Clear();
         }
 
-        public void LogisticaMetGuardarTraslado(
-            string CodigoTraslado, int BodegaOrigen, int BodegaDestino,
-            int CodigoTipoTransporte, int CodigoTransporte, int CodigoConductor,
-            string Observaciones)
-        {
-            ClsTrasladoSolicitud Solicitud = LogisticaMetCrearSolicitud(
-                CodigoTraslado, BodegaOrigen, BodegaDestino, CodigoTipoTransporte,
-                CodigoTransporte, CodigoConductor, Observaciones,
-                ClsReglasEstadoTraslado.Solicitado);
-            _RepositorioTraslado.LogisticaMetGuardarTraslado(Solicitud);
-        }
-
-        public void LogisticaMetActualizarTraslado(
-            string CodigoTraslado, int BodegaOrigen, int BodegaDestino,
-            int CodigoTipoTransporte, int CodigoTransporte, int CodigoConductor,
-            string Observaciones, string Estado)
-        {
-            ClsTrasladoSolicitud Solicitud = LogisticaMetCrearSolicitud(
-                CodigoTraslado, BodegaOrigen, BodegaDestino, CodigoTipoTransporte,
-                CodigoTransporte, CodigoConductor, Observaciones, Estado);
-            _RepositorioTraslado.LogisticaMetActualizarTraslado(Solicitud);
-        }
-
-        private ClsTrasladoSolicitud LogisticaMetCrearSolicitud(
-            string CodigoTraslado, int BodegaOrigen, int BodegaDestino,
-            int CodigoTipoTransporte, int CodigoTransporte, int CodigoConductor,
-            string Observaciones, string Estado)
-        {
-            if (string.IsNullOrWhiteSpace(CodigoTraslado) || CodigoTraslado.Trim().Length > 30)
-            {
-                throw new InvalidOperationException(
-                    "Ingrese un código de traslado de hasta 30 caracteres.");
-            }
-
-            if (BodegaOrigen <= 0 || BodegaDestino <= 0)
-            {
-                throw new InvalidOperationException("Seleccione las bodegas de origen y destino.");
-            }
-
-            if (BodegaOrigen == BodegaDestino)
-            {
-                throw new InvalidOperationException(
-                    "La bodega de origen debe ser diferente a la bodega de destino.");
-            }
-
-            if (ClsReglasEstadoTraslado.LogisticaMetRequiereTransporte(Estado) &&
-                (CodigoTipoTransporte <= 0 || CodigoTransporte <= 0))
-            {
-                throw new InvalidOperationException(
-                    "Para despachar o recibir el traslado debe asignar un transporte disponible.");
-            }
-
-            if (_Detalles.Count == 0)
-            {
-                throw new InvalidOperationException(
-                    "Agregue al menos un producto al detalle del traslado.");
-            }
-
-            if (Observaciones != null && Observaciones.Length > 500)
-            {
-                throw new InvalidOperationException(
-                    "Las observaciones no pueden superar los 500 caracteres.");
-            }
-
-            var Solicitud = new ClsTrasladoSolicitud
-            {
-                CodigoTraslado = CodigoTraslado.Trim(),
-                BodegaOrigen = BodegaOrigen,
-                BodegaDestino = BodegaDestino,
-                CodigoTipoTransporte = CodigoTipoTransporte,
-                CodigoTransporte = CodigoTransporte,
-                CodigoConductor = CodigoConductor,
-                Observaciones = Observaciones ?? string.Empty,
-                Estado = Estado
-            };
-            foreach (ClsProductoTrasladoDetalle Detalle in _Detalles)
-            {
-                Solicitud.Detalles.Add(new ClsProductoTrasladoDetalle
-                {
-                    CodigoProducto = Detalle.CodigoProducto,
-                    SKU = Detalle.SKU,
-                    Nombre = Detalle.Nombre,
-                    Descripcion = Detalle.Descripcion,
-                    Cantidad = Detalle.Cantidad,
-                    ExistenciasDisponibles = Detalle.ExistenciasDisponibles,
-                    PesoUnitario = Detalle.PesoUnitario
-                });
-            }
-
-            return Solicitud;
-        }
-
-        public DataTable LogisticaMetCargarTraslados()
-        {
-            _TablaTrasladosCompleta = _RepositorioTraslado.LogisticaMetObtenerTraslados();
-            if (_TablaTrasladosCompleta == null)
-            {
-                throw new DataException("El repositorio devolvió una lista de traslados nula.");
-            }
-
-            _TablaTraslados = _TablaTrasladosCompleta.Copy();
-            _IndiceActual = _TablaTraslados.Rows.Count == 0 ? -1 : 0;
-            return _TablaTraslados;
-        }
-
-        public DataTable LogisticaMetObtenerTrasladosParaReporte()
-        {
-            DataTable Traslados = _RepositorioTraslado.LogisticaMetObtenerTraslados();
-            if (Traslados == null)
-            {
-                throw new DataException("El repositorio devolvió una lista de traslados nula.");
-            }
-
-            return Traslados;
-        }
-
-        public DataTable LogisticaMetFiltrarTraslados(
-            string Codigo, DateTime? FechaSolicitud, string Estado)
-        {
-            DataTable Resultados = _TablaTrasladosCompleta.Clone();
-            string CodigoBuscado = (Codigo ?? string.Empty).Trim();
-            string EstadoBuscado = (Estado ?? string.Empty).Trim();
-
-            foreach (DataRow Traslado in _TablaTrasladosCompleta.Rows)
-            {
-                if (CodigoBuscado.Length > 0 &&
-                    Convert.ToString(Traslado["CodigoTraslado"]).IndexOf(
-                        CodigoBuscado, StringComparison.OrdinalIgnoreCase) < 0)
-                {
-                    continue;
-                }
-
-                if (FechaSolicitud.HasValue &&
-                    (Traslado.IsNull("FechaSolicitud") ||
-                    Convert.ToDateTime(Traslado["FechaSolicitud"]).Date != FechaSolicitud.Value.Date))
-                {
-                    continue;
-                }
-
-                if (EstadoBuscado.Length > 0 &&
-                    !string.Equals(EstadoBuscado, "Todos", StringComparison.OrdinalIgnoreCase) &&
-                    !string.Equals(
-                        Convert.ToString(Traslado["Estado"]), EstadoBuscado,
-                        StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                Resultados.ImportRow(Traslado);
-            }
-
-            _TablaTraslados = Resultados;
-            _IndiceActual = _TablaTraslados.Rows.Count == 0 ? -1 : 0;
-            return _TablaTraslados;
-        }
-
-        public DataRow LogisticaMetIrAInicio()
-        {
-            return LogisticaMetObtenerFila(0);
-        }
-
-        public DataRow LogisticaMetIrAlAnterior()
-        {
-            return LogisticaMetObtenerFila(Math.Max(0, _IndiceActual - 1));
-        }
-
-        public DataRow LogisticaMetIrAlSiguiente()
-        {
-            return LogisticaMetObtenerFila(Math.Min(_TablaTraslados.Rows.Count - 1, _IndiceActual + 1));
-        }
-
-        public DataRow LogisticaMetIrAlFin()
-        {
-            return LogisticaMetObtenerFila(_TablaTraslados.Rows.Count - 1);
-        }
-
-        public DataRow LogisticaMetSeleccionarTraslado(DataRow Traslado)
-        {
-            if (Traslado == null)
-            {
-                throw new ArgumentNullException("Traslado");
-            }
-
-            int Indice = _TablaTraslados.Rows.IndexOf(Traslado);
-            if (Indice < 0)
-            {
-                throw new ArgumentException("El traslado no pertenece a la lista cargada.", "Traslado");
-            }
-
-            _IndiceActual = Indice;
-            return Traslado;
-        }
-
-        private DataRow LogisticaMetObtenerFila(int Indice)
-        {
-            if (_TablaTraslados.Rows.Count == 0)
-            {
-                _IndiceActual = -1;
-                return null;
-            }
-
-            _IndiceActual = Indice;
-            return _TablaTraslados.Rows[_IndiceActual];
-        }
-
-        private DataTable LogisticaMetCrearTablaVacia(params string[] Columnas)
-        {
-            var Tabla = new DataTable();
-            foreach (string Columna in Columnas)
-            {
-                Tabla.Columns.Add(Columna);
-            }
-
-            return Tabla;
-        }
     }
 }
