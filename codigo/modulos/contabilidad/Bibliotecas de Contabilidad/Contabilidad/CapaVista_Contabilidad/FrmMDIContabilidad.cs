@@ -14,6 +14,8 @@
  * Reglas especificas:
  *  El MDI lee la sesión y los permisos mediante el Controlador; no toca el Modelo.
  *  Las cinco pantallas son ventanas modales con su propio controlador.
+ *  Pólizas, presupuestos, activos fijos y cierre se despliegan en
+ *  Gestionar y Reporte; cada módulo entrega su ventana de reporte.
  *  Los indicadores se leen de la base mediante el Controlador y se
  *  actualizan al cerrar cada pantalla.
  *  Los procesos contables reales y el Reporteador todavía no se implementan.
@@ -47,8 +49,14 @@ namespace CapaVista_Contabilidad
         private Button _BotonSobre;
         private ClsEstadoSeguridadContabilidad _Estado;
         private readonly ClsPermisosMenuContabilidad _PermisosMenu = new ClsPermisosMenuContabilidad();
-        private Button[] _BotonesCatalogos;
-        private bool _CatalogosAbierto;
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+        // botones que despliegan un submenú y sus hijos
+        private readonly Dictionary<Button, Button[]> _Submenus;
+        // submenú desplegado
+        private Button _SubmenuAbierto;
+        // botones principales del menú en orden
+        private readonly Button[] _MenuPrincipal;
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
         private readonly Dictionary<int, Button> _BotonesMenu;
         // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
         // posición original de cada control del menú
@@ -75,9 +83,20 @@ namespace CapaVista_Contabilidad
                 { 10014, ContabilidadBtnCuentas },
                 { 10015, ContabilidadBtnCuentasModulo }
             };
-            _BotonesCatalogos = new[] { ContabilidadBtnPaises, ContabilidadBtnModulosContables, ContabilidadBtnVidaUtil,
-                ContabilidadBtnCuentas, ContabilidadBtnCuentasModulo };
-            foreach (Button Boton in _BotonesMenu.Values) _PermisosMenu.ContabilidadMetAplicar(Boton, false);
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            _Submenus = new Dictionary<Button, Button[]>
+            {
+                { ContabilidadBtnPolizasLocales, new[] { ContabilidadBtnPolizasLocalesGestion, ContabilidadBtnPolizasLocalesReporte } },
+                { ContabilidadBtnPresupuestos, new[] { ContabilidadBtnPresupuestosGestion, ContabilidadBtnPresupuestosReporte } },
+                { ContabilidadBtnActivosFijos, new[] { ContabilidadBtnActivosFijosGestion, ContabilidadBtnActivosFijosReporte } },
+                { ContabilidadBtnCierreContable, new[] { ContabilidadBtnCierreContableGestion, ContabilidadBtnCierreContableReporte } },
+                { ContabilidadBtnCatalogos, new[] { ContabilidadBtnPaises, ContabilidadBtnModulosContables, ContabilidadBtnVidaUtil,
+                    ContabilidadBtnCuentas, ContabilidadBtnCuentasModulo } }
+            };
+            _MenuPrincipal = new[] { ContabilidadBtnPolizasLocales, ContabilidadBtnPresupuestos, ContabilidadBtnActivosFijos,
+                ContabilidadBtnCierreContable, ContabilidadBtnEstadosFinancieros, ContabilidadBtnCatalogos };
+            foreach (Button Boton in _BotonesMenu.Values) ContabilidadMetAplicarPermiso(Boton, false);
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             _PermisosMenu.ContabilidadMetAplicar(ContabilidadBtnCatalogos, false);
             Disposed += (Remitente, Evento) => _PermisosMenu.Dispose();
             ContabilidadPnlPrincipal.Resize += (Remitente, Evento) => ContabilidadMetAcomodarEncabezado();
@@ -148,18 +167,33 @@ namespace CapaVista_Contabilidad
             ContabilidadLblUsuario.Text = "Usuario: " + Estado.NombreUsuario;
             ContabilidadLblUsuarioRol.Text = "Rol: " + Estado.Roles;
             foreach (KeyValuePair<int, Button> Boton in _BotonesMenu)
-                _PermisosMenu.ContabilidadMetAplicar(Boton.Value, Estado.Permisos[Boton.Key].TieneAcceso);
+                // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+                ContabilidadMetAplicarPermiso(Boton.Value, Estado.Permisos[Boton.Key].TieneAcceso);
+                // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             bool AlgunCatalogo = false;
             foreach (int Codigo in new[] { 10011, 10012, 10013, 10014, 10015 }) AlgunCatalogo |= Estado.Permisos[Codigo].TieneAcceso;
             _PermisosMenu.ContabilidadMetAplicar(ContabilidadBtnCatalogos, AlgunCatalogo);
-            if (!AlgunCatalogo) _CatalogosAbierto = false;
-            ContabilidadMetAcomodarCatalogos();
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            if (_SubmenuAbierto != null && !_SubmenuAbierto.Enabled) _SubmenuAbierto = null;
+            ContabilidadMetAcomodarSubmenus();
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             if (_BotonActivo != null && !_BotonActivo.Enabled) _BotonActivo = null;
             _BotonSobre = null;
             ContabilidadMetAcomodarEncabezado();
             if (MostrarAviso && !string.IsNullOrWhiteSpace(Estado.Mensaje))
                 MessageBox.Show(this, Estado.Mensaje, "Seguridad de Contabilidad", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+        // El permiso de un módulo vale también para Gestionar y Reporte
+        private void ContabilidadMetAplicarPermiso(Button Boton, bool TieneAcceso)
+        {
+            _PermisosMenu.ContabilidadMetAplicar(Boton, TieneAcceso);
+            Button[] Hijos;
+            if (Boton != ContabilidadBtnCatalogos && _Submenus.TryGetValue(Boton, out Hijos))
+                foreach (Button Hijo in Hijos) _PermisosMenu.ContabilidadMetAplicar(Hijo, TieneAcceso);
+        }
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
 
         private void ContabilidadMetAcomodarEncabezado()
         {
@@ -282,37 +316,58 @@ namespace CapaVista_Contabilidad
 
             ContabilidadPnlNavegador.Width = NuevoAncho;
             ContabilidadPnlLateral.Width = NuevoAncho + _MargenMenu;
-            ContabilidadMetAcomodarCatalogos();
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            ContabilidadMetAcomodarSubmenus();
         }
 
-        private void ContabilidadMetAlternarCatalogos(object Remitente, EventArgs Evento)
+        // Abre o cierra el submenú del botón; solo queda uno abierto
+        private void ContabilidadMetAlternarSubmenu(object Remitente, EventArgs Evento)
         {
-            _CatalogosAbierto = !_CatalogosAbierto;
-            ContabilidadMetAcomodarCatalogos();
+            Button Boton = (Button)Remitente;
+            _SubmenuAbierto = _SubmenuAbierto == Boton ? null : Boton;
+            ContabilidadMetAcomodarSubmenus();
         }
 
-        private void ContabilidadMetAcomodarCatalogos()
+        // Muestra los hijos del submenú abierto y oculta los demás
+        private void ContabilidadMetAcomodarSubmenus()
         {
             int Izquierda = ContabilidadPnlNavegador.Width == _AnchoMenuExpandido ? 21 : 3;
-            foreach (Button Boton in _BotonesCatalogos)
+            foreach (KeyValuePair<Button, Button[]> Submenu in _Submenus)
             {
-                Boton.Visible = _CatalogosAbierto;
-                Boton.Left = Izquierda;
+                foreach (Button Hijo in Submenu.Value)
+                {
+                    Hijo.Visible = Submenu.Key == _SubmenuAbierto;
+                    Hijo.Left = Izquierda;
+                }
+                Submenu.Key.Invalidate();
             }
-            ContabilidadBtnCatalogos.Invalidate();
-            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
             ContabilidadMetAcomodarMenu();
-            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
         }
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
 
         // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
         // Cerrar sesión va al final del menú; si no cabe, la barra de la izquierda mueve el menú
         private void ContabilidadMetAcomodarMenu()
         {
-            Button Ultimo = _CatalogosAbierto ? ContabilidadBtnCuentasModulo : ContabilidadBtnCatalogos;
             int Visible = ContabilidadPnlNavegador.ClientSize.Height;
             int Alto = ContabilidadBtnCerrarSesion.Height;
-            int TopCerrar = Math.Max(_PosicionesMenu[Ultimo] + Ultimo.Height + 12, Visible - Alto - 16);
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            // Cada botón va debajo del anterior y el submenú abierto empuja a los de abajo
+            Dictionary<Control, int> Posiciones = new Dictionary<Control, int>(_PosicionesMenu);
+            int Siguiente = _PosicionesMenu[ContabilidadBtnPolizasLocales];
+            foreach (Button Principal in _MenuPrincipal)
+            {
+                Posiciones[Principal] = Siguiente;
+                Siguiente += Principal.Height + 9;
+                if (Principal != _SubmenuAbierto) continue;
+                foreach (Button Hijo in _Submenus[Principal])
+                {
+                    Posiciones[Hijo] = Siguiente - 2;
+                    Siguiente += Hijo.Height + 7;
+                }
+            }
+            int TopCerrar = Math.Max(Siguiente + 3, Visible - Alto - 16);
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             int Contenido = TopCerrar + Alto + 16;
             bool Desborda = Contenido > Visible && Visible > 0;
             ContabilidadVsbMenu.Visible = Desborda;
@@ -325,7 +380,9 @@ namespace CapaVista_Contabilidad
                 if (ContabilidadVsbMenu.Value > Contenido - Visible) ContabilidadVsbMenu.Value = Contenido - Visible;
                 Desplazamiento = ContabilidadVsbMenu.Value;
             }
-            foreach (KeyValuePair<Control, int> Posicion in _PosicionesMenu) Posicion.Key.Top = Posicion.Value - Desplazamiento;
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            foreach (KeyValuePair<Control, int> Posicion in Posiciones) Posicion.Key.Top = Posicion.Value - Desplazamiento;
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             ContabilidadBtnCerrarSesion.Top = TopCerrar - Desplazamiento;
         }
 
@@ -401,6 +458,32 @@ namespace CapaVista_Contabilidad
             // Fin de cambio: Mario Taracena - 0901-23-9335 - 27/10/2026
         }
 
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+        // Reporte de pólizas locales
+        private void ContabilidadMetAbrirReportePolizas(object Remitente, EventArgs Evento)
+        {
+            ContabilidadMetAbrirPantalla(10001, (Button)Remitente, ClsReportePolizasContabilidad.ContabilidadFuncCrearReporte);
+        }
+
+        // Reporte de presupuestos
+        private void ContabilidadMetAbrirReportePresupuestos(object Remitente, EventArgs Evento)
+        {
+            ContabilidadMetAbrirPantalla(10002, (Button)Remitente, ClsReportePresupuestosContabilidad.ContabilidadFuncCrearReporte);
+        }
+
+        // Reporte de activos fijos
+        private void ContabilidadMetAbrirReporteActivosFijos(object Remitente, EventArgs Evento)
+        {
+            ContabilidadMetAbrirPantalla(10003, (Button)Remitente, ClsReporteActivosFijosContabilidad.ContabilidadFuncCrearReporte);
+        }
+
+        // Reporte de cierre contable
+        private void ContabilidadMetAbrirReporteCierre(object Remitente, EventArgs Evento)
+        {
+            ContabilidadMetAbrirPantalla(10004, (Button)Remitente, ClsReporteCierreContabilidad.ContabilidadFuncCrearReporte);
+        }
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+
         private void ContabilidadMetConfigurarEstadosMenu()
         {
             Button[] Botones = { ContabilidadBtnPolizasLocales, ContabilidadBtnPresupuestos,
@@ -412,11 +495,22 @@ namespace CapaVista_Contabilidad
                 ContabilidadBtnCuentas,
                 // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
                 ContabilidadBtnCuentasModulo,
-                ContabilidadBtnCerrarSesion };
+                ContabilidadBtnCerrarSesion,
+                // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+                // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+                ContabilidadBtnPolizasLocalesGestion, ContabilidadBtnPolizasLocalesReporte,
+                ContabilidadBtnPresupuestosGestion, ContabilidadBtnPresupuestosReporte,
+                ContabilidadBtnActivosFijosGestion, ContabilidadBtnActivosFijosReporte,
+                ContabilidadBtnCierreContableGestion, ContabilidadBtnCierreContableReporte };
+                // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
             string[] Titulos = { "Pólizas locales", "Presupuestos", "Activos fijos",
                 "Cierre contable", "Estados financieros", "Catálogos", "Países", "Módulos contables", "Vida útil", "Cuentas contables", "Cuentas por módulo",
-                "Cerrar sesión" };
-            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+                "Cerrar sesión",
+                // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 09/11/2026
+                // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+                "Gestionar", "Reporte", "Gestionar", "Reporte", "Gestionar", "Reporte", "Gestionar", "Reporte" };
+                // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             for (int Indice = 0; Indice < Botones.Length; Indice++)
             {
                 Button Boton = Botones[Indice];
@@ -438,7 +532,12 @@ namespace CapaVista_Contabilidad
         private void ContabilidadMetPintarEstadoMenu(object Remitente, PaintEventArgs Evento)
         {
             Button Boton = (Button)Remitente;
-            bool Activo = Boton == _BotonActivo || (Boton == ContabilidadBtnCatalogos && _BotonActivo != null && Array.IndexOf(_BotonesCatalogos, _BotonActivo) >= 0);
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            // Un botón con submenú se marca cuando la pantalla activa es de sus hijos
+            Button[] Hijos;
+            bool TieneSubmenu = _Submenus.TryGetValue(Boton, out Hijos);
+            bool Activo = Boton == _BotonActivo || (TieneSubmenu && _BotonActivo != null && Array.IndexOf(Hijos, _BotonActivo) >= 0);
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             if (Boton.Enabled && (Boton == _BotonSobre || Activo))
             {
                 using (SolidBrush Fondo = new SolidBrush(Color.FromArgb(65, 70, 104, 125)))
@@ -456,10 +555,12 @@ namespace CapaVista_Contabilidad
                 Activo ? Color.FromArgb(197, 143, 62) : Color.FromArgb(212, 222, 228);
             TextRenderer.DrawText(Evento.Graphics, Boton.AccessibleName, Boton.Font,
                 Etiqueta, Texto, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
-            if (Boton == ContabilidadBtnCatalogos)
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            if (TieneSubmenu)
             {
                 int X = Boton.Width - 26, Y = Boton.Height / 2;
-                Point[] Flecha = _CatalogosAbierto
+                Point[] Flecha = Boton == _SubmenuAbierto
+                // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
                     ? new[] { new Point(X, Y - 3), new Point(X + 10, Y - 3), new Point(X + 5, Y + 4) }
                     : new[] { new Point(X + 2, Y - 6), new Point(X + 2, Y + 6), new Point(X + 9, Y) };
                 using (SolidBrush Pincel = new SolidBrush(Texto)) Evento.Graphics.FillPolygon(Pincel, Flecha);
@@ -472,11 +573,23 @@ namespace CapaVista_Contabilidad
         {
             ContabilidadMetActualizarSeguridad(true);
             if (!_Estado.Permisos[Codigo].TieneAcceso) return;
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            // Un reporte que el módulo aún no entrega solo avisa
+            Form Formulario = Crear(_Estado.Permisos[Codigo]);
+            if (Formulario == null)
+            {
+                MessageBox.Show(this, "Este reporte todavía no está disponible.", Boton.AccessibleName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             Button Anterior = _BotonActivo;
             _BotonActivo = Boton;
             Anterior?.Invalidate();
             Boton.Invalidate();
-            using (Form Formulario = Crear(_Estado.Permisos[Codigo]))
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            using (Formulario)
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             {
                 // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 07/11/2026
                 ContabilidadMetAgregarAyuda(Formulario, Codigo);

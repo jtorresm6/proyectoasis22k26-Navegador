@@ -146,6 +146,13 @@
             }
         }
 
+        internal static System.Drawing.Bitmap botonmdi13 {
+            get {
+                object obj = ResourceManager.GetObject("botonmdi13", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
         internal static System.Drawing.Bitmap kpi1 {
             get {
                 object obj = ResourceManager.GetObject("kpi1", resourceCulture);
