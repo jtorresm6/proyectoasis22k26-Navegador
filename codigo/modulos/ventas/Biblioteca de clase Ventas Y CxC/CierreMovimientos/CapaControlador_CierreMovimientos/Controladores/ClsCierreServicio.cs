@@ -1,4 +1,11 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 09/11/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Aplicar las reglas de cierre y traslado de movimientos.
+ */
+// Preparación del traslado: Natali Sofía Montenegro Portillo | 0901-23-10017 | 09/11/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 22/10/2026
 using CapaControlador_CierreMovimientos.Validaciones;
 using CapaModelo_CierreMovimientos;
 using System.Data;
@@ -6,10 +13,44 @@ using System.Linq;
 using System;
 using VentasValidaciones;
 
-namespace CapaControlador_CierreMovimientos.Servicios
+namespace CapaControlador_CierreMovimientos
 {
     internal sealed class ClsCierreServicio
     {
+        public string VentasFuncEstadoCierre(int IdCierre)
+        {
+            using (var Repositorio = new ClsCierreRepositorio())
+                return Convert.ToString(Repositorio.Contabilidad.VentasFuncEstadoCierre(IdCierre));
+        }
+
+        public DateTime VentasFuncSiguientePeriodo(int Moneda, DateTime PeriodoElegido)
+        {
+            using (var Repositorio = new ClsCierreRepositorio())
+            {
+                object Ultimo = Repositorio.VentasFuncConfirmarConsultarControlperiodocxc(Moneda);
+                return Ultimo == null || Ultimo == DBNull.Value
+                    ? PeriodoElegido.Date
+                    : Convert.ToDateTime(Ultimo).Date.AddDays(1);
+            }
+        }
+
+
+        public bool VentasFuncEsCierreDemo(int IdCierre)
+        {
+            using (var Repositorio = new ClsCierreRepositorio())
+                return Convert.ToString(Repositorio.Contabilidad.VentasFuncNumeroCierre(IdCierre))
+                    .StartsWith("V16-DEMO-", StringComparison.Ordinal);
+        }
+
+        public bool VentasFuncEsDocumentoDemo(string Documento)
+        {
+            if (string.IsNullOrWhiteSpace(Documento))
+                return false;
+            using (var Repositorio = new ClsCierreRepositorio())
+                return Convert.ToString(Repositorio.Contabilidad.VentasFuncNumeroCierrePorDocumento(Documento))
+                    .StartsWith("V16-DEMO-", StringComparison.Ordinal);
+        }
+
         // TrasladoCierres.
         public DataTable VentasFuncEstadoTraslado(int IdCierre)
         {
@@ -213,7 +254,12 @@ namespace CapaControlador_CierreMovimientos.Servicios
                 {
                     object Ultimo = Repositorio.VentasFuncConfirmarConsultarControlperiodocxc(Moneda);
                     if (Ultimo != null && Ultimo != DBNull.Value)
-                        ClsValidacionesVentas.VentasMetExigir(Desde.Date == Convert.ToDateTime(Ultimo).Date.AddDays(1), "Los cierres mensuales deben ser consecutivos y no pueden superponerse.");
+                    {
+                        DateTime Siguiente = Convert.ToDateTime(Ultimo).Date.AddDays(1);
+                        // Natali Sofía Montenegro Portillo | 0901-23-10017 | Indica el siguiente mes que se puede cerrar.
+                        ClsValidacionesVentas.VentasMetExigir(Desde.Date == Siguiente,
+                            "Los cierres mensuales deben ser consecutivos. El siguiente período inicia el " + Siguiente.ToString("dd/MM/yyyy") + ".");
+                    }
                     else
                     {
                         object Primera = Repositorio.VentasFuncConfirmarConsultarMovimientocxc(Moneda);
@@ -249,6 +295,14 @@ namespace CapaControlador_CierreMovimientos.Servicios
                 {
                     Id = Convert.ToInt32(Borrador.Rows[0]["idCierre"]);
                     Numero = Convert.ToString(Borrador.Rows[0]["numeroCierre"]);
+                    DataTable TrasladoAnterior = Repositorio.Contabilidad.VentasFuncEstadoTrasladoConsultarTrasladocxc(Id);
+                    ClsValidacionesVentas.VentasMetExigir(TrasladoAnterior.Rows.Count == 0 || Convert.ToString(TrasladoAnterior.Rows[0]["estado"]) == "PREPARADO",
+                        "El borrador ya tiene una póliza registrada; revise el traslado antes de confirmarlo.");
+                    // Natali Sofía Montenegro Portillo | 0901-23-10017 | Recalcula saldos y póliza del borrador al confirmar.
+                    Repositorio.VentasFuncConfirmarLimpiarTrasladoDetalle(Id);
+                    Repositorio.VentasFuncConfirmarLimpiarTraslado(Id);
+                    Repositorio.VentasFuncConfirmarLimpiarSaldos(Id);
+                    Repositorio.VentasFuncConfirmarLimpiarDetalle(Id);
                     Repositorio.VentasFuncConfirmarActualizarCierremovimientos(Usuario, Id);
                 }
                 else

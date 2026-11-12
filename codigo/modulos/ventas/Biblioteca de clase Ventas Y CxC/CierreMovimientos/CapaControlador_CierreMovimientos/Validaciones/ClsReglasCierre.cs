@@ -1,4 +1,11 @@
-﻿using System;
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 09/11/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Validar los períodos y saldos del cierre.
+ */
+// Natali Sofía Montenegro Portillo | Carné 0901-23-10017 | Cierre de movimientos | 09/11/2026
+using System;
 using CapaModelo_CierreMovimientos;
 using VentasValidaciones;
 

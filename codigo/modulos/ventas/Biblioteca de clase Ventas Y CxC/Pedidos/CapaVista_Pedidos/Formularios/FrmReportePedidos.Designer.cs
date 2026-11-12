@@ -1,3 +1,9 @@
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 22/10/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Seleccionar los filtros del reporte de pedidos.
+ */
 namespace CapaVista_Pedidos
 {
     // Natali Sofía Montenegro Portillo | 0901-23-10017 | Define los controles del filtro del reporte de pedidos.
@@ -89,25 +95,33 @@ namespace CapaVista_Pedidos
             this.VentasCboEstadoReporte.Size = new System.Drawing.Size(504, 31);
             this.VentasCboEstadoReporte.SelectedIndex = 0;
             this.VentasBtnGenerarReporte.BackColor = System.Drawing.Color.FromArgb(59, 29, 74);
+            this.VentasBtnGenerarReporte.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BotonOriginalImprimirVentas")));
+            this.VentasBtnGenerarReporte.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.VentasBtnGenerarReporte.FlatAppearance.BorderSize = 0;
             this.VentasBtnGenerarReporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.VentasBtnGenerarReporte.ForeColor = System.Drawing.Color.White;
-            this.VentasBtnGenerarReporte.Location = new System.Drawing.Point(362, 270);
+            this.VentasBtnGenerarReporte.Location = new System.Drawing.Point(468, 263);
             this.VentasBtnGenerarReporte.Name = "VentasBtnGenerarReporte";
-            this.VentasBtnGenerarReporte.Size = new System.Drawing.Size(170, 40);
-            this.VentasBtnGenerarReporte.Text = "Generar reporte";
+            this.VentasBtnGenerarReporte.Size = new System.Drawing.Size(64, 64);
+            this.VentasBtnGenerarReporte.Text = string.Empty;
+            this.VentasBtnGenerarReporte.AccessibleName = "Generar reporte";
+            this.VentasBtnGenerarReporte.UseVisualStyleBackColor = false;
             this.VentasBtnGenerarReporte.Click += new System.EventHandler(this.VentasMetMostrarReporte);
             this.VentasBtnCancelarReporte.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.VentasBtnCancelarReporte.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BotonOriginalCancelarVentas")));
+            this.VentasBtnCancelarReporte.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.VentasBtnCancelarReporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnCancelarReporte.FlatAppearance.BorderSize = 0;
             this.VentasBtnCancelarReporte.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
-            this.VentasBtnCancelarReporte.Location = new System.Drawing.Point(236, 270);
+            this.VentasBtnCancelarReporte.Location = new System.Drawing.Point(392, 263);
             this.VentasBtnCancelarReporte.Name = "VentasBtnCancelarReporte";
-            this.VentasBtnCancelarReporte.Size = new System.Drawing.Size(110, 40);
-            this.VentasBtnCancelarReporte.Text = "Cancelar";
+            this.VentasBtnCancelarReporte.Size = new System.Drawing.Size(64, 64);
+            this.VentasBtnCancelarReporte.Text = string.Empty;
+            this.VentasBtnCancelarReporte.AccessibleName = "Cancelar";
             this.AcceptButton = this.VentasBtnGenerarReporte;
             this.CancelButton = this.VentasBtnCancelarReporte;
             this.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.ClientSize = new System.Drawing.Size(560, 330);
+            this.ClientSize = new System.Drawing.Size(560, 347);
             this.Controls.Add(this.VentasBtnCancelarReporte);
             this.Controls.Add(this.VentasBtnGenerarReporte);
             this.Controls.Add(this.VentasCboEstadoReporte);
