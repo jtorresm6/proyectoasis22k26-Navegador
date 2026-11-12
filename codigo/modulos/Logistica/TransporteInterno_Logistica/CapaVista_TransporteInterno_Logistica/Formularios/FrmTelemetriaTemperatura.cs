@@ -872,11 +872,7 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
         private void LogisticaBtnImprimir_Click(
             object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "El reporte de telemetría está pendiente de integrar.",
-                "Logística",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+           
         }
 
         // =====================================================
@@ -905,6 +901,107 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
                 "Error - Logística",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
+        }
+
+        // =====================================================
+        // OBTENER DATOS PARA EL REPORTE DE TELEMETRÍA
+        // =====================================================
+
+        private DataTable LogisticaMetObtenerDatosReporte()
+        {
+            DataTable Tabla = new DataTable();
+
+            // Definir columnas del ReportViewer.
+            Tabla.Columns.Add(
+                "IdTelemetriaTemperatura", typeof(long));
+
+            Tabla.Columns.Add(
+                "FkEncabezadoViajeCodigo", typeof(long));
+
+            Tabla.Columns.Add(
+                "FechaHoraTelemetriaTemperatura",
+                typeof(DateTime));
+
+            Tabla.Columns.Add(
+                "TemperaturaCelsiusTelemetriaTemperatura",
+                typeof(decimal));
+
+            Tabla.Columns.Add(
+                "HumedadRelativaTelemetriaTemperatura",
+                typeof(decimal));
+
+            Tabla.Columns.Add(
+                "PuertaAbierta", typeof(string));
+
+            Tabla.Columns.Add(
+                "UbicacionGpsTelemetriaTemperatura",
+                typeof(string));
+
+            // Obtener los registros desde el controlador.
+            var Controlador =
+                new ClsControladorTelemetriaTemperatura();
+
+            var Registros =
+                Controlador.LogisticaFuncObtenerTodos();
+
+            // Recorrer los registros.
+            foreach (var Telemetria in Registros)
+            {
+                DataRow Fila = Tabla.NewRow();
+
+                Fila["IdTelemetriaTemperatura"] =
+                    Telemetria.IdTelemetriaTemperatura;
+
+                Fila["FkEncabezadoViajeCodigo"] =
+                    Telemetria.FkEncabezadoViajeCodigo;
+
+                Fila["FechaHoraTelemetriaTemperatura"] =
+                    Telemetria.FechaHoraTelemetriaTemperatura;
+
+                Fila["TemperaturaCelsiusTelemetriaTemperatura"] =
+                    Telemetria.TemperaturaCelsiusTelemetriaTemperatura;
+
+                Fila["HumedadRelativaTelemetriaTemperatura"] =
+                    Telemetria.HumedadRelativaTelemetriaTemperatura;
+
+                Fila["PuertaAbierta"] =
+                    Telemetria.PuertaAbiertaTelemetriaTemperatura
+                        ? "Sí"
+                        : "No";
+
+                Fila["UbicacionGpsTelemetriaTemperatura"] =
+                    Telemetria.UbicacionGpsTelemetriaTemperatura
+                    ?? "";
+
+                Tabla.Rows.Add(Fila);
+            }
+
+            return Tabla;
+        }
+        private void LogisticaBtnImprimir_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                // Obtener los registros de telemetría.
+                DataTable TablaDatos =
+                    LogisticaMetObtenerDatosReporte();
+
+                // Abrir el formulario del reporte.
+                using (var Formulario =
+                    new FrmReporteTelemetriaTemperatura(TablaDatos))
+                {
+                    Formulario.ShowDialog(this);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(
+                    "No se pudo generar el reporte de telemetría:\n"
+                    + Ex.Message,
+                    "Reporte de Telemetría",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
     }
 }

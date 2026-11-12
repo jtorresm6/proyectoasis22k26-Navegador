@@ -846,12 +846,7 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
         private void LogisticaBtnImprimir_Click(
             object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "El reporte de Alertas de Cadena de Frío " +
-                "está pendiente de integrar.",
-                "Logística",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            
         }
 
         // =====================================================
@@ -870,6 +865,66 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
         }
 
         // =====================================================
+        // OBTENER DATOS PARA REPORTE DE ALERTAS
+        // =====================================================
+
+        private DataTable LogisticaMetObtenerDatosReporte()
+        {
+            DataTable Tabla = new DataTable();
+
+            Tabla.Columns.Add(
+                "IdAlertaCadenaFrio", typeof(long));
+
+            Tabla.Columns.Add(
+                "FkTelemetriaTemperaturaCodigo",
+                typeof(long));
+
+            Tabla.Columns.Add(
+                "TipoAlertaCadenaFrio", typeof(string));
+
+            Tabla.Columns.Add(
+                "Atendida", typeof(string));
+
+            Tabla.Columns.Add(
+                "ObservacionCalidadAlertaCadenaFrio",
+                typeof(string));
+
+            // Consultar datos desde el controlador existente.
+            var Controlador =
+                new ClsControladorAlertaCadenaFrio();
+
+            var Registros =
+                Controlador.LogisticaFuncObtenerTodos();
+
+            foreach (var Alerta in Registros)
+            {
+                DataRow Fila = Tabla.NewRow();
+
+                Fila["IdAlertaCadenaFrio"] =
+                    Alerta.IdAlertaCadenaFrio;
+
+                Fila["FkTelemetriaTemperaturaCodigo"] =
+                    Alerta.FkTelemetriaTemperaturaCodigo;
+
+                Fila["TipoAlertaCadenaFrio"] =
+                    Alerta.TipoAlertaCadenaFrio ?? "";
+
+                Fila["Atendida"] =
+                    Alerta.AtendidaAlertaCadenaFrio
+                    ? "Sí"
+                    : "No";
+
+                Fila["ObservacionCalidadAlertaCadenaFrio"] =
+                    Alerta.ObservacionCalidadAlertaCadenaFrio
+                    ?? "";
+
+                Tabla.Rows.Add(Fila);
+            }
+
+            return Tabla;
+        }
+
+        // =====================================================
         // MOSTRAR ERRORES
         // =====================================================
 
@@ -880,6 +935,32 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
                 "Error - Logística",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
+        }
+
+        private void LogisticaBtnImprimir_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                // Obtener todos los registros de alertas.
+                DataTable TablaDatos =
+                    LogisticaMetObtenerDatosReporte();
+
+                // Abrir el formulario del reporte.
+                using (var Formulario =
+                    new FrmReporteAlertaCadenaFrio(TablaDatos))
+                {
+                    Formulario.ShowDialog(this);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(
+                    "No se pudo generar el reporte de alertas:\n"
+                    + Ex.Message,
+                    "Reporte de Alertas de Cadena de Frío",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
     }
 }

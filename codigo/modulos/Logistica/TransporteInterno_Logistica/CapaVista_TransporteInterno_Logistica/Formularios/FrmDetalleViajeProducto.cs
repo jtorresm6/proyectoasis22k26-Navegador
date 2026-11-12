@@ -731,11 +731,64 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
         private void LogisticaBtnImprimir_Click(
             object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "El reporte de lotes asignados está pendiente.",
-                "Logística",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            
+        }
+
+        // =====================================================
+        // OBTENER DATOS PARA EL REPORTE
+        // =====================================================
+
+        private DataTable LogisticaMetObtenerDatosReporte()
+        {
+            DataTable Tabla = new DataTable();
+
+            Tabla.Columns.Add(
+                "IdDetalleViajeLoteProducto", typeof(long));
+
+            Tabla.Columns.Add(
+                "FkDetalleViajeCodigo", typeof(long));
+
+            Tabla.Columns.Add(
+                "FkLoteProductoCodigo", typeof(long));
+
+            Tabla.Columns.Add(
+                "CantidadCajasDetalleViajeLoteProducto",
+                typeof(int));
+
+            Tabla.Columns.Add(
+                "PesoKgDetalleViajeLoteProducto",
+                typeof(decimal));
+
+            // Obtener registros desde el controlador existente.
+            var Controlador =
+                new ClsControladorDetalleViajeLoteProducto();
+
+            var Registros =
+                Controlador.LogisticaFuncObtenerTodos();
+
+            foreach (var Detalle in Registros)
+            {
+                DataRow Fila = Tabla.NewRow();
+
+                Fila["IdDetalleViajeLoteProducto"] =
+                    Detalle.IdDetalleViajeLoteProducto;
+
+                Fila["FkDetalleViajeCodigo"] =
+                    Detalle.FkDetalleViajeCodigo;
+
+                Fila["FkLoteProductoCodigo"] =
+                    Detalle.FkLoteProductoCodigo;
+
+                Fila["CantidadCajasDetalleViajeLoteProducto"] =
+                    Detalle.CantidadCajasDetalleViajeLoteProducto;
+
+                Fila["PesoKgDetalleViajeLoteProducto"] =
+                    Detalle.PesoKgDetalleViajeLoteProducto;
+
+                Tabla.Rows.Add(Fila);
+            }
+
+            return Tabla;
         }
 
         // =====================================================
@@ -763,6 +816,29 @@ namespace CapaVista_TransporteInterno_Logistica.Formularios
                 "Error - Logística",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
+        }
+
+        private void LogisticaBtnImprimir_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable TablaDatos =
+                    LogisticaMetObtenerDatosReporte();
+
+                using (var Formulario =
+                    new FrmReporteDetalleViajeProducto(TablaDatos))
+                {
+                    Formulario.ShowDialog(this);
+                }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(
+                    "No se pudo generar el reporte:\n" + Ex.Message,
+                    "Reporte de Detalle de Viaje Producto",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
     }
 }

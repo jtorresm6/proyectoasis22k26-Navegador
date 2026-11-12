@@ -122,6 +122,7 @@
             this.LogisticaBtnImprimir.Size = new System.Drawing.Size(70, 74);
             this.LogisticaBtnImprimir.TabIndex = 24;
             this.LogisticaBtnImprimir.UseVisualStyleBackColor = false;
+            this.LogisticaBtnImprimir.Click += new System.EventHandler(this.LogisticaBtnImprimir_Click_1);
             // 
             // LogisticaBtnModificar
             // 

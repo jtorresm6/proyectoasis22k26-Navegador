@@ -129,6 +129,7 @@
             this.LogisticaBtnImprimir.Size = new System.Drawing.Size(70, 74);
             this.LogisticaBtnImprimir.TabIndex = 15;
             this.LogisticaBtnImprimir.UseVisualStyleBackColor = false;
+            this.LogisticaBtnImprimir.Click += new System.EventHandler(this.LogisticaBtnImprimir_Click_1);
             // 
             // LogisticaBtnModificar
             // 
@@ -208,7 +209,6 @@
             this.LogisticaPnlDatosDetalle.Name = "LogisticaPnlDatosDetalle";
             this.LogisticaPnlDatosDetalle.Size = new System.Drawing.Size(1200, 260);
             this.LogisticaPnlDatosDetalle.TabIndex = 20;
-         
             // 
             // LogisticaNudPeso
             // 
