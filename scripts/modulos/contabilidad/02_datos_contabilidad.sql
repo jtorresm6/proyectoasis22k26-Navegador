@@ -9,10 +9,12 @@ USE dbContabilidad;
 --  1. DATOS DE CATÁLOGOS
 -- =============================================================================
 
-INSERT INTO tblPais (idPais, nombrePais) VALUES
-(1, 'Guatemala'),
-(2, 'El Salvador'),
-(3, 'Honduras');
+-- Inicio de cambio: Dylan Hernández - 0901-23-519 - 29/10/2026
+INSERT INTO tblPais (idPais, nombrePais, codigoMonedaPais) VALUES
+(1, 'Guatemala',   'GTQ'),
+(2, 'El Salvador', 'USD'),
+(3, 'Honduras',    'HNL');
+-- Fin de cambio: Dylan Hernández - 0901-23-519 - 29/10/2026
 
 INSERT INTO tblModuloContable (idModuloContable, nombreModuloContable, codigoModuloContable) VALUES
 (1, 'Contabilidad',    'MOD-CONTA'),
@@ -323,8 +325,54 @@ WHERE  m.codigoModuloContable = 'MOD-CONTA'
                                          OR c.codigoCuenta LIKE '2.02.01.%' OR c.codigoCuenta LIKE '4.02.%'
                                          OR c.codigoCuenta LIKE '5.05.%'));
 
+-- Inicio de cambio: Dylan Hernández - 0901-23-519 - 29/10/2026
+INSERT IGNORE INTO tblModuloCuentaPais (idModuloContable, idCuenta, idPais)
+SELECT mcp.idModuloContable, mcp.idCuenta, p.idPais
+FROM   tblModuloCuentaPais mcp
+JOIN   tblPais p ON p.idPais <> 1 AND p.is_active = TRUE
+WHERE  mcp.idPais = 1;
+-- Fin de cambio: Dylan Hernández - 0901-23-519 - 29/10/2026
+
 -- =============================================================================
---  1.2 BITÁCORA DE ACTUALIZACIÓN DE SALDOS
+--  1.2 CATÁLOGO DE IMPUESTOS (Solo Guatemala)
+-- =============================================================================
+
+-- Inicio de cambio: Dylan Hernández - 0901-23-519 - 30/10/2026
+INSERT INTO tblImpuesto
+    (idImpuesto, nombreImpuesto, descripcionImpuesto, tipoImpuesto, operacionImpuesto,
+     valorImpuesto, periodicidadImpuesto, idCuentaAcreditableImpuesto, idCuentaPorPagarImpuesto) VALUES
+(1,  'IVA',                      'Impuesto al Valor Agregado (Decreto 27-92)',              'CONSUMO',     'AMBAS',    0.1200, 'MENSUAL',    29,   91),
+(2,  'IVA Pequeño Contribuyente','IVA Régimen Pequeño Contribuyente (Decreto 27-92)',      'CONSUMO',     'VENTA',    0.0500, 'MENSUAL',    NULL, 91),
+(3,  'ISR Utilidades',           'ISR Régimen sobre las Utilidades (Decreto 10-2012)',      'RENTA',       'PERIODO',  0.2500, 'ANUAL',      NULL, 90),
+(4,  'ISR Simplificado',         'ISR Régimen Opcional Simplificado (Decreto 10-2012)',     'RENTA',       'PERIODO',  0.0000, 'ANUAL',      NULL, 90),
+(5,  'ISR Rentas del Trabajo',   'ISR Rentas del Trabajo en relación de dependencia',       'RENTA',       'PLANILLA', 0.0000, 'MENSUAL',    NULL, 90),
+(6,  'ISO',                      'Impuesto de Solidaridad (Decreto 73-2008)',               'OTRO',        'PERIODO',  0.0100, 'TRIMESTRAL', NULL, NULL),
+(7,  'IUSI',                     'Impuesto Único Sobre Inmuebles (Decreto 15-98)',          'PATRIMONIO',  'PERIODO',  0.0000, 'TRIMESTRAL', NULL, NULL),
+(8,  'Timbres Fiscales',         'Impuesto de Timbres Fiscales (Decreto 37-92)',            'OTRO',        'AMBAS',    0.0300, 'POR_EVENTO', NULL, NULL),
+(9,  'IGSS Patronal',            'Cuota patronal IGSS',                                     'CONTRIBUCION','PLANILLA', 0.1067, 'MENSUAL',    NULL, 92),
+(10, 'IGSS Laboral',             'Cuota laboral IGSS',                                      'CONTRIBUCION','PLANILLA', 0.0483, 'MENSUAL',    NULL, 92),
+(11, 'IRTRA',                    'Cuota patronal IRTRA',                                    'CONTRIBUCION','PLANILLA', 0.0100, 'MENSUAL',    NULL, 93);
+
+-- Tramos ISR Simplificado (id 4)
+INSERT INTO tblImpuestoTramo (idImpuesto, montoDesdeImpuestoTramo, montoHastaImpuestoTramo, tasaImpuestoTramo, importeFijoImpuestoTramo) VALUES
+(4, 0.0000,    30000.0000, 0.0500, 0.0000),
+(4, 30000.0000, NULL,      0.0700, 1500.0000);
+
+-- Tramos ISR Rentas del Trabajo (id 5)
+INSERT INTO tblImpuestoTramo (idImpuesto, montoDesdeImpuestoTramo, montoHastaImpuestoTramo, tasaImpuestoTramo, importeFijoImpuestoTramo) VALUES
+(5, 0.0000,     300000.0000, 0.0500, 0.0000),
+(5, 300000.0000, NULL,       0.0700, 15000.0000);
+
+-- Tramos IUSI (id 7) - Decreto 15-98
+INSERT INTO tblImpuestoTramo (idImpuesto, montoDesdeImpuestoTramo, montoHastaImpuestoTramo, tasaImpuestoTramo, importeFijoImpuestoTramo) VALUES
+(7, 0.0000,     2000.0000,  0.0000, 0.0000),
+(7, 2000.0000,  20000.0000, 0.0020, 0.0000),
+(7, 20000.0000, 70000.0000, 0.0060, 36.0000),
+(7, 70000.0000, NULL,       0.0090, 336.0000);
+-- Fin de cambio: Dylan Hernández - 0901-23-519 - 30/10/2026
+
+-- =============================================================================
+--  1.3 BITÁCORA DE ACTUALIZACIÓN DE SALDOS
 -- =============================================================================
 
 INSERT INTO tblActualizacionSaldos
@@ -435,6 +483,10 @@ UPDATE tblCuenta c
        c.cargoPeriodoCuenta = s.cargoSaldoCuentaPeriodo,
        c.abonoPeriodoCuenta = s.abonoSaldoCuentaPeriodo,
        c.saldoActualCuenta  = s.saldoFinalSaldoCuentaPeriodo,
-       c.cargoActualCuenta  = s.cargoSaldoCuentaPeriodo,
-       c.abonoActualCuenta  = s.abonoSaldoCuentaPeriodo,
+       -- Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
+       c.cargoAcumuladoCuenta = (SELECT SUM(a.cargoSaldoCuentaPeriodo) FROM tblSaldoCuentaPeriodo a
+                                  WHERE a.idCuenta = c.idCuenta AND a.periodoContableSaldoCuentaPeriodo BETWEEN '2026-01' AND '2026-10'),
+       c.abonoAcumuladoCuenta = (SELECT SUM(a.abonoSaldoCuentaPeriodo) FROM tblSaldoCuentaPeriodo a
+                                  WHERE a.idCuenta = c.idCuenta AND a.periodoContableSaldoCuentaPeriodo BETWEEN '2026-01' AND '2026-10'),
+       -- Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
        c.periodoSaldoCuenta = '2026-10';

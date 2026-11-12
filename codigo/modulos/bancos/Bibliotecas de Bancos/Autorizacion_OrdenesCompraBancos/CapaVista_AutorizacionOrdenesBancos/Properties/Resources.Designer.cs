@@ -169,5 +169,15 @@ namespace CapaVista_AutorizacionOrdenes.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Refrescar_Iconodeactualización {
+            get {
+                object obj = ResourceManager.GetObject("Refrescar_Iconodeactualización", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

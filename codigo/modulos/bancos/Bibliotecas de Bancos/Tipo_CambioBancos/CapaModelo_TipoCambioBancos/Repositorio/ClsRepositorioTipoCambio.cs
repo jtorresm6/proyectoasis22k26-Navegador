@@ -1,243 +1,354 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using CapaModelo_TipoCambio.Entidades;
+using CapaModelo_TipoCambio.Servicios;
 
 namespace CapaModelo_TipoCambio.Repositorio
 {
+    // Guarda únicamente respuestas reales en memoria durante esta sesión.
+    // Ninguna consulta sustituye una fecha faltante por la de otro día.
     public class ClsRepositorioTipoCambio
     {
-        // ── Catálogo de tasas de referencia actuales (demo según prototipo) ──
-        private static readonly List<ClsTipoCambio> _tasasActuales =
-            new List<ClsTipoCambio>
-            {
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 13),
-                    CodigoMoneda  = "USD",
-                    NombreMoneda  = "Dólar estadounidense",
-                    MonedaOrigen  = "USD",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 7.753200m,
-                    TasaTexto     = "7.753200",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 13),
-                    CodigoMoneda  = "EUR",
-                    NombreMoneda  = "Euro",
-                    MonedaOrigen  = "EUR",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 8.421500m,
-                    TasaTexto     = "8.421500",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 13),
-                    CodigoMoneda  = "JPY",
-                    NombreMoneda  = "Yen japonés",
-                    MonedaOrigen  = "JPY",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 0.051000m,
-                    TasaTexto     = "0.051000",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 13),
-                    CodigoMoneda  = "CHF",
-                    NombreMoneda  = "Franco suizo",
-                    MonedaOrigen  = "CHF",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 8.960000m,
-                    TasaTexto     = "8.960000",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 13),
-                    CodigoMoneda  = "CAD",
-                    NombreMoneda  = "Dólar canadiense",
-                    MonedaOrigen  = "CAD",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 5.678000m,
-                    TasaTexto     = "5.678000",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 13),
-                    CodigoMoneda  = "GBP",
-                    NombreMoneda  = "Libra esterlina",
-                    MonedaOrigen  = "GBP",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 10.120000m,
-                    TasaTexto     = "10.120000",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 13),
-                    CodigoMoneda  = "MXN",
-                    NombreMoneda  = "Peso mexicano",
-                    MonedaOrigen  = "MXN",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 0.421500m,
-                    TasaTexto     = "0.421500",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 13),
-                    CodigoMoneda  = "CNY",
-                    NombreMoneda  = "Yuan chino",
-                    MonedaOrigen  = "CNY",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 1.088000m,
-                    TasaTexto     = "1.088000",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 13),
-                    CodigoMoneda  = "VEF",
-                    NombreMoneda  = "Bolívar fuerte",
-                    MonedaOrigen  = "VEF",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 0m,
-                    TasaTexto     = "—",
-                    Fuente        = "Demostración",
-                    Estado        = "Sin tasa"
-                }
-            };
+        private readonly ClsServicioBanguat _servicio;
+        private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
+        private readonly Dictionary<string, EntradaCache> _cache =
+            new Dictionary<string, EntradaCache>(StringComparer.Ordinal);
+        private List<ClsMoneda> _catalogo;
+        private DateTime _fechaCatalogoUtc;
 
-        // ── Historial demo (09/10/2026 al 13/10/2026) ──
-        private static readonly List<ClsTipoCambio> _historico =
-            new List<ClsTipoCambio>
-            {
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 13),
-                    CodigoMoneda  = "USD",
-                    NombreMoneda  = "Dólar estadounidense",
-                    MonedaOrigen  = "USD",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 7.753200m,
-                    TasaTexto     = "7.753200",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 12),
-                    CodigoMoneda  = "USD",
-                    NombreMoneda  = "Dólar estadounidense",
-                    MonedaOrigen  = "USD",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 7.751000m,
-                    TasaTexto     = "7.751000",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 11),
-                    CodigoMoneda  = "USD",
-                    NombreMoneda  = "Dólar estadounidense",
-                    MonedaOrigen  = "USD",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 7.749500m,
-                    TasaTexto     = "7.749500",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 10),
-                    CodigoMoneda  = "USD",
-                    NombreMoneda  = "Dólar estadounidense",
-                    MonedaOrigen  = "USD",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 7.748000m,
-                    TasaTexto     = "7.748000",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                },
-                new ClsTipoCambio
-                {
-                    FechaTasa     = new DateTime(2026, 10, 9),
-                    CodigoMoneda  = "USD",
-                    NombreMoneda  = "Dólar estadounidense",
-                    MonedaOrigen  = "USD",
-                    MonedaDestino = "GTQ",
-                    Tasa          = 7.747200m,
-                    TasaTexto     = "7.747200",
-                    Fuente        = "Demostración",
-                    Estado        = "Disponible"
-                }
-            };
+        public ClsRepositorioTipoCambio() : this(new ClsServicioBanguat()) { }
 
-        public List<ClsTipoCambio> BancosMetObtenerTasasActuales(bool incluirSinTasa = true)
+        public ClsRepositorioTipoCambio(ClsServicioBanguat servicio)
         {
-            if (incluirSinTasa)
-                return new List<ClsTipoCambio>(_tasasActuales);
-
-            return _tasasActuales.FindAll(t => t.Estado != "Sin tasa");
+            _servicio = servicio ?? throw new ArgumentNullException(nameof(servicio));
         }
 
-        public ClsTipoCambio BancosMetObtenerTasaActual(string monedaOrigen, string monedaDestino)
+        public async Task BancosMetInvalidarCacheAsync(CancellationToken cancellationToken)
         {
-            if (monedaOrigen == "EUR" && monedaDestino == "USD")
+            await _mutex.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
             {
-                return new ClsTipoCambio
+                cancellationToken.ThrowIfCancellationRequested();
+                _cache.Clear();
+            }
+            finally { _mutex.Release(); }
+        }
+
+        public async Task<List<ClsMoneda>> BancosMetObtenerMonedasAsync(
+            CancellationToken cancellationToken)
+        {
+            await _mutex.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                var catalogo = await ObtenerCatalogoInternoAsync(cancellationToken)
+                    .ConfigureAwait(false);
+                return catalogo.Select(CopiarMoneda).ToList();
+            }
+            finally { _mutex.Release(); }
+        }
+
+        public async Task<List<ClsTipoCambio>> BancosMetObtenerTasasActualesAsync(
+            DateTime fecha, bool incluirSinTasa, bool forzar,
+            CancellationToken cancellationToken)
+        {
+            ValidarFechas(fecha, fecha);
+            var lista = await ObtenerTasasAsync(fecha.Date, fecha.Date, null,
+                forzar, cancellationToken).ConfigureAwait(false);
+            return lista.Where(t => incluirSinTasa || Disponible(t))
+                .OrderBy(t => t.CodigoMoneda, StringComparer.Ordinal).ToList();
+        }
+
+        public async Task<List<ClsTipoCambio>> BancosMetObtenerHistoricoAsync(
+            DateTime desde, DateTime hasta, string origen, string destino,
+            CancellationToken cancellationToken)
+        {
+            ValidarFechas(desde, hasta);
+            origen = NormalizarCodigo(origen);
+            destino = NormalizarCodigo(destino);
+            var catalogo = await BancosMetObtenerMonedasAsync(cancellationToken)
+                .ConfigureAwait(false);
+            var monedaOrigen = BuscarMoneda(catalogo, origen);
+            BuscarMoneda(catalogo, destino);
+
+            if (origen == destino)
+            {
+                var identidad = new List<ClsTipoCambio>();
+                for (DateTime fecha = desde.Date; fecha <= hasta.Date; fecha = fecha.AddDays(1))
                 {
-                    FechaTasa = new DateTime(2026, 10, 13),
-                    CodigoMoneda = "EUR",
-                    NombreMoneda = "Euro",
-                    MonedaOrigen = "EUR",
-                    MonedaDestino = "USD",
-                    Tasa = 1.086200m,
-                    TasaTexto = "1.086200",
-                    Fuente = "Demostración",
-                    Estado = "Disponible"
-                };
+                    cancellationToken.ThrowIfCancellationRequested();
+                    identidad.Add(CrearIdentidad(fecha, monedaOrigen));
+                }
+                return identidad;
             }
 
-            var encontrada = _tasasActuales.Find(
-                t => (t.MonedaOrigen == monedaOrigen && t.MonedaDestino == monedaDestino) ||
-                     (t.CodigoMoneda == monedaOrigen && monedaDestino == "GTQ"));
-
-            return encontrada;
+            var lista = await ObtenerTasasAsync(desde.Date, hasta.Date,
+                new[] { origen, destino }, false, cancellationToken).ConfigureAwait(false);
+            var indice = lista.ToDictionary(t => Clave(t.FechaTasa, t.CodigoMoneda));
+            var resultado = new List<ClsTipoCambio>();
+            for (DateTime fecha = desde.Date; fecha <= hasta.Date; fecha = fecha.AddDays(1))
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                ClsTipoCambio tasaOrigen;
+                ClsTipoCambio tasaDestino;
+                if (indice.TryGetValue(Clave(fecha, origen), out tasaOrigen) &&
+                    indice.TryGetValue(Clave(fecha, destino), out tasaDestino) &&
+                    Disponible(tasaOrigen) && Disponible(tasaDestino))
+                {
+                    resultado.Add(CrearPar(tasaOrigen, tasaDestino));
+                }
+            }
+            return resultado;
         }
 
-        public List<ClsTipoCambio> BancosMetObtenerHistorico(
-            DateTime desde,
-            DateTime hasta,
-            string monedaOrigen,
-            string monedaDestino)
+        public async Task<ClsResultadoConversion> BancosMetConvertirAsync(
+            decimal importe, DateTime fecha, string origen, string destino,
+            CancellationToken cancellationToken)
         {
-            return _historico.FindAll(t =>
-                t.FechaTasa >= desde &&
-                t.FechaTasa <= hasta &&
-                (string.IsNullOrEmpty(monedaOrigen)  || monedaOrigen  == "Todas" || t.MonedaOrigen  == monedaOrigen) &&
-                (string.IsNullOrEmpty(monedaDestino) || monedaDestino == "Todas" || t.MonedaDestino == monedaDestino));
+            if (importe < 0)
+                throw new ArgumentOutOfRangeException(nameof(importe), "El importe no puede ser negativo.");
+
+            var tasas = await BancosMetObtenerHistoricoAsync(fecha, fecha,
+                origen, destino, cancellationToken).ConfigureAwait(false);
+            var tasa = tasas.SingleOrDefault();
+            if (tasa == null)
+                throw new InvalidOperationException(
+                    $"No hay cotizaciones para {origen}/{destino} en la fecha exacta {fecha:dd/MM/yyyy}.");
+
+            decimal tasaAplicada = Math.Round(tasa.Tasa, 4, MidpointRounding.AwayFromZero);
+            if (tasaAplicada <= 0m)
+                throw new InvalidOperationException("La tasa no se puede representar con los cuatro decimales del estándar.");
+
+            return new ClsResultadoConversion
+            {
+                Resultado = Math.Round(checked(importe * tasaAplicada), 4,
+                    MidpointRounding.AwayFromZero),
+                Tasa = tasaAplicada,
+                Fecha = tasa.FechaTasa,
+                MonedaOrigen = tasa.MonedaOrigen,
+                MonedaDestino = tasa.MonedaDestino,
+                Fuente = tasa.Fuente,
+                Metodo = tasa.Metodo
+            };
         }
 
-        public (decimal Minima, decimal Maxima, decimal Variacion) BancosMetObtenerResumenHistorico()
+        private async Task<List<ClsMoneda>> ObtenerCatalogoInternoAsync(
+            CancellationToken cancellationToken)
         {
-            decimal min = 7.747200m;
-            decimal max = 7.753200m;
-            decimal var = max - min;
-            return (min, max, var);
+            if (_catalogo == null || DateTime.UtcNow - _fechaCatalogoUtc > TimeSpan.FromHours(6))
+            {
+                var monedas = await _servicio.BancosMetObtenerMonedasAsync(cancellationToken)
+                    .ConfigureAwait(false);
+                if (monedas == null || monedas.Count == 0 ||
+                    monedas.Any(m => m == null || string.IsNullOrWhiteSpace(m.Codigo)) ||
+                    monedas.Select(m => NormalizarCodigo(m.Codigo)).Distinct().Count() != monedas.Count)
+                    throw new InvalidOperationException("El catálogo de monedas recibido no es válido.");
+
+                if (!monedas.Any(m => NormalizarCodigo(m.Codigo) == "GTQ") ||
+                    !monedas.Any(m => NormalizarCodigo(m.Codigo) == "USD"))
+                    throw new InvalidOperationException("El catálogo debe contener GTQ y USD.");
+
+                cancellationToken.ThrowIfCancellationRequested();
+                _catalogo = monedas.Select(CopiarMoneda).ToList();
+                _fechaCatalogoUtc = DateTime.UtcNow;
+            }
+            return _catalogo;
+        }
+
+        private async Task<List<ClsTipoCambio>> ObtenerTasasAsync(
+            DateTime desde, DateTime hasta, IEnumerable<string> codigos, bool forzar,
+            CancellationToken cancellationToken)
+        {
+            await _mutex.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                var catalogo = await ObtenerCatalogoInternoAsync(cancellationToken)
+                    .ConfigureAwait(false);
+                var monedas = codigos == null ? catalogo : codigos
+                    .Select(c => BuscarMoneda(catalogo, NormalizarCodigo(c)))
+                    .GroupBy(m => m.Codigo).Select(g => g.First()).ToList();
+
+                DateTime? primerFaltante = null;
+                DateTime? ultimoFaltante = null;
+                var codigosFaltantes = new HashSet<string>(StringComparer.Ordinal);
+                for (DateTime fecha = desde; fecha <= hasta; fecha = fecha.AddDays(1))
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    foreach (var moneda in monedas)
+                    {
+                        EntradaCache entrada;
+                        if (forzar || !_cache.TryGetValue(Clave(fecha, moneda.Codigo), out entrada) ||
+                            !Vigente(entrada))
+                        {
+                            if (!primerFaltante.HasValue) primerFaltante = fecha;
+                            ultimoFaltante = fecha;
+                            codigosFaltantes.Add(moneda.Codigo);
+                        }
+                    }
+                }
+
+                if (primerFaltante.HasValue)
+                {
+                    var solicitadas = monedas.Where(m => codigosFaltantes.Contains(m.Codigo)).ToList();
+                    var recibidas = await _servicio.BancosMetObtenerTasasEnGtqAsync(
+                        primerFaltante.Value, ultimoFaltante.Value, solicitadas, cancellationToken)
+                        .ConfigureAwait(false);
+                    if (recibidas == null)
+                        throw new InvalidOperationException("Banguat no devolvió una respuesta de tasas.");
+
+                    var nuevas = new Dictionary<string, ClsTipoCambio>(StringComparer.Ordinal);
+                    foreach (var tasa in recibidas)
+                    {
+                        if (tasa == null || tasa.FechaTasa.Date < primerFaltante.Value ||
+                            tasa.FechaTasa.Date > ultimoFaltante.Value || tasa.Tasa < 0)
+                            throw new InvalidOperationException("La respuesta de tasas contiene datos inválidos.");
+                        string codigo = NormalizarCodigo(tasa.CodigoMoneda);
+                        if (!codigosFaltantes.Contains(codigo)) continue;
+                        string clave = Clave(tasa.FechaTasa, codigo);
+                        if (nuevas.ContainsKey(clave))
+                            throw new InvalidOperationException("Banguat devolvió más de una tasa para la misma moneda y fecha.");
+                        var copia = CopiarTasa(tasa);
+                        copia.CodigoMoneda = codigo;
+                        copia.FechaTasa = copia.FechaTasa.Date;
+                        nuevas.Add(clave, copia);
+                    }
+
+                    // Un día sin publicación se mantiene como faltante; nunca recibe
+                    // la tasa del día anterior ni una cotización escrita en el código.
+                    for (DateTime fecha = primerFaltante.Value; fecha <= ultimoFaltante.Value; fecha = fecha.AddDays(1))
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        foreach (var moneda in solicitadas)
+                        {
+                            string clave = Clave(fecha, moneda.Codigo);
+                            if (!nuevas.ContainsKey(clave))
+                                nuevas.Add(clave, CrearSinTasa(fecha, moneda));
+                        }
+                    }
+
+                    cancellationToken.ThrowIfCancellationRequested();
+                    DateTime ahora = DateTime.UtcNow;
+                    foreach (var nueva in nuevas)
+                        _cache[nueva.Key] = new EntradaCache { Tasa = nueva.Value, ConsultadaUtc = ahora };
+                }
+
+                var resultado = new List<ClsTipoCambio>();
+                for (DateTime fecha = desde; fecha <= hasta; fecha = fecha.AddDays(1))
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    foreach (var moneda in monedas)
+                        resultado.Add(CopiarTasa(_cache[Clave(fecha, moneda.Codigo)].Tasa));
+                }
+                return resultado;
+            }
+            finally { _mutex.Release(); }
+        }
+
+        private static ClsTipoCambio CrearPar(ClsTipoCambio origen, ClsTipoCambio destino)
+        {
+            decimal valor = origen.Tasa / destino.Tasa;
+            string metodo = destino.CodigoMoneda == "GTQ" ? origen.Metodo :
+                origen.CodigoMoneda == "GTQ" && destino.CodigoMoneda == "USD" ?
+                    (destino.Metodo == "DIRECTA" ? "INVERSA" :
+                        "INVERSA (" + destino.Metodo + ")") :
+                "CRUZADA (promedio)";
+            return new ClsTipoCambio
+            {
+                FechaTasa = origen.FechaTasa,
+                CodigoMoneda = origen.CodigoMoneda,
+                NombreMoneda = origen.NombreMoneda,
+                MonedaOrigen = origen.CodigoMoneda,
+                MonedaDestino = destino.CodigoMoneda,
+                Tasa = valor,
+                TasaTexto = valor.ToString("F4", CultureInfo.InvariantCulture),
+                Fuente = "Banco de Guatemala",
+                Estado = "Disponible",
+                Metodo = metodo
+            };
+        }
+
+        private static ClsTipoCambio CrearIdentidad(DateTime fecha, ClsMoneda moneda)
+        {
+            var tasa = CrearSinTasa(fecha, moneda);
+            tasa.MonedaDestino = moneda.Codigo;
+            tasa.Tasa = 1m;
+            tasa.TasaTexto = "1.0000";
+            tasa.Fuente = "Identidad matemática";
+            tasa.Estado = "Disponible";
+            tasa.Metodo = "IDENTIDAD";
+            return tasa;
+        }
+
+        private static ClsTipoCambio CrearSinTasa(DateTime fecha, ClsMoneda moneda)
+        {
+            return new ClsTipoCambio
+            {
+                FechaTasa = fecha.Date, CodigoMoneda = moneda.Codigo,
+                NombreMoneda = moneda.Nombre, MonedaOrigen = moneda.Codigo,
+                MonedaDestino = "GTQ", Tasa = 0m, TasaTexto = "—",
+                Fuente = "Banco de Guatemala", Estado = "Sin tasa", Metodo = "Sin publicación"
+            };
+        }
+
+        private static bool Disponible(ClsTipoCambio tasa)
+        { return tasa.Tasa > 0 && tasa.Estado != "Sin tasa"; }
+
+        private static bool Vigente(EntradaCache entrada)
+        {
+            TimeSpan duracion = entrada.Tasa.FechaTasa.Date == DateTime.Today ||
+                !Disponible(entrada.Tasa) ? TimeSpan.FromMinutes(5) : TimeSpan.FromHours(24);
+            return DateTime.UtcNow - entrada.ConsultadaUtc < duracion;
+        }
+
+        private static string Clave(DateTime fecha, string codigo)
+        { return fecha.Date.ToString("yyyyMMdd", CultureInfo.InvariantCulture) + ":" + NormalizarCodigo(codigo); }
+
+        private static string NormalizarCodigo(string codigo)
+        {
+            if (string.IsNullOrWhiteSpace(codigo))
+                throw new ArgumentException("Selecciona una moneda.");
+            return codigo.Trim().ToUpperInvariant();
+        }
+
+        private static ClsMoneda BuscarMoneda(IEnumerable<ClsMoneda> monedas, string codigo)
+        {
+            var moneda = monedas.SingleOrDefault(m => NormalizarCodigo(m.Codigo) == codigo);
+            if (moneda == null)
+                throw new ArgumentException("La moneda " + codigo + " no está disponible en el catálogo de Banguat.");
+            return moneda;
+        }
+
+        private static void ValidarFechas(DateTime desde, DateTime hasta)
+        {
+            if (desde.Date > hasta.Date)
+                throw new ArgumentException("La fecha inicial debe ser anterior o igual a la final.");
+            if (hasta.Date > DateTime.Today)
+                throw new ArgumentException("No se pueden consultar cotizaciones de fechas futuras.");
+        }
+
+        private static ClsMoneda CopiarMoneda(ClsMoneda moneda)
+        {
+            return new ClsMoneda { IdBanguat = moneda.IdBanguat,
+                Codigo = NormalizarCodigo(moneda.Codigo), Nombre = moneda.Nombre,
+                DolaresPorUnidad = moneda.DolaresPorUnidad };
+        }
+
+        private static ClsTipoCambio CopiarTasa(ClsTipoCambio tasa)
+        {
+            return new ClsTipoCambio { FechaTasa = tasa.FechaTasa,
+                CodigoMoneda = tasa.CodigoMoneda, NombreMoneda = tasa.NombreMoneda,
+                MonedaOrigen = tasa.MonedaOrigen, MonedaDestino = tasa.MonedaDestino,
+                Tasa = tasa.Tasa, TasaTexto = tasa.TasaTexto, Fuente = tasa.Fuente,
+                Estado = tasa.Estado, Metodo = tasa.Metodo };
+        }
+
+        private sealed class EntradaCache
+        {
+            public ClsTipoCambio Tasa { get; set; }
+            public DateTime ConsultadaUtc { get; set; }
         }
     }
 }

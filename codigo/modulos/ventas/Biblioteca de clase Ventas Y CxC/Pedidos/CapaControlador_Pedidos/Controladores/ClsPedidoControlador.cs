@@ -1,8 +1,13 @@
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 22/10/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Validar y coordinar los pedidos entre vista y modelo.
+ */
 using System;
 using System.Data;
 using System.IO;
 using System.Reflection;
-using System.Security.Cryptography;
 using CapaModelo_Pedidos;
 
 namespace CapaControlador_Pedidos
@@ -40,25 +45,14 @@ namespace CapaControlador_Pedidos
         public string VentasFuncRutaAyuda(Assembly BibliotecaVista)
         {
             if (BibliotecaVista == null) throw new ArgumentNullException(nameof(BibliotecaVista));
-            const string Recurso = "CapaVista_Pedidos.Ayudas.Pedidos.chm";
-            using (Stream Manual = BibliotecaVista.GetManifestResourceStream(Recurso))
-            {
-                if (Manual == null) throw new FileNotFoundException("No se encontró la ayuda de pedidos.");
-                byte[] Huella;
-                using (var Resumen = SHA256.Create()) Huella = Resumen.ComputeHash(Manual);
-                string Carpeta = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "EmbutidosDeCalidad", "Ventas", "Ayuda");
-                Directory.CreateDirectory(Carpeta);
-                string Archivo = Path.Combine(Carpeta, "Pedidos_" +
-                    BitConverter.ToString(Huella, 0, 8).Replace("-", "") + ".chm");
-                if (!File.Exists(Archivo))
+            // Natali Montenegro: buscar el manual desde el ejecutable o la DLL, sin depender de la letra de unidad.
+            foreach (string Origen in new[] { AppDomain.CurrentDomain.BaseDirectory, Path.GetDirectoryName(BibliotecaVista.Location) })
+                for (DirectoryInfo Carpeta = new DirectoryInfo(Origen); Carpeta != null; Carpeta = Carpeta.Parent)
                 {
-                    Manual.Position = 0;
-                    using (var Destino = new FileStream(Archivo, FileMode.CreateNew, FileAccess.Write))
-                        Manual.CopyTo(Destino);
+                    string Manual = Path.Combine(Carpeta.FullName, "ayuda", "modulos", "ventas", "Pedidos.chm");
+                    if (File.Exists(Manual)) return Manual;
                 }
-                return Archivo;
-            }
+            throw new FileNotFoundException("No se encontró ayuda\\modulos\\ventas\\Pedidos.chm desde la carpeta del programa.");
         }
 
         public static DataTable VentasFuncLineas()

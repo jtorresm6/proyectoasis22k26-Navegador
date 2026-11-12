@@ -1,4 +1,10 @@
 /*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 22/10/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Capturar y administrar pedidos de Ventas.
+ */
+/*
  * INICIO DEL CÓDIGO — Ventas y cuentas por cobrar
  * Asignación: Matthew, Jose, Natali
  * Matthew Andreé Juárez Xoy | Carné: 0901-23-4250

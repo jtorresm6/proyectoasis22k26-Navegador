@@ -1,0 +1,8 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN"><HTML><BODY><UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="cierre en borrador"><param name="Local" value="html/01_confirmar.html"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="confirmar cierre"><param name="Local" value="html/01_confirmar.html"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="diagnostico"><param name="Local" value="html/03_errores.html"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="historial por cliente"><param name="Local" value="html/04_historial.html"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="poliza contable"><param name="Local" value="html/02_traslado.html"></OBJECT>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="traslado a contabilidad"><param name="Local" value="html/02_traslado.html"></OBJECT>
+</UL></BODY></HTML>

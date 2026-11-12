@@ -27,10 +27,6 @@ namespace CapaControlador_Contabilidad
         [MaxLength(255, ErrorMessage = "La descripción admite hasta 255 caracteres.")]
         public string Descripcion { get; set; }
 
-        [Required(ErrorMessage = "Ingrese el centro de costo.")]
-        [MaxLength(20, ErrorMessage = "El centro de costo admite hasta 20 caracteres.")]
-        public string Centro { get; set; }
-
         public string Modulo { get; set; }
 
         public string Tipo { get; set; }

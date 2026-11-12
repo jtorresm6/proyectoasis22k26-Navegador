@@ -11,6 +11,7 @@ namespace CapaVista_Contabilidad.Componentes
 {
     internal sealed class ClsPaginacionContabilidad : IDisposable
     {
+        // Inicio de cambio: Gabriel Guillén - 0901-23-1998 - 09/11/2026
         private readonly ClsTablaContabilidad _Tabla;
         private readonly Panel _Pie;
         private readonly Label _Resumen;
@@ -122,5 +123,6 @@ namespace CapaVista_Contabilidad.Componentes
             if (_PaginaVisible != null) _PaginaVisible.Dispose();
             _Pie.Dispose();
         }
+        // Fin de cambio: Gabriel Guillén - 0901-23-1998 - 09/11/2026
     }
 }

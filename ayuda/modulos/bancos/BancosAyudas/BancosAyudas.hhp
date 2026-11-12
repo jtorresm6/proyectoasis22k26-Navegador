@@ -1,0 +1,26 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=BancosAyudas.chm
+Contents file=BancosAyudas.hhc
+Default Window=BancosAyudas
+Default topic=Bancos_Bancos.html
+Display compile progress=No
+Index file=BancosAyudas.hhk
+Language=0x100a Español (Guatemala)
+
+[WINDOWS]
+BancosAyudas="Ayudas generales del módulo de Bancos.","BancosAyudas.hhc","BancosAyudas.hhk","MDI_Bancos.html","MDI_Bancos.html",,,,,0x23520,,0x4387e,,,,,,,,0
+
+
+[FILES]
+MDI_Bancos.html
+Bancos_Bancos.html
+CuentaBancaria_Bancos.html
+Moneda_Bancos.html
+TipoCuentaBancaria_Bancos.html
+TipoTransaccion_Bancos.html
+AutorizacionOrdenCompra_Bancos.html
+CierreBancario_Bancos.html
+MovimientoBancario_Bancos.html
+
+[INFOTYPES]

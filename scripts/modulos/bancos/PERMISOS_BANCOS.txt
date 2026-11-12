@@ -1,0 +1,68 @@
+USE `dbsistemaembutidos`;
+
+-- 1) Módulo Bancos
+INSERT INTO `tblmodulo` (`idModulo`, `nombreModulo`, `descripcionModulo`, `is_active`)
+VALUES (8000, 'Bancos', 'Modulo bancario del sistema de Enbutidos S.A.', 1)
+ON DUPLICATE KEY UPDATE `is_active` = 1;
+
+-- 2) Aplicaciones de Bancos (8001 a 8013)
+INSERT INTO `tblaplicacion`
+  (`idAplicacion`, `idModulo`, `nombreAplicacion`, `descripcionAplicacion`, `is_active`)
+VALUES
+(8001, 8000, 'Moneda',                                  'Mantenimiento de la moneda a utilizar.', 1),
+(8002, 8000, 'Bancos',                                  'Mantenimiento del banco a utilizar.', 1),
+(8003, 8000, 'Tipo de Cuenta Bancaria',                 'Mantenimiento del tipo de cuenta a utilizar.', 1),
+(8004, 8000, 'Tipo de Transacción',                     'Mantenimiento del tipo de transacción a utilizar.', 1),
+(8005, 8000, 'Cuenta Bancaria',                         'Mantenimiento de las cuentas a utilizar.', 1),
+(8006, 8000, 'Movimiento Bancario',                     'Proceso para el registro de movimientos bancarios.', 1),
+(8007, 8000, 'Conciliacion Bancaria',                   'Proceso para conciliar los movimientos con el estado de cuentas.', 1),
+(8008, 8000, 'Enlace a Otros Modulos',                  'Proceso que permite la comunicacion con los demas modulos.', 1),
+(8009, 8000, 'Disponibilidad Diaria',                   'Proceso que permite visualizar la disponibilidad del cliente.', 1),
+(8010, 8000, 'Tipo de Cambio',                          'Proceso que permite visualizar el cambio de la moneda.', 1),
+(8011, 8000, 'Proceso autorizacion de Orden de Compra', 'Proceso que autoriza las ordenes de las compras.', 1),
+(8012, 8000, 'Proceso Generacion de Pago',              'Proceso que permite generar los pagos requeridos.', 1),
+(8013, 8000, 'Cierre Bancario',                         'Proceso que culmina con los movimientos mensuales y anuales.', 1)
+ON DUPLICATE KEY UPDATE
+  `nombreAplicacion` = VALUES(`nombreAplicacion`),
+  `descripcionAplicacion` = VALUES(`descripcionAplicacion`),
+  `is_active` = 1;
+
+-- 3) Permisos del perfil Administrador (idRol = 1) en todas las aplicaciones de Bancos
+INSERT INTO `tblrolmoduloaplicacion`
+  (`idRol`, `idModulo`, `idAplicacion`,
+   `derInsertarRolModuloAplicacion`, `derEditarRolModuloAplicacion`,
+   `derEliminarRolModuloAplicacion`, `derImprimirRolModuloAplicacion`)
+SELECT 1, 8000, a.`idAplicacion`, 1, 1, 1, 1
+FROM `tblaplicacion` a
+WHERE a.`idModulo` = 8000
+ON DUPLICATE KEY UPDATE
+  `derInsertarRolModuloAplicacion` = 1,
+  `derEditarRolModuloAplicacion`   = 1,
+  `derEliminarRolModuloAplicacion` = 1,
+  `derImprimirRolModuloAplicacion` = 1;
+
+-- 4) Permisos directos para imelendez (idUsuario = 1)
+INSERT INTO `tblusuariomoduloaplicacion`
+  (`idUsuario`, `idModulo`, `idAplicacion`,
+   `derInsertarUsuarioModuloAplicacion`, `derEditarUsuarioModuloAplicacion`,
+   `derEliminarUsuarioModuloAplicacion`, `derImprimirUsuarioModuloAplicacion`)
+SELECT 1, 8000, a.`idAplicacion`, 1, 1, 1, 1
+FROM `tblaplicacion` a
+WHERE a.`idModulo` = 8000
+ON DUPLICATE KEY UPDATE
+  `derInsertarUsuarioModuloAplicacion` = 1,
+  `derEditarUsuarioModuloAplicacion`   = 1,
+  `derEliminarUsuarioModuloAplicacion` = 1,
+  `derImprimirUsuarioModuloAplicacion` = 1;
+
+-- 5) Verificación
+SELECT a.idAplicacion, a.nombreAplicacion, a.is_active,
+       rma.derInsertarRolModuloAplicacion AS Ins,
+       rma.derEditarRolModuloAplicacion   AS Edi,
+       rma.derEliminarRolModuloAplicacion AS Eli,
+       rma.derImprimirRolModuloAplicacion AS Imp
+FROM tblaplicacion a
+LEFT JOIN tblrolmoduloaplicacion rma
+       ON rma.idAplicacion = a.idAplicacion AND rma.idRol = 1
+WHERE a.idModulo = 8000
+ORDER BY a.idAplicacion;

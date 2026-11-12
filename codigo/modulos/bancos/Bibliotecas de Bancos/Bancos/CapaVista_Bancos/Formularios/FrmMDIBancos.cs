@@ -92,8 +92,8 @@ namespace CapaVista_Bancos.Formularios
 
         private void BancosBtnEnlace_Click(object sender, EventArgs e)
         {
-            FrmEnlaceOtrosModulos Enlace = new FrmEnlaceOtrosModulos();
-            Enlace.ShowDialog();
+            FrmBancoNavegador Banco = new FrmBancoNavegador();
+            Banco.ShowDialog();
         }
 
         private void BancosBtnDisp_Click(object sender, EventArgs e)

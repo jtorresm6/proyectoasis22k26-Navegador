@@ -1,4 +1,11 @@
-﻿// Jose Javier Torres Martinez | 0901-23-1091 | 23/10/2026
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 09/11/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Consultar saldos e historial de cierres.
+ */
+// Natali Sofía Montenegro Portillo | Carné 0901-23-10017 | Cierre de movimientos | 09/11/2026
+// Jose Javier Torres Martinez | 0901-23-1091 | 23/10/2026
 using System.Data;
 using System;
 using VentasDatos;
