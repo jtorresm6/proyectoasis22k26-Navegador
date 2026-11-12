@@ -111,11 +111,17 @@ namespace CapaControlador_Polizas
                 return "La descripción admite hasta 255 caracteres.";
             if (Poliza.Lineas == null || Poliza.Lineas.Count < 2)
                 return "Agregue al menos dos líneas contables.";
-            foreach (var Linea in Poliza.Lineas)
+            for (int Indice = 0; Indice < Poliza.Lineas.Count; Indice++)
             {
-                if (string.IsNullOrWhiteSpace(Linea.CodigoCuenta) || Linea.Debe < 0m || Linea.Haber < 0m ||
-                    ((Linea.Debe > 0m) == (Linea.Haber > 0m)))
-                    return "Cada línea necesita una cuenta y un importe en Debe o Haber.";
+                var Linea = Poliza.Lineas[Indice];
+                if (string.IsNullOrWhiteSpace(Linea.CodigoCuenta))
+                    return "Seleccione una cuenta para la línea " + (Indice + 1) + ".";
+                if (Linea.Debe < 0m || Linea.Haber < 0m)
+                    return "No se permiten importes negativos. Revise la línea " + (Indice + 1) + ".";
+                if (Linea.Debe > 0m && Linea.Haber > 0m)
+                    return "La línea " + (Indice + 1) + " tiene importe en Debe y Haber. Deje el importe en un solo lado.";
+                if (Linea.Debe == 0m && Linea.Haber == 0m)
+                    return "Cada línea necesita una cuenta y un importe en Debe o Haber. Revise la línea " + (Indice + 1) + ".";
             }
             if (Poliza.Lineas.Sum(x => x.Debe) != Poliza.Lineas.Sum(x => x.Haber))
                 return "La póliza no está cuadrada.";

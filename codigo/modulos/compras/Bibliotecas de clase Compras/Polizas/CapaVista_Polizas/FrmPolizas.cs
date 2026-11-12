@@ -23,17 +23,14 @@ namespace CapaVista_Polizas
             ComprasBtnEnviar.Enabled = true;
             ComprasBtnNuevo.Visible = false;
             ComprasBtnGuardar.Visible = false;
-            ComprasGbxDetalle.Height = 390;
-            ComprasLblDiferencia.Location = new System.Drawing.Point(10, 315);
-            ComprasLblDiferencia.Size = new System.Drawing.Size(900, 32);
-            ComprasBtnEnviar.Location = new System.Drawing.Point(1146, 300);
             ComprasLblDiferencia.Text = "Total Debe: Q 0.00    Total Haber: Q 0.00    Diferencia: Q 0.00";
             ComprasLblDiferencia.Texto = ComprasLblDiferencia.Text;
             ComprasLblCuenta.MostrarAsterisco = true;
             ComprasCboCuenta.Entrada.Validating += (Remitente, Evento) =>
             {
-                if (string.IsNullOrEmpty(ComprasCboCuenta.Text)) return;
-                bool EsValido = ClsCuentaContable.ComprasFuncFormatoValido(ComprasCboCuenta.Text);
+                string Codigo = Convert.ToString(ComprasCboCuenta.Entrada.SelectedValue);
+                if (string.IsNullOrEmpty(Codigo)) return;
+                bool EsValido = ClsCuentaContable.ComprasFuncFormatoValido(Codigo);
                 Evento.Cancel = !EsValido;
                 if (EsValido) ComprasCboCuenta.ComprasMetLimpiarError();
                 else ComprasCboCuenta.ComprasMetMostrarError("Use el formato C.GG.CC.SSS; por ejemplo, 1.01.02.001.");
@@ -53,31 +50,17 @@ namespace CapaVista_Polizas
                 ComprasCboCuenta.Entrada.DisplayMember = "Texto";
                 ComprasCboCuenta.Entrada.ValueMember = "Codigo";
 
-                _Lineas = new DataGridView
-                {
-                    Name = "ComprasDgvLineasPoliza",
-                    AllowUserToAddRows = false,
-                    AllowUserToDeleteRows = true,
-                    AutoGenerateColumns = false,
-                    RowHeadersVisible = false,
-                    SelectionMode = DataGridViewSelectionMode.CellSelect,
-                    Location = new System.Drawing.Point(10, 125),
-                    Size = new System.Drawing.Size(1220, 165),
-                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
-                };
-                _Lineas.Columns.Add(new DataGridViewComboBoxColumn
-                {
-                    Name = "Cuenta", HeaderText = "Cuenta", DataSource = _Cuentas.ToArray(),
-                    DisplayMember = "Texto", ValueMember = "Codigo", Width = 270
-                });
-                _Lineas.Columns["Cuenta"].ReadOnly = true;
-                _Lineas.Columns.Add(new DataGridViewTextBoxColumn { Name = "Debe", HeaderText = "Debe", Width = 125 });
-                _Lineas.Columns.Add(new DataGridViewTextBoxColumn { Name = "Haber", HeaderText = "Haber", Width = 125 });
-                _Lineas.Columns.Add(new DataGridViewTextBoxColumn { Name = "Descripcion", HeaderText = "Descripción", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+                _Lineas = ComprasDgvLineasPoliza;
+                _Lineas.AutoGenerateColumns = false;
+                DataGridViewComboBoxColumn ColumnaCuenta = (DataGridViewComboBoxColumn)_Lineas.Columns["Cuenta"];
+                ColumnaCuenta.DataSource = _Cuentas.ToArray();
+                ColumnaCuenta.DisplayMember = "Texto";
+                ColumnaCuenta.ValueMember = "Codigo";
+                ColumnaCuenta.ReadOnly = true;
                 _Lineas.CellEndEdit += (EmisorCuadricula, Argumentos) => ComprasMetActualizarTotales();
                 _Lineas.RowsRemoved += (EmisorCuadricula, Argumentos) => ComprasMetActualizarTotales();
                 _Lineas.CellValueChanged += (EmisorCuadricula, Argumentos) => ComprasMetActualizarTotales();
-                ComprasGbxDetalle.Controls.Add(_Lineas);
+                _Lineas.DataError += (EmisorCuadricula, Argumentos) => Argumentos.ThrowException = false;
 
                 DataTable CuentasPorPagar = _Controlador.ComprasFuncConsultarCuentasPorPagar();
                 ComprasCboOrigen.Entrada.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -90,9 +73,20 @@ namespace CapaVista_Polizas
             }
             catch (Exception Ex)
             {
-                MessageBox.Show("No se pudieron cargar las cuentas o documentos de Compras: " + Ex.Message,
+                MessageBox.Show("No se pudieron cargar las cuentas o documentos de Compras:" + Environment.NewLine + ComprasFuncObtenerErrorCompleto(Ex),
                     "Pólizas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private static string ComprasFuncObtenerErrorCompleto(Exception Ex)
+        {
+            System.Text.StringBuilder Mensaje = new System.Text.StringBuilder();
+            for (Exception Actual = Ex; Actual != null; Actual = Actual.InnerException)
+            {
+                if (Mensaje.Length > 0) Mensaje.AppendLine();
+                Mensaje.Append(Actual.Message);
+            }
+            return Mensaje.ToString();
         }
 
         private void ComprasCboOrigen_SelectedIndexChanged(object Remitente, EventArgs Evento)
@@ -112,6 +106,8 @@ namespace CapaVista_Polizas
             if (_Lineas == null || ComprasCboCuenta.Entrada.SelectedValue == null) return;
             int Indice = _Lineas.Rows.Add();
             _Lineas.Rows[Indice].Cells["Cuenta"].Value = Convert.ToString(ComprasCboCuenta.Entrada.SelectedValue);
+            _Lineas.CurrentCell = _Lineas.Rows[Indice].Cells["Debe"];
+            _Lineas.BeginEdit(true);
             ComprasMetActualizarTotales();
         }
 
@@ -124,8 +120,8 @@ namespace CapaVista_Polizas
                 foreach (DataGridViewRow Fila in _Lineas.Rows)
                 {
                     if (Fila.IsNewRow) continue;
-                    decimal.TryParse(Convert.ToString(Fila.Cells["Debe"].Value), NumberStyles.Number, CultureInfo.CurrentCulture, out decimal Debe);
-                    decimal.TryParse(Convert.ToString(Fila.Cells["Haber"].Value), NumberStyles.Number, CultureInfo.CurrentCulture, out decimal Haber);
+                    ComprasFuncLeerImporte(Fila.Cells["Debe"].Value, out decimal Debe);
+                    ComprasFuncLeerImporte(Fila.Cells["Haber"].Value, out decimal Haber);
                     TotalDebe += Debe;
                     TotalHaber += Haber;
                 }
@@ -137,13 +133,30 @@ namespace CapaVista_Polizas
             ComprasLblDiferencia.Texto = ComprasLblDiferencia.Text;
         }
 
+        private static bool ComprasFuncLeerImporte(object Valor, out decimal Importe)
+        {
+            string Texto = Convert.ToString(Valor);
+            if (string.IsNullOrWhiteSpace(Texto))
+            {
+                Importe = 0m;
+                return true;
+            }
+            return decimal.TryParse(Texto, NumberStyles.Number, CultureInfo.CurrentCulture, out Importe)
+                || decimal.TryParse(Texto, NumberStyles.Number, CultureInfo.InvariantCulture, out Importe);
+        }
+
         private void ComprasBtnEnviar_Click(object Remitente, EventArgs Evento)
         {
-            if (_Lineas != null) _Lineas.EndEdit();
+            if (_Lineas != null)
+            {
+                if (_Lineas.IsCurrentCellInEditMode) _Lineas.EndEdit();
+                _Lineas.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                _Lineas.EndEdit();
+            }
             DataRowView Factura = ComprasCboOrigen.Entrada.SelectedItem as DataRowView;
             if (Factura == null)
             {
-                MessageBox.Show("Seleccione una cuenta por pagar pendiente.", "Pólizas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione primero un documento en el campo Origen para enviar la póliza.", "Pólizas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (!DateTime.TryParse(ComprasCboFecha.Entrada.Text, CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime Fecha))
@@ -163,9 +176,14 @@ namespace CapaVista_Polizas
             {
                 if (Fila.IsNewRow) continue;
                 string Cuenta = Convert.ToString(Fila.Cells["Cuenta"].Value);
-                if (string.IsNullOrWhiteSpace(Cuenta)) continue;
-                decimal.TryParse(Convert.ToString(Fila.Cells["Debe"].Value), NumberStyles.Number, CultureInfo.CurrentCulture, out decimal Debe);
-                decimal.TryParse(Convert.ToString(Fila.Cells["Haber"].Value), NumberStyles.Number, CultureInfo.CurrentCulture, out decimal Haber);
+                if (!ComprasFuncLeerImporte(Fila.Cells["Debe"].Value, out decimal Debe) ||
+                    !ComprasFuncLeerImporte(Fila.Cells["Haber"].Value, out decimal Haber))
+                {
+                    MessageBox.Show("Revise el importe de Debe y Haber en la fila " + (Fila.Index + 1) + ". Use solo números.",
+                        "Pólizas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(Cuenta) || (Debe == 0m && Haber == 0m)) continue;
                 Poliza.Lineas.Add(new ClsModeloLineaPolizaCompras
                 {
                     CodigoCuenta = Cuenta,
@@ -181,6 +199,14 @@ namespace CapaVista_Polizas
             MessageBox.Show(Mensaje + (string.IsNullOrEmpty(Codigo) ? string.Empty : Environment.NewLine + "Código: " + Codigo),
                 "Pólizas de Compras", MessageBoxButtons.OK,
                 Aceptada ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+
+            if (Aceptada) ComprasMetLimpiarTabla();
+        }
+
+        private void ComprasMetLimpiarTabla()
+        {
+            if (_Lineas != null) _Lineas.Rows.Clear();
+            ComprasMetActualizarTotales();
         }
     }
 }

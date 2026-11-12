@@ -7,18 +7,18 @@ namespace CapaModelo_Polizas
     {
         public DataTable ComprasFuncConsultarCuentasPorPagar()
         {
-            const string Sql = @"SELECT cp.numeroFacturaCuentaPorPagar AS DocumentoOrigen,
+            const string Sql = @"SELECT CONCAT(cp.serieDocumentoCuentaPorPagar, '-', cp.numeroDocumentoCuentaPorPagar) AS DocumentoOrigen,
        cp.fechaEmisionCuentaPorPagar AS Fecha,
        cp.montoTotalCuentaPorPagar AS MontoTotal,
-       cp.saldoCuentaPorPagar AS Saldo,
+       cp.saldoActualCuentaPorPagar AS Saldo,
        cp.estadoCuentaPorPagar AS Estado,
        p.nombreProveedor AS Proveedor,
-       CONCAT(cp.numeroFacturaCuentaPorPagar, ' - ', p.nombreProveedor,
-              ' - Q ', FORMAT(cp.saldoCuentaPorPagar, 2)) AS TextoOrigen
+       CONCAT(cp.serieDocumentoCuentaPorPagar, '-', cp.numeroDocumentoCuentaPorPagar,
+              ' - ', p.nombreProveedor, ' - Q ', FORMAT(cp.saldoActualCuentaPorPagar, 2)) AS TextoOrigen
 FROM dbsistemaembutidos.tblCuentaPorPagar cp
 INNER JOIN dbsistemaembutidos.tblProveedor p ON p.idProveedor = cp.idProveedor
 WHERE cp.estadoCuentaPorPagar IN ('Pendiente', 'Parcial')
-ORDER BY cp.fechaEmisionCuentaPorPagar DESC, cp.idCuentaPorPagar DESC";
+ORDER BY cp.fechaEmisionCuentaPorPagar DESC, cp.numeroDocumentoCuentaPorPagar DESC";
             return ComprasFuncEjecucionConsulta(Sql, CommandType.Text);
         }
     }
