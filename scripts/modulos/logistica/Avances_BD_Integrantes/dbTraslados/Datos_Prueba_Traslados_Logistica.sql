@@ -342,46 +342,46 @@ WHERE NOT EXISTS (
 -- uno recibido y uno cancelado. Los estados finales son historicos/solo lectura.
 INSERT INTO tblTraslado
     (codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo,
-     Fk_Transporte_Codigo, Fk_Conductor_Codigo, fechaSolicitudTraslado,
+     Fk_Transporte_Codigo, fechaSolicitudTraslado,
      fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
 SELECT 'QA-TRAS-REQ-001', @BodegaOrigen, @BodegaGuatemala,
-       @TransporteSolicitado, @ConductorSolicitado, CURRENT_TIMESTAMP - INTERVAL 2 DAY,
+       @TransporteSolicitado, CURRENT_TIMESTAMP - INTERVAL 2 DAY,
        NULL, NULL, 'SOLICITADO',
        'Reposicion semanal de jamon y chorizo para el centro metropolitano.'
 WHERE NOT EXISTS (SELECT 1 FROM tblTraslado WHERE codigoTraslado = 'QA-TRAS-REQ-001');
 INSERT INTO tblTraslado
     (codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo,
-     Fk_Transporte_Codigo, Fk_Conductor_Codigo, fechaSolicitudTraslado,
+     Fk_Transporte_Codigo, fechaSolicitudTraslado,
      fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
 SELECT 'QA-TRAS-REQ-002', @BodegaOrigen, @BodegaOccidente,
-       NULL, @ConductorSinCamion, CURRENT_TIMESTAMP - INTERVAL 1 DAY,
+       NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY,
        NULL, NULL, 'SOLICITADO',
        'Solicitud pendiente de asignacion de camion para producto refrigerado.'
 WHERE NOT EXISTS (SELECT 1 FROM tblTraslado WHERE codigoTraslado = 'QA-TRAS-REQ-002');
 INSERT INTO tblTraslado
     (codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo,
-     Fk_Transporte_Codigo, Fk_Conductor_Codigo, fechaSolicitudTraslado,
+     Fk_Transporte_Codigo, fechaSolicitudTraslado,
      fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
 SELECT 'QA-TRAS-ENR-001', @BodegaOrigen, @BodegaSur,
-       @TransporteTransito, @ConductorTransito, CURRENT_TIMESTAMP - INTERVAL 5 HOUR,
+       @TransporteTransito, CURRENT_TIMESTAMP - INTERVAL 5 HOUR,
        CURRENT_TIMESTAMP - INTERVAL 2 HOUR, NULL, 'EN_TRANSITO',
        'Traslado refrigerado en ruta hacia el centro regional del sur.'
 WHERE NOT EXISTS (SELECT 1 FROM tblTraslado WHERE codigoTraslado = 'QA-TRAS-ENR-001');
 INSERT INTO tblTraslado
     (codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo,
-     Fk_Transporte_Codigo, Fk_Conductor_Codigo, fechaSolicitudTraslado,
+     Fk_Transporte_Codigo, fechaSolicitudTraslado,
      fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
 SELECT 'QA-TRAS-REC-001', @BodegaOrigen, @BodegaGuatemala,
-       @TransporteLibre, @ConductorRecibido, CURRENT_TIMESTAMP - INTERVAL 4 DAY,
+       @TransporteLibre, CURRENT_TIMESTAMP - INTERVAL 4 DAY,
        CURRENT_TIMESTAMP - INTERVAL 3 DAY, CURRENT_TIMESTAMP - INTERVAL 3 DAY,
        'RECIBIDO', 'Recepcion confirmada de longaniza fresca; revisar el detalle historico.'
 WHERE NOT EXISTS (SELECT 1 FROM tblTraslado WHERE codigoTraslado = 'QA-TRAS-REC-001');
 INSERT INTO tblTraslado
     (codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo,
-     Fk_Transporte_Codigo, Fk_Conductor_Codigo, fechaSolicitudTraslado,
+     Fk_Transporte_Codigo, fechaSolicitudTraslado,
      fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
 SELECT 'QA-TRAS-CAN-001', @BodegaOrigen, @BodegaOccidente,
-       NULL, @ConductorCancelado, CURRENT_TIMESTAMP - INTERVAL 6 DAY,
+       NULL, CURRENT_TIMESTAMP - INTERVAL 6 DAY,
        NULL, NULL, 'CANCELADO',
        'Cancelado por ajuste de demanda antes del despacho.'
 WHERE NOT EXISTS (SELECT 1 FROM tblTraslado WHERE codigoTraslado = 'QA-TRAS-CAN-001');
@@ -535,3 +535,10 @@ WHERE traslado.codigoTraslado LIKE 'QA-TRAS-%'
 GROUP BY traslado.idTraslado, codigoTraslado, estadoTraslado,
          origen.nombreBodega, destino.nombreBodega
 ORDER BY traslado.codigoTraslado;
+
+
+Select * from tbldetalletraslado;
+Select * from tblmovimientoinventario;
+Select * from tblEncabezadoviaje;
+Select * from tblstock;
+Select * from tblsaldos;

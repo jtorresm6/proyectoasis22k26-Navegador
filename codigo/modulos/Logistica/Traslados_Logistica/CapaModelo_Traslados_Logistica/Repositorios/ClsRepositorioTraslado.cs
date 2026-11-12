@@ -22,7 +22,6 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
 {
     public class ClsRepositorioTraslado : ClsSentencias, IRepositorioTraslado
     {
-        private const string _EstadosTrasladoActivo = "'SOLICITADO', 'EN_TRANSITO'";
         private readonly ClsRepositorioInventarioTraslado _Inventario;
         private readonly ClsRepositorioViajeTraslado _Viaje;
 
@@ -71,6 +70,28 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
             _Viaje = new ClsRepositorioViajeTraslado();
         }
 
+        public void LogisticaMetEjecutarUnidadTrabajo(
+            Action<IRepositorioUnidadTrabajoTraslado> Operacion)
+        {
+            LogisticaMetEjecutarTransaccion(Conexion =>
+            {
+                using (var Transaccion = Conexion.BeginTransaction(IsolationLevel.Serializable))
+                {
+                    try
+                    {
+                        Operacion(new UnidadTrabajoTraslado(
+                            this, Conexion, Transaccion, _Inventario, _Viaje));
+                        Transaccion.Commit();
+                    }
+                    catch
+                    {
+                        Transaccion.Rollback();
+                        throw;
+                    }
+                }
+            });
+        }
+
         public DataTable LogisticaMetObtenerTraslados()
         {
             return LogisticaMetEjecutarConsulta(_ConsultaTraslados);
@@ -93,81 +114,44 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
             return LogisticaMetEjecutarConsulta(Consulta);
         }
 
-        public DataTable LogisticaMetObtenerConductoresDisponibles(string CodigoTrasladoExcluir)
+        public DataTable LogisticaMetObtenerConductores()
         {
             const string Consulta =
                 "SELECT conductor.idConductor AS CodigoConductor, " +
                 "CONCAT(conductor.codigoConductor, ' - ', conductor.nombreCompletoConductor) " +
-                "AS NombreConductor " +
+                "AS NombreConductor, UPPER(TRIM(estado.tipoEstado)) AS EstadoConductor, " +
+                "UPPER(TRIM(viaje.estadoViajeEncabezadoViaje)) AS EstadoViaje " +
                 "FROM tblConductor conductor " +
                 "INNER JOIN tblEstado estado ON estado.idEstado = conductor.Fk_Estado_Codigo " +
-                "WHERE UPPER(TRIM(estado.tipoEstado)) = 'DISPONIBLE' " +
-                "AND NOT EXISTS (SELECT 1 FROM tblEncabezadoViaje viaje " +
-                "WHERE viaje.Fk_Conductor_Codigo = conductor.idConductor " +
-                "AND viaje.estadoViajeEncabezadoViaje = 'EN_CURSO') " +
+                "LEFT JOIN tblEncabezadoViaje viaje ON " +
+                "viaje.Fk_Conductor_Codigo = conductor.idConductor " +
                 "ORDER BY conductor.nombreCompletoConductor";
             return LogisticaMetEjecutarConsulta(Consulta);
         }
 
-        public DataTable LogisticaMetObtenerTransportesDisponibles(int CodigoTipoTransporte)
+        public DataTable LogisticaMetObtenerTransportes()
         {
-            return LogisticaMetObtenerTransportesDisponibles(CodigoTipoTransporte, null);
-        }
-
-        public DataTable LogisticaMetObtenerTransportesDisponibles(
-            int CodigoTipoTransporte, string CodigoTrasladoExcluir)
-        {
-            string Consulta =
+            const string Consulta =
                 "SELECT transporte.idTransporte AS CodigoTransporte, " +
-                "transporte.nroPlacaTransporte AS PlacaTransporte " +
+                "transporte.nroPlacaTransporte AS PlacaTransporte, " +
+                "transporte.Fk_Tipo_Transporte_Codigo AS CodigoTipoTransporte, " +
+                "UPPER(TRIM(estado.tipoEstado)) AS EstadoTransporte, " +
+                "traslado.codigoTraslado AS CodigoTrasladoAsignado, " +
+                "UPPER(TRIM(traslado.estadoTraslado)) AS EstadoTrasladoAsignado " +
                 "FROM tblTransporte transporte " +
                 "INNER JOIN tblEstado estado ON estado.idEstado = transporte.Fk_Estado_Codigo " +
-                "WHERE transporte.Fk_Tipo_Transporte_Codigo = ? " +
-                "AND UPPER(TRIM(estado.tipoEstado)) = 'DISPONIBLE' " +
-                "AND NOT EXISTS (SELECT 1 FROM tblTraslado traslado " +
-                "WHERE traslado.Fk_Transporte_Codigo = transporte.idTransporte " +
-                "AND traslado.estadoTraslado IN (" + _EstadosTrasladoActivo + ")) ";
-            var Parametros = new List<OdbcParameter>
-            {
-                new OdbcParameter("CodigoTipoTransporte", OdbcType.Int) { Value = CodigoTipoTransporte }
-            };
-
-            if (!string.IsNullOrWhiteSpace(CodigoTrasladoExcluir))
-            {
-                Consulta =
-                    Consulta.Substring(0, Consulta.IndexOf("AND UPPER", StringComparison.Ordinal)) +
-                    "AND (UPPER(TRIM(estado.tipoEstado)) = 'DISPONIBLE' " +
-                    "OR transporte.idTransporte = (SELECT Fk_Transporte_Codigo FROM tblTraslado " +
-                    "WHERE codigoTraslado = ?)) " +
-                    "AND NOT EXISTS (SELECT 1 FROM tblTraslado traslado " +
-                    "WHERE traslado.Fk_Transporte_Codigo = transporte.idTransporte " +
-                    "AND traslado.estadoTraslado IN (" + _EstadosTrasladoActivo + ") " +
-                    "AND traslado.codigoTraslado <> ?) ";
-                Parametros.Add(new OdbcParameter("CodigoTrasladoActual", OdbcType.VarChar, 30)
-                {
-                    Value = CodigoTrasladoExcluir
-                });
-                Parametros.Add(new OdbcParameter("CodigoTrasladoExcluir", OdbcType.VarChar, 30)
-                {
-                    Value = CodigoTrasladoExcluir
-                });
-            }
-
-            Consulta += "ORDER BY transporte.nroPlacaTransporte";
-            return LogisticaMetEjecutarConsulta(Consulta, Parametros.ToArray());
+                "LEFT JOIN tblTraslado traslado ON " +
+                "traslado.Fk_Transporte_Codigo = transporte.idTransporte " +
+                "ORDER BY transporte.nroPlacaTransporte";
+            return LogisticaMetEjecutarConsulta(Consulta);
         }
 
-        public DataTable LogisticaMetObtenerProductosDisponibles(int CodigoBodega)
-        {
-            return LogisticaMetObtenerProductosDisponibles(CodigoBodega, null);
-        }
-
-        public DataTable LogisticaMetObtenerProductosDisponibles(
-            int CodigoBodega, string CodigoTrasladoExcluir)
+        public DataTable LogisticaMetObtenerStockProductos(
+            int CodigoBodega, string CodigoTrasladoReserva)
         {
             string JoinReserva = string.Empty;
             string CantidadReserva = "0";
-            if (!string.IsNullOrWhiteSpace(CodigoTrasladoExcluir))
+            if (!string.IsNullOrWhiteSpace(CodigoTrasladoReserva))
             {
                 JoinReserva =
                     "LEFT JOIN (SELECT detalle.Fk_Producto_Codigo, " +
@@ -185,17 +169,16 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
                 "producto.skuProducto AS SKU, producto.nombreProducto AS Nombre, " +
                 "producto.descripcionProducto AS Descripcion, " +
                 "producto.pesoProducto AS PesoUnitario, " +
-                "stock.stockActualStock - stock.apartadosStock + " + CantidadReserva +
-                " AS ExistenciasDisponibles, " +
-                "CONCAT(producto.skuProducto, ' - ', producto.nombreProducto) AS ProductoMostrar " +
+                "stock.stockActualStock AS StockActual, " +
+                "stock.apartadosStock AS CantidadApartada, " +
+                CantidadReserva + " AS CantidadReservada " +
                 "FROM tblStock stock " +
                 "INNER JOIN tblProducto producto ON producto.idProducto = stock.Fk_Producto_Codigo " +
                 JoinReserva +
                 "WHERE stock.Fk_Bodega_Codigo = ? " +
-                "AND stock.stockActualStock - stock.apartadosStock + " + CantidadReserva + " > 0 " +
                 "ORDER BY producto.nombreProducto";
 
-            if (string.IsNullOrWhiteSpace(CodigoTrasladoExcluir))
+            if (string.IsNullOrWhiteSpace(CodigoTrasladoReserva))
             {
                 return LogisticaMetEjecutarConsulta(
                     Consulta,
@@ -204,9 +187,9 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
 
             return LogisticaMetEjecutarConsulta(
                 Consulta,
-                new OdbcParameter("CodigoTrasladoExcluir", OdbcType.VarChar, 30)
+                new OdbcParameter("CodigoTrasladoReserva", OdbcType.VarChar, 30)
                 {
-                    Value = CodigoTrasladoExcluir
+                    Value = CodigoTrasladoReserva
                 },
                 new OdbcParameter("CodigoBodega", OdbcType.Int) { Value = CodigoBodega });
         }
@@ -217,11 +200,9 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
                 "SELECT producto.idProducto AS CodigoProducto, producto.skuProducto AS SKU, " +
                 "producto.nombreProducto AS Nombre, producto.descripcionProducto AS Descripcion, " +
                 "detalle.cantidadDetalleTraslado AS Cantidad, producto.pesoProducto AS PesoUnitario, " +
-                "producto.pesoProducto * detalle.cantidadDetalleTraslado AS PesoTotal, " +
                 "producto.precioCostoProducto AS PrecioUnitario, " +
-                "producto.precioCostoProducto * detalle.cantidadDetalleTraslado AS PrecioTotal, " +
-                "COALESCE(stock.stockActualStock, 0) - COALESCE(stock.apartadosStock, 0) + " +
-                "detalle.cantidadDetalleTraslado AS ExistenciasDisponibles " +
+                "COALESCE(stock.stockActualStock, 0) AS StockActual, " +
+                "COALESCE(stock.apartadosStock, 0) AS CantidadApartada " +
                 "FROM tblTraslado traslado " +
                 "INNER JOIN tblDetalleTraslado detalle ON detalle.Fk_Traslado_Codigo = traslado.idTraslado " +
                 "INNER JOIN tblProducto producto ON producto.idProducto = detalle.Fk_Producto_Codigo " +
@@ -236,250 +217,6 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
                 {
                     Value = CodigoTraslado
                 });
-        }
-
-        public void LogisticaMetGuardarTraslado(ClsTrasladoSolicitud Solicitud)
-        {
-            if (Solicitud == null)
-            {
-                throw new ArgumentNullException("Solicitud");
-            }
-
-            LogisticaMetValidarSolicitud(Solicitud);
-            LogisticaMetValidarDetalles(Solicitud.Detalles);
-            LogisticaMetEjecutarTransaccion(Conexion =>
-            {
-                using (var Transaccion = Conexion.BeginTransaction(IsolationLevel.Serializable))
-                {
-                    try
-                    {
-                        LogisticaMetValidarCodigoDisponible(
-                            Conexion, Transaccion, Solicitud.CodigoTraslado);
-                        if (Solicitud.CodigoTransporte > 0)
-                        {
-                            LogisticaMetValidarTransporte(Conexion, Transaccion, Solicitud);
-                        }
-
-                        Dictionary<int, ClsStockProductoTraslado> Stocks =
-                            _Inventario.LogisticaMetObtenerStocksBloqueados(
-                                Conexion, Transaccion, Solicitud.BodegaOrigen);
-                        _Inventario.LogisticaMetValidarDisponibilidad(
-                            Solicitud.Detalles, Stocks, null);
-                        int CodigoGenerado = LogisticaMetInsertarEncabezado(
-                            Conexion, Transaccion, Solicitud);
-                        LogisticaMetInsertarDetalles(
-                            Conexion, Transaccion, CodigoGenerado, Solicitud.Detalles);
-                        _Inventario.LogisticaMetReservar(
-                            Conexion, Transaccion, Stocks, Solicitud.Detalles);
-                        LogisticaMetCambiarEstadoTransporte(
-                            Conexion, Transaccion, Solicitud.CodigoTransporte, "NO DISPONIBLE");
-                        Transaccion.Commit();
-                    }
-                    catch
-                    {
-                        Transaccion.Rollback();
-                        throw;
-                    }
-                }
-            });
-        }
-
-        public void LogisticaMetActualizarTraslado(ClsTrasladoSolicitud Solicitud)
-        {
-            if (Solicitud == null)
-            {
-                throw new ArgumentNullException("Solicitud");
-            }
-
-            LogisticaMetEjecutarTransaccion(Conexion =>
-            {
-                using (var Transaccion = Conexion.BeginTransaction(IsolationLevel.Serializable))
-                {
-                    try
-                    {
-                        ClsTrasladoPersistido Existente = LogisticaMetObtenerTrasladoBloqueado(
-                            Conexion, Transaccion, Solicitud.CodigoTraslado);
-                        if (Existente == null)
-                        {
-                            throw new InvalidOperationException("El traslado seleccionado ya no existe.");
-                        }
-
-                        if (Existente.Estado == ClsReglasEstadoTraslado.Recibido ||
-                            Existente.Estado == ClsReglasEstadoTraslado.Cancelado)
-                        {
-                            throw new InvalidOperationException(
-                                "Un traslado recibido o cancelado es histórico y no puede modificarse.");
-                        }
-
-                        ClsReglasEstadoTraslado.LogisticaMetValidarCambioEstado(
-                            Existente.Estado, Solicitud.Estado);
-                        LogisticaMetValidarSolicitud(Solicitud);
-                        LogisticaMetValidarDetalles(Solicitud.Detalles);
-
-                        if (Existente.Estado == ClsReglasEstadoTraslado.EnTransito)
-                        {
-                            LogisticaMetProcesarTrasladoEnTransito(
-                                Conexion, Transaccion, Existente, Solicitud);
-                        }
-                        else
-                        {
-                            LogisticaMetProcesarTrasladoSolicitado(
-                                Conexion, Transaccion, Existente, Solicitud);
-                        }
-
-                        Transaccion.Commit();
-                    }
-                    catch
-                    {
-                        Transaccion.Rollback();
-                        throw;
-                    }
-                }
-            });
-        }
-
-        private void LogisticaMetProcesarTrasladoSolicitado(
-            OdbcConnection Conexion, OdbcTransaction Transaccion,
-            ClsTrasladoPersistido Existente, ClsTrasladoSolicitud Solicitud)
-        {
-            bool ServicioExterno = LogisticaMetTieneServicioExterno(
-                Conexion, Transaccion, Existente.CodigoInterno);
-            Dictionary<int, ClsStockProductoTraslado> Stocks =
-                _Inventario.LogisticaMetObtenerStocksBloqueados(
-                    Conexion, Transaccion, Solicitud.BodegaOrigen);
-            Dictionary<int, int> DetallesPersistidos =
-                LogisticaMetObtenerDetallesBloqueados(Conexion, Transaccion, Existente.CodigoInterno);
-            _Inventario.LogisticaMetValidarDisponibilidad(
-                Solicitud.Detalles, Stocks, DetallesPersistidos);
-
-            if (Solicitud.Estado == ClsReglasEstadoTraslado.EnTransito && !ServicioExterno)
-            {
-                if (Solicitud.CodigoConductor <= 0)
-                {
-                    throw new InvalidOperationException(
-                        "Debe seleccionar un conductor para despachar el traslado.");
-                }
-
-                if (Solicitud.CodigoConductor != Existente.CodigoConductor)
-                {
-                    LogisticaMetValidarConductorActualizacion(
-                        Conexion, Transaccion, Solicitud);
-                }
-            }
-
-            if (Solicitud.CodigoTransporte > 0 &&
-                Solicitud.CodigoTransporte != Existente.CodigoTransporte)
-            {
-                LogisticaMetValidarTransporteActualizacion(Conexion, Transaccion, Solicitud);
-            }
-
-            bool CambiaronDetalles = !LogisticaMetDetallesIguales(
-                DetallesPersistidos, Solicitud.Detalles);
-            if (CambiaronDetalles || Existente.BodegaOrigen != Solicitud.BodegaOrigen)
-            {
-                _Inventario.LogisticaMetSincronizarReservas(
-                    Conexion, Transaccion, Existente.BodegaOrigen, Solicitud.BodegaOrigen,
-                    DetallesPersistidos, Solicitud.Detalles);
-            }
-
-            LogisticaMetActualizarEncabezado(Conexion, Transaccion, Existente.CodigoInterno, Solicitud);
-            if (CambiaronDetalles)
-            {
-                LogisticaMetActualizarDetalles(
-                    Conexion, Transaccion, Existente.CodigoInterno, Solicitud.Detalles);
-            }
-
-            int TransporteAnterior = Existente.CodigoTransporte;
-            Existente.BodegaOrigen = Solicitud.BodegaOrigen;
-            Existente.BodegaDestino = Solicitud.BodegaDestino;
-            Existente.CodigoTransporte = Solicitud.CodigoTransporte;
-            Existente.CodigoConductor = ServicioExterno ||
-                Solicitud.Estado == ClsReglasEstadoTraslado.Solicitado
-                    ? 0
-                    : Solicitud.CodigoConductor;
-            Existente.CodigoTraslado = Solicitud.CodigoTraslado;
-
-            if (Solicitud.Estado == ClsReglasEstadoTraslado.Cancelado)
-            {
-                Dictionary<int, ClsStockProductoTraslado> StocksOrigen =
-                    _Inventario.LogisticaMetObtenerStocksBloqueados(
-                        Conexion, Transaccion, Existente.BodegaOrigen);
-                _Inventario.LogisticaMetLiberarReserva(
-                    Conexion, Transaccion, StocksOrigen, Solicitud.Detalles);
-                LogisticaMetCambiarEstadoTransporte(
-                    Conexion, Transaccion, TransporteAnterior, "DISPONIBLE");
-                if (Solicitud.CodigoTransporte != TransporteAnterior)
-                {
-                    LogisticaMetCambiarEstadoTransporte(
-                        Conexion, Transaccion, Solicitud.CodigoTransporte, "DISPONIBLE");
-                }
-
-                return;
-            }
-
-            if (Solicitud.CodigoTransporte != TransporteAnterior)
-            {
-                LogisticaMetCambiarEstadoTransporte(
-                    Conexion, Transaccion, TransporteAnterior, "DISPONIBLE");
-                LogisticaMetCambiarEstadoTransporte(
-                    Conexion, Transaccion, Solicitud.CodigoTransporte, "NO DISPONIBLE");
-            }
-
-            if (Solicitud.Estado == ClsReglasEstadoTraslado.EnTransito)
-            {
-                if (Existente.CodigoTransporte <= 0)
-                {
-                    throw new InvalidOperationException(
-                        "Para despachar el traslado debe asignar un transporte.");
-                }
-
-                _Inventario.LogisticaMetRegistrarSalida(
-                    Conexion, Transaccion, Existente, Solicitud.Detalles);
-                _Viaje.LogisticaMetRegistrarSalida(
-                    Conexion, Transaccion, Existente, Solicitud.Detalles);
-            }
-        }
-
-        private void LogisticaMetProcesarTrasladoEnTransito(
-            OdbcConnection Conexion, OdbcTransaction Transaccion,
-            ClsTrasladoPersistido Existente, ClsTrasladoSolicitud Solicitud)
-        {
-            LogisticaMetValidarDatosEnTransito(Conexion, Transaccion, Existente, Solicitud);
-            LogisticaMetActualizarObservaciones(
-                Conexion, Transaccion, Existente.CodigoInterno, Solicitud.Observaciones);
-
-            if (Solicitud.Estado == ClsReglasEstadoTraslado.Recibido)
-            {
-                _Inventario.LogisticaMetRegistrarEntrada(
-                    Conexion, Transaccion, Existente, Solicitud.Detalles);
-                _Viaje.LogisticaMetRegistrarLlegada(
-                    Conexion, Transaccion, Existente.CodigoTransporte);
-                LogisticaMetActualizarEstado(
-                    Conexion, Transaccion, Existente.CodigoInterno, Solicitud.Estado);
-                if (Existente.CodigoTransporte > 0)
-                {
-                    LogisticaMetCambiarEstadoTransporte(
-                        Conexion, Transaccion, Existente.CodigoTransporte, "DISPONIBLE");
-                }
-            }
-            else if (Solicitud.Estado == ClsReglasEstadoTraslado.Cancelado)
-            {
-                _Inventario.LogisticaMetAnularSalida(
-                    Conexion, Transaccion, Existente, Solicitud.Detalles);
-                _Viaje.LogisticaMetCancelarViaje(
-                    Conexion, Transaccion, Existente.CodigoTransporte);
-                LogisticaMetEjecutarNoConsulta(
-                    Conexion, Transaccion,
-                    "UPDATE tblTraslado SET estadoTraslado = ? WHERE idTraslado = ?",
-                    LogisticaMetCrearParametro(
-                        "Estado", OdbcType.VarChar, 20, ClsReglasEstadoTraslado.Cancelado),
-                    LogisticaMetCrearParametro("Codigo", OdbcType.Int, Existente.CodigoInterno));
-                if (Existente.CodigoTransporte > 0)
-                {
-                    LogisticaMetCambiarEstadoTransporte(
-                        Conexion, Transaccion, Existente.CodigoTransporte, "DISPONIBLE");
-                }
-            }
         }
 
         private void LogisticaMetEjecutarTransaccion(Action<OdbcConnection> Accion)
@@ -558,61 +295,15 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
             }
         }
 
-        private void LogisticaMetValidarDatosEnTransito(
-            OdbcConnection Conexion, OdbcTransaction Transaccion,
-            ClsTrasladoPersistido Existente, ClsTrasladoSolicitud Solicitud)
-        {
-            bool ServicioExterno = LogisticaMetTieneServicioExterno(
-                Conexion, Transaccion, Existente.CodigoInterno);
-            if (Existente.BodegaOrigen != Solicitud.BodegaOrigen ||
-                Existente.BodegaDestino != Solicitud.BodegaDestino ||
-                Existente.CodigoTransporte != Solicitud.CodigoTransporte ||
-                (!ServicioExterno && Existente.CodigoConductor != Solicitud.CodigoConductor))
-            {
-                throw new InvalidOperationException(
-                    "No se pueden cambiar bodegas, transporte ni conductor cuando el traslado está en tránsito.");
-            }
-
-            Dictionary<int, int> DetallesPersistidos =
-                LogisticaMetObtenerDetallesBloqueados(Conexion, Transaccion, Existente.CodigoInterno);
-            if (!LogisticaMetDetallesIguales(DetallesPersistidos, Solicitud.Detalles))
-            {
-                throw new InvalidOperationException(
-                    "No se puede cambiar el detalle de un traslado que está en tránsito.");
-            }
-        }
-
-        private bool LogisticaMetTieneServicioExterno(
+        private int LogisticaMetObtenerCantidadServiciosExternos(
             OdbcConnection Conexion, OdbcTransaction Transaccion, int CodigoTraslado)
         {
             object Resultado = LogisticaMetEjecutarEscalar(
                 Conexion, Transaccion,
-                "SELECT 1 FROM tblServicioTransporteExterno " +
-                "WHERE Fk_Traslado_Codigo = ? LIMIT 1",
+                "SELECT COUNT(*) FROM tblServicioTransporteExterno " +
+                "WHERE Fk_Traslado_Codigo = ?",
                 LogisticaMetCrearParametro("Traslado", OdbcType.Int, CodigoTraslado));
-            return Resultado != null;
-        }
-
-        private bool LogisticaMetDetallesIguales(
-            IDictionary<int, int> DetallesPersistidos,
-            IList<ClsProductoTrasladoDetalle> DetallesSolicitados)
-        {
-            if (DetallesPersistidos.Count != DetallesSolicitados.Count)
-            {
-                return false;
-            }
-
-            foreach (ClsProductoTrasladoDetalle Detalle in DetallesSolicitados)
-            {
-                int CantidadPersistida;
-                if (!DetallesPersistidos.TryGetValue(Detalle.CodigoProducto, out CantidadPersistida) ||
-                    CantidadPersistida != Detalle.Cantidad)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return Convert.ToInt32(Resultado);
         }
 
         private Dictionary<int, int> LogisticaMetObtenerDetallesBloqueados(
@@ -639,117 +330,54 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
             return Detalles;
         }
 
-        private void LogisticaMetValidarSolicitud(ClsTrasladoSolicitud Solicitud)
-        {
-            if (string.IsNullOrWhiteSpace(Solicitud.CodigoTraslado) ||
-                Solicitud.CodigoTraslado.Trim().Length > 30)
-            {
-                throw new InvalidOperationException(
-                    "El código del traslado debe tener hasta 30 caracteres.");
-            }
-
-            if (Solicitud.BodegaOrigen <= 0 || Solicitud.BodegaDestino <= 0 ||
-                Solicitud.BodegaOrigen == Solicitud.BodegaDestino)
-            {
-                throw new InvalidOperationException(
-                    "Seleccione bodegas de origen y destino diferentes.");
-            }
-
-            if (ClsReglasEstadoTraslado.LogisticaMetRequiereTransporte(Solicitud.Estado) &&
-                (Solicitud.CodigoTransporte <= 0 || Solicitud.CodigoTipoTransporte <= 0))
-            {
-                throw new InvalidOperationException(
-                    "Para despachar o recibir el traslado debe asignar un transporte válido.");
-            }
-
-            if (Solicitud.CodigoTransporte > 0 && Solicitud.CodigoTipoTransporte <= 0)
-            {
-                throw new InvalidOperationException(
-                    "Seleccione el tipo de transporte de la placa asignada.");
-            }
-
-            if (Solicitud.Observaciones != null && Solicitud.Observaciones.Length > 500)
-            {
-                throw new InvalidOperationException(
-                    "Las observaciones no pueden superar los 500 caracteres.");
-            }
-
-            if (Solicitud.Estado != ClsReglasEstadoTraslado.Solicitado &&
-                Solicitud.Estado != ClsReglasEstadoTraslado.EnTransito &&
-                Solicitud.Estado != ClsReglasEstadoTraslado.Recibido &&
-                Solicitud.Estado != ClsReglasEstadoTraslado.Cancelado)
-            {
-                throw new InvalidOperationException("Seleccione un estado válido para el traslado.");
-            }
-        }
-
-        private void LogisticaMetValidarDetalles(IList<ClsProductoTrasladoDetalle> Detalles)
-        {
-            if (Detalles == null || Detalles.Count == 0)
-            {
-                throw new InvalidOperationException(
-                    "El traslado debe contener al menos un producto.");
-            }
-
-            var Productos = new HashSet<int>();
-            foreach (ClsProductoTrasladoDetalle Detalle in Detalles)
-            {
-                if (Detalle == null || Detalle.CodigoProducto <= 0 || Detalle.Cantidad <= 0)
-                {
-                    throw new InvalidOperationException(
-                        "Cada producto debe tener un código válido y una cantidad mayor que cero.");
-                }
-
-                if (!Productos.Add(Detalle.CodigoProducto))
-                {
-                    throw new InvalidOperationException(
-                        "Un producto no puede repetirse en el detalle del traslado.");
-                }
-            }
-        }
-
-        private void LogisticaMetValidarCodigoDisponible(
-            OdbcConnection Conexion, OdbcTransaction Transaccion, string CodigoTraslado)
-        {
-            object Existe = LogisticaMetEjecutarEscalar(
-                Conexion, Transaccion,
-                "SELECT 1 FROM tblTraslado WHERE codigoTraslado = ?",
-                LogisticaMetCrearParametro("CodigoTraslado", OdbcType.VarChar, 30, CodigoTraslado));
-            if (Existe != null)
-            {
-                throw new InvalidOperationException(
-                    "Ya existe un traslado con el código " + CodigoTraslado + ".");
-            }
-        }
-
-        private void LogisticaMetValidarTransporteActualizacion(
-            OdbcConnection Conexion, OdbcTransaction Transaccion, ClsTrasladoSolicitud Solicitud)
+        private DataTable LogisticaMetObtenerTransporte(
+            OdbcConnection Conexion, OdbcTransaction Transaccion, int CodigoTransporte)
         {
             const string Consulta =
-                "SELECT transporte.idTransporte FROM tblTransporte transporte " +
+                "SELECT transporte.idTransporte AS CodigoTransporte, " +
+                "transporte.Fk_Tipo_Transporte_Codigo AS CodigoTipoTransporte, " +
+                "UPPER(TRIM(estado.tipoEstado)) AS EstadoTransporte, " +
+                "traslado.codigoTraslado AS CodigoTrasladoAsignado, " +
+                "UPPER(TRIM(traslado.estadoTraslado)) AS EstadoTrasladoAsignado " +
+                "FROM tblTransporte transporte " +
                 "INNER JOIN tblEstado estado ON estado.idEstado = transporte.Fk_Estado_Codigo " +
-                "WHERE transporte.idTransporte = ? " +
-                "AND transporte.Fk_Tipo_Transporte_Codigo = ? " +
-                "AND UPPER(TRIM(estado.tipoEstado)) = 'DISPONIBLE' " +
-                "AND NOT EXISTS (SELECT 1 FROM tblTraslado traslado " +
-                "WHERE traslado.Fk_Transporte_Codigo = transporte.idTransporte " +
-                "AND traslado.estadoTraslado IN (" + _EstadosTrasladoActivo + ") " +
-                "AND traslado.codigoTraslado <> ?) FOR UPDATE";
-
+                "LEFT JOIN tblTraslado traslado ON traslado.Fk_Transporte_Codigo = transporte.idTransporte " +
+                "WHERE transporte.idTransporte = ? FOR UPDATE";
+            var Tabla = new DataTable();
             using (var Comando = new OdbcCommand(Consulta, Conexion, Transaccion))
             {
-                Comando.Parameters.Add("CodigoTransporte", OdbcType.Int).Value =
-                    Solicitud.CodigoTransporte;
-                Comando.Parameters.Add("CodigoTipoTransporte", OdbcType.Int).Value =
-                    Solicitud.CodigoTipoTransporte;
-                Comando.Parameters.Add("CodigoTrasladoExcluir", OdbcType.VarChar, 30).Value =
-                    Solicitud.CodigoTraslado;
-                if (Comando.ExecuteScalar() == null)
+                Comando.Parameters.Add("CodigoTransporte", OdbcType.Int).Value = CodigoTransporte;
+                using (var Lector = Comando.ExecuteReader())
                 {
-                    throw new InvalidOperationException(
-                        "El transporte seleccionado ya no está disponible o no corresponde al tipo elegido.");
+                    Tabla.Load(Lector);
                 }
             }
+
+            return Tabla;
+        }
+
+        private DataTable LogisticaMetObtenerConductor(
+            OdbcConnection Conexion, OdbcTransaction Transaccion, int CodigoConductor)
+        {
+            const string Consulta =
+                "SELECT conductor.idConductor AS CodigoConductor, " +
+                "UPPER(TRIM(estado.tipoEstado)) AS EstadoConductor, " +
+                "UPPER(TRIM(viaje.estadoViajeEncabezadoViaje)) AS EstadoViaje " +
+                "FROM tblConductor conductor " +
+                "INNER JOIN tblEstado estado ON estado.idEstado = conductor.Fk_Estado_Codigo " +
+                "LEFT JOIN tblEncabezadoViaje viaje ON viaje.Fk_Conductor_Codigo = conductor.idConductor " +
+                "WHERE conductor.idConductor = ? FOR UPDATE";
+            var Tabla = new DataTable();
+            using (var Comando = new OdbcCommand(Consulta, Conexion, Transaccion))
+            {
+                Comando.Parameters.Add("CodigoConductor", OdbcType.Int).Value = CodigoConductor;
+                using (var Lector = Comando.ExecuteReader())
+                {
+                    Tabla.Load(Lector);
+                }
+            }
+
+            return Tabla;
         }
 
         private void LogisticaMetActualizarEncabezado(
@@ -799,8 +427,10 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
             LogisticaMetEjecutarNoConsulta(
                 Conexion, Transaccion,
                 "UPDATE tblTraslado SET estadoTraslado = ?, " +
-                "fechaLlegadaTraslado = CURRENT_TIMESTAMP WHERE idTraslado = ?",
+                "fechaLlegadaTraslado = CASE WHEN ? = 'RECIBIDO' " +
+                "THEN CURRENT_TIMESTAMP ELSE fechaLlegadaTraslado END WHERE idTraslado = ?",
                 LogisticaMetCrearParametro("Estado", OdbcType.VarChar, 20, Estado),
+                LogisticaMetCrearParametro("EstadoLlegada", OdbcType.VarChar, 20, Estado),
                 LogisticaMetCrearParametro("CodigoTraslado", OdbcType.Int, CodigoTraslado));
         }
 
@@ -815,96 +445,25 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
             LogisticaMetInsertarDetalles(Conexion, Transaccion, CodigoTraslado, Detalles);
         }
 
-        private void LogisticaMetCambiarEstadoTransporte(
+        private int LogisticaMetCambiarEstadoTransporte(
             OdbcConnection Conexion, OdbcTransaction Transaccion,
             int CodigoTransporte, string EstadoNuevo)
         {
-            if (CodigoTransporte <= 0)
-            {
-                return;
-            }
-
-            object Resultado = LogisticaMetEjecutarEscalar(
+            LogisticaMetEjecutarNoConsulta(
                 Conexion, Transaccion,
-                "SELECT idEstado FROM tblEstado WHERE UPPER(TRIM(tipoEstado)) = ?",
-                LogisticaMetCrearParametro("TipoEstado", OdbcType.VarChar, 100, EstadoNuevo));
-            if (Resultado == null)
-            {
-                throw new InvalidOperationException(
-                    "Debe existir el estado '" + EstadoNuevo +
-                    "' en tblEstado para actualizar la disponibilidad del transporte.");
-            }
-
-            int CodigoEstado = Convert.ToInt32(Resultado);
-            int Actualizados = LogisticaMetEjecutarNoConsulta(
-                Conexion, Transaccion,
-                "UPDATE tblTransporte SET Fk_Estado_Codigo = ? WHERE idTransporte = ?",
-                LogisticaMetCrearParametro("CodigoEstado", OdbcType.Int, CodigoEstado),
+                "UPDATE tblTransporte SET Fk_Estado_Codigo = COALESCE(" +
+                "(SELECT idEstado FROM tblEstado WHERE UPPER(TRIM(tipoEstado)) = ? LIMIT 1), " +
+                "Fk_Estado_Codigo) WHERE idTransporte = ?",
+                LogisticaMetCrearParametro("TipoEstado", OdbcType.VarChar, 100, EstadoNuevo),
                 LogisticaMetCrearParametro("CodigoTransporte", OdbcType.Int, CodigoTransporte));
-            if (Actualizados == 0)
-            {
-                object YaActualizado = LogisticaMetEjecutarEscalar(
-                    Conexion, Transaccion,
-                    "SELECT COUNT(*) FROM tblTransporte WHERE idTransporte = ? AND Fk_Estado_Codigo = ?",
-                    LogisticaMetCrearParametro("CodigoTransporte", OdbcType.Int, CodigoTransporte),
-                    LogisticaMetCrearParametro("CodigoEstado", OdbcType.Int, CodigoEstado));
-                if (Convert.ToInt32(YaActualizado) == 0)
-                {
-                    throw new InvalidOperationException(
-                        "No se pudo actualizar el estado del transporte asignado.");
-                }
-            }
-        }
-
-        private void LogisticaMetValidarConductorActualizacion(
-            OdbcConnection Conexion, OdbcTransaction Transaccion, ClsTrasladoSolicitud Solicitud)
-        {
-            const string Consulta =
-                "SELECT conductor.idConductor FROM tblConductor conductor " +
-                "INNER JOIN tblEstado estado ON estado.idEstado = conductor.Fk_Estado_Codigo " +
-                "WHERE conductor.idConductor = ? " +
-                "AND UPPER(TRIM(estado.tipoEstado)) = 'DISPONIBLE' " +
-                "AND NOT EXISTS (SELECT 1 FROM tblEncabezadoViaje viaje " +
-                "WHERE viaje.Fk_Conductor_Codigo = conductor.idConductor " +
-                "AND viaje.estadoViajeEncabezadoViaje = 'EN_CURSO') " +
-                "FOR UPDATE";
-
-            using (var Comando = new OdbcCommand(Consulta, Conexion, Transaccion))
-            {
-                Comando.Parameters.Add("CodigoConductor", OdbcType.Int).Value =
-                    Solicitud.CodigoConductor;
-                if (Comando.ExecuteScalar() == null)
-                {
-                    throw new InvalidOperationException(
-                        "El conductor seleccionado ya no está disponible.");
-                }
-            }
-        }
-
-        private void LogisticaMetValidarTransporte(
-            OdbcConnection Conexion, OdbcTransaction Transaccion, ClsTrasladoSolicitud Solicitud)
-        {
-            const string Consulta =
-                "SELECT transporte.idTransporte FROM tblTransporte transporte " +
+            object Coincidencias = LogisticaMetEjecutarEscalar(
+                Conexion, Transaccion,
+                "SELECT COUNT(*) FROM tblTransporte transporte " +
                 "INNER JOIN tblEstado estado ON estado.idEstado = transporte.Fk_Estado_Codigo " +
-                "WHERE transporte.idTransporte = ? " +
-                "AND transporte.Fk_Tipo_Transporte_Codigo = ? " +
-                "AND UPPER(TRIM(estado.tipoEstado)) = 'DISPONIBLE' " +
-                "AND NOT EXISTS (SELECT 1 FROM tblTraslado traslado " +
-                "WHERE traslado.Fk_Transporte_Codigo = transporte.idTransporte " +
-                "AND traslado.estadoTraslado IN ('SOLICITADO', 'EN_TRANSITO')) " +
-                "FOR UPDATE";
-
-            using (var Comando = new OdbcCommand(Consulta, Conexion, Transaccion))
-            {
-                Comando.Parameters.Add("CodigoTransporte", OdbcType.Int).Value = Solicitud.CodigoTransporte;
-                Comando.Parameters.Add("CodigoTipoTransporte", OdbcType.Int).Value = Solicitud.CodigoTipoTransporte;
-                if (Comando.ExecuteScalar() == null)
-                {
-                    throw new InvalidOperationException(
-                        "Seleccione una placa válida, disponible y correspondiente al tipo de transporte.");
-                }
-            }
+                "WHERE transporte.idTransporte = ? AND UPPER(TRIM(estado.tipoEstado)) = ?",
+                LogisticaMetCrearParametro("CodigoTransporte", OdbcType.Int, CodigoTransporte),
+                LogisticaMetCrearParametro("TipoEstado", OdbcType.VarChar, 100, EstadoNuevo));
+            return Convert.ToInt32(Coincidencias);
         }
 
         private int LogisticaMetInsertarEncabezado(
@@ -941,6 +500,224 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
                     LogisticaMetCrearParametro("CodigoTraslado", OdbcType.Int, CodigoTraslado),
                     LogisticaMetCrearParametro("CodigoProducto", OdbcType.Int, Detalle.CodigoProducto),
                     LogisticaMetCrearParametro("Cantidad", OdbcType.Int, Detalle.Cantidad));
+            }
+        }
+
+        private sealed class UnidadTrabajoTraslado : IRepositorioUnidadTrabajoTraslado
+        {
+            private readonly ClsRepositorioTraslado _Repositorio;
+            private readonly OdbcConnection _Conexion;
+            private readonly OdbcTransaction _Transaccion;
+            private readonly ClsRepositorioInventarioTraslado _Inventario;
+            private readonly ClsRepositorioViajeTraslado _Viaje;
+
+            public UnidadTrabajoTraslado(ClsRepositorioTraslado Repositorio,
+                OdbcConnection Conexion, OdbcTransaction Transaccion,
+                ClsRepositorioInventarioTraslado Inventario,
+                ClsRepositorioViajeTraslado Viaje)
+            {
+                _Repositorio = Repositorio;
+                _Conexion = Conexion;
+                _Transaccion = Transaccion;
+                _Inventario = Inventario;
+                _Viaje = Viaje;
+            }
+
+            public ClsTrasladoPersistido LogisticaMetObtenerTrasladoBloqueado(string CodigoTraslado)
+            {
+                return _Repositorio.LogisticaMetObtenerTrasladoBloqueado(
+                    _Conexion, _Transaccion, CodigoTraslado);
+            }
+
+            public int LogisticaMetObtenerCantidadServiciosExternos(int CodigoTraslado)
+            {
+                return _Repositorio.LogisticaMetObtenerCantidadServiciosExternos(
+                    _Conexion, _Transaccion, CodigoTraslado);
+            }
+
+            public DataTable LogisticaMetObtenerTransporte(int CodigoTransporte)
+            {
+                return _Repositorio.LogisticaMetObtenerTransporte(
+                    _Conexion, _Transaccion, CodigoTransporte);
+            }
+
+            public DataTable LogisticaMetObtenerConductor(int CodigoConductor)
+            {
+                return _Repositorio.LogisticaMetObtenerConductor(
+                    _Conexion, _Transaccion, CodigoConductor);
+            }
+
+            public object LogisticaMetObtenerRefrigeracionTransporte(int CodigoTransporte)
+            {
+                return _Viaje.LogisticaMetObtenerRefrigeracionTransporte(
+                    _Conexion, _Transaccion, CodigoTransporte);
+            }
+
+            public DataTable LogisticaMetObtenerRefrigeracionLotesProducto(int CodigoProducto)
+            {
+                return _Inventario.LogisticaMetObtenerRefrigeracionLotesProducto(
+                    _Conexion, _Transaccion, CodigoProducto);
+            }
+
+            public Dictionary<int, ClsStockProductoTraslado> LogisticaMetObtenerStocksBloqueados(
+                int CodigoBodega)
+            {
+                return _Inventario.LogisticaMetObtenerStocksBloqueados(
+                    _Conexion, _Transaccion, CodigoBodega);
+            }
+
+            public Dictionary<int, int> LogisticaMetObtenerDetallesBloqueados(int CodigoTraslado)
+            {
+                return _Repositorio.LogisticaMetObtenerDetallesBloqueados(
+                    _Conexion, _Transaccion, CodigoTraslado);
+            }
+
+            public int LogisticaMetInsertarTraslado(ClsTrasladoSolicitud Solicitud)
+            {
+                return _Repositorio.LogisticaMetInsertarEncabezado(
+                    _Conexion, _Transaccion, Solicitud);
+            }
+
+            public void LogisticaMetInsertarDetalles(int CodigoTraslado,
+                IList<ClsProductoTrasladoDetalle> Detalles)
+            {
+                _Repositorio.LogisticaMetInsertarDetalles(
+                    _Conexion, _Transaccion, CodigoTraslado, Detalles);
+            }
+
+            public void LogisticaMetActualizarEncabezado(int CodigoTraslado,
+                ClsTrasladoSolicitud Solicitud)
+            {
+                _Repositorio.LogisticaMetActualizarEncabezado(
+                    _Conexion, _Transaccion, CodigoTraslado, Solicitud);
+            }
+
+            public void LogisticaMetActualizarObservaciones(int CodigoTraslado, string Observaciones)
+            {
+                _Repositorio.LogisticaMetActualizarObservaciones(
+                    _Conexion, _Transaccion, CodigoTraslado, Observaciones);
+            }
+
+            public void LogisticaMetActualizarEstado(int CodigoTraslado, string Estado)
+            {
+                _Repositorio.LogisticaMetActualizarEstado(
+                    _Conexion, _Transaccion, CodigoTraslado, Estado);
+            }
+
+            public void LogisticaMetActualizarDetalles(int CodigoTraslado,
+                IList<ClsProductoTrasladoDetalle> Detalles)
+            {
+                _Repositorio.LogisticaMetActualizarDetalles(
+                    _Conexion, _Transaccion, CodigoTraslado, Detalles);
+            }
+
+            public int LogisticaMetCambiarEstadoTransporte(int CodigoTransporte, string EstadoNuevo)
+            {
+                return _Repositorio.LogisticaMetCambiarEstadoTransporte(
+                    _Conexion, _Transaccion, CodigoTransporte, EstadoNuevo);
+            }
+
+            public DataTable LogisticaMetObtenerTiposMovimiento()
+            {
+                return _Inventario.LogisticaMetObtenerTiposMovimiento(
+                    _Conexion, _Transaccion);
+            }
+
+            public int LogisticaMetObtenerSucursalBodega(int CodigoBodega)
+            {
+                return _Inventario.LogisticaMetObtenerSucursalBodega(
+                    _Conexion, _Transaccion, CodigoBodega);
+            }
+
+            public DataTable LogisticaMetObtenerLotesProducto(int CodigoProducto)
+            {
+                return _Inventario.LogisticaMetObtenerLotesProducto(
+                    _Conexion, _Transaccion, CodigoProducto);
+            }
+
+            public DataTable LogisticaMetObtenerLotesMovimientosTraslado(
+                int CodigoTraslado, int CodigoProducto)
+            {
+                return _Inventario.LogisticaMetObtenerLotesMovimientosTraslado(
+                    _Conexion, _Transaccion, CodigoTraslado, CodigoProducto);
+            }
+
+            public int LogisticaMetInsertarMovimiento(int TipoMovimiento,
+                ClsTrasladoPersistido Traslado, string Observaciones)
+            {
+                return _Inventario.LogisticaMetInsertarMovimiento(
+                    _Conexion, _Transaccion, TipoMovimiento, Traslado, Observaciones);
+            }
+
+            public void LogisticaMetInsertarDetalleMovimiento(int CodigoMovimiento,
+                ClsProductoTrasladoDetalle Detalle, object LotePreferido)
+            {
+                _Inventario.LogisticaMetInsertarDetalleMovimiento(
+                    _Conexion, _Transaccion, CodigoMovimiento, Detalle, LotePreferido);
+            }
+
+            public void LogisticaMetAnularMovimientosSalida(int CodigoTraslado)
+            {
+                _Inventario.LogisticaMetAnularMovimientosSalida(
+                    _Conexion, _Transaccion, CodigoTraslado);
+            }
+
+            public int LogisticaMetInsertarStockDestino(int CodigoSucursal, int CodigoBodega,
+                int CodigoProducto, int Cantidad, bool EstadoVenta, bool EstadoCompra)
+            {
+                return _Inventario.LogisticaMetInsertarStockDestino(
+                    _Conexion, _Transaccion, CodigoSucursal, CodigoBodega, CodigoProducto,
+                    Cantidad, EstadoVenta, EstadoCompra);
+            }
+
+            public void LogisticaMetActualizarSaldo(int CodigoBodega, int CodigoProducto, int SaldoActual)
+            {
+                _Inventario.LogisticaMetSincronizarSaldo(
+                    _Conexion, _Transaccion, CodigoBodega, CodigoProducto, SaldoActual);
+            }
+
+            public int LogisticaMetActualizarStock(int IdStock, int StockAnterior, int StockActual,
+                int Apartados, int Cargos, int Abonos)
+            {
+                return _Inventario.LogisticaMetActualizarStock(
+                    _Conexion, _Transaccion, IdStock, StockAnterior, StockActual,
+                    Apartados, Cargos, Abonos);
+            }
+
+            public int LogisticaMetActualizarApartados(int IdStock, int Apartados, int Virtual)
+            {
+                return _Inventario.LogisticaMetActualizarApartados(
+                    _Conexion, _Transaccion, IdStock, Apartados, Virtual);
+            }
+
+            public long LogisticaMetInsertarEncabezadoViaje(bool RequiereCadenaFrio,
+                double PesoTotal, int CodigoTransporte, int CodigoConductor)
+            {
+                return _Viaje.LogisticaMetInsertarEncabezadoViaje(
+                    _Conexion, _Transaccion, RequiereCadenaFrio, PesoTotal,
+                    CodigoTransporte, CodigoConductor);
+            }
+
+            public long LogisticaMetInsertarDetalleViaje(long CodigoViaje, int Orden,
+                string Descripcion, int Cantidad, double PesoTotal)
+            {
+                return _Viaje.LogisticaMetInsertarDetalleViaje(
+                    _Conexion, _Transaccion, CodigoViaje, Orden,
+                    Descripcion, Cantidad, PesoTotal);
+            }
+
+            public void LogisticaMetInsertarDetalleViajeLote(long CodigoDetalle,
+                long CodigoLote, int Cantidad, double PesoTotal)
+            {
+                _Viaje.LogisticaMetInsertarDetalleViajeLote(
+                    _Conexion, _Transaccion, CodigoDetalle, CodigoLote, Cantidad, PesoTotal);
+            }
+
+            public void LogisticaMetActualizarViajeActivo(int CodigoTransporte,
+                string Estado, bool RegistrarLlegada)
+            {
+                _Viaje.LogisticaMetActualizarViajeActivo(
+                    _Conexion, _Transaccion, CodigoTransporte, Estado, RegistrarLlegada);
             }
         }
     }

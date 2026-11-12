@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 using System.Windows.Forms;
 
 /*
@@ -22,6 +23,7 @@ namespace CapaVista_Traslados_Logistica.Formularios
         public FrmDetalleTraslados()
         {
             InitializeComponent();
+            LogisticaBtnAyudaTraslados.Click += LogisticaProcMostrarAyuda;
             LogisticaTxtCodigoTraslado.ReadOnly = true;
             LogisticaTxtEstadoTraslado.ReadOnly = true;
             LogisticaTxtBodegaOrigen.ReadOnly = true;
@@ -79,12 +81,12 @@ namespace CapaVista_Traslados_Logistica.Formularios
                 Traslado, "Observaciones", "Sin observaciones");
 
             int TotalUnidades = 0;
-            decimal PesoTotal = 0;
+            double PesoTotal = 0;
             decimal CostoTotal = 0;
             foreach (DataRow Producto in Productos.Rows)
             {
                 int Cantidad = Convert.ToInt32(Producto["Cantidad"]);
-                decimal PesoProducto = Convert.ToDecimal(Producto["PesoTotal"]);
+                double PesoProducto = Convert.ToDouble(Producto["PesoTotal"]);
                 decimal CostoProducto = Convert.ToDecimal(Producto["PrecioTotal"]);
                 TotalUnidades += Cantidad;
                 PesoTotal += PesoProducto;
@@ -122,6 +124,38 @@ namespace CapaVista_Traslados_Logistica.Formularios
             }
 
             return Convert.ToDateTime(Fila[Columna]).ToString("g");
+        }
+
+        private void LogisticaProcMostrarAyuda(object sender, EventArgs e)
+        {
+            DirectoryInfo DirectorioActual =
+                new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+
+            while (DirectorioActual != null)
+            {
+                string RutaAyuda = Path.Combine(
+                    DirectorioActual.FullName,
+                    "ayuda",
+                    "modulos",
+                    "logistica",
+                    "LogisticaAyudas",
+                    "LogisticaAyudas.chm");
+
+                if (File.Exists(RutaAyuda))
+                {
+                    Help.ShowHelp(this, RutaAyuda, "DetalleTraslados_Logistica.html");
+                    return;
+                }
+
+                DirectorioActual = DirectorioActual.Parent;
+            }
+
+            MessageBox.Show(
+                this,
+                "No se encontró el archivo de ayuda del detalle de traslados.",
+                "Detalle de traslados",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
         }
     }
 }

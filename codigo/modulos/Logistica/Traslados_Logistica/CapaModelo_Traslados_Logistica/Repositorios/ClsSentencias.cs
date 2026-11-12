@@ -52,10 +52,7 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
         {
             using (var Comando = new OdbcCommand(Consulta, Conexion, Transaccion))
             {
-                if (Parametros != null && Parametros.Length > 0)
-                {
-                    Comando.Parameters.AddRange(Parametros);
-                }
+                Comando.Parameters.AddRange(Parametros);
 
                 return Comando.ExecuteNonQuery();
             }
@@ -67,10 +64,7 @@ namespace CapaModelo_Traslados_Logistica.Repositorios
         {
             using (var Comando = new OdbcCommand(Consulta, Conexion, Transaccion))
             {
-                if (Parametros != null && Parametros.Length > 0)
-                {
-                    Comando.Parameters.AddRange(Parametros);
-                }
+                Comando.Parameters.AddRange(Parametros);
 
                 return Comando.ExecuteScalar();
             }

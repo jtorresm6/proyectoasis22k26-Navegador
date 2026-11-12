@@ -655,8 +655,9 @@
             </Paragraph>
           </Paragraphs>
           <Top>0.05cm</Top>
+          <Left>5.86783cm</Left>
           <Height>3.3975cm</Height>
-          <Width>28.19267cm</Width>
+          <Width>15.63762cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -669,7 +670,7 @@
           <Value>ID7</Value>
           <Sizing>Fit</Sizing>
           <Top>0.05cm</Top>
-          <Left>21.68184cm</Left>
+          <Left>20.24251cm</Left>
           <Height>3.3975cm</Height>
           <Width>2.91816cm</Width>
           <ZIndex>1</ZIndex>

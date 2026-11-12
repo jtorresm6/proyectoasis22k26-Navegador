@@ -1,4 +1,4 @@
-﻿namespace CapaVista_Traslados_Logistica.Formularios
+namespace CapaVista_Traslados_Logistica.Formularios
 {
     partial class FrmDetalleTraslados
     {

@@ -1,4 +1,4 @@
-﻿namespace CapaVista_Traslados_Logistica.Formularios
+namespace CapaVista_Traslados_Logistica.Formularios
 {
     partial class FrmReporteTraslados
     {
@@ -49,8 +49,8 @@
             this.MaximizeBox = false;
             this.Name = "FrmReporteTraslados";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmReporteTraslados";
-            this.Load += new System.EventHandler(this.FrmReporteTraslados_Load);
+            this.Text = "5030 - Reporte de Traslados";
+            this.Load += new System.EventHandler(this.LogisticaProcCargarReporteTraslados);
             this.ResumeLayout(false);
 
         }

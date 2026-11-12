@@ -1,5 +1,18 @@
+using System;
 using System.Data;
 using CapaModelo_Traslados_Logistica.Entidades;
+
+/*
+ * ==================================================================
+ * Área : Logística
+ * Autor : José Xavier Bolaños Tenas
+ * Carné : 0901-23-2128
+ * Fecha : 11/11/2026
+ * ==================================================================
+ * Propósito :
+ * Contrato de acceso a los datos de traslados entre bodegas.
+ * ===================================================================
+ */
 
 namespace CapaModelo_Traslados_Logistica.Contratos
 {
@@ -8,13 +21,10 @@ namespace CapaModelo_Traslados_Logistica.Contratos
         DataTable LogisticaMetObtenerTraslados();
         DataTable LogisticaMetObtenerBodegas();
         DataTable LogisticaMetObtenerTiposTransporte();
-        DataTable LogisticaMetObtenerConductoresDisponibles(string CodigoTrasladoExcluir);
-        DataTable LogisticaMetObtenerTransportesDisponibles(int CodigoTipoTransporte);
-        DataTable LogisticaMetObtenerTransportesDisponibles(int CodigoTipoTransporte, string CodigoTrasladoExcluir);
-        DataTable LogisticaMetObtenerProductosDisponibles(int CodigoBodega);
-        DataTable LogisticaMetObtenerProductosDisponibles(int CodigoBodega, string CodigoTrasladoExcluir);
+        DataTable LogisticaMetObtenerConductores();
+        DataTable LogisticaMetObtenerTransportes();
+        DataTable LogisticaMetObtenerStockProductos(int CodigoBodega, string CodigoTrasladoReserva);
         DataTable LogisticaMetObtenerDetalleTraslado(string CodigoTraslado);
-        void LogisticaMetGuardarTraslado(ClsTrasladoSolicitud Solicitud);
-        void LogisticaMetActualizarTraslado(ClsTrasladoSolicitud Solicitud);
+        void LogisticaMetEjecutarUnidadTrabajo(Action<IRepositorioUnidadTrabajoTraslado> Operacion);
     }
 }

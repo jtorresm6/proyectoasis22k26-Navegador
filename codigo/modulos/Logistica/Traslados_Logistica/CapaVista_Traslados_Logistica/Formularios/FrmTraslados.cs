@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 using System.Windows.Forms;
 using CapaControlador_Traslados_Logistica;
 
@@ -190,7 +191,8 @@ namespace CapaVista_Traslados_Logistica.Formularios
             LogisticaPnlDatosTraslados.Enabled = true;
             LogisticaTxtCodigoTraslado.Enabled = true;
             LogisticaCboEstadoTraslado.Enabled = false;
-            LogisticaCboConductorTraslado.Enabled = false;
+            LogisticaCboConductorTraslado.Enabled = true;
+            LogisticaMetCargarConductoresDisponibles();
             LogisticaBtnGuardarTraslados.Enabled = true;
             LogisticaBtnCancelarTraslados.Enabled = true;
             LogisticaTxtCodigoTraslado.Focus();
@@ -326,9 +328,8 @@ namespace CapaVista_Traslados_Logistica.Formularios
         {
             try
             {
-                int CodigoConductor = _Editando
-                    ? LogisticaMetObtenerCodigoSeleccionado(LogisticaCboConductorTraslado)
-                    : 0;
+                int CodigoConductor =
+                    LogisticaMetObtenerCodigoSeleccionado(LogisticaCboConductorTraslado);
                 if (_Editando)
                 {
                     _Traslado.LogisticaMetActualizarTraslado(
@@ -799,6 +800,33 @@ namespace CapaVista_Traslados_Logistica.Formularios
                 LogisticaProcMostrarError(
                     "No fue posible cargar el detalle del traslado. " + Error.Message);
             }
+        }
+
+        private void LogisticaProcMostrarAyuda(object sender, EventArgs e)
+        {
+            DirectoryInfo DirectorioActual =
+                new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+
+            while (DirectorioActual != null)
+            {
+                string RutaAyuda = Path.Combine(
+                    DirectorioActual.FullName,
+                    "ayuda",
+                    "modulos",
+                    "logistica",
+                    "LogisticaAyudas",
+                    "LogisticaAyudas.chm");
+
+                if (File.Exists(RutaAyuda))
+                {
+                    Help.ShowHelp(this, RutaAyuda, "Traslados_Logistica.html");
+                    return;
+                }
+
+                DirectorioActual = DirectorioActual.Parent;
+            }
+
+            LogisticaProcMostrarError("No se encontró el archivo de ayuda de traslados.");
         }
     }
 }

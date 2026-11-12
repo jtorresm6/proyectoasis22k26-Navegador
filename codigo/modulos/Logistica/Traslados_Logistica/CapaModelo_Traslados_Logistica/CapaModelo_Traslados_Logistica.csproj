@@ -45,6 +45,7 @@
     <Compile Include="Repositorios\ClsConexion.cs" />
     <Compile Include="Repositorios\ClsSentencias.cs" />
     <Compile Include="Contratos\IRepositorioTraslado.cs" />
+    <Compile Include="Contratos\IRepositorioUnidadTrabajoTraslado.cs" />
     <Compile Include="Repositorios\ClsRepositorioTraslado.cs" />
     <Compile Include="Entidades\ClsProductoTrasladoDetalle.cs" />
     <Compile Include="Entidades\ClsTrasladoSolicitud.cs" />

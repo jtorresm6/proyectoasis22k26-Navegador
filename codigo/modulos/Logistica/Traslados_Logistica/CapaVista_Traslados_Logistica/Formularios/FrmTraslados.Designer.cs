@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTraslados));
             this.LogisticaPnlBotonesTraslados = new System.Windows.Forms.Panel();
             this.LogisticaBtnNuevoTraslados = new System.Windows.Forms.Button();
@@ -47,6 +47,14 @@
             this.LogisticaBtnVerDetalleTraslados = new System.Windows.Forms.Button();
             this.LogisticaPnlListaTraslados = new System.Windows.Forms.Panel();
             this.LogisticaDgvListaTraslados = new System.Windows.Forms.DataGridView();
+            this.LogisticaDgvtbcCodigoTraslado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcFechaSolicitud = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcBodegaOrigen = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcFechaSalida = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcBodegaDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcFechaLlegada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcObservacionesTraslado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcEstadoTraslado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LogisticaPnlDatosTraslados = new System.Windows.Forms.Panel();
             this.LogisticaCboConductorTraslado = new System.Windows.Forms.ComboBox();
             this.LogisticaLblConductorTraslado = new System.Windows.Forms.Label();
@@ -63,11 +71,11 @@
             this.LogisticaCboEstadoTraslado = new System.Windows.Forms.ComboBox();
             this.LogisticaBtnAgregarTraslados = new System.Windows.Forms.Button();
             this.LogisticaDgvProductoTraslados = new System.Windows.Forms.DataGridView();
-            this.skuProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcionProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidadProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pesoProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcSkuProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcNombreProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcDescripcionProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcCantidadProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogisticaDgvtbcPesoProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LogisticaLblCantidadTraslados = new System.Windows.Forms.Label();
             this.LogisticaCboProductoTraslados = new System.Windows.Forms.ComboBox();
             this.LogisticaLblProductoTraslados = new System.Windows.Forms.Label();
@@ -82,20 +90,12 @@
             this.LogisticaDtpFechaDelFiltro = new System.Windows.Forms.DateTimePicker();
             this.LogisticaCboEstadoFiltro = new System.Windows.Forms.ComboBox();
             this.LogisticaBtnBuscarTraslados = new System.Windows.Forms.Button();
-            this.LogisitcaLblFechaSolicitudFiltro = new System.Windows.Forms.Label();
+            this.LogisticaLblFechaSolicitudFiltro = new System.Windows.Forms.Label();
             this.LogisticaLblEstadoTrasladoFiltro = new System.Windows.Forms.Label();
             this.LogisticaPnlEncabezadoTraslado = new System.Windows.Forms.Panel();
             this.LogisticaBtnAyudaTraslados = new System.Windows.Forms.Button();
             this.LogisticaLblSubtituloTraslados = new System.Windows.Forms.Label();
             this.LogisticaLblTituloTraslados = new System.Windows.Forms.Label();
-            this.LogisticaDgvtbcCodigoTraslado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LogisticaDgvtbcFechaSolicitud = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LogisticaDgvtbcBodegaOrigen = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LogisticaDgvtbcFechaSalida = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LogisticaDgvtbcBodegaDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LogisticaDgvtbcFechaLlegada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LogisticaDgvtbcObservacionesTraslado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LogisticaDgvtbcEstadoTraslado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LogisticaPnlBotonesTraslados.SuspendLayout();
             this.LogisticaPnlListaTraslados.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogisticaDgvListaTraslados)).BeginInit();
@@ -322,6 +322,76 @@
             this.LogisticaDgvListaTraslados.Size = new System.Drawing.Size(1219, 153);
             this.LogisticaDgvListaTraslados.TabIndex = 0;
             // 
+            // LogisticaDgvtbcCodigoTraslado
+            // 
+            this.LogisticaDgvtbcCodigoTraslado.DataPropertyName = "CodigoTraslado";
+            this.LogisticaDgvtbcCodigoTraslado.HeaderText = "Código Traslado";
+            this.LogisticaDgvtbcCodigoTraslado.MinimumWidth = 6;
+            this.LogisticaDgvtbcCodigoTraslado.Name = "LogisticaDgvtbcCodigoTraslado";
+            this.LogisticaDgvtbcCodigoTraslado.ReadOnly = true;
+            // 
+            // LogisticaDgvtbcFechaSolicitud
+            // 
+            this.LogisticaDgvtbcFechaSolicitud.DataPropertyName = "FechaSolicitud";
+            dataGridViewCellStyle1.Format = "dd/MM/yyyy HH:mm";
+            this.LogisticaDgvtbcFechaSolicitud.DefaultCellStyle = dataGridViewCellStyle1;
+            this.LogisticaDgvtbcFechaSolicitud.HeaderText = "Fecha Solicitud";
+            this.LogisticaDgvtbcFechaSolicitud.MinimumWidth = 6;
+            this.LogisticaDgvtbcFechaSolicitud.Name = "LogisticaDgvtbcFechaSolicitud";
+            this.LogisticaDgvtbcFechaSolicitud.ReadOnly = true;
+            // 
+            // LogisticaDgvtbcBodegaOrigen
+            // 
+            this.LogisticaDgvtbcBodegaOrigen.DataPropertyName = "BodegaOrigen";
+            this.LogisticaDgvtbcBodegaOrigen.HeaderText = "Bodega Origen";
+            this.LogisticaDgvtbcBodegaOrigen.MinimumWidth = 6;
+            this.LogisticaDgvtbcBodegaOrigen.Name = "LogisticaDgvtbcBodegaOrigen";
+            this.LogisticaDgvtbcBodegaOrigen.ReadOnly = true;
+            // 
+            // LogisticaDgvtbcFechaSalida
+            // 
+            this.LogisticaDgvtbcFechaSalida.DataPropertyName = "FechaSalida";
+            dataGridViewCellStyle2.Format = "dd/MM/yyyy HH:mm";
+            this.LogisticaDgvtbcFechaSalida.DefaultCellStyle = dataGridViewCellStyle2;
+            this.LogisticaDgvtbcFechaSalida.HeaderText = "Fecha Salida";
+            this.LogisticaDgvtbcFechaSalida.MinimumWidth = 6;
+            this.LogisticaDgvtbcFechaSalida.Name = "LogisticaDgvtbcFechaSalida";
+            this.LogisticaDgvtbcFechaSalida.ReadOnly = true;
+            // 
+            // LogisticaDgvtbcBodegaDestino
+            // 
+            this.LogisticaDgvtbcBodegaDestino.DataPropertyName = "BodegaDestino";
+            this.LogisticaDgvtbcBodegaDestino.HeaderText = "Bodega Destino";
+            this.LogisticaDgvtbcBodegaDestino.MinimumWidth = 6;
+            this.LogisticaDgvtbcBodegaDestino.Name = "LogisticaDgvtbcBodegaDestino";
+            this.LogisticaDgvtbcBodegaDestino.ReadOnly = true;
+            // 
+            // LogisticaDgvtbcFechaLlegada
+            // 
+            this.LogisticaDgvtbcFechaLlegada.DataPropertyName = "FechaLlegada";
+            dataGridViewCellStyle3.Format = "dd/MM/yyyy HH:mm";
+            this.LogisticaDgvtbcFechaLlegada.DefaultCellStyle = dataGridViewCellStyle3;
+            this.LogisticaDgvtbcFechaLlegada.HeaderText = "Fecha Llegada";
+            this.LogisticaDgvtbcFechaLlegada.MinimumWidth = 6;
+            this.LogisticaDgvtbcFechaLlegada.Name = "LogisticaDgvtbcFechaLlegada";
+            this.LogisticaDgvtbcFechaLlegada.ReadOnly = true;
+            // 
+            // LogisticaDgvtbcObservacionesTraslado
+            // 
+            this.LogisticaDgvtbcObservacionesTraslado.DataPropertyName = "Observaciones";
+            this.LogisticaDgvtbcObservacionesTraslado.HeaderText = "Observaciones";
+            this.LogisticaDgvtbcObservacionesTraslado.MinimumWidth = 6;
+            this.LogisticaDgvtbcObservacionesTraslado.Name = "LogisticaDgvtbcObservacionesTraslado";
+            this.LogisticaDgvtbcObservacionesTraslado.ReadOnly = true;
+            // 
+            // LogisticaDgvtbcEstadoTraslado
+            // 
+            this.LogisticaDgvtbcEstadoTraslado.DataPropertyName = "Estado";
+            this.LogisticaDgvtbcEstadoTraslado.HeaderText = "Estado";
+            this.LogisticaDgvtbcEstadoTraslado.MinimumWidth = 6;
+            this.LogisticaDgvtbcEstadoTraslado.Name = "LogisticaDgvtbcEstadoTraslado";
+            this.LogisticaDgvtbcEstadoTraslado.ReadOnly = true;
+            // 
             // LogisticaPnlDatosTraslados
             // 
             this.LogisticaPnlDatosTraslados.BackColor = System.Drawing.Color.Transparent;
@@ -535,11 +605,11 @@
             this.LogisticaDgvProductoTraslados.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.LogisticaDgvProductoTraslados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.LogisticaDgvProductoTraslados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.skuProducto,
-            this.nombreProducto,
-            this.descripcionProducto,
-            this.cantidadProducto,
-            this.pesoProducto});
+            this.LogisticaDgvtbcSkuProducto,
+            this.LogisticaDgvtbcNombreProducto,
+            this.LogisticaDgvtbcDescripcionProducto,
+            this.LogisticaDgvtbcCantidadProducto,
+            this.LogisticaDgvtbcPesoProducto});
             this.LogisticaDgvProductoTraslados.Location = new System.Drawing.Point(571, 231);
             this.LogisticaDgvProductoTraslados.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaDgvProductoTraslados.MultiSelect = false;
@@ -551,42 +621,42 @@
             this.LogisticaDgvProductoTraslados.Size = new System.Drawing.Size(783, 133);
             this.LogisticaDgvProductoTraslados.TabIndex = 55;
             // 
-            // skuProducto
+            // LogisticaDgvtbcSkuProducto
             // 
-            this.skuProducto.HeaderText = "SKU";
-            this.skuProducto.MinimumWidth = 6;
-            this.skuProducto.Name = "skuProducto";
-            this.skuProducto.ReadOnly = true;
+            this.LogisticaDgvtbcSkuProducto.HeaderText = "SKU";
+            this.LogisticaDgvtbcSkuProducto.MinimumWidth = 6;
+            this.LogisticaDgvtbcSkuProducto.Name = "LogisticaDgvtbcSkuProducto";
+            this.LogisticaDgvtbcSkuProducto.ReadOnly = true;
             // 
-            // nombreProducto
+            // LogisticaDgvtbcNombreProducto
             // 
-            this.nombreProducto.HeaderText = "Nombre";
-            this.nombreProducto.MinimumWidth = 6;
-            this.nombreProducto.Name = "nombreProducto";
-            this.nombreProducto.ReadOnly = true;
+            this.LogisticaDgvtbcNombreProducto.HeaderText = "Nombre";
+            this.LogisticaDgvtbcNombreProducto.MinimumWidth = 6;
+            this.LogisticaDgvtbcNombreProducto.Name = "LogisticaDgvtbcNombreProducto";
+            this.LogisticaDgvtbcNombreProducto.ReadOnly = true;
             // 
-            // descripcionProducto
+            // LogisticaDgvtbcDescripcionProducto
             // 
-            this.descripcionProducto.HeaderText = "Descripción";
-            this.descripcionProducto.MinimumWidth = 6;
-            this.descripcionProducto.Name = "descripcionProducto";
-            this.descripcionProducto.ReadOnly = true;
+            this.LogisticaDgvtbcDescripcionProducto.HeaderText = "Descripción";
+            this.LogisticaDgvtbcDescripcionProducto.MinimumWidth = 6;
+            this.LogisticaDgvtbcDescripcionProducto.Name = "LogisticaDgvtbcDescripcionProducto";
+            this.LogisticaDgvtbcDescripcionProducto.ReadOnly = true;
             // 
-            // cantidadProducto
+            // LogisticaDgvtbcCantidadProducto
             // 
-            this.cantidadProducto.HeaderText = "Cantidad";
-            this.cantidadProducto.MinimumWidth = 6;
-            this.cantidadProducto.Name = "cantidadProducto";
-            this.cantidadProducto.ReadOnly = true;
+            this.LogisticaDgvtbcCantidadProducto.HeaderText = "Cantidad";
+            this.LogisticaDgvtbcCantidadProducto.MinimumWidth = 6;
+            this.LogisticaDgvtbcCantidadProducto.Name = "LogisticaDgvtbcCantidadProducto";
+            this.LogisticaDgvtbcCantidadProducto.ReadOnly = true;
             // 
-            // pesoProducto
+            // LogisticaDgvtbcPesoProducto
             // 
             dataGridViewCellStyle5.Format = "N2";
-            this.pesoProducto.DefaultCellStyle = dataGridViewCellStyle5;
-            this.pesoProducto.HeaderText = "Peso (kg)";
-            this.pesoProducto.MinimumWidth = 6;
-            this.pesoProducto.Name = "pesoProducto";
-            this.pesoProducto.ReadOnly = true;
+            this.LogisticaDgvtbcPesoProducto.DefaultCellStyle = dataGridViewCellStyle5;
+            this.LogisticaDgvtbcPesoProducto.HeaderText = "Peso (kg)";
+            this.LogisticaDgvtbcPesoProducto.MinimumWidth = 6;
+            this.LogisticaDgvtbcPesoProducto.Name = "LogisticaDgvtbcPesoProducto";
+            this.LogisticaDgvtbcPesoProducto.ReadOnly = true;
             // 
             // LogisticaLblCantidadTraslados
             // 
@@ -687,7 +757,7 @@
             this.LogisticaPnlFiltrosTraslados.Controls.Add(this.LogisticaDtpFechaDelFiltro);
             this.LogisticaPnlFiltrosTraslados.Controls.Add(this.LogisticaCboEstadoFiltro);
             this.LogisticaPnlFiltrosTraslados.Controls.Add(this.LogisticaBtnBuscarTraslados);
-            this.LogisticaPnlFiltrosTraslados.Controls.Add(this.LogisitcaLblFechaSolicitudFiltro);
+            this.LogisticaPnlFiltrosTraslados.Controls.Add(this.LogisticaLblFechaSolicitudFiltro);
             this.LogisticaPnlFiltrosTraslados.Controls.Add(this.LogisticaLblEstadoTrasladoFiltro);
             this.LogisticaPnlFiltrosTraslados.Dock = System.Windows.Forms.DockStyle.Top;
             this.LogisticaPnlFiltrosTraslados.Location = new System.Drawing.Point(0, 615);
@@ -755,17 +825,17 @@
             this.LogisticaBtnBuscarTraslados.TabIndex = 58;
             this.LogisticaBtnBuscarTraslados.UseVisualStyleBackColor = true;
             // 
-            // LogisitcaLblFechaSolicitudFiltro
+            // LogisticaLblFechaSolicitudFiltro
             // 
-            this.LogisitcaLblFechaSolicitudFiltro.AutoSize = true;
-            this.LogisitcaLblFechaSolicitudFiltro.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogisitcaLblFechaSolicitudFiltro.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
-            this.LogisitcaLblFechaSolicitudFiltro.Location = new System.Drawing.Point(578, 15);
-            this.LogisitcaLblFechaSolicitudFiltro.Margin = new System.Windows.Forms.Padding(0);
-            this.LogisitcaLblFechaSolicitudFiltro.Name = "LogisitcaLblFechaSolicitudFiltro";
-            this.LogisitcaLblFechaSolicitudFiltro.Size = new System.Drawing.Size(172, 21);
-            this.LogisitcaLblFechaSolicitudFiltro.TabIndex = 63;
-            this.LogisitcaLblFechaSolicitudFiltro.Text = "Fecha de Solicitud:";
+            this.LogisticaLblFechaSolicitudFiltro.AutoSize = true;
+            this.LogisticaLblFechaSolicitudFiltro.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LogisticaLblFechaSolicitudFiltro.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
+            this.LogisticaLblFechaSolicitudFiltro.Location = new System.Drawing.Point(578, 15);
+            this.LogisticaLblFechaSolicitudFiltro.Margin = new System.Windows.Forms.Padding(0);
+            this.LogisticaLblFechaSolicitudFiltro.Name = "LogisticaLblFechaSolicitudFiltro";
+            this.LogisticaLblFechaSolicitudFiltro.Size = new System.Drawing.Size(172, 21);
+            this.LogisticaLblFechaSolicitudFiltro.TabIndex = 63;
+            this.LogisticaLblFechaSolicitudFiltro.Text = "Fecha de Solicitud:";
             // 
             // LogisticaLblEstadoTrasladoFiltro
             // 
@@ -809,6 +879,7 @@
             this.LogisticaBtnAyudaTraslados.Size = new System.Drawing.Size(60, 60);
             this.LogisticaBtnAyudaTraslados.TabIndex = 23;
             this.LogisticaBtnAyudaTraslados.UseVisualStyleBackColor = true;
+            this.LogisticaBtnAyudaTraslados.Click += new System.EventHandler(this.LogisticaProcMostrarAyuda);
             // 
             // LogisticaLblSubtituloTraslados
             // 
@@ -833,76 +904,6 @@
             this.LogisticaLblTituloTraslados.Size = new System.Drawing.Size(511, 38);
             this.LogisticaLblTituloTraslados.TabIndex = 2;
             this.LogisticaLblTituloTraslados.Text = "TRASLADO ENTRE BODEGAS";
-            // 
-            // LogisticaDgvtbcCodigoTraslado
-            // 
-            this.LogisticaDgvtbcCodigoTraslado.DataPropertyName = "CodigoTraslado";
-            this.LogisticaDgvtbcCodigoTraslado.HeaderText = "Código Traslado";
-            this.LogisticaDgvtbcCodigoTraslado.MinimumWidth = 6;
-            this.LogisticaDgvtbcCodigoTraslado.Name = "LogisticaDgvtbcCodigoTraslado";
-            this.LogisticaDgvtbcCodigoTraslado.ReadOnly = true;
-            // 
-            // LogisticaDgvtbcFechaSolicitud
-            // 
-            this.LogisticaDgvtbcFechaSolicitud.DataPropertyName = "FechaSolicitud";
-            dataGridViewCellStyle1.Format = "dd/MM/yyyy HH:mm";
-            this.LogisticaDgvtbcFechaSolicitud.DefaultCellStyle = dataGridViewCellStyle1;
-            this.LogisticaDgvtbcFechaSolicitud.HeaderText = "Fecha Solicitud";
-            this.LogisticaDgvtbcFechaSolicitud.MinimumWidth = 6;
-            this.LogisticaDgvtbcFechaSolicitud.Name = "LogisticaDgvtbcFechaSolicitud";
-            this.LogisticaDgvtbcFechaSolicitud.ReadOnly = true;
-            // 
-            // LogisticaDgvtbcBodegaOrigen
-            // 
-            this.LogisticaDgvtbcBodegaOrigen.DataPropertyName = "BodegaOrigen";
-            this.LogisticaDgvtbcBodegaOrigen.HeaderText = "Bodega Origen";
-            this.LogisticaDgvtbcBodegaOrigen.MinimumWidth = 6;
-            this.LogisticaDgvtbcBodegaOrigen.Name = "LogisticaDgvtbcBodegaOrigen";
-            this.LogisticaDgvtbcBodegaOrigen.ReadOnly = true;
-            // 
-            // LogisticaDgvtbcFechaSalida
-            // 
-            this.LogisticaDgvtbcFechaSalida.DataPropertyName = "FechaSalida";
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy HH:mm";
-            this.LogisticaDgvtbcFechaSalida.DefaultCellStyle = dataGridViewCellStyle2;
-            this.LogisticaDgvtbcFechaSalida.HeaderText = "Fecha Salida";
-            this.LogisticaDgvtbcFechaSalida.MinimumWidth = 6;
-            this.LogisticaDgvtbcFechaSalida.Name = "LogisticaDgvtbcFechaSalida";
-            this.LogisticaDgvtbcFechaSalida.ReadOnly = true;
-            // 
-            // LogisticaDgvtbcBodegaDestino
-            // 
-            this.LogisticaDgvtbcBodegaDestino.DataPropertyName = "BodegaDestino";
-            this.LogisticaDgvtbcBodegaDestino.HeaderText = "Bodega Destino";
-            this.LogisticaDgvtbcBodegaDestino.MinimumWidth = 6;
-            this.LogisticaDgvtbcBodegaDestino.Name = "LogisticaDgvtbcBodegaDestino";
-            this.LogisticaDgvtbcBodegaDestino.ReadOnly = true;
-            // 
-            // LogisticaDgvtbcFechaLlegada
-            // 
-            this.LogisticaDgvtbcFechaLlegada.DataPropertyName = "FechaLlegada";
-            dataGridViewCellStyle3.Format = "dd/MM/yyyy HH:mm";
-            this.LogisticaDgvtbcFechaLlegada.DefaultCellStyle = dataGridViewCellStyle3;
-            this.LogisticaDgvtbcFechaLlegada.HeaderText = "Fecha Llegada";
-            this.LogisticaDgvtbcFechaLlegada.MinimumWidth = 6;
-            this.LogisticaDgvtbcFechaLlegada.Name = "LogisticaDgvtbcFechaLlegada";
-            this.LogisticaDgvtbcFechaLlegada.ReadOnly = true;
-            // 
-            // LogisticaDgvtbcObservacionesTraslado
-            // 
-            this.LogisticaDgvtbcObservacionesTraslado.DataPropertyName = "Observaciones";
-            this.LogisticaDgvtbcObservacionesTraslado.HeaderText = "Observaciones";
-            this.LogisticaDgvtbcObservacionesTraslado.MinimumWidth = 6;
-            this.LogisticaDgvtbcObservacionesTraslado.Name = "LogisticaDgvtbcObservacionesTraslado";
-            this.LogisticaDgvtbcObservacionesTraslado.ReadOnly = true;
-            // 
-            // LogisticaDgvtbcEstadoTraslado
-            // 
-            this.LogisticaDgvtbcEstadoTraslado.DataPropertyName = "Estado";
-            this.LogisticaDgvtbcEstadoTraslado.HeaderText = "Estado";
-            this.LogisticaDgvtbcEstadoTraslado.MinimumWidth = 6;
-            this.LogisticaDgvtbcEstadoTraslado.Name = "LogisticaDgvtbcEstadoTraslado";
-            this.LogisticaDgvtbcEstadoTraslado.ReadOnly = true;
             // 
             // FrmTraslados
             // 
@@ -969,13 +970,9 @@
         private System.Windows.Forms.ComboBox LogisticaCboTipoTransporte;
         private System.Windows.Forms.Button LogisticaBtnAyudaTraslados;
         private System.Windows.Forms.Button LogisticaBtnNuevoTraslados;
-        private System.Windows.Forms.DataGridViewTextBoxColumn skuProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descripcionProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidadProducto;
         private System.Windows.Forms.Label LogisticaLblEstadoTrasladoFiltro;
         private System.Windows.Forms.ComboBox LogisticaCboEstadoFiltro;
-        private System.Windows.Forms.Label LogisitcaLblFechaSolicitudFiltro;
+        private System.Windows.Forms.Label LogisticaLblFechaSolicitudFiltro;
         private System.Windows.Forms.TextBox LogisticaTxtCodigoTrasladoFiltro;
         private System.Windows.Forms.Label LogisticaLblCodigoTrasladoFiltro;
         private System.Windows.Forms.Label LogisticaLblNombreConductor;
@@ -990,7 +987,6 @@
         private System.Windows.Forms.ComboBox LogisticaCboBodegaOrigen;
         private System.Windows.Forms.Label LogisticaLblBodegaDestinoTraslados;
         private System.Windows.Forms.Label LogisticaLblBodegaOrigenTraslados;
-        private System.Windows.Forms.DataGridViewTextBoxColumn pesoProducto;
         private System.Windows.Forms.TextBox LogisticaTxtObservacionesTraslados;
         private System.Windows.Forms.ComboBox LogisticaCboPlacaTransporte;
         private System.Windows.Forms.ComboBox LogisticaCboConductorTraslado;
@@ -1003,5 +999,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn LogisticaDgvtbcFechaLlegada;
         private System.Windows.Forms.DataGridViewTextBoxColumn LogisticaDgvtbcObservacionesTraslado;
         private System.Windows.Forms.DataGridViewTextBoxColumn LogisticaDgvtbcEstadoTraslado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LogisticaDgvtbcSkuProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LogisticaDgvtbcNombreProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LogisticaDgvtbcDescripcionProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LogisticaDgvtbcCantidadProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LogisticaDgvtbcPesoProducto;
     }
 }

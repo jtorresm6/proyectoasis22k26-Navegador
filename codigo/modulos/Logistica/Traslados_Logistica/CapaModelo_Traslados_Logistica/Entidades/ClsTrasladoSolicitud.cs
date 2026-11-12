@@ -1,5 +1,17 @@
 using System.Collections.Generic;
 
+/*
+ * ==================================================================
+ * Área : Logística
+ * Autor : José Xavier Bolaños Tenas
+ * Carné : 0901-23-2128
+ * Fecha : 11/11/2026
+ * ==================================================================
+ * Propósito :
+ * Agrupa los datos solicitados para registrar un traslado.
+ * ===================================================================
+ */
+
 namespace CapaModelo_Traslados_Logistica.Entidades
 {
     public class ClsTrasladoSolicitud
