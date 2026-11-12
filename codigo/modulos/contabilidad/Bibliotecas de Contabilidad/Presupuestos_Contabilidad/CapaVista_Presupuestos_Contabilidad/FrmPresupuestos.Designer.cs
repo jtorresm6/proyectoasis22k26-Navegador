@@ -197,7 +197,7 @@ namespace CapaVista_Contabilidad
             this.Icon = global::CapaVista_Contabilidad.Properties.Resources.Icono_Contabilidad;
             this.MaximizeBox = false;
             this.Name = "FrmPresupuestos";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "10002 - Presupuestos";
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1180, 688);

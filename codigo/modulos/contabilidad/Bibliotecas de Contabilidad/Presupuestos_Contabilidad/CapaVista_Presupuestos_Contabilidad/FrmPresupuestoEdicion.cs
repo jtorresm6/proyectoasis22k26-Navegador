@@ -20,6 +20,9 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using CapaControlador_Contabilidad;
+// Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+using CapaControlador_Navegador;
+// Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
 using CapaVista_Contabilidad.Componentes;
 using Diseno = CapaVista_Contabilidad.Componentes.ClsDisenoContabilidad;
 
@@ -68,6 +71,17 @@ namespace CapaVista_Contabilidad
             ContabilidadBtnGuardar.Click += ContabilidadMetGuardar;
             ContabilidadBtnCancelar.Click += (Remitente, Argumentos) => Close();
             FormClosing += ContabilidadMetCerrando;
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            // Ayuda con el botón o con F1
+            ContabilidadBtnAyuda.Click += ContabilidadMetMostrarAyuda;
+            KeyPreview = true;
+            KeyDown += (Remitente, Tecla) =>
+            {
+                if (Tecla.KeyCode != Keys.F1) return;
+                Tecla.Handled = true;
+                ContabilidadMetMostrarAyuda(this, EventArgs.Empty);
+            };
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             ContabilidadMetCargar(Presupuesto);
         }
 
@@ -166,5 +180,30 @@ namespace CapaVista_Contabilidad
             ContabilidadBtnGuardar.Enabled = _HayCambios && _Detalle.Rows.Count > 0;
             _Tabla.ContabilidadMetActualizar();
         }
+
+        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+        // Abre la página de ayuda de esta ventana
+        private void ContabilidadMetMostrarAyuda(object Remitente, EventArgs Argumentos)
+        {
+            try
+            {
+                ClsDestinoAyuda Destino = new ClsCtrlAyuda().NavegadorFuncObtenerDestino(10002, GetType().Name);
+
+                if (Destino.RutaArchivo == "")
+                {
+                    MessageBox.Show(this, Destino.Mensaje, "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    Help.ShowHelp(this, Destino.RutaArchivo, HelpNavigator.Topic, "PresupuestoEdicion_Contabilidad.html");
+                }
+            }
+            catch (Exception Excepcion)
+            {
+                MessageBox.Show(this, "No se pudo abrir la ayuda de Contabilidad.\n\n" + Excepcion.Message,
+                    "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
     }
 }

@@ -162,18 +162,30 @@ namespace CapaVista_Contabilidad.Componentes
         {
             Lienzo.InterpolationMode = InterpolationMode.HighQualityBicubic;
             Rectangle Destino = new Rectangle(0, 0, Width, Height);
-            float Opacidad = Enabled ? 1f : 0.4f;
             float Brillo = !Enabled ? 0f : (_Presionado ? -0.08f : (_Sobre ? 0.08f : 0f));
             using (ImageAttributes Atributos = new ImageAttributes())
             {
-                Atributos.SetColorMatrix(new ColorMatrix(new float[][]
-                {
-                    new float[] { 1, 0, 0, 0, 0 },
-                    new float[] { 0, 1, 0, 0, 0 },
-                    new float[] { 0, 0, 1, 0, 0 },
-                    new float[] { 0, 0, 0, Opacidad, 0 },
-                    new float[] { Brillo, Brillo, Brillo, 0, 1 }
-                }));
+                // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+                // Deshabilitado en gris, igual que los botones de Pólizas
+                float[][] Matriz = Enabled
+                    ? new float[][]
+                    {
+                        new float[] { 1, 0, 0, 0, 0 },
+                        new float[] { 0, 1, 0, 0, 0 },
+                        new float[] { 0, 0, 1, 0, 0 },
+                        new float[] { 0, 0, 0, 1, 0 },
+                        new float[] { Brillo, Brillo, Brillo, 0, 1 }
+                    }
+                    : new float[][]
+                    {
+                        new float[] { 0.3f, 0.3f, 0.3f, 0, 0 },
+                        new float[] { 0.59f, 0.59f, 0.59f, 0, 0 },
+                        new float[] { 0.11f, 0.11f, 0.11f, 0, 0 },
+                        new float[] { 0, 0, 0, 1, 0 },
+                        new float[] { 0, 0, 0, 0, 1 }
+                    };
+                Atributos.SetColorMatrix(new ColorMatrix(Matriz));
+                // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
                 Lienzo.DrawImage(_Icono, Destino, 0, 0, _Icono.Width, _Icono.Height, GraphicsUnit.Pixel, Atributos);
             }
         }

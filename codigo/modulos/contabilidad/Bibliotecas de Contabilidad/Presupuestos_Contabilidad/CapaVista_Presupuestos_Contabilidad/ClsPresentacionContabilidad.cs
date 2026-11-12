@@ -38,7 +38,10 @@ namespace CapaVista_Contabilidad
             Formulario.MaximizeBox = false;
             Formulario.MinimizeBox = true;
             Formulario.FormBorderStyle = FormBorderStyle.FixedSingle;
-            Formulario.StartPosition = FormStartPosition.CenterParent;
+            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+            // Las dos ventanas abren al centro de la pantalla
+            Formulario.StartPosition = FormStartPosition.CenterScreen;
+            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             Formulario.BackColor = Color.FromArgb(246, 247, 248);
             Formulario.Font = new Font("Segoe UI", 10F);
             ContabilidadMetAplicarTipografia(Formulario);

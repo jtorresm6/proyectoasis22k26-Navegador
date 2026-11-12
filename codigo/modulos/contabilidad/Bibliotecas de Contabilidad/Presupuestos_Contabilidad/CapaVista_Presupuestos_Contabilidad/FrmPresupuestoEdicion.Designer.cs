@@ -50,6 +50,7 @@ namespace CapaVista_Contabilidad
             this.ContabilidadBtnAnterior = new Componentes.ClsBotonContabilidad();
             this.ContabilidadBtnSiguiente = new Componentes.ClsBotonContabilidad();
             this.ContabilidadBtnFin = new Componentes.ClsBotonContabilidad();
+            this.ContabilidadBtnAyuda = new Componentes.ClsBotonContabilidad();
             ((System.ComponentModel.ISupportInitialize)(this.ContabilidadNudCantidad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ContabilidadDgvDetalle)).BeginInit();
             this.ContabilidadPnlEncabezado.SuspendLayout();
@@ -63,6 +64,14 @@ namespace CapaVista_Contabilidad
             this.ContabilidadLblTitulo.ForeColor = System.Drawing.Color.FromArgb(35, 50, 61);
             this.ContabilidadLblTitulo.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadLblTitulo.Font = new System.Drawing.Font("Lucida Fax", 20F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic);
+            this.ContabilidadBtnAyuda.Name = "ContabilidadBtnAyuda";
+            this.Controls.Add(this.ContabilidadBtnAyuda);
+            this.ContabilidadBtnAyuda.Text = "";
+            this.ContabilidadBtnAyuda.TabStop = false;
+            this.ContabilidadBtnAyuda.Location = new System.Drawing.Point(932, 16);
+            this.ContabilidadBtnAyuda.Size = new System.Drawing.Size(44, 44);
+            this.ContabilidadBtnAyuda.Icono = global::CapaVista_Contabilidad.Properties.Resources.btn_ayuda;
+            this.ContabilidadTtpBotones.SetToolTip(this.ContabilidadBtnAyuda, "Ayuda (F1)");
             this.ContabilidadPnlEncabezado.Name = "ContabilidadPnlEncabezado";
             this.Controls.Add(this.ContabilidadPnlEncabezado);
             this.ContabilidadPnlEncabezado.Location = new System.Drawing.Point(24, 70);
@@ -304,6 +313,7 @@ namespace CapaVista_Contabilidad
         private Componentes.ClsBotonContabilidad ContabilidadBtnAnterior;
         private Componentes.ClsBotonContabilidad ContabilidadBtnSiguiente;
         private Componentes.ClsBotonContabilidad ContabilidadBtnFin;
+        private Componentes.ClsBotonContabilidad ContabilidadBtnAyuda;
         private System.Windows.Forms.ToolTip ContabilidadTtpBotones;
     }
 }
