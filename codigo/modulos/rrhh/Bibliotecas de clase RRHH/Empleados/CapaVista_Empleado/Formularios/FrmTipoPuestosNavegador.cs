@@ -6,7 +6,7 @@
  * Fecha : 21/10/2026
  * ==================================================================
  * Propósito :
- *  Formulario 9003 - TipoPuestos. Mantenimiento de tblTipoPuesto con el Navegador.
+ *  Formulario 9005 - TipoPuestos. Mantenimiento de tblTipoPuesto con el Navegador.
  *  Tipos de puesto (operativo, administrativo, etc.).
  * ===================================================================
 */
@@ -22,7 +22,7 @@ namespace CapaVista_Empleado.Formularios
         public FrmTipoPuestosNavegador()
         {
             InitializeComponent();
-            RrhhNavTipoPuestos.NavegadorMetConfigurar("tblTipoPuesto", 9000, 9003);
+            RrhhNavTipoPuestos.NavegadorMetConfigurar("tblTipoPuesto", 9000, 9005);
         }
 
     }
