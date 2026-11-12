@@ -112,6 +112,13 @@ namespace CapaVista_Contabilidad.Componentes
             Lienzo.SmoothingMode = SmoothingMode.AntiAlias;
             Lienzo.Clear(ContabilidadFuncColorFondo());
 
+            // Boton solo con icono del catalogo
+            if (string.IsNullOrEmpty(Text) && _Icono != null)
+            {
+                ContabilidadMetPintarIconoEstandar(Lienzo);
+                return;
+            }
+
             Rectangle Area = new Rectangle(0, 0, Width - 1, Height - 1);
             using (GraphicsPath Ruta = ContabilidadFuncRuta(Area, _Radio))
             using (SolidBrush Relleno = new SolidBrush(ContabilidadFuncColorRelleno()))
@@ -148,6 +155,39 @@ namespace CapaVista_Contabilidad.Componentes
             }
             using (SolidBrush Pincel = new SolidBrush(ColorTexto))
                 Lienzo.DrawString(Text, Font, Pincel, X, (Height - Medida.Height) / 2f);
+        }
+
+        // Pinta el icono del catalogo estandarizado en todo el boton
+        private void ContabilidadMetPintarIconoEstandar(Graphics Lienzo)
+        {
+            Lienzo.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            Rectangle Destino = new Rectangle(0, 0, Width, Height);
+            float Brillo = !Enabled ? 0f : (_Presionado ? -0.08f : (_Sobre ? 0.08f : 0f));
+            using (ImageAttributes Atributos = new ImageAttributes())
+            {
+                // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+                // Deshabilitado en gris, igual que los botones de Pólizas
+                float[][] Matriz = Enabled
+                    ? new float[][]
+                    {
+                        new float[] { 1, 0, 0, 0, 0 },
+                        new float[] { 0, 1, 0, 0, 0 },
+                        new float[] { 0, 0, 1, 0, 0 },
+                        new float[] { 0, 0, 0, 1, 0 },
+                        new float[] { Brillo, Brillo, Brillo, 0, 1 }
+                    }
+                    : new float[][]
+                    {
+                        new float[] { 0.3f, 0.3f, 0.3f, 0, 0 },
+                        new float[] { 0.59f, 0.59f, 0.59f, 0, 0 },
+                        new float[] { 0.11f, 0.11f, 0.11f, 0, 0 },
+                        new float[] { 0, 0, 0, 1, 0 },
+                        new float[] { 0, 0, 0, 0, 1 }
+                    };
+                Atributos.SetColorMatrix(new ColorMatrix(Matriz));
+                // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
+                Lienzo.DrawImage(_Icono, Destino, 0, 0, _Icono.Width, _Icono.Height, GraphicsUnit.Pixel, Atributos);
+            }
         }
 
         private Color ContabilidadFuncColorFondo()
