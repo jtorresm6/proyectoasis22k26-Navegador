@@ -1203,6 +1203,7 @@
             this.ComprasTlpRegistroCompras.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpRegistroCompras.Size = new System.Drawing.Size(258, 1);
             this.ComprasTlpRegistroCompras.TabIndex = 5;
+            this.ComprasTlpRegistroCompras.Click += new System.EventHandler(this.ComprasMetAbrirRegistroCompras);
             this.ComprasBtnIconoRegistroCompras.TipoBoton = CapaVista_Componentes.Componentes.ComprasTipoBoton.Libre;
             // 
             // ComprasBtnIconoRegistroCompras
@@ -1227,6 +1228,7 @@
             this.ComprasBtnIconoRegistroCompras.Size = new System.Drawing.Size(59, 1);
             this.ComprasBtnIconoRegistroCompras.TabIndex = 0;
             this.ComprasBtnIconoRegistroCompras.UseVisualStyleBackColor = false;
+            this.ComprasBtnIconoRegistroCompras.Click += new System.EventHandler(this.ComprasMetAbrirRegistroCompras);
             // 
             // ComprasLblRegistroCompras
             // 
@@ -1248,6 +1250,7 @@
             this.ComprasLblRegistroCompras.Text = "Compras";
             this.ComprasLblRegistroCompras.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ComprasLblRegistroCompras.Texto = "Compras";
+            this.ComprasLblRegistroCompras.Click += new System.EventHandler(this.ComprasMetAbrirRegistroCompras);
             // 
             // ComprasTlpDevolucionesCompras
             // 
@@ -1273,6 +1276,7 @@
             this.ComprasTlpDevolucionesCompras.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpDevolucionesCompras.Size = new System.Drawing.Size(258, 1);
             this.ComprasTlpDevolucionesCompras.TabIndex = 6;
+            this.ComprasTlpDevolucionesCompras.Click += new System.EventHandler(this.ComprasMetAbrirDevolucionesCompras);
             this.ComprasBtnIconoDevolucionesCompras.TipoBoton = CapaVista_Componentes.Componentes.ComprasTipoBoton.Libre;
             // 
             // ComprasBtnIconoDevolucionesCompras
@@ -1297,6 +1301,7 @@
             this.ComprasBtnIconoDevolucionesCompras.Size = new System.Drawing.Size(59, 1);
             this.ComprasBtnIconoDevolucionesCompras.TabIndex = 0;
             this.ComprasBtnIconoDevolucionesCompras.UseVisualStyleBackColor = false;
+            this.ComprasBtnIconoDevolucionesCompras.Click += new System.EventHandler(this.ComprasMetAbrirDevolucionesCompras);
             // 
             // ComprasLblDevolucionesCompras
             // 
@@ -1318,6 +1323,7 @@
             this.ComprasLblDevolucionesCompras.Text = "Devoluciones de Compras";
             this.ComprasLblDevolucionesCompras.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ComprasLblDevolucionesCompras.Texto = "Devoluciones de Compras";
+            this.ComprasLblDevolucionesCompras.Click += new System.EventHandler(this.ComprasMetAbrirDevolucionesCompras);
             // 
             // ComprasFlpEncabezado
             // 

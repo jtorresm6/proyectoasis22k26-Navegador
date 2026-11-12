@@ -198,12 +198,14 @@ namespace CapaVista_Compras
             ComprasTlpProveedores.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.MantenimientoProveedor);
             ComprasTlpMantenimiento2.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.MantenimientoPlazo);
             ComprasTlpMantenimiento3.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.MantenimientoConceptoProveedor);
-            ComprasTlpRegistroCompras.Enabled = false;
-            ComprasTlpDevolucionesCompras.Enabled = false;
-            ComprasTlpRegistrosCompra.Enabled = ComprasTlpOrdenesCompra.Enabled;
+            // Permiso compartido temporal para Compras, Devoluciones y Herramientas.
+            bool AccesoCompras = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.AprobacionFinanciera);
+            ComprasTlpRegistroCompras.Enabled = AccesoCompras;
+            ComprasTlpDevolucionesCompras.Enabled = AccesoCompras;
+            ComprasTlpRegistrosCompra.Enabled = ComprasTlpOrdenesCompra.Enabled || AccesoCompras;
             ComprasTlpCatalogos.Enabled = ComprasTlpProveedores.Enabled || ComprasTlpMantenimiento2.Enabled || ComprasTlpMantenimiento3.Enabled;
             ComprasTlpBitacora.Enabled = AccesoMdi && TieneAcceso(4, 12);
-            ComprasTlpHerramientas.Enabled = AccesoMdi && TieneAcceso(Modulo, ClsAplicacionesCompras.HerramientasMoneda);
+            ComprasTlpHerramientas.Enabled = AccesoCompras;
             return AccesoMdi;
         }
         private void ComprasMetConfigurarEstadosTab(Control Elemento, CapaVista_Componentes.Componentes.ClsTableLayoutPanelCompras Panel)
@@ -350,6 +352,14 @@ namespace CapaVista_Compras
         private void ComprasMetAbrirOrdenesCompra(object Remitente, EventArgs Evento)
         {
             ComprasMetAbrirSubproceso<CapaVista_OrdenesCompra.FrmEncabezados>(ComprasTlpOrdenesCompra);
+        }
+        private void ComprasMetAbrirRegistroCompras(object Remitente, EventArgs Evento)
+        {
+            ComprasMetAbrirSubproceso<CapaVista_AprobacionFinanciera.FrmAprobacionFinanciera>(ComprasTlpRegistroCompras);
+        }
+        private void ComprasMetAbrirDevolucionesCompras(object Remitente, EventArgs Evento)
+        {
+            ComprasMetAbrirSubproceso<CapaVista_AprobacionFinanciera.FrmSelecDevoluciones>(ComprasTlpDevolucionesCompras);
         }
         private void ComprasMetAbrirPagosProveedores(object Remitente, EventArgs Evento)
         {

@@ -458,6 +458,26 @@ try {
             $assembly = ($reference.Identity -split ',')[0].Trim() + '.dll'
             if (!$reference.HintPath -and !$assemblies.ContainsKey($assembly)) { continue }
             $hint = if ($reference.HintPath) { FullPath (Split-Path $project.Path) $reference.HintPath } else { $assembly }
+            # Algunas vistas conservan rutas absolutas de otra computadora.
+            # Usar la misma version declarada por Seguridad, restaurada abajo.
+            if ($assembly -like 'Microsoft.ReportViewer.*.dll') {
+                $reportPackages = Join-Path $codeRoot 'componentes\seguridad\Seguridad\CapaVista_Seguridad\packages.config'
+                if (Test-Path -LiteralPath $reportPackages) {
+                    [xml]$reportManifest = [IO.File]::ReadAllText($reportPackages)
+                    $reportPackage = $reportManifest.packages.package | Where-Object id -eq 'Microsoft.ReportingServices.ReportViewerControl.Winforms' | Select-Object -First 1
+                    if ($reportPackage -and ($reference.Identity -notmatch 'Version=' -or $reference.Identity -match 'Version=15\.0\.0\.0')) {
+                        $reportPath = Join-Path (Split-Path (Split-Path $reportPackages)) ("packages\$($reportPackage.id).$($reportPackage.version)\lib\net40\$assembly")
+                        $referenceOverrides.Add([pscustomobject]@{ Project=$project.Path; Identity=$reference.Identity; NewIdentity=$null; Output=$reportPath })
+                        continue
+                    }
+                }
+            }
+            # RAR no siempre normaliza rutas con muchos '..' antes de aplicar
+            # MAX_PATH. Entregar rutas absolutas cortas tambien a los paquetes.
+            if ($reference.HintPath -and $hint -match '[\\/]packages[\\/]') {
+                $referenceOverrides.Add([pscustomobject]@{ Project=$project.Path; Identity=$reference.Identity; NewIdentity=$null; Output=$hint })
+                continue
+            }
             if ($outputs.ContainsKey($hint)) { $project.Dependencies += $outputs[$hint] }
             elseif ($hint -notmatch '[\\/]packages[\\/]') {
                 $assembly = ($reference.Identity -split ',')[0].Trim() + '.dll'
@@ -526,11 +546,13 @@ try {
     $current = $null
     $runner = Join-Path $runDirectory 'Build.proj'
     $body = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><ItemGroup>'
-    foreach ($step in $steps | Where-Object { $_.Packages -and !@($_.Projects | Where-Object IsSdk).Count }) {
-        $packageRoot = Join-Path (Split-Path $step.Path) 'packages'
-        if ([IO.Path]::GetExtension($step.Path) -eq '.csproj') { $packageRoot = Join-Path (Split-Path (Split-Path $step.Path)) 'packages' }
-        $properties = "Configuration=$configuration;Platform=$($step.Platform);RestorePackagesConfig=true;RestoreRepositoryPath=$(MsbuildEscape $packageRoot)"
-        $body += '<Restauracion Include="' + (XmlEscape (MsbuildEscape $step.Path)) + '"><AdditionalProperties>' + (XmlEscape $properties) + '</AdditionalProperties></Restauracion>'
+    # Un proyecto compartido puede registrarse primero desde una solucion de
+    # ejecucion. Sus paquetes pertenecen al proyecto, no a esa solucion.
+    foreach ($project in $projects.Values | Where-Object { !$_.IsSdk } | Sort-Object Path) {
+        if (!(Test-Path -LiteralPath (Join-Path (Split-Path $project.Path) 'packages.config'))) { continue }
+        $packageRoot = Join-Path (Split-Path (Split-Path $project.Path)) 'packages'
+        $properties = "Configuration=$($project.Configuration);Platform=$($project.Platform);RestorePackagesConfig=true;RestoreRepositoryPath=$(MsbuildEscape $packageRoot)"
+        $body += '<Restauracion Include="' + (XmlEscape (MsbuildEscape $project.Path)) + '"><AdditionalProperties>' + (XmlEscape $properties) + '</AdditionalProperties></Restauracion>'
     }
     $index = 0
     foreach ($project in $projects.Values | Sort-Object Path) {
