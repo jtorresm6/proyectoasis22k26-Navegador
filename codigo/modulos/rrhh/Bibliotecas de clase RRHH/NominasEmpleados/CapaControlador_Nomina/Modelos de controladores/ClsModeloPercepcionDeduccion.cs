@@ -1,4 +1,19 @@
-﻿using CapaControlador_Nomina.ObjetosdeValor;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Gestiona las reglas y operaciones del catálogo de percepciones
+ *  y deducciones. Valida los datos del concepto, comprueba nombres
+ *  duplicados y restricciones de cálculo, y coordina el registro,
+ *  modificación, eliminación y búsqueda mediante el repositorio.
+ * ==================================================================
+ */
+
+using CapaControlador_Nomina.ObjetosdeValor;
 using CapaModelo_Nomina.Entidades;
 using CapaModelo_Nomina.Repositorios;
 using System;

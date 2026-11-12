@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Consulta los catálogos de empleados y departamentos usados
+ *  en el módulo de nómina. Obtiene empleados generales o activos,
+ *  identifica el departamento de un empleado y devuelve
+ *  identificadores y nombres para listas de selección.
+ * ==================================================================
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;

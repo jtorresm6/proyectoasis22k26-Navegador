@@ -1,4 +1,19 @@
-﻿using CapaModelo_Nomina.Repositorios;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Proporciona a la vista los catálogos de empleados y
+ *  departamentos mediante el repositorio correspondiente.
+ *  Permite obtener empleados generales o activos y consultar
+ *  el nombre del departamento de un empleado.
+ * ==================================================================
+ */
+
+using CapaModelo_Nomina.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;

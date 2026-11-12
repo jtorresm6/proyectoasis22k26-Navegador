@@ -1,10 +1,27 @@
-﻿using CapaControlador_Nomina.Modelos_de_controladores;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Permite seleccionar una nómina no rechazada para consultar
+ *  sus importes guardados y el desglose de conceptos.
+ *  Identifica las nóminas sin detalle y permite solicitar
+ *  su generación, buscar conceptos, navegar entre nóminas,
+ *  actualizar la información y abrir el reporte de detalles.
+ * ==================================================================
+ */
+
+using CapaControlador_Nomina.Modelos_de_controladores;
 using CapaVista_Nomina.Reportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -306,6 +323,27 @@ namespace CapaVista_Nomina.Formularios
         {
             FrmReporteNominaDetalle reporte = new FrmReporteNominaDetalle();
             reporte.Show();
+        }
+
+        internal static void RrhhMetAbrirAyuda(Control Ventana, string Pagina)
+        {
+            const string Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\RecursosHumanosAyudas.chm";
+            for (var Carpeta = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory); Carpeta != null; Carpeta = Carpeta.Parent)
+            {
+                string Ruta = Path.Combine(Carpeta.FullName, Ayuda);
+                if (File.Exists(Ruta))
+                {
+                    Help.ShowHelp(Ventana, Ruta, Pagina);
+                    return;
+                }
+            }
+            MessageBox.Show("No se encontró el archivo de ayuda de RRHH.", "Ayuda",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void RrhhDedBtnAyuda_Click(object sender, EventArgs e)
+        {
+            RrhhMetAbrirAyuda(this, "NominaDetalle__RecursosHumanos.html");
         }
     }
 }

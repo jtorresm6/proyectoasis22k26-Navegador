@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Presenta una ventana de acceso al módulo de nómina.
+ *  Permite abrir mediante botones los formularios de
+ *  percepciones y deducciones y de encabezados de nómina
+ *  como ventanas de diálogo.
+ * ==================================================================
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

@@ -105,6 +105,7 @@
             this.RrhhDedBtnAyuda.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnAyuda.TabIndex = 42;
             this.RrhhDedBtnAyuda.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnAyuda.Click += new System.EventHandler(this.RrhhDedBtnAyuda_Click);
             // 
             // RrhhBtnConsultar
             // 
@@ -557,6 +558,7 @@
             this.Controls.Add(this.RrhhDgvListaDetalle);
             this.Controls.Add(this.RrhhPnlInfoConfiCalculo);
             this.Controls.Add(this.RrhhPnlConceptoRegistrados);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;

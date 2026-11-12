@@ -1,4 +1,19 @@
-﻿using CapaControlador_Nomina.ObjetosdeValor;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Gestiona los rangos salariales asociados a los conceptos.
+ *  Valida límites, modo de cálculo, valores y porcentajes,
+ *  comprueba límites iniciales duplicados y coordina el registro,
+ *  modificación, eliminación y consulta de los rangos.
+ * ==================================================================
+ */
+
+using CapaControlador_Nomina.ObjetosdeValor;
 using CapaModelo_Nomina.Entidades;
 using CapaModelo_Nomina.Repositorios;
 using System;

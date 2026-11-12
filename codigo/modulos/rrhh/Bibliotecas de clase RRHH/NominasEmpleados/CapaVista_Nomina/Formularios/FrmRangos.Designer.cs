@@ -250,6 +250,7 @@
             this.RrhhDedBtnAyuda.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnAyuda.TabIndex = 10;
             this.RrhhDedBtnAyuda.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnAyuda.Click += new System.EventHandler(this.RrhhDedBtnAyuda_Click);
             // 
             // RrhhDedBtnSalir
             // 
@@ -505,6 +506,8 @@
             this.Controls.Add(this.RrhhPnlRangosValores);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmRangos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "9504 – Rangos y Valores";

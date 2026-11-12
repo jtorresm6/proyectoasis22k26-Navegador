@@ -1,4 +1,19 @@
-﻿using CapaModelo_Nomina.Repositorios;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Proporciona al cálculo de nómina el total de comisiones
+ *  aprobadas de un empleado dentro de las fechas indicadas,
+ *  delegando la consulta de los datos al repositorio
+ *  de comisiones.
+ * ==================================================================
+ */
+
+using CapaModelo_Nomina.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;

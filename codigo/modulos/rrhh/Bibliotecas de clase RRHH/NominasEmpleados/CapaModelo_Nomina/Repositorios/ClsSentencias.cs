@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Centraliza la ejecución de sentencias SQL mediante ODBC.
+ *  Proporciona métodos para ejecutar consultas, operaciones
+ *  de escritura y comandos escalares, con parámetros y soporte
+ *  para utilizar conexiones y transacciones existentes.
+ * ==================================================================
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;

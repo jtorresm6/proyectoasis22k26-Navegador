@@ -1,4 +1,20 @@
-﻿using CapaModelo_Nomina.Contratos;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Administra el acceso a los encabezados de nómina y consulta
+ *  salarios, horas extra, conceptos, rangos y períodos existentes.
+ *  Utiliza transacciones para guardar la nómina y asociar sus
+ *  horas extra, así como para actualizar su estado y gestionar
+ *  la relación de dichas horas cuando corresponde.
+ * ==================================================================
+ */
+
+using CapaModelo_Nomina.Contratos;
 using CapaModelo_Nomina.Entidades;
 using System;
 using System.Collections.Generic;

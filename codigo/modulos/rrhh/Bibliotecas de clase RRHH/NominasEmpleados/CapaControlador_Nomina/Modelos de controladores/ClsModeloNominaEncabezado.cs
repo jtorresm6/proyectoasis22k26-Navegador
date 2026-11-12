@@ -1,4 +1,20 @@
-﻿using CapaControlador_Nomina.ObjetosdeValor;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Coordina el cálculo y registro de la nómina a partir del
+ *  salario, conceptos aplicables, comisiones y horas extra.
+ *  Valida empleado, período, traslapes y monto neto; permite
+ *  consultar nóminas y modificar su estado, manteniendo
+ *  deshabilitada la eliminación.
+ * ==================================================================
+ */
+
+using CapaControlador_Nomina.ObjetosdeValor;
 using CapaModelo_Nomina.Entidades;
 using CapaModelo_Nomina.Repositorios;
 using System;

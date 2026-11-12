@@ -1,4 +1,19 @@
-﻿using CapaModelo_Nomina.Entidades;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Administra el almacenamiento y consulta de asignaciones de
+ *  percepciones y deducciones a empleados o departamentos.
+ *  Utiliza parámetros ODBC, maneja destinos nulos y proporciona
+ *  consultas para detectar asignaciones duplicadas.
+ * ==================================================================
+ */
+
+using CapaModelo_Nomina.Entidades;
 using CapaModelo_Nomina.Contratos;
 using System;
 using System.Collections.Generic;
