@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><meta name="GENERATOR" content="HTML Help Workshop"><!-- Sitemap 1.0 --></HEAD><BODY>
+<OBJECT type="text/site properties"><param name="ImageType" value="Folder"></OBJECT>
+<UL>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Inicio y preparaci&oacute;n"><param name="ImageNumber" value="1"></OBJECT>
+    <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="C&oacute;mo usar Cierre de movimientos"><param name="Local" value="html/00_inicio.html"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="Revisar y confirmar el cierre"><param name="Local" value="html/01_confirmar.html"></OBJECT>
+    </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Contabilidad"><param name="ImageNumber" value="1"></OBJECT>
+    <UL><LI><OBJECT type="text/sitemap"><param name="Name" value="Enviar la p&oacute;liza"><param name="Local" value="html/02_traslado.html"></OBJECT></UL>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Consultas"><param name="ImageNumber" value="1"></OBJECT>
+    <UL><LI><OBJECT type="text/sitemap"><param name="Name" value="Hist&oacute;rico por cliente"><param name="Local" value="html/04_historial.html"></OBJECT></UL>
+  <LI><OBJECT type="text/sitemap"><param name="Name" value="Diagn&oacute;stico"><param name="ImageNumber" value="1"></OBJECT>
+    <UL><LI><OBJECT type="text/sitemap"><param name="Name" value="Problemas frecuentes"><param name="Local" value="html/03_errores.html"></OBJECT></UL>
+</UL></BODY></HTML>
