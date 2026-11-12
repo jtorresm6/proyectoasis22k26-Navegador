@@ -1,6 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 using CapaModelo_TipoCambio.Entidades;
 using CapaModelo_TipoCambio.Repositorio;
 
@@ -10,135 +12,75 @@ namespace CapaControlador_TipoCambio
     {
         private readonly ClsRepositorioTipoCambio _repositorio;
 
-        public ClsControladorTipoCambio()
+        public ClsControladorTipoCambio() : this(new ClsRepositorioTipoCambio()) { }
+
+        public ClsControladorTipoCambio(ClsRepositorioTipoCambio repositorio)
         {
-            _repositorio = new ClsRepositorioTipoCambio();
+            _repositorio = repositorio ?? throw new ArgumentNullException(nameof(repositorio));
         }
 
-        // ==========================================
-        // TASAS ACTUALES
-        // ==========================================
-
-        public DataTable BancosMetObtenerTasasActuales(bool incluirSinTasa = true)
+        public Task<List<ClsMoneda>> BancosMetObtenerMonedasAsync(
+            CancellationToken cancellationToken)
         {
-            var lista = _repositorio.BancosMetObtenerTasasActuales(incluirSinTasa);
-            var tabla = new DataTable();
-            tabla.Columns.Add("Código",      typeof(string));
-            tabla.Columns.Add("Moneda",      typeof(string));
-            tabla.Columns.Add("Tasa en GTQ", typeof(string));
-            tabla.Columns.Add("Fecha",       typeof(string));
-            tabla.Columns.Add("Estado",      typeof(string));
+            return _repositorio.BancosMetObtenerMonedasAsync(cancellationToken);
+        }
 
-            foreach (var t in lista)
+        public Task BancosMetInvalidarCacheAsync(CancellationToken cancellationToken)
+        {
+            return _repositorio.BancosMetInvalidarCacheAsync(cancellationToken);
+        }
+
+        public async Task<DataTable> BancosMetObtenerTasasActualesAsync(
+            DateTime fecha, bool incluirSinTasa, bool forzar,
+            CancellationToken cancellationToken)
+        {
+            var tasas = await _repositorio.BancosMetObtenerTasasActualesAsync(
+                fecha, incluirSinTasa, forzar, cancellationToken).ConfigureAwait(false);
+            var tabla = new DataTable("Tasas de cambio");
+            tabla.Columns.Add("Código", typeof(string));
+            tabla.Columns.Add("Moneda", typeof(string));
+            tabla.Columns.Add("Tasa en GTQ", typeof(decimal));
+            tabla.Columns.Add("Fecha", typeof(DateTime));
+            tabla.Columns.Add("Fuente", typeof(string));
+            tabla.Columns.Add("Estado", typeof(string));
+            tabla.Columns.Add("Metodo", typeof(string));
+            foreach (var tasa in tasas)
             {
-                string fechaStr = t.Estado == "Sin tasa" ? "—" : t.FechaTasa.ToString("dd/MM/yyyy");
-                string estadoSimbolo = t.Estado == "Sin tasa" ? "●  Sin tasa" : "●  Disponible";
-                tabla.Rows.Add(
-                    t.CodigoMoneda,
-                    t.NombreMoneda,
-                    t.TasaTexto,
-                    fechaStr,
-                    estadoSimbolo);
+                bool disponible = tasa.Tasa > 0 && tasa.Estado != "Sin tasa";
+                tabla.Rows.Add(tasa.CodigoMoneda, tasa.NombreMoneda,
+                    disponible ? (object)tasa.Tasa : DBNull.Value,
+                    tasa.FechaTasa.Date, tasa.Fuente,
+                    disponible ? "Disponible" : "Sin tasa", tasa.Metodo);
             }
             return tabla;
         }
 
-        public string BancosMetActualizarDesdeBanguat()
+        public async Task<DataTable> BancosMetObtenerHistoricoAsync(
+            DateTime desde, DateTime hasta, string origen, string destino,
+            CancellationToken cancellationToken)
         {
-            return "Actualización completada en modo demostración.\n" +
-                   "Tasas sincronizadas para la fecha de consulta.";
-        }
-
-        // ==========================================
-        // HISTÓRICO
-        // ==========================================
-
-        public DataTable BancosMetObtenerHistorico(
-            DateTime desde,
-            DateTime hasta,
-            string monedaOrigen,
-            string monedaDestino)
-        {
-            var lista = _repositorio.BancosMetObtenerHistorico(
-                desde, hasta, monedaOrigen, monedaDestino);
-
-            var tabla = new DataTable();
-            tabla.Columns.Add("Fecha",          typeof(string));
-            tabla.Columns.Add("Moneda origen",  typeof(string));
+            var tasas = await _repositorio.BancosMetObtenerHistoricoAsync(
+                desde, hasta, origen, destino, cancellationToken).ConfigureAwait(false);
+            var tabla = new DataTable("Histórico de tipos de cambio");
+            tabla.Columns.Add("Fecha", typeof(DateTime));
+            tabla.Columns.Add("Moneda origen", typeof(string));
             tabla.Columns.Add("Moneda destino", typeof(string));
-            tabla.Columns.Add("Tasa",           typeof(string));
-            tabla.Columns.Add("Fuente",         typeof(string));
-            tabla.Columns.Add("Estado",         typeof(string));
-
-            foreach (var t in lista)
-            {
-                string estadoSimbolo = t.Estado == "Sin tasa" ? "●  Sin tasa" : "●  Disponible";
-                tabla.Rows.Add(
-                    t.FechaTasa.ToString("dd/MM/yyyy"),
-                    t.MonedaOrigen,
-                    t.MonedaDestino,
-                    t.Tasa.ToString("F6"),
-                    t.Fuente,
-                    estadoSimbolo);
-            }
+            tabla.Columns.Add("Tasa", typeof(decimal));
+            tabla.Columns.Add("Fuente", typeof(string));
+            tabla.Columns.Add("Estado", typeof(string));
+            tabla.Columns.Add("Metodo", typeof(string));
+            foreach (var tasa in tasas)
+                tabla.Rows.Add(tasa.FechaTasa.Date, tasa.MonedaOrigen,
+                    tasa.MonedaDestino, tasa.Tasa, tasa.Fuente, tasa.Estado, tasa.Metodo);
             return tabla;
         }
 
-        public (decimal Minima, decimal Maxima, decimal Variacion) BancosMetObtenerResumenHistorico()
+        public Task<ClsResultadoConversion> BancosMetConvertirAsync(
+            decimal importe, DateTime fecha, string origen, string destino,
+            CancellationToken cancellationToken)
         {
-            return _repositorio.BancosMetObtenerResumenHistorico();
-        }
-
-        // ==========================================
-        // CONVERSOR
-        // ==========================================
-
-        public (decimal Resultado, decimal TasaAplicada, string Mensaje)
-            BancosMetConvertir(
-                decimal importe,
-                string monedaOrigen,
-                string monedaDestino)
-        {
-            if (monedaOrigen == monedaDestino)
-                return (importe, 1.000000m, "Misma moneda — tasa = 1.000000");
-
-            // Si es EUR -> GTQ
-            if (monedaOrigen == "EUR" && monedaDestino == "GTQ")
-            {
-                decimal tasa = 8.421500m;
-                decimal res = Math.Round(importe * tasa, 2);
-                return (res, tasa, $"1 EUR = {tasa:F6} GTQ");
-            }
-
-            // Si es USD -> GTQ
-            if (monedaOrigen == "USD" && monedaDestino == "GTQ")
-            {
-                decimal tasa = 7.753200m;
-                decimal res = Math.Round(importe * tasa, 2);
-                return (res, tasa, $"1 USD = {tasa:F6} GTQ");
-            }
-
-            // Buscar en repositorio
-            var tasaObj = _repositorio.BancosMetObtenerTasaActual(monedaOrigen, monedaDestino);
-            if (tasaObj != null && tasaObj.Tasa > 0)
-            {
-                decimal res = Math.Round(importe * tasaObj.Tasa, 2);
-                return (res, tasaObj.Tasa, $"1 {monedaOrigen} = {tasaObj.Tasa:F6} {monedaDestino}");
-            }
-
-            // Inversa si destino es GTQ
-            if (monedaOrigen == "GTQ")
-            {
-                var directa = _repositorio.BancosMetObtenerTasaActual(monedaDestino, "GTQ");
-                if (directa != null && directa.Tasa > 0)
-                {
-                    decimal tasaInv = Math.Round(1m / directa.Tasa, 6);
-                    decimal res = Math.Round(importe * tasaInv, 2);
-                    return (res, tasaInv, $"1 GTQ = {tasaInv:F6} {monedaDestino}");
-                }
-            }
-
-            return (0m, 0m, $"No se encontró tasa demo para {monedaOrigen}/{monedaDestino}.");
+            return _repositorio.BancosMetConvertirAsync(
+                importe, fecha, origen, destino, cancellationToken);
         }
     }
 }

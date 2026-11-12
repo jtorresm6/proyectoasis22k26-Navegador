@@ -1,0 +1,78 @@
+/*
+ * ================================================================
+ * Área   : Bancos
+ * Autor  : Evelyn Sofía Andrade Luna
+ * Autor  : Andre De Jesus Gonzalez Camey
+ * Carné  : 9959-23-1224 --- 9959-23-3117
+ * Fecha  : 08/11/2026
+ * ================================================================
+ * Propósito :
+ *  Centraliza las sentencias SQL usadas para consultar y cerrar
+ *  conciliaciones bancarias.
+ * ================================================================
+ */
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Odbc;
+
+namespace CapaModelo_CierreBancario.Repositorio
+{
+    public class ClsSentencias : ClsConexion
+    {
+        private DataTable _TablaDatos;
+
+        public int BancosMetEjecucionNonQuery(string ComandoTexto, List<OdbcParameter> Parametros, CommandType ComandoTipo)
+        {
+            using (var ConexionActiva = BancosMetObtenerConexion())
+            {
+                ConexionActiva.Open();
+                using (var Comando = new OdbcCommand())
+                {
+                    Comando.Connection  = ConexionActiva;
+                    Comando.CommandText = ComandoTexto;
+                    Comando.CommandType = ComandoTipo;
+                    Comando.Parameters.AddRange(Parametros.ToArray());
+                    return Comando.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public DataTable BancosMetEjecucionConsulta(string ComandoTexto, CommandType ComandoTipo)
+        {
+            _TablaDatos = new DataTable();
+            using (var ConexionActiva = BancosMetObtenerConexion())
+            {
+                ConexionActiva.Open();
+                using (var Comando = new OdbcCommand())
+                {
+                    Comando.Connection  = ConexionActiva;
+                    Comando.CommandText = ComandoTexto;
+                    Comando.CommandType = ComandoTipo;
+                    using (var LectorDatos = Comando.ExecuteReader())
+                        _TablaDatos.Load(LectorDatos);
+                }
+                return _TablaDatos;
+            }
+        }
+
+        public DataTable BancosMetEjecucionConsulta(string ComandoTexto, CommandType ComandoTipo, List<OdbcParameter> Parametros)
+        {
+            _TablaDatos = new DataTable();
+            using (var ConexionActiva = BancosMetObtenerConexion())
+            {
+                ConexionActiva.Open();
+                using (var Comando = new OdbcCommand())
+                {
+                    Comando.Connection  = ConexionActiva;
+                    Comando.CommandText = ComandoTexto;
+                    Comando.CommandType = ComandoTipo;
+                    Comando.Parameters.AddRange(Parametros.ToArray());
+                    using (var LectorDatos = Comando.ExecuteReader())
+                        _TablaDatos.Load(LectorDatos);
+                }
+                return _TablaDatos;
+            }
+        }
+    }
+}

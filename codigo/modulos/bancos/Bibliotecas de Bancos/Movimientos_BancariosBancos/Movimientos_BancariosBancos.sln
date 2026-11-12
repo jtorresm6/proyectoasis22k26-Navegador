@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_MovimientosBancar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_MovimientosBancariosBancos", "CapaControlador_MovimientosBancariosBancos\CapaControlador_MovimientosBancariosBancos.csproj", "{993DA596-FEF0-4C53-A17C-59EE4A4CED82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_MovimientosBancarios_Bancos", "Test_MovimientosBancarios_Bancos\Test_MovimientosBancarios_Bancos.csproj", "{6144FE29-665F-4096-BFC6-53DBB0EE9858}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{993DA596-FEF0-4C53-A17C-59EE4A4CED82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{993DA596-FEF0-4C53-A17C-59EE4A4CED82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{993DA596-FEF0-4C53-A17C-59EE4A4CED82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6144FE29-665F-4096-BFC6-53DBB0EE9858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6144FE29-665F-4096-BFC6-53DBB0EE9858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6144FE29-665F-4096-BFC6-53DBB0EE9858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6144FE29-665F-4096-BFC6-53DBB0EE9858}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

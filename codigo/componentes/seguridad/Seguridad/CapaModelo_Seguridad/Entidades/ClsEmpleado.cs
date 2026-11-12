@@ -28,9 +28,7 @@ namespace CapaModelo_Seguridad.Entidades
         public string NitEmpleado { get; set; }
         public string NombresEmpleado { get; set; }
         public string ApellidosEmpleado { get; set; }
-        public int IdDepartamento { get; set; }
-        public int IdJornada { get; set; }
-        public decimal SalarioEmpleado { get; set; }
+        public string PuestoEmpleado { get; set; }
         public string GeneroEmpleado { get; set; }
         public DateTime FechaNacimientoEmpleado { get; set; }
         public DateTime FechaContratacionEmpleado { get; set; }
