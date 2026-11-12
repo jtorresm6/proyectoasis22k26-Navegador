@@ -1,0 +1,28 @@
+body{margin:0;background:#f8f5f9;color:#3b1d4a;font:15px/1.5 'Segoe UI',Tahoma,Arial,sans-serif}
+.encabezado{background:#3b1d4a;color:#fff;border-bottom:5px solid #c9a24a;padding:12px 24px}
+.encabezado table{width:100%;border-collapse:collapse}
+.encabezado h1{font:italic bold 26px Georgia,'Times New Roman',serif;margin:0}
+.encabezado p{margin:3px 0 0;color:#eadff0}
+.contenido{max-width:900px;margin:22px auto;padding:0 22px 28px}
+h2{font:normal bold 21px Georgia,'Times New Roman',serif;color:#3b1d4a;border-bottom:2px solid #c9a24a;padding-bottom:5px;margin:24px 0 12px}
+p{margin:8px 0 14px}
+.navegacion{background:#eee2f2;border:1px solid #dfd3e4;padding:8px 12px;line-height:1.8}
+.navegacion a{color:#3b1d4a;font-weight:bold;white-space:nowrap}
+.portada{background:#fff;border:1px solid #dfd3e4;padding:12px;text-align:center}
+.portada img{max-width:100%;height:auto;border:1px solid #dfd3e4}
+.portada p{font-size:13px;color:#725c7c;margin:6px 0 0}
+.manual{width:100%;border-collapse:collapse;background:#fff;border:1px solid #dfd3e4}
+.manual th{background:#3b1d4a;color:#fff;text-align:left;padding:9px 12px}
+.manual td{border-top:1px solid #e5dce9;padding:9px 12px;vertical-align:top}
+.manual td:first-child{width:31%;font-weight:bold;color:#63317a}
+.manual tr:nth-child(even) td{background:#f6f0f8}
+.boton{display:inline-block;box-sizing:border-box;width:245px;min-height:52px;background:#3b1d4a;color:#fff;border:1px solid #a47ab4;border-radius:8px;padding:4px 7px;text-align:left;font-weight:normal}
+.boton img{width:42px;height:42px;vertical-align:middle;margin-right:8px}
+.boton span{display:inline-block;width:174px;vertical-align:middle;line-height:1.2}
+.boton.activo{background:#e7d8ec;color:#3b1d4a;border-left:5px solid #c9a24a}
+.control{display:inline-block;background:#3b1d4a;color:#fff;padding:5px 12px;min-width:115px;text-align:left}
+.control img{width:28px;height:28px;vertical-align:middle;margin-right:10px}
+.control.menu{background:#e7d8ec;color:#3b1d4a}
+.controles td:first-child{width:31%}
+.nota{background:#eee2f2;border-left:4px solid #c9a24a;padding:10px 14px}
+.pie{border-top:1px solid #dfd3e4;color:#725c7c;margin-top:22px;padding-top:9px;font-size:12px}

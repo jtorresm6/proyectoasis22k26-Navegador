@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Cierre de movimientos</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <div class="encabezado"><table><tr><td>
+    <h1><img src="../imagenes/iconoCierreMovimientosVentas.png" width="32" height="32" alt=""> Cierre de movimientos</h1>
+    <p>Ventas y cuentas por cobrar · 7010</p>
+  </td><td align="right" width="190">
+    <img src="../imagenes/logoEmpresa.png" width="82" height="82" alt="Embutidos de Calidad">
+    <img src="../imagenes/mascotaVentas.png" width="64" height="82" alt="Mascota de Ventas">
+  </td></tr></table></div>
+  <div class="contenido">
+    <p class="navegacion"><a href="00_inicio.html">Inicio</a> | <a href="01_confirmar.html">Revisar y confirmar</a> | <a href="02_traslado.html">Enviar a Contabilidad</a> | <a href="04_historial.html">Histórico por cliente</a> | <a href="03_errores.html">Problemas frecuentes</a></p>
+    <h2>Primero: elija el período</h2>
+    <p>Seleccione <b>Tipo de cierre</b>, <b>Mes</b>, <b>Año</b> y <b>Moneda del cierre</b>. La franja inferior muestra las fechas exactas del período. Un cierre mensual debe ser de un mes ya terminado; los cierres se confirman en orden.</p>
+    <div class="portada"><a href="../imagenes/capturas/01_periodo.png"><img src="../imagenes/capturas/01_periodo.png" alt="Campos para elegir tipo, mes, año y moneda del cierre"></a><p>El período se elige en la parte superior. Pulse la imagen para ampliarla.</p></div>
+    <h2>Ruta completa del cierre</h2>
+    <ol>
+      <li>Elija el período y la moneda. Pulse <b>Refrescar</b> para consultar los saldos.</li>
+      <li>En <b>2. Revisar y confirmar</b>, compare los saldos por cliente con los documentos y movimientos.</li>
+      <li>Marque <b>Ya revisé los documentos y movimientos de este período</b> y pulse <b>Confirmar cierre</b>, dentro de esa pestaña.</li>
+      <li>Abra <b>3. Enviar a Contabilidad</b>, seleccione el país y compruebe que Debe y Haber sean iguales. Envíe la póliza cuando el enlace contable esté habilitado.</li>
+      <li>Compruebe la referencia y fecha devueltas por Contabilidad. Use <b>Histórico por cliente</b> para consultar cierres anteriores.</li>
+    </ol>
+    <p class="nota"><b>Dos botones Guardar:</b> el de la barra inferior solo conserva un <b>borrador</b>. El botón <b>Confirmar cierre</b>, dentro de la primera pestaña, es el que cierra el período. Guardar un borrador no permite enviar la póliza.</p>
+    <h2>Cómo leer el estado</h2>
+    <table class="manual"><tr><th>Estado visible</th><th>Qué significa</th></tr>
+      <tr><td>Borrador revisado</td><td>Los saldos fueron revisados, pero todavía debe marcar la constancia y confirmar el cierre.</td></tr>
+      <tr><td>Cerrado</td><td>El período ya se confirmó; revise la partida contable.</td></tr>
+      <tr><td>Confirmado por Contabilidad</td><td>El envío terminó. Consulte el código y la fecha de traslado.</td></tr>
+    </table>
+    <div class="pie">Manual de usuario · Cierre de movimientos · Aplicación 7010</div>
+  </div>
+</body>
+</html>

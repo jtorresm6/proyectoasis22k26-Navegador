@@ -1,9 +1,16 @@
-﻿/*
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 09/11/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Permitir revisar, confirmar y trasladar el cierre.
+ */
+// Natali Sofía Montenegro Portillo | Carné 0901-23-10017 | Cierre de movimientos | 09/11/2026
+/*
  * INICIO DEL CÓDIGO — Ventas y cuentas por cobrar
  * Jose Javier Torres Martínez | Carné: 0901-23-1091
  * Asignación: Todos | Roger Herrera 0901-23-2429; Natali Montenegro 0901-23-10017; Matthew Juárez 0901-23-4250; Julio Rosales 0901-23-1426; Diego Cheng 0901-22-8091
  * Fecha de actualización: 17/10/2026
- * Propósito: Prototipo visual conforme a las reuniones de Ventas y Bancos; sin persistencia ni operaciones de negocio.
+ * Propósito: Cierre de movimientos, histórico, traslado contable y ayuda del módulo de Ventas.
  */
 namespace CapaVista_CierreMovimientos
 {
@@ -130,6 +137,8 @@ namespace CapaVista_CierreMovimientos
             this.VentasTxtEstadoTraslado = new System.Windows.Forms.TextBox();
             this.VentasLblFechaTrasladoEtiqueta = new System.Windows.Forms.Label();
             this.VentasTxtFechaTraslado = new System.Windows.Forms.TextBox();
+            this.VentasLblPaisContable = new System.Windows.Forms.Label();
+            this.VentasCboPaisContable = new System.Windows.Forms.ComboBox();
             this.VentasDgvPoliza = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.VentasDgvPoliza)).BeginInit();
             this.VentasClmPolizaCuenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -139,7 +148,9 @@ namespace CapaVista_CierreMovimientos
             this.VentasLblPolizaRegla = new System.Windows.Forms.Label();
             this.VentasLblPolizaTotales = new System.Windows.Forms.Label();
             this.VentasBtnTrasladarContabilidad = new System.Windows.Forms.Button();
+            this.VentasLblAccionTrasladar = new System.Windows.Forms.Label();
             this.VentasLblTrasladoCierre = new System.Windows.Forms.Label();
+            this.VentasBtnIrSiguientePeriodo = new System.Windows.Forms.Button();
             this.VentasBtnModificar = new System.Windows.Forms.Button();
             this.VentasBtnEliminar = new System.Windows.Forms.Button();
             this.VentasBtnGuardarBorrador = new System.Windows.Forms.Button();
@@ -150,23 +161,31 @@ namespace CapaVista_CierreMovimientos
             this.VentasBtnCancelar = new System.Windows.Forms.Button();
             this.VentasBtnImprimir = new System.Windows.Forms.Button();
             this.VentasBtnCerrar = new System.Windows.Forms.Button();
+            this.VentasBtnAyuda = new System.Windows.Forms.Button();
             this.VentasLblCierreHistorico = new System.Windows.Forms.Label();
             this.VentasLblAccionGuardarBorrador = new System.Windows.Forms.Label();
             this.VentasLblAccionGuardarBorrador.Name = "VentasLblAccionGuardarBorrador";
-            this.VentasLblAccionGuardarBorrador.Location = new System.Drawing.Point(328, 590);
-            this.VentasLblAccionGuardarBorrador.Size = new System.Drawing.Size(96, 14);
-            this.VentasLblAccionGuardarBorrador.Text = "Borrador";
+            this.VentasLblAccionGuardarBorrador.Location = new System.Drawing.Point(316, 590);
+            this.VentasLblAccionGuardarBorrador.Size = new System.Drawing.Size(110, 14);
+            this.VentasLblAccionGuardarBorrador.Text = "Guardar borrador";
             this.VentasLblAccionGuardarBorrador.Font = new System.Drawing.Font("Tahoma", 8F);
             this.VentasLblAccionGuardarBorrador.ForeColor = System.Drawing.Color.FromArgb(59,29,74);
             this.Controls.Add(this.VentasLblAccionGuardarBorrador);
             this.VentasLblAccionConfirmar = new System.Windows.Forms.Label();
             this.VentasLblAccionConfirmar.Name = "VentasLblAccionConfirmar";
-            this.VentasLblAccionConfirmar.Location = new System.Drawing.Point(664, 590);
-            this.VentasLblAccionConfirmar.Size = new System.Drawing.Size(96, 14);
+            this.VentasLblAccionConfirmar.Location = new System.Drawing.Point(798, 20);
+            this.VentasLblAccionConfirmar.Size = new System.Drawing.Size(173, 18);
             this.VentasLblAccionConfirmar.Text = "Confirmar cierre";
             this.VentasLblAccionConfirmar.Font = new System.Drawing.Font("Tahoma", 8F);
             this.VentasLblAccionConfirmar.ForeColor = System.Drawing.Color.FromArgb(59,29,74);
-            this.Controls.Add(this.VentasLblAccionConfirmar);
+            this.VentasLblAccionRefrescar = new System.Windows.Forms.Label();
+            this.VentasLblAccionRefrescar.Name = "VentasLblAccionRefrescar";
+            this.VentasLblAccionRefrescar.Location = new System.Drawing.Point(549, 590);
+            this.VentasLblAccionRefrescar.Size = new System.Drawing.Size(99, 14);
+            this.VentasLblAccionRefrescar.Text = "1. Revisar saldos";
+            this.VentasLblAccionRefrescar.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.VentasLblAccionRefrescar.ForeColor = System.Drawing.Color.FromArgb(59,29,74);
+            this.Controls.Add(this.VentasLblAccionRefrescar);
             this.SuspendLayout();
             this.VentasLblUsuarioRegistro = new System.Windows.Forms.Label();
             this.VentasCboUsuarioRegistro = new System.Windows.Forms.ComboBox();
@@ -195,7 +214,7 @@ namespace CapaVista_CierreMovimientos
             this.VentasLblCodigo.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             this.VentasLblCodigo.BackColor = System.Drawing.Color.FromArgb(201, 162, 74);
             this.VentasLblCodigo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.VentasLblSubtitulo.Text = "Cierre mensual o anual, histórico de saldos y preparación del traslado a Contabilidad";
+            this.VentasLblSubtitulo.Text = "1. Elija el período   →   2. Revise y confirme   →   3. Envíe la póliza";
             this.VentasPnlPeriodo.Location = new System.Drawing.Point(16, 86);
             this.VentasPnlPeriodo.Size = new System.Drawing.Size(1088, 128);
             this.VentasPnlPeriodo.Name = "VentasPnlPeriodo";
@@ -302,24 +321,51 @@ namespace CapaVista_CierreMovimientos
             this.VentasLblCierreRegla.Location = new System.Drawing.Point(646, 68);
             this.VentasLblCierreRegla.Size = new System.Drawing.Size(412, 21);
             this.VentasLblCierreRegla.Name = "VentasLblCierreRegla";
-            this.VentasLblCierreRegla.Text = "Observaciones del cierre";
+            this.VentasLblCierreRegla.Text = "Observaciones (opcional)";
             this.VentasLblCierreRegla.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular);
             this.VentasLblCierreRegla.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             this.VentasTbcCierre.Location = new System.Drawing.Point(16, 226);
             this.VentasTbcCierre.Size = new System.Drawing.Size(1088, 366);
             this.VentasTbcCierre.Name = "VentasTbcCierre";
             this.VentasTbpPreparar.Name = "VentasTbpPreparar";
-            this.VentasTbpPreparar.Text = "Revisión de saldos";
+            this.VentasTbpPreparar.Text = "2. Revisar y confirmar";
             this.VentasTbpPreparar.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
             this.VentasTbpHistorial.Name = "VentasTbpHistorial";
             this.VentasTbpHistorial.Text = "Histórico por cliente";
             this.VentasTbpHistorial.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
             this.VentasTbpContabilidad.Name = "VentasTbpContabilidad";
-            this.VentasTbpContabilidad.Text = "Traslado a Contabilidad";
+            this.VentasTbpContabilidad.Text = "3. Enviar a Contabilidad";
             this.VentasTbpContabilidad.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
             this.VentasTbcCierre.SelectedIndex = 0;
-            this.VentasDgvRevisionCierre.Location = new System.Drawing.Point(12, 12);
-            this.VentasDgvRevisionCierre.Size = new System.Drawing.Size(1042, 154);
+            this.VentasLblSaldosPeriodo = new System.Windows.Forms.Label();
+            this.VentasLblSaldosPeriodo.Name = "VentasLblSaldosPeriodo";
+            this.VentasLblSaldosPeriodo.Location = new System.Drawing.Point(12, 8);
+            this.VentasLblSaldosPeriodo.Size = new System.Drawing.Size(1042, 22);
+            this.VentasLblSaldosPeriodo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.VentasLblSaldosPeriodo.Text = "Paso 2. Compruebe los saldos de cada cliente";
+            this.VentasLblPeriodoCalculado = new System.Windows.Forms.Label();
+            this.VentasLblPeriodoCalculado.Name = "VentasLblPeriodoCalculado";
+            this.VentasLblPeriodoCalculado.Location = new System.Drawing.Point(12, 74);
+            this.VentasLblPeriodoCalculado.Size = new System.Drawing.Size(620, 40);
+            this.VentasLblPeriodoCalculado.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.VentasLblPeriodoCalculado.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
+            this.VentasLblPeriodoCalculado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.VentasLblPeriodoCalculado.Text = "Período del cierre";
+            this.VentasPnlPeriodo.Controls.Add(this.VentasLblPeriodoCalculado);
+            this.VentasLblDesdeCierreEtiqueta.Visible = false;
+            this.VentasDtpDesdeCierre.Visible = false;
+            this.VentasLblHastaCierreEtiqueta.Visible = false;
+            this.VentasDtpHastaCierre.Visible = false;
+            this.VentasLblCorteCierreEtiqueta.Visible = false;
+            this.VentasDtpCorteCierre.Visible = false;
+            this.VentasGrpConfirmacion = new System.Windows.Forms.GroupBox();
+            this.VentasGrpConfirmacion.Name = "VentasGrpConfirmacion";
+            this.VentasGrpConfirmacion.Location = new System.Drawing.Point(12, 248);
+            this.VentasGrpConfirmacion.Size = new System.Drawing.Size(1042, 92);
+            this.VentasGrpConfirmacion.Text = "Paso 3. Confirmar este cierre";
+            this.VentasGrpConfirmacion.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
+            this.VentasDgvRevisionCierre.Location = new System.Drawing.Point(12, 34);
+            this.VentasDgvRevisionCierre.Size = new System.Drawing.Size(1042, 132);
             this.VentasDgvRevisionCierre.Name = "VentasDgvRevisionCierre";
             this.VentasDgvRevisionCierre.AllowUserToAddRows = false;
             this.VentasDgvRevisionCierre.AllowUserToDeleteRows = false;
@@ -400,7 +446,7 @@ namespace CapaVista_CierreMovimientos
             this.VentasDgvRevisionCierre.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.VentasClmRevisionCierreCliente, this.VentasClmRevisionCierreNombre, this.VentasClmRevisionCierreAnterior, this.VentasClmRevisionCierreCargos, this.VentasClmRevisionCierreAbonos, this.VentasClmRevisionCierreCargosAcum, this.VentasClmRevisionCierreAbonosAcum, this.VentasClmRevisionCierreActual });
             this.VentasDgvRevisionCierre.ColumnHeadersHeight = 48;
             this.VentasPnlAnteriorCierre.Location = new System.Drawing.Point(12, 180);
-            this.VentasPnlAnteriorCierre.Size = new System.Drawing.Size(166, 62);
+            this.VentasPnlAnteriorCierre.Size = new System.Drawing.Size(250, 62);
             this.VentasPnlAnteriorCierre.Name = "VentasPnlAnteriorCierre";
             this.VentasPnlAnteriorCierre.BackColor = System.Drawing.Color.White;
             this.VentasPnlAcentoAnteriorCierre.Location = new System.Drawing.Point(0, 0);
@@ -419,8 +465,8 @@ namespace CapaVista_CierreMovimientos
             this.VentasLblValorAnteriorCierre.Text = "0.00";
             this.VentasLblValorAnteriorCierre.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
             this.VentasLblValorAnteriorCierre.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
-            this.VentasPnlCargosCierre.Location = new System.Drawing.Point(187, 180);
-            this.VentasPnlCargosCierre.Size = new System.Drawing.Size(166, 62);
+            this.VentasPnlCargosCierre.Location = new System.Drawing.Point(276, 180);
+            this.VentasPnlCargosCierre.Size = new System.Drawing.Size(250, 62);
             this.VentasPnlCargosCierre.Name = "VentasPnlCargosCierre";
             this.VentasPnlCargosCierre.BackColor = System.Drawing.Color.White;
             this.VentasPnlAcentoCargosCierre.Location = new System.Drawing.Point(0, 0);
@@ -439,8 +485,8 @@ namespace CapaVista_CierreMovimientos
             this.VentasLblValorCargosCierre.Text = "0.00";
             this.VentasLblValorCargosCierre.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
             this.VentasLblValorCargosCierre.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
-            this.VentasPnlAbonosCierre.Location = new System.Drawing.Point(362, 180);
-            this.VentasPnlAbonosCierre.Size = new System.Drawing.Size(166, 62);
+            this.VentasPnlAbonosCierre.Location = new System.Drawing.Point(540, 180);
+            this.VentasPnlAbonosCierre.Size = new System.Drawing.Size(250, 62);
             this.VentasPnlAbonosCierre.Name = "VentasPnlAbonosCierre";
             this.VentasPnlAbonosCierre.BackColor = System.Drawing.Color.White;
             this.VentasPnlAcentoAbonosCierre.Location = new System.Drawing.Point(0, 0);
@@ -499,8 +545,8 @@ namespace CapaVista_CierreMovimientos
             this.VentasLblValorAbonosAcumulados.Text = "0.00";
             this.VentasLblValorAbonosAcumulados.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
             this.VentasLblValorAbonosAcumulados.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
-            this.VentasPnlActualCierre.Location = new System.Drawing.Point(887, 180);
-            this.VentasPnlActualCierre.Size = new System.Drawing.Size(166, 62);
+            this.VentasPnlActualCierre.Location = new System.Drawing.Point(804, 180);
+            this.VentasPnlActualCierre.Size = new System.Drawing.Size(250, 62);
             this.VentasPnlActualCierre.Name = "VentasPnlActualCierre";
             this.VentasPnlActualCierre.BackColor = System.Drawing.Color.White;
             this.VentasPnlAcentoActualCierre.Location = new System.Drawing.Point(0, 0);
@@ -519,12 +565,12 @@ namespace CapaVista_CierreMovimientos
             this.VentasLblValorActualCierre.Text = "0.00";
             this.VentasLblValorActualCierre.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
             this.VentasLblValorActualCierre.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
-            this.VentasChkRevisionDocumentos.Location = new System.Drawing.Point(12, 262);
-            this.VentasChkRevisionDocumentos.Size = new System.Drawing.Size(1042, 26);
+            this.VentasChkRevisionDocumentos.Location = new System.Drawing.Point(12, 22);
+            this.VentasChkRevisionDocumentos.Size = new System.Drawing.Size(780, 26);
             this.VentasChkRevisionDocumentos.Name = "VentasChkRevisionDocumentos";
-            this.VentasChkRevisionDocumentos.Text = "Constancia del responsable: documentos y movimientos del período revisados.";
-            this.VentasLblRevisionContable.Location = new System.Drawing.Point(12, 298);
-            this.VentasLblRevisionContable.Size = new System.Drawing.Size(1042, 28);
+            this.VentasChkRevisionDocumentos.Text = "Ya revisé los documentos y movimientos de este período.";
+            this.VentasLblRevisionContable.Location = new System.Drawing.Point(12, 48);
+            this.VentasLblRevisionContable.Size = new System.Drawing.Size(780, 38);
             this.VentasLblRevisionContable.Name = "VentasLblRevisionContable";
             this.VentasLblRevisionContable.Text = "El cierre conserva los saldos por cliente y período; los cargos de CxC no tienen que igualar los abonos.";
             this.VentasLblRevisionContable.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular);
@@ -551,7 +597,7 @@ namespace CapaVista_CierreMovimientos
             this.VentasLblHistoricoClave.Location = new System.Drawing.Point(720, 24);
             this.VentasLblHistoricoClave.Size = new System.Drawing.Size(334, 42);
             this.VentasLblHistoricoClave.Name = "VentasLblHistoricoClave";
-            this.VentasLblHistoricoClave.Text = "Histórico identificado por cliente + mes + año.";
+            this.VentasLblHistoricoClave.Text = "Solo consulta. Para ver la póliza, elija el mes arriba y abra Ver póliza y enviar.";
             this.VentasLblHistoricoClave.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular);
             this.VentasLblHistoricoClave.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             this.VentasDgvHistorialCierre.Location = new System.Drawing.Point(12, 83);
@@ -643,40 +689,52 @@ namespace CapaVista_CierreMovimientos
             this.VentasClmHistorialCierreEstado.ReadOnly = true;
             this.VentasDgvHistorialCierre.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.VentasClmHistorialCierrePeriodo, this.VentasClmHistorialCierreCliente, this.VentasClmHistorialCierreNombre, this.VentasClmHistorialCierreAnterior, this.VentasClmHistorialCierreCargos, this.VentasClmHistorialCierreAbonos, this.VentasClmHistorialCierreCargosAcum, this.VentasClmHistorialCierreAbonosAcum, this.VentasClmHistorialCierreActual, this.VentasClmHistorialCierreEstado });
             this.VentasDgvHistorialCierre.ColumnHeadersHeight = 48;
-            this.VentasLblReferenciaPolizaEtiqueta.Location = new System.Drawing.Point(12, 7);
-            this.VentasLblReferenciaPolizaEtiqueta.Size = new System.Drawing.Size(330, 21);
+            this.VentasLblReferenciaPolizaEtiqueta.Location = new System.Drawing.Point(798, 7);
+            this.VentasLblReferenciaPolizaEtiqueta.Size = new System.Drawing.Size(248, 21);
             this.VentasLblReferenciaPolizaEtiqueta.Name = "VentasLblReferenciaPolizaEtiqueta";
             this.VentasLblReferenciaPolizaEtiqueta.Text = "Referencia de la póliza";
             this.VentasLblReferenciaPolizaEtiqueta.Font = new System.Drawing.Font("Tahoma", 9.5F, System.Drawing.FontStyle.Regular);
             this.VentasLblReferenciaPolizaEtiqueta.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
-            this.VentasTxtReferenciaPoliza.Location = new System.Drawing.Point(12, 30);
-            this.VentasTxtReferenciaPoliza.Size = new System.Drawing.Size(330, 28);
+            this.VentasTxtReferenciaPoliza.Location = new System.Drawing.Point(798, 30);
+            this.VentasTxtReferenciaPoliza.Size = new System.Drawing.Size(248, 28);
             this.VentasTxtReferenciaPoliza.Name = "VentasTxtReferenciaPoliza";
             this.VentasTxtReferenciaPoliza.ReadOnly = true;
             this.VentasTxtReferenciaPoliza.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.VentasLblEstadoTrasladoEtiqueta.Location = new System.Drawing.Point(360, 7);
-            this.VentasLblEstadoTrasladoEtiqueta.Size = new System.Drawing.Size(330, 21);
+            this.VentasLblEstadoTrasladoEtiqueta.Location = new System.Drawing.Point(274, 7);
+            this.VentasLblEstadoTrasladoEtiqueta.Size = new System.Drawing.Size(248, 21);
             this.VentasLblEstadoTrasladoEtiqueta.Name = "VentasLblEstadoTrasladoEtiqueta";
             this.VentasLblEstadoTrasladoEtiqueta.Text = "Estado del traslado";
             this.VentasLblEstadoTrasladoEtiqueta.Font = new System.Drawing.Font("Tahoma", 9.5F, System.Drawing.FontStyle.Regular);
             this.VentasLblEstadoTrasladoEtiqueta.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
-            this.VentasTxtEstadoTraslado.Location = new System.Drawing.Point(360, 30);
-            this.VentasTxtEstadoTraslado.Size = new System.Drawing.Size(330, 28);
+            this.VentasTxtEstadoTraslado.Location = new System.Drawing.Point(274, 30);
+            this.VentasTxtEstadoTraslado.Size = new System.Drawing.Size(248, 28);
             this.VentasTxtEstadoTraslado.Name = "VentasTxtEstadoTraslado";
             this.VentasTxtEstadoTraslado.ReadOnly = true;
             this.VentasTxtEstadoTraslado.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
             this.VentasTxtEstadoTraslado.Text = "Pendiente de cierre";
-            this.VentasLblFechaTrasladoEtiqueta.Location = new System.Drawing.Point(708, 7);
-            this.VentasLblFechaTrasladoEtiqueta.Size = new System.Drawing.Size(346, 21);
+            this.VentasLblFechaTrasladoEtiqueta.Location = new System.Drawing.Point(536, 7);
+            this.VentasLblFechaTrasladoEtiqueta.Size = new System.Drawing.Size(248, 21);
             this.VentasLblFechaTrasladoEtiqueta.Name = "VentasLblFechaTrasladoEtiqueta";
             this.VentasLblFechaTrasladoEtiqueta.Text = "Fecha del traslado";
             this.VentasLblFechaTrasladoEtiqueta.Font = new System.Drawing.Font("Tahoma", 9.5F, System.Drawing.FontStyle.Regular);
             this.VentasLblFechaTrasladoEtiqueta.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
-            this.VentasTxtFechaTraslado.Location = new System.Drawing.Point(708, 30);
-            this.VentasTxtFechaTraslado.Size = new System.Drawing.Size(346, 28);
+            this.VentasTxtFechaTraslado.Location = new System.Drawing.Point(536, 30);
+            this.VentasTxtFechaTraslado.Size = new System.Drawing.Size(248, 28);
             this.VentasTxtFechaTraslado.Name = "VentasTxtFechaTraslado";
             this.VentasTxtFechaTraslado.ReadOnly = true;
             this.VentasTxtFechaTraslado.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            this.VentasLblPaisContable.Location = new System.Drawing.Point(12, 7);
+            this.VentasLblPaisContable.Size = new System.Drawing.Size(256, 21);
+            this.VentasLblPaisContable.Name = "VentasLblPaisContable";
+            this.VentasLblPaisContable.Text = "País (Contabilidad)";
+            this.VentasLblPaisContable.Font = new System.Drawing.Font("Tahoma", 9.5F);
+            this.VentasLblPaisContable.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
+            this.VentasCboPaisContable.Location = new System.Drawing.Point(12, 30);
+            this.VentasCboPaisContable.Size = new System.Drawing.Size(256, 28);
+            this.VentasCboPaisContable.Name = "VentasCboPaisContable";
+            this.VentasCboPaisContable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VentasCboPaisContable.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            this.VentasTtpAcciones.SetToolTip(this.VentasCboPaisContable, "País de Contabilidad que recibirá la póliza y determinará las cuentas permitidas");
             this.VentasDgvPoliza.Location = new System.Drawing.Point(12, 83);
             this.VentasDgvPoliza.Size = new System.Drawing.Size(1042, 124);
             this.VentasDgvPoliza.Name = "VentasDgvPoliza";
@@ -741,10 +799,11 @@ namespace CapaVista_CierreMovimientos
             this.VentasLblPolizaTotales.Text = "Total debe: 0.00                 Total haber: 0.00                 Diferencia: 0.00";
             this.VentasLblPolizaTotales.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
             this.VentasLblPolizaTotales.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
+            // Natali Sofía Montenegro Portillo | 0901-23-10017 | Botón contable con colores del módulo y mensajes de validación.
             this.VentasBtnTrasladarContabilidad.Location = new System.Drawing.Point(954, 217);
             this.VentasBtnTrasladarContabilidad.Size = new System.Drawing.Size(64, 64);
             this.VentasBtnTrasladarContabilidad.Name = "VentasBtnTrasladarContabilidad";
-            this.VentasBtnTrasladarContabilidad.BackgroundImage = global::CapaVista_CierreMovimientos.Properties.Resources.BotonOriginalIngresarVentas;
+            this.VentasBtnTrasladarContabilidad.BackgroundImage = global::CapaVista_CierreMovimientos.Properties.Resources.BotonCierreContable;
             this.VentasBtnTrasladarContabilidad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.VentasBtnTrasladarContabilidad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.VentasBtnTrasladarContabilidad.FlatAppearance.BorderSize = 0;
@@ -756,12 +815,31 @@ namespace CapaVista_CierreMovimientos
             this.VentasBtnTrasladarContabilidad.TabIndex = 92;
             this.VentasBtnTrasladarContabilidad.Enabled = false;
             this.VentasTtpAcciones.SetToolTip(this.VentasBtnTrasladarContabilidad, "Trasladar póliza: requiere cierre confirmado y partida cuadrada");
+            this.VentasLblAccionTrasladar.Location = new System.Drawing.Point(913, 281);
+            this.VentasLblAccionTrasladar.Size = new System.Drawing.Size(148, 18);
+            this.VentasLblAccionTrasladar.Name = "VentasLblAccionTrasladar";
+            this.VentasLblAccionTrasladar.Text = "3. Enviar póliza";
+            this.VentasLblAccionTrasladar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VentasLblAccionTrasladar.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblAccionTrasladar.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             this.VentasLblTrasladoCierre.Location = new System.Drawing.Point(12, 299);
-            this.VentasLblTrasladoCierre.Size = new System.Drawing.Size(1042, 30);
+            this.VentasLblTrasladoCierre.Size = new System.Drawing.Size(805, 42);
             this.VentasLblTrasladoCierre.Name = "VentasLblTrasladoCierre";
             this.VentasLblTrasladoCierre.Text = "El traslado requiere cierre confirmado. Los documentos cerrados se conservan sin edición ni eliminación.";
             this.VentasLblTrasladoCierre.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular);
             this.VentasLblTrasladoCierre.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
+            this.VentasBtnIrSiguientePeriodo.Location = new System.Drawing.Point(830, 299);
+            this.VentasBtnIrSiguientePeriodo.Size = new System.Drawing.Size(224, 36);
+            this.VentasBtnIrSiguientePeriodo.Name = "VentasBtnIrSiguientePeriodo";
+            this.VentasBtnIrSiguientePeriodo.Text = "Ir al mes pendiente";
+            this.VentasBtnIrSiguientePeriodo.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasBtnIrSiguientePeriodo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnIrSiguientePeriodo.FlatAppearance.BorderSize = 0;
+            this.VentasBtnIrSiguientePeriodo.BackColor = System.Drawing.Color.FromArgb(123, 63, 147);
+            this.VentasBtnIrSiguientePeriodo.ForeColor = System.Drawing.Color.White;
+            this.VentasBtnIrSiguientePeriodo.UseVisualStyleBackColor = false;
+            this.VentasBtnIrSiguientePeriodo.Visible = false;
+            this.VentasTtpAcciones.SetToolTip(this.VentasBtnIrSiguientePeriodo, "Abrir el primer mes que debe cerrarse antes del período elegido");
             this.VentasBtnModificar.Location = new System.Drawing.Point(176, 604);
             this.VentasBtnModificar.Size = new System.Drawing.Size(64, 64);
             this.VentasBtnModificar.Name = "VentasBtnModificar";
@@ -846,7 +924,7 @@ namespace CapaVista_CierreMovimientos
             this.VentasBtnRevisar.UseVisualStyleBackColor = false;
             this.VentasBtnRevisar.TabIndex = 94;
             this.VentasTtpAcciones.SetToolTip(this.VentasBtnRevisar, "Revisar saldos del período");
-            this.VentasBtnConfirmar.Location = new System.Drawing.Point(672, 604);
+            this.VentasBtnConfirmar.Location = new System.Drawing.Point(968, 18);
             this.VentasBtnConfirmar.Size = new System.Drawing.Size(64, 64);
             this.VentasBtnConfirmar.Name = "VentasBtnConfirmar";
             this.VentasBtnConfirmar.BackgroundImage = global::CapaVista_CierreMovimientos.Properties.Resources.BotonOriginalGuardarVentas;
@@ -902,12 +980,25 @@ namespace CapaVista_CierreMovimientos
             this.VentasBtnCerrar.UseVisualStyleBackColor = false;
             this.VentasBtnCerrar.TabIndex = 98;
             this.VentasTtpAcciones.SetToolTip(this.VentasBtnCerrar, "Salir");
+            this.VentasBtnAyuda.Location = new System.Drawing.Point(960, 604);
+            this.VentasBtnAyuda.Size = new System.Drawing.Size(64, 64);
+            this.VentasBtnAyuda.Name = "VentasBtnAyuda";
+            this.VentasBtnAyuda.BackgroundImage = global::CapaVista_CierreMovimientos.Properties.Resources.BotonOriginalAyudaVentas;
+            this.VentasBtnAyuda.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VentasBtnAyuda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnAyuda.FlatAppearance.BorderSize = 0;
+            this.VentasBtnAyuda.BackColor = System.Drawing.Color.FromArgb(123, 63, 147);
+            this.VentasBtnAyuda.Text = string.Empty;
+            this.VentasBtnAyuda.AccessibleName = "Ayuda de cierre de movimientos";
+            this.VentasBtnAyuda.UseVisualStyleBackColor = false;
+            this.VentasBtnAyuda.TabIndex = 99;
+            this.VentasTtpAcciones.SetToolTip(this.VentasBtnAyuda, "Ayuda de cierre de movimientos (F1)");
             this.VentasBtnCerrar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CancelButton = this.VentasBtnCerrar;
-            this.VentasLblCierreHistorico.Location = new System.Drawing.Point(752, 612);
-            this.VentasLblCierreHistorico.Size = new System.Drawing.Size(264, 52);
+            this.VentasLblCierreHistorico.Location = new System.Drawing.Point(798, 42);
+            this.VentasLblCierreHistorico.Size = new System.Drawing.Size(173, 46);
             this.VentasLblCierreHistorico.Name = "VentasLblCierreHistorico";
-            this.VentasLblCierreHistorico.Text = "Guardar conserva el borrador. Confirmar bloquea el periodo revisado.";
+            this.VentasLblCierreHistorico.Text = "Marque la constancia para confirmar el cierre.";
             this.VentasLblCierreHistorico.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular);
             this.VentasLblCierreHistorico.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
             this.VentasCboTipoCierre.SelectedIndexChanged += new System.EventHandler(this.VentasMetPeriodoCierreChanged);
@@ -950,8 +1041,11 @@ namespace CapaVista_CierreMovimientos
             this.VentasPnlPeriodo.Controls.Add(this.VentasLblCierreRegla);
             this.Controls.Add(this.VentasTbcCierre);
             this.VentasTbcCierre.Controls.Add(this.VentasTbpPreparar);
-            this.VentasTbcCierre.Controls.Add(this.VentasTbpHistorial);
             this.VentasTbcCierre.Controls.Add(this.VentasTbpContabilidad);
+            this.VentasTbcCierre.Controls.Add(this.VentasTbpHistorial);
+            this.VentasTbpPreparar.Controls.Add(this.VentasLblSaldosPeriodo);
+            this.VentasTbpPreparar.Controls.Add(this.VentasGrpConfirmacion);
+            this.VentasGrpConfirmacion.Controls.Add(this.VentasLblAccionConfirmar);
             this.VentasTbpPreparar.Controls.Add(this.VentasDgvRevisionCierre);
             this.VentasTbpPreparar.Controls.Add(this.VentasPnlAnteriorCierre);
             this.VentasPnlAnteriorCierre.Controls.Add(this.VentasPnlAcentoAnteriorCierre);
@@ -965,11 +1059,9 @@ namespace CapaVista_CierreMovimientos
             this.VentasPnlAbonosCierre.Controls.Add(this.VentasPnlAcentoAbonosCierre);
             this.VentasPnlAbonosCierre.Controls.Add(this.VentasLblTituloAbonosCierre);
             this.VentasPnlAbonosCierre.Controls.Add(this.VentasLblValorAbonosCierre);
-            this.VentasTbpPreparar.Controls.Add(this.VentasPnlCargosAcumulados);
             this.VentasPnlCargosAcumulados.Controls.Add(this.VentasPnlAcentoCargosAcumulados);
             this.VentasPnlCargosAcumulados.Controls.Add(this.VentasLblTituloCargosAcumulados);
             this.VentasPnlCargosAcumulados.Controls.Add(this.VentasLblValorCargosAcumulados);
-            this.VentasTbpPreparar.Controls.Add(this.VentasPnlAbonosAcumulados);
             this.VentasPnlAbonosAcumulados.Controls.Add(this.VentasPnlAcentoAbonosAcumulados);
             this.VentasPnlAbonosAcumulados.Controls.Add(this.VentasLblTituloAbonosAcumulados);
             this.VentasPnlAbonosAcumulados.Controls.Add(this.VentasLblValorAbonosAcumulados);
@@ -977,8 +1069,8 @@ namespace CapaVista_CierreMovimientos
             this.VentasPnlActualCierre.Controls.Add(this.VentasPnlAcentoActualCierre);
             this.VentasPnlActualCierre.Controls.Add(this.VentasLblTituloActualCierre);
             this.VentasPnlActualCierre.Controls.Add(this.VentasLblValorActualCierre);
-            this.VentasTbpPreparar.Controls.Add(this.VentasChkRevisionDocumentos);
-            this.VentasTbpPreparar.Controls.Add(this.VentasLblRevisionContable);
+            this.VentasGrpConfirmacion.Controls.Add(this.VentasChkRevisionDocumentos);
+            this.VentasGrpConfirmacion.Controls.Add(this.VentasLblRevisionContable);
             this.VentasTbpHistorial.Controls.Add(this.VentasLblClienteHistorialEtiqueta);
             this.VentasTbpHistorial.Controls.Add(this.VentasCboClienteHistorial);
             this.VentasTbpHistorial.Controls.Add(this.VentasLblPeriodoHistorialEtiqueta);
@@ -991,22 +1083,27 @@ namespace CapaVista_CierreMovimientos
             this.VentasTbpContabilidad.Controls.Add(this.VentasTxtEstadoTraslado);
             this.VentasTbpContabilidad.Controls.Add(this.VentasLblFechaTrasladoEtiqueta);
             this.VentasTbpContabilidad.Controls.Add(this.VentasTxtFechaTraslado);
+            this.VentasTbpContabilidad.Controls.Add(this.VentasLblPaisContable);
+            this.VentasTbpContabilidad.Controls.Add(this.VentasCboPaisContable);
             this.VentasTbpContabilidad.Controls.Add(this.VentasDgvPoliza);
             this.VentasTbpContabilidad.Controls.Add(this.VentasLblPolizaRegla);
             this.VentasTbpContabilidad.Controls.Add(this.VentasLblPolizaTotales);
             this.VentasTbpContabilidad.Controls.Add(this.VentasBtnTrasladarContabilidad);
+            this.VentasTbpContabilidad.Controls.Add(this.VentasLblAccionTrasladar);
             this.VentasTbpContabilidad.Controls.Add(this.VentasLblTrasladoCierre);
+            this.VentasTbpContabilidad.Controls.Add(this.VentasBtnIrSiguientePeriodo);
             this.Controls.Add(this.VentasBtnModificar);
             this.Controls.Add(this.VentasBtnEliminar);
             this.Controls.Add(this.VentasBtnGuardarBorrador);
             this.Controls.Add(this.VentasBtnRefrescar);
             this.Controls.Add(this.VentasBtnIngresar);
             this.Controls.Add(this.VentasBtnRevisar);
-            this.Controls.Add(this.VentasBtnConfirmar);
+            this.VentasGrpConfirmacion.Controls.Add(this.VentasBtnConfirmar);
             this.Controls.Add(this.VentasBtnCancelar);
             this.Controls.Add(this.VentasBtnImprimir);
             this.Controls.Add(this.VentasBtnCerrar);
-            this.Controls.Add(this.VentasLblCierreHistorico);
+            this.Controls.Add(this.VentasBtnAyuda);
+            this.VentasGrpConfirmacion.Controls.Add(this.VentasLblCierreHistorico);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1120, 680);
             this.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
@@ -1018,7 +1115,7 @@ namespace CapaVista_CierreMovimientos
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Name = "FrmCierreMovimientosVentas";
-            this.Text = "7010 – CierreDeMovimientos";
+            this.Text = "7010 – Cierre de movimientos";
             ((System.ComponentModel.ISupportInitialize)(this.VentasNudAnioCierre)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasDgvRevisionCierre)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VentasDgvHistorialCierre)).EndInit();
@@ -1113,6 +1210,8 @@ namespace CapaVista_CierreMovimientos
         internal System.Windows.Forms.TextBox VentasTxtEstadoTraslado;
         internal System.Windows.Forms.Label VentasLblFechaTrasladoEtiqueta;
         internal System.Windows.Forms.TextBox VentasTxtFechaTraslado;
+        internal System.Windows.Forms.Label VentasLblPaisContable;
+        internal System.Windows.Forms.ComboBox VentasCboPaisContable;
         internal System.Windows.Forms.DataGridView VentasDgvPoliza;
         internal System.Windows.Forms.DataGridViewTextBoxColumn VentasClmPolizaCuenta;
         internal System.Windows.Forms.DataGridViewTextBoxColumn VentasClmPolizaDescripcion;
@@ -1121,7 +1220,9 @@ namespace CapaVista_CierreMovimientos
         internal System.Windows.Forms.Label VentasLblPolizaRegla;
         internal System.Windows.Forms.Label VentasLblPolizaTotales;
         internal System.Windows.Forms.Button VentasBtnTrasladarContabilidad;
+        internal System.Windows.Forms.Label VentasLblAccionTrasladar;
         internal System.Windows.Forms.Label VentasLblTrasladoCierre;
+        internal System.Windows.Forms.Button VentasBtnIrSiguientePeriodo;
         internal System.Windows.Forms.Button VentasBtnModificar;
         internal System.Windows.Forms.Button VentasBtnEliminar;
         internal System.Windows.Forms.Button VentasBtnGuardarBorrador;
@@ -1132,8 +1233,13 @@ namespace CapaVista_CierreMovimientos
         internal System.Windows.Forms.Button VentasBtnCancelar;
         internal System.Windows.Forms.Button VentasBtnImprimir;
         internal System.Windows.Forms.Button VentasBtnCerrar;
+        internal System.Windows.Forms.Button VentasBtnAyuda;
         internal System.Windows.Forms.Label VentasLblCierreHistorico;
         internal System.Windows.Forms.Label VentasLblAccionGuardarBorrador;
+        internal System.Windows.Forms.Label VentasLblSaldosPeriodo;
+        internal System.Windows.Forms.Label VentasLblPeriodoCalculado;
+        internal System.Windows.Forms.GroupBox VentasGrpConfirmacion;
         internal System.Windows.Forms.Label VentasLblAccionConfirmar;
+        internal System.Windows.Forms.Label VentasLblAccionRefrescar;
     }
 }
