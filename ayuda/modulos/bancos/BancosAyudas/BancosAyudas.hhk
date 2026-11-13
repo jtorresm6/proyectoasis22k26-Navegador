@@ -30,12 +30,24 @@
 		<param name="Local" value="CierreBancario_Bancos.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Conciliación bancaria">
+		<param name="Local" value="Conciliacion_Bancos.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Consultar pólizas bancarias del período">
 		<param name="Local" value="EnlaceContabilidad_Bancos.htm#consultar">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Corte de conciliación">
+		<param name="Local" value="Conciliacion_Bancos.html#corte">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Cuenta bancaria">
 		<param name="Local" value="CuentaBancaria_Bancos.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Desmarcar partidas">
+		<param name="Local" value="Conciliacion_Bancos.html#desmarcar">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Emitir cheque o transferencia">
@@ -68,6 +80,10 @@
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Historial de partidas">
 		<param name="Local" value="EnlaceContabilidad_Bancos.htm#historial">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Marcar partidas a mano">
+		<param name="Local" value="Conciliacion_Bancos.html#marcar">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="MDI de Bancos">
@@ -104,6 +120,10 @@
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Reporte de cierre bancario">
 		<param name="Local" value="CierreBancario_Bancos.html#reporte">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Reporte de conciliación">
+		<param name="Local" value="Conciliacion_Bancos.html#reporte">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Reporte de enlace con Contabilidad">

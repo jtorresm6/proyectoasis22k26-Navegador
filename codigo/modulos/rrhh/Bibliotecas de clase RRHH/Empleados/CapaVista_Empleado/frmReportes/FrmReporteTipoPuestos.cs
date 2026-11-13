@@ -6,7 +6,7 @@
  * Fecha : 21/10/2026
  * ==================================================================
  * Propósito :
- *  Muestra el reporte de tblTipoPuesto (aplicación 9003).
+ *  Muestra el reporte de tblTipoPuesto (aplicación 9005).
  * ===================================================================
 */
 

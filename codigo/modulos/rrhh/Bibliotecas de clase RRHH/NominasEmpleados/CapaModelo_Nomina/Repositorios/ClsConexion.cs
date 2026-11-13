@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Centraliza la configuración de conexión a la base de datos
+ *  del módulo de nómina. Proporciona a las clases derivadas
+ *  una conexión ODBC construida a partir de la cadena
+ *  de conexión definida en esta clase.
+ * ==================================================================
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
 using System.Linq;
@@ -19,18 +34,6 @@ namespace CapaModelo_Nomina.Repositorios
         protected OdbcConnection RrhhMetObtenerConexion()
         {
             return new OdbcConnection(_ConnectionString);
-        }
-
-        public void RrhhMetDesconexion(OdbcConnection ConexionOdbc)
-        {
-            try
-            {
-                ConexionOdbc.Close();
-            }
-            catch (OdbcException)
-            {
-                Console.WriteLine("No se desconecto");
-            }
         }
     }
 }

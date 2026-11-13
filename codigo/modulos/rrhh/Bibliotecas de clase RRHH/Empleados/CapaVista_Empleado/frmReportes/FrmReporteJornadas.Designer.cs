@@ -41,7 +41,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmReporteJornadas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "9005 – ReporteJornadas";
+            this.Text = "9003 – ReporteJornadas";
             this.Load += new System.EventHandler(this.FrmReporteJornadas_Load);
             this.ResumeLayout(false);
 
