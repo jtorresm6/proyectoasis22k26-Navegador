@@ -118,8 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="boton_inicio_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\boton_inicio_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="boton_Ayudas_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\boton_Ayudas_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Pnl_fondo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Pnl_fondo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -133,8 +139,8 @@
   <data name="boton_modificar_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boton_modificar_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="boton_fin_sin_bordes_final" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\boton_fin_sin_bordes_final.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Pnl_fondo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Pnl_fondo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="boton_siguiente_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boton_siguiente_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,8 +148,8 @@
   <data name="boton_eliminar_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boton_eliminar_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Pnl_fondo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Pnl_fondo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="boton_consultar_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\boton_consultar_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icono_rrhh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icono_rrhh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,8 +160,8 @@
   <data name="boton_anterior_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boton_anterior_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="boton_inicio_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\boton_inicio_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="boton_fin_sin_bordes_final" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\boton_fin_sin_bordes_final.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="boton_guardar_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boton_guardar_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -163,7 +169,7 @@
   <data name="fondo_mantenimientos_relacionados" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fondo_mantenimientos_relacionados.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="boton_consultar_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\boton_consultar_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="boton_Limpiar_sin_bordes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\boton_Limpiar_sin_bordes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

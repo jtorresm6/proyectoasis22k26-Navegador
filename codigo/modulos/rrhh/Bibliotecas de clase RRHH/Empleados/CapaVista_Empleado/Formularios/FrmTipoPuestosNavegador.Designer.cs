@@ -39,7 +39,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmTipoPuestosNavegador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "9003 – TipoPuestos";
+            this.Text = "9005 – TipoPuestos";
             this.ResumeLayout(false);
 
         }

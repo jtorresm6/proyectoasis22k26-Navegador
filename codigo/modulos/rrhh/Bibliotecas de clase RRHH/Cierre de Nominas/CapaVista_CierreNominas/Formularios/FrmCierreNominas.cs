@@ -23,7 +23,6 @@ namespace CapaVista_CierreNominas.Formularios
             RrhhMetAjustarAPantalla();
         }
 
-        // en pantallas de 1366x768 la ventana se reduce para que quepa completa
         private void RrhhMetAjustarAPantalla()
         {
             Rectangle Area = Screen.FromControl(this).WorkingArea;
