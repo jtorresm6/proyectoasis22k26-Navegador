@@ -42,7 +42,7 @@
     <Compile Include="Repositorios\ClsConsultasCierre.cs" />
     <Compile Include="Repositorios\ClsCierreRepositorio.cs" />
     <Compile Include="..\..\VentasYCxC\CapaModelo_Ventas\Datos\ClsDatosVentas.cs">
-      <Link>Datos\ClsDatosVentas.cs</Link>
+      <Link>Conexion\ClsDatosVentas.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

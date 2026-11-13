@@ -10,6 +10,7 @@
     <RootNamespace>CapaControlador_CierreMovimientos</RootNamespace>
     <AssemblyName>CapaControlador_CierreMovimientos</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <PlatformTarget>x64</PlatformTarget>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -57,7 +58,7 @@
   <ItemGroup>
     </ItemGroup>
   <ItemGroup>
-    <Compile Include="Servicios\ClsCierreServicio.cs" />
+    <Compile Include="Controladores\ClsCierreServicio.cs" />
   </ItemGroup>
   <ItemGroup />
 </Project>

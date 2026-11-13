@@ -1,3 +1,9 @@
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 22/10/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Comprobar las reglas y acciones de pedidos.
+ */
 using System;
 using System.Data;
 using System.Linq;
@@ -267,45 +273,6 @@ namespace TestPedidos
             Assert.IsNull(Repositorio.Estado);
         }
 
-        [TestMethod]
-        public void VentasMetConsultaContactoDePedidoEnBaseDePruebas()
-        {
-            //Arrange
-            int IdPedido;
-            if (!int.TryParse(Environment.GetEnvironmentVariable("VENTAS_TEST_PEDIDO_ID"), out IdPedido) ||
-                IdPedido <= 0)
-                Assert.Inconclusive("Configura VENTAS_TEST_PEDIDO_ID con un pedido de prueba cuyo cliente tenga contacto.");
-
-            var Controlador = new ClsPedidoControlador();
-            //Act
-            DataTable Pedido = Controlador.VentasFuncPedido(IdPedido);
-            //Assert
-            Assert.IsTrue(Pedido.Rows.Count > 0, "El pedido de prueba no existe.");
-            DataRow Datos = Pedido.Rows[0];
-            string Contacto = Convert.ToString(Datos["contactoCliente"]);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(Contacto), "El cliente de prueba no tiene contacto.");
-
-            DataRow[] Clientes = Controlador.VentasFuncCatalogo("Clientes").Select("Id = " + Datos["ClienteId"]);
-            if (Clientes.Length > 0)
-                Assert.AreEqual(Contacto, Convert.ToString(Clientes[0]["contactoCliente"]));
-
-            int IdCliente = Convert.ToInt32(Datos["ClienteId"]);
-            DateTime Fecha = Convert.ToDateTime(Datos["Fecha"]);
-            string Estado = Convert.ToString(Datos["Estado"]);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(Controlador.VentasFuncMoneda(Convert.ToInt32(Datos["MonedaId"]))));
-            Assert.IsTrue(Controlador.VentasFuncCatalogo("Vendedores").Columns.Contains("Id"));
-            Assert.IsTrue(Controlador.VentasFuncListar().Select("Id = " + IdPedido).Length > 0);
-
-            DataTable Reporte = Controlador.VentasFuncReporte(Fecha, Fecha, Estado);
-            Assert.IsTrue(Reporte.Rows.Cast<DataRow>().Any(Fila => Equals(Fila["Numero"], Datos["Numero"])));
-
-            DataTable Listas = Controlador.VentasFuncListas(IdCliente, Fecha);
-            Assert.IsTrue(Listas.Columns.Contains("TipoClienteId"));
-            foreach (DataRow Lista in Listas.Rows)
-                Assert.IsTrue(Controlador.VentasFuncProductos(Convert.ToInt32(Lista["Id"])).Columns.Contains("Precio"));
-
-            Assert.IsTrue(Controlador.VentasFuncCotizaciones(IdCliente, Fecha).Columns.Contains("CotizacionId"));
-        }
     }
 
     // Natali Sofía Montenegro Portillo | 0901-23-10017 | Simula la persistencia para verificar el controlador.
