@@ -1051,7 +1051,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmDisponibilidadDiaria";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "8009-DisponibilidadDiaria";
+            this.Text = "8009 - DisponibilidadDiaria";
             this.BancosPnlAreaDesplazable.ResumeLayout(false);
             this.BancosPnlFondo.ResumeLayout(false);
             this.BancosPnlFondo.PerformLayout();

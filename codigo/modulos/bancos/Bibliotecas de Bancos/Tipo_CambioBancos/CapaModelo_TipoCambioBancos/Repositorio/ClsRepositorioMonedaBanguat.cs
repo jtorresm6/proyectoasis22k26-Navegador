@@ -56,12 +56,12 @@ namespace CapaModelo_TipoCambio.Repositorio
                 try
                 {
                     string codigo = null;
-                    Leer(conexion, transaccion, "SELECT codigoMoneda FROM tblMoneda WHERE Pk_Moneda = ? FOR UPDATE",
+                    Leer(conexion, transaccion, "SELECT codigoMoneda FROM tblMoneda WHERE idMoneda = ? FOR UPDATE",
                         new[] { Numero(id) }, token, r => codigo = Convert.ToString(r[0]).Trim().ToUpperInvariant());
                     if (codigo == null) throw new InvalidOperationException("La moneda ya no existe. Vuelve a consultar.");
                     if (ClsCatalogoMonedasBanguat.BancosMetIdDeCodigo(codigo) != id)
                         throw new InvalidOperationException("Primero sincroniza el catálogo para utilizar los identificadores de Banguat.");
-                    Ejecutar(conexion, transaccion, "UPDATE tblMoneda SET is_active = ? WHERE Pk_Moneda = ?",
+                    Ejecutar(conexion, transaccion, "UPDATE tblMoneda SET is_active = ? WHERE idMoneda = ?",
                         new[] { Numero(activa ? 1 : 0), Numero(id) }, token);
                     token.ThrowIfCancellationRequested();
                     transaccion.Commit();
@@ -109,16 +109,16 @@ namespace CapaModelo_TipoCambio.Repositorio
                                 temporales.Add(moneda.Codigo, temporal);
                                 // El alias y el ID temporal se generan aquí, no provienen de un campo de usuario.
                                 string codigoTemporal = "0" + (indice++).ToString("D2", CultureInfo.InvariantCulture);
-                                string sqlClonar = "INSERT INTO tblMoneda (Pk_Moneda,codigoMoneda,nombreMoneda,simboloMoneda,is_active,created_at,updated_at) " +
+                                string sqlClonar = "INSERT INTO tblMoneda (idMoneda,codigoMoneda,nombreMoneda,simboloMoneda,is_active,created_at,updated_at) " +
                                     "SELECT " + temporal.ToString(CultureInfo.InvariantCulture) + ", '" + codigoTemporal + "', " +
-                                    "nombreMoneda,simboloMoneda,is_active,created_at,updated_at FROM tblMoneda WHERE Pk_Moneda = ?";
+                                    "nombreMoneda,simboloMoneda,is_active,created_at,updated_at FROM tblMoneda WHERE idMoneda = ?";
                                 if (Ejecutar(conexion, transaccion, sqlClonar, new[] { Numero(moneda.Id) }, token) != 1)
                                     throw new InvalidOperationException("No se pudo preparar la migración de la moneda " + moneda.Codigo + ".");
                                 foreach (var referencia in referencias.Where(r => r.Filas > 0))
                                     resultado.ReferenciasMigradas += MoverReferencias(conexion, transaccion, referencia, moneda.Id, temporal, token);
                             }
                             foreach (var moneda in cambios)
-                                if (Ejecutar(conexion, transaccion, "DELETE FROM tblMoneda WHERE Pk_Moneda = ?", new[] { Numero(moneda.Id) }, token) != 1)
+                                if (Ejecutar(conexion, transaccion, "DELETE FROM tblMoneda WHERE idMoneda = ?", new[] { Numero(moneda.Id) }, token) != 1)
                                     throw new InvalidOperationException("No se pudo sustituir el identificador de " + moneda.Codigo + ".");
 
                             foreach (var moneda in catalogo.OrderBy(m => m.IdBanguat))
@@ -130,21 +130,21 @@ namespace CapaModelo_TipoCambio.Repositorio
                                     bool activa = existia ? anterior.Activa : ClsCatalogoMonedasBanguat.BancosMetClase(moneda.Codigo) == "Moneda";
                                     string simbolo = existia ? anterior.Simbolo : moneda.Codigo;
                                     if (Ejecutar(conexion, transaccion,
-                                        "INSERT INTO tblMoneda (Pk_Moneda,codigoMoneda,nombreMoneda,simboloMoneda,is_active) VALUES (?,?,?,?,?)",
+                                        "INSERT INTO tblMoneda (idMoneda,codigoMoneda,nombreMoneda,simboloMoneda,is_active) VALUES (?,?,?,?,?)",
                                         new[] { Numero(moneda.IdBanguat), Texto(moneda.Codigo, 3), Texto(moneda.Nombre, 255), Texto(simbolo, 8), Numero(activa ? 1 : 0) }, token) != 1)
                                         throw new InvalidOperationException("No se pudo incorporar " + moneda.Codigo + ".");
                                     if (!existia) resultado.Agregadas++;
                                     else
                                     {
                                         Ejecutar(conexion, transaccion,
-                                            "UPDATE tblMoneda c JOIN tblMoneda t ON t.Pk_Moneda = ? " +
-                                            "SET c.created_at = t.created_at, c.updated_at = t.updated_at WHERE c.Pk_Moneda = ?",
+                                            "UPDATE tblMoneda c JOIN tblMoneda t ON t.idMoneda = ? " +
+                                            "SET c.created_at = t.created_at, c.updated_at = t.updated_at WHERE c.idMoneda = ?",
                                             new[] { Numero(temporales[moneda.Codigo]), Numero(moneda.IdBanguat) }, token);
                                     }
                                 }
                                 else if (!string.Equals(anterior.Nombre, moneda.Nombre, StringComparison.Ordinal))
                                 {
-                                    Ejecutar(conexion, transaccion, "UPDATE tblMoneda SET nombreMoneda = ?, updated_at = updated_at WHERE Pk_Moneda = ?",
+                                    Ejecutar(conexion, transaccion, "UPDATE tblMoneda SET nombreMoneda = ?, updated_at = updated_at WHERE idMoneda = ?",
                                         new[] { Texto(moneda.Nombre, 255), Numero(moneda.IdBanguat) }, token);
                                 }
                                 if (existia && !string.Equals(anterior.Nombre, moneda.Nombre, StringComparison.Ordinal)) resultado.Actualizadas++;
@@ -154,7 +154,7 @@ namespace CapaModelo_TipoCambio.Repositorio
                                 long idTemporal = temporales[moneda.Codigo];
                                 foreach (var referencia in referencias.Where(r => r.Filas > 0))
                                     MoverReferencias(conexion, transaccion, referencia, idTemporal, apiPorCodigo[moneda.Codigo].IdBanguat, token);
-                                if (Ejecutar(conexion, transaccion, "DELETE FROM tblMoneda WHERE Pk_Moneda = ?", new[] { Numero(idTemporal) }, token) != 1)
+                                if (Ejecutar(conexion, transaccion, "DELETE FROM tblMoneda WHERE idMoneda = ?", new[] { Numero(idTemporal) }, token) != 1)
                                     throw new InvalidOperationException("No se pudo terminar la migración de " + moneda.Codigo + ".");
                             }
                             var finales = LeerMonedas(conexion, transaccion, false, token);
@@ -194,7 +194,7 @@ namespace CapaModelo_TipoCambio.Repositorio
                 "AND LOWER(REFERENCED_TABLE_NAME) = 'tblmoneda' ORDER BY TABLE_SCHEMA,TABLE_NAME,CONSTRAINT_NAME,ORDINAL_POSITION",
                 new[] { Texto(esquema, 64) }, token, r =>
                 {
-                    if (!string.Equals(Convert.ToString(r[4]), "Pk_Moneda", StringComparison.OrdinalIgnoreCase))
+                    if (!string.Equals(Convert.ToString(r[4]), "idMoneda", StringComparison.OrdinalIgnoreCase))
                         throw new InvalidOperationException("Hay una relación de moneda que requiere una migración específica.");
                     string clave = Convert.ToString(r[0]) + "." + Convert.ToString(r[1]) + "." + Convert.ToString(r[3]);
                     List<Referencia> lista;
@@ -282,8 +282,8 @@ namespace CapaModelo_TipoCambio.Repositorio
         private static List<ClsMonedaCatalogoLocal> LeerMonedas(OdbcConnection conexion, OdbcTransaction tx, bool bloquear, CancellationToken token)
         {
             var monedas = new List<ClsMonedaCatalogoLocal>();
-            Leer(conexion, tx, "SELECT Pk_Moneda,codigoMoneda,nombreMoneda,simboloMoneda,is_active,created_at,updated_at " +
-                "FROM tblMoneda ORDER BY Pk_Moneda" + (bloquear ? " FOR UPDATE" : ""), null, token,
+            Leer(conexion, tx, "SELECT idMoneda,codigoMoneda,nombreMoneda,simboloMoneda,is_active,created_at,updated_at " +
+                "FROM tblMoneda ORDER BY idMoneda" + (bloquear ? " FOR UPDATE" : ""), null, token,
                 r => monedas.Add(new ClsMonedaCatalogoLocal
                 {
                     Id = Convert.ToInt64(r[0]), Codigo = Convert.ToString(r[1]).Trim().ToUpperInvariant(),

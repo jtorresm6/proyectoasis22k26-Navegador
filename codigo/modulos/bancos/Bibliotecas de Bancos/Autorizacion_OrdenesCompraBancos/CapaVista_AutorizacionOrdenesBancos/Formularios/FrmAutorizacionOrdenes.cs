@@ -6,33 +6,32 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaVista_Navegador;
 
 /*
- * ==================================================================
+ * =========================================================================
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
  * Fecha : 4/11/2026
- * ==================================================================
+ * ==========================================================================
  * Propósito :
  *  El formulario Autorización de Órdenes de Compra (proceso 8011) permite al
  *  área de Tesorería y Bancos revisar las órdenes pendientes, asignar una o
  *  varias cuentas bancarias con su disponibilidad y autorizar o rechazar la
  *  orden, comunicándose con la capa controlador.
- * ===================================================================
+ * ==========================================================================
 */
 
 namespace CapaVista_AutorizacionOrdenes.Formularios
 {
     public partial class FrmAutorizacionOrdenes : Form
     {
-        private const int ID_EMPRESA_PRUEBA = 1;
-        private const int ID_USUARIO_PRUEBA = 1;
-
         private ClsModeloOrdenCompra _ModeloOrdenCompra = new ClsModeloOrdenCompra();
         private ClsModeloCuentaDisponible _ModeloCuentaDisponible = new ClsModeloCuentaDisponible();
         private ClsModeloAutorizacionOrdenCompra _ModeloAutorizacionOrdenCompra = new ClsModeloAutorizacionOrdenCompra();
@@ -333,9 +332,22 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
 
                 _ModeloAutorizacionOrdenCompra = new ClsModeloAutorizacionOrdenCompra();
                 _ModeloAutorizacionOrdenCompra.IdOrdenCompra = IdOrdenCompra;
-                _ModeloAutorizacionOrdenCompra.IdEmpresaAutorizacionOrden = ID_EMPRESA_PRUEBA;
+                if (!ClsNavegadorSesion.NavegadorFuncHaySesion())
+                {
+                    MessageBox.Show("Debe iniciar sesión para autorizar o rechazar una orden.");
+                    return;
+                }
+
+                int IdEmpresa = _ModeloAutorizacionOrdenCompra.BancosMetObtenerIdEmpresa();
+                if (IdEmpresa <= 0)
+                {
+                    MessageBox.Show("No hay una empresa activa registrada en tblEmpresa.");
+                    return;
+                }
+
+                _ModeloAutorizacionOrdenCompra.IdEmpresaAutorizacionOrden = IdEmpresa;
                 _ModeloAutorizacionOrdenCompra.EstadoAutorizacionOrden = Estado;
-                _ModeloAutorizacionOrdenCompra.IdUsuarioAutoriza = ID_USUARIO_PRUEBA;
+                _ModeloAutorizacionOrdenCompra.IdUsuarioAutoriza = ClsNavegadorSesion.NavegadorFuncIdUsuario();
                 _ModeloAutorizacionOrdenCompra.FechaDecisionAutorizacionOrden = DateTime.Now;
                 _ModeloAutorizacionOrdenCompra.Ip = "127.0.0.1";
 
@@ -525,6 +537,23 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
         {
             FrmReporteAutorizacionOrdenCompra reporte = new FrmReporteAutorizacionOrdenCompra();
             reporte.Show();
+        }
+
+        private void BancosBtnAyuda_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo Directorio = new DirectoryInfo(Application.StartupPath);
+            while (Directorio != null)
+            {
+                string Ruta = Path.Combine(Directorio.FullName, "ayuda", "modulos", "bancos", "BancosAyudas", "BancosAyudas.chm");
+                if (File.Exists(Ruta))
+                {
+                    Help.ShowHelp(this, Ruta, HelpNavigator.Topic, "AutorizacionOrdenCompra_Bancos.html");
+                    return;
+                }
+                Directorio = Directorio.Parent;
+            }
+            MessageBox.Show("No se encontró el archivo de ayuda del módulo de Bancos.", "Ayuda de autorización de órdenes de compra",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

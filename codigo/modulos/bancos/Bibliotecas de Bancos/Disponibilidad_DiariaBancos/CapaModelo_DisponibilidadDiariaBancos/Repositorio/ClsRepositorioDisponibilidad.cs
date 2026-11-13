@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
@@ -13,6 +13,7 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
     {
         ClsCatalogosDisponibilidad BancosMetObtenerCatalogos(CancellationToken token);
         ClsConsultaDisponibilidad BancosMetConsultar(DateTime fecha, long? bancoId, long? cuentaId, string moneda, CancellationToken token);
+        ClsCalculoAutomaticoDisponibilidad BancosMetCalcularAutomaticamente(DateTime fecha, CancellationToken token);
         void BancosMetGuardar(ClsDisponibilidad registro, bool reemplazar, CancellationToken token);
     }
 
@@ -38,14 +39,14 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
                     Bancos = new List<ClsOpcionCatalogo>(), Cuentas = new List<ClsCuentaCatalogo>(),
                     Monedas = new List<ClsOpcionCatalogo>()
                 };
-                Leer(conexion, null, "SELECT Pk_Banco, codigoBanco, nombreBanco FROM tblBanco " +
-                    "WHERE is_active = 1 ORDER BY nombreBanco, Pk_Banco", null, token,
+                Leer(conexion, null, "SELECT idBanco, codigoBanco, nombreBanco FROM tblBanco " +
+                    "WHERE is_active = 1 ORDER BY nombreBanco, idBanco", null, token,
                     lector => resultado.Bancos.Add(new ClsOpcionCatalogo
                     {
                         Id = Convert.ToInt64(lector[0]), Codigo = Convert.ToString(lector[1]),
                         Nombre = Convert.ToString(lector[2])
                     }));
-                Leer(conexion, null, "SELECT Pk_Moneda, codigoMoneda, nombreMoneda FROM tblMoneda " +
+                Leer(conexion, null, "SELECT idMoneda, codigoMoneda, nombreMoneda FROM tblMoneda " +
                     "WHERE is_active = 1 ORDER BY codigoMoneda", null, token,
                     lector => resultado.Monedas.Add(new ClsOpcionCatalogo
                     {
@@ -53,13 +54,13 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
                         Nombre = Convert.ToString(lector[1]).Trim() + " - " + Convert.ToString(lector[2])
                     }));
                 Leer(conexion, null,
-                    "SELECT c.Pk_CuentaBancaria, c.Fk_Banco_Codigo, c.numeroCuentaBancaria, " +
+                    "SELECT c.idCuentaBancaria, c.Fk_Banco_Codigo, c.numeroCuentaBancaria, " +
                     "c.nombreCuentaBancaria, m.codigoMoneda, b.nombreBanco " +
-                    "FROM tblCuentaBancaria c JOIN tblBanco b ON b.Pk_Banco = c.Fk_Banco_Codigo " +
-                    "JOIN tblMoneda m ON m.Pk_Moneda = c.Fk_Moneda_Codigo " +
-                    "JOIN tblTipoCuentaBancaria t ON t.Pk_TipoCuentaBancaria = c.Fk_TipoCuentaBancaria_Codigo " +
+                    "FROM tblCuentaBancaria c JOIN tblBanco b ON b.idBanco = c.Fk_Banco_Codigo " +
+                    "JOIN tblMoneda m ON m.idMoneda = c.Fk_Moneda_Codigo " +
+                    "JOIN tblTipoCuentaBancaria t ON t.idTipoCuentaBancaria = c.Fk_TipoCuentaBancaria_Codigo " +
                     "WHERE c.is_active = 1 AND b.is_active = 1 AND m.is_active = 1 AND t.is_active = 1 " +
-                    "ORDER BY b.nombreBanco, c.numeroCuentaBancaria, c.Pk_CuentaBancaria",
+                    "ORDER BY b.nombreBanco, c.numeroCuentaBancaria, c.idCuentaBancaria",
                     null, token, lector => resultado.Cuentas.Add(new ClsCuentaCatalogo
                     {
                         Id = Convert.ToInt64(lector[0]), BancoId = Convert.ToInt64(lector[1]),
@@ -100,22 +101,22 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
                         "d.usuarioRegistroDisponibilidadDiaria, d.fechaActualizacionDisponibilidadDiaria"
                     : "0, NULL, NULL, NULL";
                 string sql =
-                    "SELECT c.Pk_CuentaBancaria, b.Pk_Banco, b.nombreBanco, c.numeroCuentaBancaria, " +
+                    "SELECT c.idCuentaBancaria, b.idBanco, b.nombreBanco, c.numeroCuentaBancaria, " +
                     "t.nombreTipoCuentaBancaria, " + columnaMoneda + ", d.fechaDisponibilidadDiaria, " +
                     "d.saldoInicialDisponibilidadDiaria, d.ingresosDisponibilidadDiaria, d.egresosDisponibilidadDiaria, " +
                     "d.comprometidoDisponibilidadDiaria, d.restringidoDisponibilidadDiaria, d.saldoDisponibleDisponibilidadDiaria, " +
                     "d.tipoCambioAplicadoDisponibilidadDiaria, d.saldoDisponibleGTQDisponibilidadDiaria, " +
                     "d.fuenteDisponibilidadDiaria, d.fechaGeneracionDisponibilidadDiaria, " + columnasAuditoria + " " +
-                    "FROM tblDisponibilidadDiaria d JOIN tblCuentaBancaria c ON c.Pk_CuentaBancaria = d.Fk_CuentaBancaria_Codigo " +
-                    "JOIN tblBanco b ON b.Pk_Banco = c.Fk_Banco_Codigo " +
-                    "JOIN tblMoneda m ON m.Pk_Moneda = c.Fk_Moneda_Codigo " +
-                    "JOIN tblTipoCuentaBancaria t ON t.Pk_TipoCuentaBancaria = c.Fk_TipoCuentaBancaria_Codigo " +
+                    "FROM tblDisponibilidadDiaria d JOIN tblCuentaBancaria c ON c.idCuentaBancaria = d.Fk_CuentaBancaria_Codigo " +
+                    "JOIN tblBanco b ON b.idBanco = c.Fk_Banco_Codigo " +
+                    "JOIN tblMoneda m ON m.idMoneda = c.Fk_Moneda_Codigo " +
+                    "JOIN tblTipoCuentaBancaria t ON t.idTipoCuentaBancaria = c.Fk_TipoCuentaBancaria_Codigo " +
                     "WHERE d.fechaDisponibilidadDiaria = ?";
                 var parametros = new List<OdbcParameter> { Parametro(OdbcType.Date, fecha.Date) };
-                if (bancoId.HasValue) { sql += " AND b.Pk_Banco = ?"; parametros.Add(Parametro(OdbcType.BigInt, bancoId.Value)); }
-                if (cuentaId.HasValue) { sql += " AND c.Pk_CuentaBancaria = ?"; parametros.Add(Parametro(OdbcType.BigInt, cuentaId.Value)); }
+                if (bancoId.HasValue) { sql += " AND b.idBanco = ?"; parametros.Add(Parametro(OdbcType.BigInt, bancoId.Value)); }
+                if (cuentaId.HasValue) { sql += " AND c.idCuentaBancaria = ?"; parametros.Add(Parametro(OdbcType.BigInt, cuentaId.Value)); }
                 if (moneda != null) { sql += " AND " + columnaMoneda + " = ?"; parametros.Add(Parametro(OdbcType.VarChar, moneda)); }
-                sql += " ORDER BY b.nombreBanco, c.numeroCuentaBancaria, c.Pk_CuentaBancaria";
+                sql += " ORDER BY b.nombreBanco, c.numeroCuentaBancaria, c.idCuentaBancaria";
                 // Los cortes históricos conservan filas aunque después se desactive una cuenta.
                 Leer(conexion, null, sql, parametros, token, lector =>
                 {
@@ -151,13 +152,215 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
                             registro.NumeroCuenta + ".");
                     resultado.Detalle.Add(registro);
                 });
+                if (fecha.Date == DateTime.Today && resultado.Detalle.Count > 0)
+                    CargarCompromisosActuales(conexion, resultado, token);
                 resultado.Mensaje = resultado.Detalle.Count == 0
                     ? "No hay registros para la fecha y los filtros seleccionados."
-                    : "No hay detalle por beneficiario; el monto comprometido corresponde al registro diario.";
+                    : resultado.Compromisos.Count > 0
+                        ? "Los compromisos muestran reservas y órdenes pendientes que todavía no tienen movimiento bancario."
+                        : fecha.Date == DateTime.Today
+                            ? "No hay reservas u órdenes pendientes para las cuentas consultadas."
+                            : "El corte histórico conserva el total comprometido; su desglose operativo sólo se presenta para hoy.";
                 if (!conservaMoneda) resultado.Mensaje += " La estructura antigua no conserva la moneda histórica; " +
                     "se muestra la moneda actual de la cuenta. Actualiza el esquema antes de guardar.";
                 if (!tieneAuditoria) resultado.Mensaje += " Falta aplicar la actualización de auditoría y versiones antes de guardar.";
                 return resultado;
+            }
+        }
+
+        public ClsCalculoAutomaticoDisponibilidad BancosMetCalcularAutomaticamente(
+            DateTime fecha, CancellationToken token)
+        {
+            ValidarFiltros(fecha, null, null, null);
+            fecha = fecha.Date;
+            if (fecha != DateTime.Today)
+                throw new InvalidOperationException("Sólo el corte del día actual puede recalcularse. Los cortes anteriores son históricos.");
+
+            var resultado = new ClsCalculoAutomaticoDisponibilidad();
+            using (OdbcConnection conexion = AbrirConexion(token))
+            {
+                if (!ExisteTabla(conexion, "tblDisponibilidadDiaria", token) ||
+                    !ExisteTabla(conexion, "tblMovimientoBancario", token))
+                    throw new InvalidOperationException("No están disponibles las tablas operativas requeridas para calcular el corte.");
+
+                var cuentas = new List<ClsDisponibilidad>();
+                Leer(conexion, null,
+                    "SELECT c.idCuentaBancaria, b.idBanco, b.nombreBanco, c.numeroCuentaBancaria, " +
+                    "t.nombreTipoCuentaBancaria, m.codigoMoneda, COALESCE(d.versionDisponibilidadDiaria, 0) " +
+                    "FROM tblCuentaBancaria c JOIN tblBanco b ON b.idBanco = c.Fk_Banco_Codigo " +
+                    "JOIN tblMoneda m ON m.idMoneda = c.Fk_Moneda_Codigo " +
+                    "JOIN tblTipoCuentaBancaria t ON t.idTipoCuentaBancaria = c.Fk_TipoCuentaBancaria_Codigo " +
+                    "LEFT JOIN tblDisponibilidadDiaria d ON d.Fk_CuentaBancaria_Codigo = c.idCuentaBancaria " +
+                    "AND d.fechaDisponibilidadDiaria = ? " +
+                    "WHERE c.is_active = 1 AND b.is_active = 1 AND m.is_active = 1 AND t.is_active = 1 " +
+                    "ORDER BY b.nombreBanco, c.numeroCuentaBancaria, c.idCuentaBancaria",
+                    new[] { Parametro(OdbcType.Date, fecha) }, token, lector => cuentas.Add(new ClsDisponibilidad
+                    {
+                        CuentaId = Convert.ToInt64(lector[0]), BancoId = Convert.ToInt64(lector[1]),
+                        Banco = Convert.ToString(lector[2]), NumeroCuenta = Convert.ToString(lector[3]),
+                        TipoCuenta = Convert.ToString(lector[4]),
+                        Moneda = Convert.ToString(lector[5]).Trim().ToUpperInvariant(),
+                        FechaCorte = fecha, VersionRegistro = Convert.ToInt64(lector[6])
+                    }));
+
+                bool tieneConciliacion = ExisteTabla(conexion, "tblConciliacion", token);
+                bool tieneExtracto = ExisteTabla(conexion, "tblExtractoBancario", token);
+                bool tieneReservas = ExisteTabla(conexion, "tblAutPagoOrden", token) &&
+                    ExisteTabla(conexion, "tblAutDisponibilidadFondos", token);
+                bool tieneOrdenes = ExisteTabla(conexion, "tblOrdenPago", token);
+
+                foreach (ClsDisponibilidad registro in cuentas)
+                {
+                    token.ThrowIfCancellationRequested();
+                    DateTime? fechaAncla = null;
+                    decimal? saldoAncla = null;
+                    string fuenteAncla = null;
+
+                    Leer(conexion, null,
+                        "SELECT fechaDisponibilidadDiaria, " +
+                        "saldoInicialDisponibilidadDiaria + ingresosDisponibilidadDiaria - egresosDisponibilidadDiaria " +
+                        "FROM tblDisponibilidadDiaria WHERE Fk_CuentaBancaria_Codigo = ? " +
+                        "AND fechaDisponibilidadDiaria < ? ORDER BY fechaDisponibilidadDiaria DESC LIMIT 1",
+                        new[] { Parametro(OdbcType.BigInt, registro.CuentaId), Parametro(OdbcType.Date, fecha) }, token,
+                        lector => { fechaAncla = Convert.ToDateTime(lector[0]).Date; saldoAncla = Convert.ToDecimal(lector[1]); fuenteAncla = "CORTE"; });
+
+                    if (!saldoAncla.HasValue && tieneConciliacion)
+                        Leer(conexion, null,
+                            "SELECT fechaCorteConciliacion, saldoBancoConciliacion FROM tblConciliacion " +
+                            "WHERE Fk_CuentaBancaria_Codigo = ? AND fechaCorteConciliacion < ? " +
+                            "AND UPPER(estadoConciliacion) IN ('CERRADA','CONCILIADA') " +
+                            "ORDER BY fechaCorteConciliacion DESC, idConciliacion DESC LIMIT 1",
+                            new[] { Parametro(OdbcType.BigInt, registro.CuentaId), Parametro(OdbcType.Date, fecha) }, token,
+                            lector => { fechaAncla = Convert.ToDateTime(lector[0]).Date; saldoAncla = Convert.ToDecimal(lector[1]); fuenteAncla = "CONCILIACION"; });
+
+                    if (!saldoAncla.HasValue && tieneExtracto)
+                        Leer(conexion, null,
+                            "SELECT fechaFinExtractoBancario, saldoFinalExtractoBancario FROM tblExtractoBancario " +
+                            "WHERE Fk_CuentaBancaria_Codigo = ? AND fechaFinExtractoBancario < ? " +
+                            "ORDER BY fechaFinExtractoBancario DESC, Pk_ExtractoBancario DESC LIMIT 1",
+                            new[] { Parametro(OdbcType.BigInt, registro.CuentaId), Parametro(OdbcType.Date, fecha) }, token,
+                            lector => { fechaAncla = Convert.ToDateTime(lector[0]).Date; saldoAncla = Convert.ToDecimal(lector[1]); fuenteAncla = "EXTRACTO"; });
+
+                    // Apertura del maestro: es el último recurso para una cuenta que aún
+                    // no tiene cortes, conciliaciones ni extractos anteriores. La fecha
+                    // anterior a su creación permite sumar los movimientos históricos
+                    // una sola vez y evita reinterpretar el saldo en cortes posteriores.
+                    if (!saldoAncla.HasValue)
+                        Leer(conexion, null,
+                            "SELECT DATE_SUB(DATE(created_at), INTERVAL 1 DAY), saldoInicialCuentaBancaria " +
+                            "FROM tblCuentaBancaria WHERE idCuentaBancaria = ? AND is_active = 1 LIMIT 1",
+                            new[] { Parametro(OdbcType.BigInt, registro.CuentaId) }, token,
+                            lector => { fechaAncla = Convert.ToDateTime(lector[0]).Date; saldoAncla = Convert.ToDecimal(lector[1]); fuenteAncla = "CUENTA"; });
+
+                    if (!saldoAncla.HasValue)
+                    {
+                        resultado.CuentasPendientes.Add(registro.Banco + " / " + registro.NumeroCuenta);
+                        continue;
+                    }
+
+                    decimal movimientosPrevios = 0m;
+                    Leer(conexion, null,
+                        "SELECT COALESCE(SUM(importeMovimientoBancario * sentidoMovimientoBancario), 0) " +
+                        "FROM tblMovimientoBancario WHERE Fk_CuentaBancaria_Codigo = ? " +
+                        "AND fechaValorMovimientoBancario > ? AND fechaValorMovimientoBancario < ?",
+                        new[] { Parametro(OdbcType.BigInt, registro.CuentaId), Parametro(OdbcType.Date, fechaAncla.Value),
+                            Parametro(OdbcType.Date, fecha) }, token,
+                        lector => movimientosPrevios = Convert.ToDecimal(lector[0]));
+                    registro.SaldoInicial = Math.Round(saldoAncla.Value + movimientosPrevios, 4, MidpointRounding.AwayFromZero);
+                    if (registro.SaldoInicial < 0m)
+                    {
+                        resultado.CuentasPendientes.Add(registro.Banco + " / " + registro.NumeroCuenta + " (saldo de apertura negativo)");
+                        continue;
+                    }
+
+                    Leer(conexion, null,
+                        "SELECT " +
+                        "COALESCE(SUM(CASE WHEN mb.sentidoMovimientoBancario = 1 THEN mb.importeMovimientoBancario ELSE 0 END), 0), " +
+                        "COALESCE(SUM(CASE WHEN mb.sentidoMovimientoBancario = -1 AND (cb.codigoConceptoBancario IS NULL OR UPPER(cb.codigoConceptoBancario) NOT IN ('GARANTIA','RETENCION-GARANTIA','EMBARGO')) THEN mb.importeMovimientoBancario ELSE 0 END), 0), " +
+                        "COALESCE(SUM(CASE WHEN UPPER(cb.codigoConceptoBancario) IN ('GARANTIA','RETENCION-GARANTIA','EMBARGO') THEN mb.importeMovimientoBancario ELSE 0 END), 0) " +
+                        "FROM tblMovimientoBancario mb " +
+                        "LEFT JOIN tblConceptoBancario cb ON cb.idConceptoBancario = mb.idConceptoBancario " +
+                        "WHERE mb.Fk_CuentaBancaria_Codigo = ? AND mb.fechaValorMovimientoBancario = ?",
+                        new[] { Parametro(OdbcType.BigInt, registro.CuentaId), Parametro(OdbcType.Date, fecha) }, token,
+                        lector => {
+                            registro.Ingresos = Convert.ToDecimal(lector[0]);
+                            registro.Egresos = Convert.ToDecimal(lector[1]);
+                            registro.Restringido = Convert.ToDecimal(lector[2]);
+                        });
+
+                    decimal reservas = 0m, ordenes = 0m;
+                    if (tieneReservas)
+                        Leer(conexion, null,
+                            "SELECT COALESCE(SUM(a.montoAsignadoAutPagoOrden), 0) FROM tblAutPagoOrden a " +
+                            "JOIN tblAutDisponibilidadFondos f ON f.idAutDisponibilidadFondos = a.Fk_AutDisponibilidadFondos_Codigo " +
+                            "WHERE f.Fk_CuentaBancaria_Codigo = ? AND UPPER(a.estadoAutPagoOrden) IN ('RESERVADA','RESERVADO') " +
+                            "AND NOT EXISTS (SELECT 1 FROM tblMovimientoBancario mb " +
+                            "WHERE mb.Fk_OrdenPago_Codigo = a.Fk_OrdenPago_Codigo)",
+                            new[] { Parametro(OdbcType.BigInt, registro.CuentaId) }, token,
+                            lector => reservas = Convert.ToDecimal(lector[0]));
+                    if (tieneOrdenes)
+                        Leer(conexion, null,
+                            "SELECT COALESCE(SUM(o.importeOrdenPago), 0) FROM tblOrdenPago o " +
+                            "WHERE o.Fk_CuentaBancaria_Codigo = ? AND UPPER(o.estadoOrdenPago) IN ('AUTORIZADA','EMITIDA') " +
+                            "AND NOT EXISTS (SELECT 1 FROM tblMovimientoBancario mb WHERE mb.Fk_OrdenPago_Codigo = o.idOrdenPago) " +
+                            (tieneReservas ? "AND NOT EXISTS (SELECT 1 FROM tblAutPagoOrden a WHERE a.Fk_OrdenPago_Codigo = o.idOrdenPago " +
+                                "AND UPPER(a.estadoAutPagoOrden) IN ('RESERVADA','RESERVADO'))" : ""),
+                            new[] { Parametro(OdbcType.BigInt, registro.CuentaId) }, token,
+                            lector => ordenes = Convert.ToDecimal(lector[0]));
+                    registro.Comprometido = Math.Round(reservas + ordenes, 4, MidpointRounding.AwayFromZero);
+                    registro.FechaGeneracion = DateTime.Now;
+                    registro.Fuente = "AUTO;APERTURA:" + fuenteAncla +
+                        ";MOVIMIENTOS;RESERVAS;" + (registro.Restringido > 0m ? "RESTRINGIDO:GARANTIA" : "RESTRINGIDO:SIN_RETENCIONES");
+                    resultado.Registros.Add(registro);
+                }
+            }
+            return resultado;
+        }
+
+        private static void CargarCompromisosActuales(OdbcConnection conexion,
+            ClsConsultaDisponibilidad resultado, CancellationToken token)
+        {
+            bool tieneReservas = ExisteTabla(conexion, "tblAutPagoOrden", token) &&
+                ExisteTabla(conexion, "tblAutDisponibilidadFondos", token);
+            bool tieneOrdenes = ExisteTabla(conexion, "tblOrdenPago", token);
+            foreach (ClsDisponibilidad cuenta in resultado.Detalle)
+            {
+                if (tieneReservas)
+                    Leer(conexion, null,
+                        "SELECT a.fechaReservaAutPagoOrden, " +
+                        "COALESCE(o.referenciaOrdenPago, CONCAT('Reserva #', a.idAutPagoOrden)), " +
+                        "COALESCE(o.beneficiarioOrdenPago, 'Reserva autorizada'), a.montoAsignadoAutPagoOrden " +
+                        "FROM tblAutPagoOrden a JOIN tblAutDisponibilidadFondos f " +
+                        "ON f.idAutDisponibilidadFondos = a.Fk_AutDisponibilidadFondos_Codigo " +
+                        "LEFT JOIN tblOrdenPago o ON o.idOrdenPago = a.Fk_OrdenPago_Codigo " +
+                        "WHERE f.Fk_CuentaBancaria_Codigo = ? " +
+                        "AND UPPER(a.estadoAutPagoOrden) IN ('RESERVADA','RESERVADO') " +
+                        "AND NOT EXISTS (SELECT 1 FROM tblMovimientoBancario mb " +
+                        "WHERE mb.Fk_OrdenPago_Codigo = a.Fk_OrdenPago_Codigo) " +
+                        "ORDER BY a.fechaReservaAutPagoOrden, a.idAutPagoOrden",
+                        new[] { Parametro(OdbcType.BigInt, cuenta.CuentaId) }, token,
+                        lector => resultado.Compromisos.Add(new ClsCompromiso
+                        {
+                            CuentaId = cuenta.CuentaId, Moneda = cuenta.Moneda,
+                            Fecha = Convert.ToDateTime(lector[0]), Concepto = Convert.ToString(lector[1]),
+                            Beneficiario = Convert.ToString(lector[2]), Monto = Convert.ToDecimal(lector[3])
+                        }));
+                if (tieneOrdenes)
+                    Leer(conexion, null,
+                        "SELECT o.fechaProgramadaOrdenPago, o.referenciaOrdenPago, o.beneficiarioOrdenPago, o.importeOrdenPago " +
+                        "FROM tblOrdenPago o WHERE o.Fk_CuentaBancaria_Codigo = ? " +
+                        "AND UPPER(o.estadoOrdenPago) IN ('AUTORIZADA','EMITIDA') " +
+                        "AND NOT EXISTS (SELECT 1 FROM tblMovimientoBancario mb WHERE mb.Fk_OrdenPago_Codigo = o.idOrdenPago) " +
+                        (tieneReservas ? "AND NOT EXISTS (SELECT 1 FROM tblAutPagoOrden a WHERE a.Fk_OrdenPago_Codigo = o.idOrdenPago " +
+                            "AND UPPER(a.estadoAutPagoOrden) IN ('RESERVADA','RESERVADO')) " : "") +
+                        "ORDER BY o.fechaProgramadaOrdenPago, o.idOrdenPago",
+                        new[] { Parametro(OdbcType.BigInt, cuenta.CuentaId) }, token,
+                        lector => resultado.Compromisos.Add(new ClsCompromiso
+                        {
+                            CuentaId = cuenta.CuentaId, Moneda = cuenta.Moneda,
+                            Fecha = Convert.ToDateTime(lector[0]), Concepto = Convert.ToString(lector[1]),
+                            Beneficiario = Convert.ToString(lector[2]), Monto = Convert.ToDecimal(lector[3])
+                        }));
             }
         }
 
@@ -178,10 +381,10 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
                         string monedaActual = null;
                         Leer(conexion, transaccion,
                             "SELECT m.codigoMoneda FROM tblCuentaBancaria c " +
-                            "JOIN tblBanco b ON b.Pk_Banco = c.Fk_Banco_Codigo " +
-                            "JOIN tblMoneda m ON m.Pk_Moneda = c.Fk_Moneda_Codigo " +
-                            "JOIN tblTipoCuentaBancaria t ON t.Pk_TipoCuentaBancaria = c.Fk_TipoCuentaBancaria_Codigo " +
-                            "WHERE c.Pk_CuentaBancaria = ? AND c.is_active = 1 AND b.is_active = 1 " +
+                            "JOIN tblBanco b ON b.idBanco = c.Fk_Banco_Codigo " +
+                            "JOIN tblMoneda m ON m.idMoneda = c.Fk_Moneda_Codigo " +
+                            "JOIN tblTipoCuentaBancaria t ON t.idTipoCuentaBancaria = c.Fk_TipoCuentaBancaria_Codigo " +
+                            "WHERE c.idCuentaBancaria = ? AND c.is_active = 1 AND b.is_active = 1 " +
                             "AND m.is_active = 1 AND t.is_active = 1 FOR UPDATE",
                             new[] { Parametro(OdbcType.BigInt, registro.CuentaId) }, token,
                             lector => monedaActual = Convert.ToString(lector[0]).Trim().ToUpperInvariant());
@@ -193,7 +396,7 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
                         long idRegistro = 0, versionAnterior = 0;
                         Leer(conexion, transaccion,
                             "SELECT fechaGeneracionDisponibilidadDiaria, codigoMonedaDisponibilidadDiaria, " +
-                            "Pk_DisponibilidadDiaria, versionDisponibilidadDiaria " +
+                            "idDisponibilidadDiaria, versionDisponibilidadDiaria " +
                             "FROM tblDisponibilidadDiaria " +
                             "WHERE Fk_CuentaBancaria_Codigo = ? AND fechaDisponibilidadDiaria = ? FOR UPDATE",
                             new[] { Parametro(OdbcType.BigInt, registro.CuentaId), Parametro(OdbcType.Date, registro.FechaCorte.Date) },
@@ -363,7 +566,7 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
                 "monedaAnterior, monedaNueva, saldoInicialAnterior, ingresosAnterior, egresosAnterior, " +
                 "comprometidoAnterior, restringidoAnterior, tasaAnterior, fuenteAnterior, saldoInicialNuevo, " +
                 "ingresosNuevo, egresosNuevo, comprometidoNuevo, restringidoNuevo, tasaNueva, fuenteNueva) " +
-                "SELECT d.Pk_DisponibilidadDiaria, d.Fk_CuentaBancaria_Codigo, d.fechaDisponibilidadDiaria, " +
+                "SELECT d.idDisponibilidadDiaria, d.Fk_CuentaBancaria_Codigo, d.fechaDisponibilidadDiaria, " +
                 (esNuevo ? "'CREAR', NULL, d.versionDisponibilidadDiaria, " :
                     "'ACTUALIZAR', d.versionDisponibilidadDiaria, d.versionDisponibilidadDiaria + 1, ") +
                 "d.usuarioRegistroIdDisponibilidadDiaria, d.usuarioRegistroDisponibilidadDiaria, " +
@@ -375,7 +578,7 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
                 "d.saldoInicialDisponibilidadDiaria, d.ingresosDisponibilidadDiaria, d.egresosDisponibilidadDiaria, " +
                 "d.comprometidoDisponibilidadDiaria, d.restringidoDisponibilidadDiaria, " +
                 "d.tipoCambioAplicadoDisponibilidadDiaria, d.fuenteDisponibilidadDiaria " +
-                "FROM tblDisponibilidadDiaria d WHERE d.Pk_DisponibilidadDiaria = ?";
+                "FROM tblDisponibilidadDiaria d WHERE d.idDisponibilidadDiaria = ?";
             using (OdbcCommand comando = CrearComando(conexion, transaccion, sql, parametros))
             using (token.Register(() => Cancelar(comando)))
             {
@@ -389,14 +592,14 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
             long idRegistro, CancellationToken token)
         {
             const string sql = "UPDATE tblDisponibilidadDiariaHistorial h " +
-                "JOIN tblDisponibilidadDiaria d ON d.Pk_DisponibilidadDiaria = h.Fk_DisponibilidadDiaria " +
+                "JOIN tblDisponibilidadDiaria d ON d.idDisponibilidadDiaria = h.Fk_DisponibilidadDiaria " +
                 "AND d.versionDisponibilidadDiaria = h.versionNueva " +
                 "SET h.usuarioId = d.usuarioRegistroIdDisponibilidadDiaria, h.usuarioNombre = d.usuarioRegistroDisponibilidadDiaria, " +
                 "h.monedaNueva = d.codigoMonedaDisponibilidadDiaria, h.saldoInicialNuevo = d.saldoInicialDisponibilidadDiaria, " +
                 "h.ingresosNuevo = d.ingresosDisponibilidadDiaria, h.egresosNuevo = d.egresosDisponibilidadDiaria, " +
                 "h.comprometidoNuevo = d.comprometidoDisponibilidadDiaria, h.restringidoNuevo = d.restringidoDisponibilidadDiaria, " +
                 "h.tasaNueva = d.tipoCambioAplicadoDisponibilidadDiaria, h.fuenteNueva = d.fuenteDisponibilidadDiaria " +
-                "WHERE d.Pk_DisponibilidadDiaria = ?";
+                "WHERE d.idDisponibilidadDiaria = ?";
             using (OdbcCommand comando = CrearComando(conexion, transaccion, sql,
                 new[] { Parametro(OdbcType.BigInt, idRegistro) }))
             using (token.Register(() => Cancelar(comando)))
@@ -412,9 +615,9 @@ namespace CapaModelo_DisponibilidadDiariaBancos.Repositorio
                     bool coincide = false;
                     Leer(conexion, transaccion,
                         "SELECT 1 FROM tblDisponibilidadDiariaHistorial h " +
-                        "JOIN tblDisponibilidadDiaria d ON d.Pk_DisponibilidadDiaria = h.Fk_DisponibilidadDiaria " +
+                        "JOIN tblDisponibilidadDiaria d ON d.idDisponibilidadDiaria = h.Fk_DisponibilidadDiaria " +
                         "AND d.versionDisponibilidadDiaria = h.versionNueva " +
-                        "WHERE d.Pk_DisponibilidadDiaria = ? " +
+                        "WHERE d.idDisponibilidadDiaria = ? " +
                         "AND h.usuarioId <=> d.usuarioRegistroIdDisponibilidadDiaria " +
                         "AND h.usuarioNombre <=> d.usuarioRegistroDisponibilidadDiaria " +
                         "AND h.monedaNueva = d.codigoMonedaDisponibilidadDiaria " +

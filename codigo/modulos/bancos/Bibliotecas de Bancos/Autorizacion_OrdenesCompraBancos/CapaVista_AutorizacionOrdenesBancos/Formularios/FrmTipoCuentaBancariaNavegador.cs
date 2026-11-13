@@ -41,7 +41,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
         private void FrmTipoCuentaBancariaNavegador_Load(object sender, EventArgs e)
         {
             this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point(290, 20);
+            this.Location = new Point(290, 0);
         }
     }
 }

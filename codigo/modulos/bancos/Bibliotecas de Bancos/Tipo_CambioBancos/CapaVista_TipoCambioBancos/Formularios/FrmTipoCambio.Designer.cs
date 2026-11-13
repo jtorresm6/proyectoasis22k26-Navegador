@@ -1828,7 +1828,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmTipoCambio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "8010-TipoCambio";
+            this.Text = "8010 - TipoCambio";
             this.BancosPnlFondo.ResumeLayout(false);
             this.BancosPnlFooterBar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.BancosPicDonButiTC)).EndInit();
