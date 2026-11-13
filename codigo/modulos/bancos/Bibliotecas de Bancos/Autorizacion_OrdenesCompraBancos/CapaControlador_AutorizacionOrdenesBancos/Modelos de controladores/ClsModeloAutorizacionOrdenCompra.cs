@@ -112,6 +112,11 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
 
         public void BancosMetAgregarCuenta(ClsModeloCuentaDisponible Cuenta, long IdMonedaOrden, decimal Monto)
         {
+            BancosMetAgregarCuenta(Cuenta, IdMonedaOrden, Monto, Cuenta.TipoCambio, Cuenta.IdTipoCambio);
+        }
+
+        public void BancosMetAgregarCuenta(ClsModeloCuentaDisponible Cuenta, long IdMonedaOrden, decimal Monto, decimal TipoCambio, long? IdTipoCambio)
+        {
             bool MismaMoneda = Cuenta.IdMoneda == IdMonedaOrden;
 
             _Evidencias.Add(new ClsEvidenciaFondos
@@ -121,8 +126,8 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
                 SaldoDisponibleDisponibilidadFondos = Cuenta.SaldoDisponible,
                 IdMonedaOrigen = Cuenta.IdMoneda,
                 IdMonedaDestino = IdMonedaOrden,
-                TipoCambioDisponibilidadFondos = MismaMoneda ? 1m : Cuenta.TipoCambio,
-                IdTipoCambio = MismaMoneda ? (long?)null : Cuenta.IdTipoCambio,
+                TipoCambioDisponibilidadFondos = MismaMoneda ? 1m : TipoCambio,
+                IdTipoCambio = MismaMoneda ? (long?)null : IdTipoCambio,
                 FuenteDisponibilidadFondos = "tblDisponibilidadDiaria"
             });
 

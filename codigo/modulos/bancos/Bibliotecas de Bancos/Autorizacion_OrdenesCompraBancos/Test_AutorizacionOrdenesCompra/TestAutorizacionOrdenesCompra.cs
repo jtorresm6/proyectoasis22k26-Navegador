@@ -406,6 +406,58 @@ namespace Test_AutorizacionOrdenesCompra
         }
 
         [TestMethod]
+        public void Test_ModeloAutorizacion_AgregarCuenta_ConTipoCambioNuevo_UsaElTipoCambioRecibido()
+        {
+            //Arrange: cuenta en quetzales sin tipo de cambio guardado y una orden en dólares
+            var Modelo = new ClsModeloAutorizacionOrdenCompra();
+            var Cuenta = BancosMetCrearCuenta(1, 1, 1000m, 1m, null);
+            //Act: agregar la cuenta con la tasa consultada y su identificador
+            Modelo.BancosMetAgregarCuenta(Cuenta, 2, 500m, 0.1307m, 12);
+            var Evidencia = Modelo.Evidencias[0];
+            //Assert: debe usar la tasa y el identificador recibidos, no los de la cuenta
+            Assert.AreEqual(0.1307m, Evidencia.TipoCambioDisponibilidadFondos);
+            Assert.AreEqual((long?)12, Evidencia.IdTipoCambio);
+        }
+
+        [TestMethod]
+        public void Test_ModeloAutorizacion_AgregarCuenta_ConTipoCambioNuevo_MismaMoneda_UsaUno()
+        {
+            //Arrange: cuenta y orden en quetzales
+            var Modelo = new ClsModeloAutorizacionOrdenCompra();
+            var Cuenta = BancosMetCrearCuenta(1, 1, 1000m, 1m, null);
+            //Act: agregar la cuenta enviando una tasa que no debe aplicarse
+            Modelo.BancosMetAgregarCuenta(Cuenta, 1, 500m, 7.65m, 12);
+            var Evidencia = Modelo.Evidencias[0];
+            //Assert: como la moneda es la misma, el tipo de cambio es 1 y no lleva identificador
+            Assert.AreEqual(1m, Evidencia.TipoCambioDisponibilidadFondos);
+            Assert.IsNull(Evidencia.IdTipoCambio);
+        }
+
+        [TestMethod]
+        public void Test_TasaCambio_NormalizarMetodo_AceptaLosTresValores()
+        {
+            //Arrange y Act: textos que devuelve el módulo de Tipo de Cambio
+            string Directa = ClsModeloTasaCambio.BancosMetNormalizarMetodo("DIRECTA");
+            string Inversa = ClsModeloTasaCambio.BancosMetNormalizarMetodo("INVERSA (DIRECTA)");
+            string Cruzada = ClsModeloTasaCambio.BancosMetNormalizarMetodo("CRUZADA (promedio)");
+            //Assert: solo salen los valores que acepta la base de datos
+            Assert.AreEqual("DIRECTA", Directa);
+            Assert.AreEqual("INVERSA", Inversa);
+            Assert.AreEqual("CRUZADA", Cruzada);
+        }
+
+        [TestMethod]
+        public void Test_TasaCambio_NormalizarMetodo_ValorDesconocido_EsCruzada()
+        {
+            //Arrange y Act: texto vacío y texto desconocido
+            string Vacio = ClsModeloTasaCambio.BancosMetNormalizarMetodo(null);
+            string Otro = ClsModeloTasaCambio.BancosMetNormalizarMetodo("Sin publicación");
+            //Assert: se toma como cruzada
+            Assert.AreEqual("CRUZADA", Vacio);
+            Assert.AreEqual("CRUZADA", Otro);
+        }
+
+        [TestMethod]
         public void Test_ModeloAutorizacion_AgregarCuenta_GuardaLaEvidencia()
         {
             //Arrange: cuenta 7 con saldo de 2500 en quetzales
