@@ -53,6 +53,8 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contratos\IRepositorioCuentaPorPagar.cs" />
+    <Compile Include="Repositorios\ClsRepositorioCuentaPorPagar.cs" />
     <Compile Include="ClsConexionCompras.cs" />
     <Compile Include="ClsSentenciasCompras.cs" />
     <Compile Include="Entidades\ClsNotaProveedor.cs" />
