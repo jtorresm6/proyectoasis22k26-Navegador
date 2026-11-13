@@ -31,7 +31,7 @@ namespace CapaControlador_Contabilidad
                 PresupuestosVigentes = ContabilidadFuncLeer(_Repositorio.ContabilidadFuncContarPresupuestosVigentes),
                 ActivosFijos = ContabilidadFuncLeer(_Repositorio.ContabilidadFuncContarActivosFijos),
                 PeriodosCerrados = ContabilidadFuncLeer(_Repositorio.ContabilidadFuncContarPeriodosCerrados),
-                EstadosEmitidos = ContabilidadFuncLeer(_Repositorio.ContabilidadFuncContarEstadosEmitidos),
+                PolizasAplicadas = ContabilidadFuncLeer(_Repositorio.ContabilidadFuncContarPolizasAplicadas),
                 Cuentas = ContabilidadFuncLeer(_Repositorio.ContabilidadFuncContarCuentas)
             };
         }

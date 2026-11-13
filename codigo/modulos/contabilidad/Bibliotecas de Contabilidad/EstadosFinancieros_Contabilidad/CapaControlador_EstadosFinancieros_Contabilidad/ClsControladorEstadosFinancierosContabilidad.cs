@@ -110,22 +110,6 @@ namespace CapaControlador_Contabilidad
             if (Tipo == FlujoCaja) return ContabilidadFuncFlujoCaja(Desde, Hasta, IdPais, Moneda);
             return ContabilidadFuncEstadoResultados(Desde, Hasta, IdPais, Moneda);
         }
-
-        // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
-        // Registra el estado emitido para el indicador del MDI; un fallo no detiene el reporte
-        public bool ContabilidadFuncRegistrarEmision(string Tipo, DateTime Desde, DateTime Hasta, int IdPais, string Moneda)
-        {
-            try
-            {
-                _Repositorio.ContabilidadMetRegistrarEmision(Tipo, Desde, Hasta, IdPais, Moneda);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-        // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
         // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 29/10/2026
         // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
 

@@ -7,13 +7,11 @@
  * ==================================================================
  * Propósito :
  *  Pruebas unitarias MSTest del MDI de Contabilidad: los seis
- *  indicadores, el registro de estados financieros emitidos y los
- *  submenús Gestionar y Reporte.
+ *  indicadores y los submenús Gestionar y Reporte.
  * Reglas especificas:
  *  Cada prueba sigue Arrange, Act y Assert. Los indicadores se
- *  comparan con la base por el DSN EmbutidosS.A; el registro de
- *  emisiones borra al final lo que insertó. Los métodos privados se
- *  prueban por reflexión.
+ *  comparan con la base por el DSN EmbutidosS.A, solo leyendo. Los
+ *  métodos privados se prueban por reflexión.
  * ===================================================================
 */
 
@@ -31,8 +29,6 @@ namespace TestMDI
     [TestClass]
     public class TestMDI
     {
-        // tipo con el que se marcan las emisiones de prueba
-        private const string _TipoPrueba = "Prueba MSTest";
         private const BindingFlags _Privado = BindingFlags.NonPublic | BindingFlags.Instance;
         private const BindingFlags _PrivadoEstatico = BindingFlags.NonPublic | BindingFlags.Static;
 
@@ -44,18 +40,6 @@ namespace TestMDI
             {
                 Conexion.Open();
                 return Convert.ToInt32(Comando.ExecuteScalar());
-            }
-        }
-
-        // borra las emisiones de prueba
-        private static void ContabilidadMetLimpiarEmisiones()
-        {
-            using (OdbcConnection Conexion = new OdbcConnection("Dsn=EmbutidosS.A"))
-            using (OdbcCommand Comando = new OdbcCommand("DELETE FROM tblEstadoFinancieroEmitido WHERE tipoEstadoFinancieroEmitido = ?", Conexion))
-            {
-                Comando.Parameters.Add(new OdbcParameter("Tipo", _TipoPrueba));
-                Conexion.Open();
-                Comando.ExecuteNonQuery();
             }
         }
 
@@ -82,7 +66,7 @@ namespace TestMDI
             Assert.AreEqual(ContabilidadFuncContar("SELECT COUNT(*) FROM tblPolizaEncabezado WHERE is_active = TRUE AND estadoPolizaEncabezado <> 'ANULADA'"), Indicadores.Polizas);
             Assert.AreEqual(ContabilidadFuncContar("SELECT COUNT(*) FROM tblActivoFijo WHERE is_active = TRUE"), Indicadores.ActivosFijos);
             Assert.AreEqual(ContabilidadFuncContar("SELECT COUNT(*) FROM tblCuenta WHERE is_active = TRUE"), Indicadores.Cuentas);
-            Assert.AreEqual(ContabilidadFuncContar("SELECT COUNT(*) FROM tblEstadoFinancieroEmitido WHERE is_active = TRUE"), Indicadores.EstadosEmitidos);
+            Assert.AreEqual(ContabilidadFuncContar("SELECT COUNT(*) FROM tblPolizaEncabezado WHERE is_active = TRUE AND estadoPolizaEncabezado = 'APLICADA'"), Indicadores.PolizasAplicadas);
         }
 
         [TestMethod]
@@ -94,7 +78,7 @@ namespace TestMDI
             ClsModeloIndicadoresContabilidad Indicadores = Controlador.ContabilidadFuncObtener();
             // Assert
             Assert.IsTrue(Indicadores.Polizas.HasValue && Indicadores.PresupuestosVigentes.HasValue && Indicadores.ActivosFijos.HasValue);
-            Assert.IsTrue(Indicadores.PeriodosCerrados.HasValue && Indicadores.EstadosEmitidos.HasValue && Indicadores.Cuentas.HasValue);
+            Assert.IsTrue(Indicadores.PeriodosCerrados.HasValue && Indicadores.PolizasAplicadas.HasValue && Indicadores.Cuentas.HasValue);
             Assert.IsTrue(Indicadores.PresupuestosVigentes >= 0 && Indicadores.PeriodosCerrados >= 0);
         }
 
@@ -114,62 +98,15 @@ namespace TestMDI
         }
 
         [TestMethod]
-        public void Test_RegistrarEmisionSumaUnEstado()
+        public void Test_AplicadasNoSuperanRegistradas()
         {
             // Arrange
-            ClsControladorIndicadoresContabilidad Indicadores = new ClsControladorIndicadoresContabilidad();
-            ClsControladorEstadosFinancierosContabilidad EstadosFinancieros = new ClsControladorEstadosFinancierosContabilidad();
-            int Antes = Indicadores.ContabilidadFuncObtener().EstadosEmitidos.Value;
-            try
-            {
-                // Act
-                bool Registrado = EstadosFinancieros.ContabilidadFuncRegistrarEmision(_TipoPrueba, new DateTime(2026, 10, 1), new DateTime(2026, 10, 31), 1, "GTQ");
-                int Despues = Indicadores.ContabilidadFuncObtener().EstadosEmitidos.Value;
-                // Assert
-                Assert.IsTrue(Registrado);
-                Assert.AreEqual(Antes + 1, Despues);
-            }
-            finally
-            {
-                ContabilidadMetLimpiarEmisiones();
-            }
-        }
-
-        [TestMethod]
-        public void Test_EmisionDeTodosLosPaisesSinPais()
-        {
-            // Arrange
-            ClsControladorEstadosFinancierosContabilidad EstadosFinancieros = new ClsControladorEstadosFinancierosContabilidad();
-            try
-            {
-                // Act
-                EstadosFinancieros.ContabilidadFuncRegistrarEmision(_TipoPrueba, new DateTime(2026, 1, 1), new DateTime(2026, 10, 31), 0, "USD");
-                int SinPais = ContabilidadFuncContar("SELECT COUNT(*) FROM tblEstadoFinancieroEmitido WHERE tipoEstadoFinancieroEmitido = '" + _TipoPrueba + "' AND idPais IS NULL");
-                // Assert
-                Assert.AreEqual(1, SinPais);
-            }
-            finally
-            {
-                ContabilidadMetLimpiarEmisiones();
-            }
-        }
-
-        [TestMethod]
-        public void Test_EmisionConFechasInvertidasNoSeRegistra()
-        {
-            // Arrange
-            ClsControladorEstadosFinancierosContabilidad EstadosFinancieros = new ClsControladorEstadosFinancierosContabilidad();
-            try
-            {
-                // Act
-                bool Registrado = EstadosFinancieros.ContabilidadFuncRegistrarEmision(_TipoPrueba, new DateTime(2026, 10, 31), new DateTime(2026, 10, 1), 1, "GTQ");
-                // Assert
-                Assert.IsFalse(Registrado);
-            }
-            finally
-            {
-                ContabilidadMetLimpiarEmisiones();
-            }
+            ClsControladorIndicadoresContabilidad Controlador = new ClsControladorIndicadoresContabilidad();
+            // Act
+            ClsModeloIndicadoresContabilidad Indicadores = Controlador.ContabilidadFuncObtener();
+            // Assert
+            Assert.IsTrue(Indicadores.PolizasAplicadas >= 0);
+            Assert.IsTrue(Indicadores.PolizasAplicadas <= Indicadores.Polizas);
         }
 
         [TestMethod]

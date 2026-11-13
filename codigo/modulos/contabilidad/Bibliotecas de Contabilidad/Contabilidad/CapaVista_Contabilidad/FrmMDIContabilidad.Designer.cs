@@ -757,7 +757,7 @@ namespace CapaVista_Contabilidad
             this.ContabilidadLblKPI5.Name = "ContabilidadLblKPI5";
             this.ContabilidadLblKPI5.Size = new System.Drawing.Size(130, 40);
             this.ContabilidadLblKPI5.TabIndex = 0;
-            this.ContabilidadLblKPI5.Text = "Estados\r\nemitidos";
+            this.ContabilidadLblKPI5.Text = "Pólizas\r\naplicadas";
             this.ContabilidadPnlKPI6.BackColor = System.Drawing.Color.Transparent;
             this.ContabilidadPnlKPI6.BackgroundImage = global::CapaVista_Contabilidad.Properties.Resources.kpi6;
             this.ContabilidadPnlKPI6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;

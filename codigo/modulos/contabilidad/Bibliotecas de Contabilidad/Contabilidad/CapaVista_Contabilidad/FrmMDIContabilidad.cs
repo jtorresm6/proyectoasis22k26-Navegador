@@ -142,7 +142,7 @@ namespace CapaVista_Contabilidad
             ContabilidadLblKPIResp2.Text = ContabilidadFuncTextoIndicador(Indicadores.PresupuestosVigentes);
             ContabilidadLblKPIResp3.Text = ContabilidadFuncTextoIndicador(Indicadores.ActivosFijos);
             ContabilidadLblKPIResp4.Text = ContabilidadFuncTextoIndicador(Indicadores.PeriodosCerrados);
-            ContabilidadLblKPIResp5.Text = ContabilidadFuncTextoIndicador(Indicadores.EstadosEmitidos);
+            ContabilidadLblKPIResp5.Text = ContabilidadFuncTextoIndicador(Indicadores.PolizasAplicadas);
             ContabilidadLblKPIResp6.Text = ContabilidadFuncTextoIndicador(Indicadores.Cuentas);
         }
 

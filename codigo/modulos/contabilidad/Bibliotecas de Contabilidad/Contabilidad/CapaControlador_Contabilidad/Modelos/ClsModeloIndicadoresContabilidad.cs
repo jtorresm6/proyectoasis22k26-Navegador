@@ -19,7 +19,7 @@ namespace CapaControlador_Contabilidad
         public int? PresupuestosVigentes { get; set; }
         public int? ActivosFijos { get; set; }
         public int? PeriodosCerrados { get; set; }
-        public int? EstadosEmitidos { get; set; }
+        public int? PolizasAplicadas { get; set; }
         public int? Cuentas { get; set; }
     }
 }

@@ -260,29 +260,6 @@ CREATE TABLE tblActivoFijo (
     INDEX idxActivoFijoMaestroVida (idMaestroVidaUtil)
 ) ENGINE=InnoDB;
 
--- Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
--- =============================================================================
---  ESTADOS FINANCIEROS EMITIDOS
---  Un registro por cada reporte de estado financiero; lo cuenta el MDI.
--- =============================================================================
-
-CREATE TABLE IF NOT EXISTS tblEstadoFinancieroEmitido (
-    idEstadoFinancieroEmitido          INT          NOT NULL AUTO_INCREMENT,
-    idPais                             INT          NULL,
-    tipoEstadoFinancieroEmitido        VARCHAR(30)  NOT NULL,
-    fechaDesdeEstadoFinancieroEmitido  DATE         NOT NULL,
-    fechaHastaEstadoFinancieroEmitido  DATE         NOT NULL,
-    monedaEstadoFinancieroEmitido      CHAR(3)      NOT NULL,
-    is_active                          BOOLEAN      NOT NULL DEFAULT TRUE,
-    created_at                         TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at                         TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT Pk_EstadoFinancieroEmitido PRIMARY KEY (idEstadoFinancieroEmitido),
-    CONSTRAINT ckEstadoFinancieroEmitidoFechas CHECK (fechaHastaEstadoFinancieroEmitido >= fechaDesdeEstadoFinancieroEmitido),
-    CONSTRAINT Fk_EstadoFinancieroEmitido_Pais FOREIGN KEY (idPais) REFERENCES tblPais (idPais) ON DELETE RESTRICT ON UPDATE CASCADE,
-    INDEX idxEstadoFinancieroEmitidoPais (idPais)
-) ENGINE=InnoDB;
--- Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
-
 -- =============================================================================
 --  6. VISTAS DE VISUALIZACIÓN
 -- =============================================================================

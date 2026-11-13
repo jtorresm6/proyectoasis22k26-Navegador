@@ -8,9 +8,10 @@
  * Propósito :
  *  Cuenta los registros que muestran los seis indicadores del MDI:
  *  pólizas, presupuestos vigentes, activos fijos, períodos cerrados,
- *  estados financieros emitidos y cuentas contables.
+ *  pólizas aplicadas y cuentas contables.
  * Reglas especificas:
- *  Solo cuenta registros activos. Las pólizas anuladas no cuentan.
+ *  Solo cuenta registros activos. Las pólizas anuladas no cuentan; las
+ *  aplicadas son las que entran en los estados financieros.
  *  Un presupuesto es vigente si ya empezó y no ha cerrado. Un período
  *  está cerrado cuando sus saldos quedaron en CERRADO.
  * ===================================================================
@@ -51,10 +52,11 @@ namespace CapaModelo_Contabilidad.Repositorios
                 "WHERE is_active = TRUE AND estadoSaldoCuentaPeriodo = 'CERRADO'");
         }
 
-        // estados emitidos
-        public int ContabilidadFuncContarEstadosEmitidos()
+        // pólizas aplicadas
+        public int ContabilidadFuncContarPolizasAplicadas()
         {
-            return ContabilidadFuncContar("SELECT COUNT(*) FROM tblEstadoFinancieroEmitido WHERE is_active = TRUE");
+            return ContabilidadFuncContar("SELECT COUNT(*) FROM tblPolizaEncabezado " +
+                "WHERE is_active = TRUE AND estadoPolizaEncabezado = 'APLICADA'");
         }
 
         // cuentas contables

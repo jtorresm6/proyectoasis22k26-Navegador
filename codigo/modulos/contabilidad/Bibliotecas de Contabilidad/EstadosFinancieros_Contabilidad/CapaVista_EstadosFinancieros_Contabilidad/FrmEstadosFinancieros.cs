@@ -188,12 +188,6 @@ namespace CapaVista_Contabilidad
             if (_Estado == null) ContabilidadMetConsultar();
             if (_Estado == null || _Vista == null) return;
             // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 28/10/2026
-            // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
-            // El reporte cuenta como estado emitido
-            DateTime Desde = new DateTime(ContabilidadDtpDesde.Value.Year, ContabilidadDtpDesde.Value.Month, 1);
-            DateTime Hasta = new DateTime(ContabilidadDtpHasta.Value.Year, ContabilidadDtpHasta.Value.Month, 1).AddMonths(1).AddDays(-1);
-            _Controlador.ContabilidadFuncRegistrarEmision(_Titulo, Desde, Hasta, Convert.ToInt32(ContabilidadCboPais.SelectedValue ?? 0), _Moneda);
-            // Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026
             // Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 29/10/2026
             using (FrmReporteEstadoFinanciero Reporte = new FrmReporteEstadoFinanciero(_Vista, _Titulo, _Periodo,
                 Convert.ToString(ContabilidadCboNivel.SelectedItem) + " · " + ContabilidadCboPais.Text + " · Cifras en " + _Moneda))

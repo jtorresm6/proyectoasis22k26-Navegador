@@ -52,14 +52,6 @@
       <HintPath>..\CapaVista_Contabilidad\bin\$(Configuration)\CapaVista_Contabilidad.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CapaModelo_EstadosFinancieros_Contabilidad">
-      <HintPath>..\..\EstadosFinancieros_Contabilidad\CapaModelo_EstadosFinancieros_Contabilidad\bin\$(Configuration)\CapaModelo_EstadosFinancieros_Contabilidad.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CapaControlador_EstadosFinancieros_Contabilidad">
-      <HintPath>..\..\EstadosFinancieros_Contabilidad\CapaControlador_EstadosFinancieros_Contabilidad\bin\$(Configuration)\CapaControlador_EstadosFinancieros_Contabilidad.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework">
       <HintPath>..\packages\MSTest.TestFramework.2.2.10\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
