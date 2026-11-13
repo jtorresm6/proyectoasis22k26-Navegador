@@ -1,4 +1,12 @@
-﻿using System;
+﻿// =====================================================================
+// Autor:       Andre De Jesus Gonzalez Camey
+// Carné:       9959-23-3117
+// Módulo:      Tesorería y Bancos – Enlace con otros módulos
+// Descripción: Repositorio con las consultas ODBC del enlace: lectura de pólizas
+//              bancarias, registro de partidas y envío a Contabilidad.
+// Fecha:       12/11/2026
+// =====================================================================
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;

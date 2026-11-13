@@ -1,4 +1,12 @@
-﻿using System;
+﻿// =====================================================================
+// Autor:       Andre De Jesus Gonzalez Camey
+// Carné:       9959-23-3117
+// Módulo:      Tesorería y Bancos – Enlace con otros módulos
+// Descripción: Clase estática de apoyo visual: paleta Bancario, estilo de tablas y
+//              mensajes estándar (confirmación, éxito y error).
+// Fecha:       12/11/2026
+// =====================================================================
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Data;

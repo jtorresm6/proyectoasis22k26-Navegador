@@ -1,4 +1,14 @@
-﻿using System;
+﻿// =====================================================================
+// Autor:       Andre De Jesus Gonzalez Camey
+// Carné:       9959-23-3117
+// Módulo:      Tesorería y Bancos – Enlace con Contabilidad
+// Descripción: Formulario principal del enlace: consulta pólizas bancarias del período,
+//              genera la partida contable y la envía a Contabilidad. Incluye ayuda y
+//              reporte.
+// Fecha:       12/11/2026
+// =====================================================================
+using System;
+using System.IO;
 using System.Windows.Forms;
 using CapaControlador_EnlaceB;
 using System.Data;
@@ -6,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CapaControlador_Seguridad.Objetos_de_valor;
 using CapaModelo_EnlaceB.Entidades;
+using CapaVista_EnlaceB.frmReportes;
 
 namespace CapaVista_EnlaceB.Formularios
 {
@@ -88,6 +99,31 @@ namespace CapaVista_EnlaceB.Formularios
         private void BancarioMetCerrar(object Remitente, EventArgs Argumentos)
         {
             Close();
+        }
+
+        private void BancarioMetReporte(object Remitente, EventArgs Argumentos)
+        {
+            using (FrmReporteEnlaceContabilidad Reporte = new FrmReporteEnlaceContabilidad())
+            {
+                Reporte.ShowDialog(this);
+            }
+        }
+
+        private void BancarioMetAyuda(object Remitente, EventArgs Argumentos)
+        {
+            DirectoryInfo Directorio = new DirectoryInfo(Application.StartupPath);
+            while (Directorio != null)
+            {
+                string Ruta = Path.Combine(Directorio.FullName, "ayuda", "modulos", "bancos", "BancosAyudas", "BancosAyudas.chm");
+                if (File.Exists(Ruta))
+                {
+                    Help.ShowHelp(this, Ruta, HelpNavigator.Topic, "EnlaceContabilidad_Bancos.htm");
+                    return;
+                }
+                Directorio = Directorio.Parent;
+            }
+            MessageBox.Show("No se encontró el archivo de ayuda del módulo de Bancos.", "Ayuda de enlace con Contabilidad",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BancarioMetLimpiar(object Remitente, EventArgs Argumentos)

@@ -1,3 +1,11 @@
+// =====================================================================
+// Autor:       Andre De Jesus Gonzalez Camey
+// Carné:       9959-23-3117
+// Módulo:      Tesorería y Bancos – Enlace con otros módulos
+// Descripción: Pruebas unitarias del controlador del enlace: consulta, generación y
+//              envío de partidas.
+// Fecha:       12/11/2026
+// =====================================================================
 using System;
 using System.Data;
 using System.Linq;

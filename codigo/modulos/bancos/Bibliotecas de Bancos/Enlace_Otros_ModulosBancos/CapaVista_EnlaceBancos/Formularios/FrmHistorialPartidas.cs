@@ -1,3 +1,11 @@
+// =====================================================================
+// Autor:       Andre De Jesus Gonzalez Camey
+// Carné:       9959-23-3117
+// Módulo:      Tesorería y Bancos – Enlace con Contabilidad
+// Descripción: Formulario que muestra el historial de partidas enviadas a
+//              Contabilidad y su estado.
+// Fecha:       12/11/2026
+// =====================================================================
 using System;
 using System.Windows.Forms;
 using CapaControlador_EnlaceB;

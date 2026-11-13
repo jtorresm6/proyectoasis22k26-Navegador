@@ -1,4 +1,12 @@
-﻿using System;
+﻿// =====================================================================
+// Autor:       Andre De Jesus Gonzalez Camey
+// Carné:       9959-23-3117
+// Módulo:      Tesorería y Bancos – Enlace con otros módulos
+// Descripción: Entidades del enlace: enumeración de módulos destino, contexto de la
+//              partida y datos de la partida contable.
+// Fecha:       12/11/2026
+// =====================================================================
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text.RegularExpressions;

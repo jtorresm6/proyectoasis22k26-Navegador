@@ -14,6 +14,10 @@
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="EnlaceContabilidad_Bancos">
+			<param name="Local" value="EnlaceContabilidad_Bancos.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="MDI_Bancos">
 			<param name="Local" value="MDI_Bancos.html">
 			</OBJECT>
