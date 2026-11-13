@@ -62,6 +62,10 @@
 			<param name="Local" value="CierreBancario_Bancos.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Conciliacion_Bancos">
+			<param name="Local" value="Conciliacion_Bancos.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="GeneracionPagos_Bancos">
 			<param name="Local" value="GeneracionPagos_Bancos.html">
 			</OBJECT>
