@@ -1,0 +1,22 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=..\Facturas.chm
+Contents file=Facturas.hhc
+Default topic=General.html
+Display compile progress=No
+Full-text search=Yes
+Language=0x100a Spanish (Guatemala)
+Title=Ayuda de Facturas
+
+[FILES]
+estilos.css
+General.html
+Manual.html
+Origen.html
+Precios.html
+Guardar.html
+Botones.html
+Errores.html
+imagenes\formulario.png
+imagenes\origen.png
+imagenes\factura.png
