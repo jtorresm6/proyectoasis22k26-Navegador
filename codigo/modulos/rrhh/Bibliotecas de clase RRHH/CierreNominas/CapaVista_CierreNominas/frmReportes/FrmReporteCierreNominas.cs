@@ -24,10 +24,10 @@ namespace CapaVista_Nomina.Reportes
         {
 
             ReportDataSource reportDataSource = new ReportDataSource("DsFilasCierreNominas", AsignacionConceptos.RrhhMetObtenerTodos());
-            RpCierreNominas.LocalReport.ReportEmbeddedResource = "CapaVista_CierreNominas.Reportes.RpCierreNominas.rdlc";
-            RpCierreNominas.LocalReport.DataSources.Clear();
-            RpCierreNominas.LocalReport.DataSources.Add(reportDataSource);
-            this.RpCierreNominas.RefreshReport();
+            RpReporteCierreNominas.LocalReport.ReportEmbeddedResource = "CapaVista_CierreNominas.Reportes.RpReporteCierreNominas.rdlc";
+            RpReporteCierreNominas.LocalReport.DataSources.Clear();
+            RpReporteCierreNominas.LocalReport.DataSources.Add(reportDataSource);
+            this.RpReporteCierreNominas.RefreshReport();
 
      
         }

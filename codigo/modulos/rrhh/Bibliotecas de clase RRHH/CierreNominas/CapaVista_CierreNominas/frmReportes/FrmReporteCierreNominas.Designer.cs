@@ -31,23 +31,23 @@ namespace CapaVista_Nomina.Reportes
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmReporteCierreNominas));
-            this.RpCierreNominas = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.RpReporteCierreNominas = new Microsoft.Reporting.WinForms.ReportViewer();
             this.SuspendLayout();
             // 
-            // RpCierreNominas
+            // RpReporteCierreNominas
             // 
-            this.RpCierreNominas.Location = new System.Drawing.Point(0, 0);
-            this.RpCierreNominas.Name = "RpCierreNominas";
-            this.RpCierreNominas.ServerReport.BearerToken = null;
-            this.RpCierreNominas.Size = new System.Drawing.Size(1405, 602);
-            this.RpCierreNominas.TabIndex = 0;
+            this.RpReporteCierreNominas.Location = new System.Drawing.Point(0, 0);
+            this.RpReporteCierreNominas.Name = "RpReporteCierreNominas";
+            this.RpReporteCierreNominas.ServerReport.BearerToken = null;
+            this.RpReporteCierreNominas.Size = new System.Drawing.Size(1405, 602);
+            this.RpReporteCierreNominas.TabIndex = 0;
             // 
             // FrmReporteCierreNominas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1404, 555);
-            this.Controls.Add(this.RpCierreNominas);
+            this.Controls.Add(this.RpReporteCierreNominas);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -61,6 +61,6 @@ namespace CapaVista_Nomina.Reportes
 
         #endregion
 
-        private Microsoft.Reporting.WinForms.ReportViewer RpCierreNominas;
+        private Microsoft.Reporting.WinForms.ReportViewer RpReporteCierreNominas;
     }
 }
