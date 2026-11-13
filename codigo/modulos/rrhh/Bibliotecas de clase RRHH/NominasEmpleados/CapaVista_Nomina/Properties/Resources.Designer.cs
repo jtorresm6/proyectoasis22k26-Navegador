@@ -83,6 +83,16 @@ namespace CapaVista_Nomina.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap boton_consultar_sin_bordes1 {
+            get {
+                object obj = ResourceManager.GetObject("boton_consultar_sin_bordes1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boton_eliminar_sin_bordes {
             get {
                 object obj = ResourceManager.GetObject("boton_eliminar_sin_bordes", resourceCulture);
@@ -173,6 +183,16 @@ namespace CapaVista_Nomina.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_ayuda {
+            get {
+                object obj = ResourceManager.GetObject("btn_ayuda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_cierres_diseno {
             get {
                 object obj = ResourceManager.GetObject("btn_cierres_diseno", resourceCulture);
@@ -213,9 +233,29 @@ namespace CapaVista_Nomina.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_nomina {
+            get {
+                object obj = ResourceManager.GetObject("btn_nomina", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_permisos_diseno {
             get {
                 object obj = ResourceManager.GetObject("btn_permisos_diseno", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Icn_TotalDeducciones {
+            get {
+                object obj = ResourceManager.GetObject("Icn_TotalDeducciones", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -246,6 +286,36 @@ namespace CapaVista_Nomina.Properties {
         internal static System.Drawing.Bitmap mascota {
             get {
                 object obj = ResourceManager.GetObject("mascota", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mascota1 {
+            get {
+                object obj = ResourceManager.GetObject("mascota1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pb_Nominas {
+            get {
+                object obj = ResourceManager.GetObject("pb_Nominas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pb_percepcion {
+            get {
+                object obj = ResourceManager.GetObject("pb_percepcion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

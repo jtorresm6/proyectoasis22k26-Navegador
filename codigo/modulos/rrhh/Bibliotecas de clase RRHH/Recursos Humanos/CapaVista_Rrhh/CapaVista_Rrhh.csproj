@@ -34,6 +34,9 @@
     <Reference Include="CapaControlador_Rrhh">
       <HintPath>..\CapaControlador_Rrhh\bin\Debug\CapaControlador_Rrhh.dll</HintPath>
     </Reference>
+    <Reference Include="CapaVista_AsigCapacitacion">
+      <HintPath>..\..\AsigCapacitacion\CapaVista_AsigCapacitacion\bin\Debug\CapaVista_AsigCapacitacion.dll</HintPath>
+    </Reference>
     <Reference Include="CapaVista_Asistencia">
       <HintPath>..\..\Asistencia\CapaVista_Asistencia\bin\Debug\CapaVista_Asistencia.dll</HintPath>
     </Reference>
@@ -41,7 +44,7 @@
       <HintPath>..\..\Cierre de Nominas\CapaVista_CierreNominas\bin\Debug\CapaVista_CierreNominas.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_EvaluacionDesempeño">
-      <HintPath>..\..\EvaluacionDesempeño\CapaVista_EvaluacionDesempeño\bin\Debug\CapaVista_EvaluacionDesempeño.dll</HintPath>
+      <HintPath>..\..\EvaluacionDesempeno\CapaVista_EvaluacionDesempeño\bin\Debug\CapaVista_EvaluacionDesempeño.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Empleado">
       <HintPath>..\..\Empleados\CapaVista_Empleado\bin\Debug\CapaVista_Empleado.dll</HintPath>
@@ -54,6 +57,10 @@
     </Reference>
     <Reference Include="CapaVista_PermisosVacaciones">
       <HintPath>..\..\PermisosVacaciones\CapaVista_PermisosVacaciones\bin\Debug\CapaVista_PermisosVacaciones.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Seguridad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -95,6 +102,8 @@
     <None Include="Resources\btn_ayuda.png" />
     <None Include="Resources\btn_capacitaciones.png" />
     <None Include="Resources\btn_capacitaciones_diseno.png" />
+    <None Include="Resources\btn_catalogos.png" />
+    <None Include="Resources\btn_catalogos_diseno.png" />
     <None Include="Resources\btn_cerrarsesion.png" />
     <None Include="Resources\btn_cerrarsesion_diseno.png" />
     <None Include="Resources\btn_cierres.png" />
@@ -125,4 +134,4 @@
     <Folder Include="Ayudas\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-</Project>
+</Project>

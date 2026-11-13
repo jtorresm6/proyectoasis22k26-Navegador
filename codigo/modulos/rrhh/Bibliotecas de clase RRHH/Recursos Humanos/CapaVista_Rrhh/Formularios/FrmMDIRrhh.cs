@@ -7,7 +7,8 @@
  * ==================================================================
  * Propósito :
  *  Formulario MDI (menú de inicio) del módulo de Recursos Humanos.
- *  Tiene el menú lateral con las opciones del módulo, la barra de
+ *  Tiene el menú lateral con los procesos del módulo y el desplegable
+ *  de Catálogos (las ventanas que usan el Navegador), la barra de
  *  arriba con el usuario y el rol, y el panel de bienvenida con el
  *  resumen de indicadores (KPIs), la información del módulo y la
  *  nota de acceso por perfil. Es la única ventana del módulo que se puede
@@ -21,10 +22,14 @@
  * ===================================================================
 */
 
+using CapaVista_AsigCapacitacion.Formularios;
 using CapaVista_CierreNominas.Formularios;
 using CapaVista_Empleado.Formularios;
 using CapaVista_EvaluacionDesempeño.Formularios;
+using CapaVista_Liquidacion_Rrhh.Formularios;
 using CapaVista_Nomina.Formularios;
+using CapaVista_Seguridad;
+using CapaVista_PermisosVacaciones.Formularios;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -36,6 +41,7 @@ namespace CapaVista_Rrhh.Formularios
 {
     public partial class FrmMDIRrhh : Form
     {
+
         private bool _NavegadorColapsado;
         private int _AnchoNavegador;
 
@@ -52,10 +58,18 @@ namespace CapaVista_Rrhh.Formularios
         private readonly Dictionary<Control, KeyValuePair<Rectangle, Font>> _Originales =
             new Dictionary<Control, KeyValuePair<Rectangle, Font>>();
 
+        // Inicio cambio - Byron Alexander Chiquito Paredes - 0901-23-3747
+        private bool _CatalogosAbierto;
+        private readonly Dictionary<Button, int> _BotonesCatalogos = new Dictionary<Button, int>();
+        // Fin cambio - Byron Alexander Chiquito Paredes - 0901-23-3747
+
         public FrmMDIRrhh()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
+            RrhhMetCrearCatalogos();
+            RrhhPnlNavegador.Scroll += (Remitente, Evento) => RrhhPnlNavegador.Invalidate(true);
+            RrhhPnlNavegador.MouseWheel += (Remitente, Evento) => RrhhPnlNavegador.Invalidate(true);
             this.Load += FrmMDIRrhh_Load;
         }
 
@@ -301,14 +315,13 @@ namespace CapaVista_Rrhh.Formularios
         {
             var Iconos = new Dictionary<Button, Image>
             {
-                { RrhhBtnEmpleados, Properties.Resources.btn_empleados },
                 { RrhhBtnAsistencia, Properties.Resources.btn_asistencia },
-                { RrhhBtnPermisosVacaciones, Properties.Resources.btn_permisos },
-                { RrhhBtnCapacitaciones, Properties.Resources.btn_capacitaciones },
+                { RrhhBtnAsigCapacitacion, Properties.Resources.btn_capacitaciones },
                 { RrhhBtnEvaluacionDesempeno, Properties.Resources.btn_evaluacion },
                 { RrhhBtnNomina, Properties.Resources.btn_nomina },
                 { RrhhBtnCierresNomina, Properties.Resources.btn_cierres },
                 { RrhhBtnLiquidacion, Properties.Resources.btn_liquidacion },
+                { RrhhBtnCatalogos, Properties.Resources.btn_catalogos },
                 { RrhhBtnCerrarSesion, Properties.Resources.btn_cerrarsesion }
             };
 
@@ -348,15 +361,14 @@ namespace CapaVista_Rrhh.Formularios
         {
             var MapaBotonesMDI = new Dictionary<Button, int>
             {
-                { RrhhBtnEmpleados, 0 },
                 { RrhhBtnAsistencia, 0 },
-                { RrhhBtnPermisosVacaciones, 0 },
-                { RrhhBtnCapacitaciones, 0 },
+                { RrhhBtnAsigCapacitacion, 0 },
                 { RrhhBtnEvaluacionDesempeno, 0 },
                 { RrhhBtnNomina, 0 },
                 { RrhhBtnCierresNomina, 0 },
                 { RrhhBtnLiquidacion, 0 }
             };
+            foreach (var Par in _BotonesCatalogos) MapaBotonesMDI[Par.Key] = Par.Value;
 
             foreach (var Par in MapaBotonesMDI)
             {
@@ -428,6 +440,7 @@ namespace CapaVista_Rrhh.Formularios
         private void RrhhPnlNavegador_Resize(object sender, EventArgs e)
         {
             RrhhPnlNavegador.Region = new Region(RrhhMetRedondearEsquinas(RrhhPnlNavegador.ClientRectangle, 22));
+            RrhhMetAcomodarCatalogos();
         }
 
         private void RrhhPnlNavegador_Paint(object sender, PaintEventArgs e)
@@ -481,23 +494,158 @@ namespace CapaVista_Rrhh.Formularios
             if (Colapsar)
             {
                 _AnchoNavegador = RrhhPnlNavegador.Width;
-                RrhhPnlNavegador.Width = RrhhBtnEmpleados.Left + RrhhBtnEmpleados.Padding.Left
-                    + RrhhBtnEmpleados.Image.Width + 18;
+                RrhhPnlNavegador.Width = RrhhBtnAsistencia.Left + RrhhBtnAsistencia.Padding.Left
+                    + RrhhBtnAsistencia.Image.Width + 18;
             }
             else
             {
                 RrhhPnlNavegador.Width = _AnchoNavegador;
             }
             RrhhPbLogo.Visible = !Colapsar;
+            if (Colapsar) _CatalogosAbierto = false;
 
             foreach (Control Boton in RrhhPnlNavegador.Controls)
             {
                 if (Boton is Button) Boton.Text = Colapsar ? "" : (string)Boton.Tag;
             }
 
+            RrhhMetAcomodarCatalogos();
             RrhhPnlNavegador.ResumeLayout();
             this.ResumeLayout();
         }
+
+
+        // Inicio cambio - Byron Alexander Chiquito Paredes - 0901-23-3747
+        // Ventanas de RRHH que usan el Navegador; se abren desde el desplegable de Catálogos.
+        private void RrhhMetCrearCatalogos()
+        {
+            var Catalogos = new List<Tuple<string, int, Func<Form>>>
+            {
+
+                Tuple.Create<string, int, Func<Form>>("Empleados", 4, () => new CapaVista_Seguridad.FrmEmpleadosNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Departamentos", 9002, () => new FrmDepartamentosNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Tipos de Puesto", 9005, () => new FrmTipoPuestosNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Puestos", 9004, () => new FrmPuestosNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Jornadas", 9003, () => new FrmJornadasNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Asignación de Puestos", 9006, () => new FrmAsigPuestosNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Permisos", 9202, () => new FrmPermisos()),
+                Tuple.Create<string, int, Func<Form>>("Vacaciones", 9203, () => new FrmVacaciones()),
+                Tuple.Create<string, int, Func<Form>>("Capacitaciones", 9302, () => new FrmCapacitacionesNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Instructores", 9303, () => new FrmInstructoresNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Evaluación de Capacitación", 9304, () => new FrmEvaluacionNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Evaluación de Desempeño", 9402, () => new FrmRealizarEvaluacion()),
+                Tuple.Create<string, int, Func<Form>>("Motivos de Baja", 9702, () => new FrmMotivoBajaNavegador()),
+                Tuple.Create<string, int, Func<Form>>("Parámetros de Ley", 9703, () => new FrmParametrosLeyNavegador())
+            };
+
+            foreach (var Catalogo in Catalogos)
+            {
+                Func<Form> Crear = Catalogo.Item3;
+                Button Boton = new Button
+                {
+                    Name = "RrhhBtnCatalogo" + Catalogo.Item2,
+                    Text = Catalogo.Item1,
+                    Tag = Catalogo.Item1,
+                    Size = new Size(234, 34),
+                    Margin = new Padding(16, 0, 0, 4),
+                    Padding = new Padding(10, 0, 0, 0),
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    FlatStyle = FlatStyle.Flat,
+                    BackColor = Color.FromArgb(110, 31, 138, 143),
+                    ForeColor = Color.White,
+                    Font = new Font("Lucida Fax", 9F, FontStyle.Regular),
+                    Cursor = Cursors.Hand,
+                    UseVisualStyleBackColor = false
+                };
+                Boton.FlatAppearance.BorderSize = 0;
+                Boton.FlatAppearance.MouseDownBackColor = RrhhBtnCatalogos.FlatAppearance.MouseDownBackColor;
+                Boton.FlatAppearance.MouseOverBackColor = RrhhBtnCatalogos.FlatAppearance.MouseOverBackColor;
+                Boton.MouseEnter += RrhhBtnMenu_MouseEnter;
+                Boton.MouseLeave += RrhhBtnMenu_MouseLeave;
+                Boton.Click += (Remitente, Evento) =>
+                {
+                    using (Form Ventana = Crear()) Ventana.ShowDialog(this);
+                };
+                Boton.Region = new Region(RrhhMetRedondearEsquinas(new Rectangle(Point.Empty, Boton.Size), 8));
+                RrhhFlpCatalogos.Controls.Add(Boton);
+                _BotonesCatalogos.Add(Boton, Catalogo.Item2);
+            }
+        }
+
+        private void RrhhBtnCatalogos_Click(object sender, EventArgs e)
+        {
+            // con el menú contraído primero se expande para que se vean los catálogos
+            if (_NavegadorColapsado) RrhhBtnBurger_Click(RrhhBtnBurger, EventArgs.Empty);
+            _CatalogosAbierto = !_CatalogosAbierto;
+            RrhhMetAcomodarCatalogos();
+        }
+
+        // Muestra u oculta los catálogos y baja Cerrar Sesión. Si no caben en la pantalla,
+        // el menú lateral se puede desplazar hacia abajo.
+        private void RrhhMetAcomodarCatalogos()
+        {
+            if (RrhhFlpCatalogos == null) return;
+            if (!_CatalogosAbierto && RrhhPnlNavegador.AutoScroll)
+            {
+                RrhhPnlNavegador.AutoScrollPosition = Point.Empty;
+                RrhhMetActivarDesplazamiento(false);
+            }
+
+            int Separacion = RrhhBtnCatalogos.Top - RrhhBtnLiquidacion.Bottom;
+            int TopLista = RrhhBtnCatalogos.Bottom + Separacion;
+
+            if (_CatalogosAbierto)
+            {
+                int AltoContenido = 0;
+                foreach (Control Boton in RrhhFlpCatalogos.Controls) AltoContenido += Boton.Height + Boton.Margin.Vertical;
+                RrhhFlpCatalogos.SetBounds(RrhhBtnCatalogos.Left, TopLista, RrhhFlpCatalogos.Width, AltoContenido);
+                RrhhFlpCatalogos.Visible = true;
+                RrhhBtnCerrarSesion.Top = RrhhFlpCatalogos.Bottom + Separacion;
+                RrhhMetActivarDesplazamiento(RrhhBtnCerrarSesion.Bottom + Separacion > RrhhPnlNavegador.ClientSize.Height);
+            }
+            else
+            {
+                RrhhFlpCatalogos.Visible = false;
+                RrhhBtnCerrarSesion.Top = TopLista;
+            }
+            RrhhBtnCatalogos.Invalidate();
+        }
+
+        // Cuando el menú necesita barra de desplazamiento, los botones se angostan lo que mide la
+        // barra; así nunca sale la barra horizontal.
+        private void RrhhMetActivarDesplazamiento(bool Activar)
+        {
+            if (RrhhPnlNavegador.AutoScroll == Activar) return;
+            int Ancho = RrhhBtnAsistencia.Width + (Activar ? -SystemInformation.VerticalScrollBarWidth : SystemInformation.VerticalScrollBarWidth);
+            foreach (Control Boton in RrhhPnlNavegador.Controls)
+            {
+                if (!(Boton is Button)) continue;
+                Boton.Width = Ancho;
+                Boton.Region = new Region(RrhhMetRedondearEsquinas(Boton.ClientRectangle, 10));
+            }
+            RrhhFlpCatalogos.Width = Ancho;
+            foreach (Control Boton in RrhhFlpCatalogos.Controls)
+            {
+                Boton.Width = Ancho - Boton.Margin.Horizontal;
+                Boton.Region = new Region(RrhhMetRedondearEsquinas(Boton.ClientRectangle, 8));
+            }
+            RrhhPnlNavegador.AutoScroll = Activar;
+        }
+
+        // Flecha a la derecha de Catálogos: hacia abajo si está abierto.
+        private void RrhhBtnCatalogos_Paint(object sender, PaintEventArgs e)
+        {
+            // con el menú contraído solo se ve el icono del libro, sin la flecha
+            if (_NavegadorColapsado) return;
+            int X = RrhhBtnCatalogos.Width - 26;
+            int Y = RrhhBtnCatalogos.Height / 2;
+            Point[] Flecha = _CatalogosAbierto
+                ? new[] { new Point(X, Y - 3), new Point(X + 10, Y - 3), new Point(X + 5, Y + 4) }
+                : new[] { new Point(X + 2, Y - 6), new Point(X + 2, Y + 6), new Point(X + 9, Y) };
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            using (SolidBrush Pincel = new SolidBrush(RrhhBtnCatalogos.ForeColor)) e.Graphics.FillPolygon(Pincel, Flecha);
+        }
+        // Fin cambio - Byron Alexander Chiquito Paredes - 0901-23-3747
 
         private void RrhhBtnAsistencia_Click(object sender, EventArgs e)
         {
@@ -521,12 +669,6 @@ namespace CapaVista_Rrhh.Formularios
             }
         }
 
-        private void RrhhBtnEmpleados_Click(object sender, EventArgs e)
-        {
-            FrmEmpleados Empleados = new FrmEmpleados();
-            Empleados.ShowDialog(this);
-        }
-
         private void RrhhBtnCierresNomina_Click(object sender, EventArgs e)
         {
             FrmCierreNominas CierreNominas = new FrmCierreNominas();
@@ -535,23 +677,20 @@ namespace CapaVista_Rrhh.Formularios
 
         private void RrhhBtnNomina_Click(object sender, EventArgs e)
         {
-            FrmPercepcionesDeducciones Percepciones = new FrmPercepcionesDeducciones();
-            Percepciones.ShowDialog(this);
+            FrmNominaEmpleado Nomina = new FrmNominaEmpleado();
+            Nomina.ShowDialog(this);
         }
 
-        private void RrhhBtnCapacitaciones_Click(object sender, EventArgs e)
+        // Inicio cambio - Byron Alexander Chiquito Paredes - 0901-23-3747
+        // Las ventanas con Navegador de Capacitaciones están en Catálogos; aquí queda la asignación.
+        private void RrhhBtnAsigCapacitacion_Click(object sender, EventArgs e)
         {
-            FrmCapacitacion Capacitacion = new FrmCapacitacion();
-            Capacitacion.ShowDialog(this);
-        }
-
-        private void RrhhBtnPermisosVacaciones_Click(object sender, EventArgs e)
-        {
-            using (var Permisos = new CapaVista_PermisosVacaciones.Formularios.FrmPermisosVacaciones())
+            using (var AsigCapacitacion = new FrmAsigCapacitacion())
             {
-                Permisos.ShowDialog(this);
+                AsigCapacitacion.ShowDialog(this);
             }
         }
+        // Fin cambio - Byron Alexander Chiquito Paredes - 0901-23-3747
 
         private void RrhhBtnEvaluacionDesempeno_Click(object sender, EventArgs e)
         {

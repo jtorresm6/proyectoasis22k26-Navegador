@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CapaModelo_Nomina.Contratos
 {
-    public interface IRepositorioGenerico<Entidad> where Entidad : class
+    public interface IRepositorioGenerico <Entidad> where Entidad : class
     {
         int RrhhMetAgregar(Entidad Entidad);
         int RrhhMetEditar(Entidad Entidad);

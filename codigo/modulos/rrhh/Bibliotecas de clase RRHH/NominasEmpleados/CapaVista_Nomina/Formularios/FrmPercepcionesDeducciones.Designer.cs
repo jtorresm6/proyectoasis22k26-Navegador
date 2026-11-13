@@ -30,31 +30,30 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPercepcionesDeducciones));
             this.RrhhPnlDatosInfoConcep = new System.Windows.Forms.Panel();
-            this.RrhhDedCboPais = new System.Windows.Forms.ComboBox();
-            this.RrhhDedChkEfecto = new System.Windows.Forms.CheckBox();
-            this.RrhhDedCboPeriodo = new System.Windows.Forms.ComboBox();
+            this.RrhhCboEfecto = new System.Windows.Forms.ComboBox();
+            this.RrhhCboPeriodo = new System.Windows.Forms.ComboBox();
             this.RrhhLblEfecto = new System.Windows.Forms.Label();
+            this.RrhhCboTipoCalculo = new System.Windows.Forms.ComboBox();
             this.RrhhLblPeriodo = new System.Windows.Forms.Label();
-            this.RrhhLblPais = new System.Windows.Forms.Label();
-            this.RrhhDedTxtNombreConcepto = new System.Windows.Forms.TextBox();
+            this.RrhhTxtNombreConcepto = new System.Windows.Forms.TextBox();
             this.RrhhLblNombreConcepto = new System.Windows.Forms.Label();
-            this.RrhhPnlInfoConfiCalculo = new System.Windows.Forms.Panel();
-            this.RrhhDedCboActivo = new System.Windows.Forms.CheckBox();
-            this.RrhhLblActivo = new System.Windows.Forms.Label();
-            this.RrhhDedTxtValor = new System.Windows.Forms.TextBox();
-            this.RrhhDedCboTipoCalculo = new System.Windows.Forms.ComboBox();
-            this.RrhhLblAplicacion = new System.Windows.Forms.Label();
-            this.RrhhDedClbAplicacion = new System.Windows.Forms.CheckedListBox();
-            this.RrhhLblValor = new System.Windows.Forms.Label();
             this.RrhhLblTipoCalculo = new System.Windows.Forms.Label();
+            this.RrhhPnlInfoConfiCalculo = new System.Windows.Forms.Panel();
+            this.RrhhCboActivo = new System.Windows.Forms.CheckBox();
+            this.RrhhLblActivo = new System.Windows.Forms.Label();
+            this.RrhhTxtValor = new System.Windows.Forms.TextBox();
+            this.RrhhLblAplicacion = new System.Windows.Forms.Label();
+            this.RrhhClbAplicacion = new System.Windows.Forms.CheckedListBox();
+            this.RrhhLblValor = new System.Windows.Forms.Label();
             this.RrhhPnlInfoTablaNomina = new System.Windows.Forms.Panel();
             this.RrhhLblAsignacionExcepcion = new System.Windows.Forms.Label();
             this.RrhhLblAccedeCalculoNomina = new System.Windows.Forms.Label();
-            this.RrhhBtnExcepciones = new System.Windows.Forms.Button();
-            this.RrhhBtnNomina = new System.Windows.Forms.Button();
-            this.RrhhDgvLista = new System.Windows.Forms.DataGridView();
+            this.RrhhBtnRangos = new System.Windows.Forms.Button();
+            this.RrhhBtnAsignacionConceptos = new System.Windows.Forms.Button();
+            this.RrhhDgvListaConceptos = new System.Windows.Forms.DataGridView();
             this.RrhhLblConsultaGeneral = new System.Windows.Forms.Label();
             this.RrhhTxtBuscar = new System.Windows.Forms.TextBox();
+            this.RrhhDedBtnAyuda = new System.Windows.Forms.Button();
             this.RrhhBtnConsultar = new System.Windows.Forms.Button();
             this.RrhhPnlConceptoRegistrados = new System.Windows.Forms.Panel();
             this.RrhhLblConceptoRegistrado = new System.Windows.Forms.Label();
@@ -82,11 +81,11 @@
             this.RrhhPbDonButti = new System.Windows.Forms.PictureBox();
             this.RrhhLblSubtituloGestion = new System.Windows.Forms.Label();
             this.RrhhLblPercepDeducciones = new System.Windows.Forms.Label();
-            this.RrhhDedPbIconoPerDed = new System.Windows.Forms.PictureBox();
+            this.RrhhPbIconoPerDed = new System.Windows.Forms.PictureBox();
             this.RrhhPnlDatosInfoConcep.SuspendLayout();
             this.RrhhPnlInfoConfiCalculo.SuspendLayout();
             this.RrhhPnlInfoTablaNomina.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RrhhDgvLista)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RrhhDgvListaConceptos)).BeginInit();
             this.RrhhPnlConceptoRegistrados.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconoConsultas)).BeginInit();
             this.RrhhPnlTablaNominas.SuspendLayout();
@@ -97,94 +96,81 @@
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconInforme)).BeginInit();
             this.RrhhPnlPercepcionDeducciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbDonButti)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RrhhDedPbIconoPerDed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconoPerDed)).BeginInit();
             this.SuspendLayout();
             // 
             // RrhhPnlDatosInfoConcep
             // 
             this.RrhhPnlDatosInfoConcep.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhDedCboPais);
-            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhDedChkEfecto);
-            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhDedCboPeriodo);
+            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhCboEfecto);
+            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhCboPeriodo);
             this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhLblEfecto);
+            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhCboTipoCalculo);
             this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhLblPeriodo);
-            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhLblPais);
-            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhDedTxtNombreConcepto);
+            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhTxtNombreConcepto);
             this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhLblNombreConcepto);
+            this.RrhhPnlDatosInfoConcep.Controls.Add(this.RrhhLblTipoCalculo);
             this.RrhhPnlDatosInfoConcep.Location = new System.Drawing.Point(12, 295);
             this.RrhhPnlDatosInfoConcep.Name = "RrhhPnlDatosInfoConcep";
             this.RrhhPnlDatosInfoConcep.Size = new System.Drawing.Size(500, 283);
             this.RrhhPnlDatosInfoConcep.TabIndex = 11;
             // 
-            // RrhhDedCboPais
+            // RrhhCboEfecto
             // 
-            this.RrhhDedCboPais.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhDedCboPais.FormattingEnabled = true;
-            this.RrhhDedCboPais.Location = new System.Drawing.Point(199, 133);
-            this.RrhhDedCboPais.Name = "RrhhDedCboPais";
-            this.RrhhDedCboPais.Size = new System.Drawing.Size(284, 31);
-            this.RrhhDedCboPais.TabIndex = 10;
+            this.RrhhCboEfecto.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhCboEfecto.FormattingEnabled = true;
+            this.RrhhCboEfecto.Location = new System.Drawing.Point(199, 189);
+            this.RrhhCboEfecto.Name = "RrhhCboEfecto";
+            this.RrhhCboEfecto.Size = new System.Drawing.Size(284, 31);
+            this.RrhhCboEfecto.TabIndex = 11;
             // 
-            // RrhhDedChkEfecto
+            // RrhhCboPeriodo
             // 
-            this.RrhhDedChkEfecto.AutoSize = true;
-            this.RrhhDedChkEfecto.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhDedChkEfecto.Location = new System.Drawing.Point(199, 235);
-            this.RrhhDedChkEfecto.Name = "RrhhDedChkEfecto";
-            this.RrhhDedChkEfecto.Size = new System.Drawing.Size(115, 27);
-            this.RrhhDedChkEfecto.TabIndex = 9;
-            this.RrhhDedChkEfecto.Text = "Percepción";
-            this.RrhhDedChkEfecto.UseVisualStyleBackColor = true;
-            // 
-            // RrhhDedCboPeriodo
-            // 
-            this.RrhhDedCboPeriodo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhDedCboPeriodo.FormattingEnabled = true;
-            this.RrhhDedCboPeriodo.Location = new System.Drawing.Point(199, 186);
-            this.RrhhDedCboPeriodo.Name = "RrhhDedCboPeriodo";
-            this.RrhhDedCboPeriodo.Size = new System.Drawing.Size(284, 31);
-            this.RrhhDedCboPeriodo.TabIndex = 8;
+            this.RrhhCboPeriodo.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhCboPeriodo.FormattingEnabled = true;
+            this.RrhhCboPeriodo.Location = new System.Drawing.Point(199, 133);
+            this.RrhhCboPeriodo.Name = "RrhhCboPeriodo";
+            this.RrhhCboPeriodo.Size = new System.Drawing.Size(284, 31);
+            this.RrhhCboPeriodo.TabIndex = 8;
             // 
             // RrhhLblEfecto
             // 
             this.RrhhLblEfecto.AutoSize = true;
             this.RrhhLblEfecto.Font = new System.Drawing.Font("Tahoma", 9.5F);
             this.RrhhLblEfecto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblEfecto.Location = new System.Drawing.Point(18, 233);
+            this.RrhhLblEfecto.Location = new System.Drawing.Point(17, 194);
             this.RrhhLblEfecto.Name = "RrhhLblEfecto";
             this.RrhhLblEfecto.Size = new System.Drawing.Size(58, 19);
             this.RrhhLblEfecto.TabIndex = 6;
             this.RrhhLblEfecto.Text = "Efecto:";
+            // 
+            // RrhhCboTipoCalculo
+            // 
+            this.RrhhCboTipoCalculo.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhCboTipoCalculo.FormattingEnabled = true;
+            this.RrhhCboTipoCalculo.Location = new System.Drawing.Point(199, 237);
+            this.RrhhCboTipoCalculo.Name = "RrhhCboTipoCalculo";
+            this.RrhhCboTipoCalculo.Size = new System.Drawing.Size(284, 31);
+            this.RrhhCboTipoCalculo.TabIndex = 13;
             // 
             // RrhhLblPeriodo
             // 
             this.RrhhLblPeriodo.AutoSize = true;
             this.RrhhLblPeriodo.Font = new System.Drawing.Font("Tahoma", 9.5F);
             this.RrhhLblPeriodo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblPeriodo.Location = new System.Drawing.Point(18, 189);
+            this.RrhhLblPeriodo.Location = new System.Drawing.Point(18, 138);
             this.RrhhLblPeriodo.Name = "RrhhLblPeriodo";
             this.RrhhLblPeriodo.Size = new System.Drawing.Size(69, 19);
             this.RrhhLblPeriodo.TabIndex = 5;
             this.RrhhLblPeriodo.Text = "Periodo:";
             // 
-            // RrhhLblPais
+            // RrhhTxtNombreConcepto
             // 
-            this.RrhhLblPais.AutoSize = true;
-            this.RrhhLblPais.Font = new System.Drawing.Font("Tahoma", 9.5F);
-            this.RrhhLblPais.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblPais.Location = new System.Drawing.Point(18, 140);
-            this.RrhhLblPais.Name = "RrhhLblPais";
-            this.RrhhLblPais.Size = new System.Drawing.Size(43, 19);
-            this.RrhhLblPais.TabIndex = 4;
-            this.RrhhLblPais.Text = "Pais:";
-            // 
-            // RrhhDedTxtNombreConcepto
-            // 
-            this.RrhhDedTxtNombreConcepto.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhDedTxtNombreConcepto.Location = new System.Drawing.Point(199, 79);
-            this.RrhhDedTxtNombreConcepto.Name = "RrhhDedTxtNombreConcepto";
-            this.RrhhDedTxtNombreConcepto.Size = new System.Drawing.Size(284, 30);
-            this.RrhhDedTxtNombreConcepto.TabIndex = 3;
+            this.RrhhTxtNombreConcepto.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhTxtNombreConcepto.Location = new System.Drawing.Point(199, 79);
+            this.RrhhTxtNombreConcepto.Name = "RrhhTxtNombreConcepto";
+            this.RrhhTxtNombreConcepto.Size = new System.Drawing.Size(284, 30);
+            this.RrhhTxtNombreConcepto.TabIndex = 3;
             // 
             // RrhhLblNombreConcepto
             // 
@@ -197,115 +183,104 @@
             this.RrhhLblNombreConcepto.TabIndex = 2;
             this.RrhhLblNombreConcepto.Text = "Nombre del concepto:";
             // 
+            // RrhhLblTipoCalculo
+            // 
+            this.RrhhLblTipoCalculo.AutoSize = true;
+            this.RrhhLblTipoCalculo.Font = new System.Drawing.Font("Tahoma", 9.5F);
+            this.RrhhLblTipoCalculo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
+            this.RrhhLblTipoCalculo.Location = new System.Drawing.Point(17, 242);
+            this.RrhhLblTipoCalculo.Name = "RrhhLblTipoCalculo";
+            this.RrhhLblTipoCalculo.Size = new System.Drawing.Size(122, 19);
+            this.RrhhLblTipoCalculo.TabIndex = 10;
+            this.RrhhLblTipoCalculo.Text = "Tipo de calculo:";
+            // 
             // RrhhPnlInfoConfiCalculo
             // 
             this.RrhhPnlInfoConfiCalculo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhDedCboActivo);
+            this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhCboActivo);
             this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhLblActivo);
-            this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhDedTxtValor);
-            this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhDedCboTipoCalculo);
+            this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhTxtValor);
             this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhLblAplicacion);
-            this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhDedClbAplicacion);
+            this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhClbAplicacion);
             this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhLblValor);
-            this.RrhhPnlInfoConfiCalculo.Controls.Add(this.RrhhLblTipoCalculo);
             this.RrhhPnlInfoConfiCalculo.Location = new System.Drawing.Point(518, 295);
             this.RrhhPnlInfoConfiCalculo.Name = "RrhhPnlInfoConfiCalculo";
             this.RrhhPnlInfoConfiCalculo.Size = new System.Drawing.Size(500, 283);
             this.RrhhPnlInfoConfiCalculo.TabIndex = 12;
             // 
-            // RrhhDedCboActivo
+            // RrhhCboActivo
             // 
-            this.RrhhDedCboActivo.AutoSize = true;
-            this.RrhhDedCboActivo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhDedCboActivo.Location = new System.Drawing.Point(301, 219);
-            this.RrhhDedCboActivo.Name = "RrhhDedCboActivo";
-            this.RrhhDedCboActivo.Size = new System.Drawing.Size(45, 27);
-            this.RrhhDedCboActivo.TabIndex = 17;
-            this.RrhhDedCboActivo.Text = "Sí";
-            this.RrhhDedCboActivo.UseVisualStyleBackColor = true;
+            this.RrhhCboActivo.AutoSize = true;
+            this.RrhhCboActivo.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhCboActivo.Location = new System.Drawing.Point(182, 239);
+            this.RrhhCboActivo.Name = "RrhhCboActivo";
+            this.RrhhCboActivo.Size = new System.Drawing.Size(45, 27);
+            this.RrhhCboActivo.TabIndex = 17;
+            this.RrhhCboActivo.Text = "Sí";
+            this.RrhhCboActivo.UseVisualStyleBackColor = true;
             // 
             // RrhhLblActivo
             // 
             this.RrhhLblActivo.AutoSize = true;
             this.RrhhLblActivo.Font = new System.Drawing.Font("Tahoma", 9.5F);
             this.RrhhLblActivo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblActivo.Location = new System.Drawing.Point(236, 221);
+            this.RrhhLblActivo.Location = new System.Drawing.Point(17, 243);
             this.RrhhLblActivo.Name = "RrhhLblActivo";
             this.RrhhLblActivo.Size = new System.Drawing.Size(59, 19);
             this.RrhhLblActivo.TabIndex = 16;
             this.RrhhLblActivo.Text = "Activo:";
             // 
-            // RrhhDedTxtValor
+            // RrhhTxtValor
             // 
-            this.RrhhDedTxtValor.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhDedTxtValor.Location = new System.Drawing.Point(185, 144);
-            this.RrhhDedTxtValor.Name = "RrhhDedTxtValor";
-            this.RrhhDedTxtValor.Size = new System.Drawing.Size(284, 30);
-            this.RrhhDedTxtValor.TabIndex = 14;
-            // 
-            // RrhhDedCboTipoCalculo
-            // 
-            this.RrhhDedCboTipoCalculo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhDedCboTipoCalculo.FormattingEnabled = true;
-            this.RrhhDedCboTipoCalculo.Location = new System.Drawing.Point(185, 89);
-            this.RrhhDedCboTipoCalculo.Name = "RrhhDedCboTipoCalculo";
-            this.RrhhDedCboTipoCalculo.Size = new System.Drawing.Size(284, 31);
-            this.RrhhDedCboTipoCalculo.TabIndex = 13;
+            this.RrhhTxtValor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhTxtValor.Location = new System.Drawing.Point(182, 81);
+            this.RrhhTxtValor.Name = "RrhhTxtValor";
+            this.RrhhTxtValor.Size = new System.Drawing.Size(284, 30);
+            this.RrhhTxtValor.TabIndex = 14;
             // 
             // RrhhLblAplicacion
             // 
             this.RrhhLblAplicacion.AutoSize = true;
             this.RrhhLblAplicacion.Font = new System.Drawing.Font("Tahoma", 9.5F);
             this.RrhhLblAplicacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblAplicacion.Location = new System.Drawing.Point(17, 221);
+            this.RrhhLblAplicacion.Location = new System.Drawing.Point(17, 164);
             this.RrhhLblAplicacion.Name = "RrhhLblAplicacion";
             this.RrhhLblAplicacion.Size = new System.Drawing.Size(87, 19);
             this.RrhhLblAplicacion.TabIndex = 12;
             this.RrhhLblAplicacion.Text = "Aplicación:";
             // 
-            // RrhhDedClbAplicacion
+            // RrhhClbAplicacion
             // 
-            this.RrhhDedClbAplicacion.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RrhhDedClbAplicacion.FormattingEnabled = true;
-            this.RrhhDedClbAplicacion.Items.AddRange(new object[] {
+            this.RrhhClbAplicacion.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.RrhhClbAplicacion.FormattingEnabled = true;
+            this.RrhhClbAplicacion.Items.AddRange(new object[] {
             "Todos",
             "Algunos",
             "Excepto"});
-            this.RrhhDedClbAplicacion.Location = new System.Drawing.Point(110, 189);
-            this.RrhhDedClbAplicacion.Name = "RrhhDedClbAplicacion";
-            this.RrhhDedClbAplicacion.Size = new System.Drawing.Size(120, 79);
-            this.RrhhDedClbAplicacion.TabIndex = 15;
-            this.RrhhDedClbAplicacion.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            this.RrhhClbAplicacion.Location = new System.Drawing.Point(182, 133);
+            this.RrhhClbAplicacion.Name = "RrhhClbAplicacion";
+            this.RrhhClbAplicacion.Size = new System.Drawing.Size(120, 79);
+            this.RrhhClbAplicacion.TabIndex = 15;
+            this.RrhhClbAplicacion.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.RrhhClbAplicacion_ItemCheck);
             // 
             // RrhhLblValor
             // 
             this.RrhhLblValor.AutoSize = true;
             this.RrhhLblValor.Font = new System.Drawing.Font("Tahoma", 9.5F);
             this.RrhhLblValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblValor.Location = new System.Drawing.Point(17, 138);
+            this.RrhhLblValor.Location = new System.Drawing.Point(17, 90);
             this.RrhhLblValor.Name = "RrhhLblValor";
             this.RrhhLblValor.Size = new System.Drawing.Size(52, 19);
             this.RrhhLblValor.TabIndex = 11;
             this.RrhhLblValor.Text = "Valor:";
-            // 
-            // RrhhLblTipoCalculo
-            // 
-            this.RrhhLblTipoCalculo.AutoSize = true;
-            this.RrhhLblTipoCalculo.Font = new System.Drawing.Font("Tahoma", 9.5F);
-            this.RrhhLblTipoCalculo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhLblTipoCalculo.Location = new System.Drawing.Point(17, 89);
-            this.RrhhLblTipoCalculo.Name = "RrhhLblTipoCalculo";
-            this.RrhhLblTipoCalculo.Size = new System.Drawing.Size(122, 19);
-            this.RrhhLblTipoCalculo.TabIndex = 10;
-            this.RrhhLblTipoCalculo.Text = "Tipo de calculo:";
             // 
             // RrhhPnlInfoTablaNomina
             // 
             this.RrhhPnlInfoTablaNomina.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RrhhPnlInfoTablaNomina.Controls.Add(this.RrhhLblAsignacionExcepcion);
             this.RrhhPnlInfoTablaNomina.Controls.Add(this.RrhhLblAccedeCalculoNomina);
-            this.RrhhPnlInfoTablaNomina.Controls.Add(this.RrhhBtnExcepciones);
-            this.RrhhPnlInfoTablaNomina.Controls.Add(this.RrhhBtnNomina);
+            this.RrhhPnlInfoTablaNomina.Controls.Add(this.RrhhBtnRangos);
+            this.RrhhPnlInfoTablaNomina.Controls.Add(this.RrhhBtnAsignacionConceptos);
             this.RrhhPnlInfoTablaNomina.Location = new System.Drawing.Point(1023, 295);
             this.RrhhPnlInfoTablaNomina.Name = "RrhhPnlInfoTablaNomina";
             this.RrhhPnlInfoTablaNomina.Size = new System.Drawing.Size(500, 283);
@@ -317,11 +292,11 @@
             this.RrhhLblAsignacionExcepcion.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblAsignacionExcepcion.Font = new System.Drawing.Font("Lucida Fax", 13F, System.Drawing.FontStyle.Bold);
             this.RrhhLblAsignacionExcepcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblAsignacionExcepcion.Location = new System.Drawing.Point(84, 177);
+            this.RrhhLblAsignacionExcepcion.Location = new System.Drawing.Point(157, 177);
             this.RrhhLblAsignacionExcepcion.Name = "RrhhLblAsignacionExcepcion";
-            this.RrhhLblAsignacionExcepcion.Size = new System.Drawing.Size(291, 25);
+            this.RrhhLblAsignacionExcepcion.Size = new System.Drawing.Size(212, 25);
             this.RrhhLblAsignacionExcepcion.TabIndex = 19;
-            this.RrhhLblAsignacionExcepcion.Text = "Asignación Excepciones";
+            this.RrhhLblAsignacionExcepcion.Text = "Rangos y Valores";
             // 
             // RrhhLblAccedeCalculoNomina
             // 
@@ -329,45 +304,48 @@
             this.RrhhLblAccedeCalculoNomina.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblAccedeCalculoNomina.Font = new System.Drawing.Font("Lucida Fax", 13F, System.Drawing.FontStyle.Bold);
             this.RrhhLblAccedeCalculoNomina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblAccedeCalculoNomina.Location = new System.Drawing.Point(84, 79);
+            this.RrhhLblAccedeCalculoNomina.Location = new System.Drawing.Point(117, 79);
             this.RrhhLblAccedeCalculoNomina.Name = "RrhhLblAccedeCalculoNomina";
-            this.RrhhLblAccedeCalculoNomina.Size = new System.Drawing.Size(356, 25);
+            this.RrhhLblAccedeCalculoNomina.Size = new System.Drawing.Size(301, 25);
             this.RrhhLblAccedeCalculoNomina.TabIndex = 18;
-            this.RrhhLblAccedeCalculoNomina.Text = "Accede al calculo de nominas";
+            this.RrhhLblAccedeCalculoNomina.Text = "Asignación de conceptos";
             // 
-            // RrhhBtnExcepciones
+            // RrhhBtnRangos
             // 
-            this.RrhhBtnExcepciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhBtnExcepciones.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.RrhhBtnExcepciones.ForeColor = System.Drawing.Color.White;
-            this.RrhhBtnExcepciones.Location = new System.Drawing.Point(193, 216);
-            this.RrhhBtnExcepciones.Name = "RrhhBtnExcepciones";
-            this.RrhhBtnExcepciones.Size = new System.Drawing.Size(130, 45);
-            this.RrhhBtnExcepciones.TabIndex = 1;
-            this.RrhhBtnExcepciones.Text = "Excepciones";
-            this.RrhhBtnExcepciones.UseVisualStyleBackColor = false;
+            this.RrhhBtnRangos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
+            this.RrhhBtnRangos.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.RrhhBtnRangos.ForeColor = System.Drawing.Color.White;
+            this.RrhhBtnRangos.Location = new System.Drawing.Point(193, 216);
+            this.RrhhBtnRangos.Name = "RrhhBtnRangos";
+            this.RrhhBtnRangos.Size = new System.Drawing.Size(130, 45);
+            this.RrhhBtnRangos.TabIndex = 1;
+            this.RrhhBtnRangos.Text = "Abrir";
+            this.RrhhBtnRangos.UseVisualStyleBackColor = false;
+            this.RrhhBtnRangos.Click += new System.EventHandler(this.RrhhBtnRangos_Click);
             // 
-            // RrhhBtnNomina
+            // RrhhBtnAsignacionConceptos
             // 
-            this.RrhhBtnNomina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
-            this.RrhhBtnNomina.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.RrhhBtnNomina.ForeColor = System.Drawing.Color.White;
-            this.RrhhBtnNomina.Location = new System.Drawing.Point(193, 114);
-            this.RrhhBtnNomina.Name = "RrhhBtnNomina";
-            this.RrhhBtnNomina.Size = new System.Drawing.Size(130, 45);
-            this.RrhhBtnNomina.TabIndex = 0;
-            this.RrhhBtnNomina.Text = "Nomina";
-            this.RrhhBtnNomina.UseVisualStyleBackColor = false;
+            this.RrhhBtnAsignacionConceptos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
+            this.RrhhBtnAsignacionConceptos.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.RrhhBtnAsignacionConceptos.ForeColor = System.Drawing.Color.White;
+            this.RrhhBtnAsignacionConceptos.Location = new System.Drawing.Point(193, 114);
+            this.RrhhBtnAsignacionConceptos.Name = "RrhhBtnAsignacionConceptos";
+            this.RrhhBtnAsignacionConceptos.Size = new System.Drawing.Size(130, 45);
+            this.RrhhBtnAsignacionConceptos.TabIndex = 0;
+            this.RrhhBtnAsignacionConceptos.Text = "Abrir";
+            this.RrhhBtnAsignacionConceptos.UseVisualStyleBackColor = false;
+            this.RrhhBtnAsignacionConceptos.Click += new System.EventHandler(this.RrhhBtnAsignacionConceptos_Click);
             // 
-            // RrhhDgvLista
+            // RrhhDgvListaConceptos
             // 
-            this.RrhhDgvLista.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.RrhhDgvLista.Location = new System.Drawing.Point(12, 708);
-            this.RrhhDgvLista.Name = "RrhhDgvLista";
-            this.RrhhDgvLista.RowHeadersWidth = 51;
-            this.RrhhDgvLista.RowTemplate.Height = 24;
-            this.RrhhDgvLista.Size = new System.Drawing.Size(1511, 293);
-            this.RrhhDgvLista.TabIndex = 15;
+            this.RrhhDgvListaConceptos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.RrhhDgvListaConceptos.Location = new System.Drawing.Point(12, 708);
+            this.RrhhDgvListaConceptos.Name = "RrhhDgvListaConceptos";
+            this.RrhhDgvListaConceptos.RowHeadersWidth = 51;
+            this.RrhhDgvListaConceptos.RowTemplate.Height = 24;
+            this.RrhhDgvListaConceptos.Size = new System.Drawing.Size(1511, 293);
+            this.RrhhDgvListaConceptos.TabIndex = 15;
+            this.RrhhDgvListaConceptos.SelectionChanged += new System.EventHandler(this.RrhhDgvListaConceptos_SelectionChanged);
             // 
             // RrhhLblConsultaGeneral
             // 
@@ -383,10 +361,24 @@
             // 
             // RrhhTxtBuscar
             // 
+            this.RrhhTxtBuscar.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.RrhhTxtBuscar.Location = new System.Drawing.Point(239, 667);
             this.RrhhTxtBuscar.Name = "RrhhTxtBuscar";
-            this.RrhhTxtBuscar.Size = new System.Drawing.Size(397, 22);
+            this.RrhhTxtBuscar.Size = new System.Drawing.Size(397, 30);
             this.RrhhTxtBuscar.TabIndex = 16;
+            this.RrhhTxtBuscar.TextChanged += new System.EventHandler(this.RrhhTxtBuscar_TextChanged);
+            // 
+            // RrhhDedBtnAyuda
+            // 
+            this.RrhhDedBtnAyuda.BackColor = System.Drawing.Color.Transparent;
+            this.RrhhDedBtnAyuda.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.btn_ayuda;
+            this.RrhhDedBtnAyuda.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.RrhhDedBtnAyuda.ForeColor = System.Drawing.Color.Chartreuse;
+            this.RrhhDedBtnAyuda.Location = new System.Drawing.Point(970, 188);
+            this.RrhhDedBtnAyuda.Name = "RrhhDedBtnAyuda";
+            this.RrhhDedBtnAyuda.Size = new System.Drawing.Size(87, 80);
+            this.RrhhDedBtnAyuda.TabIndex = 19;
+            this.RrhhDedBtnAyuda.UseVisualStyleBackColor = false;
             // 
             // RrhhBtnConsultar
             // 
@@ -534,7 +526,7 @@
             this.RrhhDedBtnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
             this.RrhhDedBtnSalir.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_salir_sin_bordes;
             this.RrhhDedBtnSalir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhDedBtnSalir.Location = new System.Drawing.Point(968, 188);
+            this.RrhhDedBtnSalir.Location = new System.Drawing.Point(1074, 188);
             this.RrhhDedBtnSalir.Name = "RrhhDedBtnSalir";
             this.RrhhDedBtnSalir.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnSalir.TabIndex = 10;
@@ -550,18 +542,19 @@
             this.RrhhDedBtnRefrescar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnRefrescar.TabIndex = 9;
             this.RrhhDedBtnRefrescar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnRefrescar.Click += new System.EventHandler(this.RrhhDedBtnRefrescar_Click);
             // 
             // RrhhDedBtnFin
             // 
             this.RrhhDedBtnFin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(138)))), ((int)(((byte)(143)))));
             this.RrhhDedBtnFin.BackgroundImage = global::CapaVista_Nomina.Properties.Resources.boton_fin_sin_bordes_final;
             this.RrhhDedBtnFin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhDedBtnFin.Location = new System.Drawing.Point(875, 188);
+            this.RrhhDedBtnFin.Location = new System.Drawing.Point(866, 188);
             this.RrhhDedBtnFin.Name = "RrhhDedBtnFin";
             this.RrhhDedBtnFin.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnFin.TabIndex = 8;
             this.RrhhDedBtnFin.UseVisualStyleBackColor = false;
-            this.RrhhDedBtnFin.Click += new System.EventHandler(this.button4_Click);
+            this.RrhhDedBtnFin.Click += new System.EventHandler(this.RrhhDedBtnFin_Click);
             // 
             // RrhhDedBtnSiguiente
             // 
@@ -573,6 +566,7 @@
             this.RrhhDedBtnSiguiente.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnSiguiente.TabIndex = 7;
             this.RrhhDedBtnSiguiente.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnSiguiente.Click += new System.EventHandler(this.RrhhDedBtnSiguiente_Click);
             // 
             // RrhhDedBtnAnterior
             // 
@@ -584,6 +578,7 @@
             this.RrhhDedBtnAnterior.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnAnterior.TabIndex = 6;
             this.RrhhDedBtnAnterior.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnAnterior.Click += new System.EventHandler(this.RrhhDedBtnAnterior_Click);
             // 
             // RrhhDedBtnInicio
             // 
@@ -595,6 +590,7 @@
             this.RrhhDedBtnInicio.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnInicio.TabIndex = 5;
             this.RrhhDedBtnInicio.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnInicio.Click += new System.EventHandler(this.RrhhDedBtnInicio_Click);
             // 
             // RrhhDedBtnImprimir
             // 
@@ -606,6 +602,7 @@
             this.RrhhDedBtnImprimir.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnImprimir.TabIndex = 4;
             this.RrhhDedBtnImprimir.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnImprimir.Click += new System.EventHandler(this.RrhhDedBtnImprimir_Click);
             // 
             // RrhhDedBtnEliminar
             // 
@@ -629,6 +626,7 @@
             this.RrhhDedBtnModificar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnModificar.TabIndex = 2;
             this.RrhhDedBtnModificar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnModificar.Click += new System.EventHandler(this.RrhhDedBtnModificar_Click);
             // 
             // RrhhDedBtnGuardar
             // 
@@ -640,6 +638,7 @@
             this.RrhhDedBtnGuardar.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnGuardar.TabIndex = 1;
             this.RrhhDedBtnGuardar.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnGuardar.Click += new System.EventHandler(this.RrhhDedBtnGuardar_Click);
             // 
             // RrhhPnlPercepcionDeducciones
             // 
@@ -648,7 +647,7 @@
             this.RrhhPnlPercepcionDeducciones.Controls.Add(this.RrhhPbDonButti);
             this.RrhhPnlPercepcionDeducciones.Controls.Add(this.RrhhLblSubtituloGestion);
             this.RrhhPnlPercepcionDeducciones.Controls.Add(this.RrhhLblPercepDeducciones);
-            this.RrhhPnlPercepcionDeducciones.Controls.Add(this.RrhhDedPbIconoPerDed);
+            this.RrhhPnlPercepcionDeducciones.Controls.Add(this.RrhhPbIconoPerDed);
             this.RrhhPnlPercepcionDeducciones.Location = new System.Drawing.Point(21, 25);
             this.RrhhPnlPercepcionDeducciones.Name = "RrhhPnlPercepcionDeducciones";
             this.RrhhPnlPercepcionDeducciones.Size = new System.Drawing.Size(1502, 132);
@@ -689,17 +688,17 @@
             this.RrhhLblPercepDeducciones.TabIndex = 1;
             this.RrhhLblPercepDeducciones.Text = "Percepciones y Deducciones";
             // 
-            // RrhhDedPbIconoPerDed
+            // RrhhPbIconoPerDed
             // 
-            this.RrhhDedPbIconoPerDed.BackColor = System.Drawing.Color.Transparent;
-            this.RrhhDedPbIconoPerDed.Image = global::CapaVista_Nomina.Properties.Resources.icono_rrhh1;
-            this.RrhhDedPbIconoPerDed.InitialImage = null;
-            this.RrhhDedPbIconoPerDed.Location = new System.Drawing.Point(13, 19);
-            this.RrhhDedPbIconoPerDed.Name = "RrhhDedPbIconoPerDed";
-            this.RrhhDedPbIconoPerDed.Size = new System.Drawing.Size(102, 100);
-            this.RrhhDedPbIconoPerDed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.RrhhDedPbIconoPerDed.TabIndex = 0;
-            this.RrhhDedPbIconoPerDed.TabStop = false;
+            this.RrhhPbIconoPerDed.BackColor = System.Drawing.Color.Transparent;
+            this.RrhhPbIconoPerDed.Image = global::CapaVista_Nomina.Properties.Resources.icono_rrhh1;
+            this.RrhhPbIconoPerDed.InitialImage = null;
+            this.RrhhPbIconoPerDed.Location = new System.Drawing.Point(13, 19);
+            this.RrhhPbIconoPerDed.Name = "RrhhPbIconoPerDed";
+            this.RrhhPbIconoPerDed.Size = new System.Drawing.Size(102, 100);
+            this.RrhhPbIconoPerDed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.RrhhPbIconoPerDed.TabIndex = 0;
+            this.RrhhPbIconoPerDed.TabStop = false;
             // 
             // FrmPercepcionesDeducciones
             // 
@@ -707,10 +706,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(248)))), ((int)(((byte)(247)))));
             this.ClientSize = new System.Drawing.Size(1535, 1013);
+            this.Controls.Add(this.RrhhDedBtnAyuda);
             this.Controls.Add(this.RrhhBtnConsultar);
             this.Controls.Add(this.RrhhTxtBuscar);
             this.Controls.Add(this.RrhhLblConsultaGeneral);
-            this.Controls.Add(this.RrhhDgvLista);
+            this.Controls.Add(this.RrhhDgvListaConceptos);
             this.Controls.Add(this.RrhhPnlConceptoRegistrados);
             this.Controls.Add(this.RrhhPnlTablaNominas);
             this.Controls.Add(this.RrhhPnlConfiguracionCalculo);
@@ -732,9 +732,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmPercepcionesDeducciones";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "9501 – PercepcionesDeducciones";
+            this.Text = "9502 – PercepcionesDeducciones";
             this.Load += new System.EventHandler(this.FrmNominas_Load);
             this.RrhhPnlDatosInfoConcep.ResumeLayout(false);
             this.RrhhPnlDatosInfoConcep.PerformLayout();
@@ -742,7 +743,7 @@
             this.RrhhPnlInfoConfiCalculo.PerformLayout();
             this.RrhhPnlInfoTablaNomina.ResumeLayout(false);
             this.RrhhPnlInfoTablaNomina.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RrhhDgvLista)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RrhhDgvListaConceptos)).EndInit();
             this.RrhhPnlConceptoRegistrados.ResumeLayout(false);
             this.RrhhPnlConceptoRegistrados.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconoConsultas)).EndInit();
@@ -758,7 +759,7 @@
             this.RrhhPnlPercepcionDeducciones.ResumeLayout(false);
             this.RrhhPnlPercepcionDeducciones.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RrhhPbDonButti)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RrhhDedPbIconoPerDed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RrhhPbIconoPerDed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -767,9 +768,8 @@
         #endregion
 
         private System.Windows.Forms.Panel RrhhPnlPercepcionDeducciones;
-        private System.Windows.Forms.PictureBox RrhhDedPbIconoPerDed;
+        private System.Windows.Forms.PictureBox RrhhPbIconoPerDed;
         private System.Windows.Forms.Label RrhhLblSubtituloGestion;
-        private System.Windows.Forms.Label RrhhLblPercepDeducciones;
         private System.Windows.Forms.Button RrhhDedBtnGuardar;
         private System.Windows.Forms.Button RrhhDedBtnModificar;
         private System.Windows.Forms.Button RrhhDedBtnEliminar;
@@ -783,17 +783,15 @@
         private System.Windows.Forms.Panel RrhhPnlDatosInfoConcep;
         private System.Windows.Forms.Panel RrhhPnlInfoConfiCalculo;
         private System.Windows.Forms.Panel RrhhPnlInfoTablaNomina;
-        private System.Windows.Forms.CheckedListBox RrhhDedClbAplicacion;
+        private System.Windows.Forms.CheckedListBox RrhhClbAplicacion;
         private System.Windows.Forms.Label RrhhLblInformacionConcepto;
         private System.Windows.Forms.PictureBox RrhhPbIconInforme;
         private System.Windows.Forms.Label RrhhLblNombreConcepto;
-        private System.Windows.Forms.TextBox RrhhDedTxtNombreConcepto;
+        private System.Windows.Forms.TextBox RrhhTxtNombreConcepto;
         private System.Windows.Forms.Panel RrhhPnlConcepto;
-        private System.Windows.Forms.CheckBox RrhhDedChkEfecto;
-        private System.Windows.Forms.ComboBox RrhhDedCboPeriodo;
+        private System.Windows.Forms.ComboBox RrhhCboPeriodo;
         private System.Windows.Forms.Label RrhhLblEfecto;
         private System.Windows.Forms.Label RrhhLblPeriodo;
-        private System.Windows.Forms.Label RrhhLblPais;
         private System.Windows.Forms.PictureBox RrhhPbDonButti;
         private System.Windows.Forms.Panel RrhhPnlConfiguracionCalculo;
         private System.Windows.Forms.Panel RrhhPnlTablaNominas;
@@ -801,24 +799,26 @@
         private System.Windows.Forms.Label RrhhLblConfiguracionCalculo;
         private System.Windows.Forms.Label RrhhLblTablasNomina;
         private System.Windows.Forms.PictureBox RrhhPbIconoTablas;
-        private System.Windows.Forms.ComboBox RrhhDedCboTipoCalculo;
+        private System.Windows.Forms.ComboBox RrhhCboTipoCalculo;
         private System.Windows.Forms.Label RrhhLblAplicacion;
         private System.Windows.Forms.Label RrhhLblValor;
         private System.Windows.Forms.Label RrhhLblTipoCalculo;
-        private System.Windows.Forms.TextBox RrhhDedTxtValor;
-        private System.Windows.Forms.CheckBox RrhhDedCboActivo;
+        private System.Windows.Forms.TextBox RrhhTxtValor;
+        private System.Windows.Forms.CheckBox RrhhCboActivo;
         private System.Windows.Forms.Label RrhhLblActivo;
-        private System.Windows.Forms.Button RrhhBtnNomina;
-        private System.Windows.Forms.Button RrhhBtnExcepciones;
+        private System.Windows.Forms.Button RrhhBtnAsignacionConceptos;
+        private System.Windows.Forms.Button RrhhBtnRangos;
         private System.Windows.Forms.Panel RrhhPnlConceptoRegistrados;
         private System.Windows.Forms.PictureBox RrhhPbIconoConsultas;
         private System.Windows.Forms.Label RrhhLblConceptoRegistrado;
-        private System.Windows.Forms.DataGridView RrhhDgvLista;
+        private System.Windows.Forms.DataGridView RrhhDgvListaConceptos;
         private System.Windows.Forms.Label RrhhLblConsultaGeneral;
         private System.Windows.Forms.TextBox RrhhTxtBuscar;
         private System.Windows.Forms.Button RrhhBtnConsultar;
-        private System.Windows.Forms.ComboBox RrhhDedCboPais;
         private System.Windows.Forms.Label RrhhLblAsignacionExcepcion;
         private System.Windows.Forms.Label RrhhLblAccedeCalculoNomina;
+        private System.Windows.Forms.ComboBox RrhhCboEfecto;
+        private System.Windows.Forms.Button RrhhDedBtnAyuda;
+        private System.Windows.Forms.Label RrhhLblPercepDeducciones;
     }
 }

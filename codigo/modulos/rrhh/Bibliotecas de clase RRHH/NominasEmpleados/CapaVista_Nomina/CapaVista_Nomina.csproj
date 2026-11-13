@@ -34,7 +34,26 @@
     <Reference Include="CapaControlador_Nomina">
       <HintPath>..\CapaControlador_Nomina\bin\Debug\CapaControlador_Nomina.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -46,11 +65,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ayudas\ClsValidacionDatos.cs" />
+    <Compile Include="Formularios\FrmNominaDetalle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmNominaDetalle.Designer.cs">
+      <DependentUpon>FrmNominaDetalle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmNominaEmpleado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmNominaEmpleado.Designer.cs">
+      <DependentUpon>FrmNominaEmpleado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmNominaEncabezado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmNominaEncabezado.Designer.cs">
+      <DependentUpon>FrmNominaEncabezado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FrmPercepcionesDeducciones.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\FrmPercepcionesDeducciones.Designer.cs">
       <DependentUpon>FrmPercepcionesDeducciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmAsignacionConceptos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmAsignacionConceptos.Designer.cs">
+      <DependentUpon>FrmAsignacionConceptos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmRangos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmRangos.Designer.cs">
+      <DependentUpon>FrmRangos.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -58,20 +108,104 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\FrmReporteAsignacionConceptos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reportes\FrmReporteAsignacionConceptos.Designer.cs">
+      <DependentUpon>FrmReporteAsignacionConceptos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\FrmReporteNominaDetalle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reportes\FrmReporteNominaDetalle.Designer.cs">
+      <DependentUpon>FrmReporteNominaDetalle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\FrmReporteNominaEncabezado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reportes\FrmReporteNominaEncabezado.Designer.cs">
+      <DependentUpon>FrmReporteNominaEncabezado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\FrmReportePercepcionDeduccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reportes\FrmReportePercepcionDeduccion.Designer.cs">
+      <DependentUpon>FrmReportePercepcionDeduccion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\FrmReporteRangos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reportes\FrmReporteRangos.Designer.cs">
+      <DependentUpon>FrmReporteRangos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Ayudas\" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Formularios\FrmNominaDetalle.resx">
+      <DependentUpon>FrmNominaDetalle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmNominaEmpleado.resx">
+      <DependentUpon>FrmNominaEmpleado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmNominaEncabezado.resx">
+      <DependentUpon>FrmNominaEncabezado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmPercepcionesDeducciones.resx">
       <DependentUpon>FrmPercepcionesDeducciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmAsignacionConceptos.resx">
+      <DependentUpon>FrmAsignacionConceptos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmRangos.resx">
+      <DependentUpon>FrmRangos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\FrmReporteAsignacionConceptos.resx">
+      <DependentUpon>FrmReporteAsignacionConceptos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\FrmReporteNominaDetalle.resx">
+      <DependentUpon>FrmReporteNominaDetalle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\FrmReporteNominaEncabezado.resx">
+      <DependentUpon>FrmReporteNominaEncabezado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\FrmReportePercepcionDeduccion.resx">
+      <DependentUpon>FrmReportePercepcionDeduccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\FrmReporteRangos.resx">
+      <DependentUpon>FrmReporteRangos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpReporteAsignacionConceptos.rdlc" />
+    <EmbeddedResource Include="Reportes\RpReporteNominaDetalle.rdlc" />
+    <EmbeddedResource Include="Reportes\RpReporteNominaEncabezado.rdlc" />
+    <EmbeddedResource Include="Reportes\RpReportePercepcionDeduccion.rdlc" />
+    <EmbeddedResource Include="Reportes\RpReporteRangos.rdlc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\CapaControlador_Nomina.Modelos_de_controladores.ClsModeloNominaDetalle.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Nomina.Modelos_de_controladores.ClsModeloNominaEncabezado.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Nomina.Modelos_de_controladores.ClsModeloPercepcionDeduccion.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Nomina.Modelos_de_controladores.ClsModeloPercepcionDeduccionEmpleado.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Nomina.Modelos_de_controladores.ClsModeloPercepcionDeduccionRango.datasource" />
     <None Include="Resources\Pnl_fondo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +258,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\boton_consultar_sin_bordes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_nomina.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pb_percepcion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pb_Nominas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_ayuda.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icn_TotalDeducciones.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
