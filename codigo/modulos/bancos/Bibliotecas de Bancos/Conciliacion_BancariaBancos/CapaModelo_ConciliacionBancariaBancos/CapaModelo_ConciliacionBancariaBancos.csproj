@@ -41,12 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entidades\ClsConciliacion.cs" />
+    <Compile Include="Entidades\ClsDatosExtracto.cs" />
+    <Compile Include="Entidades\ClsDetalleConciliacion.cs" />
+    <Compile Include="Entidades\ClsLineaExtracto.cs" />
+    <Compile Include="Entidades\ClsMovimientoLibro.cs" />
+    <Compile Include="Entidades\ClsValoresConciliacion.cs" />
+    <Compile Include="Repositorio\ClsConexion.cs" />
+    <Compile Include="Repositorio\ClsRepositorioConciliacion.cs" />
+    <Compile Include="Repositorio\IClsRepositorioConciliacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Contratos\" />
-    <Folder Include="Entidades\" />
-    <Folder Include="Repositorios\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
