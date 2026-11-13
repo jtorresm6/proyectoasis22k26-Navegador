@@ -68,6 +68,9 @@
     <None Include="Resources\Icono-Contabilidad.ico" />
   </ItemGroup>
   <ItemGroup>
+    <!-- Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026 -->
+    <Compile Include="ClsReportePresupuestosContabilidad.cs" />
+    <!-- Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026 -->
     <Compile Include="ClsPermisosMenuContabilidad.cs" />
     <Compile Include="ClsPresentacionContabilidad.cs" />
     <Compile Include="FrmPresupuestoEdicion.cs">

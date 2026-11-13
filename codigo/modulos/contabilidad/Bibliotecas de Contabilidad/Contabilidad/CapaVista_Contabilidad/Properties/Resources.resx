@@ -115,6 +115,11 @@
   <data name="botonmdi12" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\botonmdi12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <!-- Inicio de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026 -->
+  <data name="botonmdi13" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonmdi13.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <!-- Fin de cambio: Gabriel André Guillén Pocón - 0901-23-1998 - 11/11/2026 -->
 
   <data name="kpi1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\kpi1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -58,5 +58,10 @@
     <Compile Include="Modelos\ClsModeloActivoFijoContabilidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <!-- Inicio de cambio: Dylan Hernández - 0901-23-519 - 11/11/2026 -->
+  <ItemGroup>
+    <Compile Include="ClsControladorReporteActivosFijosContabilidad.cs" />
+  </ItemGroup>
+  <!-- Fin de cambio: Dylan Hernández - 0901-23-519 - 11/11/2026 -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

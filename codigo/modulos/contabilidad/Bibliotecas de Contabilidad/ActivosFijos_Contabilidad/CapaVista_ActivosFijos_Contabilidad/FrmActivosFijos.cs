@@ -193,6 +193,12 @@ namespace CapaVista_Contabilidad
             // Fin de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
                 ContabilidadDtpAdquisicion.Value, ContabilidadDtpInicio.Value, ContabilidadNudCompra.Value,
                 ContabilidadNudResidual.Value, (int)ContabilidadNudMeses.Value);
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 12/11/2026
+            // Un campo numérico borrado conserva su valor anterior en Value; se exige que tenga texto
+            if (string.IsNullOrWhiteSpace(ContabilidadNudCompra.Text)) Errores["Compra"] = "Ingrese el valor de compra.";
+            if (string.IsNullOrWhiteSpace(ContabilidadNudResidual.Text)) Errores["Residual"] = "Ingrese el valor residual (0 si no tiene).";
+            if (string.IsNullOrWhiteSpace(ContabilidadNudMeses.Text)) Errores["Meses"] = "Ingrese la vida útil en meses.";
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 12/11/2026
             var Campos = new System.Collections.Generic.Dictionary<string, Control>
             {
                 // Inicio de cambio: Dylan Hernández - 0901-23-519 - 28/10/2026
