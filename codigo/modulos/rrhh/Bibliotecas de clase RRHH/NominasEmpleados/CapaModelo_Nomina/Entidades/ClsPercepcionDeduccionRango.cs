@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Representa un rango salarial utilizado para calcular una
+ *  percepción o deducción. Almacena los límites del rango,
+ *  el modo de cálculo, su valor, el monto fijo base y el estado
+ *  activo, permitiendo un límite superior sin definir.
+ * ==================================================================
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

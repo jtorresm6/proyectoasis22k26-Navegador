@@ -1,4 +1,19 @@
-﻿using CapaControlador_Nomina.ObjetosdeValor;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Gestiona las asignaciones de conceptos a empleados o
+ *  departamentos. Valida que se seleccione un único destino,
+ *  comprueba asignaciones duplicadas y coordina las operaciones
+ *  de registro, modificación, eliminación y consulta.
+ * ==================================================================
+ */
+
+using CapaControlador_Nomina.ObjetosdeValor;
 using CapaModelo_Nomina.Entidades;
 using CapaModelo_Nomina.Repositorios;
 using System;
