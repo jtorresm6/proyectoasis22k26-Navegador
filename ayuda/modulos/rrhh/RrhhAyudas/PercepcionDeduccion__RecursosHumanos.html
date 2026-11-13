@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <title>Ayudas - Percepción y Deducción</title>
+</head>
+
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png">
+        <img class="imgButti" src="Imagenes/LogoYMascota/5.png">
+        <h1>Ayudas - Percepción y Deducción</h1>
+    </center>
+    <br>
+    <div class="container">
+        <h2>Descripción General</h2>
+        <p> En este módulo se configuran los conceptos que suman o restan al pago de los empleados en la nómina. Una percepción es un ingreso adicional al salario, como una bonificación. Una deducción es un descuento, como el ISR o una pensión alimenticia. Cada concepto se crea una sola vez y la nómina lo aplica automáticamente cada vez que se calcula.</p>
+        <br>
+        <img class="imgVentana" src="Imagenes/NominaEmpleado/PercepcionDeduccion.png" alt="Vista general de Percepción y Deducción">
+        <br><br><br>
+        <p> Para crear un concepto se llenan los siguientes datos. El nombre identifica el concepto y no puede repetirse. El periodo indica si el valor corresponde a cada mes o al año completo; en el segundo caso, la nómina reparte el resultado entre los meses, como ocurre con el ISR. El efecto define si el concepto suma al empleado (percepción) o le resta (deducción). El tipo determina cómo se calcula el valor, y el valor es el número que usa ese cálculo. Finalmente, la aplicación indica a quién le corresponde el concepto.</p>
+        <br>
+        <img class="imgVentana" src="Imagenes/NominaEmpleado/PercepcionDeduccion_Informe.png" alt="Información de los conceptos de percepción y deducción">
+        <br><br><br>
+        <p> Existen tres tipos de cálculo. Con Monto, se usa una cantidad fija, por ejemplo una bonificación de Q250 o un descuento de Q500. Con %, se calcula un porcentaje sobre el salario; por ejemplo, un valor de 10 descuenta el 10% del sueldo. Con Tabla, el valor depende del salario y se define por rangos, como en el ISR, donde cada rango tiene su propio porcentaje. En este caso el campo de valor se oculta y aparece una grilla para capturar los rangos.</p>
+        <br>
+        <p> La aplicación puede ser Todos o Algunos. Con Todos, el concepto le llega a todos los empleados activos y no requiere más configuración. Con Algunos, solo lo reciben las personas asignadas; después de guardar, se eligen los empleados o departamentos que lo recibirán. Si se asigna un departamento, el concepto aplica a todas sus personas, incluidas las que ingresen después.</p>
+        <br>
+        <img class="imgVentana" src="Imagenes/NominaEmpleado/PercepcionDeduccion_Configuracion.png" alt="Configuración de percepciones y deducciones">
+        <br><br><br>
+        <p> Por ejemplo, la Bonificación Incentivo se configura como una percepción de tipo Monto con valor 250 y aplicación Todos. El ISR es una deducción de tipo Tabla con aplicación Todos. La pensión alimenticia de una empleada es una deducción de tipo % con valor 10 y aplicación Algunos, asignada solo a ella. Un premio para el área contable es una percepción de tipo Monto con valor 300 y aplicación Algunos, asignada al departamento de Contabilidad.</p>
+        <br>
+    </div>
+</body>
+
+</html>

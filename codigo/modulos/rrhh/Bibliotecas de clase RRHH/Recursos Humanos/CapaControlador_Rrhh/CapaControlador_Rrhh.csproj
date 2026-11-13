@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaControlador_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="CapaModelo_Rrhh">
       <HintPath>..\CapaModelo_Rrhh\bin\Debug\CapaModelo_Rrhh.dll</HintPath>
     </Reference>

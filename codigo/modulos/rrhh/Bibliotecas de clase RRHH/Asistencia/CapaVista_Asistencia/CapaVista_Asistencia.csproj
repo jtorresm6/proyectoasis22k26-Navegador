@@ -31,6 +31,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -45,6 +69,24 @@
     <Compile Include="Formularios\FrmAsistencia.Designer.cs">
       <DependentUpon>FrmAsistencia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FrmHorasExtra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmHorasExtra.Designer.cs">
+      <DependentUpon>FrmHorasExtra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteAsistencia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteAsistencia.Designer.cs">
+      <DependentUpon>FrmReporteAsistencia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteHorasExtra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteHorasExtra.Designer.cs">
+      <DependentUpon>FrmReporteHorasExtra.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -53,12 +95,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reportes\RpAsistencia.rdlc" />
+    <EmbeddedResource Include="Reportes\RpHorasExtra.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\btn_anterior.png" />
     <None Include="Resources\btn_ayuda.png" />
     <None Include="Resources\btn_consultar.png" />
@@ -66,6 +111,7 @@
     <None Include="Resources\btn_fin.png" />
     <None Include="Resources\btn_generar.png" />
     <None Include="Resources\btn_guardar.png" />
+    <None Include="Resources\btn_horas_extra.png" />
     <None Include="Resources\btn_imprimir.png" />
     <None Include="Resources\btn_inicio.png" />
     <None Include="Resources\btn_modificar.png" />
@@ -75,12 +121,19 @@
     <None Include="Resources\btn_siguiente.png" />
     <None Include="Resources\fondo_encabezado.png" />
     <None Include="Resources\icono_asistencia.png" />
+    <None Include="Resources\icono_horas_extra.png" />
     <None Include="Resources\icono_rrhh.ico" />
     <None Include="Resources\mascota.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CapaControlador_Asistencia">
       <HintPath>..\CapaControlador_Asistencia\bin\Debug\CapaControlador_Asistencia.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaControlador_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -41,7 +41,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmReporteTipoPuestos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "9003 – ReporteTipoPuestos";
+            this.Text = "9005 – ReporteTipoPuestos";
             this.Load += new System.EventHandler(this.FrmReporteTipoPuestos_Load);
             this.ResumeLayout(false);
 

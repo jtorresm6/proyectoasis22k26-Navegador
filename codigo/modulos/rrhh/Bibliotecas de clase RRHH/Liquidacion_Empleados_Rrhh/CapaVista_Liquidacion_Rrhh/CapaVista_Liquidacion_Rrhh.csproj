@@ -34,9 +34,16 @@
     <Reference Include="CapaControlador_Liquidacion_Rrhh">
       <HintPath>..\CapaControlador_Liquidacion_Rrhh\bin\Debug\CapaControlador_Liquidacion_Rrhh.dll</HintPath>
     </Reference>
+    <Reference Include="CapaControlador_Seguridad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="CapaVista_Navegador, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
@@ -74,6 +81,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formularios\FrmBajaEmpleado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmBajaEmpleado.Designer.cs">
+      <DependentUpon>FrmBajaEmpleado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FrmLiquidacionEmpleados.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,11 +105,23 @@
     <Compile Include="Formularios\FrmParametrosLeyNavegador.Designer.cs">
       <DependentUpon>FrmParametrosLeyNavegador.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmReportes\FrmReporteBajaEmpleado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteBajaEmpleado.Designer.cs">
+      <DependentUpon>FrmReporteBajaEmpleado.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmReportes\FrmReporteMotivoBaja.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmReportes\FrmReporteMotivoBaja.Designer.cs">
       <DependentUpon>FrmReporteMotivoBaja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteParametroLey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes\FrmReporteParametroLey.Designer.cs">
+      <DependentUpon>FrmReporteParametroLey.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -107,6 +132,9 @@
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Formularios\FrmBajaEmpleado.resx">
+      <DependentUpon>FrmBajaEmpleado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmLiquidacionEmpleados.resx">
       <DependentUpon>FrmLiquidacionEmpleados.cs</DependentUpon>
     </EmbeddedResource>
@@ -116,19 +144,29 @@
     <EmbeddedResource Include="Formularios\FrmParametrosLeyNavegador.resx">
       <DependentUpon>FrmParametrosLeyNavegador.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes\FrmReporteBajaEmpleado.resx">
+      <DependentUpon>FrmReporteBajaEmpleado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmReportes\FrmReporteMotivoBaja.resx">
       <DependentUpon>FrmReporteMotivoBaja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes\FrmReporteParametroLey.resx">
+      <DependentUpon>FrmReporteParametroLey.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpBajaEmpleado.rdlc" />
     <EmbeddedResource Include="Reportes\RpMotivoBaja.rdlc" />
+    <EmbeddedResource Include="Reportes\RpParametroLey.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\CapaControlador_Liquidacion_Rrhh.ClsModeloBajaEmpleado.datasource" />
     <None Include="Properties\DataSources\CapaControlador_Liquidacion_Rrhh.Modelos_de_Controladores.ClsModeloMotivoBaja+ClsModeloCapacitacion.datasource" />
     <None Include="Properties\DataSources\CapaControlador_Liquidacion_Rrhh.Modelos_de_Controladores.ClsModeloMotivoBaja.datasource" />
+    <None Include="Properties\DataSources\CapaControlador_Liquidacion_Rrhh.Modelos_de_Controladores.ClsModeloParametroLey.datasource" />
     <None Include="Resources\fondo_dashboard.png" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +209,8 @@
     <None Include="Resources\7.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\boton_refrescar_sin_bordes.png" />
+    <None Include="Resources\btn_ayuda.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

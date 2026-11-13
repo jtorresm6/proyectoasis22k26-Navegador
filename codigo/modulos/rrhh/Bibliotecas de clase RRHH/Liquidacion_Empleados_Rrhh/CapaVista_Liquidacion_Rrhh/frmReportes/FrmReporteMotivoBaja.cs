@@ -26,16 +26,16 @@ namespace CapaVista_Liquidacion_Rrhh.frmReportes
             try
             {
                 ReportDataSource Fuente = new ReportDataSource("DsMotivoBaja", MotivoBaja.MotivoBajaMetObtenerParaReporte());
-                reportViewer1.LocalReport.ReportEmbeddedResource = "CapaVista_Liquidacion_Rrhh.Reportes.RpMotivoBaja.rdlc";
-                reportViewer1.LocalReport.DataSources.Clear();
-                reportViewer1.LocalReport.DataSources.Add(Fuente);
-                reportViewer1.RefreshReport();
+                RrhhRdvMotivoBaja.LocalReport.ReportEmbeddedResource = "CapaVista_Liquidacion_Rrhh.Reportes.RpMotivoBaja.rdlc";
+                RrhhRdvMotivoBaja.LocalReport.DataSources.Clear();
+                RrhhRdvMotivoBaja.LocalReport.DataSources.Add(Fuente);
+                RrhhRdvMotivoBaja.RefreshReport();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-            this.reportViewer1.RefreshReport();
+            this.RrhhRdvMotivoBaja.RefreshReport();
         }
 
     }
