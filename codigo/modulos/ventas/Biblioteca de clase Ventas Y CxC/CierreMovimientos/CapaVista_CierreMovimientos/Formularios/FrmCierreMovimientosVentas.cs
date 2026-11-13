@@ -28,7 +28,7 @@ namespace CapaVista_CierreMovimientos
         {
             InitializeComponent();
             VentasMetConectarEventos();
-            // Natali Montenegro: agregue la DLL de Pólizas al controlador de Cierre y descomente la línea para habilitar el envío.
+            // Para habilitar el envío, coloque la DLL de Pólizas junto al controlador de Cierre y descomente la llamada.
             // VentasMetHabilitarEnlaceContable();
             VentasBtnAyuda.Click += (Origen, Evento) => VentasMetAbrirAyuda();
         }

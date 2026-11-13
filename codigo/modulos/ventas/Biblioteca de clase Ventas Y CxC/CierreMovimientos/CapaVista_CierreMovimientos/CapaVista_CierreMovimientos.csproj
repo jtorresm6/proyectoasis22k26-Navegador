@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -51,18 +51,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Formularios\FrmCierreMovimientosVentas.Datos.cs">
       <DependentUpon>FrmCierreMovimientosVentas.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\FrmCierreMovimientosVentas.Acciones.cs">
       <DependentUpon>FrmCierreMovimientosVentas.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\FrmCierreMovimientosVentas.Consultas.cs">
       <DependentUpon>FrmCierreMovimientosVentas.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\FrmCierreMovimientosVentas.Eventos.cs">
       <DependentUpon>FrmCierreMovimientosVentas.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\FrmReporteCierreMovimientos.Datos.cs">
       <DependentUpon>FrmReporteCierreMovimientos.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\FrmReporteCierreMovimientos.cs">
       <SubType>Form</SubType>
