@@ -34,6 +34,10 @@
 		<param name="Local" value="Conciliacion_Bancos.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Consultar pólizas bancarias del período">
+		<param name="Local" value="EnlaceContabilidad_Bancos.htm#consultar">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Corte de conciliación">
 		<param name="Local" value="Conciliacion_Bancos.html#corte">
 		</OBJECT>
@@ -50,6 +54,14 @@
 		<param name="Local" value="GeneracionPagos_Bancos.html#emitir">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Enlace con Contabilidad">
+		<param name="Local" value="EnlaceContabilidad_Bancos.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Enviar partida a Contabilidad">
+		<param name="Local" value="EnlaceContabilidad_Bancos.htm#enviar">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Exportar cierre a CSV">
 		<param name="Local" value="CierreBancario_Bancos.html#exportar">
 		</OBJECT>
@@ -58,8 +70,16 @@
 		<param name="Local" value="GeneracionPagos_Bancos.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Generar partida contable">
+		<param name="Local" value="EnlaceContabilidad_Bancos.htm#generar">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Historial de cierres">
 		<param name="Local" value="CierreBancario_Bancos.html#historial">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Historial de partidas">
+		<param name="Local" value="EnlaceContabilidad_Bancos.htm#historial">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Marcar partidas a mano">
@@ -104,6 +124,10 @@
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Reporte de conciliación">
 		<param name="Local" value="Conciliacion_Bancos.html#reporte">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Reporte de enlace con Contabilidad">
+		<param name="Local" value="EnlaceContabilidad_Bancos.htm#reporte">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Reporte de generación de pagos">

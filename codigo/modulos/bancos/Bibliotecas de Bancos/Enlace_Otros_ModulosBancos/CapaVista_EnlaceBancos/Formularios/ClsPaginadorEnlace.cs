@@ -1,4 +1,12 @@
-﻿using System;
+﻿// =====================================================================
+// Autor:       Andre De Jesus Gonzalez Camey
+// Carné:       9959-23-3117
+// Módulo:      Tesorería y Bancos – Enlace con otros módulos
+// Descripción: Clase que maneja la paginación de los resultados mostrados en las
+//              tablas del enlace.
+// Fecha:       12/11/2026
+// =====================================================================
+using System;
 using System.Data;
 using System.Windows.Forms;
 

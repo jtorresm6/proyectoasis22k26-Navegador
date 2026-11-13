@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <title>Ayudas - Enlace Contabilidad</title>
+</head>
+
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png">
+        <img class="imgButti" src="Imagenes/LogoYMascota/butti3.png">
+        <h1>Proceso</h1>
+        <h1>Ayudas - Enlace Contabilidad</h1>
+    </center>
+    <br>
+    <div class="container">
+        <h2>Enlace Contabilidad</h2>
+        <p> Esta es la ventana del proceso de Enlace con Contabilidad del módulo de Bancos. Sirve para trasladar a Contabilidad la partida contable
+            consolidada de un mes: primero se consultan las pólizas bancarias del período, luego se genera la partida del mes con las pólizas ya validadas y,
+            por último, se envía a Contabilidad, que la recibe como una póliza. Cada partida queda guardada en un historial que se puede consultar o
+            imprimir en un reporte. En las imágenes de esta ayuda, los números rojos indican el orden en que se explica cada elemento.
+        </p>
+        <br><br><br>
+
+        <h2>¿Cómo abrir la ventana de Enlace Contabilidad?</h2>
+        <p> 1. Abra la ventana "Enlace con otros módulos" del módulo de Bancos. </p>
+        <p> 2. Presione el botón "Contabilidad". Se abrirá la ventana "8008 &ndash; EnlaceContabilidad". </p>
+        <br><br><br>
+
+        <h2>Conozca la ventana</h2>
+        <p> 1. Encabezado; muestra el nombre del proceso, "Enlace Contabilidad". </p>
+        <p> 2. Datos del período; aquí se elige el tipo de período y las fechas del mes que se quiere trasladar. </p>
+        <p> 3. Consultar; busca las pólizas bancarias que están dentro de las fechas indicadas. </p>
+        <p> 4. Movimientos del período; es la tabla con las pólizas encontradas y, en la columna "Resultado", si pueden incluirse en la partida. </p>
+        <p> 5. Generar partida; arma la partida contable consolidada del mes con las pólizas disponibles. </p>
+        <p> 6. Partida contable consolidada; es la tabla con las cuentas contables, el debe y el haber de la partida generada. </p>
+        <p> 7. Enviar a; envía la partida a Contabilidad. </p>
+        <p> 8. Limpiar; deja la ventana lista para empezar de nuevo. </p>
+        <p> 9. Datos del traslado; aquí se eligen la empresa, el país contable y el módulo contable de Bancos. </p>
+        <p> 10. Cargar catálogos y Ver historial; cargan las listas de los datos del traslado y abren el historial de partidas. </p>
+        <p> 11. Totales; muestran el total del debe, el total del haber y la diferencia de la partida. </p>
+        <p> 12. Salir; cierra la ventana. </p>
+        <p> En la parte superior, a la izquierda de "Salir", también están los botones "Ayuda" y "Reporte", que se explican más adelante. </p>
+        <img class="imgVentanaMDI" src="Imagenes/EnlaceContabilidad/EnlaceContabilidad_general.png">
+        <br><br><br>
+
+        <h2>Datos del período</h2>
+        <p> 1. Tipo de período; lista donde se elige cada cuánto se traslada. Por ahora la única opción es "Mensual". </p>
+        <p> 2. Fecha inicial; primer día del período, con el formato dd/MM/aaaa (por ejemplo 01/11/2026). Al abrir la ventana se propone el primer día del mes actual. </p>
+        <p> 3. Fecha final; último día del período, con el mismo formato (por ejemplo 30/11/2026). Al abrir la ventana se propone el último día del mes actual. </p>
+        <p> 4. Consultar; busca las pólizas bancarias que están dentro de las fechas indicadas y las muestra en la tabla "Movimientos del período". </p>
+        <p> Si cambia alguna fecha, la tabla de movimientos y la partida que estaba en pantalla se vacían y debe volver a consultar. Si la fecha inicial es posterior a la
+            final, el sistema muestra "Revise el rango de fechas." debajo de "Fecha final". Para generar o enviar una partida el rango debe ser un mes completo (del
+            día 1 al último día del mes); si no lo es, el sistema muestra "Seleccione un mes completo.". </p>
+        <img class="imgVentanaMDI" src="Imagenes/EnlaceContabilidad/EnlaceContabilidad_periodo.png">
+        <br><br><br>
+
+        <h2>Datos del traslado</h2>
+        <p> 1. Empresa; es la lista donde se elige la empresa a la que pertenece la partida. Es un dato obligatorio (el asterisco rojo lo indica). </p>
+        <p> 2. País contable (GTQ); es la lista donde se elige el país contable que recibirá la póliza. Es un dato obligatorio. </p>
+        <p> 3. Módulo contable de Bancos; es la lista donde se elige el módulo contable de Bancos en Contabilidad. Es un dato obligatorio. </p>
+        <p> 4. Cargar catálogos; vuelve a cargar las tres listas anteriores con los datos más recientes. Las listas también se cargan solas al abrir la ventana y empiezan
+            sin ninguna opción elegida. </p>
+        <p> 5. Ver historial; abre el historial de partidas (ver "Historial de partidas"). </p>
+        <p> 6. Usuario; indica con qué usuario se inició sesión. Ese usuario queda registrado como responsable de las partidas que genere o envíe. </p>
+        <p> Si no elige la empresa, el país o el módulo, el sistema muestra "Seleccione una opción." junto a la lista que falta. El botón "Generar partida" se habilita
+            hasta que las tres listas tengan una opción elegida. </p>
+        <img class="imgVentana" src="Imagenes/EnlaceContabilidad/EnlaceContabilidad_traslado.png">
+        <br><br><br>
+
+        <h2 id="consultar">Consultar</h2>
+        <p> 1. Revise las fechas del período. </p>
+        <p> 2. Presione el botón "Consultar". La tabla "Movimientos del período" se llena con las pólizas bancarias de esas fechas y debajo de la ventana el sistema
+            indica cuántas pólizas se consultaron. </p>
+        <p> 3. Revise la columna "Resultado" de cada póliza: "Disponible" quiere decir que entrará en la partida; "Ya incluida" que ya forma parte de otra partida;
+            "Pendiente de validación" que la póliza todavía no está VALIDADA; "Cuenta inactiva" que la cuenta bancaria está inactiva y "Requiere política de conversión"
+            que la póliza no es en quetzales (GTQ). </p>
+        <p> La tabla se muestra por páginas. Con "Anterior" y "Siguiente" se cambia de página y debajo de la tabla se ve la cantidad de registros y la página en que se está. </p>
+        <br><br><br>
+
+        <h2 id="generar">Generar partida</h2>
+        <p> 1. Elija la empresa, el país contable y el módulo contable, y revise que las fechas sean un mes completo. </p>
+        <p> 2. Presione "Generar partida". El sistema pregunta "Se guardará la partida GTQ del mes con todas las pólizas validadas disponibles. ¿Continuar?". Presione "Sí" para
+            confirmar o "No" para cancelar. </p>
+        <p> 3. Si confirma, aparece el mensaje "La partida se generó correctamente." y la tabla "Partida contable consolidada" se llena con las cuentas contables, el debe y
+            el haber. A la derecha de la ventana aparece el número de la partida y su estado, por ejemplo "Partida 1 &mdash; VALIDADA". </p>
+        <p> La partida del mes junta, en quetzales, todas las pólizas validadas disponibles de la empresa. Una póliza que ya está en una partida no se vuelve a incluir. </p>
+        <br><br><br>
+
+        <h2>Partida contable consolidada</h2>
+        <p> 1. Encabezado de la tabla; tiene estas columnas: "CodigoCuentaDetallePartida" es el código de la cuenta contable; "NombreCuentaDetallePartida" es el nombre de la cuenta;
+            "DebeDetallePartida" es el valor al debe y "HaberDetallePartida" es el valor al haber. </p>
+        <p> 2. Filas; cada fila es una cuenta contable de la partida. La fila resaltada es la que está seleccionada. </p>
+        <p> 3. Barra de desplazamiento; permite moverse hacia la derecha para ver todas las columnas. </p>
+        <p> 4. Botones "Anterior" y "Siguiente"; cambian de página cuando la partida tiene más cuentas de las que caben en la tabla. </p>
+        <p> 5. Cantidad de registros; indica cuántas cuentas tiene la partida y en qué página se está, por ejemplo "3 registros &middot; Página 1 de 1". </p>
+        <p> 6. Totales; muestran "Debe", "Haber" y "Dif." (la diferencia entre ambos). Para poder enviar la partida la diferencia debe ser Q 0.00. </p>
+        <p> 7. Aviso; recuerda que la partida se envía en quetzales (GTQ) y que Contabilidad valida la póliza y puede aplicarla a saldos al recibirla. </p>
+        <img class="imgVentanaMDI" src="Imagenes/EnlaceContabilidad/EnlaceContabilidad_partida.png">
+        <br><br><br>
+
+        <h2>Los botones</h2>
+        <p> 1. Consultar; busca las pólizas bancarias del período. </p>
+        <p> 2. Generar partida; guarda la partida contable consolidada del mes. Está deshabilitado hasta que se elijan la empresa, el país y el módulo contable. </p>
+        <p> 3. Enviar a; envía la partida a Contabilidad. Está deshabilitado mientras no haya una partida lista para enviar. </p>
+        <p> 4. Limpiar; vacía la tabla de movimientos y la partida que se ve en pantalla. No borra ninguna partida que ya esté guardada. </p>
+        <p> 5. Cargar catálogos; carga las listas de empresa, país y módulo contable. </p>
+        <p> 6. Ver historial; abre el historial de partidas. </p>
+        <p> 7. Salir; cierra la ventana de Enlace Contabilidad. </p>
+        <img class="imgVentanaMDI" src="Imagenes/EnlaceContabilidad/EnlaceContabilidad_botones.png">
+        <br><br><br>
+
+        <h2 id="enviar">Enviar a Contabilidad</h2>
+        <p> 1. Con una partida en estado VALIDADA en pantalla (recién generada o elegida del historial), presione "Enviar a". </p>
+        <p> 2. El sistema pregunta "¿Confirma el envío de la partida [número] a Contabilidad? Según la configuración del módulo, puede aplicarse a saldos de inmediato.".
+            Presione "Sí" para confirmar o "No" para cancelar. </p>
+        <p> 3. Si Contabilidad recibe la partida, aparece la ventana "Operación completada" con un mensaje como "Póliza POL-2026-12-0001 registrada en Contabilidad. Estado: VALIDADA.".
+            Presione "Aceptar". </p>
+        <p> 4. A la derecha de la ventana queda el resultado, por ejemplo "Póliza POL-2026-12-0001 &middot; VALIDADA". El código de la póliza es la referencia con la que la
+            partida quedó registrada en Contabilidad. La partida pasa a estado TRASLADADA y "Enviar a" se deshabilita para que no se envíe dos veces. </p>
+        <p> Si Contabilidad no acepta la póliza (por ejemplo, porque el período contable ya está cerrado), el sistema muestra el motivo en un mensaje y la partida sigue sin
+            trasladarse. Corrija el motivo y vuelva a presionar "Enviar a". Si el envío se interrumpe a la mitad, también puede volver a enviarla: el sistema reconoce la póliza que
+            Contabilidad ya recibió y no la duplica. </p>
+        <p> Si no ha iniciado sesión, el sistema muestra "Inicie sesión en el sistema para generar o enviar partidas.". </p>
+        <img class="imgVentanaMDI" src="Imagenes/EnlaceContabilidad/EnlaceContabilidad_enviado.png">
+        <br><br><br>
+
+        <h2>Estados de la partida</h2>
+        <p> - "VALIDADA"; la partida está guardada y lista para enviarse a Contabilidad. </p>
+        <p> - "TRASLADADA"; Contabilidad ya recibió la partida. En el historial se ve el código de la póliza y la fecha del traslado. </p>
+        <br><br><br>
+
+        <h2 id="historial">Historial de partidas</h2>
+        <p> Esta ventana, llamada "8008 &ndash; Historial de partidas", se abre con "Ver historial" y muestra todas las partidas generadas, de la más reciente a la más antigua. </p>
+        <p> 1. Encabezado de la tabla; tiene estas columnas: "Id" es el número de la partida; "Inicio" y "Fin" son las fechas del mes; "EmpresaId" y "Empresa" identifican la empresa;
+            "Moneda" es la moneda de la partida; "Debe" y "Haber" son los totales; "Estado" es el estado de la partida; "Referencia" es el código de la póliza en Contabilidad y
+            "FechaTraslado" es el día y la hora en que se envió. </p>
+        <p> 2. Filas; cada fila es una partida. La fila resaltada es la seleccionada. </p>
+        <p> 3. Referencia y FechaTraslado; están vacías mientras la partida no se ha enviado a Contabilidad. </p>
+        <p> Para volver a ver una partida, selecciónela en la tabla y presione "Seleccionar". La ventana de Enlace Contabilidad se llena con las fechas, la empresa y las cuentas
+            de esa partida, y si todavía está VALIDADA puede enviarla. Con "Anterior" y "Siguiente" se cambia de página cuando hay muchas partidas. </p>
+        <img class="imgVentanaMDI" src="Imagenes/EnlaceContabilidad/EnlaceContabilidad_historial.png">
+        <br><br><br>
+
+        <h2 id="reporte">Reporte</h2>
+        <p> 1. Presione el botón "Reporte", que está en la parte superior de la ventana, a la izquierda de "Salir". Se abre la ventana "8008&ndash;FrmReporteEnlaceContabilidad"
+            con el listado de las partidas enviadas a Contabilidad: número, fecha inicial, fecha final, empresa, moneda, total debe, total haber, estado y póliza contable. En las partidas
+            que todavía no se han enviado, la póliza contable muestra "Sin enviar". </p>
+        <p> 2. Desde la barra del reporte puede cambiar de página, hacer zoom, imprimir y guardar el reporte como archivo (por ejemplo PDF, Word o Excel). </p>
+        <br><br><br>
+
+        <h2>Limpiar</h2>
+        <p> 1. Presione "Limpiar" si desea empezar de nuevo. La tabla de movimientos y la partida se vacían, los totales vuelven a su valor inicial y a la derecha aparece
+            "Sin partida seleccionada.". Este botón no borra ni modifica ninguna partida guardada. </p>
+        <br><br><br>
+
+        <h2>Ayuda</h2>
+        <p> 1. Presione "Ayuda", que está en la parte superior de la ventana, a la izquierda de "Reporte", para abrir esta ayuda. </p>
+        <br><br><br>
+
+        <h2>Salir</h2>
+        <p> 1. Presione "Salir" para cerrar la ventana de Enlace Contabilidad. Las partidas ya generadas o enviadas quedan guardadas en el historial. </p>
+        <br><br><br>
+    </div>
+</body>
+</html>

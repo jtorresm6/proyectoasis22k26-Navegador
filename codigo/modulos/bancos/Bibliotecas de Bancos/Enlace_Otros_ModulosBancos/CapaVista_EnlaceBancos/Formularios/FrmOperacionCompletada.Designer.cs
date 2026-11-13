@@ -47,7 +47,7 @@
             this.Size = new System.Drawing.Size(430, 155);
             this.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular);
             this.ForeColor = System.Drawing.Color.FromArgb(28, 74, 48);
-            this.Text = "Operación completada";
+            this.Text = "8008 – OperacionCompletada";
             this.ClientSize = new System.Drawing.Size(430, 155);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.BackColor = System.Drawing.Color.FromArgb(245, 248, 243);

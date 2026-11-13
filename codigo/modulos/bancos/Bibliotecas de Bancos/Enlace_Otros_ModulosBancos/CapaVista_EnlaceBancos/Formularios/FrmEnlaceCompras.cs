@@ -1,3 +1,11 @@
+// =====================================================================
+// Autor:       Andre De Jesus Gonzalez Camey
+// Carné:       9959-23-3117
+// Módulo:      Tesorería y Bancos – Enlace con otros módulos
+// Descripción: Formulario de consulta de registros del módulo Compras dentro del
+//              enlace con otros módulos.
+// Fecha:       12/11/2026
+// =====================================================================
 using System;
 using System.Windows.Forms;
 using CapaControlador_EnlaceB;
