@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
  * INICIO DEL CÓDIGO — Ventas y cuentas por cobrar
  * Asignación: Matthew, Diego
  * Matthew Andreé Juárez Xoy | Carné: 0901-23-4250
