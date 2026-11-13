@@ -245,6 +245,7 @@
             this.RrhhDedBtnAyuda.Size = new System.Drawing.Size(87, 80);
             this.RrhhDedBtnAyuda.TabIndex = 10;
             this.RrhhDedBtnAyuda.UseVisualStyleBackColor = false;
+            this.RrhhDedBtnAyuda.Click += new System.EventHandler(this.RrhhDedBtnAyuda_Click);
             // 
             // RrhhDedBtnSalir
             // 

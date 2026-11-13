@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Consulta el total de comisiones aprobadas de un empleado
+ *  dentro del período solicitado. Relaciona al empleado con
+ *  el vendedor, los encabezados y los detalles de comisiones
+ *  para obtener el monto que se incorporará a la nómina.
+ * ==================================================================
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;

@@ -1,4 +1,19 @@
-﻿using CapaModelo_Nomina.Contratos;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Ejecuta las operaciones de registro, modificación, eliminación
+ *  y consulta del catálogo de percepciones y deducciones.
+ *  Construye los parámetros ODBC, convierte los resultados
+ *  en entidades y permite comprobar nombres duplicados.
+ * ==================================================================
+ */
+
+using CapaModelo_Nomina.Contratos;
 using CapaModelo_Nomina.Entidades;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,20 @@
-﻿using CapaModelo_Nomina.Contratos;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Administra el registro, modificación, eliminación y consulta
+ *  de rangos salariales de percepciones y deducciones.
+ *  Configura parámetros decimales, admite límites superiores
+ *  nulos y permite comprobar límites iniciales duplicados
+ *  para un mismo concepto.
+ * ==================================================================
+ */
+
+using CapaModelo_Nomina.Contratos;
 using CapaModelo_Nomina.Entidades;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,20 @@
-﻿using CapaControlador_Nomina.Modelos_de_controladores;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Permite asignar conceptos de aplicación Algunos a un empleado
+ *  o departamento. Controla la selección del destino y permite
+ *  registrar, modificar, eliminar, buscar y navegar entre
+ *  asignaciones, mostrando sus nombres en el listado
+ *  y permitiendo abrir el reporte correspondiente.
+ * ==================================================================
+ */
+
+using CapaControlador_Nomina.Modelos_de_controladores;
 using CapaControlador_Nomina.ObjetosdeValor;
 using CapaVista_Nomina.Ayudas;
 using CapaVista_Nomina.Reportes;
@@ -7,6 +23,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -485,6 +502,27 @@ namespace CapaVista_Nomina.Formularios
         {
             FrmReporteAsignacionConceptos reporte = new FrmReporteAsignacionConceptos();
             reporte.Show();
+        }
+
+        internal static void RrhhMetAbrirAyuda(Control Ventana, string Pagina)
+        {
+            const string Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\RecursosHumanosAyudas.chm";
+            for (var Carpeta = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory); Carpeta != null; Carpeta = Carpeta.Parent)
+            {
+                string Ruta = Path.Combine(Carpeta.FullName, Ayuda);
+                if (File.Exists(Ruta))
+                {
+                    Help.ShowHelp(Ventana, Ruta, Pagina);
+                    return;
+                }
+            }
+            MessageBox.Show("No se encontró el archivo de ayuda de RRHH.", "Ayuda",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void RrhhDedBtnAyuda_Click(object sender, EventArgs e)
+        {
+            RrhhMetAbrirAyuda(this, "AsignacionConceptos_RecursosHumanos.html");
         }
     }
 }

@@ -1,4 +1,20 @@
-﻿using CapaControlador_Nomina.ObjetosdeValor;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Coordina la generación del detalle de nóminas aprobadas.
+ *  Comprueba que no exista detalle y que los conceptos calculados
+ *  coincidan con los totales guardados antes de registrar el lote.
+ *  También prepara consultas con nombre, tipo y monto de concepto
+ *  para mostrarlas en formularios y reportes.
+ * ==================================================================
+ */
+
+using CapaControlador_Nomina.ObjetosdeValor;
 using CapaModelo_Nomina.Entidades;
 using CapaModelo_Nomina.Repositorios;
 using System;

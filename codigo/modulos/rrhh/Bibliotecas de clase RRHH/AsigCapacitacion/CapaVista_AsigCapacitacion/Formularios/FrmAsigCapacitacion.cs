@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -350,7 +351,25 @@ namespace CapaVista_AsigCapacitacion.Formularios
 
         private void RrhhBtnAyuda_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this, "C:/RrhhAyudas/RecursosHumanosAyudas.chm", "AsigCapacitacion_RecursosHumanos.html");
+            RrhhMetAbrirAyuda(this, "AsigCapacitacion_RecursosHumanos.html");
+        }
+ 
+        // Busca el .chm de RRHH subiendo carpetas desde donde corre el programa, así abre
+        // desde cualquier computadora que tenga el repo sin copiarlo a otro lado
+        internal static void RrhhMetAbrirAyuda(Control Ventana, string Pagina)
+        {
+            const string Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\RecursosHumanosAyudas.chm";
+            for (var Carpeta = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory); Carpeta != null; Carpeta = Carpeta.Parent)
+            {
+                string Ruta = Path.Combine(Carpeta.FullName, Ayuda);
+                if (File.Exists(Ruta))
+                {
+                    Help.ShowHelp(Ventana, Ruta, Pagina);
+                    return;
+                }
+            }
+            MessageBox.Show("No se encontró el archivo de ayuda de RRHH.", "Ayuda",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void RrhhMetLimpiarCampos()
         {

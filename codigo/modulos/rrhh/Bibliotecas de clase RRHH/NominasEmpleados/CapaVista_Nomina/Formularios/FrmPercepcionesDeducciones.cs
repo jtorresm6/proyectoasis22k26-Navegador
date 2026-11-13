@@ -1,4 +1,20 @@
-﻿using CapaControlador_Nomina.Modelos_de_controladores;
+﻿/*
+ * ==================================================================
+ * Área : Rrhh
+ * Autor : Cristian David Sipac Ispache
+ * Carné : 9959-23-1567
+ * Fecha : 06/11/2026
+ * ==================================================================
+ * Propósito :
+ *  Permite administrar el catálogo de percepciones y deducciones,
+ *  definiendo nombre, período, efecto, tipo de cálculo, valor,
+ *  aplicación y estado activo. Facilita agregar, modificar,
+ *  eliminar, buscar y navegar entre conceptos, además
+ *  de abrir su reporte.
+ * ==================================================================
+ */
+
+using CapaControlador_Nomina.Modelos_de_controladores;
 using CapaControlador_Nomina.ObjetosdeValor;
 using CapaVista_Nomina.Ayudas;
 using CapaVista_Nomina.Reportes;
@@ -8,6 +24,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -392,6 +409,28 @@ namespace CapaVista_Nomina.Formularios
         {
             FrmReportePercepcionDeduccion reporte = new FrmReportePercepcionDeduccion();
             reporte.Show();
+        }
+
+        internal static void RrhhMetAbrirAyuda(Control Ventana, string Pagina)
+        {
+            const string Ayuda = @"ayuda\modulos\rrhh\RrhhAyudas\RecursosHumanosAyudas.chm";
+            for (var Carpeta = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory); Carpeta != null; Carpeta = Carpeta.Parent)
+            {
+                string Ruta = Path.Combine(Carpeta.FullName, Ayuda);
+                if (File.Exists(Ruta))
+                {
+                    Help.ShowHelp(Ventana, Ruta, Pagina);
+                    return;
+                }
+            }
+            MessageBox.Show("No se encontró el archivo de ayuda de RRHH.", "Ayuda",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void RrhhDedBtnAyuda_Click(object sender, EventArgs e)
+        {
+            //Help.ShowHelp(this, "C:/ayuda/modulos/rrhh/RrhhAyudas/RrhhAyudas.chm", "PercepcionDeduccion__RecursosHumanos.html");
+            RrhhMetAbrirAyuda(this, "PercepcionDeduccion__RecursosHumanos.html");
         }
     }
 }
