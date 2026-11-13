@@ -1,6 +1,7 @@
 ﻿using CapaControlador_EvaluacionDesempeño.Controladores;
 using CapaControlador_Seguridad;
 using CapaControlador_Seguridad.Objetos_de_valor;
+using CapaVista_EvaluacionDesempeño.frmReportes;
 using CapaVista_EvaluacionDesempeño.Utilidades;
 using CapaVista_Seguridad.Ayudas;
 using System;
@@ -71,12 +72,12 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             RrhhBtnEliminar.Click += RrhhBtnEliminar_Click;
             RrhhBtnCancelar.Click += RrhhBtnCancelar_Click;
             RrhhBtnRefrescar.Click += RrhhBtnRefrescar_Click;
-            RrhhBtnImprimir.Click += (Remitente, Evento) => ClsAccionesVista.RrhhMetImprimir(this);
+            RrhhBtnImprimir.Click += (Remitente, Evento) => new FrmReportePlanMejora().Show();
             RrhhBtnInicio.Click += (Remitente, Evento) => RrhhMetIrAFila(0);
             RrhhBtnAnterior.Click += (Remitente, Evento) => RrhhMetIrAFila(RrhhMetFilaActual() - 1);
             RrhhBtnSiguiente.Click += (Remitente, Evento) => RrhhMetIrAFila(RrhhMetFilaActual() + 1);
             RrhhBtnFin.Click += (Remitente, Evento) => RrhhMetIrAFila(RrhhDgvPlanes.Rows.Count - 1);
-            RrhhBtnAyuda.Click += (Remitente, Evento) => ClsAccionesVista.RrhhMetMostrarAyuda(this);
+            RrhhBtnAyuda.Click += (Remitente, Evento) => ClsAccionesVista.RrhhMetMostrarAyuda(this, "PlanMejora__RecursosHumanos.html");
         }
 
         private void FrmPlanMejora_Load(object sender, EventArgs e)
