@@ -152,6 +152,16 @@ namespace CapaControlador_ConciliacionBancaria
             return Math.Abs(ImporteBanco) - Math.Abs(ImporteLibro);
         }
 
+        public bool BancosFuncMismoSentido(decimal ImporteLibro, decimal ImporteBanco)
+        {
+            return ImporteLibro != 0m && ImporteBanco != 0m && (ImporteLibro > 0m) == (ImporteBanco > 0m);
+        }
+
+        public bool BancosFuncEsSugerida(decimal ImporteLibro, decimal ImporteBanco)
+        {
+            return BancosFuncMismoSentido(ImporteLibro, ImporteBanco) && Math.Abs(ImporteLibro) == Math.Abs(ImporteBanco);
+        }
+
         public string BancosMetMarcar(long IdConciliacion, long IdMovimiento, long IdLinea, bool AceptarDiferencia,
             string Responsable, out ClsResultadoConciliacion Resultado)
         {

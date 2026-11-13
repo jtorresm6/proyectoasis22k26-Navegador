@@ -35,9 +35,9 @@
         <h2>Conozca la ventana</h2>
         <p> 1. Encabezado; muestra el nombre del proceso, "Conciliación Bancaria". </p>
         <p> 2. Datos de la conciliación; aquí se elige la cuenta, el estado de cuenta y la fecha de corte, y se ve el estado de la conciliación. </p>
-        <p> 3. Botones; son las acciones del proceso (corte, marcar, reporte, ayuda y salir). </p>
+        <p> 3. Botones; son las acciones del proceso (corte de conciliación, marcar conciliación, reporte, ayuda y salir). A la izquierda de los botones el sistema muestra un texto corto que le dice qué hacer en cada momento; por ejemplo, los tres pasos para conciliar a mano. </p>
         <p> 4. Resumen de saldos; muestra los saldos al corte, lo que ya está conciliado y lo que falta por conciliar. </p>
-        <p> 5. Tabla de partidas; muestra una fila por cada pareja o partida suelta del libro o del banco. </p>
+        <p> 5. Tabla de partidas; muestra una fila por cada pareja o partida suelta del libro o del banco. Tiene barras de desplazamiento para ver todas sus columnas y filas. </p>
         <img class="imgVentanaMDI" src="Imagenes/Conciliacion/Conciliacion_general.png">
         <br><br><br>
 
@@ -48,14 +48,14 @@
             el sistema propone la fecha final del extracto. </p>
         <p> 4. Estado de la conciliación; es un campo que no se escribe. Dice "Sin corte" hasta que se hace el corte y después muestra el estado de la conciliación
             (ver "Estados de la conciliación"). </p>
-        <p> Si cambia la cuenta, el estado de cuenta o la fecha de corte, el resumen y la tabla se vacían y debe volver a presionar "Corte". </p>
+        <p> Si cambia la cuenta, el estado de cuenta o la fecha de corte, el resumen y la tabla se vacían y debe volver a presionar "Corte de Conciliación". </p>
         <p> Si la cuenta no tiene estados de cuenta cargados, el sistema muestra el mensaje "La cuenta seleccionada no tiene estados de cuenta cargados". </p>
         <img class="imgVentanaMDI" src="Imagenes/Conciliacion/Conciliacion_seleccion.png">
         <br><br><br>
 
         <h2 id="corte">Corte</h2>
         <p> 1. Elija la cuenta, el estado de cuenta y la fecha de corte. </p>
-        <p> 2. Presione el botón "Corte". El sistema toma los movimientos del libro y las líneas del estado de cuenta hasta esa fecha, las compara, guarda el resultado y lo muestra
+        <p> 2. Presione el botón "Corte de Conciliación". El sistema toma los movimientos del libro y las líneas del estado de cuenta hasta esa fecha, las compara, guarda el resultado y lo muestra
             en el resumen y en la tabla. </p>
         <p> 3. Puede repetir el corte las veces que necesite. Las parejas que usted marcó a mano se conservan; las demás se calculan de nuevo. </p>
         <p> Si falta algún dato, el sistema muestra mensajes como "Seleccione una cuenta bancaria" o "Seleccione un extracto bancario". Si el extracto no es de la cuenta elegida, muestra
@@ -79,7 +79,8 @@
             "Importe libro" son los datos del movimiento registrado; "Ref. banco", "Concepto banco" e "Importe banco" son los datos de la línea del estado de cuenta;
             "Diferencia" es el importe del banco menos el del libro cuando no coinciden; "Método" indica si se emparejó de forma "Automático" o "Manual" y "Observación" explica el motivo. </p>
         <p> 2. Filas; los abonos se muestran con importe positivo y los cargos con importe negativo. Las filas pendientes se ven en tono amarillo y las que tienen diferencia en tono rosado. </p>
-        <p> 3. Selección; para marcar o desmarcar se seleccionan filas con el mouse. Para elegir dos filas mantenga presionada la tecla Ctrl. </p>
+        <p> 3. Selección; para marcar o desmarcar se elige cada partida con un clic del mouse, sin teclas adicionales. La partida elegida se resalta en azul, en negrita, y la columna "Elegida" dice "Elegida"; las posibles coincidencias se resaltan en verde y la columna dice "Sugerida". </p>
+        <p> 4. Barras de desplazamiento; la tabla tiene más columnas de las que caben en la ventana. Use la barra de abajo para moverse a la derecha y ver "Importe banco", "Diferencia", "Método" y "Observación", y la barra de la derecha para ver más filas. Las columnas "Elegida" y "Estado" se quedan fijas para que siempre sepa de qué partida se trata. Si una palabra no cabe completa en su columna, deje el puntero del mouse encima para verla. </p>
         <img class="imgVentanaMDI" src="Imagenes/Conciliacion/Conciliacion_tabla.png">
         <br><br><br>
 
@@ -100,9 +101,15 @@
         <p> - "Cerrada"; la conciliación ya fue cerrada y no se puede modificar. </p>
         <br><br><br>
 
+        <h2>Cuando no hay partidas pendientes</h2>
+        <p> 1. Si después del corte todas las partidas coinciden, el sistema escribe a la izquierda de los botones "No hay partidas pendientes por conciliar." y la tabla queda vacía. </p>
+        <p> 2. El estado de la conciliación muestra "Conciliada" en verde, los contadores quedan en 0 y los saldos del banco y del libro son iguales. Ya puede cerrar el período en el proceso de Cierre Bancario. </p>
+        <img class="imgVentanaMDI" src="Imagenes/Conciliacion/Conciliacion_conciliada.png">
+        <br><br><br>
+
         <h2>Los botones</h2>
-        <p> 1. Corte; hace la conciliación de la cuenta y el estado de cuenta elegidos hasta la fecha de corte. </p>
-        <p> 2. Marcar; empareja a mano dos partidas pendientes o desmarca una pareja que se marcó a mano. </p>
+        <p> 1. Corte de Conciliación; hace la conciliación de la cuenta y el estado de cuenta elegidos hasta la fecha de corte. </p>
+        <p> 2. Marcar Conciliación; empareja a mano dos partidas pendientes o desmarca una pareja que se marcó a mano. </p>
         <p> 3. Reporte; abre el reporte de la conciliación que se está viendo. </p>
         <p> 4. Ayuda; abre esta ayuda. </p>
         <p> 5. Salir; cierra la ventana de Conciliación Bancaria. </p>
@@ -110,29 +117,33 @@
         <br><br><br>
 
         <h2 id="marcar">Marcar partidas a mano</h2>
-        <p> Use esta opción cuando una partida del libro y una del banco son la misma operación pero el sistema no las emparejó, por ejemplo porque las referencias son distintas. </p>
-        <p> 1. En la tabla, seleccione una fila "Solo libro" y una fila "Solo banco" que estén pendientes. Para elegir las dos, mantenga presionada la tecla Ctrl. </p>
-        <p> 2. Presione "Marcar". </p>
-        <p> 3. Si los importes son iguales, las dos partidas se unen en una sola fila "Conciliado" con método "Manual". </p>
-        <p> 4. Si los importes no son iguales, el sistema pregunta "Los importes no coinciden. La diferencia es de ... ¿Desea marcar las partidas de todos modos?". Presione "Sí" para
+        <p> Use esta opción cuando una partida del libro y una del banco son la misma operación pero el sistema no las emparejó, por ejemplo porque las referencias son distintas.
+            Todo se hace con el mouse; no necesita teclas adicionales. </p>
+        <p> 1. Haga el corte. Después, en la tabla, haga clic en una fila "Solo libro" que esté pendiente. La fila se resalta en azul (número 2 de la imagen) y a la izquierda de los botones el sistema
+            escribe qué partida eligió y qué sigue (número 1), por ejemplo "Libro elegido: ... Ahora haga clic en la línea del banco. Las posibles coincidencias están en verde". </p>
+        <p> 2. Haga clic en la fila "Solo banco" pendiente que le corresponde. Para cambiar de elección, haga clic en otra fila, o vuelva a hacer clic en la elegida para quitarla. </p>
+        <p> 3. Presione "Marcar Conciliación" (número 3). Al dejar el puntero sobre el botón aparece el texto "Concilia (o desmarca) las partidas que eligió con un clic". </p>
+        <p> 4. Si los importes son iguales, las dos partidas se unen en una sola fila "Conciliado" con método "Manual". </p>
+        <p> 5. Si los importes no son iguales, el sistema pregunta "Los importes no coinciden. La diferencia es de ... ¿Desea marcar las partidas de todos modos?". Presione "Sí" para
             unirlas con el estado "Con diferencia" o "No" para cancelar. </p>
         <p> Las dos partidas deben ser del mismo tipo, ambas cargos o ambas abonos; si no, el sistema muestra "El movimiento y la línea del estado de cuenta deben ser ambos cargos o ambos abonos".
-            Si la selección no es correcta, muestra "Selección incompleta" con las instrucciones. Si todavía no hizo el corte, muestra "Realice primero el corte de conciliación". </p>
+            Si todavía no eligió las dos partidas, muestra "Falta elegir las partidas" con las instrucciones. Si todavía no hizo el corte, muestra "Realice primero el corte de conciliación". </p>
+        <p> Elija con cuidado: una comisión o un interés que solo aparece en el banco no tiene pareja en el libro. No la marque contra otra partida; primero registre el movimiento y luego haga el corte otra vez. </p>
         <img class="imgVentanaMDI" src="Imagenes/Conciliacion/Conciliacion_marcar.png">
         <br><br><br>
 
         <h2 id="desmarcar">Desmarcar una pareja</h2>
-        <p> 1. En la tabla, seleccione una sola fila que tenga origen "Libro y banco" y método "Manual". </p>
-        <p> 2. Presione "Marcar". El sistema pregunta "¿Desea desmarcar la pareja seleccionada?" y aclara que las dos partidas volverán a quedar pendientes. </p>
+        <p> 1. En la tabla, haga clic en la fila que tenga origen "Libro y banco" y método "Manual". Se resalta en azul. </p>
+        <p> 2. Presione "Marcar Conciliación". El sistema pregunta "¿Desea desmarcar la pareja seleccionada?" y aclara que las dos partidas volverán a quedar pendientes. </p>
         <p> 3. Presione "Sí" para desmarcar o "No" para cancelar. </p>
         <p> Solo se pueden desmarcar las parejas que se marcaron a mano. Las parejas que el sistema emparejó solo no se desmarcan; si están mal, corríjalas en el proceso donde se registró el movimiento y vuelva a hacer el corte. </p>
         <br><br><br>
 
         <h2 id="reporte">Reporte</h2>
         <p> 1. Haga el corte y presione el botón "Reporte". Si todavía no hizo el corte, el sistema muestra "Realice primero el corte de conciliación para generar el reporte". </p>
-        <p> 2. Se abre la ventana "8007-FrmReporteConciliacionBancaria". Arriba muestra los datos de la conciliación (cuenta, banco, moneda, fecha de corte, estado de cuenta, estado, saldos,
-            diferencia y responsable) y abajo la tabla con todas las partidas. </p>
-        <p> 3. Desde la barra del reporte puede cambiar de página, hacer zoom, imprimir y guardar el reporte como archivo (por ejemplo PDF, Word o Excel). </p>
+        <p> 2. Se abre la ventana "8007-FrmReporteConciliacionBancaria". Arriba tiene la barra del reporte (número 1 de la imagen); desde ahí puede cambiar de página, hacer zoom, imprimir, buscar texto y guardar el reporte como archivo (por ejemplo PDF, Word o Excel). </p>
+        <p> 3. Debajo del título del reporte están los datos de la conciliación (número 2): cuenta bancaria, banco, moneda, fecha de corte, estado de cuenta, estado, saldo del banco, saldo del libro, diferencia de saldos, responsable, partidas conciliadas y partidas abiertas. </p>
+        <p> 4. Abajo está la tabla con todas las partidas (número 3): número, estado, fecha, referencia y concepto del libro, importe del libro, referencia y concepto del banco, importe del banco, diferencia, método y observación. </p>
         <img class="imgVentanaMDI" src="Imagenes/Conciliacion/Conciliacion_reporte.png">
         <br><br><br>
 

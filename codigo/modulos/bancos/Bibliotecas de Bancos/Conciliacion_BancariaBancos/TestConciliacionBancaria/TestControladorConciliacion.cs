@@ -713,6 +713,28 @@ namespace TestConciliacionBancaria
         }
 
         [TestMethod]
+        public void Test_MismoSentidoReconoceCargosYAbonos()
+        {
+            ClsControladorConciliacion Controlador = new ClsControladorConciliacion(RepositorioBase());
+
+            Assert.IsTrue(Controlador.BancosFuncMismoSentido(-100m, -95m));
+            Assert.IsTrue(Controlador.BancosFuncMismoSentido(80m, 100m));
+            Assert.IsFalse(Controlador.BancosFuncMismoSentido(-100m, 100m));
+            Assert.IsFalse(Controlador.BancosFuncMismoSentido(0m, 100m));
+        }
+
+        [TestMethod]
+        public void Test_SugeridaExigeMismoSentidoEImporteIgual()
+        {
+            ClsControladorConciliacion Controlador = new ClsControladorConciliacion(RepositorioBase());
+
+            Assert.IsTrue(Controlador.BancosFuncEsSugerida(-250m, -250m));
+            Assert.IsTrue(Controlador.BancosFuncEsSugerida(250m, 250m));
+            Assert.IsFalse(Controlador.BancosFuncEsSugerida(-250m, 250m));
+            Assert.IsFalse(Controlador.BancosFuncEsSugerida(250m, 249m));
+        }
+
+        [TestMethod]
         public void Test_MarcarRechazaSinConciliacion()
         {
             ClsControladorConciliacion Controlador = new ClsControladorConciliacion(RepositorioBase());
