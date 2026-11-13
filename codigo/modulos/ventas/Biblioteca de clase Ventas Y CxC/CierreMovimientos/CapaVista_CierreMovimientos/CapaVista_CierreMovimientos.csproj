@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -10,6 +10,7 @@
     <RootNamespace>CapaVista_CierreMovimientos</RootNamespace>
     <AssemblyName>CapaVista_CierreMovimientos</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <PlatformTarget>x64</PlatformTarget>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -36,11 +37,45 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\componentes\reporteador\BtnVerReporte_Reporteador\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\componentes\reporteador\BtnVerReporte_Reporteador\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\componentes\reporteador\BtnVerReporte_Reporteador\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Presentacion\ClsEventosCierre.cs" />
-    <Compile Include="Presentacion\ClsConsultasCierre.cs" />
+    <Compile Include="Formularios\FrmCierreMovimientosVentas.Datos.cs">
+      <DependentUpon>FrmCierreMovimientosVentas.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmCierreMovimientosVentas.Acciones.cs">
+      <DependentUpon>FrmCierreMovimientosVentas.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmCierreMovimientosVentas.Consultas.cs">
+      <DependentUpon>FrmCierreMovimientosVentas.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmCierreMovimientosVentas.Eventos.cs">
+      <DependentUpon>FrmCierreMovimientosVentas.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmReporteCierreMovimientos.Datos.cs">
+      <DependentUpon>FrmReporteCierreMovimientos.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmReporteCierreMovimientos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmReporteCierreMovimientos.Designer.cs">
+      <DependentUpon>FrmReporteCierreMovimientos.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Reportes\RpReporteCierreMovimientos.rdlc" />
     <Compile Include="Formularios\FrmCierreMovimientosVentas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,20 +104,5 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CustomToolNamespace>CapaVista_CierreMovimientos.Properties</CustomToolNamespace>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Presentacion\ClsCierrePresentador.cs" />
-  </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Presentacion\ClsBorradorCierre.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
-  <ItemGroup>
-    <Compile Include="..\..\VentasYCxC\CapaVista_Ventas\Presentacion\ClsHerramientasVentas.cs">
-      <Link>Presentacion\ClsHerramientasVentas.cs</Link>
-    </Compile>
   </ItemGroup>
 </Project>

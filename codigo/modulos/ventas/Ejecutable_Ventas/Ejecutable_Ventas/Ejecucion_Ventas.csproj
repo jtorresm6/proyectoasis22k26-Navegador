@@ -86,10 +86,6 @@
       <Project>{9496BD61-6249-436E-B168-BB5C8C6ABFB0}</Project>
       <Name>CapaVista_Ventas</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\CapaVista_CierreMovimientos.csproj" Condition=" '$(Configuration)' == 'Debug' ">
-      <Project>{2AC893AF-20AB-5159-BF28-32D0AA59D794}</Project>
-      <Name>CapaVista_CierreMovimientos</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Data.Odbc" Version="8.0.1" />

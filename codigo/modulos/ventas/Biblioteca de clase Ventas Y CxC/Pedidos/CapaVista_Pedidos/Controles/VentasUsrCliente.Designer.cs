@@ -1,3 +1,9 @@
+/*
+ * INICIO DEL CÓDIGO — Natali Montenegro
+ * Carné: 0901-23-10017 | Fecha: 22/10/2026
+ * Área: Ventas y cuentas por cobrar
+ * Propósito: Seleccionar clientes con el control estándar de Ventas.
+ */
 namespace CapaVista_Pedidos
 {
     // Natali Sofía Montenegro Portillo | 0901-23-10017 | Define el selector visual reutilizable de cliente.
