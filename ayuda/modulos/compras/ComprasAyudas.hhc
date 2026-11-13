@@ -1,0 +1,18 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN"><html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"></head><body><ul>
+<li><object type="text/sitemap"><param name="Name" value="Inicio"><param name="Local" value="index.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Pantalla principal (MDI)"><param name="Local" value="MDI_Compras.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Movimientos de proveedores"><param name="Local" value="MovimientosProveedores.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="órdenes de compra"><param name="Local" value="OrdenesCompra.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Compras"><param name="Local" value="Compras.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Devoluciones de Compras"><param name="Local" value="DevolucionesCompras.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Pagos a proveedores"><param name="Local" value="PagosProveedores.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Pólizas"><param name="Local" value="Polizas.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Cierre de movimientos"><param name="Local" value="CierreMovimientos.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Herramientas de moneda"><param name="Local" value="HerramientasMoneda.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Bitácora"><param name="Local" value="BitacoraCompras.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Mantenimiento de proveedores"><param name="Local" value="Proveedor_Compras.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Mantenimiento de plazos"><param name="Local" value="Plazo_Compras.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Mantenimiento de conceptos de proveedor"><param name="Local" value="ConceptoProveedor_Compras.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Encabezados de órdenes de compra"><param name="Local" value="EncabezadosOrdenesCompra.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Detalles de órdenes de compra"><param name="Local" value="DetallesOrdenesCompra.html"></object></li>
+</ul></body></html>
