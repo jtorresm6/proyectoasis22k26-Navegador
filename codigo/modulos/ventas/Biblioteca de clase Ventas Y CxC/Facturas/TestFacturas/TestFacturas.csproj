@@ -60,4 +60,5 @@
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
   </ItemGroup>
+<ItemGroup><ProjectReference Include="..\CapaControlador_Facturas\CapaControlador_Facturas.csproj"><Name>CapaControlador_Facturas</Name></ProjectReference></ItemGroup>
 <ItemGroup><ProjectReference Include="..\CapaModelo_Facturas\CapaModelo_Facturas.csproj"><Name>CapaModelo_Facturas</Name></ProjectReference></ItemGroup></Project>

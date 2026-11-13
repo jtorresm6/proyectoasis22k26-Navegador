@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -320,7 +320,7 @@
                         </Style>
                       </TextRun>
                       <TextRun>
-                        <Value>=Parameters!Fecha.Value</Value>
+                        <Value>=Parameters!Fecha.Value &amp; vbCrLf &amp; "Vencimiento: " &amp; Parameters!FechaVencimiento.Value</Value>
                         <Style>
                           <FontSize>6.5pt</FontSize>
                           <Format>dd/MM/yyyy HH:mm</Format>
@@ -355,7 +355,7 @@
                 </Paragraphs>
                 <Top>0.02in</Top>
                 <Left>4.35in</Left>
-                <Height>0.42in</Height>
+                <Height>0.62in</Height>
                 <Width>2.7in</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
@@ -366,7 +366,7 @@
             </ReportItems>
             <Top>0.72in</Top>
             <Left>0.2in</Left>
-            <Height>0.46in</Height>
+            <Height>0.68in</Height>
             <Width>7.15in</Width>
             <ZIndex>4</ZIndex>
             <Style>
@@ -836,6 +836,26 @@
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
+                        <Value>Descuento incluido: </Value>
+                        <Style>
+                          <FontSize>7.5pt</FontSize>
+                        </Style>
+                      </TextRun>
+                      <TextRun>
+                        <Value>=Sum(Fields!Descuento.Value, "dsDetalle")</Value>
+                        <Style>
+                          <FontSize>7.5pt</FontSize>
+                          <Format>=Chr(34) &amp; Parameters!Moneda.Value &amp; Chr(34) &amp; " #,##0.0000"</Format>
+                        </Style>
+                      </TextRun>
+                    </TextRuns>
+                    <Style>
+                      <TextAlign>Right</TextAlign>
+                    </Style>
+                  </Paragraph>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
                         <Value>Subtotal: </Value>
                         <Style>
                           <FontSize>7.5pt</FontSize>
@@ -900,7 +920,7 @@
                 </Paragraphs>
                 <Top>0.02in</Top>
                 <Left>0.02in</Left>
-                <Height>0.48in</Height>
+                <Height>0.72in</Height>
                 <Width>2.4in</Width>
                 <Style>
                   <PaddingLeft>2pt</PaddingLeft>
@@ -910,7 +930,7 @@
             </ReportItems>
             <Top>1.75in</Top>
             <Left>4.35in</Left>
-            <Height>0.52in</Height>
+            <Height>0.78in</Height>
             <Width>2.98in</Width>
             <ZIndex>7</ZIndex>
             <Style>
@@ -3491,5 +3511,5 @@ DXTabJlp35IcPnPBXn/72XPreRtu3QL96BHoawfz/vzoEej2Keibu/bYwQF0UejHNi6P8bmfV33/Tq/Y
       <DataType>String</DataType>
       <Prompt>Condicion</Prompt>
     </ReportParameter>
-  </ReportParameters>
+  <ReportParameter Name="FechaVencimiento"><DataType>String</DataType><Prompt>FechaVencimiento</Prompt></ReportParameter></ReportParameters>
 </Report>

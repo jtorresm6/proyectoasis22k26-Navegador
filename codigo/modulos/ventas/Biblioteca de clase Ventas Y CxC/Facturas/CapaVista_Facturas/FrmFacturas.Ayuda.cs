@@ -6,27 +6,27 @@ namespace CapaVista_Facturas
 {
     public partial class FrmFacturas
     {
-        private void MostrarAyudaFacturas()
+        private void VentasMetMostrarAyudaFacturas()
         {
-            Ejecutar(()=>{
-                byte[] contenido;
-                using(var recurso=typeof(FrmFacturas).Assembly.GetManifestResourceStream("CapaVista_Facturas.Ayudas.Facturas.chm"))
-                using(var memoria=new MemoryStream())
+            VentasMetEjecutar(()=>{
+                byte[] Contenido;
+                using(var Recurso=typeof(FrmFacturas).Assembly.GetManifestResourceStream("CapaVista_Facturas.Ayudas.Facturas.chm"))
+                using(var Memoria=new MemoryStream())
                 {
-                    if(recurso==null)throw new FileNotFoundException("No se encontró la guía de Facturas integrada.");
-                    recurso.CopyTo(memoria);contenido=memoria.ToArray();
+                    if(Recurso==null)throw new FileNotFoundException("No se encontró la guía de Facturas integrada.");
+                    Recurso.CopyTo(Memoria);Contenido=Memoria.ToArray();
                 }
-                string hash;using(var sha=SHA256.Create())hash=BitConverter.ToString(sha.ComputeHash(contenido)).Replace("-","");
-                string carpeta=Path.Combine(Path.GetTempPath(),"EmbutidosCalidad","AyudaFacturas");Directory.CreateDirectory(carpeta);
-                string ruta=Path.Combine(carpeta,"Facturas-"+hash+".chm");
-                if(!File.Exists(ruta))File.WriteAllBytes(ruta,contenido);
-                Help.ShowHelp(this,ruta,HelpNavigator.Topic,"General.html");
+                string Hash;using(var Sha=SHA256.Create())Hash=BitConverter.ToString(Sha.ComputeHash(Contenido)).Replace("-","");
+                string Carpeta=Path.Combine(Path.GetTempPath(),"EmbutidosCalidad","AyudaFacturas");Directory.CreateDirectory(Carpeta);
+                string Ruta=Path.Combine(Carpeta,"Facturas-"+Hash+".chm");
+                if(!File.Exists(Ruta))File.WriteAllBytes(Ruta,Contenido);
+                Help.ShowHelp(this,Ruta,HelpNavigator.Topic,"General.html");
             });
         }
-        protected override bool ProcessCmdKey(ref Message mensaje,Keys tecla)
+        protected override bool ProcessCmdKey(ref Message Mensaje,Keys Tecla)
         {
-            if(tecla==Keys.F1){MostrarAyudaFacturas();return true;}
-            return base.ProcessCmdKey(ref mensaje,tecla);
+            if(Tecla==Keys.F1){VentasMetMostrarAyudaFacturas();return true;}
+            return base.ProcessCmdKey(ref Mensaje,Tecla);
         }
     }
 }

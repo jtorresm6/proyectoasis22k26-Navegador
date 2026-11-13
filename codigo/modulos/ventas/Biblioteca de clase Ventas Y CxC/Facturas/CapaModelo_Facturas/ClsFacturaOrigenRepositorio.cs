@@ -8,7 +8,7 @@ namespace CapaModelo_Facturas
     {
         // dbSistemaEmbutidos v1.6 usa ids descriptivos (idCotizacionEncabezado,
         // idPedidoEncabezado, idFacturaEncabezado) y relaciones con esos mismos nombres.
-        private const string Cotizaciones = @"SELECT q.idCotizacionEncabezado Id,
+        private const string _Cotizaciones = @"SELECT q.idCotizacionEncabezado Id,
             CONCAT(q.numeroCotizacionEncabezado, ' - ', c.nombreCliente) Nombre,
             q.idCotizacionEncabezado CotizacionId, NULL PedidoId, q.idCliente ClienteId,
             q.idVendedor VendedorId, q.idMoneda MonedaId, m.codigoMoneda Moneda,
@@ -25,7 +25,7 @@ namespace CapaModelo_Facturas
               AND EXISTS (SELECT 1 FROM tblCotizacionDetalle d WHERE d.idCotizacionEncabezado=q.idCotizacionEncabezado)
             ORDER BY q.numeroCotizacionEncabezado";
 
-        private const string Pedidos = @"SELECT p.idPedidoEncabezado Id,
+        private const string _Pedidos = @"SELECT p.idPedidoEncabezado Id,
             CONCAT(p.referenciaPedidoEncabezado, ' - ', c.nombreCliente) Nombre,
             p.idCotizacionEncabezado CotizacionId, p.idPedidoEncabezado PedidoId, p.idCliente ClienteId,
             p.idVendedor VendedorId, p.idMoneda MonedaId, m.codigoMoneda Moneda,
@@ -44,7 +44,7 @@ namespace CapaModelo_Facturas
               AND EXISTS (SELECT 1 FROM tblPedidoDetalle d WHERE d.idPedidoEncabezado=p.idPedidoEncabezado)
             ORDER BY p.referenciaPedidoEncabezado";
 
-        private const string LineasCotizacion = @"SELECT d.idProducto ProductoId,
+        private const string _LineasCotizacion = @"SELECT d.idProducto ProductoId,
             d.descripcionItemCotizacionDetalle Producto, d.cantidadCotizacionDetalle Cantidad,
             d.precioUnitarioCotizacionDetalle Precio, d.descuentoMontoCotizacionDetalle Descuento,
             d.tasaImpuestoCotizacionDetalle Tasa
@@ -52,7 +52,7 @@ namespace CapaModelo_Facturas
             WHERE d.idCotizacionEncabezado=?
             ORDER BY d.numeroLineaCotizacionDetalle";
 
-        private const string LineasPedido = @"SELECT d.idProducto ProductoId,
+        private const string _LineasPedido = @"SELECT d.idProducto ProductoId,
             COALESCE(c.descripcionItemCotizacionDetalle,p.nombreProducto) Producto,
             d.cantidadPedidoDetalle Cantidad, d.precioUnitarioPedidoDetalle Precio,
             d.descuentoMontoPedidoDetalle Descuento, COALESCE(c.tasaImpuestoCotizacionDetalle,pv.tasaImpuestoProductoVenta,0) Tasa
@@ -69,7 +69,7 @@ namespace CapaModelo_Facturas
         public DataTable VentasFuncOrigenes(bool Pedido)
         {
             using (var Datos = new ClsDatosVentas())
-                return Datos.VentasFuncTabla(Pedido ? Pedidos : Cotizaciones, 0, 0);
+                return Datos.VentasFuncTabla(Pedido ? _Pedidos : _Cotizaciones, 0, 0);
         }
 
         public DataTable VentasFuncSucursales()
@@ -87,21 +87,21 @@ namespace CapaModelo_Facturas
         private static DataSet VentasFuncDocumento(ClsDatosVentas Datos, bool Pedido, int Id)
         {
             if (Id <= 0) throw new ArgumentException("Seleccione un documento de origen.");
-            DataTable Encabezado = Datos.VentasFuncTabla(Pedido ? Pedidos : Cotizaciones, Id, Id);
+            DataTable Encabezado = Datos.VentasFuncTabla(Pedido ? _Pedidos : _Cotizaciones, Id, Id);
             if (Encabezado.Rows.Count != 1)
                 throw new InvalidOperationException("El documento ya fue utilizado o dejó de estar disponible.");
 
-            DataTable Lineas = Datos.VentasFuncTabla(Pedido ? LineasPedido : LineasCotizacion, Id);
+            DataTable Lineas = Datos.VentasFuncTabla(Pedido ? _LineasPedido : _LineasCotizacion, Id);
             if (Lineas.Rows.Count == 0) throw new InvalidOperationException("El documento no tiene productos.");
             Lineas.Columns.Add("Subtotal", typeof(decimal));
             Lineas.Columns.Add("Impuesto", typeof(decimal));
             Lineas.Columns.Add("Total", typeof(decimal));
-            decimal tasa = Tasa(Datos);
+            decimal Tasa = VentasFuncTasa(Datos);
             foreach (DataRow Linea in Lineas.Rows)
             {
-                Linea["Tasa"] = tasa;
-                var importes = ReglasFactura.Calcular(Convert.ToDecimal(Linea["Cantidad"]), Convert.ToDecimal(Linea["Precio"]), Convert.ToDecimal(Linea["Descuento"]), tasa);
-                Linea["Subtotal"] = importes[0]; Linea["Impuesto"] = importes[1]; Linea["Total"] = importes[2];
+                Linea["Tasa"] = Tasa;
+                var Importes = ClsReglasFactura.VentasFuncCalcular(Convert.ToDecimal(Linea["Cantidad"]), Convert.ToDecimal(Linea["Precio"]), Convert.ToDecimal(Linea["Descuento"]), Tasa);
+                Linea["Subtotal"] = Importes[0]; Linea["Impuesto"] = Importes[1]; Linea["Total"] = Importes[2];
             }            var Documento = new DataSet();
             Documento.Tables.Add(Encabezado);
             Documento.Tables.Add(Lineas);

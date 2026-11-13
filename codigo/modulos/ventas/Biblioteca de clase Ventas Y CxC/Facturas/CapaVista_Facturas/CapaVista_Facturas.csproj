@@ -66,6 +66,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsFactura.xsd</DependentUpon>
     </Compile>
+    <Compile Include="frmReportes\FrmReporteFactura.cs" />
     <Compile Include="FrmFacturas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,7 +96,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptFactura.rdlc" /><EmbeddedResource Include="..\..\..\..\..\..\ayuda\modulos\ventas\Facturas.chm"><LogicalName>CapaVista_Facturas.Ayudas.Facturas.chm</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpReporteFactura.rdlc" /><EmbeddedResource Include="..\..\..\..\..\..\ayuda\modulos\ventas\Facturas.chm"><LogicalName>CapaVista_Facturas.Ayudas.Facturas.chm</LogicalName></EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="dsFactura.xsc">
