@@ -30,27 +30,24 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCierreNominas));
             this.RrhhDgvVistaCierreNomina = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Empleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Deducciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RrhhPnlInicio = new System.Windows.Forms.Panel();
+            this.RrhhBtnAyudaCierreNomina = new System.Windows.Forms.Button();
             this.RrhhPbIconoMascota = new System.Windows.Forms.PictureBox();
             this.RrhhPbIconoCierreNominas = new System.Windows.Forms.PictureBox();
             this.RrhhLblSubTituloCierreNominas = new System.Windows.Forms.Label();
             this.RrhhLblTituloCierreNominas = new System.Windows.Forms.Label();
             this.RrhhPnlCierreNominas = new System.Windows.Forms.Panel();
             this.RrhhPbCalendario = new System.Windows.Forms.PictureBox();
+            this.RrhhBtnCerrarNomina = new System.Windows.Forms.Button();
             this.RrhhLblMensajeInformativo = new System.Windows.Forms.Label();
             this.RrhhLblAdvertencia = new System.Windows.Forms.Label();
             this.RrhhCboPeriodo = new System.Windows.Forms.ComboBox();
             this.RrhhLblMesAño = new System.Windows.Forms.Label();
             this.RrhhLblTituloCierre = new System.Windows.Forms.Label();
             this.RrhhPnlResumen = new System.Windows.Forms.Panel();
+            this.RrhhBtnReporteCierreNomina = new System.Windows.Forms.Button();
             this.RrhhPbResumen = new System.Windows.Forms.PictureBox();
             this.RrhhLblResumenPeriodo = new System.Windows.Forms.Label();
-            this.RrhhBtnCerrarNomina = new System.Windows.Forms.Button();
             this.RrhhPnlDecorativo1 = new System.Windows.Forms.Panel();
             this.RrhhPbIEmpleadoNomina = new System.Windows.Forms.PictureBox();
             this.RrhhLblValorResumen = new System.Windows.Forms.Label();
@@ -97,12 +94,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RrhhDgvVistaCierreNomina.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.RrhhDgvVistaCierreNomina.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.RrhhDgvVistaCierreNomina.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Empleado,
-            this.Column2,
-            this.Deducciones,
-            this.Column3});
             this.RrhhDgvVistaCierreNomina.Location = new System.Drawing.Point(55, 541);
             this.RrhhDgvVistaCierreNomina.Name = "RrhhDgvVistaCierreNomina";
             this.RrhhDgvVistaCierreNomina.RowHeadersWidth = 51;
@@ -110,40 +101,11 @@
             this.RrhhDgvVistaCierreNomina.Size = new System.Drawing.Size(1296, 211);
             this.RrhhDgvVistaCierreNomina.TabIndex = 33;
             // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Codigo";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            // 
-            // Empleado
-            // 
-            this.Empleado.HeaderText = "Empleado";
-            this.Empleado.MinimumWidth = 6;
-            this.Empleado.Name = "Empleado";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Percepciones";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            // 
-            // Deducciones
-            // 
-            this.Deducciones.HeaderText = "Deducciones";
-            this.Deducciones.MinimumWidth = 6;
-            this.Deducciones.Name = "Deducciones";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Verificacion";
-            this.Column3.MinimumWidth = 6;
-            this.Column3.Name = "Column3";
-            // 
             // RrhhPnlInicio
             // 
             this.RrhhPnlInicio.BackgroundImage = global::CapaVista_CierreNominas.Properties.Resources.Pnl_fondo;
             this.RrhhPnlInicio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.RrhhPnlInicio.Controls.Add(this.RrhhBtnAyudaCierreNomina);
             this.RrhhPnlInicio.Controls.Add(this.RrhhPbIconoMascota);
             this.RrhhPnlInicio.Controls.Add(this.RrhhPbIconoCierreNominas);
             this.RrhhPnlInicio.Controls.Add(this.RrhhLblSubTituloCierreNominas);
@@ -152,6 +114,17 @@
             this.RrhhPnlInicio.Name = "RrhhPnlInicio";
             this.RrhhPnlInicio.Size = new System.Drawing.Size(1296, 159);
             this.RrhhPnlInicio.TabIndex = 0;
+            // 
+            // RrhhBtnAyudaCierreNomina
+            // 
+            this.RrhhBtnAyudaCierreNomina.BackgroundImage = global::CapaVista_CierreNominas.Properties.Resources.btn_ayuda;
+            this.RrhhBtnAyudaCierreNomina.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.RrhhBtnAyudaCierreNomina.Location = new System.Drawing.Point(1062, 59);
+            this.RrhhBtnAyudaCierreNomina.Name = "RrhhBtnAyudaCierreNomina";
+            this.RrhhBtnAyudaCierreNomina.Size = new System.Drawing.Size(75, 66);
+            this.RrhhBtnAyudaCierreNomina.TabIndex = 4;
+            this.RrhhBtnAyudaCierreNomina.UseVisualStyleBackColor = true;
+            this.RrhhBtnAyudaCierreNomina.Click += new System.EventHandler(this.RrhhBtnAyudaCierreNomina_Click);
             // 
             // RrhhPbIconoMascota
             // 
@@ -201,6 +174,7 @@
             // 
             this.RrhhPnlCierreNominas.BackgroundImage = global::CapaVista_CierreNominas.Properties.Resources.Pnl_fondo;
             this.RrhhPnlCierreNominas.Controls.Add(this.RrhhPbCalendario);
+            this.RrhhPnlCierreNominas.Controls.Add(this.RrhhBtnCerrarNomina);
             this.RrhhPnlCierreNominas.Controls.Add(this.RrhhLblMensajeInformativo);
             this.RrhhPnlCierreNominas.Controls.Add(this.RrhhLblAdvertencia);
             this.RrhhPnlCierreNominas.Controls.Add(this.RrhhCboPeriodo);
@@ -215,22 +189,34 @@
             // 
             this.RrhhPbCalendario.BackColor = System.Drawing.Color.Transparent;
             this.RrhhPbCalendario.Image = global::CapaVista_CierreNominas.Properties.Resources.Icn_Calendario;
-            this.RrhhPbCalendario.Location = new System.Drawing.Point(3, 100);
+            this.RrhhPbCalendario.Location = new System.Drawing.Point(7, 92);
             this.RrhhPbCalendario.Name = "RrhhPbCalendario";
             this.RrhhPbCalendario.Size = new System.Drawing.Size(135, 107);
             this.RrhhPbCalendario.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.RrhhPbCalendario.TabIndex = 18;
             this.RrhhPbCalendario.TabStop = false;
             // 
+            // RrhhBtnCerrarNomina
+            // 
+            this.RrhhBtnCerrarNomina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
+            this.RrhhBtnCerrarNomina.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RrhhBtnCerrarNomina.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.RrhhBtnCerrarNomina.Location = new System.Drawing.Point(229, 201);
+            this.RrhhBtnCerrarNomina.Name = "RrhhBtnCerrarNomina";
+            this.RrhhBtnCerrarNomina.Size = new System.Drawing.Size(164, 45);
+            this.RrhhBtnCerrarNomina.TabIndex = 29;
+            this.RrhhBtnCerrarNomina.Text = "Cerrar Nómina";
+            this.RrhhBtnCerrarNomina.UseVisualStyleBackColor = false;
+            // 
             // RrhhLblMensajeInformativo
             // 
             this.RrhhLblMensajeInformativo.AutoSize = true;
             this.RrhhLblMensajeInformativo.BackColor = System.Drawing.Color.Transparent;
-            this.RrhhLblMensajeInformativo.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RrhhLblMensajeInformativo.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblMensajeInformativo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblMensajeInformativo.Location = new System.Drawing.Point(18, 244);
+            this.RrhhLblMensajeInformativo.Location = new System.Drawing.Point(16, 266);
             this.RrhhLblMensajeInformativo.Name = "RrhhLblMensajeInformativo";
-            this.RrhhLblMensajeInformativo.Size = new System.Drawing.Size(389, 21);
+            this.RrhhLblMensajeInformativo.Size = new System.Drawing.Size(340, 18);
             this.RrhhLblMensajeInformativo.TabIndex = 17;
             this.RrhhLblMensajeInformativo.Text = "Solo aparecen las nóminas que aun siguen abiertas";
             // 
@@ -249,7 +235,7 @@
             // 
             this.RrhhCboPeriodo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhCboPeriodo.FormattingEnabled = true;
-            this.RrhhCboPeriodo.Location = new System.Drawing.Point(148, 171);
+            this.RrhhCboPeriodo.Location = new System.Drawing.Point(153, 151);
             this.RrhhCboPeriodo.Name = "RrhhCboPeriodo";
             this.RrhhCboPeriodo.Size = new System.Drawing.Size(327, 36);
             this.RrhhCboPeriodo.TabIndex = 16;
@@ -260,7 +246,7 @@
             this.RrhhLblMesAño.BackColor = System.Drawing.Color.Transparent;
             this.RrhhLblMesAño.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblMesAño.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblMesAño.Location = new System.Drawing.Point(144, 143);
+            this.RrhhLblMesAño.Location = new System.Drawing.Point(149, 126);
             this.RrhhLblMesAño.Name = "RrhhLblMesAño";
             this.RrhhLblMesAño.Size = new System.Drawing.Size(207, 22);
             this.RrhhLblMesAño.TabIndex = 5;
@@ -272,7 +258,7 @@
             this.RrhhLblTituloCierre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(228)))), ((int)(((byte)(225)))));
             this.RrhhLblTituloCierre.Font = new System.Drawing.Font("Lucida Bright", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblTituloCierre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblTituloCierre.Location = new System.Drawing.Point(143, 104);
+            this.RrhhLblTituloCierre.Location = new System.Drawing.Point(148, 92);
             this.RrhhLblTituloCierre.Name = "RrhhLblTituloCierre";
             this.RrhhLblTituloCierre.Size = new System.Drawing.Size(232, 26);
             this.RrhhLblTituloCierre.TabIndex = 15;
@@ -281,9 +267,9 @@
             // RrhhPnlResumen
             // 
             this.RrhhPnlResumen.BackgroundImage = global::CapaVista_CierreNominas.Properties.Resources.Pnl_fondo;
+            this.RrhhPnlResumen.Controls.Add(this.RrhhBtnReporteCierreNomina);
             this.RrhhPnlResumen.Controls.Add(this.RrhhPbResumen);
             this.RrhhPnlResumen.Controls.Add(this.RrhhLblResumenPeriodo);
-            this.RrhhPnlResumen.Controls.Add(this.RrhhBtnCerrarNomina);
             this.RrhhPnlResumen.Controls.Add(this.RrhhPnlDecorativo1);
             this.RrhhPnlResumen.Controls.Add(this.RrhhPnlDecorativo3);
             this.RrhhPnlResumen.Controls.Add(this.RrhhPnlDecorativo5);
@@ -293,6 +279,17 @@
             this.RrhhPnlResumen.Name = "RrhhPnlResumen";
             this.RrhhPnlResumen.Size = new System.Drawing.Size(702, 299);
             this.RrhhPnlResumen.TabIndex = 32;
+            // 
+            // RrhhBtnReporteCierreNomina
+            // 
+            this.RrhhBtnReporteCierreNomina.BackgroundImage = global::CapaVista_CierreNominas.Properties.Resources.btn_reporte;
+            this.RrhhBtnReporteCierreNomina.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.RrhhBtnReporteCierreNomina.Location = new System.Drawing.Point(534, 15);
+            this.RrhhBtnReporteCierreNomina.Name = "RrhhBtnReporteCierreNomina";
+            this.RrhhBtnReporteCierreNomina.Size = new System.Drawing.Size(74, 68);
+            this.RrhhBtnReporteCierreNomina.TabIndex = 19;
+            this.RrhhBtnReporteCierreNomina.UseVisualStyleBackColor = true;
+            this.RrhhBtnReporteCierreNomina.Click += new System.EventHandler(this.RrhhBtnReporteCierreNomina_Click);
             // 
             // RrhhPbResumen
             // 
@@ -316,18 +313,6 @@
             this.RrhhLblResumenPeriodo.Size = new System.Drawing.Size(259, 26);
             this.RrhhLblResumenPeriodo.TabIndex = 19;
             this.RrhhLblResumenPeriodo.Text = "Resumen del período";
-            // 
-            // RrhhBtnCerrarNomina
-            // 
-            this.RrhhBtnCerrarNomina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhBtnCerrarNomina.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RrhhBtnCerrarNomina.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.RrhhBtnCerrarNomina.Location = new System.Drawing.Point(522, 34);
-            this.RrhhBtnCerrarNomina.Name = "RrhhBtnCerrarNomina";
-            this.RrhhBtnCerrarNomina.Size = new System.Drawing.Size(164, 45);
-            this.RrhhBtnCerrarNomina.TabIndex = 29;
-            this.RrhhBtnCerrarNomina.Text = "Cerrar Nómina";
-            this.RrhhBtnCerrarNomina.UseVisualStyleBackColor = false;
             // 
             // RrhhPnlDecorativo1
             // 
@@ -630,10 +615,7 @@
         private System.Windows.Forms.PictureBox RrhhPbTotalDeducciones;
         private System.Windows.Forms.PictureBox RrhhPbVerificacionCierre;
         private System.Windows.Forms.PictureBox RrhhPbSalarioLiquido;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Empleado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Deducciones;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.Button RrhhBtnReporteCierreNomina;
+        private System.Windows.Forms.Button RrhhBtnAyudaCierreNomina;
     }
 }

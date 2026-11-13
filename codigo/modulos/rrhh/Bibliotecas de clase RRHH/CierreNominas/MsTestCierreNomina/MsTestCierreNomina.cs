@@ -1,4 +1,4 @@
-﻿/*using System.Reflection;
+﻿using System.Reflection;
 using CapaControlador_CierreNominas;
 using CapaControlador_CierreNominas.Objetos_de_valor;
 using CapaModelo_CierreNominas.Contratos;
@@ -23,7 +23,7 @@ using System.Linq;
  * ===================================================================
  */
 
-/*
+
 namespace MSTestCierreNominas
 {
     [TestClass]
@@ -49,9 +49,13 @@ namespace MSTestCierreNominas
             };
         }
 
- 
-
- 
+        private static string RrhhMetVerificar(ClsPrevioCierreNomina Item)
+        {
+            var Controlador = new ClsModeloCierreNomina();
+            MethodInfo Metodo = typeof(ClsModeloCierreNomina).GetMethod("RrhhMetVerificarEmpleado",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            return (string)Metodo.Invoke(Controlador, new object[] { Item });
+        }
 
         // ---------- CONTROLADOR: propiedades ----------
 
@@ -494,7 +498,5 @@ namespace MSTestCierreNominas
             // Assert
             StringAssert.Contains(Sql, "GROUP BY YEAR(ne.fechaFinalNominaEncabezado), MONTH(ne.fechaFinalNominaEncabezado)");
         }
-
-
     }
-}*/
+}

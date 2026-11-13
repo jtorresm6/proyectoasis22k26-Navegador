@@ -1,4 +1,4 @@
-﻿/*using CapaControlador_CierreNominas.Objetos_de_valor;
+﻿using CapaControlador_CierreNominas.Objetos_de_valor;
 using CapaControlador_Contabilidad;
 using CapaControlador_Seguridad;
 using CapaControlador_Seguridad.Objetos_de_valor;
@@ -23,7 +23,7 @@ using System.Linq;
  * irreversible, por eso no tiene editar ni eliminar.
  * ===================================================================
  */
-/*
+
 namespace CapaControlador_CierreNominas
 {
     public class ClsModeloCierreNomina
@@ -109,7 +109,7 @@ namespace CapaControlador_CierreNominas
                 string EstadoPoliza;
                 string MensajeContabilidad;
 
-                /*var Contabilidad = new ClsControladorIntegracionContabilidad();
+                var Contabilidad = new ClsControladorIntegracionContabilidad();
                 bool PolizaAceptada = Contabilidad.ContabilidadFuncRecibirPoliza(
                     ClsConfiguracionCierreNomina.CodigoModuloContable,
                     ClsConfiguracionCierreNomina.IdPais,
@@ -178,9 +178,9 @@ namespace CapaControlador_CierreNominas
                 Mensaje = Ex.Message;
             }
             return Mensaje;
-        }*/
+        }
 
-        /*
+        
         // Períodos de nómina abiertos para el combo Mes y Año
         public List<ClsPeriodoNominaValor> RrhhMetObtenerPeriodosAbiertos()
         {
@@ -199,13 +199,12 @@ namespace CapaControlador_CierreNominas
         }
 
         // Resumen y grilla del período seleccionado, con la verificación de cuadre
-        /*public ClsResumenCierreNominaValor RrhhMetObtenerPrevio(DateTime FechaInicio, DateTime FechaFinal)
+        public ClsResumenCierreNominaValor RrhhMetObtenerPrevio(DateTime FechaInicio, DateTime FechaFinal)
         {
             List<ClsModeloLineaIntegracionContabilidad> Lineas;
             return RrhhMetPrepararCierre(FechaInicio, FechaFinal, out Lineas);
-        }*/
+        }
 
-/*
         public List<ClsModeloCierreNomina> RrhhMetObtenerTodos()
         {
             var ResultadoConsulta = _RepositorioCierreNomina.RrhhMetObtenerTodos();
@@ -347,4 +346,4 @@ namespace CapaControlador_CierreNominas
             return Lineas;
         }
     }
-} */
+} 
