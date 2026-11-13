@@ -274,9 +274,9 @@ namespace CapaVista_ConciliacionBancaria.Formularios
             this.BancosLblIndicacion.ForeColor = System.Drawing.Color.DimGray;
             this.BancosLblIndicacion.Location = new System.Drawing.Point(35, 222);
             this.BancosLblIndicacion.Name = "BancosLblIndicacion";
-            this.BancosLblIndicacion.Size = new System.Drawing.Size(290, 62);
+            this.BancosLblIndicacion.Size = new System.Drawing.Size(290, 78);
             this.BancosLblIndicacion.TabIndex = 2;
-            this.BancosLblIndicacion.Text = "Para marcar a mano, seleccione con Ctrl un movimiento del libro y una línea del banco que estén pendientes.";
+            this.BancosLblIndicacion.Text = "Elija la cuenta, el estado de cuenta y la fecha, y presione Corte de conciliación.";
             // 
             // BancosBtnCorte
             // 
@@ -604,21 +604,21 @@ namespace CapaVista_ConciliacionBancaria.Formularios
             this.BancosDgvMovimientos.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
             this.BancosDgvMovimientos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.BancosDgvMovimientos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.BancosDgvMovimientos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
             this.BancosDgvMovimientos.BackgroundColor = System.Drawing.Color.White;
             this.BancosDgvMovimientos.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(78)))), ((int)(((byte)(53)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.BancosDgvMovimientos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.BancosDgvMovimientos.ColumnHeadersHeight = 32;
+            this.BancosDgvMovimientos.ColumnHeadersHeight = 38;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(232)))), ((int)(((byte)(219)))));
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(78)))), ((int)(((byte)(53)))));
@@ -627,9 +627,11 @@ namespace CapaVista_ConciliacionBancaria.Formularios
             this.BancosDgvMovimientos.EnableHeadersVisualStyles = false;
             this.BancosDgvMovimientos.Location = new System.Drawing.Point(35, 444);
             this.BancosDgvMovimientos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BancosDgvMovimientos.MultiSelect = false;
             this.BancosDgvMovimientos.Name = "BancosDgvMovimientos";
             this.BancosDgvMovimientos.ReadOnly = true;
             this.BancosDgvMovimientos.RowHeadersVisible = false;
+            this.BancosDgvMovimientos.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.BancosDgvMovimientos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.BancosDgvMovimientos.Size = new System.Drawing.Size(1030, 236);
             this.BancosDgvMovimientos.TabIndex = 10;
