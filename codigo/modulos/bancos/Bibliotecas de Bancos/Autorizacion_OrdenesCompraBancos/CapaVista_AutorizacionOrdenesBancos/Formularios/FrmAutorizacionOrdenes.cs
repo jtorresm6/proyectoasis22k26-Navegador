@@ -35,6 +35,8 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
         private ClsModeloOrdenCompra _ModeloOrdenCompra = new ClsModeloOrdenCompra();
         private ClsModeloCuentaDisponible _ModeloCuentaDisponible = new ClsModeloCuentaDisponible();
         private ClsModeloAutorizacionOrdenCompra _ModeloAutorizacionOrdenCompra = new ClsModeloAutorizacionOrdenCompra();
+        private ClsModeloTipoCambioOrden _ModeloTipoCambioOrden = new ClsModeloTipoCambioOrden();
+        private Dictionary<string, ClsModeloTasaCambio> _TasasConsultadas = new Dictionary<string, ClsModeloTasaCambio>();
 
         public FrmAutorizacionOrdenes()
         {
@@ -126,11 +128,12 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             BancosTxtMotivoRechazo.Text = string.Empty;
             BancosCboBanco.SelectedIndex = -1;
             BancosDgvAsignacionCuenta.Rows.Clear();
+            _TasasConsultadas.Clear();
             BancosDgvOrdenesPendientes.ClearSelection();
             BancosPnlDisponibilidadAsignacion.Enabled = false;
         }
 
-        private void BancosCboBanco_CambioSeleccion(object sender, EventArgs e)
+        private async void BancosCboBanco_CambioSeleccion(object sender, EventArgs e)
         {
             try
             {
@@ -156,7 +159,16 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
                     }
                     else
                     {
-                        BancosLblTipoCambioValor.Text = "No disponible";
+                        string CodigoMonedaOrden = Convert.ToString(BancosDgvOrdenesPendientes.CurrentRow.Cells[8].Value);
+                        BancosLblTipoCambioValor.Text = "Consultando...";
+                        ClsModeloTasaCambio Tasa = await BancosMetObtenerTasaAsync(Cuenta, IdMonedaOrden, CodigoMonedaOrden);
+
+                        // Si mientras se consultaba se eligió otra cuenta, no se muestra esta tasa.
+                        if (BancosCboBanco.SelectedIndex < 0 || Convert.ToInt64(BancosCboBanco.SelectedValue) != IdCuenta)
+                        {
+                            return;
+                        }
+                        BancosLblTipoCambioValor.Text = Tasa == null ? "No disponible" : Tasa.Tasa.ToString("N4");
                     }
                 }
             }
@@ -166,7 +178,7 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             }
         }
 
-        private void BancosMetAgregarAsignacion()
+        private async void BancosMetAgregarAsignacion()
         {
             try
             {
@@ -216,12 +228,26 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
                 decimal Importe = BancosMetImporteOrdenSeleccionada();
                 long IdMonedaOrden = Convert.ToInt64(BancosDgvOrdenesPendientes.CurrentRow.Cells[7].Value);
 
+                decimal TipoCambio = 1m;
+
                 if (Cuenta.IdMoneda != IdMonedaOrden)
                 {
-                    MessageBox.Show("En esta entrega solo se permiten cuentas de la misma moneda que la orden");
-                    return;
+                    string CodigoMonedaOrden = Convert.ToString(BancosDgvOrdenesPendientes.CurrentRow.Cells[8].Value);
+                    ClsModeloTasaCambio Tasa = await BancosMetObtenerTasaAsync(Cuenta, IdMonedaOrden, CodigoMonedaOrden);
+                    if (Tasa == null)
+                    {
+                        return;
+                    }
+                    TipoCambio = Tasa.Tasa;
+
+                    // Después de consultar la tasa se vuelve a validar que la cuenta no se haya agregado.
+                    if (BancosDgvAsignacionCuenta.Rows.Cast<DataGridViewRow>().Any(Fila => Convert.ToInt64(Fila.Tag) == IdCuenta))
+                    {
+                        MessageBox.Show("Esta cuenta ya fue asignada");
+                        return;
+                    }
+                    Asignado = BancosMetTotalAsignado();
                 }
-                decimal TipoCambio = 1m;
 
                 if (Asignado + Monto > Importe)
                 {
@@ -245,6 +271,29 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             catch (Exception Ex)
             {
                 MessageBox.Show(Ex.Message);
+            }
+        }
+
+        private async Task<ClsModeloTasaCambio> BancosMetObtenerTasaAsync(ClsModeloCuentaDisponible Cuenta, long IdMonedaOrden, string CodigoMonedaOrden)
+        {
+            string Clave = Cuenta.IdCuenta + "-" + IdMonedaOrden;
+            ClsModeloTasaCambio Tasa;
+
+            if (_TasasConsultadas.TryGetValue(Clave, out Tasa))
+            {
+                return Tasa;
+            }
+
+            try
+            {
+                Tasa = await _ModeloTipoCambioOrden.BancosMetObtenerTasaAsync(Cuenta.CodigoMoneda, CodigoMonedaOrden);
+                _TasasConsultadas[Clave] = Tasa;
+                return Tasa;
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show("No se pudo obtener el tipo de cambio: " + BancosMetTextoError(Ex));
+                return null;
             }
         }
 
@@ -365,7 +414,22 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
                         }
 
                         decimal Monto = Convert.ToDecimal(Item.Cells[5].Value);
-                        _ModeloAutorizacionOrdenCompra.BancosMetAgregarCuenta(Cuenta, IdMonedaOrden, Monto);
+
+                        if (Cuenta.IdMoneda == IdMonedaOrden)
+                        {
+                            _ModeloAutorizacionOrdenCompra.BancosMetAgregarCuenta(Cuenta, IdMonedaOrden, Monto);
+                            continue;
+                        }
+
+                        ClsModeloTasaCambio Tasa;
+                        if (!_TasasConsultadas.TryGetValue(Cuenta.IdCuenta + "-" + IdMonedaOrden, out Tasa))
+                        {
+                            MessageBox.Show("No se encontró el tipo de cambio de una de las cuentas asignadas");
+                            return;
+                        }
+
+                        long IdTipoCambio = _ModeloTipoCambioOrden.BancosMetGuardarTasa(Tasa, Cuenta.IdMoneda, IdMonedaOrden);
+                        _ModeloAutorizacionOrdenCompra.BancosMetAgregarCuenta(Cuenta, IdMonedaOrden, Monto, Tasa.Tasa, IdTipoCambio);
                     }
                 }
                 else
@@ -385,9 +449,21 @@ namespace CapaVista_AutorizacionOrdenes.Formularios
             }
             catch (Exception Ex)
             {
-                MessageBox.Show(Ex.Message);
+                MessageBox.Show(BancosMetTextoError(Ex));
             }
         }
+
+        // Si la excepción no trae mensaje, se muestra su tipo y su traza para poder ubicar el fallo.
+        private static string BancosMetTextoError(Exception Ex)
+        {
+            string Texto = Ex.GetBaseException().Message;
+            if (string.IsNullOrWhiteSpace(Texto))
+            {
+                Texto = Ex.GetType().FullName + Environment.NewLine + Ex.StackTrace;
+            }
+            return Texto;
+        }
+
         private void BancosBtnAutorizar_Click(object sender, EventArgs e)
         {
 
