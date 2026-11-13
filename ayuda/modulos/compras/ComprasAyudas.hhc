@@ -2,6 +2,7 @@
 <li><object type="text/sitemap"><param name="Name" value="Inicio"><param name="Local" value="index.html"></object></li>
 <li><object type="text/sitemap"><param name="Name" value="Pantalla principal (MDI)"><param name="Local" value="MDI_Compras.html"></object></li>
 <li><object type="text/sitemap"><param name="Name" value="Movimientos de proveedores"><param name="Local" value="MovimientosProveedores.html"></object></li>
+<li><object type="text/sitemap"><param name="Name" value="Balance de antig&#252;edad de saldos"><param name="Local" value="MovimientosProveedores.html#antiguedad"></object></li>
 <li><object type="text/sitemap"><param name="Name" value="órdenes de compra"><param name="Local" value="OrdenesCompra.html"></object></li>
 <li><object type="text/sitemap"><param name="Name" value="Compras"><param name="Local" value="Compras.html"></object></li>
 <li><object type="text/sitemap"><param name="Name" value="Devoluciones de Compras"><param name="Local" value="DevolucionesCompras.html"></object></li>

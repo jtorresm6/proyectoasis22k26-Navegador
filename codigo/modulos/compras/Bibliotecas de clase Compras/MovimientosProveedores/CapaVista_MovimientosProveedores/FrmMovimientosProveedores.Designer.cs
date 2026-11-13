@@ -66,7 +66,9 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasUsrEncabezadoFormulario.Margin = new System.Windows.Forms.Padding(0);
             this.ComprasUsrEncabezadoFormulario.MaximumSize = new System.Drawing.Size(1500, 130);
             this.ComprasUsrEncabezadoFormulario.MinimumSize = new System.Drawing.Size(0, 130);
-            this.ComprasUsrEncabezadoFormulario.MostrarReportes = false;
+            this.ComprasUsrEncabezadoFormulario.MostrarReportes = true;
+            this.ComprasUsrEncabezadoFormulario.RutaReporte = "RpReporteCuentaPorPagar.rdlc";
+            this.ComprasUsrEncabezadoFormulario.PrepararReporte += this.ComprasMetPrepararReporteCuentaPorPagar;
             this.ComprasUsrEncabezadoFormulario.Name = "ComprasUsrEncabezadoFormulario";
             this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "MovimientosProveedores.html";
             this.ComprasUsrEncabezadoFormulario.Size = new System.Drawing.Size(1300, 130);
@@ -174,7 +176,7 @@ namespace CapaVista_MovimientosProveedores
             this.ComprasBtnHistorial.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ComprasBtnHistorial.BackgroundImage")));
             this.ComprasBtnHistorial.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasBtnHistorial.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComprasBtnHistorial.Enabled = false;
+            this.ComprasBtnHistorial.Enabled = true;
             this.ComprasBtnHistorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComprasBtnHistorial.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComprasBtnHistorial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));

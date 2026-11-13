@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ClsControladorBalanceAntiguedadProveedor.cs" />
+
     <Compile Include="EstadoEntidad.cs" />
 
   </ItemGroup>
@@ -56,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClsModeloNotaProveedor.cs" />
+    <Compile Include="ClsControladorCuentaPorPagar.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CapaModelo_Componentes">
