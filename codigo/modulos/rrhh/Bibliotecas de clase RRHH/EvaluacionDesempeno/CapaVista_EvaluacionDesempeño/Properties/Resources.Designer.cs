@@ -243,6 +243,16 @@ namespace CapaVista_EvaluacionDesempeño.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap btn_reporte1 {
+            get {
+                object obj = ResourceManager.GetObject("btn_reporte1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap btn_resultados {
             get {
                 object obj = ResourceManager.GetObject("btn_resultados", resourceCulture);
