@@ -235,6 +235,7 @@ CREATE TABLE tblConsulta (
     CONSTRAINT Uq_NombreConsulta UNIQUE (nombreConsulta)
 );
 
+
 -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ Modulos !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 
 -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡  RECURSOS HUMANOS !!!!!!!!!!!!!!!!!!!!!!!!!-------------
@@ -1069,7 +1070,6 @@ ALTER TABLE tblPermisoEmpleado
 
 -- Fin de cambio: Isabel Meléndez - 9959-23-1379 - 07/11/2026
 
-
 -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ Bancos !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 
 CREATE TABLE tblMoneda (
@@ -1791,7 +1791,6 @@ ALTER TABLE `tblPartidaConsolidada` DROP CHECK `ckPartidaConsolidadaPeriodo`, DR
 ALTER TABLE `tblPartidaConsolidada` ADD CONSTRAINT `uqPartidaConsolidadaPeriodo` UNIQUE (`identificadorEmpresaPartidaConsolidada`, `fechaInicioPartidaConsolidada`, `Fk_Moneda_Codigo`), ADD CONSTRAINT `ckPartidaConsolidadaPeriodo` CHECK (DAYOFMONTH(`fechaInicioPartidaConsolidada`) = 1);
 ALTER TABLE `tblPartidaConsolidada` DROP COLUMN `fechaFinPartidaConsolidada`;
 
-
 -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡  Contabilidad  !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 
 -- =============================================================================
@@ -2212,7 +2211,7 @@ CREATE TABLE IF NOT EXISTS tblImpuestoTramo (
     INDEX idxImpuestoTramoImpuesto (idImpuesto)
 ) ENGINE=InnoDB;
 -- Fin de cambio: Dylan Hernández - 0901-23-519 - 30/10/2026
-         
+
 -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ alter de  recusos humanos  una de sus tablas !!!!!!!!!!!!!!!!!!!!!!!!!-------------        
 
          -- ---------- 3. Percepciones/Deducciones: cuenta contable ----------
@@ -2221,7 +2220,6 @@ ALTER TABLE tblPercepcionDeduccion
     ADD COLUMN idCuenta INT NULL AFTER aplicacionPercepcionDeduccion,
     ADD CONSTRAINT Fk_PercepcionDeduccion_Cuenta FOREIGN KEY (idCuenta)
         REFERENCES tblCuenta (idCuenta) ON DELETE RESTRICT ON UPDATE CASCADE;
-        
   -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ tablas de Compras que necesita Logistica para funcionar !!!!!!!!!!!!!!!!!!!!!!!!!-------------              
         
         CREATE TABLE IF NOT EXISTS tblPlazo(
@@ -2273,8 +2271,40 @@ CREATE TABLE IF NOT EXISTS tblProveedor(
     INDEX idxProveedorPlazo (idPlazo),
     CONSTRAINT ckMovimientosProveedor CHECK (cargosMesProveedor >= 0 AND abonosMesProveedor >= 0 AND cargosAsignadosProveedor >= 0 AND cargosAcumuladosProveedor >= 0 AND abonosAcumuladosProveedor >= 0)
 ) ENGINE=InnoDB;
-        
-   -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ Logistica !!!!!!!!!!!!!!!!!!!!!!!!!-------------     
+
+CREATE TABLE IF NOT EXISTS tblCuentaPorPagar(
+    idProveedor                                  INT NOT NULL,
+    idConceptoProveedor                          INT NOT NULL,
+    serieDocumentoCuentaPorPagar                 VARCHAR(20) NOT NULL,
+    numeroDocumentoCuentaPorPagar                VARCHAR(30) NOT NULL,
+    fechaEmisionCuentaPorPagar                   DATE NOT NULL,
+    fechaVencimientoCuentaPorPagar               DATE NOT NULL,
+    idMoneda                                     BIGINT         NOT NULL,
+    idTipoCambio                                 BIGINT         NULL,
+    tipoCambioCuentaPorPagar                     DECIMAL(12,6) NOT NULL DEFAULT 1,
+    montoTotalCuentaPorPagar                     DECIMAL(12,4) NOT NULL,
+    saldoActualCuentaPorPagar                    DECIMAL(12,4) NOT NULL,
+    estadoCuentaPorPagar                         VARCHAR(30) NOT NULL DEFAULT 'Pendiente',
+    bloqueadoCuentaPorPagar                      BOOLEAN NOT NULL DEFAULT 0,
+    created_at                                   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at                                   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    CONSTRAINT Pk_CuentaPorPagar PRIMARY KEY (serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor),
+    CONSTRAINT Fk_Proveedor_idProveedor FOREIGN KEY (idProveedor) REFERENCES tblProveedor(idProveedor),
+    CONSTRAINT Fk_CuentaPorPagar_Concepto FOREIGN KEY (idConceptoProveedor) REFERENCES tblConceptoProveedor (idConceptoProveedor),
+    INDEX idxCuentaPorPagarVencimiento (fechaVencimientoCuentaPorPagar),
+    CONSTRAINT Fk_CuentaPorPagar_Moneda FOREIGN KEY (idMoneda) REFERENCES tblMoneda (idMoneda) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT Fk_CuentaPorPagar_TipoCambio FOREIGN KEY (idTipoCambio) REFERENCES tblTipoCambio (idTipoCambio) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    INDEX idxCuentaPorPagarMoneda (idMoneda),
+    INDEX idxCuentaPorPagarTipoCambio (idTipoCambio),
+    CONSTRAINT ckReferenciaTipoCambioCuentaPorPagar CHECK (idTipoCambio IS NOT NULL OR tipoCambioCuentaPorPagar = 1),
+    CONSTRAINT ckTipoCambioCuentaPorPagar CHECK (tipoCambioCuentaPorPagar > 0),
+    CONSTRAINT ckMontoTotalCuentaPorPagar CHECK (montoTotalCuentaPorPagar <> 0),
+    CONSTRAINT ckFechasCuentaPorPagar CHECK (fechaVencimientoCuentaPorPagar >= fechaEmisionCuentaPorPagar),
+    CONSTRAINT ckEstadoCuentaPorPagar CHECK (estadoCuentaPorPagar IN ('Pendiente','Parcial','Pagada','Anulada'))
+) ENGINE=InnoDB;
+
+ -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ Logistica !!!!!!!!!!!!!!!!!!!!!!!!!-------------  
 
 /* 
 	Responsable:
@@ -2285,9 +2315,13 @@ idEmpresaTransportista INT NOT NULL AUTO_INCREMENT,
  nombreEmpresaTransportista VARCHAR(100) NOT NULL,
  contactoEmpresaTransportista VARCHAR(100) NOT NULL,
  telefonoEmpresaTransportista VARCHAR(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+ nitEmpresaTransportista CHAR(10) NULL,
+ direccionEmpresaTransportista VARCHAR(500) NULL,
+ estadoEmpresaTransportista BOOLEAN NOT NULL DEFAULT TRUE,
  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  CONSTRAINT uqEmpresaTransportistaNombre UNIQUE (nombreEmpresaTransportista),
+ CONSTRAINT uqNitEmpresaTransportista UNIQUE (nitEmpresaTransportista),
     CONSTRAINT Pk_EmpresaTransportista PRIMARY KEY (idEmpresaTransportista)
 ) ENGINE=InnoDB;
 
@@ -2299,6 +2333,7 @@ idEmpresaTransportista INT NOT NULL AUTO_INCREMENT,
 CREATE TABLE tblTipoServicio (
 idTipoServicio INT NOT NULL AUTO_INCREMENT,
  nombreTipoServicio VARCHAR(100) NOT NULL,
+ estadoTipoServicio BOOLEAN NOT NULL DEFAULT TRUE,
  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  CONSTRAINT uqTipoServicioNombre UNIQUE (nombreTipoServicio),
@@ -2314,6 +2349,7 @@ idTipoServicio INT NOT NULL AUTO_INCREMENT,
 CREATE TABLE tblTarifaTransporte (
 idTarifaTransporte INT NOT NULL AUTO_INCREMENT,
  nombreTarifaTransporte VARCHAR(100) NOT NULL,
+ estadoTarifaTransporte BOOLEAN NOT NULL DEFAULT TRUE,
  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  CONSTRAINT uqTarifaTransporteNombre UNIQUE (nombreTarifaTransporte),
@@ -2470,7 +2506,6 @@ idTelemetriaTemperatura BIGINT AUTO_INCREMENT NOT NULL,
     Fk_Encabezado_Viaje_Codigo BIGINT NOT NULL,
     fechaHoraTelemetriaTemperatura DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     temperaturaCelsiusTelemetriaTemperatura DECIMAL(5,2) NOT NULL,
-    /* Porcentaje en formato decimal: 0.6500 = 65 % (DECIMAL(5,4) permite llegar a 100 %) */
     humedadRelativaTelemetriaTemperatura DECIMAL(5,4) NOT NULL,
     puertaAbiertaTelemetriaTemperatura BOOLEAN NOT NULL DEFAULT FALSE,
     ubicacionGpsTelemetriaTemperatura VARCHAR(100) NOT NULL,
@@ -2584,6 +2619,9 @@ idMarca INT NOT NULL AUTO_INCREMENT,
     CONSTRAINT Pk_Marca PRIMARY KEY (idMarca)
 ) ENGINE=InnoDB;
 
+/* 	RESPONSABLE:
+	VELVETH SARAI CHAVEZ MEJIA 0901  23 6269
+ */ 
 -- tblProducto
 CREATE TABLE tblProducto (
 idProducto INT NOT NULL AUTO_INCREMENT,
@@ -2800,30 +2838,27 @@ idDetalleTraslado INT NOT NULL AUTO_INCREMENT,
 /* 	RESPONSABLE:
 	NILLS BERDUCIDO GOMEZ 0901 23 14275
 */ 
--- tblCierreMovimiento
-CREATE TABLE tblCierreMovimiento (
-idCierreMovimiento INT NOT NULL AUTO_INCREMENT,
-    nombreCierreMovimiento VARCHAR(100) NOT NULL,
+-- tblCierreInventario: se registra el cierre desde el MVC; no se anula ni modifica.
+CREATE TABLE tblCierreInventario (
+idCierreInventario INT NOT NULL AUTO_INCREMENT,
+    nombreCierreInventario VARCHAR(100) NOT NULL,
     Fk_Sucursal_Codigo INT NOT NULL,
-    fechaInicioCierreMovimiento DATE NOT NULL,
-    fechaFinCierreMovimiento DATE NOT NULL,
-    estadoCierreMovimiento ENUM('ABIERTO', 'EN_PROCESO', 'CERRADO') NOT NULL DEFAULT 'ABIERTO',
-    esCierreAnualCierreMovimiento BOOLEAN NOT NULL DEFAULT FALSE,
-    toleranciaCierreMovimiento INT NOT NULL DEFAULT 0,
-    diferenciaUnidadesCierreMovimiento INT NOT NULL DEFAULT 0,
-    diferenciaMontoCierreMovimiento DECIMAL(12,4) NOT NULL DEFAULT 0,
-    motivoAceptacionCierreMovimiento VARCHAR(500) NOT NULL,
+    fechaInicioCierreInventario DATE NOT NULL,
+    fechaFinCierreInventario DATE NOT NULL,
+    esCierreAnualCierreInventario BOOLEAN NOT NULL DEFAULT FALSE,
+    diferenciaUnidadesCierreInventario INT NOT NULL DEFAULT 0,
+    diferenciaMontoCierreInventario DECIMAL(12,4) NOT NULL DEFAULT 0,
+    motivoAceptacionCierreInventario VARCHAR(500) NOT NULL,
     -- El cierre ejecutado no puede anularse; por eso no se guarda motivoAnulacion.
-    observacionesCierreMovimiento VARCHAR(500) NOT NULL,
-    fechaEjecucionCierreMovimiento DATETIME NULL,
-    CONSTRAINT uqCierreMovimientoSucursalFin UNIQUE (Fk_Sucursal_Codigo, fechaFinCierreMovimiento, esCierreAnualCierreMovimiento),
-    CONSTRAINT ckCierreMovimientoFechas CHECK (fechaInicioCierreMovimiento <= fechaFinCierreMovimiento),
-    CONSTRAINT ckCierreEjecucion CHECK (estadoCierreMovimiento <> 'CERRADO' OR fechaEjecucionCierreMovimiento IS NOT NULL),
-    CONSTRAINT Fk_Cierre_Movimiento_Sucursal FOREIGN KEY (Fk_Sucursal_Codigo)
+    observacionesCierreInventario VARCHAR(500) NOT NULL,
+    fechaEjecucionCierreInventario DATETIME NULL, -- El MVC la establece al ejecutar el cierre
+    CONSTRAINT uqCierreInventarioSucursalFin UNIQUE (Fk_Sucursal_Codigo, fechaFinCierreInventario, esCierreAnualCierreInventario),
+    CONSTRAINT ckCierreInventarioFechas CHECK (fechaInicioCierreInventario <= fechaFinCierreInventario),
+    CONSTRAINT Fk_Cierre_Inventario_Sucursal FOREIGN KEY (Fk_Sucursal_Codigo)
         REFERENCES tblSucursal(idSucursal) ON DELETE RESTRICT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT Pk_CierreMovimiento PRIMARY KEY (idCierreMovimiento)
+    CONSTRAINT Pk_CierreInventario PRIMARY KEY (idCierreInventario)
 ) ENGINE=InnoDB;
 
 
@@ -2832,38 +2867,46 @@ idCierreMovimiento INT NOT NULL AUTO_INCREMENT,
  */ 
 -- tblMovimientoInventario
 CREATE TABLE tblMovimientoInventario (
-idMovimientoInventario INT NOT NULL AUTO_INCREMENT,
+    idMovimientoInventario INT NOT NULL AUTO_INCREMENT,
     Fk_Tipo_Movimiento_Codigo INT NOT NULL,
--- agregar sucursales destino y origen 
+    Fk_Sucursal_Origen_Codigo INT NULL,
     Fk_Bodega_Origen_Codigo INT NULL,
+    Fk_Sucursal_Destino_Codigo INT NULL,
     Fk_Bodega_Destino_Codigo INT NULL,
     Fk_Transporte_Codigo INT NULL,
-    Fk_Traslado_Codigo INT NULL COMMENT 'Relaciona movimientos de entrada/salida con su traslado',
+    Fk_Traslado_Codigo INT NULL COMMENT 'Relaciona movimientos con su traslado',
     fechaMovimientoInventario DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     observacionesMovimientoInventario VARCHAR(500) NOT NULL,
     estadoMovimientoInventario ENUM('PENDIENTE', 'CUADRADO', 'CERRADO', 'ANULADO') NOT NULL DEFAULT 'PENDIENTE',
-    Fk_Cierre_Movimiento_Codigo INT NULL COMMENT 'FK al cierre; permite NULL mientras el movimiento no se haya cerrado', 
-    
+    Fk_Cierre_Inventario_Codigo INT NULL COMMENT 'NULL mientras el movimiento no pertenezca a un cierre',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    CONSTRAINT Fk_Movimiento_Inventario_Tipo_Movimiento FOREIGN KEY (Fk_Tipo_Movimiento_Codigo)
-	REFERENCES tblTipoMovimiento(idTipoMovimiento) ON DELETE RESTRICT,
-
-    CONSTRAINT Fk_Movimiento_Inventario_Bodega_Origen FOREIGN KEY (Fk_Bodega_Origen_Codigo)
-    REFERENCES tblBodega(idBodega) ON DELETE RESTRICT,
-
-    CONSTRAINT Fk_Movimiento_Inventario_Bodega_Destino FOREIGN KEY (Fk_Bodega_Destino_Codigo)
-    REFERENCES tblBodega(idBodega) ON DELETE RESTRICT,
-
-    CONSTRAINT Fk_Movimiento_Inventario_Transporte FOREIGN KEY (Fk_Transporte_Codigo)
-    REFERENCES tblTransporte(idTransporte) ON DELETE RESTRICT,
-    CONSTRAINT Fk_Movimiento_Inventario_Traslado FOREIGN KEY (Fk_Traslado_Codigo)
-        REFERENCES tblTraslado(idTraslado) ON DELETE RESTRICT,
-    CONSTRAINT Fk_Movimiento_Inventario_Cierre_Movimiento FOREIGN KEY (Fk_Cierre_Movimiento_Codigo)
-        REFERENCES tblCierreMovimiento(idCierreMovimiento) ON DELETE RESTRICT,
-    CONSTRAINT Pk_MovimientoInventario PRIMARY KEY (idMovimientoInventario)
+    CONSTRAINT Pk_MovimientoInventario PRIMARY KEY (idMovimientoInventario),
+    CONSTRAINT Fk_Movimiento_Inventario_Tipo_Movimiento
+        FOREIGN KEY (Fk_Tipo_Movimiento_Codigo) REFERENCES tblTipoMovimiento(idTipoMovimiento) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Movimiento_Inventario_Sucursal_Origen
+        FOREIGN KEY (Fk_Sucursal_Origen_Codigo) REFERENCES tblSucursal(idSucursal) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Movimiento_Inventario_Sucursal_Destino
+        FOREIGN KEY (Fk_Sucursal_Destino_Codigo) REFERENCES tblSucursal(idSucursal) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Movimiento_Inventario_Bodega_Origen
+        FOREIGN KEY (Fk_Bodega_Origen_Codigo, Fk_Sucursal_Origen_Codigo)
+        REFERENCES tblBodega(idBodega, Fk_Sucursal_Codigo) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Movimiento_Inventario_Bodega_Destino
+        FOREIGN KEY (Fk_Bodega_Destino_Codigo, Fk_Sucursal_Destino_Codigo)
+        REFERENCES tblBodega(idBodega, Fk_Sucursal_Codigo) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Movimiento_Inventario_Transporte
+        FOREIGN KEY (Fk_Transporte_Codigo) REFERENCES tblTransporte(idTransporte) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Movimiento_Inventario_Traslado
+        FOREIGN KEY (Fk_Traslado_Codigo) REFERENCES tblTraslado(idTraslado) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Movimiento_Inventario_Cierre_Inventario
+        FOREIGN KEY (Fk_Cierre_Inventario_Codigo) REFERENCES tblCierreInventario(idCierreInventario) ON DELETE RESTRICT,
+    CONSTRAINT ckMovimientoSucursalBodegaOrigen
+        CHECK ((Fk_Sucursal_Origen_Codigo IS NULL AND Fk_Bodega_Origen_Codigo IS NULL)
+            OR (Fk_Sucursal_Origen_Codigo IS NOT NULL AND Fk_Bodega_Origen_Codigo IS NOT NULL)),
+    CONSTRAINT ckMovimientoSucursalBodegaDestino
+        CHECK ((Fk_Sucursal_Destino_Codigo IS NULL AND Fk_Bodega_Destino_Codigo IS NULL)
+            OR (Fk_Sucursal_Destino_Codigo IS NOT NULL AND Fk_Bodega_Destino_Codigo IS NOT NULL))
 ) ENGINE=InnoDB;
 
 
@@ -2897,19 +2940,23 @@ idDetalleMovimiento INT NOT NULL AUTO_INCREMENT,
 */ 
 -- tblAuditoriaInventario
 CREATE TABLE tblAuditoriaInventario (
-idAuditoriaInventario INT NOT NULL AUTO_INCREMENT,
-    Fk_Movimiento_Inventario_Codigo INT NULL COMMENT 'Opcional: una auditoria puede realizarse sin movimiento previo',
+    idAuditoriaInventario INT NOT NULL AUTO_INCREMENT,
+    Fk_Movimiento_Inventario_Codigo INT NULL COMMENT 'La auditoría puede realizarse sin movimiento previo',
     Fk_Bodega_Codigo INT NOT NULL,
     tipoAuditoriaInventario ENUM('INDIVIDUAL', 'MULTIPLE') NOT NULL,
     estadoAuditoriaInventario ENUM('EN_PROCESO', 'FINALIZADA') NOT NULL DEFAULT 'EN_PROCESO',
     fechaAuditoriaInventario DATETIME NOT NULL,
+    encargadoBodegaAuditoriaInventario VARCHAR(100) NOT NULL,
+    responsableAuditoriaInventario VARCHAR(100) NOT NULL,
     resultadoAuditoriaInventario VARCHAR(100) NOT NULL,
-    observacionesCalidadAuditoriaInventario TEXT NOT NULL, -- Observaciones generales de la auditoria
+    observacionesCalidadAuditoriaInventario TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT Fk_Auditoria_Inventario_Movimiento_Inventario FOREIGN KEY (Fk_Movimiento_Inventario_Codigo) REFERENCES tblMovimientoInventario(idMovimientoInventario) ON DELETE RESTRICT,
-    CONSTRAINT Fk_Auditoria_Inventario_Bodega FOREIGN KEY (Fk_Bodega_Codigo) REFERENCES tblBodega(idBodega) ON DELETE RESTRICT,
-    CONSTRAINT Pk_AuditoriaInventario PRIMARY KEY (idAuditoriaInventario)
+    CONSTRAINT Pk_AuditoriaInventario PRIMARY KEY (idAuditoriaInventario),
+    CONSTRAINT Fk_Auditoria_Inventario_Movimiento_Inventario
+        FOREIGN KEY (Fk_Movimiento_Inventario_Codigo) REFERENCES tblMovimientoInventario(idMovimientoInventario) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Auditoria_Inventario_Bodega
+        FOREIGN KEY (Fk_Bodega_Codigo) REFERENCES tblBodega(idBodega) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 
@@ -2920,19 +2967,18 @@ CREATE TABLE tblDetalleAuditoria (
     Fk_Stock_Codigo INT NOT NULL,
     stockTeoricoDetalleAuditoria INT NOT NULL,
     stockFisicoDetalleAuditoria INT NOT NULL,
-    diferenciaDetalleAuditoria INT GENERATED ALWAYS AS
-        (stockFisicoDetalleAuditoria - stockTeoricoDetalleAuditoria) STORED NOT NULL,
+    diferenciaDetalleAuditoria INT NOT NULL COMMENT 'Calculado en C# como stock físico - stock teórico',
     observacionesDetalleAuditoria VARCHAR(500) NOT NULL DEFAULT '',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_DetalleAuditoria PRIMARY KEY (idDetalleAuditoria),
     CONSTRAINT uqDetalleAuditoriaStock UNIQUE (Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo),
-    CONSTRAINT Fk_Detalle_Auditoria_Auditoria_Inventario FOREIGN KEY (Fk_Auditoria_Inventario_Codigo)
-        REFERENCES tblAuditoriaInventario(idAuditoriaInventario) ON DELETE RESTRICT,
-    CONSTRAINT Fk_Detalle_Auditoria_Stock FOREIGN KEY (Fk_Stock_Codigo)
-        REFERENCES tblStock(idStock) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Detalle_Auditoria_Auditoria_Inventario
+        FOREIGN KEY (Fk_Auditoria_Inventario_Codigo) REFERENCES tblAuditoriaInventario(idAuditoriaInventario) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Detalle_Auditoria_Stock
+        FOREIGN KEY (Fk_Stock_Codigo) REFERENCES tblStock(idStock) ON DELETE RESTRICT,
     CONSTRAINT ckDetalleAuditoriaStockTeorico CHECK (stockTeoricoDetalleAuditoria >= 0),
-    CONSTRAINT ckDetalleAuditoriaStockFisico CHECK (stockFisicoDetalleAuditoria >= 0),
-    CONSTRAINT Pk_DetalleAuditoria PRIMARY KEY (idDetalleAuditoria)
+    CONSTRAINT ckDetalleAuditoriaStockFisico CHECK (stockFisicoDetalleAuditoria >= 0)
 ) ENGINE=InnoDB;
 
 
@@ -2942,7 +2988,7 @@ CREATE TABLE tblDetalleAuditoria (
 -- tblDetalleCierre
 CREATE TABLE tblDetalleCierre (
 idDetalleCierre INT NOT NULL AUTO_INCREMENT,
-    Fk_Cierre_Movimiento_Codigo INT NOT NULL,
+    Fk_Cierre_Inventario_Codigo INT NOT NULL,
     Fk_Stock_Codigo INT NOT NULL,
     stockAnteriorDetalleCierre INT NOT NULL DEFAULT 0,
     stockActualDetalleCierre INT NOT NULL DEFAULT 0,
@@ -2952,9 +2998,9 @@ idDetalleCierre INT NOT NULL AUTO_INCREMENT,
     abonosAcumuladosDetalleCierre BIGINT NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT Fk_Detalle_Cierre_Cierre_Movimiento FOREIGN KEY (Fk_Cierre_Movimiento_Codigo) REFERENCES tblCierreMovimiento(idCierreMovimiento) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Detalle_Cierre_Cierre_Inventario FOREIGN KEY (Fk_Cierre_Inventario_Codigo) REFERENCES tblCierreInventario(idCierreInventario) ON DELETE RESTRICT,
     CONSTRAINT Fk_Detalle_Cierre_Stock FOREIGN KEY (Fk_Stock_Codigo) REFERENCES tblStock(idStock) ON DELETE RESTRICT,
-    CONSTRAINT uqDetalleCierreStock UNIQUE (Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo),
+    CONSTRAINT uqDetalleCierreStock UNIQUE (Fk_Cierre_Inventario_Codigo, Fk_Stock_Codigo),
     CONSTRAINT Pk_DetalleCierre PRIMARY KEY (idDetalleCierre)
 ) ENGINE=InnoDB;
 
@@ -2969,7 +3015,7 @@ idDetalleCierre INT NOT NULL AUTO_INCREMENT,
 -- No modificar ni eliminar instantaneas desde la aplicacion luego del cierre.
 CREATE TABLE tblHistoricoInventario (
     idHistoricoInventario BIGINT NOT NULL AUTO_INCREMENT,
-    Fk_Cierre_Movimiento_Codigo INT NOT NULL,
+    Fk_Cierre_Inventario_Codigo INT NOT NULL,
     Fk_Stock_Codigo INT NOT NULL,
     Fk_Sucursal_Codigo INT NOT NULL,
     Fk_Bodega_Codigo INT NOT NULL,
@@ -2992,10 +3038,10 @@ CREATE TABLE tblHistoricoInventario (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT Pk_HistoricoInventario PRIMARY KEY (idHistoricoInventario),
-    CONSTRAINT uqHistoricoInventarioCierreStock UNIQUE (Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo),
-    CONSTRAINT Fk_Historico_Inventario_Cierre_Movimiento
-        FOREIGN KEY (Fk_Cierre_Movimiento_Codigo)
-        REFERENCES tblCierreMovimiento(idCierreMovimiento) ON DELETE RESTRICT,
+    CONSTRAINT uqHistoricoInventarioCierreStock UNIQUE (Fk_Cierre_Inventario_Codigo, Fk_Stock_Codigo),
+    CONSTRAINT Fk_Historico_Inventario_Cierre_Inventario
+        FOREIGN KEY (Fk_Cierre_Inventario_Codigo)
+        REFERENCES tblCierreInventario(idCierreInventario) ON DELETE RESTRICT,
     CONSTRAINT Fk_Historico_Inventario_Stock
         FOREIGN KEY (Fk_Stock_Codigo)
         REFERENCES tblStock(idStock) ON DELETE RESTRICT,
@@ -3017,28 +3063,31 @@ CREATE TABLE tblHistoricoInventario (
 */
 -- tblServicioTransporteExterno
 CREATE TABLE tblServicioTransporteExterno (
-idServicioTransporteExterno INT NOT NULL AUTO_INCREMENT,
- Fk_Empresa_Transportista_Codigo INT NOT NULL,
- Fk_Tipo_Servicio_Codigo INT NOT NULL,
- Fk_Traslado_Codigo INT NOT NULL,
- numeroGuiaServicioTransporteExterno VARCHAR(30) NOT NULL,
- estadoServicioTransporteExterno VARCHAR(30) NOT NULL DEFAULT 'Programado',
- origenServicioTransporteExterno VARCHAR(100) NOT NULL,
- direccionOrigenServicioTransporteExterno VARCHAR(500) NOT NULL,
- destinoServicioTransporteExterno VARCHAR(100) NOT NULL,
- direccionDestinoServicioTransporteExterno VARCHAR(500) NOT NULL,
- fechaContratacionServicioTransporteExterno DATE NOT NULL,
- fechaEstimadaEntregaServicioTransporteExterno DATE NOT NULL,
- fechaEntregaRealServicioTransporteExterno DATE NULL,
- created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
- updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT uqServicioNumeroGuia UNIQUE (numeroGuiaServicioTransporteExterno),
- CONSTRAINT Fk_Servicio_Transporte_Externo_Empresa_Transportista FOREIGN KEY (Fk_Empresa_Transportista_Codigo) REFERENCES tblEmpresaTransportista(idEmpresaTransportista) ON DELETE RESTRICT,
- CONSTRAINT Fk_Servicio_Transporte_Externo_Tipo_Servicio FOREIGN KEY (Fk_Tipo_Servicio_Codigo) REFERENCES tblTipoServicio(idTipoServicio) ON DELETE RESTRICT,
- CONSTRAINT Fk_Servicio_Transporte_Externo_Traslado FOREIGN KEY (Fk_Traslado_Codigo) REFERENCES tblTraslado(idTraslado) ON DELETE RESTRICT,
+    idServicioTransporteExterno INT NOT NULL AUTO_INCREMENT,
+    Fk_Empresa_Transportista_Codigo INT NOT NULL,
+    Fk_Tipo_Servicio_Codigo INT NOT NULL,
+    Fk_Traslado_Codigo INT NULL,
+    numeroGuiaServicioTransporteExterno VARCHAR(30) NULL,
+    estadoServicioTransporteExterno VARCHAR(30) NOT NULL DEFAULT 'Programado',
+    origenServicioTransporteExterno VARCHAR(100) NOT NULL,
+    direccionOrigenServicioTransporteExterno VARCHAR(500) NULL,
+    destinoServicioTransporteExterno VARCHAR(100) NOT NULL,
+    direccionDestinoServicioTransporteExterno VARCHAR(500) NULL,
+    fechaContratacionServicioTransporteExterno DATE NOT NULL,
+    fechaEstimadaEntregaServicioTransporteExterno DATE NOT NULL,
+    fechaEntregaRealServicioTransporteExterno DATE NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_ServicioTransporteExterno PRIMARY KEY (idServicioTransporteExterno),
+    CONSTRAINT uqServicioNumeroGuia UNIQUE (numeroGuiaServicioTransporteExterno),
     CONSTRAINT ckServicioEstado CHECK (estadoServicioTransporteExterno IN ('Programado','En tránsito','Entregado','Cancelado')),
     CONSTRAINT ckServicioFechas CHECK (fechaEstimadaEntregaServicioTransporteExterno >= fechaContratacionServicioTransporteExterno),
-    CONSTRAINT Pk_ServicioTransporteExterno PRIMARY KEY (idServicioTransporteExterno)
+    CONSTRAINT Fk_Servicio_Transporte_Externo_Empresa_Transportista
+        FOREIGN KEY (Fk_Empresa_Transportista_Codigo) REFERENCES tblEmpresaTransportista(idEmpresaTransportista) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Servicio_Transporte_Externo_Tipo_Servicio
+        FOREIGN KEY (Fk_Tipo_Servicio_Codigo) REFERENCES tblTipoServicio(idTipoServicio) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Servicio_Transporte_Externo_Traslado
+        FOREIGN KEY (Fk_Traslado_Codigo) REFERENCES tblTraslado(idTraslado) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 
@@ -3048,25 +3097,26 @@ idServicioTransporteExterno INT NOT NULL AUTO_INCREMENT,
 */
 -- tblCostoTransporte
 CREATE TABLE tblCostoTransporte (
-idCostoTransporte INT NOT NULL AUTO_INCREMENT,
- Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
- Fk_Tarifa_Transporte_Codigo INT NOT NULL,
- cantidadCostoTransporte DECIMAL(12,4) NOT NULL,
- costoUnitarioCostoTransporte DECIMAL(12,4) NOT NULL,
- costoTotalCostoTransporte DECIMAL(12,4) GENERATED ALWAYS AS
-     (ROUND(cantidadCostoTransporte * costoUnitarioCostoTransporte, 4)) STORED NOT NULL,
- monedaCostoTransporte CHAR(3) NOT NULL,
- tipoPagoCostoTransporte VARCHAR(30) NOT NULL,
- created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
- updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT uqCostoServicio UNIQUE (Fk_Servicio_Transporte_Externo_Codigo),
- CONSTRAINT Fk_Costo_Transporte_Servicio_Transporte_Externo FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE CASCADE,
- CONSTRAINT Fk_Costo_Transporte_Tarifa_Transporte FOREIGN KEY (Fk_Tarifa_Transporte_Codigo) REFERENCES tblTarifaTransporte(idTarifaTransporte) ON DELETE RESTRICT,
+    idCostoTransporte INT NOT NULL AUTO_INCREMENT,
+    Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
+    Fk_Tarifa_Transporte_Codigo INT NOT NULL,
+    cantidadCostoTransporte DECIMAL(12,4) NOT NULL,
+    costoUnitarioCostoTransporte DECIMAL(12,4) NOT NULL,
+    costoTotalCostoTransporte DECIMAL(12,4) NOT NULL COMMENT 'Calculado por el programa, no en la base de datos',
+    monedaCostoTransporte CHAR(3) NOT NULL,
+    tipoPagoCostoTransporte VARCHAR(30) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_CostoTransporte PRIMARY KEY (idCostoTransporte),
+    CONSTRAINT uqCostoServicio UNIQUE (Fk_Servicio_Transporte_Externo_Codigo),
     CONSTRAINT ckCostoCantidad CHECK (cantidadCostoTransporte > 0),
     CONSTRAINT ckCostoUnitario CHECK (costoUnitarioCostoTransporte >= 0),
     CONSTRAINT ckCostoMoneda CHECK (monedaCostoTransporte IN ('GTQ','USD')),
     CONSTRAINT ckCostoTipoPago CHECK (tipoPagoCostoTransporte IN ('Transferencia','Efectivo')),
-    CONSTRAINT Pk_CostoTransporte PRIMARY KEY (idCostoTransporte)
+    CONSTRAINT Fk_Costo_Transporte_Servicio_Transporte_Externo
+        FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Costo_Transporte_Tarifa_Transporte
+        FOREIGN KEY (Fk_Tarifa_Transporte_Codigo) REFERENCES tblTarifaTransporte(idTarifaTransporte) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 
@@ -3076,16 +3126,17 @@ idCostoTransporte INT NOT NULL AUTO_INCREMENT,
 */
 -- tblVehiculoTransporte
 CREATE TABLE tblVehiculoTransporte (
-idVehiculoTransporte INT NOT NULL AUTO_INCREMENT,
- Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
- placaVehiculoTransporte VARCHAR(30) NOT NULL,
- tipoVehiculoTransporte VARCHAR(100) NOT NULL,
- capacidadVehiculoTransporte VARCHAR(100) NOT NULL,
- created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
- updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT uqVehiculoServicio UNIQUE (Fk_Servicio_Transporte_Externo_Codigo),
- CONSTRAINT Fk_Vehiculo_Transporte_Servicio_Transporte_Externo FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE CASCADE,
-    CONSTRAINT Pk_VehiculoTransporte PRIMARY KEY (idVehiculoTransporte)
+    idVehiculoTransporte INT NOT NULL AUTO_INCREMENT,
+    Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
+    placaVehiculoTransporte VARCHAR(30) NULL,
+    tipoVehiculoTransporte VARCHAR(100) NULL,
+    capacidadVehiculoTransporte VARCHAR(100) NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_VehiculoTransporte PRIMARY KEY (idVehiculoTransporte),
+    CONSTRAINT uqVehiculoServicio UNIQUE (Fk_Servicio_Transporte_Externo_Codigo),
+    CONSTRAINT Fk_Vehiculo_Transporte_Servicio_Transporte_Externo
+        FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 
@@ -3095,15 +3146,16 @@ idVehiculoTransporte INT NOT NULL AUTO_INCREMENT,
 */
 -- tblConductorTransporte
 CREATE TABLE tblConductorTransporte (
-idConductorTransporte INT NOT NULL AUTO_INCREMENT,
- Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
- nombreConductorTransporte VARCHAR(100) NOT NULL,
- telefonoConductorTransporte VARCHAR(30) COLLATE utf8mb4_unicode_ci NOT NULL,
- created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
- updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT uqConductorServicio UNIQUE (Fk_Servicio_Transporte_Externo_Codigo),
- CONSTRAINT Fk_Conductor_Transporte_Servicio_Transporte_Externo FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE CASCADE,
-    CONSTRAINT Pk_ConductorTransporte PRIMARY KEY (idConductorTransporte)
+    idConductorTransporte INT NOT NULL AUTO_INCREMENT,
+    Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
+    nombreConductorTransporte VARCHAR(100) NULL,
+    telefonoConductorTransporte VARCHAR(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_ConductorTransporte PRIMARY KEY (idConductorTransporte),
+    CONSTRAINT uqConductorServicio UNIQUE (Fk_Servicio_Transporte_Externo_Codigo),
+    CONSTRAINT Fk_Conductor_Transporte_Servicio_Transporte_Externo
+        FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 
@@ -3113,17 +3165,19 @@ idConductorTransporte INT NOT NULL AUTO_INCREMENT,
 */
 -- tblProductoTransporte
 CREATE TABLE tblProductoTransporte (
-idProductoTransporte INT NOT NULL AUTO_INCREMENT,
- Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
- Fk_Producto_Codigo INT NOT NULL,
- cantidadProductoTransporte DECIMAL(12,4) NOT NULL,
- unidadMedidaProductoTransporte VARCHAR(30) NOT NULL,
- created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
- updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT Fk_Producto_Transporte_Servicio_Transporte_Externo FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE CASCADE,
- CONSTRAINT Fk_Producto_Transporte_Producto FOREIGN KEY (Fk_Producto_Codigo) REFERENCES tblProducto(idProducto) ON DELETE RESTRICT,
+    idProductoTransporte INT NOT NULL AUTO_INCREMENT,
+    Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
+    Fk_Producto_Codigo INT NOT NULL,
+    cantidadProductoTransporte DECIMAL(12,4) NOT NULL,
+    unidadMedidaProductoTransporte VARCHAR(30) NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_ProductoTransporte PRIMARY KEY (idProductoTransporte),
     CONSTRAINT ckProductoCantidad CHECK (cantidadProductoTransporte > 0),
-    CONSTRAINT Pk_ProductoTransporte PRIMARY KEY (idProductoTransporte)
+    CONSTRAINT Fk_Producto_Transporte_Servicio_Transporte_Externo
+        FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Producto_Transporte_Producto
+        FOREIGN KEY (Fk_Producto_Codigo) REFERENCES tblProducto(idProducto) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 
@@ -3133,15 +3187,16 @@ idProductoTransporte INT NOT NULL AUTO_INCREMENT,
 */
 -- tblUbicacionTransporte
 CREATE TABLE tblUbicacionTransporte (
-idUbicacionTransporte INT NOT NULL AUTO_INCREMENT,
- Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
- ubicacionActualUbicacionTransporte VARCHAR(500) NOT NULL,
- fechaActualizacionUbicacionTransporte DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
- created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
- updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT Fk_Ubicacion_Transporte_Servicio_Transporte_Externo FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE CASCADE,
- INDEX idxUbicacionServicioFecha (Fk_Servicio_Transporte_Externo_Codigo, fechaActualizacionUbicacionTransporte),
-    CONSTRAINT Pk_UbicacionTransporte PRIMARY KEY (idUbicacionTransporte)
+    idUbicacionTransporte INT NOT NULL AUTO_INCREMENT,
+    Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
+    ubicacionActualUbicacionTransporte VARCHAR(500) NOT NULL,
+    fechaActualizacionUbicacionTransporte DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_UbicacionTransporte PRIMARY KEY (idUbicacionTransporte),
+    INDEX idxUbicacionServicioFecha (Fk_Servicio_Transporte_Externo_Codigo, fechaActualizacionUbicacionTransporte),
+    CONSTRAINT Fk_Ubicacion_Transporte_Servicio_Transporte_Externo
+        FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 
@@ -3151,19 +3206,20 @@ idUbicacionTransporte INT NOT NULL AUTO_INCREMENT,
 */
 -- tblIncidenciaTransporte
 CREATE TABLE tblIncidenciaTransporte (
-idIncidenciaTransporte INT NOT NULL AUTO_INCREMENT,
- Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
- codigoIncidenciaTransporte VARCHAR(30) NOT NULL,
- fechaIncidenciaTransporte DATETIME NOT NULL,
- tipoIncidenciaTransporte VARCHAR(100) NOT NULL,
- descripcionIncidenciaTransporte TEXT NOT NULL, -- Relato amplio de incidencia, puede superar 255 caracteres
- responsableIncidenciaTransporte VARCHAR(100) NOT NULL,
- estadoIncidenciaTransporte VARCHAR(30) NOT NULL DEFAULT 'Pendiente',
- created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
- updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT uqIncidenciaCodigo UNIQUE (codigoIncidenciaTransporte),
- CONSTRAINT Fk_Incidencia_Transporte_Servicio_Transporte_Externo FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE CASCADE,
-    CONSTRAINT Pk_IncidenciaTransporte PRIMARY KEY (idIncidenciaTransporte)
+    idIncidenciaTransporte INT NOT NULL AUTO_INCREMENT,
+    Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
+    codigoIncidenciaTransporte VARCHAR(30) NOT NULL,
+    fechaIncidenciaTransporte DATETIME NOT NULL,
+    tipoIncidenciaTransporte VARCHAR(100) NOT NULL,
+    descripcionIncidenciaTransporte TEXT NOT NULL,
+    responsableIncidenciaTransporte VARCHAR(100) NULL,
+    estadoIncidenciaTransporte VARCHAR(30) NOT NULL DEFAULT 'Pendiente',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_IncidenciaTransporte PRIMARY KEY (idIncidenciaTransporte),
+    CONSTRAINT uqIncidenciaCodigo UNIQUE (codigoIncidenciaTransporte),
+    CONSTRAINT Fk_Incidencia_Transporte_Servicio_Transporte_Externo
+        FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 
@@ -3173,24 +3229,23 @@ idIncidenciaTransporte INT NOT NULL AUTO_INCREMENT,
 */
 -- tblHistorialTransporte
 CREATE TABLE tblHistorialTransporte (
-idHistorialTransporte INT NOT NULL AUTO_INCREMENT,
- Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
- fechaMovimientoHistorialTransporte DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
- tipoMovimientoHistorialTransporte VARCHAR(100) NOT NULL,
- descripcionMovimientoHistorialTransporte VARCHAR(255) NOT NULL,
- estadoTransporteHistorialTransporte VARCHAR(30) NOT NULL,
- created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
- updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT Fk_Historial_Transporte_Servicio_Transporte_Externo FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE CASCADE,
-    CONSTRAINT Pk_HistorialTransporte PRIMARY KEY (idHistorialTransporte)
+    idHistorialTransporte INT NOT NULL AUTO_INCREMENT,
+    Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
+    fechaMovimientoHistorialTransporte DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    tipoMovimientoHistorialTransporte VARCHAR(100) NOT NULL,
+    descripcionMovimientoHistorialTransporte VARCHAR(255) NOT NULL,
+    estadoTransporteHistorialTransporte VARCHAR(30) NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_HistorialTransporte PRIMARY KEY (idHistorialTransporte),
+    CONSTRAINT Fk_Historial_Transporte_Servicio_Transporte_Externo
+        FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo) REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 
--- ============================================================================
 -- tblEstadoSolicitudPago
--- Responsable: BRAYAN MOISES PINZON LOPEZ (carne incompleto en solicitud).
+-- Responsable: BRAYAN MOISES PINZON LOPEZ 0901 23 10511
 -- Catalogo de estados para las solicitudes de pago de transporte.
--- ============================================================================
 CREATE TABLE tblEstadoSolicitudPago (
     idEstadoSolicitudPago INT NOT NULL AUTO_INCREMENT,
     codigoEstadoSolicitudPago VARCHAR(30) NOT NULL,
@@ -3217,7 +3272,7 @@ VALUES
 CREATE TABLE tblSolicitudPagoTransporte (
 idSolicitudPagoTransporte INT NOT NULL AUTO_INCREMENT,
  Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
- codigoSolicitudPagoTransporte VARCHAR(30) NOT NULL,
+ codigoSolicitudPagoTransporte VARCHAR(30) NULL,
  Fk_Estado_Solicitud_Pago_Codigo INT NOT NULL DEFAULT 1,
  referenciaBancariaSolicitudPagoTransporte VARCHAR(100) NULL,
  fechaPagoSolicitudPagoTransporte DATE NULL,
@@ -3233,6 +3288,93 @@ idSolicitudPagoTransporte INT NOT NULL AUTO_INCREMENT,
   REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE CASCADE,
     CONSTRAINT Pk_SolicitudPagoTransporte PRIMARY KEY (idSolicitudPagoTransporte)
 ) ENGINE=InnoDB;
+/*
+    Responsable:
+    GABRIELA PINTO GARCIA 9959 23 1087
+*/
+-- tblPlazo y tblCuentaPorPagar existen en el esquema general dbsistemaembutidos.
+-- Revisión de la relación compuesta según INF-S-003, apartado 6.
+CREATE TABLE tblFacturaTransporte (
+    idFacturaTransporte INT NOT NULL AUTO_INCREMENT,
+    Fk_Servicio_Transporte_Externo_Codigo INT NOT NULL,
+    Fk_Plazo_Codigo INT NOT NULL,
+    -- Las tres columnas son NULL cuando todavía no hay cuenta por pagar.
+    Fk_SerieDocumentoCuentaPorPagar VARCHAR(20) NULL,
+    Fk_NumeroDocumentoCuentaPorPagar VARCHAR(30) NULL,
+    Fk_IdConceptoProveedor INT NULL,
+
+    serieFacturaTransporte VARCHAR(30) NOT NULL,
+    numeroFacturaTransporte VARCHAR(30) NOT NULL,
+    fechaEmisionFacturaTransporte DATE NOT NULL,
+    montoFacturaTransporte DECIMAL(12,4) NOT NULL,
+    activaFacturaTransporte BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT Pk_FacturaTransporte PRIMARY KEY (idFacturaTransporte),
+    CONSTRAINT uqFacturaServicio UNIQUE (Fk_Servicio_Transporte_Externo_Codigo),
+    CONSTRAINT uqFacturaCuentaPorPagar UNIQUE (
+        Fk_SerieDocumentoCuentaPorPagar,
+        Fk_NumeroDocumentoCuentaPorPagar,
+        Fk_IdConceptoProveedor
+    ),
+    CONSTRAINT uqFacturaDocumento UNIQUE (serieFacturaTransporte, numeroFacturaTransporte),
+    CONSTRAINT ckFacturaMonto CHECK (montoFacturaTransporte > 0),
+    CONSTRAINT ckFacturaCuentaPorPagarCompleta CHECK (
+        (Fk_SerieDocumentoCuentaPorPagar IS NULL
+         AND Fk_NumeroDocumentoCuentaPorPagar IS NULL
+         AND Fk_IdConceptoProveedor IS NULL)
+        OR
+        (Fk_SerieDocumentoCuentaPorPagar IS NOT NULL
+         AND Fk_NumeroDocumentoCuentaPorPagar IS NOT NULL
+         AND Fk_IdConceptoProveedor IS NOT NULL)
+    ),
+    CONSTRAINT Fk_Factura_Transporte_Servicio_Transporte_Externo
+        FOREIGN KEY (Fk_Servicio_Transporte_Externo_Codigo)
+        REFERENCES tblServicioTransporteExterno(idServicioTransporteExterno) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Factura_Transporte_Plazo
+        FOREIGN KEY (Fk_Plazo_Codigo)
+        REFERENCES tblPlazo(idPlazo) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Factura_Transporte_Cuenta_Por_Pagar
+        FOREIGN KEY (
+            Fk_SerieDocumentoCuentaPorPagar,
+            Fk_NumeroDocumentoCuentaPorPagar,
+            Fk_IdConceptoProveedor
+        ) REFERENCES tblCuentaPorPagar (
+            serieDocumentoCuentaPorPagar,
+            numeroDocumentoCuentaPorPagar,
+            idConceptoProveedor
+        ) ON DELETE RESTRICT
+) ENGINE=InnoDB;
+
+/*
+    Responsable:
+    GABRIELA PINTO GARCIA 9959 23 1087
+*/
+CREATE TABLE tblCuentaBancariaTransportista (
+    idCuentaBancariaTransportista INT NOT NULL AUTO_INCREMENT,
+    Fk_Empresa_Transportista_Codigo INT NOT NULL,
+    Fk_Banco_Codigo BIGINT NOT NULL,
+    Fk_TipoCuentaBancaria_Codigo BIGINT NOT NULL,
+    Fk_Moneda_Codigo BIGINT NOT NULL,
+    numeroCuentaBancariaTransportista VARCHAR(100) NOT NULL,
+    titularCuentaBancariaTransportista VARCHAR(100) NOT NULL,
+    activaCuentaBancariaTransportista BOOLEAN NOT NULL DEFAULT TRUE,
+    predeterminadaCuentaBancariaTransportista BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_CuentaBancariaTransportista PRIMARY KEY (idCuentaBancariaTransportista),
+    CONSTRAINT uqCuentaBancariaTransportista UNIQUE (Fk_Banco_Codigo, numeroCuentaBancariaTransportista),
+    CONSTRAINT Fk_Cuenta_Bancaria_Transportista_Empresa_Transportista
+        FOREIGN KEY (Fk_Empresa_Transportista_Codigo) REFERENCES tblEmpresaTransportista(idEmpresaTransportista) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Cuenta_Bancaria_Transportista_Banco
+        FOREIGN KEY (Fk_Banco_Codigo) REFERENCES tblBanco(idBanco) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Cuenta_Bancaria_Transportista_Tipo_Cuenta_Bancaria
+        FOREIGN KEY (Fk_TipoCuentaBancaria_Codigo) REFERENCES tblTipoCuentaBancaria(idTipoCuentaBancaria) ON DELETE RESTRICT,
+    CONSTRAINT Fk_Cuenta_Bancaria_Transportista_Moneda
+        FOREIGN KEY (Fk_Moneda_Codigo) REFERENCES tblMoneda(idMoneda) ON DELETE RESTRICT
+) ENGINE=InnoDB;
+
 -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡  Modulo de compras !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 
 
@@ -3365,37 +3507,7 @@ CREATE TABLE IF NOT EXISTS tblDetalleCompra (
     CONSTRAINT ckDescuentoDetalleCompra CHECK (descuentoPorcentualDetalleCompra BETWEEN 0 AND 0.99)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS tblCuentaPorPagar(
-    idProveedor                                  INT NOT NULL,
-    idConceptoProveedor                          INT NOT NULL,
-    serieDocumentoCuentaPorPagar                 VARCHAR(20) NOT NULL,
-    numeroDocumentoCuentaPorPagar                VARCHAR(30) NOT NULL,
-    fechaEmisionCuentaPorPagar                   DATE NOT NULL,
-    fechaVencimientoCuentaPorPagar               DATE NOT NULL,
-    idMoneda                                     BIGINT         NOT NULL,
-    idTipoCambio                                 BIGINT         NULL,
-    tipoCambioCuentaPorPagar                     DECIMAL(12,6) NOT NULL DEFAULT 1,
-    montoTotalCuentaPorPagar                     DECIMAL(12,4) NOT NULL,
-    saldoActualCuentaPorPagar                    DECIMAL(12,4) NOT NULL,
-    estadoCuentaPorPagar                         VARCHAR(30) NOT NULL DEFAULT 'Pendiente',
-    bloqueadoCuentaPorPagar                      BOOLEAN NOT NULL DEFAULT 0,
-    created_at                                   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at                                   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    
-    CONSTRAINT Pk_CuentaPorPagar PRIMARY KEY (serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor),
-    CONSTRAINT Fk_Proveedor_idProveedor FOREIGN KEY (idProveedor) REFERENCES tblProveedor(idProveedor),
-    CONSTRAINT Fk_CuentaPorPagar_Concepto FOREIGN KEY (idConceptoProveedor) REFERENCES tblConceptoProveedor (idConceptoProveedor),
-    INDEX idxCuentaPorPagarVencimiento (fechaVencimientoCuentaPorPagar),
-    CONSTRAINT Fk_CuentaPorPagar_Moneda FOREIGN KEY (idMoneda) REFERENCES tblMoneda (idMoneda) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    CONSTRAINT Fk_CuentaPorPagar_TipoCambio FOREIGN KEY (idTipoCambio) REFERENCES tblTipoCambio (idTipoCambio) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    INDEX idxCuentaPorPagarMoneda (idMoneda),
-    INDEX idxCuentaPorPagarTipoCambio (idTipoCambio),
-    CONSTRAINT ckReferenciaTipoCambioCuentaPorPagar CHECK (idTipoCambio IS NOT NULL OR tipoCambioCuentaPorPagar = 1),
-    CONSTRAINT ckTipoCambioCuentaPorPagar CHECK (tipoCambioCuentaPorPagar > 0),
-    CONSTRAINT ckMontoTotalCuentaPorPagar CHECK (montoTotalCuentaPorPagar <> 0),
-    CONSTRAINT ckFechasCuentaPorPagar CHECK (fechaVencimientoCuentaPorPagar >= fechaEmisionCuentaPorPagar),
-    CONSTRAINT ckEstadoCuentaPorPagar CHECK (estadoCuentaPorPagar IN ('Pendiente','Parcial','Pagada','Anulada'))
-) ENGINE=InnoDB;
+
 
 CREATE TABLE IF NOT EXISTS tblDevolucionCompra (
     idDevolucionCompra                           INT            NOT NULL AUTO_INCREMENT,
@@ -3505,7 +3617,104 @@ CREATE TABLE IF NOT EXISTS tblSolicitudPago (
     CONSTRAINT ckEstadoSolicitudPago CHECK (estadoSolicitudPago IN ('Pendiente','Procesada','Rechazada'))
 ) ENGINE=InnoDB;
 
-         
+CREATE TABLE IF NOT EXISTS tblPeriodoCompras (
+    idPeriodoCompras                             INT            NOT NULL AUTO_INCREMENT,
+    anioPeriodoCompras                           SMALLINT       NOT NULL,
+    mesPeriodoCompras                            TINYINT        NOT NULL,
+    fechaInicioPeriodoCompras                    DATE           NOT NULL,
+    fechaFinPeriodoCompras                       DATE           NOT NULL,
+    estadoPeriodoCompras                         VARCHAR(20)    NOT NULL DEFAULT 'Abierto',
+    totalCargosPeriodoCompras                    DECIMAL(12,4)  NOT NULL DEFAULT 0,
+    totalAbonosPeriodoCompras                    DECIMAL(12,4)  NOT NULL DEFAULT 0,
+    fechaCierrePeriodoCompras                    DATETIME       NULL,
+    idUsuarioCierrePeriodoCompras                INT            NULL,
+    created_at                                   TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at                                   TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT Pk_PeriodoCompras PRIMARY KEY (idPeriodoCompras),
+    CONSTRAINT uqAnioMesPeriodoCompras UNIQUE (anioPeriodoCompras, mesPeriodoCompras),
+    INDEX idxFechasPeriodoCompras (fechaInicioPeriodoCompras, fechaFinPeriodoCompras),
+    INDEX idxPeriodoComprasUsuario (idUsuarioCierrePeriodoCompras),
+    CONSTRAINT Fk_PeriodoCompras_Usuario FOREIGN KEY (idUsuarioCierrePeriodoCompras) REFERENCES tblUsuario (idUsuario) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT ckMesPeriodoCompras CHECK (mesPeriodoCompras BETWEEN 1 AND 12),
+    CONSTRAINT ckFechasPeriodoCompras CHECK (fechaFinPeriodoCompras >= fechaInicioPeriodoCompras),
+    CONSTRAINT ckEstadoPeriodoCompras CHECK (estadoPeriodoCompras IN ('Abierto','Cerrado')),
+    CONSTRAINT ckTotalesPeriodoCompras CHECK (totalCargosPeriodoCompras >= 0 AND totalAbonosPeriodoCompras >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS tblSaldoProveedorPeriodo (
+    idSaldoProveedorPeriodo                      INT            NOT NULL AUTO_INCREMENT,
+    idPeriodoCompras                             INT            NOT NULL,
+    idProveedor                                  INT            NOT NULL,
+    idMoneda                                     BIGINT         NOT NULL,
+    saldoInicialSaldoProveedorPeriodo            DECIMAL(12,4)  NOT NULL DEFAULT 0,
+    cargosSaldoProveedorPeriodo                  DECIMAL(12,4)  NOT NULL DEFAULT 0,
+    abonosSaldoProveedorPeriodo                  DECIMAL(12,4)  NOT NULL DEFAULT 0,
+    saldoFinalSaldoProveedorPeriodo              DECIMAL(12,4)  NOT NULL DEFAULT 0,
+    tipoCambioSaldoProveedorPeriodo              DECIMAL(12,6)  NOT NULL DEFAULT 1,
+    saldoFinalLocalSaldoProveedorPeriodo         DECIMAL(12,4)  NOT NULL DEFAULT 0,
+    created_at                                   TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at                                   TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT Pk_SaldoProveedorPeriodo PRIMARY KEY (idSaldoProveedorPeriodo),
+    CONSTRAINT uqPeriodoProveedorMonedaSaldo UNIQUE (idPeriodoCompras, idProveedor, idMoneda),
+    INDEX idxSaldoProveedorPeriodoProveedor (idProveedor),
+    INDEX idxSaldoProveedorPeriodoMoneda (idMoneda),
+    CONSTRAINT Fk_SaldoProveedorPeriodo_Periodo FOREIGN KEY (idPeriodoCompras) REFERENCES tblPeriodoCompras (idPeriodoCompras) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT Fk_SaldoProveedorPeriodo_Proveedor FOREIGN KEY (idProveedor) REFERENCES tblProveedor (idProveedor) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT Fk_SaldoProveedorPeriodo_Moneda FOREIGN KEY (idMoneda) REFERENCES tblMoneda (idMoneda) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT ckMovimientosSaldoProveedorPeriodo CHECK (cargosSaldoProveedorPeriodo >= 0 AND abonosSaldoProveedorPeriodo >= 0),
+    CONSTRAINT ckTipoCambioSaldoProveedorPeriodo CHECK (tipoCambioSaldoProveedorPeriodo > 0),
+    CONSTRAINT ckCuadreSaldoProveedorPeriodo CHECK (saldoFinalSaldoProveedorPeriodo =
+        saldoInicialSaldoProveedorPeriodo + cargosSaldoProveedorPeriodo - abonosSaldoProveedorPeriodo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Un límite NULL significa "sin límite". Días vencidos = fecha de cierre - fecha de vencimiento
+-- (0 o menos: el documento todavía no vence).
+CREATE TABLE IF NOT EXISTS tblRangoAntiguedad (
+    idRangoAntiguedad                            INT            NOT NULL AUTO_INCREMENT,
+    nombreRangoAntiguedad                        VARCHAR(40)    NOT NULL,
+    diasDesdeRangoAntiguedad                     INT            NULL,
+    diasHastaRangoAntiguedad                     INT            NULL,
+    ordenRangoAntiguedad                         TINYINT        NOT NULL,
+    activoRangoAntiguedad                        BOOLEAN        NOT NULL DEFAULT TRUE,
+    created_at                                   TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at                                   TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT Pk_RangoAntiguedad PRIMARY KEY (idRangoAntiguedad),
+    CONSTRAINT uqNombreRangoAntiguedad UNIQUE (nombreRangoAntiguedad),
+    CONSTRAINT uqOrdenRangoAntiguedad UNIQUE (ordenRangoAntiguedad),
+    CONSTRAINT ckLimitesRangoAntiguedad CHECK (diasDesdeRangoAntiguedad IS NULL
+        OR diasHastaRangoAntiguedad IS NULL
+        OR diasHastaRangoAntiguedad >= diasDesdeRangoAntiguedad)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS tblAntiguedadSaldo (
+    idAntiguedadSaldo                            INT            NOT NULL AUTO_INCREMENT,
+    idPeriodoCompras                             INT            NOT NULL,
+    idProveedor                                  INT            NOT NULL,
+    idMoneda                                     BIGINT         NOT NULL,
+    idRangoAntiguedad                            INT            NOT NULL,
+    montoAntiguedadSaldo                         DECIMAL(12,4)  NOT NULL,
+    montoLocalAntiguedadSaldo                    DECIMAL(12,4)  NOT NULL,
+    cantidadDocumentosAntiguedadSaldo            INT            NOT NULL,
+    created_at                                   TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at                                   TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT Pk_AntiguedadSaldo PRIMARY KEY (idAntiguedadSaldo),
+    CONSTRAINT uqPeriodoProveedorMonedaRango UNIQUE (idPeriodoCompras, idProveedor, idMoneda, idRangoAntiguedad),
+    INDEX idxAntiguedadSaldoProveedor (idProveedor),
+    INDEX idxAntiguedadSaldoMoneda (idMoneda),
+    INDEX idxAntiguedadSaldoRango (idRangoAntiguedad),
+    CONSTRAINT Fk_AntiguedadSaldo_Periodo FOREIGN KEY (idPeriodoCompras) REFERENCES tblPeriodoCompras (idPeriodoCompras) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT Fk_AntiguedadSaldo_Proveedor FOREIGN KEY (idProveedor) REFERENCES tblProveedor (idProveedor) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT Fk_AntiguedadSaldo_Moneda FOREIGN KEY (idMoneda) REFERENCES tblMoneda (idMoneda) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT Fk_AntiguedadSaldo_Rango FOREIGN KEY (idRangoAntiguedad) REFERENCES tblRangoAntiguedad (idRangoAntiguedad) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    CONSTRAINT ckMontoAntiguedadSaldo CHECK (montoAntiguedadSaldo > 0 AND montoLocalAntiguedadSaldo > 0),
+    CONSTRAINT ckCantidadAntiguedadSaldo CHECK (cantidadDocumentosAntiguedadSaldo > 0)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 -- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ Ventas y Cuentas por Cobrar !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 -- tblVendedor | Autor: Jose Torres - 0901-23-1091 | Modulo: 7000 | Aplicacion: 7009
 CREATE TABLE `tblVendedor` (
@@ -4520,8 +4729,7 @@ ALTER TABLE `tblCierreMovimientoCxCDetalle`
   ADD CONSTRAINT `Fk_CierreMovimientoCxCDetalle_FacturaEncabezado` FOREIGN KEY (`idFacturaEncabezado`)
     REFERENCES `tblFacturaEncabezado` (`idFacturaEncabezado`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
--- bancos 2
-
+-- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ alter de Bnacos  !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 
 -- Victor Samayoa 0901-23-3424
 SET @bancoBI = (
@@ -4705,89 +4913,100 @@ ALTER TABLE tblOrdenPago
         ((Fk_OrdenCompraRecibida_Codigo IS NOT NULL) + (Fk_DetallePlanillaRecibida_Codigo IS NOT NULL)
          + (Fk_SolicitudPagoTransporte_Codigo IS NOT NULL) = 1);
 
-INSERT INTO tblEstadoSolicitudPago (codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
-VALUES ('PAGADO', 'Pagado', 'Pago realizado desde Bancos');
+UPDATE tblEstadoSolicitudPago
+SET codigoEstadoSolicitudPago = 'EN_REVISION',
+    nombreEstadoSolicitudPago = 'En revisión',
+    descripcionEstadoSolicitudPago = 'Documentación de soporte en revisión.'
+WHERE idEstadoSolicitudPago = 2;
+
+INSERT INTO tblEstadoSolicitudPago
+    (idEstadoSolicitudPago, codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
+VALUES
+    (4, 'PAGADO', 'Pagado', 'Pago realizado y confirmado.');
+
 ALTER TABLE tblOrdenPago DROP CHECK ckOrdenPago2;
 ALTER TABLE tblOrdenPago DROP CHECK ckOrdenPago5;
-ALTER TABLE tblCuentaBancaria ADD COLUMN saldoInicialCuentaBancaria DECIMAL(12,4) NOT
-NULL DEFAULT 0.0000 AFTER limiteSobregiroCuentaBancaria;
+
+ALTER TABLE tblCuentaBancaria ADD COLUMN saldoInicialCuentaBancaria DECIMAL(12,4) NOT NULL DEFAULT 0.0000 AFTER limiteSobregiroCuentaBancaria;
+
 CREATE TABLE tblCuentaBancariaTercero (
-idCuentaBancariaTercero BIGINT NOT NULL AUTO_INCREMENT,
-numeroCuentaBancariaTercero VARCHAR(100) NOT NULL,
-nombreTitularCuentaBancariaTercero VARCHAR(255) NOT NULL,
-idBanco BIGINT NOT NULL,
-idMoneda BIGINT NOT NULL,
-idEmpleado INT NULL,
-idProveedor INT NULL,
-idCliente INT NULL,
-is_active BOOLEAN NOT NULL DEFAULT TRUE,
-created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE
-CURRENT_TIMESTAMP,
-CONSTRAINT Pk_CuentaBancariaTercero PRIMARY KEY (idCuentaBancariaTercero),
-CONSTRAINT uqCuentaBancariaTercero UNIQUE (idBanco, numeroCuentaBancariaTercero),
-CONSTRAINT ckCuentaBancariaTerceroPropietario CHECK ((idEmpleado IS NOT NULL) +
-(idProveedor IS NOT NULL) + (idCliente IS NOT NULL) = 1),
-CONSTRAINT Fk_CuentaBancariaTercero_Banco FOREIGN KEY (idBanco) REFERENCES
-tblBanco(idBanco),
-CONSTRAINT Fk_CuentaBancariaTercero_Moneda FOREIGN KEY (idMoneda) REFERENCES
-tblMoneda(idMoneda),
-CONSTRAINT Fk_CuentaBancariaTercero_Empleado FOREIGN KEY (idEmpleado) REFERENCES
-tblEmpleado(idEmpleado),
-CONSTRAINT Fk_CuentaBancariaTercero_Proveedor FOREIGN KEY (idProveedor) REFERENCES
-tblProveedor(idProveedor),
-CONSTRAINT Fk_CuentaBancariaTercero_Cliente FOREIGN KEY (idCliente) REFERENCES
-tblCliente(idCliente),
-INDEX idxCuentaTerceroEmpleado (idEmpleado),
-INDEX idxCuentaTerceroProveedor (idProveedor),
-INDEX idxCuentaTerceroCliente (idCliente),
-CONSTRAINT ckCuentaTerceroActivo CHECK (is_active IN (0,1))
+    idCuentaBancariaTercero BIGINT NOT NULL AUTO_INCREMENT,
+    numeroCuentaBancariaTercero VARCHAR(100) NOT NULL,
+    nombreTitularCuentaBancariaTercero VARCHAR(255) NOT NULL,
+    idBanco BIGINT NOT NULL,
+    idMoneda BIGINT NOT NULL,
+    idEmpleado INT NULL,
+    idProveedor INT NULL,
+    idCliente INT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT Pk_CuentaBancariaTercero PRIMARY KEY (idCuentaBancariaTercero),
+    CONSTRAINT uqCuentaBancariaTercero UNIQUE (idBanco, numeroCuentaBancariaTercero),
+    CONSTRAINT ckCuentaBancariaTerceroPropietario CHECK ((idEmpleado IS NOT NULL) + (idProveedor IS NOT NULL) + (idCliente IS NOT NULL) = 1),
+    CONSTRAINT Fk_CuentaBancariaTercero_Banco FOREIGN KEY (idBanco) REFERENCES tblBanco(idBanco),
+    CONSTRAINT Fk_CuentaBancariaTercero_Moneda FOREIGN KEY (idMoneda) REFERENCES tblMoneda(idMoneda),
+    CONSTRAINT Fk_CuentaBancariaTercero_Empleado FOREIGN KEY (idEmpleado) REFERENCES tblEmpleado(idEmpleado),
+    CONSTRAINT Fk_CuentaBancariaTercero_Proveedor FOREIGN KEY (idProveedor) REFERENCES tblProveedor(idProveedor),
+    CONSTRAINT Fk_CuentaBancariaTercero_Cliente FOREIGN KEY (idCliente) REFERENCES tblCliente(idCliente),
+    INDEX idxCuentaTerceroEmpleado (idEmpleado),
+    INDEX idxCuentaTerceroProveedor (idProveedor),
+    INDEX idxCuentaTerceroCliente (idCliente),
+    CONSTRAINT ckCuentaTerceroActivo CHECK (is_active IN (0,1))
 ) ENGINE=InnoDB;
+
+
 ALTER TABLE tblMovimientoBancarioTercero
 ADD COLUMN idCuentaBancariaTercero BIGINT NULL,
 ADD INDEX idxMovimientoTerceroCuenta (idCuentaBancariaTercero),
 ADD CONSTRAINT Fk_MovimientoTercero_CuentaBancariaTercero
-FOREIGN KEY (idCuentaBancariaTercero)
-REFERENCES tblCuentaBancariaTercero(idCuentaBancariaTercero)
-ON DELETE RESTRICT
-ON UPDATE RESTRICT;
+    FOREIGN KEY (idCuentaBancariaTercero)
+    REFERENCES tblCuentaBancariaTercero(idCuentaBancariaTercero)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
 ALTER TABLE tblMovimientoBancario
 ADD CONSTRAINT uqMovimientoReferencia
 UNIQUE (referenciaMovimientoBancario);
+
 CREATE TABLE IF NOT EXISTS tblDisponibilidadDiariaHistorial (
-idDisponibilidadDiariaHistorial BIGINT NOT NULL AUTO_INCREMENT,
-Fk_DisponibilidadDiaria BIGINT NOT NULL,
-Fk_CuentaBancaria BIGINT NOT NULL,
-fechaCorte DATE NOT NULL,
-accion VARCHAR(12) NOT NULL,
-versionAnterior BIGINT NULL,
-versionNueva BIGINT NOT NULL,
-usuarioId INT NULL,
-usuarioNombre VARCHAR(100) NULL,
-fechaOperacion DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-monedaAnterior CHAR(3) NULL,
-monedaNueva CHAR(3) NOT NULL,
-saldoInicialAnterior DECIMAL(12,4) NULL,
-ingresosAnterior DECIMAL(12,4) NULL,
-egresosAnterior DECIMAL(12,4) NULL,
-comprometidoAnterior DECIMAL(12,4) NULL,
-restringidoAnterior DECIMAL(12,4) NULL,
-tasaAnterior DECIMAL(12,4) NULL,
-fuenteAnterior VARCHAR(100) NULL,
-saldoInicialNuevo DECIMAL(12,4) NOT NULL,
-ingresosNuevo DECIMAL(12,4) NOT NULL,
-egresosNuevo DECIMAL(12,4) NOT NULL,
-comprometidoNuevo DECIMAL(12,4) NOT NULL,
-restringidoNuevo DECIMAL(12,4) NOT NULL,
-tasaNueva DECIMAL(12,4) NOT NULL,
-fuenteNueva VARCHAR(100) NOT NULL,
-PRIMARY KEY (idDisponibilidadDiariaHistorial),
-CONSTRAINT uqDisponibilidadHistorialVersion UNIQUE (Fk_DisponibilidadDiaria, versionNueva),
-KEY ixDisponibilidadHistorialCuentaFecha (Fk_CuentaBancaria, fechaCorte, fechaOperacion),
-CONSTRAINT fkDisponibilidadHistorialCorte FOREIGN KEY (Fk_DisponibilidadDiaria)
-REFERENCES tblDisponibilidadDiaria(idDisponibilidadDiaria)
-ON DELETE RESTRICT ON UPDATE RESTRICT
+    idDisponibilidadDiariaHistorial BIGINT NOT NULL AUTO_INCREMENT,
+    Fk_DisponibilidadDiaria BIGINT NOT NULL,
+    Fk_CuentaBancaria BIGINT NOT NULL,
+    fechaCorte DATE NOT NULL,
+    accion VARCHAR(12) NOT NULL,
+    versionAnterior BIGINT NULL,
+    versionNueva BIGINT NOT NULL,
+    usuarioId INT NULL,
+    usuarioNombre VARCHAR(100) NULL,
+    fechaOperacion DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    monedaAnterior CHAR(3) NULL,
+    monedaNueva CHAR(3) NOT NULL,
+    saldoInicialAnterior DECIMAL(12,4) NULL,
+    ingresosAnterior DECIMAL(12,4) NULL,
+    egresosAnterior DECIMAL(12,4) NULL,
+    comprometidoAnterior DECIMAL(12,4) NULL,
+    restringidoAnterior DECIMAL(12,4) NULL,
+    tasaAnterior DECIMAL(12,4) NULL,
+    fuenteAnterior VARCHAR(100) NULL,
+    saldoInicialNuevo DECIMAL(12,4) NOT NULL,
+    ingresosNuevo DECIMAL(12,4) NOT NULL,
+    egresosNuevo DECIMAL(12,4) NOT NULL,
+    comprometidoNuevo DECIMAL(12,4) NOT NULL,
+    restringidoNuevo DECIMAL(12,4) NOT NULL,
+    tasaNueva DECIMAL(12,4) NOT NULL,
+    fuenteNueva VARCHAR(100) NOT NULL,
+    PRIMARY KEY (idDisponibilidadDiariaHistorial),
+    CONSTRAINT uqDisponibilidadHistorialVersion UNIQUE (Fk_DisponibilidadDiaria, versionNueva),
+    KEY ixDisponibilidadHistorialCuentaFecha (Fk_CuentaBancaria, fechaCorte, fechaOperacion),
+    CONSTRAINT fkDisponibilidadHistorialCorte FOREIGN KEY (Fk_DisponibilidadDiaria)
+        REFERENCES tblDisponibilidadDiaria(idDisponibilidadDiaria)
+        ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB;
+
+
+-- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ ingresos de Contabilidad  !!!!!!!!!!!!!!!!!!!!!!!!!-------------
+
 -- =============================================================================
 --  TERMINUS ERP  |  Contabilidad
 --  Script 2 de 2: datos
@@ -5284,7 +5503,8 @@ UPDATE tblCuenta c
 -- Base de datos: dbSistemaEmbutidos
 -- Ejecutar TODO el archivo de una vez (rayito). Ya viene en el orden correcto.
 -- ============================================================
-USE dbSistemaEmbutidos;
+
+-- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ ingresos de Bancos !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 
 -- ------------------------------------------------------------
 -- 1. tblMoneda
@@ -5826,8 +6046,8 @@ INSERT INTO tblAutPagoOrden
         41300.0000, 'RESERVADA', '2026-11-06 09:25:00', (SELECT idOrdenPago FROM tblOrdenPago WHERE referenciaOrdenPago = 'OP-2026-0205')),
     ((SELECT d.idAutDisponibilidadFondos FROM tblAutDisponibilidadFondos d JOIN tblAutOrdenCompra a ON a.Pk_AutOrdenCompra = d.Fk_AutOrdenCompra_Codigo JOIN tblOrdenCompraRecibida oc ON oc.Pk_OrdenCompraRecibida = a.Fk_OrdenCompraRecibida_Codigo WHERE oc.referenciaExternaOrdenCompraRecibida = 'OC-2026-0205'),
         12875.0000, 'PROPUESTA', NULL, NULL);
-
--- resusos Humanos 
+        
+-- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ ingresos de RRHH !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 -- ---------- 1. CATALOGOS ----------
 INSERT INTO tblTipoPuesto (idTipoPuesto, nombreTipoPuesto) VALUES
 (3, 'Gerencial'),
@@ -6252,269 +6472,844 @@ INSERT INTO tblPlanMejora (idPlanMejora, idEvaluacionDesempeno, nombrePlanMejora
 (8, 12, 'Plan de Nivelación General',               'Capacitación en calidad e iniciativa con seguimiento quincenal'),
 (9, 13, 'Plan de Seguimiento Trimestral',           'Reunión mensual de seguimiento para sostener la mejora en calidad y productividad');
 
--- ---------- Verificación ----------
-SELECT 'tblAsistenciaEmpleado' AS tabla, COUNT(*) AS filas FROM tblAsistenciaEmpleado
-UNION ALL SELECT 'tblHoraExtra',            COUNT(*) FROM tblHoraExtra
-UNION ALL SELECT 'tblPermisoEmpleado',      COUNT(*) FROM tblPermisoEmpleado
-UNION ALL SELECT 'tblEvaluacionDesempeno',  COUNT(*) FROM tblEvaluacionDesempeno
-UNION ALL SELECT 'tblPlanMejora',           COUNT(*) FROM tblPlanMejora;
+SET SQL_SAFE_UPDATES = 0;   -- Workbench, error 1175
 
--- Logistica
 START TRANSACTION;
 
--- ============================================================================
--- TABLA: tblCategoria
--- ============================================================================
--- Registro 1
-INSERT INTO tblCategoria (idCategoria, nombreCategoria, porcentajeComisionCategoria)
-VALUES (1, 'Embutidos', 0.10);
+-- ---------- 0) LIMPIEZA de corridas anteriores ----------
+DELETE FROM tblPolizaDetalle
+WHERE idPolizaEncabezado IN (SELECT idPolizaEncabezado FROM tblPolizaEncabezado
+                             WHERE documentoOrigenPolizaEncabezado IN ('NOM-2025-12','NOM-2026-01','NOM-2026-02'));
+DELETE FROM tblPolizaEncabezado WHERE documentoOrigenPolizaEncabezado IN ('NOM-2025-12','NOM-2026-01','NOM-2026-02');
+DELETE FROM tblCierreNominaEmpleado
+WHERE idCierreNomina IN (SELECT idCierreNomina FROM tblCierreNomina WHERE periodoCierreNomina IN ('2025-12','2026-01','2026-02'));
+DELETE FROM tblCierreNomina WHERE periodoCierreNomina IN ('2025-12','2026-01','2026-02');
 
--- Registro 2
-INSERT INTO tblCategoria (idCategoria, nombreCategoria, porcentajeComisionCategoria)
-VALUES (2, 'Carnes frías', 0.10);
+-- restos de versiones anteriores (hora extra pendiente de may-2026 y horas extra ligadas a nov-2026)
+DELETE FROM tblHoraExtra WHERE observacionHoraExtra LIKE '%bloquea cierre 2026-05%';
+DELETE FROM tblAsistenciaEmpleado
+WHERE idEmpleado = 3 AND fechaAsistenciaEmpleado = '2026-05-14'
+  AND observacionAsistenciaEmpleado = 'Cierre de mes - pendiente de aprobar';
+UPDATE tblHoraExtra h
+JOIN tblNominaEncabezado n ON n.idNominaEncabezado = h.idNominaEncabezado
+SET h.idNominaEncabezado = NULL
+WHERE n.fechaInicioNominaEncabezado = '2026-11-01'
+  AND n.idNominaEncabezado NOT IN (SELECT idNominaEncabezado FROM tblCierreNominaEmpleado);
 
--- Registro 3
-INSERT INTO tblCategoria (idCategoria, nombreCategoria, porcentajeComisionCategoria)
-VALUES (3, 'Ahumados', 0.10);
+DELETE d FROM tblNominaDetalle d
+JOIN tblNominaEncabezado n ON n.idNominaEncabezado = d.idNominaEncabezado
+WHERE n.fechaInicioNominaEncabezado IN ('2025-09-01', '2025-10-01', '2025-11-01', '2025-12-01', '2026-01-01', '2026-02-01', '2026-11-01', '2026-12-01')
+  AND n.idNominaEncabezado NOT IN (SELECT idNominaEncabezado FROM tblCierreNominaEmpleado);
+DELETE FROM tblNominaEncabezado
+WHERE fechaInicioNominaEncabezado IN ('2025-09-01', '2025-10-01', '2025-11-01', '2025-12-01', '2026-01-01', '2026-02-01', '2026-11-01', '2026-12-01')
+  AND idNominaEncabezado NOT IN (SELECT idNominaEncabezado FROM tblCierreNominaEmpleado);
 
--- Registro 4
-INSERT INTO tblCategoria (idCategoria, nombreCategoria, porcentajeComisionCategoria)
-VALUES (4, 'Productos frescos', 0.10);
+-- ---------- 1) CONCEPTOS con su cuenta contable (solo se crean si no existen) ----------
+INSERT INTO tblPercepcionDeduccion (nombrePercepcionDeduccion, periodoPercepcionDeduccion, efectoPercepcionDeduccion,
+     tipoPercepcionDeduccion, valorTipoPercepcionDeduccion, aplicacionPercepcionDeduccion, idCuenta)
+SELECT 'PRUEBA CIERRE - Sueldo ordinario','MENSUAL',1,'Monto',0.0000,'Todos',(SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.001')
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM tblPercepcionDeduccion WHERE nombrePercepcionDeduccion = 'PRUEBA CIERRE - Sueldo ordinario');
+INSERT INTO tblPercepcionDeduccion (nombrePercepcionDeduccion, periodoPercepcionDeduccion, efectoPercepcionDeduccion,
+     tipoPercepcionDeduccion, valorTipoPercepcionDeduccion, aplicacionPercepcionDeduccion, idCuenta)
+SELECT 'PRUEBA CIERRE - Bonificación incentivo','MENSUAL',1,'Monto',250.0000,'Todos',(SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.003')
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM tblPercepcionDeduccion WHERE nombrePercepcionDeduccion = 'PRUEBA CIERRE - Bonificación incentivo');
+INSERT INTO tblPercepcionDeduccion (nombrePercepcionDeduccion, periodoPercepcionDeduccion, efectoPercepcionDeduccion,
+     tipoPercepcionDeduccion, valorTipoPercepcionDeduccion, aplicacionPercepcionDeduccion, idCuenta)
+SELECT 'PRUEBA CIERRE - IGSS laboral','MENSUAL',0,'%',4.8300,'Todos',(SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.03.003')
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM tblPercepcionDeduccion WHERE nombrePercepcionDeduccion = 'PRUEBA CIERRE - IGSS laboral');
+INSERT INTO tblPercepcionDeduccion (nombrePercepcionDeduccion, periodoPercepcionDeduccion, efectoPercepcionDeduccion,
+     tipoPercepcionDeduccion, valorTipoPercepcionDeduccion, aplicacionPercepcionDeduccion, idCuenta)
+SELECT 'PRUEBA CIERRE - ISR','MENSUAL',0,'Monto',0.0000,'Algunos',(SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.03.001')
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM tblPercepcionDeduccion WHERE nombrePercepcionDeduccion = 'PRUEBA CIERRE - ISR');
 
--- Registro 5
-INSERT INTO tblCategoria (idCategoria, nombreCategoria, porcentajeComisionCategoria)
-VALUES (5, 'Procesados', 0.10);
+-- si ya existían sin cuenta, se les asigna
+UPDATE tblPercepcionDeduccion SET idCuenta = (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.001')
+WHERE nombrePercepcionDeduccion = 'PRUEBA CIERRE - Sueldo ordinario' AND idCuenta IS NULL;
+UPDATE tblPercepcionDeduccion SET idCuenta = (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.003')
+WHERE nombrePercepcionDeduccion = 'PRUEBA CIERRE - Bonificación incentivo' AND idCuenta IS NULL;
+UPDATE tblPercepcionDeduccion SET idCuenta = (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.03.003')
+WHERE nombrePercepcionDeduccion = 'PRUEBA CIERRE - IGSS laboral' AND idCuenta IS NULL;
+UPDATE tblPercepcionDeduccion SET idCuenta = (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.03.001')
+WHERE nombrePercepcionDeduccion = 'PRUEBA CIERRE - ISR' AND idCuenta IS NULL;
 
--- Registro 6
-INSERT INTO tblCategoria (idCategoria, nombreCategoria, porcentajeComisionCategoria)
-VALUES (6, 'Especialidades', 0.10);
+-- ---------- 2) ENCABEZADOS DE NÓMINA ----------
+INSERT INTO tblNominaEncabezado
+    (idEmpleado, fechaInicioNominaEncabezado, fechaFinalNominaEncabezado,
+     salarioBaseNominaEncabezado, duracionHoraExtraNominaEncabezado, totalHorasExtraNominaEncabezado,
+     totalPercepcionNominaEncabezado, totalDeduccionNominaEncabezado, totalNetoNominaEncabezado,
+     estadoNminaEncabezado) VALUES
+(3, '2025-09-01', '2025-09-30', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2025-09 EMP-003 María López
+(20, '2025-09-01', '2025-09-30', 6500.0000, 0, 0.0000, 6750.0000, 313.9500, 6436.0500, 'Aprobada'),  -- 2025-09 EMP-011 Ana Pérez
+(21, '2025-09-01', '2025-09-30', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Aprobada'),  -- 2025-09 EMP-012 Luis Castillo
+(22, '2025-09-01', '2025-09-30', 5800.0000, 0, 0.0000, 6050.0000, 280.1400, 5769.8600, 'Aprobada'),  -- 2025-09 EMP-013 Sofía Morales
+(23, '2025-09-01', '2025-09-30', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Aprobada'),  -- 2025-09 EMP-014 Jorge Hernández
+(24, '2025-09-01', '2025-09-30', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Aprobada'),  -- 2025-09 EMP-015 Karla Ortiz
+(3, '2025-10-01', '2025-10-31', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2025-10 EMP-003 María López
+(20, '2025-10-01', '2025-10-31', 6500.0000, 0, 0.0000, 6750.0000, 313.9500, 6436.0500, 'Aprobada'),  -- 2025-10 EMP-011 Ana Pérez
+(21, '2025-10-01', '2025-10-31', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Aprobada'),  -- 2025-10 EMP-012 Luis Castillo
+(22, '2025-10-01', '2025-10-31', 5800.0000, 0, 0.0000, 6050.0000, 280.1400, 5769.8600, 'Aprobada'),  -- 2025-10 EMP-013 Sofía Morales
+(23, '2025-10-01', '2025-10-31', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Aprobada'),  -- 2025-10 EMP-014 Jorge Hernández
+(24, '2025-10-01', '2025-10-31', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Aprobada'),  -- 2025-10 EMP-015 Karla Ortiz
+(3, '2025-11-01', '2025-11-30', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2025-11 EMP-003 María López
+(20, '2025-11-01', '2025-11-30', 6500.0000, 0, 0.0000, 6750.0000, 313.9500, 6436.0500, 'Aprobada'),  -- 2025-11 EMP-011 Ana Pérez
+(21, '2025-11-01', '2025-11-30', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Aprobada'),  -- 2025-11 EMP-012 Luis Castillo
+(22, '2025-11-01', '2025-11-30', 5800.0000, 0, 0.0000, 6050.0000, 280.1400, 5769.8600, 'Aprobada'),  -- 2025-11 EMP-013 Sofía Morales
+(23, '2025-11-01', '2025-11-30', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Aprobada'),  -- 2025-11 EMP-014 Jorge Hernández
+(24, '2025-11-01', '2025-11-30', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Aprobada'),  -- 2025-11 EMP-015 Karla Ortiz
+(3, '2025-12-01', '2025-12-31', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Pagada'),  -- 2025-12 EMP-003 María López
+(21, '2025-12-01', '2025-12-31', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Pagada'),  -- 2025-12 EMP-012 Luis Castillo
+(22, '2025-12-01', '2025-12-31', 5800.0000, 0, 0.0000, 6050.0000, 280.1400, 5769.8600, 'Pagada'),  -- 2025-12 EMP-013 Sofía Morales
+(23, '2025-12-01', '2025-12-31', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Pagada'),  -- 2025-12 EMP-014 Jorge Hernández
+(24, '2025-12-01', '2025-12-31', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Pagada'),  -- 2025-12 EMP-015 Karla Ortiz
+(3, '2026-01-01', '2026-01-31', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Pagada'),  -- 2026-01 EMP-003 María López
+(21, '2026-01-01', '2026-01-31', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Pagada'),  -- 2026-01 EMP-012 Luis Castillo
+(22, '2026-01-01', '2026-01-31', 5800.0000, 0, 0.0000, 6050.0000, 280.1400, 5769.8600, 'Pagada'),  -- 2026-01 EMP-013 Sofía Morales
+(23, '2026-01-01', '2026-01-31', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Pagada'),  -- 2026-01 EMP-014 Jorge Hernández
+(24, '2026-01-01', '2026-01-31', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Pagada'),  -- 2026-01 EMP-015 Karla Ortiz
+(1, '2026-02-01', '2026-02-28', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Pagada'),  -- 2026-02 EMP-001 Isabel Meléndez
+(3, '2026-02-01', '2026-02-28', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Pagada'),  -- 2026-02 EMP-003 María López
+(21, '2026-02-01', '2026-02-28', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Pagada'),  -- 2026-02 EMP-012 Luis Castillo
+(22, '2026-02-01', '2026-02-28', 5800.0000, 0, 0.0000, 6050.0000, 280.1400, 5769.8600, 'Pagada'),  -- 2026-02 EMP-013 Sofía Morales
+(23, '2026-02-01', '2026-02-28', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Pagada'),  -- 2026-02 EMP-014 Jorge Hernández
+(24, '2026-02-01', '2026-02-28', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Pagada'),  -- 2026-02 EMP-015 Karla Ortiz
+(1, '2026-11-01', '2026-11-30', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-11 EMP-001 Isabel Meléndez
+(3, '2026-11-01', '2026-11-30', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-11 EMP-003 María López
+(13, '2026-11-01', '2026-11-30', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-11 EMP-006 Oscar Morales
+(20, '2026-11-01', '2026-11-30', 6500.0000, 0, 0.0000, 6750.0000, 313.9500, 6436.0500, 'Aprobada'),  -- 2026-11 EMP-011 Ana Pérez
+(21, '2026-11-01', '2026-11-30', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Aprobada'),  -- 2026-11 EMP-012 Luis Castillo
+(22, '2026-11-01', '2026-11-30', 5800.0000, 0, 0.0000, 6050.0000, 280.1400, 5769.8600, 'Aprobada'),  -- 2026-11 EMP-013 Sofía Morales
+(23, '2026-11-01', '2026-11-30', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Aprobada'),  -- 2026-11 EMP-014 Jorge Hernández
+(24, '2026-11-01', '2026-11-30', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Aprobada'),  -- 2026-11 EMP-015 Karla Ortiz
+(1, '2026-12-01', '2026-12-31', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-12 EMP-001 Isabel Meléndez
+(3, '2026-12-01', '2026-12-31', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-12 EMP-003 María López
+(13, '2026-12-01', '2026-12-31', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-12 EMP-006 Oscar Morales
+(20, '2026-12-01', '2026-12-31', 6500.0000, 0, 0.0000, 6750.0000, 313.9500, 6436.0500, 'Aprobada'),  -- 2026-12 EMP-011 Ana Pérez
+(21, '2026-12-01', '2026-12-31', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Aprobada'),  -- 2026-12 EMP-012 Luis Castillo
+(22, '2026-12-01', '2026-12-31', 5800.0000, 0, 0.0000, 6050.0000, 280.1400, 5769.8600, 'Aprobada'),  -- 2026-12 EMP-013 Sofía Morales
+(23, '2026-12-01', '2026-12-31', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Aprobada'),  -- 2026-12 EMP-014 Jorge Hernández
+(24, '2026-12-01', '2026-12-31', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Aprobada');  -- 2026-12 EMP-015 Karla Ortiz
 
--- Registro 7
-INSERT INTO tblCategoria (idCategoria, nombreCategoria, porcentajeComisionCategoria)
-VALUES (7, 'Congelados', 0.10);
+-- ---------- 3) DETALLE (1 sueldo, 2 bonificación, 3 IGSS, 4 ISR) ----------
+INSERT INTO tblNominaDetalle (idNominaEncabezado, idPercepcionDeduccion, montoNominaDetalle)
+SELECT n.idNominaEncabezado, c.idPercepcionDeduccion, v.monto
+FROM (
+      SELECT 3 AS emp, DATE '2025-09-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-09-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-09-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-09-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2025-09-01' AS ini, 1 AS cod, 6500.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2025-09-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2025-09-01' AS ini, 3 AS cod, 313.9500 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-09-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-09-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-09-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-09-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-09-01' AS ini, 1 AS cod, 5800.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-09-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-09-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-09-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-09-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-09-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-09-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-09-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-09-01' AS ini, 3 AS cod, 265.6500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-10-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-10-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-10-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-10-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2025-10-01' AS ini, 1 AS cod, 6500.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2025-10-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2025-10-01' AS ini, 3 AS cod, 313.9500 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-10-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-10-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-10-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-10-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-10-01' AS ini, 1 AS cod, 5800.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-10-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-10-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-10-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-10-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-10-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-10-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-10-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-10-01' AS ini, 3 AS cod, 265.6500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-11-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-11-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-11-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2025-11-01' AS ini, 1 AS cod, 6500.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2025-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2025-11-01' AS ini, 3 AS cod, 313.9500 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-11-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-11-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-11-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-11-01' AS ini, 1 AS cod, 5800.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-11-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-11-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-11-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-11-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-11-01' AS ini, 3 AS cod, 265.6500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-12-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-12-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2025-12-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-12-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-12-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-12-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-12-01' AS ini, 1 AS cod, 5800.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-12-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-12-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-12-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-12-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-12-01' AS ini, 3 AS cod, 265.6500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-01-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-01-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-01-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-01-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-01-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-01-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-01-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-01-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-01-01' AS ini, 1 AS cod, 5800.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-01-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-01-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-01-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-01-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-01-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-01-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-01-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-01-01' AS ini, 3 AS cod, 265.6500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-02-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-02-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-02-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-02-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-02-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-02-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-02-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-02-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-02-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-02-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-02-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-02-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-02-01' AS ini, 1 AS cod, 5800.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-02-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-02-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-02-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-02-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-02-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-02-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-02-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-02-01' AS ini, 3 AS cod, 265.6500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-11-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-11-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-11-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-11-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-11-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-11-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 13 AS emp, DATE '2026-11-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 13 AS emp, DATE '2026-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 13 AS emp, DATE '2026-11-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 13 AS emp, DATE '2026-11-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2026-11-01' AS ini, 1 AS cod, 6500.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2026-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2026-11-01' AS ini, 3 AS cod, 313.9500 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-11-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-11-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-11-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-11-01' AS ini, 1 AS cod, 5800.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-11-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-11-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-11-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-11-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-11-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-11-01' AS ini, 3 AS cod, 265.6500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-12-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-12-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-12-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-12-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-12-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-12-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 13 AS emp, DATE '2026-12-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 13 AS emp, DATE '2026-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 13 AS emp, DATE '2026-12-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 13 AS emp, DATE '2026-12-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2026-12-01' AS ini, 1 AS cod, 6500.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2026-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 20 AS emp, DATE '2026-12-01' AS ini, 3 AS cod, 313.9500 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-12-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-12-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-12-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-12-01' AS ini, 1 AS cod, 5800.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-12-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-12-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-12-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-12-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-12-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-12-01' AS ini, 3 AS cod, 265.6500 AS monto
+) v
+JOIN tblNominaEncabezado n ON n.idEmpleado = v.emp AND n.fechaInicioNominaEncabezado = v.ini
+JOIN tblPercepcionDeduccion c
+  ON c.nombrePercepcionDeduccion = CASE v.cod
+       WHEN 1 THEN 'PRUEBA CIERRE - Sueldo ordinario'
+       WHEN 2 THEN 'PRUEBA CIERRE - Bonificación incentivo'
+       WHEN 3 THEN 'PRUEBA CIERRE - IGSS laboral'
+       WHEN 4 THEN 'PRUEBA CIERRE - ISR'
+       WHEN 5 THEN 'PRUEBA CIERRE - Bono SIN cuenta' END;
 
--- Registro 8
-INSERT INTO tblCategoria (idCategoria, nombreCategoria, porcentajeComisionCategoria)
-VALUES (8, 'Premium', 0.10);
+-- ---------- 4) CIERRES (solo 2025-12, 2026-01 y 2026-02) ----------
+INSERT INTO tblCierreNomina
+    (periodoCierreNomina, fechaInicioCierreNomina, fechaFinalCierreNomina,
+     cantidadEmpleadoCierreNomina, totalPercepcionCierreNomina, totalDeduccionCierreNomina,
+     totalNetoCierreNomina, totalPatronalCierreNomina, totalDebeCierreNomina, totalHaberCierreNomina,
+     documentoOrigenCierreNomina, codigoPolizaCierreNomina, fechaPolizaCierreNomina,
+     estadoPolizaCierreNomina, idUsuarioCierra, fechaEjecucionCierreNomina) VALUES
+('2025-12', '2025-12-01', '2025-12-31', 5, 33250.0000, 1845.6000, 31404.4000, 4212.7750, 37462.7750, 37462.7750, 'NOM-2025-12', 'POL-NOM-2025-12', '2025-12-31', 'VALIDADA', 1, '2026-01-02 08:30:00'),
+('2026-01', '2026-01-01', '2026-01-31', 5, 33250.0000, 1845.6000, 31404.4000, 4212.7750, 37462.7750, 37462.7750, 'NOM-2026-01', 'POL-NOM-2026-01', '2026-01-31', 'VALIDADA', 1, '2026-02-02 08:30:00'),
+('2026-02', '2026-02-01', '2026-02-28', 6, 41000.0000, 2357.8500, 38642.1500, 5194.7000, 46194.7000, 46194.7000, 'NOM-2026-02', 'POL-NOM-2026-02', '2026-02-28', 'VALIDADA', 1, '2026-03-02 08:30:00');
 
--- Registro 9
-INSERT INTO tblCategoria (idCategoria, nombreCategoria, porcentajeComisionCategoria)
-VALUES (9, 'Parrilla', 0.10);
+-- Histórico por empleado (acumulado del año dentro de estos cierres)
+INSERT INTO tblCierreNominaEmpleado
+    (idCierreNomina, idNominaEncabezado, idEmpleado, salarioBaseCierreNominaEmpleado,
+     totalPercepcionCierreNominaEmpleado, totalDeduccionCierreNominaEmpleado, totalNetoCierreNominaEmpleado,
+     acumuladoPercepcionAnioCierreNominaEmpleado, acumuladoDeduccionAnioCierreNominaEmpleado)
+SELECT c.idCierreNomina, n.idNominaEncabezado, n.idEmpleado, n.salarioBaseNominaEncabezado,
+       n.totalPercepcionNominaEncabezado, n.totalDeduccionNominaEncabezado, n.totalNetoNominaEncabezado,
+       v.acp, v.acd
+FROM (
+      SELECT 3 AS emp, DATE '2025-12-01' AS ini, 7750.0000 AS acp, 512.2500 AS acd
+      UNION ALL
+      SELECT 21 AS emp, DATE '2025-12-01' AS ini, 7450.0000 AS acp, 497.7600 AS acd
+      UNION ALL
+      SELECT 22 AS emp, DATE '2025-12-01' AS ini, 6050.0000 AS acp, 280.1400 AS acd
+      UNION ALL
+      SELECT 23 AS emp, DATE '2025-12-01' AS ini, 6250.0000 AS acp, 289.8000 AS acd
+      UNION ALL
+      SELECT 24 AS emp, DATE '2025-12-01' AS ini, 5750.0000 AS acp, 265.6500 AS acd
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-01-01' AS ini, 7750.0000 AS acp, 512.2500 AS acd
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-01-01' AS ini, 7450.0000 AS acp, 497.7600 AS acd
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-01-01' AS ini, 6050.0000 AS acp, 280.1400 AS acd
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-01-01' AS ini, 6250.0000 AS acp, 289.8000 AS acd
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-01-01' AS ini, 5750.0000 AS acp, 265.6500 AS acd
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-02-01' AS ini, 7750.0000 AS acp, 512.2500 AS acd
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-02-01' AS ini, 15500.0000 AS acp, 1024.5000 AS acd
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-02-01' AS ini, 14900.0000 AS acp, 995.5200 AS acd
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-02-01' AS ini, 12100.0000 AS acp, 560.2800 AS acd
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-02-01' AS ini, 12500.0000 AS acp, 579.6000 AS acd
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-02-01' AS ini, 11500.0000 AS acp, 531.3000 AS acd
+) v
+JOIN tblNominaEncabezado n ON n.idEmpleado = v.emp AND n.fechaInicioNominaEncabezado = v.ini
+JOIN tblCierreNomina c ON c.periodoCierreNomina = DATE_FORMAT(v.ini, '%Y-%m');
 
--- Registro 10
-INSERT INTO tblCategoria (idCategoria, nombreCategoria, porcentajeComisionCategoria)
-VALUES (10, 'Deli', 0.10);
+-- ---------- 5) PÓLIZAS de los 3 cierres (módulo contable 4 = planilla), partida doble ----------
+INSERT INTO tblPolizaEncabezado
+    (idModuloContable, codigoPolizaEncabezado, fechaPolizaEncabezado, periodoContablePolizaEncabezado,
+     estadoPolizaEncabezado, documentoOrigenPolizaEncabezado, descripcionPolizaEncabezado) VALUES
+(4, 'POL-NOM-2025-12', '2025-12-31', '2025-12', 'VALIDADA', 'NOM-2025-12', 'Cierre de nómina 2025-12'),
+(4, 'POL-NOM-2026-01', '2026-01-31', '2026-01', 'VALIDADA', 'NOM-2026-01', 'Cierre de nómina 2026-01'),
+(4, 'POL-NOM-2026-02', '2026-02-28', '2026-02', 'VALIDADA', 'NOM-2026-02', 'Cierre de nómina 2026-02');
 
--- ============================================================================
--- TABLA: tblEmpresaTransportista
--- ============================================================================
--- Registro 1
-INSERT INTO tblEmpresaTransportista (idEmpresaTransportista, nombreEmpresaTransportista, contactoEmpresaTransportista, telefonoEmpresaTransportista)
-VALUES (1, 'Transporte Maya', 'Ana López', '55500001');
+INSERT INTO tblPolizaDetalle
+    (idPolizaEncabezado, idCuenta, lineaPolizaDetalle, debePolizaDetalle, haberPolizaDetalle, descripcionPolizaDetalle) VALUES
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2025-12'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.001'), 1, 32000.0000, 0.0000, 'Sueldos Normales 2025-12'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2025-12'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.003'), 2, 1250.0000, 0.0000, 'Prestaciones Normales (bonificación incentivo) 2025-12'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2025-12'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.004'), 3, 4212.7750, 0.0000, 'Impuestos y Aportaciones Patronales (12.67 %) 2025-12'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2025-12'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.03.003'), 4, 0.0000, 5758.3750, 'IGSS laboral + patronal por pagar 2025-12'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2025-12'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.03.001'), 5, 0.0000, 300.0000, 'ISR por pagar 2025-12'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2025-12'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.02.001'), 6, 0.0000, 31404.4000, 'Sueldos por pagar (neto) 2025-12'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-01'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.001'), 1, 32000.0000, 0.0000, 'Sueldos Normales 2026-01'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-01'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.003'), 2, 1250.0000, 0.0000, 'Prestaciones Normales (bonificación incentivo) 2026-01'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-01'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.004'), 3, 4212.7750, 0.0000, 'Impuestos y Aportaciones Patronales (12.67 %) 2026-01'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-01'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.03.003'), 4, 0.0000, 5758.3750, 'IGSS laboral + patronal por pagar 2026-01'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-01'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.03.001'), 5, 0.0000, 300.0000, 'ISR por pagar 2026-01'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-01'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.02.001'), 6, 0.0000, 31404.4000, 'Sueldos por pagar (neto) 2026-01'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-02'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.001'), 1, 39500.0000, 0.0000, 'Sueldos Normales 2026-02'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-02'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.003'), 2, 1500.0000, 0.0000, 'Prestaciones Normales (bonificación incentivo) 2026-02'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-02'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '5.04.01.004'), 3, 5194.7000, 0.0000, 'Impuestos y Aportaciones Patronales (12.67 %) 2026-02'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-02'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.03.003'), 4, 0.0000, 7102.5500, 'IGSS laboral + patronal por pagar 2026-02'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-02'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.03.001'), 5, 0.0000, 450.0000, 'ISR por pagar 2026-02'),
+((SELECT idPolizaEncabezado FROM tblPolizaEncabezado WHERE codigoPolizaEncabezado = 'POL-NOM-2026-02'), (SELECT idCuenta FROM tblCuenta WHERE codigoCuenta = '2.01.02.001'), 6, 0.0000, 38642.1500, 'Sueldos por pagar (neto) 2026-02');
 
--- Registro 2
-INSERT INTO tblEmpresaTransportista (idEmpresaTransportista, nombreEmpresaTransportista, contactoEmpresaTransportista, telefonoEmpresaTransportista)
-VALUES (2, 'Carga Chapina', 'Luis Morales', '55500002');
+COMMIT;
 
--- Registro 3
-INSERT INTO tblEmpresaTransportista (idEmpresaTransportista, nombreEmpresaTransportista, contactoEmpresaTransportista, telefonoEmpresaTransportista)
-VALUES (3, 'Frío Express', 'María García', '55500003');
+SET SQL_SAFE_UPDATES = 1;
 
--- Registro 4
-INSERT INTO tblEmpresaTransportista (idEmpresaTransportista, nombreEmpresaTransportista, contactoEmpresaTransportista, telefonoEmpresaTransportista)
-VALUES (4, 'Ruta Segura', 'Carlos Pérez', '55500004');
+-- =====================================================================
+-- VERIFICACIONES (corren después del COMMIT). Todo debe salir 'Correcto' / 'CUADRA' / 'OK'.
+-- =====================================================================
 
--- Registro 5
-INSERT INTO tblEmpresaTransportista (idEmpresaTransportista, nombreEmpresaTransportista, contactoEmpresaTransportista, telefonoEmpresaTransportista)
-VALUES (5, 'Logística Quetzal', 'Elena Ruiz', '55500005');
+-- V1) Una fila por empleado y período (deben ser 50 filas, todas 'Correcto')
+SELECT DATE_FORMAT(n.fechaInicioNominaEncabezado,'%Y-%m') AS Período, e.codigoEmpleado AS Código,
+       CONCAT(e.nombresEmpleado,' ',e.apellidosEmpleado) AS Empleado,
+       n.totalPercepcionNominaEncabezado AS Percepciones, n.totalDeduccionNominaEncabezado AS Deducciones,
+       n.totalNetoNominaEncabezado AS Neto,
+       CASE WHEN n.totalNetoNominaEncabezado = n.totalPercepcionNominaEncabezado - n.totalDeduccionNominaEncabezado
+             AND n.totalPercepcionNominaEncabezado = (SELECT COALESCE(SUM(d.montoNominaDetalle),0) FROM tblNominaDetalle d
+                    JOIN tblPercepcionDeduccion p ON p.idPercepcionDeduccion = d.idPercepcionDeduccion
+                    WHERE d.idNominaEncabezado = n.idNominaEncabezado AND p.efectoPercepcionDeduccion = 1)
+             AND n.totalDeduccionNominaEncabezado = (SELECT COALESCE(SUM(d.montoNominaDetalle),0) FROM tblNominaDetalle d
+                    JOIN tblPercepcionDeduccion p ON p.idPercepcionDeduccion = d.idPercepcionDeduccion
+                    WHERE d.idNominaEncabezado = n.idNominaEncabezado AND p.efectoPercepcionDeduccion = 0)
+             AND NOT EXISTS (SELECT 1 FROM tblNominaDetalle d JOIN tblPercepcionDeduccion p ON p.idPercepcionDeduccion = d.idPercepcionDeduccion
+                    WHERE d.idNominaEncabezado = n.idNominaEncabezado AND p.idCuenta IS NULL)
+            THEN 'Correcto' ELSE 'REVISAR' END AS Verificación
+FROM tblNominaEncabezado n
+JOIN tblEmpleado e ON e.idEmpleado = n.idEmpleado
+WHERE n.fechaInicioNominaEncabezado IN ('2025-09-01', '2025-10-01', '2025-11-01', '2025-12-01', '2026-01-01', '2026-02-01', '2026-11-01', '2026-12-01')
+ORDER BY Período, e.codigoEmpleado;
 
--- Registro 6
-INSERT INTO tblEmpresaTransportista (idEmpresaTransportista, nombreEmpresaTransportista, contactoEmpresaTransportista, telefonoEmpresaTransportista)
-VALUES (6, 'Transportes del Valle', 'José Ramírez', '55500006');
+-- V2) Resumen por período: totales, cuadre Debe = Haber y situación
+SELECT DATE_FORMAT(n.fechaInicioNominaEncabezado,'%Y-%m') AS Período, COUNT(*) AS Empleados,
+       SUM(n.totalPercepcionNominaEncabezado) AS Total_Percepciones,
+       SUM(n.totalDeduccionNominaEncabezado)  AS Total_Deducciones,
+       SUM(n.totalNetoNominaEncabezado)       AS Salario_Líquido,
+       SUM(n.totalPercepcionNominaEncabezado) AS Debe,
+       SUM(n.totalDeduccionNominaEncabezado) + SUM(n.totalNetoNominaEncabezado) AS Haber,
+       CASE WHEN SUM(n.totalPercepcionNominaEncabezado) = SUM(n.totalDeduccionNominaEncabezado) + SUM(n.totalNetoNominaEncabezado)
+            THEN 'Cuadre correcto' ELSE 'NO CUADRA' END AS Cuadre,
+       CASE WHEN c.idCierreNomina IS NULL THEN 'ABIERTO (listo para cerrar)' ELSE 'CERRADO' END AS Situación
+FROM tblNominaEncabezado n
+LEFT JOIN tblCierreNomina c ON c.periodoCierreNomina = DATE_FORMAT(n.fechaInicioNominaEncabezado,'%Y-%m')
+WHERE n.fechaInicioNominaEncabezado IN ('2025-09-01', '2025-10-01', '2025-11-01', '2025-12-01', '2026-01-01', '2026-02-01', '2026-11-01', '2026-12-01')
+GROUP BY Período, c.idCierreNomina
+ORDER BY Período;
 
--- Registro 7
-INSERT INTO tblEmpresaTransportista (idEmpresaTransportista, nombreEmpresaTransportista, contactoEmpresaTransportista, telefonoEmpresaTransportista)
-VALUES (7, 'Carga Regional', 'Sofía Herrera', '55500007');
+-- V3) Conceptos usados SIN cuenta contable (debe devolver 0 filas)
+SELECT DATE_FORMAT(n.fechaInicioNominaEncabezado,'%Y-%m') AS Período, e.codigoEmpleado, p.nombrePercepcionDeduccion
+FROM tblNominaDetalle d
+JOIN tblNominaEncabezado n ON n.idNominaEncabezado = d.idNominaEncabezado
+JOIN tblEmpleado e ON e.idEmpleado = n.idEmpleado
+JOIN tblPercepcionDeduccion p ON p.idPercepcionDeduccion = d.idPercepcionDeduccion
+WHERE p.idCuenta IS NULL AND n.fechaInicioNominaEncabezado IN ('2025-09-01', '2025-10-01', '2025-11-01', '2025-12-01', '2026-01-01', '2026-02-01', '2026-11-01', '2026-12-01');
 
--- Registro 8
-INSERT INTO tblEmpresaTransportista (idEmpresaTransportista, nombreEmpresaTransportista, contactoEmpresaTransportista, telefonoEmpresaTransportista)
-VALUES (8, 'Movilidad Centro', 'Pedro Castillo', '55500008');
+-- V4) Cierres: encabezado = suma de empleados = suma de nóminas; Debe = Haber
+SELECT c.periodoCierreNomina AS Período, c.cantidadEmpleadoCierreNomina AS Empleados,
+       c.totalPercepcionCierreNomina AS Percepción_cierre,
+       (SELECT SUM(x.totalPercepcionCierreNominaEmpleado) FROM tblCierreNominaEmpleado x WHERE x.idCierreNomina = c.idCierreNomina) AS Percepción_empleados,
+       (SELECT SUM(n.totalPercepcionNominaEncabezado) FROM tblNominaEncabezado n
+         WHERE DATE_FORMAT(n.fechaInicioNominaEncabezado,'%Y-%m') = c.periodoCierreNomina) AS Percepción_nóminas,
+       c.totalDebeCierreNomina AS Debe, c.totalHaberCierreNomina AS Haber,
+       CASE WHEN c.totalDebeCierreNomina = c.totalHaberCierreNomina
+             AND c.totalPercepcionCierreNomina = (SELECT SUM(x.totalPercepcionCierreNominaEmpleado) FROM tblCierreNominaEmpleado x WHERE x.idCierreNomina = c.idCierreNomina)
+             AND c.totalPercepcionCierreNomina = (SELECT SUM(n.totalPercepcionNominaEncabezado) FROM tblNominaEncabezado n
+                                                   WHERE DATE_FORMAT(n.fechaInicioNominaEncabezado,'%Y-%m') = c.periodoCierreNomina)
+            THEN 'OK' ELSE 'NO CUADRA' END AS Cuadre
+FROM tblCierreNomina c
+WHERE c.periodoCierreNomina IN ('2025-12','2026-01','2026-02')
+ORDER BY c.periodoCierreNomina;
 
--- Registro 9
-INSERT INTO tblEmpresaTransportista (idEmpresaTransportista, nombreEmpresaTransportista, contactoEmpresaTransportista, telefonoEmpresaTransportista)
-VALUES (9, 'Fletes Progreso', 'Laura Díaz', '55500009');
+-- V5) Pólizas: Debe = Haber = total del cierre
+SELECT pe.codigoPolizaEncabezado AS Póliza, pe.estadoPolizaEncabezado AS Estado,
+       SUM(pd.debePolizaDetalle) AS Debe, SUM(pd.haberPolizaDetalle) AS Haber, c.totalDebeCierreNomina AS Debe_cierre,
+       CASE WHEN SUM(pd.debePolizaDetalle) = SUM(pd.haberPolizaDetalle)
+             AND SUM(pd.debePolizaDetalle) = c.totalDebeCierreNomina THEN 'CUADRA' ELSE 'NO CUADRA' END AS Cuadre
+FROM tblPolizaEncabezado pe
+JOIN tblPolizaDetalle pd ON pd.idPolizaEncabezado = pe.idPolizaEncabezado
+JOIN tblCierreNomina c ON c.documentoOrigenCierreNomina = pe.documentoOrigenPolizaEncabezado
+WHERE pe.documentoOrigenPolizaEncabezado IN ('NOM-2025-12','NOM-2026-01','NOM-2026-02')
+GROUP BY pe.codigoPolizaEncabezado, pe.estadoPolizaEncabezado, c.totalDebeCierreNomina
+ORDER BY pe.codigoPolizaEncabezado;
 
--- Registro 10
-INSERT INTO tblEmpresaTransportista (idEmpresaTransportista, nombreEmpresaTransportista, contactoEmpresaTransportista, telefonoEmpresaTransportista)
-VALUES (10, 'Cadena Fría GT', 'Jorge Méndez', '55500010');
 
--- ============================================================================
--- TABLA: tblEstado
--- ============================================================================
--- Registro 1
-INSERT INTO tblEstado (idEstado, tipoEstado)
-VALUES (1, 'ACTIVO');
 
--- Registro 2
-INSERT INTO tblEstado (idEstado, tipoEstado)
-VALUES (2, 'INACTIVO');
+-- =====================================================================
+-- OPCIONAL - 3 PERÍODOS PENDIENTES QUE NO SE PUEDEN CERRAR (a propósito)
+-- Ejecutar DESPUÉS de SCRIPT_NOMINA_LIMPIO_CUADRA.sql (usa los mismos conceptos).
+--   2026-03  el neto del encabezado NO cuadra (empleada 22, Q100 de menos)
+--   2026-04  el detalle NO suma lo del encabezado (empleada 22, Q500 de menos)
+--   2026-05  usa el concepto 'Bono SIN cuenta' (sin cuenta contable) (empleada 22)
+-- Las otras 5 nóminas de cada mes cuadran bien. Re-ejecutable.
+-- =====================================================================
+SET SQL_SAFE_UPDATES = 0;
 
--- Registro 3
-INSERT INTO tblEstado (idEstado, tipoEstado)
-VALUES (3, 'EN_MANTENIMIENTO');
+START TRANSACTION;
 
--- Registro 4
-INSERT INTO tblEstado (idEstado, tipoEstado)
-VALUES (4, 'DISPONIBLE');
+-- 0) Limpieza de una corrida anterior
+DELETE d FROM tblNominaDetalle d
+JOIN tblNominaEncabezado n ON n.idNominaEncabezado = d.idNominaEncabezado
+WHERE n.fechaInicioNominaEncabezado IN ('2026-03-01', '2026-04-01', '2026-05-01')
+  AND n.idNominaEncabezado NOT IN (SELECT idNominaEncabezado FROM tblCierreNominaEmpleado);
+DELETE FROM tblNominaEncabezado
+WHERE fechaInicioNominaEncabezado IN ('2026-03-01', '2026-04-01', '2026-05-01')
+  AND idNominaEncabezado NOT IN (SELECT idNominaEncabezado FROM tblCierreNominaEmpleado);
 
--- Registro 5
-INSERT INTO tblEstado (idEstado, tipoEstado)
-VALUES (5, 'OCUPADO');
+-- 1) Concepto sin cuenta (a propósito)
 
--- Registro 6
-INSERT INTO tblEstado (idEstado, tipoEstado)
-VALUES (6, 'SUSPENDIDO');
+INSERT INTO tblPercepcionDeduccion (nombrePercepcionDeduccion, periodoPercepcionDeduccion, efectoPercepcionDeduccion,
+     tipoPercepcionDeduccion, valorTipoPercepcionDeduccion, aplicacionPercepcionDeduccion, idCuenta)
+SELECT 'PRUEBA CIERRE - Bono SIN cuenta','MENSUAL',1,'Monto',0.0000,'Algunos',NULL
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM tblPercepcionDeduccion WHERE nombrePercepcionDeduccion = 'PRUEBA CIERRE - Bono SIN cuenta');
 
--- Registro 7
-INSERT INTO tblEstado (idEstado, tipoEstado)
-VALUES (7, 'EN_RUTA');
+-- 2) Encabezados
+INSERT INTO tblNominaEncabezado
+    (idEmpleado, fechaInicioNominaEncabezado, fechaFinalNominaEncabezado,
+     salarioBaseNominaEncabezado, duracionHoraExtraNominaEncabezado, totalHorasExtraNominaEncabezado,
+     totalPercepcionNominaEncabezado, totalDeduccionNominaEncabezado, totalNetoNominaEncabezado,
+     estadoNminaEncabezado) VALUES
+(1, '2026-03-01', '2026-03-31', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-03 EMP-001 Isabel Meléndez
+(3, '2026-03-01', '2026-03-31', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-03 EMP-003 María López
+(21, '2026-03-01', '2026-03-31', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Aprobada'),  -- 2026-03 EMP-012 Luis Castillo
+(22, '2026-03-01', '2026-03-31', 5800.0000, 0, 0.0000, 6050.0000, 280.1400, 5669.8600, 'Aprobada'),  -- 2026-03 EMP-013 Sofía Morales  <-- NETO NO CUADRA (a propósito)
+(23, '2026-03-01', '2026-03-31', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Aprobada'),  -- 2026-03 EMP-014 Jorge Hernández
+(24, '2026-03-01', '2026-03-31', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Aprobada'),  -- 2026-03 EMP-015 Karla Ortiz
+(1, '2026-04-01', '2026-04-30', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-04 EMP-001 Isabel Meléndez
+(3, '2026-04-01', '2026-04-30', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-04 EMP-003 María López
+(21, '2026-04-01', '2026-04-30', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Aprobada'),  -- 2026-04 EMP-012 Luis Castillo
+(22, '2026-04-01', '2026-04-30', 5800.0000, 0, 0.0000, 6050.0000, 280.1400, 5769.8600, 'Aprobada'),  -- 2026-04 EMP-013 Sofía Morales
+(23, '2026-04-01', '2026-04-30', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Aprobada'),  -- 2026-04 EMP-014 Jorge Hernández
+(24, '2026-04-01', '2026-04-30', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Aprobada'),  -- 2026-04 EMP-015 Karla Ortiz
+(1, '2026-05-01', '2026-05-31', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-05 EMP-001 Isabel Meléndez
+(3, '2026-05-01', '2026-05-31', 7500.0000, 0, 0.0000, 7750.0000, 512.2500, 7237.7500, 'Aprobada'),  -- 2026-05 EMP-003 María López
+(21, '2026-05-01', '2026-05-31', 7200.0000, 0, 0.0000, 7450.0000, 497.7600, 6952.2400, 'Aprobada'),  -- 2026-05 EMP-012 Luis Castillo
+(22, '2026-05-01', '2026-05-31', 5800.0000, 0, 0.0000, 7050.0000, 280.1400, 6769.8600, 'Aprobada'),  -- 2026-05 EMP-013 Sofía Morales
+(23, '2026-05-01', '2026-05-31', 6000.0000, 0, 0.0000, 6250.0000, 289.8000, 5960.2000, 'Aprobada'),  -- 2026-05 EMP-014 Jorge Hernández
+(24, '2026-05-01', '2026-05-31', 5500.0000, 0, 0.0000, 5750.0000, 265.6500, 5484.3500, 'Aprobada');  -- 2026-05 EMP-015 Karla Ortiz
 
--- Registro 8
-INSERT INTO tblEstado (idEstado, tipoEstado)
-VALUES (8, 'RESERVADO');
+-- 3) Detalle
+INSERT INTO tblNominaDetalle (idNominaEncabezado, idPercepcionDeduccion, montoNominaDetalle)
+SELECT n.idNominaEncabezado, c.idPercepcionDeduccion, v.monto
+FROM (
+      SELECT 1 AS emp, DATE '2026-03-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-03-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-03-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-03-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-03-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-03-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-03-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-03-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-03-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-03-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-03-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-03-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-03-01' AS ini, 1 AS cod, 5800.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-03-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-03-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-03-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-03-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-03-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-03-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-03-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-03-01' AS ini, 3 AS cod, 265.6500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-04-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-04-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-04-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-04-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-04-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-04-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-04-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-04-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-04-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-04-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-04-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-04-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-04-01' AS ini, 1 AS cod, 5300.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-04-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-04-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-04-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-04-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-04-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-04-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-04-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-04-01' AS ini, 3 AS cod, 265.6500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-05-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-05-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-05-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 1 AS emp, DATE '2026-05-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-05-01' AS ini, 1 AS cod, 7500.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-05-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-05-01' AS ini, 3 AS cod, 362.2500 AS monto
+      UNION ALL
+      SELECT 3 AS emp, DATE '2026-05-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-05-01' AS ini, 1 AS cod, 7200.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-05-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-05-01' AS ini, 3 AS cod, 347.7600 AS monto
+      UNION ALL
+      SELECT 21 AS emp, DATE '2026-05-01' AS ini, 4 AS cod, 150.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-05-01' AS ini, 1 AS cod, 5800.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-05-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-05-01' AS ini, 3 AS cod, 280.1400 AS monto
+      UNION ALL
+      SELECT 22 AS emp, DATE '2026-05-01' AS ini, 5 AS cod, 1000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-05-01' AS ini, 1 AS cod, 6000.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-05-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 23 AS emp, DATE '2026-05-01' AS ini, 3 AS cod, 289.8000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-05-01' AS ini, 1 AS cod, 5500.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-05-01' AS ini, 2 AS cod, 250.0000 AS monto
+      UNION ALL
+      SELECT 24 AS emp, DATE '2026-05-01' AS ini, 3 AS cod, 265.6500 AS monto
+) v
+JOIN tblNominaEncabezado n ON n.idEmpleado = v.emp AND n.fechaInicioNominaEncabezado = v.ini
+JOIN tblPercepcionDeduccion c
+  ON c.nombrePercepcionDeduccion = CASE v.cod
+       WHEN 1 THEN 'PRUEBA CIERRE - Sueldo ordinario'
+       WHEN 2 THEN 'PRUEBA CIERRE - Bonificación incentivo'
+       WHEN 3 THEN 'PRUEBA CIERRE - IGSS laboral'
+       WHEN 4 THEN 'PRUEBA CIERRE - ISR'
+       WHEN 5 THEN 'PRUEBA CIERRE - Bono SIN cuenta' END;
 
--- Registro 9
-INSERT INTO tblEstado (idEstado, tipoEstado)
-VALUES (9, 'REPARACION');
+COMMIT;
 
--- Registro 10
-INSERT INTO tblEstado (idEstado, tipoEstado)
-VALUES (10, 'BAJA');
+SET SQL_SAFE_UPDATES = 1;
 
--- ============================================================================
--- TABLA: tblEstadoSolicitudPago
--- ============================================================================
--- Registro 2
-INSERT INTO tblEstadoSolicitudPago (idEstadoSolicitudPago, codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
-VALUES (2, 'APROBADO', 'Aprobado', 'Estado de pago: APROBADO');
 
--- Registro 3
-INSERT INTO tblEstadoSolicitudPago (idEstadoSolicitudPago, codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
-VALUES (3, 'RECHAZADO', 'Rechazado', 'Estado de pago: RECHAZADO');
-
--- Registro 4
-INSERT INTO tblEstadoSolicitudPago (idEstadoSolicitudPago, codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
-VALUES (4, 'PENDIENTE', 'Pendiente', 'Estado de pago: PENDIENTE');
-
--- Registro 5
-INSERT INTO tblEstadoSolicitudPago (idEstadoSolicitudPago, codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
-VALUES (5, 'PAGADO', 'Pagado', 'Estado de pago: PAGADO');
-
--- Registro 6
-INSERT INTO tblEstadoSolicitudPago (idEstadoSolicitudPago, codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
-VALUES (6, 'EN_REVISION', 'En Revision', 'Estado de pago: EN_REVISION');
-
--- Registro 7
-INSERT INTO tblEstadoSolicitudPago (idEstadoSolicitudPago, codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
-VALUES (7, 'PROGRAMADO', 'Programado', 'Estado de pago: PROGRAMADO');
-
--- Registro 8
-INSERT INTO tblEstadoSolicitudPago (idEstadoSolicitudPago, codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
-VALUES (8, 'CANCELADO', 'Cancelado', 'Estado de pago: CANCELADO');
-
--- Registro 9
-INSERT INTO tblEstadoSolicitudPago (idEstadoSolicitudPago, codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
-VALUES (9, 'PROCESADO', 'Procesado', 'Estado de pago: PROCESADO');
-
--- Registro 10
-INSERT INTO tblEstadoSolicitudPago (idEstadoSolicitudPago, codigoEstadoSolicitudPago, nombreEstadoSolicitudPago, descripcionEstadoSolicitudPago)
-VALUES (10, 'FINALIZADO', 'Finalizado', 'Estado de pago: FINALIZADO');
-
--- ============================================================================
--- TABLA: tblLinea
--- ============================================================================
--- Registro 1
-INSERT INTO tblLinea (idLinea, nombreLinea, porcentajeComisionLinea)
-VALUES (1, 'Tradicional', 0.10);
-
--- Registro 2
-INSERT INTO tblLinea (idLinea, nombreLinea, porcentajeComisionLinea)
-VALUES (2, 'Familiar', 0.10);
-
--- Registro 3
-INSERT INTO tblLinea (idLinea, nombreLinea, porcentajeComisionLinea)
-VALUES (3, 'Premium', 0.10);
-
--- Registro 4
-INSERT INTO tblLinea (idLinea, nombreLinea, porcentajeComisionLinea)
-VALUES (4, 'Económica', 0.10);
-
--- Registro 5
-INSERT INTO tblLinea (idLinea, nombreLinea, porcentajeComisionLinea)
-VALUES (5, 'Selección', 0.10);
-
--- Registro 6
-INSERT INTO tblLinea (idLinea, nombreLinea, porcentajeComisionLinea)
-VALUES (6, 'Delicatessen', 0.10);
-
--- Registro 7
-INSERT INTO tblLinea (idLinea, nombreLinea, porcentajeComisionLinea)
-VALUES (7, 'Parrillera', 0.10);
-
--- Registro 8
-INSERT INTO tblLinea (idLinea, nombreLinea, porcentajeComisionLinea)
-VALUES (8, 'Profesional', 0.10);
-
--- Registro 9
-INSERT INTO tblLinea (idLinea, nombreLinea, porcentajeComisionLinea)
-VALUES (9, 'Especial', 0.10);
-
--- Registro 10
-INSERT INTO tblLinea (idLinea, nombreLinea, porcentajeComisionLinea)
-VALUES (10, 'Institucional', 0.10);
-
--- ============================================================================
--- TABLA: tblMarca
--- ============================================================================
--- Registro 1
-INSERT INTO tblMarca (idMarca, nombreMarca, porcentajeComisionMarca)
-VALUES (1, 'La Hacienda', 0.10);
-
--- Registro 2
-INSERT INTO tblMarca (idMarca, nombreMarca, porcentajeComisionMarca)
-VALUES (2, 'Del Campo', 0.10);
-
--- Registro 3
-INSERT INTO tblMarca (idMarca, nombreMarca, porcentajeComisionMarca)
-VALUES (3, 'Buen Sabor', 0.10);
-
--- Registro 4
-INSERT INTO tblMarca (idMarca, nombreMarca, porcentajeComisionMarca)
-VALUES (4, 'La Granja', 0.10);
-
--- Registro 5
-INSERT INTO tblMarca (idMarca, nombreMarca, porcentajeComisionMarca)
-VALUES (5, 'Don Chorizo', 0.10);
-
--- Registro 6
-INSERT INTO tblMarca (idMarca, nombreMarca, porcentajeComisionMarca)
-VALUES (6, 'Rey del Jamón', 0.10);
-
--- Registro 7
-INSERT INTO tblMarca (idMarca, nombreMarca, porcentajeComisionMarca)
-VALUES (7, 'Fresco GT', 0.10);
-
--- Registro 8
-INSERT INTO tblMarca (idMarca, nombreMarca, porcentajeComisionMarca)
-VALUES (8, 'Casa Selecta', 0.10);
-
--- Registro 9
-INSERT INTO tblMarca (idMarca, nombreMarca, porcentajeComisionMarca)
-VALUES (9, 'Monte Verde', 0.10);
-
--- Registro 10
-INSERT INTO tblMarca (idMarca, nombreMarca, porcentajeComisionMarca)
-VALUES (10, 'Sabor Real', 0.10);
+-- ---------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ ingresos de compras de proveedores !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 
 -- =====================================================
 -- INSERTAR 10 REGISTROS EN tblPlazo
@@ -6662,1556 +7457,1052 @@ INSERT INTO tblProveedor (
     0, 0.0000, 0.0000, 0.0000, 0.0000,
     0.0000, 0.0000, 0.0000
 );
--- ============================================================================
--- TABLA: tblSucursal
--- ============================================================================
--- Registro 1
-INSERT INTO tblSucursal (idSucursal, nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal)
-VALUES (1, 'Sucursal Central', 'Descripcion de prueba 1 - tblSucursal', 'Zona 1, Ciudad de Guatemala', 'Guatemala');
-
--- Registro 2
-INSERT INTO tblSucursal (idSucursal, nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal)
-VALUES (2, 'Sucursal Norte', 'Descripcion de prueba 2 - tblSucursal', 'Zona 2, Ciudad de Guatemala', 'Guatemala');
-
--- Registro 3
-INSERT INTO tblSucursal (idSucursal, nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal)
-VALUES (3, 'Sucursal Sur', 'Descripcion de prueba 3 - tblSucursal', 'Zona 3, Ciudad de Guatemala', 'Guatemala');
-
--- Registro 4
-INSERT INTO tblSucursal (idSucursal, nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal)
-VALUES (4, 'Sucursal Occidente', 'Descripcion de prueba 4 - tblSucursal', 'Zona 4, Ciudad de Guatemala', 'Guatemala');
-
--- Registro 5
-INSERT INTO tblSucursal (idSucursal, nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal)
-VALUES (5, 'Sucursal Oriente', 'Descripcion de prueba 5 - tblSucursal', 'Zona 5, Ciudad de Guatemala', 'Guatemala');
-
--- Registro 6
-INSERT INTO tblSucursal (idSucursal, nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal)
-VALUES (6, 'Sucursal Metropolitana', 'Descripcion de prueba 6 - tblSucursal', 'Zona 6, Ciudad de Guatemala', 'Guatemala');
-
--- Registro 7
-INSERT INTO tblSucursal (idSucursal, nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal)
-VALUES (7, 'Sucursal Carretera', 'Descripcion de prueba 7 - tblSucursal', 'Zona 7, Ciudad de Guatemala', 'Guatemala');
-
--- Registro 8
-INSERT INTO tblSucursal (idSucursal, nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal)
-VALUES (8, 'Sucursal Industrial', 'Descripcion de prueba 8 - tblSucursal', 'Zona 8, Ciudad de Guatemala', 'Guatemala');
-
--- Registro 9
-INSERT INTO tblSucursal (idSucursal, nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal)
-VALUES (9, 'Sucursal Zona 10', 'Descripcion de prueba 9 - tblSucursal', 'Zona 9, Ciudad de Guatemala', 'Guatemala');
-
--- Registro 10
-INSERT INTO tblSucursal (idSucursal, nombreSucursal, descripcionSucursal, ubicacionSucursal, paisSucursal)
-VALUES (10, 'Sucursal Zona 12', 'Descripcion de prueba 10 - tblSucursal', 'Zona 10, Ciudad de Guatemala', 'Guatemala');
-
--- ============================================================================
--- TABLA: tblTarifaTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblTarifaTransporte (idTarifaTransporte, nombreTarifaTransporte)
-VALUES (1, 'Tarifa 01 - regional');
-
--- Registro 2
-INSERT INTO tblTarifaTransporte (idTarifaTransporte, nombreTarifaTransporte)
-VALUES (2, 'Tarifa 02 - refrigerado');
-
--- Registro 3
-INSERT INTO tblTarifaTransporte (idTarifaTransporte, nombreTarifaTransporte)
-VALUES (3, 'Tarifa 03 - local');
-
--- Registro 4
-INSERT INTO tblTarifaTransporte (idTarifaTransporte, nombreTarifaTransporte)
-VALUES (4, 'Tarifa 04 - regional');
-
--- Registro 5
-INSERT INTO tblTarifaTransporte (idTarifaTransporte, nombreTarifaTransporte)
-VALUES (5, 'Tarifa 05 - refrigerado');
-
--- Registro 6
-INSERT INTO tblTarifaTransporte (idTarifaTransporte, nombreTarifaTransporte)
-VALUES (6, 'Tarifa 06 - local');
-
--- Registro 7
-INSERT INTO tblTarifaTransporte (idTarifaTransporte, nombreTarifaTransporte)
-VALUES (7, 'Tarifa 07 - regional');
-
--- Registro 8
-INSERT INTO tblTarifaTransporte (idTarifaTransporte, nombreTarifaTransporte)
-VALUES (8, 'Tarifa 08 - refrigerado');
-
--- Registro 9
-INSERT INTO tblTarifaTransporte (idTarifaTransporte, nombreTarifaTransporte)
-VALUES (9, 'Tarifa 09 - local');
-
--- Registro 10
-INSERT INTO tblTarifaTransporte (idTarifaTransporte, nombreTarifaTransporte)
-VALUES (10, 'Tarifa 10 - regional');
-
--- ============================================================================
--- TABLA: tblTipoMovimiento
--- ============================================================================
--- Registro 1
-INSERT INTO tblTipoMovimiento (idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
-VALUES (1, 'Compra', 'Descripcion de prueba 1 - tblTipoMovimiento', '+');
-
--- Registro 2
-INSERT INTO tblTipoMovimiento (idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
-VALUES (2, 'Venta', 'Descripcion de prueba 2 - tblTipoMovimiento', '-');
-
--- Registro 3
-INSERT INTO tblTipoMovimiento (idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
-VALUES (3, 'Devolución compra', 'Descripcion de prueba 3 - tblTipoMovimiento', '-');
-
--- Registro 4
-INSERT INTO tblTipoMovimiento (idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
-VALUES (4, 'Devolución venta', 'Descripcion de prueba 4 - tblTipoMovimiento', '+');
-
--- Registro 5
-INSERT INTO tblTipoMovimiento (idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
-VALUES (5, 'Entrada por ajuste', 'Descripcion de prueba 5 - tblTipoMovimiento', '+');
-
--- Registro 6
-INSERT INTO tblTipoMovimiento (idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
-VALUES (6, 'Salida por ajuste', 'Descripcion de prueba 6 - tblTipoMovimiento', '-');
-
--- Registro 7
-INSERT INTO tblTipoMovimiento (idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
-VALUES (7, 'Entrada por traslado', 'Descripcion de prueba 7 - tblTipoMovimiento', '+');
-
--- Registro 8
-INSERT INTO tblTipoMovimiento (idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
-VALUES (8, 'Salida por traslado', 'Descripcion de prueba 8 - tblTipoMovimiento', '-');
-
--- Registro 9
-INSERT INTO tblTipoMovimiento (idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
-VALUES (9, 'Ajuste positivo', 'Descripcion de prueba 9 - tblTipoMovimiento', '+');
-
--- Registro 10
-INSERT INTO tblTipoMovimiento (idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
-VALUES (10, 'Ajuste negativo', 'Descripcion de prueba 10 - tblTipoMovimiento', '-');
-
--- ============================================================================
--- TABLA: tblTipoServicio
--- ============================================================================
--- Registro 1
-INSERT INTO tblTipoServicio (idTipoServicio, nombreTipoServicio)
-VALUES (1, 'Carga refrigerada');
-
--- Registro 2
-INSERT INTO tblTipoServicio (idTipoServicio, nombreTipoServicio)
-VALUES (2, 'Carga congelada');
-
--- Registro 3
-INSERT INTO tblTipoServicio (idTipoServicio, nombreTipoServicio)
-VALUES (3, 'Carga seca');
-
--- Registro 4
-INSERT INTO tblTipoServicio (idTipoServicio, nombreTipoServicio)
-VALUES (4, 'Distribución');
-
--- Registro 5
-INSERT INTO tblTipoServicio (idTipoServicio, nombreTipoServicio)
-VALUES (5, 'Entrega urbana');
-
--- Registro 6
-INSERT INTO tblTipoServicio (idTipoServicio, nombreTipoServicio)
-VALUES (6, 'Carga pesada');
-
--- Registro 7
-INSERT INTO tblTipoServicio (idTipoServicio, nombreTipoServicio)
-VALUES (7, 'Transporte dedicado');
-
--- Registro 8
-INSERT INTO tblTipoServicio (idTipoServicio, nombreTipoServicio)
-VALUES (8, 'Reparto local');
-
--- Registro 9
-INSERT INTO tblTipoServicio (idTipoServicio, nombreTipoServicio)
-VALUES (9, 'Carga consolidada');
-
--- Registro 10
-INSERT INTO tblTipoServicio (idTipoServicio, nombreTipoServicio)
-VALUES (10, 'Ruta especial');
-
--- ============================================================================
--- TABLA: tblTipoTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblTipoTransporte (idTipoTransporte, nombreTipoTransporte)
-VALUES (1, 'Camión');
-
--- Registro 2
-INSERT INTO tblTipoTransporte (idTipoTransporte, nombreTipoTransporte)
-VALUES (2, 'Camioneta');
-
--- Registro 3
-INSERT INTO tblTipoTransporte (idTipoTransporte, nombreTipoTransporte)
-VALUES (3, 'Furgón');
-
--- Registro 4
-INSERT INTO tblTipoTransporte (idTipoTransporte, nombreTipoTransporte)
-VALUES (4, 'Pick-up');
-
--- Registro 5
-INSERT INTO tblTipoTransporte (idTipoTransporte, nombreTipoTransporte)
-VALUES (5, 'Panel');
-
--- Registro 6
-INSERT INTO tblTipoTransporte (idTipoTransporte, nombreTipoTransporte)
-VALUES (6, 'Tráiler');
-
--- Registro 7
-INSERT INTO tblTipoTransporte (idTipoTransporte, nombreTipoTransporte)
-VALUES (7, 'Cabezal');
-
--- Registro 8
-INSERT INTO tblTipoTransporte (idTipoTransporte, nombreTipoTransporte)
-VALUES (8, 'Motocicleta');
-
--- Registro 9
-INSERT INTO tblTipoTransporte (idTipoTransporte, nombreTipoTransporte)
-VALUES (9, 'Microbús');
-
--- Registro 10
-INSERT INTO tblTipoTransporte (idTipoTransporte, nombreTipoTransporte)
-VALUES (10, 'Camión refrigerado');
-
--- ============================================================================
--- TABLA: tblBodega
--- ============================================================================
--- Registro 1
-INSERT INTO tblBodega (idBodega, nombreBodega, Fk_Sucursal_Codigo, paisBodega)
-VALUES (1, 'Bodega Central', 1, 'Guatemala');
-
--- Registro 2
-INSERT INTO tblBodega (idBodega, nombreBodega, Fk_Sucursal_Codigo, paisBodega)
-VALUES (2, 'Bodega Norte', 2, 'Guatemala');
-
--- Registro 3
-INSERT INTO tblBodega (idBodega, nombreBodega, Fk_Sucursal_Codigo, paisBodega)
-VALUES (3, 'Bodega Sur', 3, 'Guatemala');
-
--- Registro 4
-INSERT INTO tblBodega (idBodega, nombreBodega, Fk_Sucursal_Codigo, paisBodega)
-VALUES (4, 'Bodega Occidente', 4, 'Guatemala');
-
--- Registro 5
-INSERT INTO tblBodega (idBodega, nombreBodega, Fk_Sucursal_Codigo, paisBodega)
-VALUES (5, 'Bodega Oriente', 5, 'Guatemala');
-
--- Registro 6
-INSERT INTO tblBodega (idBodega, nombreBodega, Fk_Sucursal_Codigo, paisBodega)
-VALUES (6, 'Bodega Metropolitana', 6, 'Guatemala');
-
--- Registro 7
-INSERT INTO tblBodega (idBodega, nombreBodega, Fk_Sucursal_Codigo, paisBodega)
-VALUES (7, 'Bodega Carretera', 7, 'Guatemala');
-
--- Registro 8
-INSERT INTO tblBodega (idBodega, nombreBodega, Fk_Sucursal_Codigo, paisBodega)
-VALUES (8, 'Bodega Industrial', 8, 'Guatemala');
-
--- Registro 9
-INSERT INTO tblBodega (idBodega, nombreBodega, Fk_Sucursal_Codigo, paisBodega)
-VALUES (9, 'Bodega Zona 10', 9, 'Guatemala');
-
--- Registro 10
-INSERT INTO tblBodega (idBodega, nombreBodega, Fk_Sucursal_Codigo, paisBodega)
-VALUES (10, 'Bodega Zona 12', 10, 'Guatemala');
-
--- ============================================================================
--- TABLA: tblCierreMovimiento
--- ============================================================================
--- Registro 1
-INSERT INTO tblCierreMovimiento (idCierreMovimiento, nombreCierreMovimiento, Fk_Sucursal_Codigo, fechaInicioCierreMovimiento, fechaFinCierreMovimiento, estadoCierreMovimiento, esCierreAnualCierreMovimiento, toleranciaCierreMovimiento, diferenciaUnidadesCierreMovimiento, diferenciaMontoCierreMovimiento, motivoAceptacionCierreMovimiento, observacionesCierreMovimiento, fechaEjecucionCierreMovimiento)
-VALUES (1, 'Cierre octubre 1', 1, '2026-01-01', '2026-01-31', 'CERRADO', 0, 0, 0, 0.0000, 'Registro de prueba para validación', 'Cierre de prueba 1', '2026-11-01 10:00:00');
-
--- Registro 2
-INSERT INTO tblCierreMovimiento (idCierreMovimiento, nombreCierreMovimiento, Fk_Sucursal_Codigo, fechaInicioCierreMovimiento, fechaFinCierreMovimiento, estadoCierreMovimiento, esCierreAnualCierreMovimiento, toleranciaCierreMovimiento, diferenciaUnidadesCierreMovimiento, diferenciaMontoCierreMovimiento, motivoAceptacionCierreMovimiento, observacionesCierreMovimiento, fechaEjecucionCierreMovimiento)
-VALUES (2, 'Cierre octubre 2', 2, '2026-02-01', '2026-02-28', 'ABIERTO', 0, 0, 0, 0.0000, 'Registro de prueba para validación', 'Cierre de prueba 2', NULL);
-
--- Registro 3
-INSERT INTO tblCierreMovimiento (idCierreMovimiento, nombreCierreMovimiento, Fk_Sucursal_Codigo, fechaInicioCierreMovimiento, fechaFinCierreMovimiento, estadoCierreMovimiento, esCierreAnualCierreMovimiento, toleranciaCierreMovimiento, diferenciaUnidadesCierreMovimiento, diferenciaMontoCierreMovimiento, motivoAceptacionCierreMovimiento, observacionesCierreMovimiento, fechaEjecucionCierreMovimiento)
-VALUES (3, 'Cierre octubre 3', 3, '2026-03-01', '2026-03-31', 'CERRADO', 0, 0, 0, 0.0000, 'Registro de prueba para validación', 'Cierre de prueba 3', '2026-11-01 10:00:00');
-
--- Registro 4
-INSERT INTO tblCierreMovimiento (idCierreMovimiento, nombreCierreMovimiento, Fk_Sucursal_Codigo, fechaInicioCierreMovimiento, fechaFinCierreMovimiento, estadoCierreMovimiento, esCierreAnualCierreMovimiento, toleranciaCierreMovimiento, diferenciaUnidadesCierreMovimiento, diferenciaMontoCierreMovimiento, motivoAceptacionCierreMovimiento, observacionesCierreMovimiento, fechaEjecucionCierreMovimiento)
-VALUES (4, 'Cierre octubre 4', 4, '2026-04-01', '2026-04-30', 'ABIERTO', 0, 0, 0, 0.0000, 'Registro de prueba para validación', 'Cierre de prueba 4', NULL);
-
--- Registro 5
-INSERT INTO tblCierreMovimiento (idCierreMovimiento, nombreCierreMovimiento, Fk_Sucursal_Codigo, fechaInicioCierreMovimiento, fechaFinCierreMovimiento, estadoCierreMovimiento, esCierreAnualCierreMovimiento, toleranciaCierreMovimiento, diferenciaUnidadesCierreMovimiento, diferenciaMontoCierreMovimiento, motivoAceptacionCierreMovimiento, observacionesCierreMovimiento, fechaEjecucionCierreMovimiento)
-VALUES (5, 'Cierre octubre 5', 5, '2026-05-01', '2026-05-31', 'CERRADO', 0, 0, 0, 0.0000, 'Registro de prueba para validación', 'Cierre de prueba 5', '2026-11-01 10:00:00');
-
--- Registro 6
-INSERT INTO tblCierreMovimiento (idCierreMovimiento, nombreCierreMovimiento, Fk_Sucursal_Codigo, fechaInicioCierreMovimiento, fechaFinCierreMovimiento, estadoCierreMovimiento, esCierreAnualCierreMovimiento, toleranciaCierreMovimiento, diferenciaUnidadesCierreMovimiento, diferenciaMontoCierreMovimiento, motivoAceptacionCierreMovimiento, observacionesCierreMovimiento, fechaEjecucionCierreMovimiento)
-VALUES (6, 'Cierre octubre 6', 6, '2026-06-01', '2026-06-30', 'ABIERTO', 0, 0, 0, 0.0000, 'Registro de prueba para validación', 'Cierre de prueba 6', NULL);
-
--- Registro 7
-INSERT INTO tblCierreMovimiento (idCierreMovimiento, nombreCierreMovimiento, Fk_Sucursal_Codigo, fechaInicioCierreMovimiento, fechaFinCierreMovimiento, estadoCierreMovimiento, esCierreAnualCierreMovimiento, toleranciaCierreMovimiento, diferenciaUnidadesCierreMovimiento, diferenciaMontoCierreMovimiento, motivoAceptacionCierreMovimiento, observacionesCierreMovimiento, fechaEjecucionCierreMovimiento)
-VALUES (7, 'Cierre octubre 7', 7, '2026-07-01', '2026-07-31', 'CERRADO', 0, 0, 0, 0.0000, 'Registro de prueba para validación', 'Cierre de prueba 7', '2026-11-01 10:00:00');
-
--- Registro 8
-INSERT INTO tblCierreMovimiento (idCierreMovimiento, nombreCierreMovimiento, Fk_Sucursal_Codigo, fechaInicioCierreMovimiento, fechaFinCierreMovimiento, estadoCierreMovimiento, esCierreAnualCierreMovimiento, toleranciaCierreMovimiento, diferenciaUnidadesCierreMovimiento, diferenciaMontoCierreMovimiento, motivoAceptacionCierreMovimiento, observacionesCierreMovimiento, fechaEjecucionCierreMovimiento)
-VALUES (8, 'Cierre octubre 8', 8, '2026-08-01', '2026-08-31', 'ABIERTO', 0, 0, 0, 0.0000, 'Registro de prueba para validación', 'Cierre de prueba 8', NULL);
-
--- Registro 9
-INSERT INTO tblCierreMovimiento (idCierreMovimiento, nombreCierreMovimiento, Fk_Sucursal_Codigo, fechaInicioCierreMovimiento, fechaFinCierreMovimiento, estadoCierreMovimiento, esCierreAnualCierreMovimiento, toleranciaCierreMovimiento, diferenciaUnidadesCierreMovimiento, diferenciaMontoCierreMovimiento, motivoAceptacionCierreMovimiento, observacionesCierreMovimiento, fechaEjecucionCierreMovimiento)
-VALUES (9, 'Cierre octubre 9', 9, '2026-09-01', '2026-09-30', 'CERRADO', 0, 0, 0, 0.0000, 'Registro de prueba para validación', 'Cierre de prueba 9', '2026-11-01 10:00:00');
-
--- Registro 10
-INSERT INTO tblCierreMovimiento (idCierreMovimiento, nombreCierreMovimiento, Fk_Sucursal_Codigo, fechaInicioCierreMovimiento, fechaFinCierreMovimiento, estadoCierreMovimiento, esCierreAnualCierreMovimiento, toleranciaCierreMovimiento, diferenciaUnidadesCierreMovimiento, diferenciaMontoCierreMovimiento, motivoAceptacionCierreMovimiento, observacionesCierreMovimiento, fechaEjecucionCierreMovimiento)
-VALUES (10, 'Cierre octubre 10', 10, '2026-10-01', '2026-10-31', 'ABIERTO', 0, 0, 0, 0.0000, 'Registro de prueba para validación', 'Cierre de prueba 10', NULL);
-
--- ============================================================================
--- TABLA: tblConductor
--- ============================================================================
--- Registro 1
-INSERT INTO tblConductor (idConductor, codigoConductor, nombreCompletoConductor, numeroLicenciaConductor, fechaVencimientoDocConductor, Fk_Estado_Codigo)
-VALUES (1, 'COND-001', 'Ana López', 'LIC-0001', '2028-12-31', 1);
-
--- Registro 2
-INSERT INTO tblConductor (idConductor, codigoConductor, nombreCompletoConductor, numeroLicenciaConductor, fechaVencimientoDocConductor, Fk_Estado_Codigo)
-VALUES (2, 'COND-002', 'Luis Morales', 'LIC-0002', '2028-12-31', 2);
-
--- Registro 3
-INSERT INTO tblConductor (idConductor, codigoConductor, nombreCompletoConductor, numeroLicenciaConductor, fechaVencimientoDocConductor, Fk_Estado_Codigo)
-VALUES (3, 'COND-003', 'María García', 'LIC-0003', '2028-12-31', 3);
-
--- Registro 4
-INSERT INTO tblConductor (idConductor, codigoConductor, nombreCompletoConductor, numeroLicenciaConductor, fechaVencimientoDocConductor, Fk_Estado_Codigo)
-VALUES (4, 'COND-004', 'Carlos Pérez', 'LIC-0004', '2028-12-31', 4);
-
--- Registro 5
-INSERT INTO tblConductor (idConductor, codigoConductor, nombreCompletoConductor, numeroLicenciaConductor, fechaVencimientoDocConductor, Fk_Estado_Codigo)
-VALUES (5, 'COND-005', 'Elena Ruiz', 'LIC-0005', '2028-12-31', 5);
-
--- Registro 6
-INSERT INTO tblConductor (idConductor, codigoConductor, nombreCompletoConductor, numeroLicenciaConductor, fechaVencimientoDocConductor, Fk_Estado_Codigo)
-VALUES (6, 'COND-006', 'José Ramírez', 'LIC-0006', '2028-12-31', 6);
-
--- Registro 7
-INSERT INTO tblConductor (idConductor, codigoConductor, nombreCompletoConductor, numeroLicenciaConductor, fechaVencimientoDocConductor, Fk_Estado_Codigo)
-VALUES (7, 'COND-007', 'Sofía Herrera', 'LIC-0007', '2028-12-31', 7);
-
--- Registro 8
-INSERT INTO tblConductor (idConductor, codigoConductor, nombreCompletoConductor, numeroLicenciaConductor, fechaVencimientoDocConductor, Fk_Estado_Codigo)
-VALUES (8, 'COND-008', 'Pedro Castillo', 'LIC-0008', '2028-12-31', 8);
-
--- Registro 9
-INSERT INTO tblConductor (idConductor, codigoConductor, nombreCompletoConductor, numeroLicenciaConductor, fechaVencimientoDocConductor, Fk_Estado_Codigo)
-VALUES (9, 'COND-009', 'Laura Díaz', 'LIC-0009', '2028-12-31', 9);
-
--- Registro 10
-INSERT INTO tblConductor (idConductor, codigoConductor, nombreCompletoConductor, numeroLicenciaConductor, fechaVencimientoDocConductor, Fk_Estado_Codigo)
-VALUES (10, 'COND-010', 'Jorge Méndez', 'LIC-0010', '2028-12-31', 10);
-
--- ============================================================================
--- TABLA: tblProducto
--- ============================================================================
--- Registro 1
-INSERT INTO tblProducto (idProducto, skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto)
-VALUES (1, 'EMB-0001', 'EMB01', 'Jamón de pavo', 1, 1, 1, 1, 'Descripcion de prueba 1 - tblProducto', 'FFD8FF', 'Guatemala', 25.0000, 45.0000, 0.10, 5, 500, 1.50);
-
--- Registro 2
-INSERT INTO tblProducto (idProducto, skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto)
-VALUES (2, 'EMB-0002', 'EMB01', 'Salchicha tipo viena', 2, 2, 2, 2, 'Descripcion de prueba 2 - tblProducto', 'FFD8FF', 'Guatemala', 25.0000, 45.0000, 0.10, 5, 500, 1.50);
-
--- Registro 3
-INSERT INTO tblProducto (idProducto, skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto)
-VALUES (3, 'EMB-0003', 'EMB01', 'Chorizo tradicional', 3, 3, 3, 3, 'Descripcion de prueba 3 - tblProducto', 'FFD8FF', 'Guatemala', 25.0000, 45.0000, 0.10, 5, 500, 1.50);
-
--- Registro 4
-INSERT INTO tblProducto (idProducto, skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto)
-VALUES (4, 'EMB-0004', 'EMB01', 'Tocino ahumado', 4, 4, 4, 4, 'Descripcion de prueba 4 - tblProducto', 'FFD8FF', 'Guatemala', 25.0000, 45.0000, 0.10, 5, 500, 1.50);
-
--- Registro 5
-INSERT INTO tblProducto (idProducto, skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto)
-VALUES (5, 'EMB-0005', 'EMB01', 'Mortadela especial', 5, 5, 5, 5, 'Descripcion de prueba 5 - tblProducto', 'FFD8FF', 'Guatemala', 25.0000, 45.0000, 0.10, 5, 500, 1.50);
-
--- Registro 6
-INSERT INTO tblProducto (idProducto, skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto)
-VALUES (6, 'EMB-0006', 'EMB01', 'Salami premium', 6, 6, 6, 6, 'Descripcion de prueba 6 - tblProducto', 'FFD8FF', 'Guatemala', 25.0000, 45.0000, 0.10, 5, 500, 1.50);
-
--- Registro 7
-INSERT INTO tblProducto (idProducto, skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto)
-VALUES (7, 'EMB-0007', 'EMB01', 'Jamón cocido', 7, 7, 7, 7, 'Descripcion de prueba 7 - tblProducto', 'FFD8FF', 'Guatemala', 25.0000, 45.0000, 0.10, 5, 500, 1.50);
-
--- Registro 8
-INSERT INTO tblProducto (idProducto, skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto)
-VALUES (8, 'EMB-0008', 'EMB01', 'Longaniza fresca', 8, 8, 8, 8, 'Descripcion de prueba 8 - tblProducto', 'FFD8FF', 'Guatemala', 25.0000, 45.0000, 0.10, 5, 500, 1.50);
-
--- Registro 9
-INSERT INTO tblProducto (idProducto, skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto)
-VALUES (9, 'EMB-0009', 'EMB01', 'Salchicha de pollo', 9, 9, 9, 9, 'Descripcion de prueba 9 - tblProducto', 'FFD8FF', 'Guatemala', 25.0000, 45.0000, 0.10, 5, 500, 1.50);
-
--- Registro 10
-INSERT INTO tblProducto (idProducto, skuProducto, clasificacionProducto, nombreProducto, idProveedorProductos, Fk_Marca_Codigo, Fk_Categoria_Codigo, Fk_Linea_Codigo, descripcionProducto, imagenProducto, paisProducto, precioCostoProducto, precioVentaProducto, porcentajeComisionProducto, stockMinimoProducto, stockMaximoProducto, pesoProducto)
-VALUES (10, 'EMB-0010', 'EMB01', 'Chorizo parrillero', 10, 10, 10, 10, 'Descripcion de prueba 10 - tblProducto', 'FFD8FF', 'Guatemala', 25.0000, 45.0000, 0.10, 5, 500, 1.50);
-
--- ============================================================================
--- TABLA: tblTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblTransporte (idTransporte, nroPlacaTransporte, marcaTransporte, modeloTransporte, anioTransporte, esRefrigeradoTransporte, Fk_Estado_Codigo, Fk_Tipo_Transporte_Codigo)
-VALUES (1, 'P001ABC', 'Toyota', 'Modelo 2021', 2017, 1, 1, 1);
-
--- Registro 2
-INSERT INTO tblTransporte (idTransporte, nroPlacaTransporte, marcaTransporte, modeloTransporte, anioTransporte, esRefrigeradoTransporte, Fk_Estado_Codigo, Fk_Tipo_Transporte_Codigo)
-VALUES (2, 'P002ABC', 'Isuzu', 'Modelo 2022', 2018, 0, 2, 2);
-
--- Registro 3
-INSERT INTO tblTransporte (idTransporte, nroPlacaTransporte, marcaTransporte, modeloTransporte, anioTransporte, esRefrigeradoTransporte, Fk_Estado_Codigo, Fk_Tipo_Transporte_Codigo)
-VALUES (3, 'P003ABC', 'Toyota', 'Modelo 2023', 2019, 1, 3, 3);
-
--- Registro 4
-INSERT INTO tblTransporte (idTransporte, nroPlacaTransporte, marcaTransporte, modeloTransporte, anioTransporte, esRefrigeradoTransporte, Fk_Estado_Codigo, Fk_Tipo_Transporte_Codigo)
-VALUES (4, 'P004ABC', 'Isuzu', 'Modelo 2024', 2020, 0, 4, 4);
-
--- Registro 5
-INSERT INTO tblTransporte (idTransporte, nroPlacaTransporte, marcaTransporte, modeloTransporte, anioTransporte, esRefrigeradoTransporte, Fk_Estado_Codigo, Fk_Tipo_Transporte_Codigo)
-VALUES (5, 'P005ABC', 'Toyota', 'Modelo 2025', 2021, 1, 5, 5);
-
--- Registro 6
-INSERT INTO tblTransporte (idTransporte, nroPlacaTransporte, marcaTransporte, modeloTransporte, anioTransporte, esRefrigeradoTransporte, Fk_Estado_Codigo, Fk_Tipo_Transporte_Codigo)
-VALUES (6, 'P006ABC', 'Isuzu', 'Modelo 2020', 2022, 0, 6, 6);
-
--- Registro 7
-INSERT INTO tblTransporte (idTransporte, nroPlacaTransporte, marcaTransporte, modeloTransporte, anioTransporte, esRefrigeradoTransporte, Fk_Estado_Codigo, Fk_Tipo_Transporte_Codigo)
-VALUES (7, 'P007ABC', 'Toyota', 'Modelo 2021', 2023, 1, 7, 7);
-
--- Registro 8
-INSERT INTO tblTransporte (idTransporte, nroPlacaTransporte, marcaTransporte, modeloTransporte, anioTransporte, esRefrigeradoTransporte, Fk_Estado_Codigo, Fk_Tipo_Transporte_Codigo)
-VALUES (8, 'P008ABC', 'Isuzu', 'Modelo 2022', 2024, 0, 8, 8);
-
--- Registro 9
-INSERT INTO tblTransporte (idTransporte, nroPlacaTransporte, marcaTransporte, modeloTransporte, anioTransporte, esRefrigeradoTransporte, Fk_Estado_Codigo, Fk_Tipo_Transporte_Codigo)
-VALUES (9, 'P009ABC', 'Toyota', 'Modelo 2023', 2025, 1, 9, 9);
-
--- Registro 10
-INSERT INTO tblTransporte (idTransporte, nroPlacaTransporte, marcaTransporte, modeloTransporte, anioTransporte, esRefrigeradoTransporte, Fk_Estado_Codigo, Fk_Tipo_Transporte_Codigo)
-VALUES (10, 'P010ABC', 'Isuzu', 'Modelo 2024', 2026, 0, 10, 10);
-
--- ============================================================================
--- TABLA: tblCamaraRefrigeracion
--- ============================================================================
--- Registro 1
-INSERT INTO tblCamaraRefrigeracion (idCamaraRefrigeracion, Fk_Transporte_Codigo, marcaEquipoCamaraRefrigeracion, tempMinimaCelsiusCamaraRefrigeracion, tempMaximaCelsiusCamaraRefrigeracion, estadoOperativoCamaraRefrigeracion)
-VALUES (1, 1, 'ThermoKing 1', -18.00, 4.00, 'OPERATIVO');
-
--- Registro 2
-INSERT INTO tblCamaraRefrigeracion (idCamaraRefrigeracion, Fk_Transporte_Codigo, marcaEquipoCamaraRefrigeracion, tempMinimaCelsiusCamaraRefrigeracion, tempMaximaCelsiusCamaraRefrigeracion, estadoOperativoCamaraRefrigeracion)
-VALUES (2, 2, 'ThermoKing 2', -18.00, 4.00, 'OPERATIVO');
-
--- Registro 3
-INSERT INTO tblCamaraRefrigeracion (idCamaraRefrigeracion, Fk_Transporte_Codigo, marcaEquipoCamaraRefrigeracion, tempMinimaCelsiusCamaraRefrigeracion, tempMaximaCelsiusCamaraRefrigeracion, estadoOperativoCamaraRefrigeracion)
-VALUES (3, 3, 'ThermoKing 3', -18.00, 4.00, 'OPERATIVO');
-
--- Registro 4
-INSERT INTO tblCamaraRefrigeracion (idCamaraRefrigeracion, Fk_Transporte_Codigo, marcaEquipoCamaraRefrigeracion, tempMinimaCelsiusCamaraRefrigeracion, tempMaximaCelsiusCamaraRefrigeracion, estadoOperativoCamaraRefrigeracion)
-VALUES (4, 4, 'ThermoKing 4', -18.00, 4.00, 'OPERATIVO');
-
--- Registro 5
-INSERT INTO tblCamaraRefrigeracion (idCamaraRefrigeracion, Fk_Transporte_Codigo, marcaEquipoCamaraRefrigeracion, tempMinimaCelsiusCamaraRefrigeracion, tempMaximaCelsiusCamaraRefrigeracion, estadoOperativoCamaraRefrigeracion)
-VALUES (5, 5, 'ThermoKing 5', -18.00, 4.00, 'OPERATIVO');
-
--- Registro 6
-INSERT INTO tblCamaraRefrigeracion (idCamaraRefrigeracion, Fk_Transporte_Codigo, marcaEquipoCamaraRefrigeracion, tempMinimaCelsiusCamaraRefrigeracion, tempMaximaCelsiusCamaraRefrigeracion, estadoOperativoCamaraRefrigeracion)
-VALUES (6, 6, 'ThermoKing 6', -18.00, 4.00, 'OPERATIVO');
-
--- Registro 7
-INSERT INTO tblCamaraRefrigeracion (idCamaraRefrigeracion, Fk_Transporte_Codigo, marcaEquipoCamaraRefrigeracion, tempMinimaCelsiusCamaraRefrigeracion, tempMaximaCelsiusCamaraRefrigeracion, estadoOperativoCamaraRefrigeracion)
-VALUES (7, 7, 'ThermoKing 7', -18.00, 4.00, 'OPERATIVO');
-
--- Registro 8
-INSERT INTO tblCamaraRefrigeracion (idCamaraRefrigeracion, Fk_Transporte_Codigo, marcaEquipoCamaraRefrigeracion, tempMinimaCelsiusCamaraRefrigeracion, tempMaximaCelsiusCamaraRefrigeracion, estadoOperativoCamaraRefrigeracion)
-VALUES (8, 8, 'ThermoKing 8', -18.00, 4.00, 'OPERATIVO');
-
--- Registro 9
-INSERT INTO tblCamaraRefrigeracion (idCamaraRefrigeracion, Fk_Transporte_Codigo, marcaEquipoCamaraRefrigeracion, tempMinimaCelsiusCamaraRefrigeracion, tempMaximaCelsiusCamaraRefrigeracion, estadoOperativoCamaraRefrigeracion)
-VALUES (9, 9, 'ThermoKing 9', -18.00, 4.00, 'OPERATIVO');
-
--- Registro 10
-INSERT INTO tblCamaraRefrigeracion (idCamaraRefrigeracion, Fk_Transporte_Codigo, marcaEquipoCamaraRefrigeracion, tempMinimaCelsiusCamaraRefrigeracion, tempMaximaCelsiusCamaraRefrigeracion, estadoOperativoCamaraRefrigeracion)
-VALUES (10, 10, 'ThermoKing 10', -18.00, 4.00, 'OPERATIVO');
-
--- ============================================================================
--- TABLA: tblEncabezadoViaje
--- ============================================================================
--- Registro 1
-INSERT INTO tblEncabezadoViaje (idEncabezadoViaje, fechaDocumentoEncabezadoViaje, horaSalidaEncabezadoViaje, horaLlegadaEncabezadoViaje, requiereCadenaFrioEncabezadoViaje, estadoViajeEncabezadoViaje, pesoTotalEncabezadoViaje, Fk_Transporte_Codigo, Fk_Conductor_Codigo)
-VALUES (1, '2026-10-15 07:30:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 1, 'EN_CURSO', 150.000, 1, 1);
-
--- Registro 2
-INSERT INTO tblEncabezadoViaje (idEncabezadoViaje, fechaDocumentoEncabezadoViaje, horaSalidaEncabezadoViaje, horaLlegadaEncabezadoViaje, requiereCadenaFrioEncabezadoViaje, estadoViajeEncabezadoViaje, pesoTotalEncabezadoViaje, Fk_Transporte_Codigo, Fk_Conductor_Codigo)
-VALUES (2, '2026-10-15 07:30:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 0, 'EN_CURSO', 150.000, 2, 2);
-
--- Registro 3
-INSERT INTO tblEncabezadoViaje (idEncabezadoViaje, fechaDocumentoEncabezadoViaje, horaSalidaEncabezadoViaje, horaLlegadaEncabezadoViaje, requiereCadenaFrioEncabezadoViaje, estadoViajeEncabezadoViaje, pesoTotalEncabezadoViaje, Fk_Transporte_Codigo, Fk_Conductor_Codigo)
-VALUES (3, '2026-10-15 07:30:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 1, 'EN_CURSO', 150.000, 3, 3);
-
--- Registro 4
-INSERT INTO tblEncabezadoViaje (idEncabezadoViaje, fechaDocumentoEncabezadoViaje, horaSalidaEncabezadoViaje, horaLlegadaEncabezadoViaje, requiereCadenaFrioEncabezadoViaje, estadoViajeEncabezadoViaje, pesoTotalEncabezadoViaje, Fk_Transporte_Codigo, Fk_Conductor_Codigo)
-VALUES (4, '2026-10-15 07:30:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 0, 'EN_CURSO', 150.000, 4, 4);
-
--- Registro 5
-INSERT INTO tblEncabezadoViaje (idEncabezadoViaje, fechaDocumentoEncabezadoViaje, horaSalidaEncabezadoViaje, horaLlegadaEncabezadoViaje, requiereCadenaFrioEncabezadoViaje, estadoViajeEncabezadoViaje, pesoTotalEncabezadoViaje, Fk_Transporte_Codigo, Fk_Conductor_Codigo)
-VALUES (5, '2026-10-15 07:30:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 1, 'EN_CURSO', 150.000, 5, 5);
-
--- Registro 6
-INSERT INTO tblEncabezadoViaje (idEncabezadoViaje, fechaDocumentoEncabezadoViaje, horaSalidaEncabezadoViaje, horaLlegadaEncabezadoViaje, requiereCadenaFrioEncabezadoViaje, estadoViajeEncabezadoViaje, pesoTotalEncabezadoViaje, Fk_Transporte_Codigo, Fk_Conductor_Codigo)
-VALUES (6, '2026-10-15 07:30:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 0, 'EN_CURSO', 150.000, 6, 6);
-
--- Registro 7
-INSERT INTO tblEncabezadoViaje (idEncabezadoViaje, fechaDocumentoEncabezadoViaje, horaSalidaEncabezadoViaje, horaLlegadaEncabezadoViaje, requiereCadenaFrioEncabezadoViaje, estadoViajeEncabezadoViaje, pesoTotalEncabezadoViaje, Fk_Transporte_Codigo, Fk_Conductor_Codigo)
-VALUES (7, '2026-10-15 07:30:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 1, 'EN_CURSO', 150.000, 7, 7);
-
--- Registro 8
-INSERT INTO tblEncabezadoViaje (idEncabezadoViaje, fechaDocumentoEncabezadoViaje, horaSalidaEncabezadoViaje, horaLlegadaEncabezadoViaje, requiereCadenaFrioEncabezadoViaje, estadoViajeEncabezadoViaje, pesoTotalEncabezadoViaje, Fk_Transporte_Codigo, Fk_Conductor_Codigo)
-VALUES (8, '2026-10-15 07:30:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 0, 'EN_CURSO', 150.000, 8, 8);
-
--- Registro 9
-INSERT INTO tblEncabezadoViaje (idEncabezadoViaje, fechaDocumentoEncabezadoViaje, horaSalidaEncabezadoViaje, horaLlegadaEncabezadoViaje, requiereCadenaFrioEncabezadoViaje, estadoViajeEncabezadoViaje, pesoTotalEncabezadoViaje, Fk_Transporte_Codigo, Fk_Conductor_Codigo)
-VALUES (9, '2026-10-15 07:30:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 1, 'EN_CURSO', 150.000, 9, 9);
-
--- Registro 10
-INSERT INTO tblEncabezadoViaje (idEncabezadoViaje, fechaDocumentoEncabezadoViaje, horaSalidaEncabezadoViaje, horaLlegadaEncabezadoViaje, requiereCadenaFrioEncabezadoViaje, estadoViajeEncabezadoViaje, pesoTotalEncabezadoViaje, Fk_Transporte_Codigo, Fk_Conductor_Codigo)
-VALUES (10, '2026-10-15 07:30:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 0, 'EN_CURSO', 150.000, 10, 10);
-
--- ============================================================================
--- TABLA: tblLoteProducto
--- ============================================================================
--- Registro 1
-INSERT INTO tblLoteProducto (idLoteProducto, codigoLoteProducto, Fk_Producto_Codigo, descripcionLoteProducto, requiereFrioLoteProducto, fechaFabricacionLoteProducto, fechaVencimientoLoteProducto, tempRequeridaMinLoteProducto, tempRequeridaMaxLoteProducto)
-VALUES (1, 'LOTE-0001', 1, 'Descripcion de prueba 1 - tblLoteProducto', 1, '2026-09-01', '2027-09-01', -18.00, 4.00);
-
--- Registro 2
-INSERT INTO tblLoteProducto (idLoteProducto, codigoLoteProducto, Fk_Producto_Codigo, descripcionLoteProducto, requiereFrioLoteProducto, fechaFabricacionLoteProducto, fechaVencimientoLoteProducto, tempRequeridaMinLoteProducto, tempRequeridaMaxLoteProducto)
-VALUES (2, 'LOTE-0002', 2, 'Descripcion de prueba 2 - tblLoteProducto', 0, '2026-09-01', '2027-09-01', -18.00, 4.00);
-
--- Registro 3
-INSERT INTO tblLoteProducto (idLoteProducto, codigoLoteProducto, Fk_Producto_Codigo, descripcionLoteProducto, requiereFrioLoteProducto, fechaFabricacionLoteProducto, fechaVencimientoLoteProducto, tempRequeridaMinLoteProducto, tempRequeridaMaxLoteProducto)
-VALUES (3, 'LOTE-0003', 3, 'Descripcion de prueba 3 - tblLoteProducto', 1, '2026-09-01', '2027-09-01', -18.00, 4.00);
-
--- Registro 4
-INSERT INTO tblLoteProducto (idLoteProducto, codigoLoteProducto, Fk_Producto_Codigo, descripcionLoteProducto, requiereFrioLoteProducto, fechaFabricacionLoteProducto, fechaVencimientoLoteProducto, tempRequeridaMinLoteProducto, tempRequeridaMaxLoteProducto)
-VALUES (4, 'LOTE-0004', 4, 'Descripcion de prueba 4 - tblLoteProducto', 0, '2026-09-01', '2027-09-01', -18.00, 4.00);
-
--- Registro 5
-INSERT INTO tblLoteProducto (idLoteProducto, codigoLoteProducto, Fk_Producto_Codigo, descripcionLoteProducto, requiereFrioLoteProducto, fechaFabricacionLoteProducto, fechaVencimientoLoteProducto, tempRequeridaMinLoteProducto, tempRequeridaMaxLoteProducto)
-VALUES (5, 'LOTE-0005', 5, 'Descripcion de prueba 5 - tblLoteProducto', 1, '2026-09-01', '2027-09-01', -18.00, 4.00);
-
--- Registro 6
-INSERT INTO tblLoteProducto (idLoteProducto, codigoLoteProducto, Fk_Producto_Codigo, descripcionLoteProducto, requiereFrioLoteProducto, fechaFabricacionLoteProducto, fechaVencimientoLoteProducto, tempRequeridaMinLoteProducto, tempRequeridaMaxLoteProducto)
-VALUES (6, 'LOTE-0006', 6, 'Descripcion de prueba 6 - tblLoteProducto', 0, '2026-09-01', '2027-09-01', -18.00, 4.00);
-
--- Registro 7
-INSERT INTO tblLoteProducto (idLoteProducto, codigoLoteProducto, Fk_Producto_Codigo, descripcionLoteProducto, requiereFrioLoteProducto, fechaFabricacionLoteProducto, fechaVencimientoLoteProducto, tempRequeridaMinLoteProducto, tempRequeridaMaxLoteProducto)
-VALUES (7, 'LOTE-0007', 7, 'Descripcion de prueba 7 - tblLoteProducto', 1, '2026-09-01', '2027-09-01', -18.00, 4.00);
-
--- Registro 8
-INSERT INTO tblLoteProducto (idLoteProducto, codigoLoteProducto, Fk_Producto_Codigo, descripcionLoteProducto, requiereFrioLoteProducto, fechaFabricacionLoteProducto, fechaVencimientoLoteProducto, tempRequeridaMinLoteProducto, tempRequeridaMaxLoteProducto)
-VALUES (8, 'LOTE-0008', 8, 'Descripcion de prueba 8 - tblLoteProducto', 0, '2026-09-01', '2027-09-01', -18.00, 4.00);
-
--- Registro 9
-INSERT INTO tblLoteProducto (idLoteProducto, codigoLoteProducto, Fk_Producto_Codigo, descripcionLoteProducto, requiereFrioLoteProducto, fechaFabricacionLoteProducto, fechaVencimientoLoteProducto, tempRequeridaMinLoteProducto, tempRequeridaMaxLoteProducto)
-VALUES (9, 'LOTE-0009', 9, 'Descripcion de prueba 9 - tblLoteProducto', 1, '2026-09-01', '2027-09-01', -18.00, 4.00);
-
--- Registro 10
-INSERT INTO tblLoteProducto (idLoteProducto, codigoLoteProducto, Fk_Producto_Codigo, descripcionLoteProducto, requiereFrioLoteProducto, fechaFabricacionLoteProducto, fechaVencimientoLoteProducto, tempRequeridaMinLoteProducto, tempRequeridaMaxLoteProducto)
-VALUES (10, 'LOTE-0010', 10, 'Descripcion de prueba 10 - tblLoteProducto', 0, '2026-09-01', '2027-09-01', -18.00, 4.00);
-
--- ============================================================================
--- TABLA: tblSaldos
--- ============================================================================
--- Registro 1
-INSERT INTO tblSaldos (idSaldo, Fk_Producto_Codigo, Fk_Bodega_Codigo, saldoActualSaldo)
-VALUES (1, 1, 1, 101);
-
--- Registro 2
-INSERT INTO tblSaldos (idSaldo, Fk_Producto_Codigo, Fk_Bodega_Codigo, saldoActualSaldo)
-VALUES (2, 2, 2, 102);
-
--- Registro 3
-INSERT INTO tblSaldos (idSaldo, Fk_Producto_Codigo, Fk_Bodega_Codigo, saldoActualSaldo)
-VALUES (3, 3, 3, 103);
-
--- Registro 4
-INSERT INTO tblSaldos (idSaldo, Fk_Producto_Codigo, Fk_Bodega_Codigo, saldoActualSaldo)
-VALUES (4, 4, 4, 104);
-
--- Registro 5
-INSERT INTO tblSaldos (idSaldo, Fk_Producto_Codigo, Fk_Bodega_Codigo, saldoActualSaldo)
-VALUES (5, 5, 5, 105);
-
--- Registro 6
-INSERT INTO tblSaldos (idSaldo, Fk_Producto_Codigo, Fk_Bodega_Codigo, saldoActualSaldo)
-VALUES (6, 6, 6, 106);
-
--- Registro 7
-INSERT INTO tblSaldos (idSaldo, Fk_Producto_Codigo, Fk_Bodega_Codigo, saldoActualSaldo)
-VALUES (7, 7, 7, 107);
-
--- Registro 8
-INSERT INTO tblSaldos (idSaldo, Fk_Producto_Codigo, Fk_Bodega_Codigo, saldoActualSaldo)
-VALUES (8, 8, 8, 108);
-
--- Registro 9
-INSERT INTO tblSaldos (idSaldo, Fk_Producto_Codigo, Fk_Bodega_Codigo, saldoActualSaldo)
-VALUES (9, 9, 9, 109);
-
--- Registro 10
-INSERT INTO tblSaldos (idSaldo, Fk_Producto_Codigo, Fk_Bodega_Codigo, saldoActualSaldo)
-VALUES (10, 10, 10, 110);
-
--- ============================================================================
--- TABLA: tblStock
--- ============================================================================
--- Registro 1
-INSERT INTO tblStock (idStock, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock)
-VALUES (1, 1, 1, 1, 101, 101, 91, 101, 15, 5, 50, 20, 2, 1, 1);
-
--- Registro 2
-INSERT INTO tblStock (idStock, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock)
-VALUES (2, 2, 2, 2, 102, 102, 92, 102, 15, 5, 50, 20, 2, 1, 1);
-
--- Registro 3
-INSERT INTO tblStock (idStock, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock)
-VALUES (3, 3, 3, 3, 103, 103, 93, 103, 15, 5, 50, 20, 2, 1, 1);
-
--- Registro 4
-INSERT INTO tblStock (idStock, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock)
-VALUES (4, 4, 4, 4, 104, 104, 94, 104, 15, 5, 50, 20, 2, 1, 1);
-
--- Registro 5
-INSERT INTO tblStock (idStock, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock)
-VALUES (5, 5, 5, 5, 105, 105, 95, 105, 15, 5, 50, 20, 2, 1, 1);
-
--- Registro 6
-INSERT INTO tblStock (idStock, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock)
-VALUES (6, 6, 6, 6, 106, 106, 96, 106, 15, 5, 50, 20, 2, 1, 1);
-
--- Registro 7
-INSERT INTO tblStock (idStock, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock)
-VALUES (7, 7, 7, 7, 107, 107, 97, 107, 15, 5, 50, 20, 2, 1, 1);
-
--- Registro 8
-INSERT INTO tblStock (idStock, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock)
-VALUES (8, 8, 8, 8, 108, 108, 98, 108, 15, 5, 50, 20, 2, 1, 1);
-
--- Registro 9
-INSERT INTO tblStock (idStock, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock)
-VALUES (9, 9, 9, 9, 109, 109, 99, 109, 15, 5, 50, 20, 2, 1, 1);
-
--- Registro 10
-INSERT INTO tblStock (idStock, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock)
-VALUES (10, 10, 10, 10, 110, 110, 100, 110, 15, 5, 50, 20, 2, 1, 1);
-
--- ============================================================================
--- TABLA: tblTraslado
--- ============================================================================
--- Registro 1
-INSERT INTO tblTraslado (idTraslado, codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, fechaSolicitudTraslado, fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
-VALUES (1, 'TR-0001', 1, 2, 1, '2026-10-14 12:00:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 'SOLICITADO', 'Traslado de prueba 1');
-
--- Registro 2
-INSERT INTO tblTraslado (idTraslado, codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, fechaSolicitudTraslado, fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
-VALUES (2, 'TR-0002', 2, 3, 2, '2026-10-14 12:00:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 'EN_TRANSITO', 'Traslado de prueba 2');
-
--- Registro 3
-INSERT INTO tblTraslado (idTraslado, codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, fechaSolicitudTraslado, fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
-VALUES (3, 'TR-0003', 3, 4, 3, '2026-10-14 12:00:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 'SOLICITADO', 'Traslado de prueba 3');
-
--- Registro 4
-INSERT INTO tblTraslado (idTraslado, codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, fechaSolicitudTraslado, fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
-VALUES (4, 'TR-0004', 4, 5, 4, '2026-10-14 12:00:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 'EN_TRANSITO', 'Traslado de prueba 4');
-
--- Registro 5
-INSERT INTO tblTraslado (idTraslado, codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, fechaSolicitudTraslado, fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
-VALUES (5, 'TR-0005', 5, 6, 5, '2026-10-14 12:00:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 'SOLICITADO', 'Traslado de prueba 5');
-
--- Registro 6
-INSERT INTO tblTraslado (idTraslado, codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, fechaSolicitudTraslado, fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
-VALUES (6, 'TR-0006', 6, 7, 6, '2026-10-14 12:00:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 'EN_TRANSITO', 'Traslado de prueba 6');
-
--- Registro 7
-INSERT INTO tblTraslado (idTraslado, codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, fechaSolicitudTraslado, fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
-VALUES (7, 'TR-0007', 7, 8, 7, '2026-10-14 12:00:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 'SOLICITADO', 'Traslado de prueba 7');
-
--- Registro 8
-INSERT INTO tblTraslado (idTraslado, codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, fechaSolicitudTraslado, fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
-VALUES (8, 'TR-0008', 8, 9, 8, '2026-10-14 12:00:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 'EN_TRANSITO', 'Traslado de prueba 8');
-
--- Registro 9
-INSERT INTO tblTraslado (idTraslado, codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, fechaSolicitudTraslado, fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
-VALUES (9, 'TR-0009', 9, 10, 9, '2026-10-14 12:00:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 'SOLICITADO', 'Traslado de prueba 9');
-
--- Registro 10
-INSERT INTO tblTraslado (idTraslado, codigoTraslado, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, fechaSolicitudTraslado, fechaSalidaTraslado, fechaLlegadaTraslado, estadoTraslado, observacionesTraslado)
-VALUES (10, 'TR-0010', 10, 1, 10, '2026-10-14 12:00:00', '2026-10-15 08:00:00', '2026-10-15 16:00:00', 'EN_TRANSITO', 'Traslado de prueba 10');
-
--- ============================================================================
--- TABLA: tblDetalleCierre
--- ============================================================================
--- Registro 1
-INSERT INTO tblDetalleCierre (idDetalleCierre, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, stockAnteriorDetalleCierre, stockActualDetalleCierre, cargosMesDetalleCierre, abonosMesDetalleCierre, cargosAcumuladosDetalleCierre, abonosAcumuladosDetalleCierre)
-VALUES (1, 1, 1, 91, 101, 15, 5, 50, 20);
-
--- Registro 2
-INSERT INTO tblDetalleCierre (idDetalleCierre, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, stockAnteriorDetalleCierre, stockActualDetalleCierre, cargosMesDetalleCierre, abonosMesDetalleCierre, cargosAcumuladosDetalleCierre, abonosAcumuladosDetalleCierre)
-VALUES (2, 2, 2, 92, 102, 15, 5, 50, 20);
-
--- Registro 3
-INSERT INTO tblDetalleCierre (idDetalleCierre, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, stockAnteriorDetalleCierre, stockActualDetalleCierre, cargosMesDetalleCierre, abonosMesDetalleCierre, cargosAcumuladosDetalleCierre, abonosAcumuladosDetalleCierre)
-VALUES (3, 3, 3, 93, 103, 15, 5, 50, 20);
-
--- Registro 4
-INSERT INTO tblDetalleCierre (idDetalleCierre, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, stockAnteriorDetalleCierre, stockActualDetalleCierre, cargosMesDetalleCierre, abonosMesDetalleCierre, cargosAcumuladosDetalleCierre, abonosAcumuladosDetalleCierre)
-VALUES (4, 4, 4, 94, 104, 15, 5, 50, 20);
-
--- Registro 5
-INSERT INTO tblDetalleCierre (idDetalleCierre, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, stockAnteriorDetalleCierre, stockActualDetalleCierre, cargosMesDetalleCierre, abonosMesDetalleCierre, cargosAcumuladosDetalleCierre, abonosAcumuladosDetalleCierre)
-VALUES (5, 5, 5, 95, 105, 15, 5, 50, 20);
-
--- Registro 6
-INSERT INTO tblDetalleCierre (idDetalleCierre, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, stockAnteriorDetalleCierre, stockActualDetalleCierre, cargosMesDetalleCierre, abonosMesDetalleCierre, cargosAcumuladosDetalleCierre, abonosAcumuladosDetalleCierre)
-VALUES (6, 6, 6, 96, 106, 15, 5, 50, 20);
-
--- Registro 7
-INSERT INTO tblDetalleCierre (idDetalleCierre, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, stockAnteriorDetalleCierre, stockActualDetalleCierre, cargosMesDetalleCierre, abonosMesDetalleCierre, cargosAcumuladosDetalleCierre, abonosAcumuladosDetalleCierre)
-VALUES (7, 7, 7, 97, 107, 15, 5, 50, 20);
-
--- Registro 8
-INSERT INTO tblDetalleCierre (idDetalleCierre, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, stockAnteriorDetalleCierre, stockActualDetalleCierre, cargosMesDetalleCierre, abonosMesDetalleCierre, cargosAcumuladosDetalleCierre, abonosAcumuladosDetalleCierre)
-VALUES (8, 8, 8, 98, 108, 15, 5, 50, 20);
-
--- Registro 9
-INSERT INTO tblDetalleCierre (idDetalleCierre, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, stockAnteriorDetalleCierre, stockActualDetalleCierre, cargosMesDetalleCierre, abonosMesDetalleCierre, cargosAcumuladosDetalleCierre, abonosAcumuladosDetalleCierre)
-VALUES (9, 9, 9, 99, 109, 15, 5, 50, 20);
-
--- Registro 10
-INSERT INTO tblDetalleCierre (idDetalleCierre, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, stockAnteriorDetalleCierre, stockActualDetalleCierre, cargosMesDetalleCierre, abonosMesDetalleCierre, cargosAcumuladosDetalleCierre, abonosAcumuladosDetalleCierre)
-VALUES (10, 10, 10, 100, 110, 15, 5, 50, 20);
-
--- ============================================================================
--- TABLA: tblDetalleTraslado
--- ============================================================================
--- Registro 1
-INSERT INTO tblDetalleTraslado (idDetalleTraslado, Fk_Traslado_Codigo, Fk_Producto_Codigo, cantidadDetalleTraslado)
-VALUES (1, 1, 1, 6);
-
--- Registro 2
-INSERT INTO tblDetalleTraslado (idDetalleTraslado, Fk_Traslado_Codigo, Fk_Producto_Codigo, cantidadDetalleTraslado)
-VALUES (2, 2, 2, 7);
-
--- Registro 3
-INSERT INTO tblDetalleTraslado (idDetalleTraslado, Fk_Traslado_Codigo, Fk_Producto_Codigo, cantidadDetalleTraslado)
-VALUES (3, 3, 3, 8);
-
--- Registro 4
-INSERT INTO tblDetalleTraslado (idDetalleTraslado, Fk_Traslado_Codigo, Fk_Producto_Codigo, cantidadDetalleTraslado)
-VALUES (4, 4, 4, 9);
-
--- Registro 5
-INSERT INTO tblDetalleTraslado (idDetalleTraslado, Fk_Traslado_Codigo, Fk_Producto_Codigo, cantidadDetalleTraslado)
-VALUES (5, 5, 5, 10);
-
--- Registro 6
-INSERT INTO tblDetalleTraslado (idDetalleTraslado, Fk_Traslado_Codigo, Fk_Producto_Codigo, cantidadDetalleTraslado)
-VALUES (6, 6, 6, 11);
-
--- Registro 7
-INSERT INTO tblDetalleTraslado (idDetalleTraslado, Fk_Traslado_Codigo, Fk_Producto_Codigo, cantidadDetalleTraslado)
-VALUES (7, 7, 7, 12);
-
--- Registro 8
-INSERT INTO tblDetalleTraslado (idDetalleTraslado, Fk_Traslado_Codigo, Fk_Producto_Codigo, cantidadDetalleTraslado)
-VALUES (8, 8, 8, 13);
-
--- Registro 9
-INSERT INTO tblDetalleTraslado (idDetalleTraslado, Fk_Traslado_Codigo, Fk_Producto_Codigo, cantidadDetalleTraslado)
-VALUES (9, 9, 9, 14);
-
--- Registro 10
-INSERT INTO tblDetalleTraslado (idDetalleTraslado, Fk_Traslado_Codigo, Fk_Producto_Codigo, cantidadDetalleTraslado)
-VALUES (10, 10, 10, 15);
-
--- ============================================================================
--- TABLA: tblDetalleViaje
--- ============================================================================
--- Registro 1
-INSERT INTO tblDetalleViaje (idDetalleViaje, Fk_Encabezado_Viaje_Codigo, ordenDetalleViaje, descripcionDetalleViaje, cantidadDetalleViaje, pesoDetalleViaje)
-VALUES (1, 1, 1, 'Descripcion de prueba 1 - tblDetalleViaje', 6, 12.500);
-
--- Registro 2
-INSERT INTO tblDetalleViaje (idDetalleViaje, Fk_Encabezado_Viaje_Codigo, ordenDetalleViaje, descripcionDetalleViaje, cantidadDetalleViaje, pesoDetalleViaje)
-VALUES (2, 2, 2, 'Descripcion de prueba 2 - tblDetalleViaje', 7, 12.500);
-
--- Registro 3
-INSERT INTO tblDetalleViaje (idDetalleViaje, Fk_Encabezado_Viaje_Codigo, ordenDetalleViaje, descripcionDetalleViaje, cantidadDetalleViaje, pesoDetalleViaje)
-VALUES (3, 3, 3, 'Descripcion de prueba 3 - tblDetalleViaje', 8, 12.500);
-
--- Registro 4
-INSERT INTO tblDetalleViaje (idDetalleViaje, Fk_Encabezado_Viaje_Codigo, ordenDetalleViaje, descripcionDetalleViaje, cantidadDetalleViaje, pesoDetalleViaje)
-VALUES (4, 4, 4, 'Descripcion de prueba 4 - tblDetalleViaje', 9, 12.500);
-
--- Registro 5
-INSERT INTO tblDetalleViaje (idDetalleViaje, Fk_Encabezado_Viaje_Codigo, ordenDetalleViaje, descripcionDetalleViaje, cantidadDetalleViaje, pesoDetalleViaje)
-VALUES (5, 5, 5, 'Descripcion de prueba 5 - tblDetalleViaje', 10, 12.500);
-
--- Registro 6
-INSERT INTO tblDetalleViaje (idDetalleViaje, Fk_Encabezado_Viaje_Codigo, ordenDetalleViaje, descripcionDetalleViaje, cantidadDetalleViaje, pesoDetalleViaje)
-VALUES (6, 6, 6, 'Descripcion de prueba 6 - tblDetalleViaje', 11, 12.500);
-
--- Registro 7
-INSERT INTO tblDetalleViaje (idDetalleViaje, Fk_Encabezado_Viaje_Codigo, ordenDetalleViaje, descripcionDetalleViaje, cantidadDetalleViaje, pesoDetalleViaje)
-VALUES (7, 7, 7, 'Descripcion de prueba 7 - tblDetalleViaje', 12, 12.500);
-
--- Registro 8
-INSERT INTO tblDetalleViaje (idDetalleViaje, Fk_Encabezado_Viaje_Codigo, ordenDetalleViaje, descripcionDetalleViaje, cantidadDetalleViaje, pesoDetalleViaje)
-VALUES (8, 8, 8, 'Descripcion de prueba 8 - tblDetalleViaje', 13, 12.500);
-
--- Registro 9
-INSERT INTO tblDetalleViaje (idDetalleViaje, Fk_Encabezado_Viaje_Codigo, ordenDetalleViaje, descripcionDetalleViaje, cantidadDetalleViaje, pesoDetalleViaje)
-VALUES (9, 9, 9, 'Descripcion de prueba 9 - tblDetalleViaje', 14, 12.500);
-
--- Registro 10
-INSERT INTO tblDetalleViaje (idDetalleViaje, Fk_Encabezado_Viaje_Codigo, ordenDetalleViaje, descripcionDetalleViaje, cantidadDetalleViaje, pesoDetalleViaje)
-VALUES (10, 10, 10, 'Descripcion de prueba 10 - tblDetalleViaje', 15, 12.500);
-
--- ============================================================================
--- TABLA: tblHistoricoInventario
--- ============================================================================
--- Registro 1
-INSERT INTO tblHistoricoInventario (idHistoricoInventario, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock, fechaCorteHistoricoInventario)
-VALUES (1, 1, 1, 1, 1, 1, 101, 101, 91, 101, 15, 5, 50, 20, 2, 1, 1, '2026-10-31');
-
--- Registro 2
-INSERT INTO tblHistoricoInventario (idHistoricoInventario, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock, fechaCorteHistoricoInventario)
-VALUES (2, 2, 2, 2, 2, 2, 102, 102, 92, 102, 15, 5, 50, 20, 2, 1, 1, '2026-10-31');
-
--- Registro 3
-INSERT INTO tblHistoricoInventario (idHistoricoInventario, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock, fechaCorteHistoricoInventario)
-VALUES (3, 3, 3, 3, 3, 3, 103, 103, 93, 103, 15, 5, 50, 20, 2, 1, 1, '2026-10-31');
-
--- Registro 4
-INSERT INTO tblHistoricoInventario (idHistoricoInventario, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock, fechaCorteHistoricoInventario)
-VALUES (4, 4, 4, 4, 4, 4, 104, 104, 94, 104, 15, 5, 50, 20, 2, 1, 1, '2026-10-31');
-
--- Registro 5
-INSERT INTO tblHistoricoInventario (idHistoricoInventario, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock, fechaCorteHistoricoInventario)
-VALUES (5, 5, 5, 5, 5, 5, 105, 105, 95, 105, 15, 5, 50, 20, 2, 1, 1, '2026-10-31');
-
--- Registro 6
-INSERT INTO tblHistoricoInventario (idHistoricoInventario, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock, fechaCorteHistoricoInventario)
-VALUES (6, 6, 6, 6, 6, 6, 106, 106, 96, 106, 15, 5, 50, 20, 2, 1, 1, '2026-10-31');
-
--- Registro 7
-INSERT INTO tblHistoricoInventario (idHistoricoInventario, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock, fechaCorteHistoricoInventario)
-VALUES (7, 7, 7, 7, 7, 7, 107, 107, 97, 107, 15, 5, 50, 20, 2, 1, 1, '2026-10-31');
-
--- Registro 8
-INSERT INTO tblHistoricoInventario (idHistoricoInventario, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock, fechaCorteHistoricoInventario)
-VALUES (8, 8, 8, 8, 8, 8, 108, 108, 98, 108, 15, 5, 50, 20, 2, 1, 1, '2026-10-31');
-
--- Registro 9
-INSERT INTO tblHistoricoInventario (idHistoricoInventario, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock, fechaCorteHistoricoInventario)
-VALUES (9, 9, 9, 9, 9, 9, 109, 109, 99, 109, 15, 5, 50, 20, 2, 1, 1, '2026-10-31');
-
--- Registro 10
-INSERT INTO tblHistoricoInventario (idHistoricoInventario, Fk_Cierre_Movimiento_Codigo, Fk_Stock_Codigo, Fk_Sucursal_Codigo, Fk_Bodega_Codigo, Fk_Producto_Codigo, stockFisicoStock, stockVirtualStock, stockAnteriorStock, stockActualStock, cargosMesStock, abonosMesStock, cargosAcumuladosStock, abonosAcumuladosStock, apartadosStock, estadoVentaStock, estadoCompraStock, fechaCorteHistoricoInventario)
-VALUES (10, 10, 10, 10, 10, 10, 110, 110, 100, 110, 15, 5, 50, 20, 2, 1, 1, '2026-10-31');
-
--- ============================================================================
--- TABLA: tblMovimientoInventario
--- ============================================================================
--- Registro 1
-INSERT INTO tblMovimientoInventario (idMovimientoInventario, Fk_Tipo_Movimiento_Codigo, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, Fk_Traslado_Codigo, fechaMovimientoInventario, observacionesMovimientoInventario, estadoMovimientoInventario, Fk_Cierre_Movimiento_Codigo)
-VALUES (1, 1, 1, 2, 1, 1, '2026-10-02 10:30:00', 'Movimiento de prueba 1', 'CUADRADO', 1);
-
--- Registro 2
-INSERT INTO tblMovimientoInventario (idMovimientoInventario, Fk_Tipo_Movimiento_Codigo, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, Fk_Traslado_Codigo, fechaMovimientoInventario, observacionesMovimientoInventario, estadoMovimientoInventario, Fk_Cierre_Movimiento_Codigo)
-VALUES (2, 2, 2, 3, 2, 2, '2026-10-03 10:30:00', 'Movimiento de prueba 2', 'PENDIENTE', 2);
-
--- Registro 3
-INSERT INTO tblMovimientoInventario (idMovimientoInventario, Fk_Tipo_Movimiento_Codigo, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, Fk_Traslado_Codigo, fechaMovimientoInventario, observacionesMovimientoInventario, estadoMovimientoInventario, Fk_Cierre_Movimiento_Codigo)
-VALUES (3, 3, 3, 4, 3, 3, '2026-10-04 10:30:00', 'Movimiento de prueba 3', 'CUADRADO', 3);
-
--- Registro 4
-INSERT INTO tblMovimientoInventario (idMovimientoInventario, Fk_Tipo_Movimiento_Codigo, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, Fk_Traslado_Codigo, fechaMovimientoInventario, observacionesMovimientoInventario, estadoMovimientoInventario, Fk_Cierre_Movimiento_Codigo)
-VALUES (4, 4, 4, 5, 4, 4, '2026-10-05 10:30:00', 'Movimiento de prueba 4', 'PENDIENTE', 4);
-
--- Registro 5
-INSERT INTO tblMovimientoInventario (idMovimientoInventario, Fk_Tipo_Movimiento_Codigo, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, Fk_Traslado_Codigo, fechaMovimientoInventario, observacionesMovimientoInventario, estadoMovimientoInventario, Fk_Cierre_Movimiento_Codigo)
-VALUES (5, 5, 5, 6, 5, 5, '2026-10-06 10:30:00', 'Movimiento de prueba 5', 'CUADRADO', 5);
-
--- Registro 6
-INSERT INTO tblMovimientoInventario (idMovimientoInventario, Fk_Tipo_Movimiento_Codigo, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, Fk_Traslado_Codigo, fechaMovimientoInventario, observacionesMovimientoInventario, estadoMovimientoInventario, Fk_Cierre_Movimiento_Codigo)
-VALUES (6, 6, 6, 7, 6, 6, '2026-10-07 10:30:00', 'Movimiento de prueba 6', 'PENDIENTE', 6);
-
--- Registro 7
-INSERT INTO tblMovimientoInventario (idMovimientoInventario, Fk_Tipo_Movimiento_Codigo, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, Fk_Traslado_Codigo, fechaMovimientoInventario, observacionesMovimientoInventario, estadoMovimientoInventario, Fk_Cierre_Movimiento_Codigo)
-VALUES (7, 7, 7, 8, 7, 7, '2026-10-08 10:30:00', 'Movimiento de prueba 7', 'CUADRADO', 7);
-
--- Registro 8
-INSERT INTO tblMovimientoInventario (idMovimientoInventario, Fk_Tipo_Movimiento_Codigo, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, Fk_Traslado_Codigo, fechaMovimientoInventario, observacionesMovimientoInventario, estadoMovimientoInventario, Fk_Cierre_Movimiento_Codigo)
-VALUES (8, 8, 8, 9, 8, 8, '2026-10-09 10:30:00', 'Movimiento de prueba 8', 'PENDIENTE', 8);
-
--- Registro 9
-INSERT INTO tblMovimientoInventario (idMovimientoInventario, Fk_Tipo_Movimiento_Codigo, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, Fk_Traslado_Codigo, fechaMovimientoInventario, observacionesMovimientoInventario, estadoMovimientoInventario, Fk_Cierre_Movimiento_Codigo)
-VALUES (9, 9, 9, 10, 9, 9, '2026-10-10 10:30:00', 'Movimiento de prueba 9', 'CUADRADO', 9);
-
--- Registro 10
-INSERT INTO tblMovimientoInventario (idMovimientoInventario, Fk_Tipo_Movimiento_Codigo, Fk_Bodega_Origen_Codigo, Fk_Bodega_Destino_Codigo, Fk_Transporte_Codigo, Fk_Traslado_Codigo, fechaMovimientoInventario, observacionesMovimientoInventario, estadoMovimientoInventario, Fk_Cierre_Movimiento_Codigo)
-VALUES (10, 10, 10, 1, 10, 10, '2026-10-11 10:30:00', 'Movimiento de prueba 10', 'PENDIENTE', 10);
-
--- ============================================================================
--- TABLA: tblServicioTransporteExterno
--- ============================================================================
--- Registro 1
-INSERT INTO tblServicioTransporteExterno (idServicioTransporteExterno, Fk_Empresa_Transportista_Codigo, Fk_Tipo_Servicio_Codigo, Fk_Traslado_Codigo, numeroGuiaServicioTransporteExterno, estadoServicioTransporteExterno, origenServicioTransporteExterno, direccionOrigenServicioTransporteExterno, destinoServicioTransporteExterno, direccionDestinoServicioTransporteExterno, fechaContratacionServicioTransporteExterno, fechaEstimadaEntregaServicioTransporteExterno, fechaEntregaRealServicioTransporteExterno)
-VALUES (1, 1, 1, 1, 'GUIA-0001', 'Programado', 'Sucursal Central', 'Zona 1, Ciudad de Guatemala', 'Sucursal Norte', 'Zona 1, Ciudad de Guatemala', '2026-10-01', '2026-10-15', '2026-10-14');
-
--- Registro 2
-INSERT INTO tblServicioTransporteExterno (idServicioTransporteExterno, Fk_Empresa_Transportista_Codigo, Fk_Tipo_Servicio_Codigo, Fk_Traslado_Codigo, numeroGuiaServicioTransporteExterno, estadoServicioTransporteExterno, origenServicioTransporteExterno, direccionOrigenServicioTransporteExterno, destinoServicioTransporteExterno, direccionDestinoServicioTransporteExterno, fechaContratacionServicioTransporteExterno, fechaEstimadaEntregaServicioTransporteExterno, fechaEntregaRealServicioTransporteExterno)
-VALUES (2, 2, 2, 2, 'GUIA-0002', 'Entregado', 'Sucursal Norte', 'Zona 2, Ciudad de Guatemala', 'Sucursal Sur', 'Zona 2, Ciudad de Guatemala', '2026-10-01', '2026-10-15', '2026-10-14');
-
--- Registro 3
-INSERT INTO tblServicioTransporteExterno (idServicioTransporteExterno, Fk_Empresa_Transportista_Codigo, Fk_Tipo_Servicio_Codigo, Fk_Traslado_Codigo, numeroGuiaServicioTransporteExterno, estadoServicioTransporteExterno, origenServicioTransporteExterno, direccionOrigenServicioTransporteExterno, destinoServicioTransporteExterno, direccionDestinoServicioTransporteExterno, fechaContratacionServicioTransporteExterno, fechaEstimadaEntregaServicioTransporteExterno, fechaEntregaRealServicioTransporteExterno)
-VALUES (3, 3, 3, 3, 'GUIA-0003', 'Programado', 'Sucursal Sur', 'Zona 3, Ciudad de Guatemala', 'Sucursal Occidente', 'Zona 3, Ciudad de Guatemala', '2026-10-01', '2026-10-15', '2026-10-14');
-
--- Registro 4
-INSERT INTO tblServicioTransporteExterno (idServicioTransporteExterno, Fk_Empresa_Transportista_Codigo, Fk_Tipo_Servicio_Codigo, Fk_Traslado_Codigo, numeroGuiaServicioTransporteExterno, estadoServicioTransporteExterno, origenServicioTransporteExterno, direccionOrigenServicioTransporteExterno, destinoServicioTransporteExterno, direccionDestinoServicioTransporteExterno, fechaContratacionServicioTransporteExterno, fechaEstimadaEntregaServicioTransporteExterno, fechaEntregaRealServicioTransporteExterno)
-VALUES (4, 4, 4, 4, 'GUIA-0004', 'Entregado', 'Sucursal Occidente', 'Zona 4, Ciudad de Guatemala', 'Sucursal Oriente', 'Zona 4, Ciudad de Guatemala', '2026-10-01', '2026-10-15', '2026-10-14');
-
--- Registro 5
-INSERT INTO tblServicioTransporteExterno (idServicioTransporteExterno, Fk_Empresa_Transportista_Codigo, Fk_Tipo_Servicio_Codigo, Fk_Traslado_Codigo, numeroGuiaServicioTransporteExterno, estadoServicioTransporteExterno, origenServicioTransporteExterno, direccionOrigenServicioTransporteExterno, destinoServicioTransporteExterno, direccionDestinoServicioTransporteExterno, fechaContratacionServicioTransporteExterno, fechaEstimadaEntregaServicioTransporteExterno, fechaEntregaRealServicioTransporteExterno)
-VALUES (5, 5, 5, 5, 'GUIA-0005', 'Programado', 'Sucursal Oriente', 'Zona 5, Ciudad de Guatemala', 'Sucursal Metropolitana', 'Zona 5, Ciudad de Guatemala', '2026-10-01', '2026-10-15', '2026-10-14');
-
--- Registro 6
-INSERT INTO tblServicioTransporteExterno (idServicioTransporteExterno, Fk_Empresa_Transportista_Codigo, Fk_Tipo_Servicio_Codigo, Fk_Traslado_Codigo, numeroGuiaServicioTransporteExterno, estadoServicioTransporteExterno, origenServicioTransporteExterno, direccionOrigenServicioTransporteExterno, destinoServicioTransporteExterno, direccionDestinoServicioTransporteExterno, fechaContratacionServicioTransporteExterno, fechaEstimadaEntregaServicioTransporteExterno, fechaEntregaRealServicioTransporteExterno)
-VALUES (6, 6, 6, 6, 'GUIA-0006', 'Entregado', 'Sucursal Metropolitana', 'Zona 6, Ciudad de Guatemala', 'Sucursal Carretera', 'Zona 6, Ciudad de Guatemala', '2026-10-01', '2026-10-15', '2026-10-14');
-
--- Registro 7
-INSERT INTO tblServicioTransporteExterno (idServicioTransporteExterno, Fk_Empresa_Transportista_Codigo, Fk_Tipo_Servicio_Codigo, Fk_Traslado_Codigo, numeroGuiaServicioTransporteExterno, estadoServicioTransporteExterno, origenServicioTransporteExterno, direccionOrigenServicioTransporteExterno, destinoServicioTransporteExterno, direccionDestinoServicioTransporteExterno, fechaContratacionServicioTransporteExterno, fechaEstimadaEntregaServicioTransporteExterno, fechaEntregaRealServicioTransporteExterno)
-VALUES (7, 7, 7, 7, 'GUIA-0007', 'Programado', 'Sucursal Carretera', 'Zona 7, Ciudad de Guatemala', 'Sucursal Industrial', 'Zona 7, Ciudad de Guatemala', '2026-10-01', '2026-10-15', '2026-10-14');
-
--- Registro 8
-INSERT INTO tblServicioTransporteExterno (idServicioTransporteExterno, Fk_Empresa_Transportista_Codigo, Fk_Tipo_Servicio_Codigo, Fk_Traslado_Codigo, numeroGuiaServicioTransporteExterno, estadoServicioTransporteExterno, origenServicioTransporteExterno, direccionOrigenServicioTransporteExterno, destinoServicioTransporteExterno, direccionDestinoServicioTransporteExterno, fechaContratacionServicioTransporteExterno, fechaEstimadaEntregaServicioTransporteExterno, fechaEntregaRealServicioTransporteExterno)
-VALUES (8, 8, 8, 8, 'GUIA-0008', 'Entregado', 'Sucursal Industrial', 'Zona 8, Ciudad de Guatemala', 'Sucursal Zona 10', 'Zona 8, Ciudad de Guatemala', '2026-10-01', '2026-10-15', '2026-10-14');
-
--- Registro 9
-INSERT INTO tblServicioTransporteExterno (idServicioTransporteExterno, Fk_Empresa_Transportista_Codigo, Fk_Tipo_Servicio_Codigo, Fk_Traslado_Codigo, numeroGuiaServicioTransporteExterno, estadoServicioTransporteExterno, origenServicioTransporteExterno, direccionOrigenServicioTransporteExterno, destinoServicioTransporteExterno, direccionDestinoServicioTransporteExterno, fechaContratacionServicioTransporteExterno, fechaEstimadaEntregaServicioTransporteExterno, fechaEntregaRealServicioTransporteExterno)
-VALUES (9, 9, 9, 9, 'GUIA-0009', 'Programado', 'Sucursal Zona 10', 'Zona 9, Ciudad de Guatemala', 'Sucursal Zona 12', 'Zona 9, Ciudad de Guatemala', '2026-10-01', '2026-10-15', '2026-10-14');
-
--- Registro 10
-INSERT INTO tblServicioTransporteExterno (idServicioTransporteExterno, Fk_Empresa_Transportista_Codigo, Fk_Tipo_Servicio_Codigo, Fk_Traslado_Codigo, numeroGuiaServicioTransporteExterno, estadoServicioTransporteExterno, origenServicioTransporteExterno, direccionOrigenServicioTransporteExterno, destinoServicioTransporteExterno, direccionDestinoServicioTransporteExterno, fechaContratacionServicioTransporteExterno, fechaEstimadaEntregaServicioTransporteExterno, fechaEntregaRealServicioTransporteExterno)
-VALUES (10, 10, 10, 10, 'GUIA-0010', 'Entregado', 'Sucursal Zona 12', 'Zona 10, Ciudad de Guatemala', 'Sucursal Central', 'Zona 10, Ciudad de Guatemala', '2026-10-01', '2026-10-15', '2026-10-14');
-
--- ============================================================================
--- TABLA: tblTelemetriaTemperatura
--- ============================================================================
--- Registro 1
-INSERT INTO tblTelemetriaTemperatura (idTelemetriaTemperatura, Fk_Encabezado_Viaje_Codigo, fechaHoraTelemetriaTemperatura, temperaturaCelsiusTelemetriaTemperatura, humedadRelativaTelemetriaTemperatura, puertaAbiertaTelemetriaTemperatura, ubicacionGpsTelemetriaTemperatura)
-VALUES (1, 1, '2026-10-02 10:30:00', 2.50, 0.6500, 1, '14.6001, -90.5001');
-
--- Registro 2
-INSERT INTO tblTelemetriaTemperatura (idTelemetriaTemperatura, Fk_Encabezado_Viaje_Codigo, fechaHoraTelemetriaTemperatura, temperaturaCelsiusTelemetriaTemperatura, humedadRelativaTelemetriaTemperatura, puertaAbiertaTelemetriaTemperatura, ubicacionGpsTelemetriaTemperatura)
-VALUES (2, 2, '2026-10-03 10:30:00', 2.50, 0.6500, 0, '14.6002, -90.5002');
-
--- Registro 3
-INSERT INTO tblTelemetriaTemperatura (idTelemetriaTemperatura, Fk_Encabezado_Viaje_Codigo, fechaHoraTelemetriaTemperatura, temperaturaCelsiusTelemetriaTemperatura, humedadRelativaTelemetriaTemperatura, puertaAbiertaTelemetriaTemperatura, ubicacionGpsTelemetriaTemperatura)
-VALUES (3, 3, '2026-10-04 10:30:00', 2.50, 0.6500, 1, '14.6003, -90.5003');
-
--- Registro 4
-INSERT INTO tblTelemetriaTemperatura (idTelemetriaTemperatura, Fk_Encabezado_Viaje_Codigo, fechaHoraTelemetriaTemperatura, temperaturaCelsiusTelemetriaTemperatura, humedadRelativaTelemetriaTemperatura, puertaAbiertaTelemetriaTemperatura, ubicacionGpsTelemetriaTemperatura)
-VALUES (4, 4, '2026-10-05 10:30:00', 2.50, 0.6500, 0, '14.6004, -90.5004');
-
--- Registro 5
-INSERT INTO tblTelemetriaTemperatura (idTelemetriaTemperatura, Fk_Encabezado_Viaje_Codigo, fechaHoraTelemetriaTemperatura, temperaturaCelsiusTelemetriaTemperatura, humedadRelativaTelemetriaTemperatura, puertaAbiertaTelemetriaTemperatura, ubicacionGpsTelemetriaTemperatura)
-VALUES (5, 5, '2026-10-06 10:30:00', 2.50, 0.6500, 1, '14.6005, -90.5005');
-
--- Registro 6
-INSERT INTO tblTelemetriaTemperatura (idTelemetriaTemperatura, Fk_Encabezado_Viaje_Codigo, fechaHoraTelemetriaTemperatura, temperaturaCelsiusTelemetriaTemperatura, humedadRelativaTelemetriaTemperatura, puertaAbiertaTelemetriaTemperatura, ubicacionGpsTelemetriaTemperatura)
-VALUES (6, 6, '2026-10-07 10:30:00', 2.50, 0.6500, 0, '14.6006, -90.5006');
-
--- Registro 7
-INSERT INTO tblTelemetriaTemperatura (idTelemetriaTemperatura, Fk_Encabezado_Viaje_Codigo, fechaHoraTelemetriaTemperatura, temperaturaCelsiusTelemetriaTemperatura, humedadRelativaTelemetriaTemperatura, puertaAbiertaTelemetriaTemperatura, ubicacionGpsTelemetriaTemperatura)
-VALUES (7, 7, '2026-10-08 10:30:00', 2.50, 0.6500, 1, '14.6007, -90.5007');
-
--- Registro 8
-INSERT INTO tblTelemetriaTemperatura (idTelemetriaTemperatura, Fk_Encabezado_Viaje_Codigo, fechaHoraTelemetriaTemperatura, temperaturaCelsiusTelemetriaTemperatura, humedadRelativaTelemetriaTemperatura, puertaAbiertaTelemetriaTemperatura, ubicacionGpsTelemetriaTemperatura)
-VALUES (8, 8, '2026-10-09 10:30:00', 2.50, 0.6500, 0, '14.6008, -90.5008');
-
--- Registro 9
-INSERT INTO tblTelemetriaTemperatura (idTelemetriaTemperatura, Fk_Encabezado_Viaje_Codigo, fechaHoraTelemetriaTemperatura, temperaturaCelsiusTelemetriaTemperatura, humedadRelativaTelemetriaTemperatura, puertaAbiertaTelemetriaTemperatura, ubicacionGpsTelemetriaTemperatura)
-VALUES (9, 9, '2026-10-10 10:30:00', 2.50, 0.6500, 1, '14.6009, -90.5009');
-
--- Registro 10
-INSERT INTO tblTelemetriaTemperatura (idTelemetriaTemperatura, Fk_Encabezado_Viaje_Codigo, fechaHoraTelemetriaTemperatura, temperaturaCelsiusTelemetriaTemperatura, humedadRelativaTelemetriaTemperatura, puertaAbiertaTelemetriaTemperatura, ubicacionGpsTelemetriaTemperatura)
-VALUES (10, 10, '2026-10-11 10:30:00', 2.50, 0.6500, 0, '14.6010, -90.5010');
-
--- ============================================================================
--- TABLA: tblAlertaCadenaFrio
--- ============================================================================
--- Registro 1
-INSERT INTO tblAlertaCadenaFrio (idAlertaCadenaFrio, Fk_Telemetria_Temperatura_Codigo, tipoAlertaCadenaFrio, atendidaAlertaCadenaFrio, observacionCalidadAlertaCadenaFrio)
-VALUES (1, 1, 'TEMPERATURA_ALTA', 1, 'Alerta revisada para el viaje 1');
-
--- Registro 2
-INSERT INTO tblAlertaCadenaFrio (idAlertaCadenaFrio, Fk_Telemetria_Temperatura_Codigo, tipoAlertaCadenaFrio, atendidaAlertaCadenaFrio, observacionCalidadAlertaCadenaFrio)
-VALUES (2, 2, 'PUERTA_ABIERTA', 0, 'Alerta revisada para el viaje 2');
-
--- Registro 3
-INSERT INTO tblAlertaCadenaFrio (idAlertaCadenaFrio, Fk_Telemetria_Temperatura_Codigo, tipoAlertaCadenaFrio, atendidaAlertaCadenaFrio, observacionCalidadAlertaCadenaFrio)
-VALUES (3, 3, 'TEMPERATURA_ALTA', 1, 'Alerta revisada para el viaje 3');
-
--- Registro 4
-INSERT INTO tblAlertaCadenaFrio (idAlertaCadenaFrio, Fk_Telemetria_Temperatura_Codigo, tipoAlertaCadenaFrio, atendidaAlertaCadenaFrio, observacionCalidadAlertaCadenaFrio)
-VALUES (4, 4, 'PUERTA_ABIERTA', 0, 'Alerta revisada para el viaje 4');
-
--- Registro 5
-INSERT INTO tblAlertaCadenaFrio (idAlertaCadenaFrio, Fk_Telemetria_Temperatura_Codigo, tipoAlertaCadenaFrio, atendidaAlertaCadenaFrio, observacionCalidadAlertaCadenaFrio)
-VALUES (5, 5, 'TEMPERATURA_ALTA', 1, 'Alerta revisada para el viaje 5');
-
--- Registro 6
-INSERT INTO tblAlertaCadenaFrio (idAlertaCadenaFrio, Fk_Telemetria_Temperatura_Codigo, tipoAlertaCadenaFrio, atendidaAlertaCadenaFrio, observacionCalidadAlertaCadenaFrio)
-VALUES (6, 6, 'PUERTA_ABIERTA', 0, 'Alerta revisada para el viaje 6');
-
--- Registro 7
-INSERT INTO tblAlertaCadenaFrio (idAlertaCadenaFrio, Fk_Telemetria_Temperatura_Codigo, tipoAlertaCadenaFrio, atendidaAlertaCadenaFrio, observacionCalidadAlertaCadenaFrio)
-VALUES (7, 7, 'TEMPERATURA_ALTA', 1, 'Alerta revisada para el viaje 7');
-
--- Registro 8
-INSERT INTO tblAlertaCadenaFrio (idAlertaCadenaFrio, Fk_Telemetria_Temperatura_Codigo, tipoAlertaCadenaFrio, atendidaAlertaCadenaFrio, observacionCalidadAlertaCadenaFrio)
-VALUES (8, 8, 'PUERTA_ABIERTA', 0, 'Alerta revisada para el viaje 8');
-
--- Registro 9
-INSERT INTO tblAlertaCadenaFrio (idAlertaCadenaFrio, Fk_Telemetria_Temperatura_Codigo, tipoAlertaCadenaFrio, atendidaAlertaCadenaFrio, observacionCalidadAlertaCadenaFrio)
-VALUES (9, 9, 'TEMPERATURA_ALTA', 1, 'Alerta revisada para el viaje 9');
-
--- Registro 10
-INSERT INTO tblAlertaCadenaFrio (idAlertaCadenaFrio, Fk_Telemetria_Temperatura_Codigo, tipoAlertaCadenaFrio, atendidaAlertaCadenaFrio, observacionCalidadAlertaCadenaFrio)
-VALUES (10, 10, 'PUERTA_ABIERTA', 0, 'Alerta revisada para el viaje 10');
-
--- ============================================================================
--- TABLA: tblAuditoriaInventario
--- ============================================================================
--- Registro 1
-INSERT INTO tblAuditoriaInventario (idAuditoriaInventario, Fk_Movimiento_Inventario_Codigo, Fk_Bodega_Codigo, tipoAuditoriaInventario, estadoAuditoriaInventario, fechaAuditoriaInventario, resultadoAuditoriaInventario, observacionesCalidadAuditoriaInventario)
-VALUES (1, 1, 1, 'INDIVIDUAL', 'FINALIZADA', '2026-10-02 10:30:00', 'Sin diferencias', 'Conteo de verificación de inventario 1');
-
--- Registro 2
-INSERT INTO tblAuditoriaInventario (idAuditoriaInventario, Fk_Movimiento_Inventario_Codigo, Fk_Bodega_Codigo, tipoAuditoriaInventario, estadoAuditoriaInventario, fechaAuditoriaInventario, resultadoAuditoriaInventario, observacionesCalidadAuditoriaInventario)
-VALUES (2, 2, 2, 'MULTIPLE', 'EN_PROCESO', '2026-10-03 10:30:00', 'Diferencia detectada', 'Conteo de verificación de inventario 2');
-
--- Registro 3
-INSERT INTO tblAuditoriaInventario (idAuditoriaInventario, Fk_Movimiento_Inventario_Codigo, Fk_Bodega_Codigo, tipoAuditoriaInventario, estadoAuditoriaInventario, fechaAuditoriaInventario, resultadoAuditoriaInventario, observacionesCalidadAuditoriaInventario)
-VALUES (3, 3, 3, 'INDIVIDUAL', 'FINALIZADA', '2026-10-04 10:30:00', 'Sin diferencias', 'Conteo de verificación de inventario 3');
-
--- Registro 4
-INSERT INTO tblAuditoriaInventario (idAuditoriaInventario, Fk_Movimiento_Inventario_Codigo, Fk_Bodega_Codigo, tipoAuditoriaInventario, estadoAuditoriaInventario, fechaAuditoriaInventario, resultadoAuditoriaInventario, observacionesCalidadAuditoriaInventario)
-VALUES (4, 4, 4, 'MULTIPLE', 'EN_PROCESO', '2026-10-05 10:30:00', 'Diferencia detectada', 'Conteo de verificación de inventario 4');
-
--- Registro 5
-INSERT INTO tblAuditoriaInventario (idAuditoriaInventario, Fk_Movimiento_Inventario_Codigo, Fk_Bodega_Codigo, tipoAuditoriaInventario, estadoAuditoriaInventario, fechaAuditoriaInventario, resultadoAuditoriaInventario, observacionesCalidadAuditoriaInventario)
-VALUES (5, 5, 5, 'INDIVIDUAL', 'FINALIZADA', '2026-10-06 10:30:00', 'Sin diferencias', 'Conteo de verificación de inventario 5');
-
--- Registro 6
-INSERT INTO tblAuditoriaInventario (idAuditoriaInventario, Fk_Movimiento_Inventario_Codigo, Fk_Bodega_Codigo, tipoAuditoriaInventario, estadoAuditoriaInventario, fechaAuditoriaInventario, resultadoAuditoriaInventario, observacionesCalidadAuditoriaInventario)
-VALUES (6, 6, 6, 'MULTIPLE', 'EN_PROCESO', '2026-10-07 10:30:00', 'Diferencia detectada', 'Conteo de verificación de inventario 6');
-
--- Registro 7
-INSERT INTO tblAuditoriaInventario (idAuditoriaInventario, Fk_Movimiento_Inventario_Codigo, Fk_Bodega_Codigo, tipoAuditoriaInventario, estadoAuditoriaInventario, fechaAuditoriaInventario, resultadoAuditoriaInventario, observacionesCalidadAuditoriaInventario)
-VALUES (7, 7, 7, 'INDIVIDUAL', 'FINALIZADA', '2026-10-08 10:30:00', 'Sin diferencias', 'Conteo de verificación de inventario 7');
-
--- Registro 8
-INSERT INTO tblAuditoriaInventario (idAuditoriaInventario, Fk_Movimiento_Inventario_Codigo, Fk_Bodega_Codigo, tipoAuditoriaInventario, estadoAuditoriaInventario, fechaAuditoriaInventario, resultadoAuditoriaInventario, observacionesCalidadAuditoriaInventario)
-VALUES (8, 8, 8, 'MULTIPLE', 'EN_PROCESO', '2026-10-09 10:30:00', 'Diferencia detectada', 'Conteo de verificación de inventario 8');
-
--- Registro 9
-INSERT INTO tblAuditoriaInventario (idAuditoriaInventario, Fk_Movimiento_Inventario_Codigo, Fk_Bodega_Codigo, tipoAuditoriaInventario, estadoAuditoriaInventario, fechaAuditoriaInventario, resultadoAuditoriaInventario, observacionesCalidadAuditoriaInventario)
-VALUES (9, 9, 9, 'INDIVIDUAL', 'FINALIZADA', '2026-10-10 10:30:00', 'Sin diferencias', 'Conteo de verificación de inventario 9');
-
--- Registro 10
-INSERT INTO tblAuditoriaInventario (idAuditoriaInventario, Fk_Movimiento_Inventario_Codigo, Fk_Bodega_Codigo, tipoAuditoriaInventario, estadoAuditoriaInventario, fechaAuditoriaInventario, resultadoAuditoriaInventario, observacionesCalidadAuditoriaInventario)
-VALUES (10, 10, 10, 'MULTIPLE', 'EN_PROCESO', '2026-10-11 10:30:00', 'Diferencia detectada', 'Conteo de verificación de inventario 10');
-
--- ============================================================================
--- TABLA: tblConductorTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblConductorTransporte (idConductorTransporte, Fk_Servicio_Transporte_Externo_Codigo, nombreConductorTransporte, telefonoConductorTransporte)
-VALUES (1, 1, 'Ana López', '55500001');
-
--- Registro 2
-INSERT INTO tblConductorTransporte (idConductorTransporte, Fk_Servicio_Transporte_Externo_Codigo, nombreConductorTransporte, telefonoConductorTransporte)
-VALUES (2, 2, 'Luis Morales', '55500002');
-
--- Registro 3
-INSERT INTO tblConductorTransporte (idConductorTransporte, Fk_Servicio_Transporte_Externo_Codigo, nombreConductorTransporte, telefonoConductorTransporte)
-VALUES (3, 3, 'María García', '55500003');
-
--- Registro 4
-INSERT INTO tblConductorTransporte (idConductorTransporte, Fk_Servicio_Transporte_Externo_Codigo, nombreConductorTransporte, telefonoConductorTransporte)
-VALUES (4, 4, 'Carlos Pérez', '55500004');
-
--- Registro 5
-INSERT INTO tblConductorTransporte (idConductorTransporte, Fk_Servicio_Transporte_Externo_Codigo, nombreConductorTransporte, telefonoConductorTransporte)
-VALUES (5, 5, 'Elena Ruiz', '55500005');
-
--- Registro 6
-INSERT INTO tblConductorTransporte (idConductorTransporte, Fk_Servicio_Transporte_Externo_Codigo, nombreConductorTransporte, telefonoConductorTransporte)
-VALUES (6, 6, 'José Ramírez', '55500006');
-
--- Registro 7
-INSERT INTO tblConductorTransporte (idConductorTransporte, Fk_Servicio_Transporte_Externo_Codigo, nombreConductorTransporte, telefonoConductorTransporte)
-VALUES (7, 7, 'Sofía Herrera', '55500007');
-
--- Registro 8
-INSERT INTO tblConductorTransporte (idConductorTransporte, Fk_Servicio_Transporte_Externo_Codigo, nombreConductorTransporte, telefonoConductorTransporte)
-VALUES (8, 8, 'Pedro Castillo', '55500008');
-
--- Registro 9
-INSERT INTO tblConductorTransporte (idConductorTransporte, Fk_Servicio_Transporte_Externo_Codigo, nombreConductorTransporte, telefonoConductorTransporte)
-VALUES (9, 9, 'Laura Díaz', '55500009');
-
--- Registro 10
-INSERT INTO tblConductorTransporte (idConductorTransporte, Fk_Servicio_Transporte_Externo_Codigo, nombreConductorTransporte, telefonoConductorTransporte)
-VALUES (10, 10, 'Jorge Méndez', '55500010');
-
--- ============================================================================
--- TABLA: tblCostoTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblCostoTransporte (idCostoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Tarifa_Transporte_Codigo, cantidadCostoTransporte, costoUnitarioCostoTransporte, monedaCostoTransporte, tipoPagoCostoTransporte)
-VALUES (1, 1, 1, 6, 25.0000, 'GTQ', 'Transferencia');
-
--- Registro 2
-INSERT INTO tblCostoTransporte (idCostoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Tarifa_Transporte_Codigo, cantidadCostoTransporte, costoUnitarioCostoTransporte, monedaCostoTransporte, tipoPagoCostoTransporte)
-VALUES (2, 2, 2, 7, 25.0000, 'GTQ', 'Efectivo');
-
--- Registro 3
-INSERT INTO tblCostoTransporte (idCostoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Tarifa_Transporte_Codigo, cantidadCostoTransporte, costoUnitarioCostoTransporte, monedaCostoTransporte, tipoPagoCostoTransporte)
-VALUES (3, 3, 3, 8, 25.0000, 'GTQ', 'Transferencia');
-
--- Registro 4
-INSERT INTO tblCostoTransporte (idCostoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Tarifa_Transporte_Codigo, cantidadCostoTransporte, costoUnitarioCostoTransporte, monedaCostoTransporte, tipoPagoCostoTransporte)
-VALUES (4, 4, 4, 9, 25.0000, 'GTQ', 'Efectivo');
-
--- Registro 5
-INSERT INTO tblCostoTransporte (idCostoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Tarifa_Transporte_Codigo, cantidadCostoTransporte, costoUnitarioCostoTransporte, monedaCostoTransporte, tipoPagoCostoTransporte)
-VALUES (5, 5, 5, 10, 25.0000, 'GTQ', 'Transferencia');
-
--- Registro 6
-INSERT INTO tblCostoTransporte (idCostoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Tarifa_Transporte_Codigo, cantidadCostoTransporte, costoUnitarioCostoTransporte, monedaCostoTransporte, tipoPagoCostoTransporte)
-VALUES (6, 6, 6, 11, 25.0000, 'GTQ', 'Efectivo');
-
--- Registro 7
-INSERT INTO tblCostoTransporte (idCostoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Tarifa_Transporte_Codigo, cantidadCostoTransporte, costoUnitarioCostoTransporte, monedaCostoTransporte, tipoPagoCostoTransporte)
-VALUES (7, 7, 7, 12, 25.0000, 'GTQ', 'Transferencia');
-
--- Registro 8
-INSERT INTO tblCostoTransporte (idCostoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Tarifa_Transporte_Codigo, cantidadCostoTransporte, costoUnitarioCostoTransporte, monedaCostoTransporte, tipoPagoCostoTransporte)
-VALUES (8, 8, 8, 13, 25.0000, 'GTQ', 'Efectivo');
-
--- Registro 9
-INSERT INTO tblCostoTransporte (idCostoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Tarifa_Transporte_Codigo, cantidadCostoTransporte, costoUnitarioCostoTransporte, monedaCostoTransporte, tipoPagoCostoTransporte)
-VALUES (9, 9, 9, 14, 25.0000, 'GTQ', 'Transferencia');
-
--- Registro 10
-INSERT INTO tblCostoTransporte (idCostoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Tarifa_Transporte_Codigo, cantidadCostoTransporte, costoUnitarioCostoTransporte, monedaCostoTransporte, tipoPagoCostoTransporte)
-VALUES (10, 10, 10, 15, 25.0000, 'GTQ', 'Efectivo');
-
--- ============================================================================
--- TABLA: tblDetalleMovimiento
--- ============================================================================
--- Registro 1
-INSERT INTO tblDetalleMovimiento (idDetalleMovimiento, Fk_Movimiento_Inventario_Codigo, Fk_Lote_Producto_Codigo, Fk_Producto_Codigo, cantidadDetalleMovimiento, precioCostoDetalleMovimiento)
-VALUES (1, 1, 1, 1, 6, 25.0000);
-
--- Registro 2
-INSERT INTO tblDetalleMovimiento (idDetalleMovimiento, Fk_Movimiento_Inventario_Codigo, Fk_Lote_Producto_Codigo, Fk_Producto_Codigo, cantidadDetalleMovimiento, precioCostoDetalleMovimiento)
-VALUES (2, 2, 2, 2, 7, 25.0000);
-
--- Registro 3
-INSERT INTO tblDetalleMovimiento (idDetalleMovimiento, Fk_Movimiento_Inventario_Codigo, Fk_Lote_Producto_Codigo, Fk_Producto_Codigo, cantidadDetalleMovimiento, precioCostoDetalleMovimiento)
-VALUES (3, 3, 3, 3, 8, 25.0000);
-
--- Registro 4
-INSERT INTO tblDetalleMovimiento (idDetalleMovimiento, Fk_Movimiento_Inventario_Codigo, Fk_Lote_Producto_Codigo, Fk_Producto_Codigo, cantidadDetalleMovimiento, precioCostoDetalleMovimiento)
-VALUES (4, 4, 4, 4, 9, 25.0000);
-
--- Registro 5
-INSERT INTO tblDetalleMovimiento (idDetalleMovimiento, Fk_Movimiento_Inventario_Codigo, Fk_Lote_Producto_Codigo, Fk_Producto_Codigo, cantidadDetalleMovimiento, precioCostoDetalleMovimiento)
-VALUES (5, 5, 5, 5, 10, 25.0000);
-
--- Registro 6
-INSERT INTO tblDetalleMovimiento (idDetalleMovimiento, Fk_Movimiento_Inventario_Codigo, Fk_Lote_Producto_Codigo, Fk_Producto_Codigo, cantidadDetalleMovimiento, precioCostoDetalleMovimiento)
-VALUES (6, 6, 6, 6, 11, 25.0000);
-
--- Registro 7
-INSERT INTO tblDetalleMovimiento (idDetalleMovimiento, Fk_Movimiento_Inventario_Codigo, Fk_Lote_Producto_Codigo, Fk_Producto_Codigo, cantidadDetalleMovimiento, precioCostoDetalleMovimiento)
-VALUES (7, 7, 7, 7, 12, 25.0000);
-
--- Registro 8
-INSERT INTO tblDetalleMovimiento (idDetalleMovimiento, Fk_Movimiento_Inventario_Codigo, Fk_Lote_Producto_Codigo, Fk_Producto_Codigo, cantidadDetalleMovimiento, precioCostoDetalleMovimiento)
-VALUES (8, 8, 8, 8, 13, 25.0000);
-
--- Registro 9
-INSERT INTO tblDetalleMovimiento (idDetalleMovimiento, Fk_Movimiento_Inventario_Codigo, Fk_Lote_Producto_Codigo, Fk_Producto_Codigo, cantidadDetalleMovimiento, precioCostoDetalleMovimiento)
-VALUES (9, 9, 9, 9, 14, 25.0000);
-
--- Registro 10
-INSERT INTO tblDetalleMovimiento (idDetalleMovimiento, Fk_Movimiento_Inventario_Codigo, Fk_Lote_Producto_Codigo, Fk_Producto_Codigo, cantidadDetalleMovimiento, precioCostoDetalleMovimiento)
-VALUES (10, 10, 10, 10, 15, 25.0000);
-
--- ============================================================================
--- TABLA: tblDetalleViajeLoteProducto
--- ============================================================================
--- Registro 1
-INSERT INTO tblDetalleViajeLoteProducto (idDetalleViajeLoteProducto, Fk_Detalle_Viaje_Codigo, Fk_Lote_Producto_Codigo, cantidadCajasDetalleViajeLoteProducto, pesoKgDetalleViajeLoteProducto)
-VALUES (1, 1, 1, 3, 12.500);
-
--- Registro 2
-INSERT INTO tblDetalleViajeLoteProducto (idDetalleViajeLoteProducto, Fk_Detalle_Viaje_Codigo, Fk_Lote_Producto_Codigo, cantidadCajasDetalleViajeLoteProducto, pesoKgDetalleViajeLoteProducto)
-VALUES (2, 2, 2, 4, 12.500);
-
--- Registro 3
-INSERT INTO tblDetalleViajeLoteProducto (idDetalleViajeLoteProducto, Fk_Detalle_Viaje_Codigo, Fk_Lote_Producto_Codigo, cantidadCajasDetalleViajeLoteProducto, pesoKgDetalleViajeLoteProducto)
-VALUES (3, 3, 3, 5, 12.500);
-
--- Registro 4
-INSERT INTO tblDetalleViajeLoteProducto (idDetalleViajeLoteProducto, Fk_Detalle_Viaje_Codigo, Fk_Lote_Producto_Codigo, cantidadCajasDetalleViajeLoteProducto, pesoKgDetalleViajeLoteProducto)
-VALUES (4, 4, 4, 6, 12.500);
-
--- Registro 5
-INSERT INTO tblDetalleViajeLoteProducto (idDetalleViajeLoteProducto, Fk_Detalle_Viaje_Codigo, Fk_Lote_Producto_Codigo, cantidadCajasDetalleViajeLoteProducto, pesoKgDetalleViajeLoteProducto)
-VALUES (5, 5, 5, 7, 12.500);
-
--- Registro 6
-INSERT INTO tblDetalleViajeLoteProducto (idDetalleViajeLoteProducto, Fk_Detalle_Viaje_Codigo, Fk_Lote_Producto_Codigo, cantidadCajasDetalleViajeLoteProducto, pesoKgDetalleViajeLoteProducto)
-VALUES (6, 6, 6, 8, 12.500);
-
--- Registro 7
-INSERT INTO tblDetalleViajeLoteProducto (idDetalleViajeLoteProducto, Fk_Detalle_Viaje_Codigo, Fk_Lote_Producto_Codigo, cantidadCajasDetalleViajeLoteProducto, pesoKgDetalleViajeLoteProducto)
-VALUES (7, 7, 7, 9, 12.500);
-
--- Registro 8
-INSERT INTO tblDetalleViajeLoteProducto (idDetalleViajeLoteProducto, Fk_Detalle_Viaje_Codigo, Fk_Lote_Producto_Codigo, cantidadCajasDetalleViajeLoteProducto, pesoKgDetalleViajeLoteProducto)
-VALUES (8, 8, 8, 10, 12.500);
-
--- Registro 9
-INSERT INTO tblDetalleViajeLoteProducto (idDetalleViajeLoteProducto, Fk_Detalle_Viaje_Codigo, Fk_Lote_Producto_Codigo, cantidadCajasDetalleViajeLoteProducto, pesoKgDetalleViajeLoteProducto)
-VALUES (9, 9, 9, 11, 12.500);
-
--- Registro 10
-INSERT INTO tblDetalleViajeLoteProducto (idDetalleViajeLoteProducto, Fk_Detalle_Viaje_Codigo, Fk_Lote_Producto_Codigo, cantidadCajasDetalleViajeLoteProducto, pesoKgDetalleViajeLoteProducto)
-VALUES (10, 10, 10, 12, 12.500);
-
--- ============================================================================
--- TABLA: tblHistorialTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblHistorialTransporte (idHistorialTransporte, Fk_Servicio_Transporte_Externo_Codigo, fechaMovimientoHistorialTransporte, tipoMovimientoHistorialTransporte, descripcionMovimientoHistorialTransporte, estadoTransporteHistorialTransporte)
-VALUES (1, 1, '2026-10-02 10:30:00', 'Salida', 'Descripcion de prueba 1 - tblHistorialTransporte', 'En tránsito');
-
--- Registro 2
-INSERT INTO tblHistorialTransporte (idHistorialTransporte, Fk_Servicio_Transporte_Externo_Codigo, fechaMovimientoHistorialTransporte, tipoMovimientoHistorialTransporte, descripcionMovimientoHistorialTransporte, estadoTransporteHistorialTransporte)
-VALUES (2, 2, '2026-10-03 10:30:00', 'Recepción', 'Descripcion de prueba 2 - tblHistorialTransporte', 'En tránsito');
-
--- Registro 3
-INSERT INTO tblHistorialTransporte (idHistorialTransporte, Fk_Servicio_Transporte_Externo_Codigo, fechaMovimientoHistorialTransporte, tipoMovimientoHistorialTransporte, descripcionMovimientoHistorialTransporte, estadoTransporteHistorialTransporte)
-VALUES (3, 3, '2026-10-04 10:30:00', 'Salida', 'Descripcion de prueba 3 - tblHistorialTransporte', 'En tránsito');
-
--- Registro 4
-INSERT INTO tblHistorialTransporte (idHistorialTransporte, Fk_Servicio_Transporte_Externo_Codigo, fechaMovimientoHistorialTransporte, tipoMovimientoHistorialTransporte, descripcionMovimientoHistorialTransporte, estadoTransporteHistorialTransporte)
-VALUES (4, 4, '2026-10-05 10:30:00', 'Recepción', 'Descripcion de prueba 4 - tblHistorialTransporte', 'En tránsito');
-
--- Registro 5
-INSERT INTO tblHistorialTransporte (idHistorialTransporte, Fk_Servicio_Transporte_Externo_Codigo, fechaMovimientoHistorialTransporte, tipoMovimientoHistorialTransporte, descripcionMovimientoHistorialTransporte, estadoTransporteHistorialTransporte)
-VALUES (5, 5, '2026-10-06 10:30:00', 'Salida', 'Descripcion de prueba 5 - tblHistorialTransporte', 'En tránsito');
-
--- Registro 6
-INSERT INTO tblHistorialTransporte (idHistorialTransporte, Fk_Servicio_Transporte_Externo_Codigo, fechaMovimientoHistorialTransporte, tipoMovimientoHistorialTransporte, descripcionMovimientoHistorialTransporte, estadoTransporteHistorialTransporte)
-VALUES (6, 6, '2026-10-07 10:30:00', 'Recepción', 'Descripcion de prueba 6 - tblHistorialTransporte', 'En tránsito');
-
--- Registro 7
-INSERT INTO tblHistorialTransporte (idHistorialTransporte, Fk_Servicio_Transporte_Externo_Codigo, fechaMovimientoHistorialTransporte, tipoMovimientoHistorialTransporte, descripcionMovimientoHistorialTransporte, estadoTransporteHistorialTransporte)
-VALUES (7, 7, '2026-10-08 10:30:00', 'Salida', 'Descripcion de prueba 7 - tblHistorialTransporte', 'En tránsito');
-
--- Registro 8
-INSERT INTO tblHistorialTransporte (idHistorialTransporte, Fk_Servicio_Transporte_Externo_Codigo, fechaMovimientoHistorialTransporte, tipoMovimientoHistorialTransporte, descripcionMovimientoHistorialTransporte, estadoTransporteHistorialTransporte)
-VALUES (8, 8, '2026-10-09 10:30:00', 'Recepción', 'Descripcion de prueba 8 - tblHistorialTransporte', 'En tránsito');
-
--- Registro 9
-INSERT INTO tblHistorialTransporte (idHistorialTransporte, Fk_Servicio_Transporte_Externo_Codigo, fechaMovimientoHistorialTransporte, tipoMovimientoHistorialTransporte, descripcionMovimientoHistorialTransporte, estadoTransporteHistorialTransporte)
-VALUES (9, 9, '2026-10-10 10:30:00', 'Salida', 'Descripcion de prueba 9 - tblHistorialTransporte', 'En tránsito');
-
--- Registro 10
-INSERT INTO tblHistorialTransporte (idHistorialTransporte, Fk_Servicio_Transporte_Externo_Codigo, fechaMovimientoHistorialTransporte, tipoMovimientoHistorialTransporte, descripcionMovimientoHistorialTransporte, estadoTransporteHistorialTransporte)
-VALUES (10, 10, '2026-10-11 10:30:00', 'Recepción', 'Descripcion de prueba 10 - tblHistorialTransporte', 'En tránsito');
-
--- ============================================================================
--- TABLA: tblIncidenciaTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblIncidenciaTransporte (idIncidenciaTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoIncidenciaTransporte, fechaIncidenciaTransporte, tipoIncidenciaTransporte, descripcionIncidenciaTransporte, responsableIncidenciaTransporte, estadoIncidenciaTransporte)
-VALUES (1, 1, 'INC-0001', '2026-10-02 10:30:00', 'Retraso', 'Descripcion de prueba 1 - tblIncidenciaTransporte', 'Ana López', 'Pendiente');
-
--- Registro 2
-INSERT INTO tblIncidenciaTransporte (idIncidenciaTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoIncidenciaTransporte, fechaIncidenciaTransporte, tipoIncidenciaTransporte, descripcionIncidenciaTransporte, responsableIncidenciaTransporte, estadoIncidenciaTransporte)
-VALUES (2, 2, 'INC-0002', '2026-10-03 10:30:00', 'Desvío', 'Descripcion de prueba 2 - tblIncidenciaTransporte', 'Luis Morales', 'Resuelto');
-
--- Registro 3
-INSERT INTO tblIncidenciaTransporte (idIncidenciaTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoIncidenciaTransporte, fechaIncidenciaTransporte, tipoIncidenciaTransporte, descripcionIncidenciaTransporte, responsableIncidenciaTransporte, estadoIncidenciaTransporte)
-VALUES (3, 3, 'INC-0003', '2026-10-04 10:30:00', 'Retraso', 'Descripcion de prueba 3 - tblIncidenciaTransporte', 'María García', 'Pendiente');
-
--- Registro 4
-INSERT INTO tblIncidenciaTransporte (idIncidenciaTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoIncidenciaTransporte, fechaIncidenciaTransporte, tipoIncidenciaTransporte, descripcionIncidenciaTransporte, responsableIncidenciaTransporte, estadoIncidenciaTransporte)
-VALUES (4, 4, 'INC-0004', '2026-10-05 10:30:00', 'Desvío', 'Descripcion de prueba 4 - tblIncidenciaTransporte', 'Carlos Pérez', 'Resuelto');
-
--- Registro 5
-INSERT INTO tblIncidenciaTransporte (idIncidenciaTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoIncidenciaTransporte, fechaIncidenciaTransporte, tipoIncidenciaTransporte, descripcionIncidenciaTransporte, responsableIncidenciaTransporte, estadoIncidenciaTransporte)
-VALUES (5, 5, 'INC-0005', '2026-10-06 10:30:00', 'Retraso', 'Descripcion de prueba 5 - tblIncidenciaTransporte', 'Elena Ruiz', 'Pendiente');
-
--- Registro 6
-INSERT INTO tblIncidenciaTransporte (idIncidenciaTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoIncidenciaTransporte, fechaIncidenciaTransporte, tipoIncidenciaTransporte, descripcionIncidenciaTransporte, responsableIncidenciaTransporte, estadoIncidenciaTransporte)
-VALUES (6, 6, 'INC-0006', '2026-10-07 10:30:00', 'Desvío', 'Descripcion de prueba 6 - tblIncidenciaTransporte', 'José Ramírez', 'Resuelto');
-
--- Registro 7
-INSERT INTO tblIncidenciaTransporte (idIncidenciaTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoIncidenciaTransporte, fechaIncidenciaTransporte, tipoIncidenciaTransporte, descripcionIncidenciaTransporte, responsableIncidenciaTransporte, estadoIncidenciaTransporte)
-VALUES (7, 7, 'INC-0007', '2026-10-08 10:30:00', 'Retraso', 'Descripcion de prueba 7 - tblIncidenciaTransporte', 'Sofía Herrera', 'Pendiente');
-
--- Registro 8
-INSERT INTO tblIncidenciaTransporte (idIncidenciaTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoIncidenciaTransporte, fechaIncidenciaTransporte, tipoIncidenciaTransporte, descripcionIncidenciaTransporte, responsableIncidenciaTransporte, estadoIncidenciaTransporte)
-VALUES (8, 8, 'INC-0008', '2026-10-09 10:30:00', 'Desvío', 'Descripcion de prueba 8 - tblIncidenciaTransporte', 'Pedro Castillo', 'Resuelto');
-
--- Registro 9
-INSERT INTO tblIncidenciaTransporte (idIncidenciaTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoIncidenciaTransporte, fechaIncidenciaTransporte, tipoIncidenciaTransporte, descripcionIncidenciaTransporte, responsableIncidenciaTransporte, estadoIncidenciaTransporte)
-VALUES (9, 9, 'INC-0009', '2026-10-10 10:30:00', 'Retraso', 'Descripcion de prueba 9 - tblIncidenciaTransporte', 'Laura Díaz', 'Pendiente');
-
--- Registro 10
-INSERT INTO tblIncidenciaTransporte (idIncidenciaTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoIncidenciaTransporte, fechaIncidenciaTransporte, tipoIncidenciaTransporte, descripcionIncidenciaTransporte, responsableIncidenciaTransporte, estadoIncidenciaTransporte)
-VALUES (10, 10, 'INC-0010', '2026-10-11 10:30:00', 'Desvío', 'Descripcion de prueba 10 - tblIncidenciaTransporte', 'Jorge Méndez', 'Resuelto');
-
--- ============================================================================
--- TABLA: tblProductoTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblProductoTransporte (idProductoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Producto_Codigo, cantidadProductoTransporte, unidadMedidaProductoTransporte)
-VALUES (1, 1, 1, 6, 'cajas');
-
--- Registro 2
-INSERT INTO tblProductoTransporte (idProductoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Producto_Codigo, cantidadProductoTransporte, unidadMedidaProductoTransporte)
-VALUES (2, 2, 2, 7, 'cajas');
-
--- Registro 3
-INSERT INTO tblProductoTransporte (idProductoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Producto_Codigo, cantidadProductoTransporte, unidadMedidaProductoTransporte)
-VALUES (3, 3, 3, 8, 'cajas');
-
--- Registro 4
-INSERT INTO tblProductoTransporte (idProductoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Producto_Codigo, cantidadProductoTransporte, unidadMedidaProductoTransporte)
-VALUES (4, 4, 4, 9, 'cajas');
-
--- Registro 5
-INSERT INTO tblProductoTransporte (idProductoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Producto_Codigo, cantidadProductoTransporte, unidadMedidaProductoTransporte)
-VALUES (5, 5, 5, 10, 'cajas');
-
--- Registro 6
-INSERT INTO tblProductoTransporte (idProductoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Producto_Codigo, cantidadProductoTransporte, unidadMedidaProductoTransporte)
-VALUES (6, 6, 6, 11, 'cajas');
-
--- Registro 7
-INSERT INTO tblProductoTransporte (idProductoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Producto_Codigo, cantidadProductoTransporte, unidadMedidaProductoTransporte)
-VALUES (7, 7, 7, 12, 'cajas');
-
--- Registro 8
-INSERT INTO tblProductoTransporte (idProductoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Producto_Codigo, cantidadProductoTransporte, unidadMedidaProductoTransporte)
-VALUES (8, 8, 8, 13, 'cajas');
-
--- Registro 9
-INSERT INTO tblProductoTransporte (idProductoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Producto_Codigo, cantidadProductoTransporte, unidadMedidaProductoTransporte)
-VALUES (9, 9, 9, 14, 'cajas');
-
--- Registro 10
-INSERT INTO tblProductoTransporte (idProductoTransporte, Fk_Servicio_Transporte_Externo_Codigo, Fk_Producto_Codigo, cantidadProductoTransporte, unidadMedidaProductoTransporte)
-VALUES (10, 10, 10, 15, 'cajas');
-
--- ============================================================================
--- TABLA: tblSolicitudPagoTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblSolicitudPagoTransporte (idSolicitudPagoTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoSolicitudPagoTransporte, Fk_Estado_Solicitud_Pago_Codigo, referenciaBancariaSolicitudPagoTransporte, fechaPagoSolicitudPagoTransporte)
-VALUES (1, 1, 'SP-0001', 1, 'REF-0001', '2026-10-20');
-
--- Registro 2
-INSERT INTO tblSolicitudPagoTransporte (idSolicitudPagoTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoSolicitudPagoTransporte, Fk_Estado_Solicitud_Pago_Codigo, referenciaBancariaSolicitudPagoTransporte, fechaPagoSolicitudPagoTransporte)
-VALUES (2, 2, 'SP-0002', 2, 'REF-0002', '2026-10-20');
-
--- Registro 3
-INSERT INTO tblSolicitudPagoTransporte (idSolicitudPagoTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoSolicitudPagoTransporte, Fk_Estado_Solicitud_Pago_Codigo, referenciaBancariaSolicitudPagoTransporte, fechaPagoSolicitudPagoTransporte)
-VALUES (3, 3, 'SP-0003', 3, 'REF-0003', '2026-10-20');
-
--- Registro 4
-INSERT INTO tblSolicitudPagoTransporte (idSolicitudPagoTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoSolicitudPagoTransporte, Fk_Estado_Solicitud_Pago_Codigo, referenciaBancariaSolicitudPagoTransporte, fechaPagoSolicitudPagoTransporte)
-VALUES (4, 4, 'SP-0004', 4, 'REF-0004', '2026-10-20');
-
--- Registro 5
-INSERT INTO tblSolicitudPagoTransporte (idSolicitudPagoTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoSolicitudPagoTransporte, Fk_Estado_Solicitud_Pago_Codigo, referenciaBancariaSolicitudPagoTransporte, fechaPagoSolicitudPagoTransporte)
-VALUES (5, 5, 'SP-0005', 5, 'REF-0005', '2026-10-20');
-
--- Registro 6
-INSERT INTO tblSolicitudPagoTransporte (idSolicitudPagoTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoSolicitudPagoTransporte, Fk_Estado_Solicitud_Pago_Codigo, referenciaBancariaSolicitudPagoTransporte, fechaPagoSolicitudPagoTransporte)
-VALUES (6, 6, 'SP-0006', 6, 'REF-0006', '2026-10-20');
-
--- Registro 7
-INSERT INTO tblSolicitudPagoTransporte (idSolicitudPagoTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoSolicitudPagoTransporte, Fk_Estado_Solicitud_Pago_Codigo, referenciaBancariaSolicitudPagoTransporte, fechaPagoSolicitudPagoTransporte)
-VALUES (7, 7, 'SP-0007', 7, 'REF-0007', '2026-10-20');
-
--- Registro 8
-INSERT INTO tblSolicitudPagoTransporte (idSolicitudPagoTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoSolicitudPagoTransporte, Fk_Estado_Solicitud_Pago_Codigo, referenciaBancariaSolicitudPagoTransporte, fechaPagoSolicitudPagoTransporte)
-VALUES (8, 8, 'SP-0008', 8, 'REF-0008', '2026-10-20');
-
--- Registro 9
-INSERT INTO tblSolicitudPagoTransporte (idSolicitudPagoTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoSolicitudPagoTransporte, Fk_Estado_Solicitud_Pago_Codigo, referenciaBancariaSolicitudPagoTransporte, fechaPagoSolicitudPagoTransporte)
-VALUES (9, 9, 'SP-0009', 9, 'REF-0009', '2026-10-20');
-
--- Registro 10
-INSERT INTO tblSolicitudPagoTransporte (idSolicitudPagoTransporte, Fk_Servicio_Transporte_Externo_Codigo, codigoSolicitudPagoTransporte, Fk_Estado_Solicitud_Pago_Codigo, referenciaBancariaSolicitudPagoTransporte, fechaPagoSolicitudPagoTransporte)
-VALUES (10, 10, 'SP-0010', 10, 'REF-0010', '2026-10-20');
-
--- ============================================================================
--- TABLA: tblUbicacionTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblUbicacionTransporte (idUbicacionTransporte, Fk_Servicio_Transporte_Externo_Codigo, ubicacionActualUbicacionTransporte, fechaActualizacionUbicacionTransporte)
-VALUES (1, 1, 'Zona 1, Ciudad de Guatemala', '2026-10-02 10:30:00');
-
--- Registro 2
-INSERT INTO tblUbicacionTransporte (idUbicacionTransporte, Fk_Servicio_Transporte_Externo_Codigo, ubicacionActualUbicacionTransporte, fechaActualizacionUbicacionTransporte)
-VALUES (2, 2, 'Zona 2, Ciudad de Guatemala', '2026-10-03 10:30:00');
-
--- Registro 3
-INSERT INTO tblUbicacionTransporte (idUbicacionTransporte, Fk_Servicio_Transporte_Externo_Codigo, ubicacionActualUbicacionTransporte, fechaActualizacionUbicacionTransporte)
-VALUES (3, 3, 'Zona 3, Ciudad de Guatemala', '2026-10-04 10:30:00');
-
--- Registro 4
-INSERT INTO tblUbicacionTransporte (idUbicacionTransporte, Fk_Servicio_Transporte_Externo_Codigo, ubicacionActualUbicacionTransporte, fechaActualizacionUbicacionTransporte)
-VALUES (4, 4, 'Zona 4, Ciudad de Guatemala', '2026-10-05 10:30:00');
-
--- Registro 5
-INSERT INTO tblUbicacionTransporte (idUbicacionTransporte, Fk_Servicio_Transporte_Externo_Codigo, ubicacionActualUbicacionTransporte, fechaActualizacionUbicacionTransporte)
-VALUES (5, 5, 'Zona 5, Ciudad de Guatemala', '2026-10-06 10:30:00');
-
--- Registro 6
-INSERT INTO tblUbicacionTransporte (idUbicacionTransporte, Fk_Servicio_Transporte_Externo_Codigo, ubicacionActualUbicacionTransporte, fechaActualizacionUbicacionTransporte)
-VALUES (6, 6, 'Zona 6, Ciudad de Guatemala', '2026-10-07 10:30:00');
-
--- Registro 7
-INSERT INTO tblUbicacionTransporte (idUbicacionTransporte, Fk_Servicio_Transporte_Externo_Codigo, ubicacionActualUbicacionTransporte, fechaActualizacionUbicacionTransporte)
-VALUES (7, 7, 'Zona 7, Ciudad de Guatemala', '2026-10-08 10:30:00');
-
--- Registro 8
-INSERT INTO tblUbicacionTransporte (idUbicacionTransporte, Fk_Servicio_Transporte_Externo_Codigo, ubicacionActualUbicacionTransporte, fechaActualizacionUbicacionTransporte)
-VALUES (8, 8, 'Zona 8, Ciudad de Guatemala', '2026-10-09 10:30:00');
-
--- Registro 9
-INSERT INTO tblUbicacionTransporte (idUbicacionTransporte, Fk_Servicio_Transporte_Externo_Codigo, ubicacionActualUbicacionTransporte, fechaActualizacionUbicacionTransporte)
-VALUES (9, 9, 'Zona 9, Ciudad de Guatemala', '2026-10-10 10:30:00');
-
--- Registro 10
-INSERT INTO tblUbicacionTransporte (idUbicacionTransporte, Fk_Servicio_Transporte_Externo_Codigo, ubicacionActualUbicacionTransporte, fechaActualizacionUbicacionTransporte)
-VALUES (10, 10, 'Zona 10, Ciudad de Guatemala', '2026-10-11 10:30:00');
-
--- ============================================================================
--- TABLA: tblVehiculoTransporte
--- ============================================================================
--- Registro 1
-INSERT INTO tblVehiculoTransporte (idVehiculoTransporte, Fk_Servicio_Transporte_Externo_Codigo, placaVehiculoTransporte, tipoVehiculoTransporte, capacidadVehiculoTransporte)
-VALUES (1, 1, 'C001DEF', 'Camión', '1250 kg');
-
--- Registro 2
-INSERT INTO tblVehiculoTransporte (idVehiculoTransporte, Fk_Servicio_Transporte_Externo_Codigo, placaVehiculoTransporte, tipoVehiculoTransporte, capacidadVehiculoTransporte)
-VALUES (2, 2, 'C002DEF', 'Camioneta', '1500 kg');
-
--- Registro 3
-INSERT INTO tblVehiculoTransporte (idVehiculoTransporte, Fk_Servicio_Transporte_Externo_Codigo, placaVehiculoTransporte, tipoVehiculoTransporte, capacidadVehiculoTransporte)
-VALUES (3, 3, 'C003DEF', 'Furgón', '1750 kg');
-
--- Registro 4
-INSERT INTO tblVehiculoTransporte (idVehiculoTransporte, Fk_Servicio_Transporte_Externo_Codigo, placaVehiculoTransporte, tipoVehiculoTransporte, capacidadVehiculoTransporte)
-VALUES (4, 4, 'C004DEF', 'Pick-up', '2000 kg');
-
--- Registro 5
-INSERT INTO tblVehiculoTransporte (idVehiculoTransporte, Fk_Servicio_Transporte_Externo_Codigo, placaVehiculoTransporte, tipoVehiculoTransporte, capacidadVehiculoTransporte)
-VALUES (5, 5, 'C005DEF', 'Panel', '2250 kg');
-
--- Registro 6
-INSERT INTO tblVehiculoTransporte (idVehiculoTransporte, Fk_Servicio_Transporte_Externo_Codigo, placaVehiculoTransporte, tipoVehiculoTransporte, capacidadVehiculoTransporte)
-VALUES (6, 6, 'C006DEF', 'Tráiler', '2500 kg');
-
--- Registro 7
-INSERT INTO tblVehiculoTransporte (idVehiculoTransporte, Fk_Servicio_Transporte_Externo_Codigo, placaVehiculoTransporte, tipoVehiculoTransporte, capacidadVehiculoTransporte)
-VALUES (7, 7, 'C007DEF', 'Cabezal', '2750 kg');
-
--- Registro 8
-INSERT INTO tblVehiculoTransporte (idVehiculoTransporte, Fk_Servicio_Transporte_Externo_Codigo, placaVehiculoTransporte, tipoVehiculoTransporte, capacidadVehiculoTransporte)
-VALUES (8, 8, 'C008DEF', 'Motocicleta', '3000 kg');
-
--- Registro 9
-INSERT INTO tblVehiculoTransporte (idVehiculoTransporte, Fk_Servicio_Transporte_Externo_Codigo, placaVehiculoTransporte, tipoVehiculoTransporte, capacidadVehiculoTransporte)
-VALUES (9, 9, 'C009DEF', 'Microbús', '3250 kg');
-
--- Registro 10
-INSERT INTO tblVehiculoTransporte (idVehiculoTransporte, Fk_Servicio_Transporte_Externo_Codigo, placaVehiculoTransporte, tipoVehiculoTransporte, capacidadVehiculoTransporte)
-VALUES (10, 10, 'C010DEF', 'Camión refrigerado', '3500 kg');
-
--- ============================================================================
--- TABLA: tblDetalleAuditoria
--- ============================================================================
--- Registro 1
-INSERT INTO tblDetalleAuditoria (idDetalleAuditoria, Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo, stockTeoricoDetalleAuditoria, stockFisicoDetalleAuditoria, observacionesDetalleAuditoria)
-VALUES (1, 1, 1, 101, 101, 'Detalle del conteo 1');
-
--- Registro 2
-INSERT INTO tblDetalleAuditoria (idDetalleAuditoria, Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo, stockTeoricoDetalleAuditoria, stockFisicoDetalleAuditoria, observacionesDetalleAuditoria)
-VALUES (2, 2, 2, 102, 102, 'Detalle del conteo 2');
-
--- Registro 3
-INSERT INTO tblDetalleAuditoria (idDetalleAuditoria, Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo, stockTeoricoDetalleAuditoria, stockFisicoDetalleAuditoria, observacionesDetalleAuditoria)
-VALUES (3, 3, 3, 103, 103, 'Detalle del conteo 3');
-
--- Registro 4
-INSERT INTO tblDetalleAuditoria (idDetalleAuditoria, Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo, stockTeoricoDetalleAuditoria, stockFisicoDetalleAuditoria, observacionesDetalleAuditoria)
-VALUES (4, 4, 4, 104, 104, 'Detalle del conteo 4');
-
--- Registro 5
-INSERT INTO tblDetalleAuditoria (idDetalleAuditoria, Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo, stockTeoricoDetalleAuditoria, stockFisicoDetalleAuditoria, observacionesDetalleAuditoria)
-VALUES (5, 5, 5, 105, 105, 'Detalle del conteo 5');
-
--- Registro 6
-INSERT INTO tblDetalleAuditoria (idDetalleAuditoria, Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo, stockTeoricoDetalleAuditoria, stockFisicoDetalleAuditoria, observacionesDetalleAuditoria)
-VALUES (6, 6, 6, 106, 106, 'Detalle del conteo 6');
-
--- Registro 7
-INSERT INTO tblDetalleAuditoria (idDetalleAuditoria, Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo, stockTeoricoDetalleAuditoria, stockFisicoDetalleAuditoria, observacionesDetalleAuditoria)
-VALUES (7, 7, 7, 107, 107, 'Detalle del conteo 7');
-
--- Registro 8
-INSERT INTO tblDetalleAuditoria (idDetalleAuditoria, Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo, stockTeoricoDetalleAuditoria, stockFisicoDetalleAuditoria, observacionesDetalleAuditoria)
-VALUES (8, 8, 8, 108, 108, 'Detalle del conteo 8');
-
--- Registro 9
-INSERT INTO tblDetalleAuditoria (idDetalleAuditoria, Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo, stockTeoricoDetalleAuditoria, stockFisicoDetalleAuditoria, observacionesDetalleAuditoria)
-VALUES (9, 9, 9, 109, 109, 'Detalle del conteo 9');
-
--- Registro 10
-INSERT INTO tblDetalleAuditoria (idDetalleAuditoria, Fk_Auditoria_Inventario_Codigo, Fk_Stock_Codigo, stockTeoricoDetalleAuditoria, stockFisicoDetalleAuditoria, observacionesDetalleAuditoria)
-VALUES (10, 10, 10, 110, 110, 'Detalle del conteo 10');
-
-COMMIT;
--- compras 
+-- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ ingresos de Logistica !!!!!!!!!!!!!!!!!!!!!!!!!-------------
+
+
+-- Recuperar IDs del catálogo general existente (sin suponer id=1).
+SET @idProveedorLogistica = (SELECT MIN(idProveedor) FROM tblProveedor);
+SET @idBancoLogistica = (SELECT MIN(idBanco) FROM tblBanco);
+SET @idTipoCuentaLogistica = (SELECT MIN(idTipoCuentaBancaria) FROM tblTipoCuentaBancaria);
+SET @idMonedaLogistica = (SELECT MIN(idMoneda) FROM tblMoneda);
+SET @idPlazoLogistica = (SELECT MIN(idPlazo) FROM tblPlazo);
+
+-- Confirmación: ninguno de los cinco IDs obligatorios puede ser NULL.
+SELECT @idProveedorLogistica AS proveedor_existente,
+       @idBancoLogistica AS banco_existente,
+       @idTipoCuentaLogistica AS tipo_cuenta_existente,
+       @idMonedaLogistica AS moneda_existente,
+       @idPlazoLogistica AS plazo_existente;
+
+-- Se buscan hasta cinco cuentas por pagar diferentes; si no existen, las
+-- facturas conservan las tres columnas opcionales en NULL (sin FK inválida).
+SET @cxp_serie_1 = (SELECT serieDocumentoCuentaPorPagar FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 0, 1);
+SET @cxp_numero_1 = (SELECT numeroDocumentoCuentaPorPagar FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 0, 1);
+SET @cxp_concepto_1 = (SELECT idConceptoProveedor FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 0, 1);
+SET @cxp_serie_2 = (SELECT serieDocumentoCuentaPorPagar FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 1, 1);
+SET @cxp_numero_2 = (SELECT numeroDocumentoCuentaPorPagar FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 1, 1);
+SET @cxp_concepto_2 = (SELECT idConceptoProveedor FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 1, 1);
+SET @cxp_serie_3 = (SELECT serieDocumentoCuentaPorPagar FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 2, 1);
+SET @cxp_numero_3 = (SELECT numeroDocumentoCuentaPorPagar FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 2, 1);
+SET @cxp_concepto_3 = (SELECT idConceptoProveedor FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 2, 1);
+SET @cxp_serie_4 = (SELECT serieDocumentoCuentaPorPagar FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 3, 1);
+SET @cxp_numero_4 = (SELECT numeroDocumentoCuentaPorPagar FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 3, 1);
+SET @cxp_concepto_4 = (SELECT idConceptoProveedor FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 3, 1);
+SET @cxp_serie_5 = (SELECT serieDocumentoCuentaPorPagar FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 4, 1);
+SET @cxp_numero_5 = (SELECT numeroDocumentoCuentaPorPagar FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 4, 1);
+SET @cxp_concepto_5 = (SELECT idConceptoProveedor FROM tblCuentaPorPagar ORDER BY serieDocumentoCuentaPorPagar, numeroDocumentoCuentaPorPagar, idConceptoProveedor LIMIT 4, 1);
+
+-- ============================================================================
+-- TABLA 01/44: tblEmpresaTransportista | 5 registros
+-- ============================================================================
+INSERT INTO tblEmpresaTransportista (
+    idEmpresaTransportista,
+    nombreEmpresaTransportista,
+    contactoEmpresaTransportista,
+    telefonoEmpresaTransportista,
+    nitEmpresaTransportista,
+    direccionEmpresaTransportista,
+    estadoEmpresaTransportista
+) VALUES
+    -- Registro 1: Transporte Refrigerado del Altiplano, S.A.
+    (1, 'Transporte Refrigerado del Altiplano, S.A.', 'María Fernanda Solís', '+502 2234-7812', '7246815-3', 'Calzada Roosevelt 15-42, zona 11, Ciudad de Guatemala', 1),
+    -- Registro 2: Logística del Pacífico, S.A.
+    (2, 'Logística del Pacífico, S.A.', 'Carlos Alberto Rivera', '+502 2478-3605', '6382504-1', 'Km 32.5, carretera al Pacífico, Amatitlán, Guatemala', 1),
+    -- Registro 3: Distribuciones La Ceiba, S.A.
+    (3, 'Distribuciones La Ceiba, S.A.', 'Andrea Lucía Méndez', '+502 7765-2098', '5827431-9', '4a avenida 6-18, zona 3, Quetzaltenango', 1),
+    -- Registro 4: Carga Fría del Sur, S.A.
+    (4, 'Carga Fría del Sur, S.A.', 'José Roberto Aguilar', '+502 7889-1436', '4109637-2', '3a calle 2-60, zona 1, Escuintla', 1),
+    -- Registro 5: Transportes Valle Verde, S.A.
+    (5, 'Transportes Valle Verde, S.A.', 'Paola Gabriela Morales', '+502 2431-8706', '9671240-5', '10a avenida 17-25, zona 10, Ciudad de Guatemala', 1);
+
+-- ============================================================================
+-- TABLA 02/44: tblTipoServicio | 5 registros
+-- ============================================================================
+INSERT INTO tblTipoServicio (
+    idTipoServicio,
+    nombreTipoServicio,
+    estadoTipoServicio
+) VALUES
+    -- Registro 1: Transporte refrigerado
+    (1, 'Transporte refrigerado', 1),
+    -- Registro 2: Distribución urbana
+    (2, 'Distribución urbana', 1),
+    -- Registro 3: Entrega interdepartamental
+    (3, 'Entrega interdepartamental', 1),
+    -- Registro 4: Traslado entre centros regionales
+    (4, 'Traslado entre centros regionales', 1),
+    -- Registro 5: Reposición a centro de distribución
+    (5, 'Reposición a centro de distribución', 1);
+
+-- ============================================================================
+-- TABLA 03/44: tblTarifaTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblTarifaTransporte (
+    idTarifaTransporte,
+    nombreTarifaTransporte,
+    estadoTarifaTransporte
+) VALUES
+    -- Registro 1: Tarifa por kilómetro recorrido
+    (1, 'Tarifa por kilómetro recorrido', 1),
+    -- Registro 2: Tarifa por kilogramo transportado
+    (2, 'Tarifa por kilogramo transportado', 1),
+    -- Registro 3: Tarifa por viaje interdepartamental
+    (3, 'Tarifa por viaje interdepartamental', 1),
+    -- Registro 4: Tarifa por hora de espera
+    (4, 'Tarifa por hora de espera', 1),
+    -- Registro 5: Tarifa por entrega realizada
+    (5, 'Tarifa por entrega realizada', 1);
+
+-- ============================================================================
+-- TABLA 04/44: tblEstado | 5 registros
+-- ============================================================================
+INSERT INTO tblEstado (
+    idEstado,
+    tipoEstado
+) VALUES
+    -- Registro 1: Disponible
+    (1, 'Disponible'),
+    -- Registro 2: En mantenimiento
+    (2, 'En mantenimiento'),
+    -- Registro 3: En ruta
+    (3, 'En ruta'),
+    -- Registro 4: Fuera de servicio
+    (4, 'Fuera de servicio'),
+    -- Registro 5: Reservado
+    (5, 'Reservado');
+
+-- ============================================================================
+-- TABLA 05/44: tblTipoTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblTipoTransporte (
+    idTipoTransporte,
+    nombreTipoTransporte
+) VALUES
+    -- Registro 1: Camión refrigerado
+    (1, 'Camión refrigerado'),
+    -- Registro 2: Furgón refrigerado
+    (2, 'Furgón refrigerado'),
+    -- Registro 3: Camión de reparto refrigerado
+    (3, 'Camión de reparto refrigerado'),
+    -- Registro 4: Panel isotérmico
+    (4, 'Panel isotérmico'),
+    -- Registro 5: Cabezal con semirremolque refrigerado
+    (5, 'Cabezal con semirremolque refrigerado');
+
+-- ============================================================================
+-- TABLA 06/44: tblTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblTransporte (
+    idTransporte,
+    nroPlacaTransporte,
+    marcaTransporte,
+    modeloTransporte,
+    anioTransporte,
+    esRefrigeradoTransporte,
+    Fk_Estado_Codigo,
+    Fk_Tipo_Transporte_Codigo
+) VALUES
+    -- Registro 1: C-428BKV
+    (1, 'C-428BKV', 'Hino', '500 Series', 2022, 1, 1, 1),
+    -- Registro 2: C-693FTR
+    (2, 'C-693FTR', 'Isuzu', 'NQR', 2021, 1, 3, 2),
+    -- Registro 3: C-185LPM
+    (3, 'C-185LPM', 'Mitsubishi Fuso', 'Canter', 2023, 1, 1, 3),
+    -- Registro 4: P-734KDS
+    (4, 'P-734KDS', 'Hyundai', 'H100', 2020, 1, 3, 4),
+    -- Registro 5: C-952RHG
+    (5, 'C-952RHG', 'Freightliner', 'M2 106', 2024, 1, 1, 5);
+
+-- ============================================================================
+-- TABLA 07/44: tblCamaraRefrigeracion | 5 registros
+-- ============================================================================
+INSERT INTO tblCamaraRefrigeracion (
+    idCamaraRefrigeracion,
+    Fk_Transporte_Codigo,
+    marcaEquipoCamaraRefrigeracion,
+    tempMinimaCelsiusCamaraRefrigeracion,
+    tempMaximaCelsiusCamaraRefrigeracion,
+    estadoOperativoCamaraRefrigeracion
+) VALUES
+    -- Registro 1: Thermo King T-800
+    (1, 1, 'Thermo King T-800', 0.0000, 5.0000, 'OPERATIVO'),
+    -- Registro 2: Carrier Xarios 350
+    (2, 2, 'Carrier Xarios 350', 0.0000, 6.0000, 'OPERATIVO'),
+    -- Registro 3: Thermo King V-500
+    (3, 3, 'Thermo King V-500', 1.0000, 5.0000, 'OPERATIVO'),
+    -- Registro 4: Carrier Neos 100
+    (4, 4, 'Carrier Neos 100', 0.0000, 5.0000, 'OPERATIVO'),
+    -- Registro 5: Thermo King SLXi 400
+    (5, 5, 'Thermo King SLXi 400', -2.0000, 5.0000, 'OPERATIVO');
+
+-- ============================================================================
+-- TABLA 08/44: tblConductor | 5 registros
+-- ============================================================================
+INSERT INTO tblConductor (
+    idConductor,
+    codigoConductor,
+    nombreCompletoConductor,
+    numeroLicenciaConductor,
+    fechaVencimientoDocConductor,
+    Fk_Estado_Codigo
+) VALUES
+    -- Registro 1: COND-001
+    (1, 'COND-001', 'Luis Fernando García', 'LIC-A-471832', '2028-06-18', 1),
+    -- Registro 2: COND-002
+    (2, 'COND-002', 'José Manuel Pérez', 'LIC-A-628105', '2027-11-03', 3),
+    -- Registro 3: COND-003
+    (3, 'COND-003', 'Ricardo Antonio López', 'LIC-B-530972', '2029-02-27', 1),
+    -- Registro 4: COND-004
+    (4, 'COND-004', 'Marco Tulio Hernández', 'LIC-B-741260', '2027-08-14', 3),
+    -- Registro 5: COND-005
+    (5, 'COND-005', 'Edwin Alexander Castillo', 'LIC-A-893641', '2028-12-09', 1);
+
+-- ============================================================================
+-- TABLA 09/44: tblEncabezadoViaje | 5 registros
+-- ============================================================================
+INSERT INTO tblEncabezadoViaje (
+    idEncabezadoViaje,
+    fechaDocumentoEncabezadoViaje,
+    horaSalidaEncabezadoViaje,
+    horaLlegadaEncabezadoViaje,
+    requiereCadenaFrioEncabezadoViaje,
+    estadoViajeEncabezadoViaje,
+    pesoTotalEncabezadoViaje,
+    Fk_Transporte_Codigo,
+    Fk_Conductor_Codigo
+) VALUES
+    -- Registro 1: FINALIZADO
+    (1, '2026-10-20 05:30:00', '2026-10-20 06:00:00', '2026-10-20 10:45:00', 1, 'FINALIZADO', 850.0000, 1, 1),
+    -- Registro 2: FINALIZADO
+    (2, '2026-10-21 07:15:00', '2026-10-21 07:45:00', '2026-10-21 13:20:00', 1, 'FINALIZADO', 920.0000, 2, 2),
+    -- Registro 3: FINALIZADO
+    (3, '2026-10-22 04:45:00', '2026-10-22 05:30:00', '2026-10-22 11:15:00', 1, 'FINALIZADO', 735.0000, 3, 3),
+    -- Registro 4: EN_CURSO
+    (4, '2026-11-08 08:10:00', '2026-11-08 09:00:00', NULL, 1, 'EN_CURSO', 480.0000, 4, 4),
+    -- Registro 5: FINALIZADO
+    (5, '2026-10-24 06:10:00', '2026-10-24 06:30:00', '2026-10-24 16:40:00', 1, 'FINALIZADO', 1200.0000, 5, 5);
+
+-- ============================================================================
+-- TABLA 10/44: tblDetalleViaje | 5 registros
+-- ============================================================================
+INSERT INTO tblDetalleViaje (
+    idDetalleViaje,
+    Fk_Encabezado_Viaje_Codigo,
+    ordenDetalleViaje,
+    descripcionDetalleViaje,
+    cantidadDetalleViaje,
+    pesoDetalleViaje
+) VALUES
+    -- Registro 1: Despacho de salchichas refrigeradas a sucursal de Mixco
+    (1, 1, 1, 'Despacho de salchichas refrigeradas a sucursal de Mixco', 1700.0000, 850.0000),
+    -- Registro 2: Entrega de chorizo parrillero a sucursal de Villa Nueva
+    (2, 2, 1, 'Entrega de chorizo parrillero a sucursal de Villa Nueva', 2044.0000, 920.0000),
+    -- Registro 3: Envío de jamón de pierna a sucursal de Quetzaltenango
+    (3, 3, 1, 'Envío de jamón de pierna a sucursal de Quetzaltenango', 2100.0000, 735.0000),
+    -- Registro 4: Distribución de mortadela familiar hacia Escuintla
+    (4, 4, 1, 'Distribución de mortadela familiar hacia Escuintla', 480.0000, 480.0000),
+    -- Registro 5: Traslado de tocino ahumado a centro de distribución
+    (5, 5, 1, 'Traslado de tocino ahumado a centro de distribución', 4800.0000, 1200.0000);
+
+-- ============================================================================
+-- TABLA 11/44: tblTelemetriaTemperatura | 5 registros
+-- ============================================================================
+INSERT INTO tblTelemetriaTemperatura (
+    idTelemetriaTemperatura,
+    Fk_Encabezado_Viaje_Codigo,
+    fechaHoraTelemetriaTemperatura,
+    temperaturaCelsiusTelemetriaTemperatura,
+    humedadRelativaTelemetriaTemperatura,
+    puertaAbiertaTelemetriaTemperatura,
+    ubicacionGpsTelemetriaTemperatura
+) VALUES
+    -- Registro 1: Ruta Interamericana, Mixco, Guatemala
+    (1, 1, '2026-10-20 07:30:00', 3.2000, 0.7250, 0, 'Ruta Interamericana, Mixco, Guatemala'),
+    -- Registro 2: Calzada Aguilar Batres, Villa Nueva, Guatemala
+    (2, 2, '2026-10-21 10:15:00', 7.1000, 0.6800, 0, 'Calzada Aguilar Batres, Villa Nueva, Guatemala'),
+    -- Registro 3: Carretera a Quetzaltenango, Totonicapán
+    (3, 3, '2026-10-22 09:40:00', 4.0000, 0.9100, 0, 'Carretera a Quetzaltenango, Totonicapán'),
+    -- Registro 4: Carretera al Pacífico, km 87, Escuintla
+    (4, 4, '2026-11-11 09:05:00', 3.6000, 0.7350, 1, 'Carretera al Pacífico, km 87, Escuintla'),
+    -- Registro 5: Ruta al Pacífico, Santa Lucía Cotzumalguapa
+    (5, 5, '2026-10-24 12:30:00', -3.5000, 0.7050, 0, 'Ruta al Pacífico, Santa Lucía Cotzumalguapa');
+
+-- ============================================================================
+-- TABLA 12/44: tblAlertaCadenaFrio | 5 registros
+-- ============================================================================
+INSERT INTO tblAlertaCadenaFrio (
+    idAlertaCadenaFrio,
+    Fk_Telemetria_Temperatura_Codigo,
+    tipoAlertaCadenaFrio,
+    atendidaAlertaCadenaFrio,
+    observacionCalidadAlertaCadenaFrio
+) VALUES
+    -- Registro 1: REVISION_PREVENTIVA
+    (1, 1, 'REVISION_PREVENTIVA', 1, 'Se verificó el termómetro de la cámara y se confirmó refrigeración estable.'),
+    -- Registro 2: TEMPERATURA_ALTA
+    (2, 2, 'TEMPERATURA_ALTA', 1, 'Temperatura superior al rango; se ajustó la unidad de frío.'),
+    -- Registro 3: HUMEDAD_ALTA
+    (3, 3, 'HUMEDAD_ALTA', 1, 'Se revisaron empaques y sellos de la cámara durante la parada técnica.'),
+    -- Registro 4: PUERTA_ABIERTA
+    (4, 4, 'PUERTA_ABIERTA', 1, 'Se confirmó apertura durante descarga y cierre inmediato de la puerta.'),
+    -- Registro 5: TEMPERATURA_BAJA
+    (5, 5, 'TEMPERATURA_BAJA', 0, 'Se solicitó verificar el termostato antes de completar la entrega.');
+
+-- ============================================================================
+-- TABLA 13/44: tblSucursal | 5 registros
+-- ============================================================================
+INSERT INTO tblSucursal (
+    idSucursal,
+    nombreSucursal,
+    descripcionSucursal,
+    ubicacionSucursal,
+    paisSucursal
+) VALUES
+    -- Registro 1: Sucursal Central Guatemala
+    (1, 'Sucursal Central Guatemala', 'Centro de distribución y atención mayorista', 'Avenida Petapa 32-36, zona 12, Ciudad de Guatemala', 'Guatemala'),
+    -- Registro 2: Sucursal Mixco
+    (2, 'Sucursal Mixco', 'Distribución para comercios del área occidental metropolitana', 'Calzada San Juan 10-80, zona 4, Mixco', 'Guatemala'),
+    -- Registro 3: Sucursal Villa Nueva
+    (3, 'Sucursal Villa Nueva', 'Almacenamiento y distribución del corredor sur', '5a avenida 4-55, zona 1, Villa Nueva', 'Guatemala'),
+    -- Registro 4: Sucursal Quetzaltenango
+    (4, 'Sucursal Quetzaltenango', 'Centro regional de distribución de occidente', '7a calle 14-26, zona 3, Quetzaltenango', 'Guatemala'),
+    -- Registro 5: Sucursal Escuintla
+    (5, 'Sucursal Escuintla', 'Centro regional de distribución de la costa sur', '2a avenida 5-14, zona 1, Escuintla', 'Guatemala');
+
+-- ============================================================================
+-- TABLA 14/44: tblBodega | 5 registros
+-- ============================================================================
+INSERT INTO tblBodega (
+    idBodega,
+    nombreBodega,
+    Fk_Sucursal_Codigo,
+    paisBodega
+) VALUES
+    -- Registro 1: Bodega Central de Refrigerados
+    (1, 'Bodega Central de Refrigerados', 1, 'Guatemala'),
+    -- Registro 2: Bodega Mixco
+    (2, 'Bodega Mixco', 2, 'Guatemala'),
+    -- Registro 3: Bodega Villa Nueva
+    (3, 'Bodega Villa Nueva', 3, 'Guatemala'),
+    -- Registro 4: Bodega Occidente
+    (4, 'Bodega Occidente', 4, 'Guatemala'),
+    -- Registro 5: Bodega Costa Sur
+    (5, 'Bodega Costa Sur', 5, 'Guatemala');
+
+-- ============================================================================
+-- TABLA 15/44: tblCategoria | 5 registros
+-- ============================================================================
+INSERT INTO tblCategoria (
+    idCategoria,
+    nombreCategoria,
+    porcentajeComisionCategoria
+) VALUES
+    -- Registro 1: Salchichas
+    (1, 'Salchichas', 0.1000),
+    -- Registro 2: Chorizos
+    (2, 'Chorizos', 0.1200),
+    -- Registro 3: Jamones
+    (3, 'Jamones', 0.1500),
+    -- Registro 4: Mortadelas
+    (4, 'Mortadelas', 0.0800),
+    -- Registro 5: Tocinos
+    (5, 'Tocinos', 0.1100);
+
+-- ============================================================================
+-- TABLA 16/44: tblLinea | 5 registros
+-- ============================================================================
+INSERT INTO tblLinea (
+    idLinea,
+    nombreLinea,
+    porcentajeComisionLinea
+) VALUES
+    -- Registro 1: Tradicional
+    (1, 'Tradicional', 0.0500),
+    -- Registro 2: Parrillera
+    (2, 'Parrillera', 0.0700),
+    -- Registro 3: Premium
+    (3, 'Premium', 0.0900),
+    -- Registro 4: Familiar
+    (4, 'Familiar', 0.0600),
+    -- Registro 5: Ahumados
+    (5, 'Ahumados', 0.0800);
+
+-- ============================================================================
+-- TABLA 17/44: tblMarca | 5 registros
+-- ============================================================================
+INSERT INTO tblMarca (
+    idMarca,
+    nombreMarca,
+    porcentajeComisionMarca
+) VALUES
+    -- Registro 1: Montesol
+    (1, 'Montesol', 0.0600),
+    -- Registro 2: Del Prado
+    (2, 'Del Prado', 0.0700),
+    -- Registro 3: La Hacienda
+    (3, 'La Hacienda', 0.0800),
+    -- Registro 4: Buen Sabor
+    (4, 'Buen Sabor', 0.0500),
+    -- Registro 5: Sierra Fresca
+    (5, 'Sierra Fresca', 0.0900);
+
+-- ============================================================================
+-- TABLA 18/44: tblProducto | 5 registros
+-- ============================================================================
+INSERT INTO tblProducto (
+    idProducto,
+    skuProducto,
+    clasificacionProducto,
+    nombreProducto,
+    idProveedorProductos,
+    Fk_Marca_Codigo,
+    Fk_Categoria_Codigo,
+    Fk_Linea_Codigo,
+    descripcionProducto,
+    imagenProducto,
+    paisProducto,
+    precioCostoProducto,
+    precioVentaProducto,
+    porcentajeComisionProducto,
+    stockMinimoProducto,
+    stockMaximoProducto,
+    pesoProducto
+) VALUES
+    -- Registro 1: SAL-VIE-500
+    (1, 'SAL-VIE-500', 'REFRI', 'Salchicha vienesa 500 g', @idProveedorLogistica, 1, 1, 1, 'Paquete refrigerado de salchicha vienesa de 500 gramos', UNHEX('89504E470D0A1A0A0000000D49484452000000010000000108060000001F15C4890000000D49444154789C6378F6ECD97F00091A03B2703A80280000000049454E44AE426082'), 'Guatemala', 18.5000, 26.9000, 0.1000, 25, 350, 0.5000),
+    -- Registro 2: CHO-PAR-450
+    (2, 'CHO-PAR-450', 'REFRI', 'Chorizo parrillero 450 g', @idProveedorLogistica, 2, 2, 2, 'Chorizo para parrilla empacado al vacío, 450 gramos', UNHEX('89504E470D0A1A0A0000000D49484452000000010000000108060000001F15C4890000000D49444154789C6378F6ECD97F00091A03B2703A80280000000049454E44AE426082'), 'Guatemala', 22.7500, 33.5000, 0.1200, 20, 250, 0.4500),
+    -- Registro 3: JAM-PIE-350
+    (3, 'JAM-PIE-350', 'REFRI', 'Jamón de pierna 350 g', @idProveedorLogistica, 3, 3, 3, 'Jamón de pierna rebanado, presentación de 350 gramos', UNHEX('89504E470D0A1A0A0000000D49484452000000010000000108060000001F15C4890000000D49444154789C6378F6ECD97F00091A03B2703A80280000000049454E44AE426082'), 'Guatemala', 24.2000, 38.0000, 0.1500, 15, 200, 0.3500),
+    -- Registro 4: MOR-FAM-1KG
+    (4, 'MOR-FAM-1KG', 'REFRI', 'Mortadela familiar 1 kg', @idProveedorLogistica, 4, 4, 4, 'Mortadela cocida en presentación familiar de un kilogramo', UNHEX('89504E470D0A1A0A0000000D49484452000000010000000108060000001F15C4890000000D49444154789C6378F6ECD97F00091A03B2703A80280000000049454E44AE426082'), 'Guatemala', 36.0000, 49.5000, 0.0800, 30, 400, 1.0000),
+    -- Registro 5: TOC-AHU-250
+    (5, 'TOC-AHU-250', 'AHUMA', 'Tocino ahumado 250 g', @idProveedorLogistica, 5, 5, 5, 'Tocino ahumado y rebanado en presentación de 250 gramos', UNHEX('89504E470D0A1A0A0000000D49484452000000010000000108060000001F15C4890000000D49444154789C6378F6ECD97F00091A03B2703A80280000000049454E44AE426082'), 'Guatemala', 20.8000, 31.2500, 0.1100, 20, 220, 0.2500);
+
+-- ============================================================================
+-- TABLA 19/44: tblLoteProducto | 5 registros
+-- ============================================================================
+INSERT INTO tblLoteProducto (
+    idLoteProducto,
+    codigoLoteProducto,
+    Fk_Producto_Codigo,
+    descripcionLoteProducto,
+    requiereFrioLoteProducto,
+    fechaFabricacionLoteProducto,
+    fechaVencimientoLoteProducto,
+    tempRequeridaMinLoteProducto,
+    tempRequeridaMaxLoteProducto
+) VALUES
+    -- Registro 1: L-SAL-261001
+    (1, 'L-SAL-261001', 1, 'Producción de salchicha vienesa, turno matutino', 1, '2026-10-01', '2026-12-15', 0.0000, 5.0000),
+    -- Registro 2: L-CHO-261004
+    (2, 'L-CHO-261004', 2, 'Producción de chorizo parrillero de octubre', 1, '2026-10-04', '2026-12-08', 0.0000, 5.0000),
+    -- Registro 3: L-JAM-261006
+    (3, 'L-JAM-261006', 3, 'Jamón de pierna rebanado y empacado al vacío', 1, '2026-10-06', '2026-12-20', 0.0000, 5.0000),
+    -- Registro 4: L-MOR-261008
+    (4, 'L-MOR-261008', 4, 'Mortadela familiar, lote de distribución nacional', 1, '2026-10-08', '2026-12-18', 0.0000, 5.0000),
+    -- Registro 5: L-TOC-261010
+    (5, 'L-TOC-261010', 5, 'Tocino ahumado, producción de octubre', 1, '2026-10-10', '2027-01-15', -1.0000, 5.0000);
+
+-- ============================================================================
+-- TABLA 20/44: tblDetalleViajeLoteProducto | 5 registros
+-- ============================================================================
+INSERT INTO tblDetalleViajeLoteProducto (
+    idDetalleViajeLoteProducto,
+    Fk_Detalle_Viaje_Codigo,
+    Fk_Lote_Producto_Codigo,
+    cantidadCajasDetalleViajeLoteProducto,
+    pesoKgDetalleViajeLoteProducto
+) VALUES
+    -- Registro 1: relación 1 - 1
+    (1, 1, 1, 85, 850.0000),
+    -- Registro 2: relación 2 - 2
+    (2, 2, 2, 92, 920.0000),
+    -- Registro 3: relación 3 - 3
+    (3, 3, 3, 70, 735.0000),
+    -- Registro 4: relación 4 - 4
+    (4, 4, 4, 48, 480.0000),
+    -- Registro 5: relación 5 - 5
+    (5, 5, 5, 120, 1200.0000);
+
+-- ============================================================================
+-- TABLA 21/44: tblStock | 5 registros
+-- ============================================================================
+INSERT INTO tblStock (
+    idStock,
+    Fk_Sucursal_Codigo,
+    Fk_Bodega_Codigo,
+    Fk_Producto_Codigo,
+    stockFisicoStock,
+    stockVirtualStock,
+    stockAnteriorStock,
+    stockActualStock,
+    cargosMesStock,
+    abonosMesStock,
+    cargosAcumuladosStock,
+    abonosAcumuladosStock,
+    apartadosStock,
+    estadoVentaStock,
+    estadoCompraStock
+) VALUES
+    -- Registro 1: sucursal 1, bodega 1, producto 1
+    (1, 1, 1, 1, 135, 135, 120, 135, 35, 20, 400, 265, 12, 1, 1),
+    -- Registro 2: sucursal 2, bodega 2, producto 2
+    (2, 2, 2, 2, 82, 82, 80, 82, 20, 18, 250, 168, 5, 1, 1),
+    -- Registro 3: sucursal 3, bodega 3, producto 3
+    (3, 3, 3, 3, 50, 50, 60, 50, 15, 25, 220, 170, 3, 1, 1),
+    -- Registro 4: sucursal 4, bodega 4, producto 4
+    (4, 4, 4, 4, 160, 160, 150, 160, 50, 40, 580, 420, 20, 1, 0),
+    -- Registro 5: sucursal 5, bodega 5, producto 5
+    (5, 5, 5, 5, 100, 100, 95, 100, 20, 15, 330, 230, 8, 0, 1);
+
+-- ============================================================================
+-- TABLA 22/44: tblSaldos | 5 registros
+-- ============================================================================
+INSERT INTO tblSaldos (
+    idSaldo,
+    Fk_Producto_Codigo,
+    Fk_Bodega_Codigo,
+    saldoActualSaldo
+) VALUES
+    -- Registro 1: relación 1 - 1
+    (1, 1, 1, 135),
+    -- Registro 2: relación 2 - 2
+    (2, 2, 2, 82),
+    -- Registro 3: relación 3 - 3
+    (3, 3, 3, 50),
+    -- Registro 4: relación 4 - 4
+    (4, 4, 4, 160),
+    -- Registro 5: relación 5 - 5
+    (5, 5, 5, 100);
+
+-- ============================================================================
+-- TABLA 23/44: tblTipoMovimiento | 5 registros
+-- ============================================================================
+INSERT INTO tblTipoMovimiento (
+    idTipoMovimiento,
+    nombreTipoMovimiento,
+    descripcionTipoMovimiento,
+    signoTipoMovimiento
+) VALUES
+    -- Registro 1: Ingreso por compra
+    (1, 'Ingreso por compra', 'Incremento de inventario por recepción de mercadería', '+'),
+    -- Registro 2: Salida por venta
+    (2, 'Salida por venta', 'Reducción de inventario por despacho a cliente', '-'),
+    -- Registro 3: Traslado de entrada
+    (3, 'Traslado de entrada', 'Ingreso a bodega destino por traslado interno', '+'),
+    -- Registro 4: Traslado de salida
+    (4, 'Traslado de salida', 'Egreso de bodega origen por traslado interno', '-'),
+    -- Registro 5: Ajuste positivo
+    (5, 'Ajuste positivo', 'Incremento autorizado después de conciliación', '+');
+
+-- ============================================================================
+-- TABLA 24/44: tblTraslado | 5 registros
+-- ============================================================================
+INSERT INTO tblTraslado (
+    idTraslado,
+    codigoTraslado,
+    Fk_Bodega_Origen_Codigo,
+    Fk_Bodega_Destino_Codigo,
+    Fk_Transporte_Codigo,
+    fechaSolicitudTraslado,
+    fechaSalidaTraslado,
+    fechaLlegadaTraslado,
+    estadoTraslado,
+    observacionesTraslado
+) VALUES
+    -- Registro 1: TR-2026-0001
+    (1, 'TR-2026-0001', 1, 2, 1, '2026-10-25 08:00:00', '2026-10-25 09:00:00', '2026-10-25 11:15:00', 'RECIBIDO', 'Mercadería recibida con temperatura de 3 grados Celsius.'),
+    -- Registro 2: TR-2026-0002
+    (2, 'TR-2026-0002', 2, 3, 2, '2026-10-26 07:30:00', '2026-10-26 08:20:00', '2026-10-26 10:45:00', 'RECIBIDO', 'Entrega conforme a guía de traslado y conteo de cajas.'),
+    -- Registro 3: TR-2026-0003
+    (3, 'TR-2026-0003', 3, 4, 3, '2026-10-27 05:50:00', '2026-10-27 06:30:00', '2026-10-27 14:20:00', 'RECIBIDO', 'Despacho interdepartamental sin novedades.'),
+    -- Registro 4: TR-2026-0004
+    (4, 'TR-2026-0004', 4, 5, 4, '2026-11-08 08:10:00', '2026-11-08 09:00:00', NULL, 'EN_TRANSITO', 'Unidad en carretera con entrega pendiente de confirmar.'),
+    -- Registro 5: TR-2026-0005
+    (5, 'TR-2026-0005', 5, 1, 5, '2026-11-10 10:00:00', NULL, NULL, 'SOLICITADO', 'Traslado programado para reposición en bodega central.');
+
+-- ============================================================================
+-- TABLA 25/44: tblDetalleTraslado | 5 registros
+-- ============================================================================
+INSERT INTO tblDetalleTraslado (
+    idDetalleTraslado,
+    Fk_Traslado_Codigo,
+    Fk_Producto_Codigo,
+    cantidadDetalleTraslado
+) VALUES
+    -- Registro 1: relación 1 - 1
+    (1, 1, 1, 25),
+    -- Registro 2: relación 2 - 2
+    (2, 2, 2, 18),
+    -- Registro 3: relación 3 - 3
+    (3, 3, 3, 12),
+    -- Registro 4: relación 4 - 4
+    (4, 4, 4, 30),
+    -- Registro 5: relación 5 - 5
+    (5, 5, 5, 15);
+
+-- ============================================================================
+-- TABLA 26/44: tblCierreInventario | 5 registros
+-- ============================================================================
+INSERT INTO tblCierreInventario (
+    idCierreInventario,
+    nombreCierreInventario,
+    Fk_Sucursal_Codigo,
+    fechaInicioCierreInventario,
+    fechaFinCierreInventario,
+    esCierreAnualCierreInventario,
+    diferenciaUnidadesCierreInventario,
+    diferenciaMontoCierreInventario,
+    motivoAceptacionCierreInventario,
+    observacionesCierreInventario,
+    fechaEjecucionCierreInventario
+) VALUES
+    -- Registro 1: Cierre octubre 2026 - Central
+    (1, 'Cierre octubre 2026 - Central', 1, '2026-10-01', '2026-10-31', 0, 0, 0.0000, 'Conteo y saldos conciliados, sin diferencias.', 'Cierre mensual validado por el responsable de inventario.', '2026-11-01 08:00:00'),
+    -- Registro 2: Cierre octubre 2026 - Mixco
+    (2, 'Cierre octubre 2026 - Mixco', 2, '2026-10-01', '2026-10-31', 0, 0, 0.0000, 'Conteo y saldos conciliados, sin diferencias.', 'Cierre mensual conforme al kardex de la bodega.', '2026-11-01 08:20:00'),
+    -- Registro 3: Cierre octubre 2026 - Villa Nueva
+    (3, 'Cierre octubre 2026 - Villa Nueva', 3, '2026-10-01', '2026-10-31', 0, 0, 0.0000, 'Movimientos de entrada y salida verificados.', 'Cierre aprobado sin ajustes pendientes.', '2026-11-01 08:40:00'),
+    -- Registro 4: Cierre octubre 2026 - Quetzaltenango
+    (4, 'Cierre octubre 2026 - Quetzaltenango', 4, '2026-10-01', '2026-10-31', 0, 0, 0.0000, 'Existencias y reportes coincidentes.', 'Cierre del centro regional de occidente.', '2026-11-01 09:00:00'),
+    -- Registro 5: Cierre octubre 2026 - Escuintla
+    (5, 'Cierre octubre 2026 - Escuintla', 5, '2026-10-01', '2026-10-31', 0, 0, 0.0000, 'Saldos y conteos confirmados por encargado.', 'Cierre del centro regional de la costa sur.', '2026-11-01 09:20:00');
+
+-- ============================================================================
+-- TABLA 27/44: tblMovimientoInventario | 5 registros
+-- ============================================================================
+INSERT INTO tblMovimientoInventario (
+    idMovimientoInventario,
+    Fk_Tipo_Movimiento_Codigo,
+    Fk_Sucursal_Origen_Codigo,
+    Fk_Bodega_Origen_Codigo,
+    Fk_Sucursal_Destino_Codigo,
+    Fk_Bodega_Destino_Codigo,
+    Fk_Transporte_Codigo,
+    Fk_Traslado_Codigo,
+    fechaMovimientoInventario,
+    observacionesMovimientoInventario,
+    estadoMovimientoInventario,
+    Fk_Cierre_Inventario_Codigo
+) VALUES
+    -- Registro 1: Salida por traslado de salchichas hacia Mixco.
+    (1, 4, 1, 1, 2, 2, 1, 1, '2026-10-25 09:00:00', 'Salida por traslado de salchichas hacia Mixco.', 'CERRADO', 1),
+    -- Registro 2: Entrada por traslado recibido de chorizos.
+    (2, 3, 2, 2, 3, 3, 2, 2, '2026-10-26 10:45:00', 'Entrada por traslado recibido de chorizos.', 'CERRADO', 2),
+    -- Registro 3: Salida por traslado de jamones hacia occidente.
+    (3, 4, 3, 3, 4, 4, 3, 3, '2026-10-27 06:30:00', 'Salida por traslado de jamones hacia occidente.', 'CERRADO', 3),
+    -- Registro 4: Ingreso de mortadela procedente del área de producción.
+    (4, 1, NULL, NULL, 4, 4, NULL, NULL, '2026-10-28 11:30:00', 'Ingreso de mortadela procedente del área de producción.', 'CERRADO', 4),
+    -- Registro 5: Despacho de tocino ahumado para venta mayorista.
+    (5, 2, 5, 5, NULL, NULL, NULL, NULL, '2026-10-29 15:10:00', 'Despacho de tocino ahumado para venta mayorista.', 'CERRADO', 5);
+
+-- ============================================================================
+-- TABLA 28/44: tblDetalleMovimiento | 5 registros
+-- ============================================================================
+INSERT INTO tblDetalleMovimiento (
+    idDetalleMovimiento,
+    Fk_Movimiento_Inventario_Codigo,
+    Fk_Lote_Producto_Codigo,
+    Fk_Producto_Codigo,
+    cantidadDetalleMovimiento,
+    precioCostoDetalleMovimiento
+) VALUES
+    -- Registro 1: relación 1 - 1
+    (1, 1, 1, 1, 25, 18.5000),
+    -- Registro 2: relación 2 - 2
+    (2, 2, 2, 2, 18, 22.7500),
+    -- Registro 3: relación 3 - 3
+    (3, 3, 3, 3, 12, 24.2000),
+    -- Registro 4: relación 4 - 4
+    (4, 4, 4, 4, 50, 36.0000),
+    -- Registro 5: relación 5 - 5
+    (5, 5, 5, 5, 15, 20.8000);
+
+-- ============================================================================
+-- TABLA 29/44: tblAuditoriaInventario | 5 registros
+-- ============================================================================
+INSERT INTO tblAuditoriaInventario (
+    idAuditoriaInventario,
+    Fk_Movimiento_Inventario_Codigo,
+    Fk_Bodega_Codigo,
+    tipoAuditoriaInventario,
+    estadoAuditoriaInventario,
+    fechaAuditoriaInventario,
+    encargadoBodegaAuditoriaInventario,
+    responsableAuditoriaInventario,
+    resultadoAuditoriaInventario,
+    observacionesCalidadAuditoriaInventario
+) VALUES
+    -- Registro 1: INDIVIDUAL
+    (1, 1, 1, 'INDIVIDUAL', 'FINALIZADA', '2026-11-03 08:30:00', 'Verónica Isabel Cruz', 'Carlos Eduardo Méndez', 'Sin diferencias', 'Conteo físico de salchichas coincide con el saldo registrado.'),
+    -- Registro 2: INDIVIDUAL
+    (2, 2, 2, 'INDIVIDUAL', 'FINALIZADA', '2026-11-04 09:15:00', 'Óscar David Ramos', 'Gabriela Fernanda López', 'Sin diferencias', 'Existencias de chorizo verificadas y documentadas.'),
+    -- Registro 3: INDIVIDUAL
+    (3, 3, 3, 'INDIVIDUAL', 'EN_PROCESO', '2026-11-05 10:00:00', 'Ana Lucía Castillo', 'Roberto Emilio Pérez', 'Diferencia pendiente', 'Se identificaron dos unidades faltantes para investigar.'),
+    -- Registro 4: INDIVIDUAL
+    (4, 4, 4, 'INDIVIDUAL', 'EN_PROCESO', '2026-11-06 11:45:00', 'Mario Estuardo Reyes', 'Daniela Sofía Vásquez', 'Diferencia pendiente', 'Una unidad adicional pendiente de conciliación documental.'),
+    -- Registro 5: MULTIPLE
+    (5, 5, 5, 'MULTIPLE', 'EN_PROCESO', '2026-11-10 14:00:00', 'Elena Patricia Herrera', 'Jorge Alejandro Castro', 'Conteo en proceso', 'Auditoría múltiple iniciada; quedan productos por agregar.');
+
+-- ============================================================================
+-- TABLA 30/44: tblDetalleAuditoria | 5 registros
+-- ============================================================================
+INSERT INTO tblDetalleAuditoria (
+    idDetalleAuditoria,
+    Fk_Auditoria_Inventario_Codigo,
+    Fk_Stock_Codigo,
+    stockTeoricoDetalleAuditoria,
+    stockFisicoDetalleAuditoria,
+    diferenciaDetalleAuditoria,
+    observacionesDetalleAuditoria
+) VALUES
+    -- Registro 1: Concordancia completa con el saldo teórico.
+    (1, 1, 1, 135, 135, 0, 'Concordancia completa con el saldo teórico.'),
+    -- Registro 2: Cantidad física confirmada con la ubicación de bodega.
+    (2, 2, 2, 82, 82, 0, 'Cantidad física confirmada con la ubicación de bodega.'),
+    -- Registro 3: Dos unidades no localizadas; investigar despachos.
+    (3, 3, 3, 50, 48, -2, 'Dos unidades no localizadas; investigar despachos.'),
+    -- Registro 4: Una unidad adicional; revisar ingreso pendiente.
+    (4, 4, 4, 160, 161, 1, 'Una unidad adicional; revisar ingreso pendiente.'),
+    -- Registro 5: Primer artículo validado de la auditoría múltiple.
+    (5, 5, 5, 100, 100, 0, 'Primer artículo validado de la auditoría múltiple.');
+
+-- ============================================================================
+-- TABLA 31/44: tblDetalleCierre | 5 registros
+-- ============================================================================
+INSERT INTO tblDetalleCierre (
+    idDetalleCierre,
+    Fk_Cierre_Inventario_Codigo,
+    Fk_Stock_Codigo,
+    stockAnteriorDetalleCierre,
+    stockActualDetalleCierre,
+    cargosMesDetalleCierre,
+    abonosMesDetalleCierre,
+    cargosAcumuladosDetalleCierre,
+    abonosAcumuladosDetalleCierre
+) VALUES
+    -- Registro 1: cierre 1, stock 1
+    (1, 1, 1, 120, 135, 35, 20, 400, 265),
+    -- Registro 2: cierre 2, stock 2
+    (2, 2, 2, 80, 82, 20, 18, 250, 168),
+    -- Registro 3: cierre 3, stock 3
+    (3, 3, 3, 60, 50, 15, 25, 220, 170),
+    -- Registro 4: cierre 4, stock 4
+    (4, 4, 4, 150, 160, 50, 40, 580, 420),
+    -- Registro 5: cierre 5, stock 5
+    (5, 5, 5, 95, 100, 20, 15, 330, 230);
+
+-- ============================================================================
+-- TABLA 32/44: tblHistoricoInventario | 5 registros
+-- ============================================================================
+INSERT INTO tblHistoricoInventario (
+    idHistoricoInventario,
+    Fk_Cierre_Inventario_Codigo,
+    Fk_Stock_Codigo,
+    Fk_Sucursal_Codigo,
+    Fk_Bodega_Codigo,
+    Fk_Producto_Codigo,
+    stockFisicoStock,
+    stockVirtualStock,
+    stockAnteriorStock,
+    stockActualStock,
+    cargosMesStock,
+    abonosMesStock,
+    cargosAcumuladosStock,
+    abonosAcumuladosStock,
+    apartadosStock,
+    estadoVentaStock,
+    estadoCompraStock,
+    fechaCorteHistoricoInventario
+) VALUES
+    -- Registro 1: cierre 1, stock 1
+    (1, 1, 1, 1, 1, 1, 135, 135, 120, 135, 35, 20, 400, 265, 12, 1, 1, '2026-10-31'),
+    -- Registro 2: cierre 2, stock 2
+    (2, 2, 2, 2, 2, 2, 82, 82, 80, 82, 20, 18, 250, 168, 5, 1, 1, '2026-10-31'),
+    -- Registro 3: cierre 3, stock 3
+    (3, 3, 3, 3, 3, 3, 50, 50, 60, 50, 15, 25, 220, 170, 3, 1, 1, '2026-10-31'),
+    -- Registro 4: cierre 4, stock 4
+    (4, 4, 4, 4, 4, 4, 160, 160, 150, 160, 50, 40, 580, 420, 20, 1, 0, '2026-10-31'),
+    -- Registro 5: cierre 5, stock 5
+    (5, 5, 5, 5, 5, 5, 100, 100, 95, 100, 20, 15, 330, 230, 8, 0, 1, '2026-10-31');
+
+-- ============================================================================
+-- TABLA 33/44: tblServicioTransporteExterno | 5 registros
+-- ============================================================================
+INSERT INTO tblServicioTransporteExterno (
+    idServicioTransporteExterno,
+    Fk_Empresa_Transportista_Codigo,
+    Fk_Tipo_Servicio_Codigo,
+    Fk_Traslado_Codigo,
+    numeroGuiaServicioTransporteExterno,
+    estadoServicioTransporteExterno,
+    origenServicioTransporteExterno,
+    direccionOrigenServicioTransporteExterno,
+    destinoServicioTransporteExterno,
+    direccionDestinoServicioTransporteExterno,
+    fechaContratacionServicioTransporteExterno,
+    fechaEstimadaEntregaServicioTransporteExterno,
+    fechaEntregaRealServicioTransporteExterno
+) VALUES
+    -- Registro 1: GUIA-EXT-2601
+    (1, 1, 1, 1, 'GUIA-EXT-2601', 'Entregado', 'Ciudad de Guatemala', 'Avenida Petapa 32-36, zona 12', 'Mixco', 'Calzada San Juan 10-80, zona 4', '2026-10-23', '2026-10-25', '2026-10-25'),
+    -- Registro 2: GUIA-EXT-2602
+    (2, 2, 2, 2, 'GUIA-EXT-2602', 'Entregado', 'Mixco', 'Calzada San Juan 10-80, zona 4', 'Villa Nueva', '5a avenida 4-55, zona 1', '2026-10-24', '2026-10-26', '2026-10-26'),
+    -- Registro 3: GUIA-EXT-2603
+    (3, 3, 3, 3, 'GUIA-EXT-2603', 'Entregado', 'Villa Nueva', '5a avenida 4-55, zona 1', 'Quetzaltenango', '7a calle 14-26, zona 3', '2026-10-25', '2026-10-27', '2026-10-27'),
+    -- Registro 4: GUIA-EXT-2604
+    (4, 4, 4, 4, 'GUIA-EXT-2604', 'En tránsito', 'Quetzaltenango', '7a calle 14-26, zona 3', 'Escuintla', '2a avenida 5-14, zona 1', '2026-11-07', '2026-11-11', NULL),
+    -- Registro 5: GUIA-EXT-2605
+    (5, 5, 5, 5, 'GUIA-EXT-2605', 'Programado', 'Escuintla', '2a avenida 5-14, zona 1', 'Ciudad de Guatemala', 'Avenida Petapa 32-36, zona 12', '2026-11-10', '2026-11-13', NULL);
+
+-- ============================================================================
+-- TABLA 34/44: tblCostoTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblCostoTransporte (
+    idCostoTransporte,
+    Fk_Servicio_Transporte_Externo_Codigo,
+    Fk_Tarifa_Transporte_Codigo,
+    cantidadCostoTransporte,
+    costoUnitarioCostoTransporte,
+    costoTotalCostoTransporte,
+    monedaCostoTransporte,
+    tipoPagoCostoTransporte
+) VALUES
+    -- Registro 1: GTQ
+    (1, 1, 1, 120.0000, 8.7500, 1050.0000, 'GTQ', 'Transferencia'),
+    -- Registro 2: GTQ
+    (2, 2, 2, 850.0000, 1.2500, 1062.5000, 'GTQ', 'Transferencia'),
+    -- Registro 3: GTQ
+    (3, 3, 3, 1.0000, 1250.0000, 1250.0000, 'GTQ', 'Transferencia'),
+    -- Registro 4: GTQ
+    (4, 4, 4, 3.0000, 150.0000, 450.0000, 'GTQ', 'Efectivo'),
+    -- Registro 5: GTQ
+    (5, 5, 5, 12.0000, 45.0000, 540.0000, 'GTQ', 'Transferencia');
+
+-- ============================================================================
+-- TABLA 35/44: tblVehiculoTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblVehiculoTransporte (
+    idVehiculoTransporte,
+    Fk_Servicio_Transporte_Externo_Codigo,
+    placaVehiculoTransporte,
+    tipoVehiculoTransporte,
+    capacidadVehiculoTransporte
+) VALUES
+    -- Registro 1: C-728GTF
+    (1, 1, 'C-728GTF', 'Camión refrigerado', '5 toneladas'),
+    -- Registro 2: C-431NVP
+    (2, 2, 'C-431NVP', 'Furgón de reparto', '3 toneladas'),
+    -- Registro 3: C-864SLM
+    (3, 3, 'C-864SLM', 'Camión de carga', '8 toneladas'),
+    -- Registro 4: P-502DRQ
+    (4, 4, 'P-502DRQ', 'Panel isotérmico', '1.5 toneladas'),
+    -- Registro 5: C-319JKA
+    (5, 5, 'C-319JKA', 'Camión refrigerado', '6 toneladas');
+
+-- ============================================================================
+-- TABLA 36/44: tblConductorTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblConductorTransporte (
+    idConductorTransporte,
+    Fk_Servicio_Transporte_Externo_Codigo,
+    nombreConductorTransporte,
+    telefonoConductorTransporte
+) VALUES
+    -- Registro 1: Héctor Orlando Gómez
+    (1, 1, 'Héctor Orlando Gómez', '+502 5432-7810'),
+    -- Registro 2: Rafael Enrique Juárez
+    (2, 2, 'Rafael Enrique Juárez', '+502 5278-0631'),
+    -- Registro 3: Saúl Ernesto Ramírez
+    (3, 3, 'Saúl Ernesto Ramírez', '+502 5590-1427'),
+    -- Registro 4: Juan Pablo Escobar
+    (4, 4, 'Juan Pablo Escobar', '+502 5781-2369'),
+    -- Registro 5: Miguel Ángel Méndez
+    (5, 5, 'Miguel Ángel Méndez', '+502 5356-8042');
+
+-- ============================================================================
+-- TABLA 37/44: tblProductoTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblProductoTransporte (
+    idProductoTransporte,
+    Fk_Servicio_Transporte_Externo_Codigo,
+    Fk_Producto_Codigo,
+    cantidadProductoTransporte,
+    unidadMedidaProductoTransporte
+) VALUES
+    -- Registro 1: paquetes
+    (1, 1, 1, 25.0000, 'paquetes'),
+    -- Registro 2: paquetes
+    (2, 2, 2, 18.0000, 'paquetes'),
+    -- Registro 3: paquetes
+    (3, 3, 3, 12.0000, 'paquetes'),
+    -- Registro 4: kilogramos
+    (4, 4, 4, 30.0000, 'kilogramos'),
+    -- Registro 5: paquetes
+    (5, 5, 5, 15.0000, 'paquetes');
+
+-- ============================================================================
+-- TABLA 38/44: tblUbicacionTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblUbicacionTransporte (
+    idUbicacionTransporte,
+    Fk_Servicio_Transporte_Externo_Codigo,
+    ubicacionActualUbicacionTransporte,
+    fechaActualizacionUbicacionTransporte
+) VALUES
+    -- Registro 1: Centro de distribución de Mixco, Guatemala
+    (1, 1, 'Centro de distribución de Mixco, Guatemala', '2026-10-25 11:15:00'),
+    -- Registro 2: Bodega principal de Villa Nueva, Guatemala
+    (2, 2, 'Bodega principal de Villa Nueva, Guatemala', '2026-10-26 10:45:00'),
+    -- Registro 3: Centro regional de Quetzaltenango, Guatemala
+    (3, 3, 'Centro regional de Quetzaltenango, Guatemala', '2026-10-27 14:20:00'),
+    -- Registro 4: Ruta al Pacífico, km 87, Escuintla
+    (4, 4, 'Ruta al Pacífico, km 87, Escuintla', '2026-11-11 10:15:00'),
+    -- Registro 5: Patio de transportistas, Escuintla
+    (5, 5, 'Patio de transportistas, Escuintla', '2026-11-10 16:00:00');
+
+-- ============================================================================
+-- TABLA 39/44: tblIncidenciaTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblIncidenciaTransporte (
+    idIncidenciaTransporte,
+    Fk_Servicio_Transporte_Externo_Codigo,
+    codigoIncidenciaTransporte,
+    fechaIncidenciaTransporte,
+    tipoIncidenciaTransporte,
+    descripcionIncidenciaTransporte,
+    responsableIncidenciaTransporte,
+    estadoIncidenciaTransporte
+) VALUES
+    -- Registro 1: INC-2601
+    (1, 1, 'INC-2601', '2026-10-25 09:20:00', 'Demora por tráfico', 'Se registraron 25 minutos de atraso en Calzada Roosevelt.', 'María Fernanda Solís', 'Resuelta'),
+    -- Registro 2: INC-2602
+    (2, 2, 'INC-2602', '2026-10-26 09:00:00', 'Revisión documental', 'Se verificó la guía de remisión antes de ingresar al destino.', 'Carlos Alberto Rivera', 'Resuelta'),
+    -- Registro 3: INC-2603
+    (3, 3, 'INC-2603', '2026-10-27 11:05:00', 'Variación de temperatura', 'La unidad registró 6 grados y se ajustó el sistema de refrigeración.', 'Andrea Lucía Méndez', 'Resuelta'),
+    -- Registro 4: INC-2604
+    (4, 4, 'INC-2604', '2026-11-11 08:45:00', 'Tránsito lento', 'Congestión vehicular en carretera; entrega todavía pendiente.', 'José Roberto Aguilar', 'En seguimiento'),
+    -- Registro 5: INC-2605
+    (5, 5, 'INC-2605', '2026-11-10 14:35:00', 'Reprogramación de carga', 'El área de despacho solicitó mover el horario de recolección.', 'Paola Gabriela Morales', 'Pendiente');
+
+-- ============================================================================
+-- TABLA 40/44: tblHistorialTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblHistorialTransporte (
+    idHistorialTransporte,
+    Fk_Servicio_Transporte_Externo_Codigo,
+    fechaMovimientoHistorialTransporte,
+    tipoMovimientoHistorialTransporte,
+    descripcionMovimientoHistorialTransporte,
+    estadoTransporteHistorialTransporte
+) VALUES
+    -- Registro 1: Confirmación de entrega
+    (1, 1, '2026-10-25 11:15:00', 'Confirmación de entrega', 'Entrega recibida y documentación firmada en Mixco.', 'Entregado'),
+    -- Registro 2: Confirmación de entrega
+    (2, 2, '2026-10-26 10:45:00', 'Confirmación de entrega', 'Recepción completa en Villa Nueva.', 'Entregado'),
+    -- Registro 3: Confirmación de entrega
+    (3, 3, '2026-10-27 14:20:00', 'Confirmación de entrega', 'Mercadería refrigerada recibida en Quetzaltenango.', 'Entregado'),
+    -- Registro 4: Actualización de ruta
+    (4, 4, '2026-11-11 10:15:00', 'Actualización de ruta', 'Vehículo reporta avance por carretera al Pacífico.', 'En tránsito'),
+    -- Registro 5: Programación de despacho
+    (5, 5, '2026-11-10 16:00:00', 'Programación de despacho', 'Se programó unidad para recolección y entrega.', 'Programado');
+
+-- ============================================================================
+-- TABLA 41/44: tblEstadoSolicitudPago | 5 registros
+-- ============================================================================
+INSERT IGNORE INTO tblEstadoSolicitudPago (
+    idEstadoSolicitudPago,
+    codigoEstadoSolicitudPago,
+    nombreEstadoSolicitudPago,
+    descripcionEstadoSolicitudPago
+) VALUES
+    -- Registro 1: SOLICITADO
+    (1, 'SOLICITADO', 'Solicitado', 'Solicitud de pago registrada y pendiente de revisión.'),
+    -- Registro 2: EN_REVISION
+    (2, 'EN_REVISION', 'En revisión', 'Documentación de soporte en revisión.'),
+    -- Registro 3: APROBADO
+    (3, 'APROBADO', 'Aprobado', 'Solicitud autorizada para realizar el pago.'),
+    -- Registro 4: PAGADO
+    (4, 'PAGADO', 'Pagado', 'Pago realizado y confirmado.'),
+    -- Registro 5: RECHAZADO
+    (5, 'RECHAZADO', 'Rechazado', 'Solicitud devuelta por inconsistencia documental.');
+
+-- ============================================================================
+-- TABLA 42/44: tblSolicitudPagoTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblSolicitudPagoTransporte (
+    idSolicitudPagoTransporte,
+    Fk_Servicio_Transporte_Externo_Codigo,
+    codigoSolicitudPagoTransporte,
+    Fk_Estado_Solicitud_Pago_Codigo,
+    referenciaBancariaSolicitudPagoTransporte,
+    fechaPagoSolicitudPagoTransporte
+) VALUES
+    -- Registro 1: SOL-PAG-2601
+    (1, 1, 'SOL-PAG-2601', 4, 'TRF-20261028-001', '2026-10-28'),
+    -- Registro 2: SOL-PAG-2602
+    (2, 2, 'SOL-PAG-2602', 3, NULL, NULL),
+    -- Registro 3: SOL-PAG-2603
+    (3, 3, 'SOL-PAG-2603', 2, NULL, NULL),
+    -- Registro 4: SOL-PAG-2604
+    (4, 4, 'SOL-PAG-2604', 1, NULL, NULL),
+    -- Registro 5: SOL-PAG-2605
+    (5, 5, 'SOL-PAG-2605', 5, NULL, NULL);
+
+-- ============================================================================
+-- TABLA 43/44: tblFacturaTransporte | 5 registros
+-- ============================================================================
+INSERT INTO tblFacturaTransporte (
+    idFacturaTransporte,
+    Fk_Servicio_Transporte_Externo_Codigo,
+    Fk_Plazo_Codigo,
+    Fk_SerieDocumentoCuentaPorPagar,
+    Fk_NumeroDocumentoCuentaPorPagar,
+    Fk_IdConceptoProveedor,
+    serieFacturaTransporte,
+    numeroFacturaTransporte,
+    fechaEmisionFacturaTransporte,
+    montoFacturaTransporte,
+    activaFacturaTransporte
+) VALUES
+    -- Registro 1: A-2026
+    (1, 1, @idPlazoLogistica, @cxp_serie_1, @cxp_numero_1, @cxp_concepto_1, 'A-2026', '000184', '2026-10-25', 1050.0000, 1),
+    -- Registro 2: A-2026
+    (2, 2, @idPlazoLogistica, @cxp_serie_2, @cxp_numero_2, @cxp_concepto_2, 'A-2026', '000192', '2026-10-26', 1062.5000, 1),
+    -- Registro 3: FEL-26
+    (3, 3, @idPlazoLogistica, @cxp_serie_3, @cxp_numero_3, @cxp_concepto_3, 'FEL-26', '000847', '2026-10-27', 1250.0000, 1),
+    -- Registro 4: FEL-26
+    (4, 4, @idPlazoLogistica, @cxp_serie_4, @cxp_numero_4, @cxp_concepto_4, 'FEL-26', '000861', '2026-11-08', 450.0000, 1),
+    -- Registro 5: B-2026
+    (5, 5, @idPlazoLogistica, @cxp_serie_5, @cxp_numero_5, @cxp_concepto_5, 'B-2026', '000319', '2026-11-10', 540.0000, 1);
+
+-- ============================================================================
+-- TABLA 44/44: tblCuentaBancariaTransportista | 5 registros
+-- ============================================================================
+INSERT INTO tblCuentaBancariaTransportista (
+    idCuentaBancariaTransportista,
+    Fk_Empresa_Transportista_Codigo,
+    Fk_Banco_Codigo,
+    Fk_TipoCuentaBancaria_Codigo,
+    Fk_Moneda_Codigo,
+    numeroCuentaBancariaTransportista,
+    titularCuentaBancariaTransportista,
+    activaCuentaBancariaTransportista,
+    predeterminadaCuentaBancariaTransportista
+) VALUES
+    -- Registro 1: 0102-0045-00876321
+    (1, 1, @idBancoLogistica, @idTipoCuentaLogistica, @idMonedaLogistica, '0102-0045-00876321', 'Transporte Refrigerado del Altiplano, S.A.', 1, 1),
+    -- Registro 2: 0102-0045-00876322
+    (2, 2, @idBancoLogistica, @idTipoCuentaLogistica, @idMonedaLogistica, '0102-0045-00876322', 'Logística del Pacífico, S.A.', 1, 1),
+    -- Registro 3: 0102-0045-00876323
+    (3, 3, @idBancoLogistica, @idTipoCuentaLogistica, @idMonedaLogistica, '0102-0045-00876323', 'Distribuciones La Ceiba, S.A.', 1, 1),
+    -- Registro 4: 0102-0045-00876324
+    (4, 4, @idBancoLogistica, @idTipoCuentaLogistica, @idMonedaLogistica, '0102-0045-00876324', 'Carga Fría del Sur, S.A.', 1, 1),
+    -- Registro 5: 0102-0045-00876325
+    (5, 5, @idBancoLogistica, @idTipoCuentaLogistica, @idMonedaLogistica, '0102-0045-00876325', 'Transportes Valle Verde, S.A.', 1, 1);
+
+-- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ ingresos de Compras !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 SET @lote = LEFT(REPLACE(UUID(), '-', ''), 12);
 SET @fecha = CURRENT_DATE();
 SET @serie = CONCAT('PR-', @lote);
@@ -8410,7 +8701,25 @@ DELIMITER ;
 CALL sp_cargar_compras_5_3();
 DROP PROCEDURE sp_cargar_compras_5_3;
 
--- ventas
+INSERT INTO tblRangoAntiguedad (nombreRangoAntiguedad, diasDesdeRangoAntiguedad, diasHastaRangoAntiguedad, ordenRangoAntiguedad)
+SELECT r.nombre, r.desde, r.hasta, r.orden
+FROM (
+    SELECT 'Por vencer' AS nombre, NULL AS desde, 0 AS hasta, 1 AS orden UNION ALL
+    SELECT '1 a 30 días', 1, 30, 2 UNION ALL
+    SELECT '31 a 60 días', 31, 60, 3 UNION ALL
+    SELECT '61 a 90 días', 61, 90, 4 UNION ALL
+    SELECT 'Más de 90 días', 91, NULL, 5
+) AS r
+WHERE NOT EXISTS (SELECT 1 FROM tblRangoAntiguedad x WHERE x.nombreRangoAntiguedad = r.nombre);
+
+-- Primer período de Compras. Cambiar al mes en que el módulo empiece a operar:
+-- los documentos anteriores forman su saldo inicial y los períodos siguientes
+-- los abre el cierre automáticamente.
+INSERT INTO tblPeriodoCompras (anioPeriodoCompras, mesPeriodoCompras, fechaInicioPeriodoCompras, fechaFinPeriodoCompras)
+SELECT 2026, 10, '2026-10-01', '2026-10-31'
+WHERE NOT EXISTS (SELECT 1 FROM tblPeriodoCompras);
+
+-- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ ingresos de ventas !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 DELIMITER $$
 CREATE PROCEDURE spCargarPruebasVentasERP16()
 carga: BEGIN
@@ -10013,7 +10322,180 @@ carga: BEGIN
     COMMIT;
 END$$
 DELIMITER ;
+START TRANSACTION;
 
+INSERT INTO tblTipoMovimiento
+    (nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento)
+SELECT 'Salida por facturación', 'Descuento de existencias al emitir una factura', '-'
+WHERE NOT EXISTS (
+    SELECT 1 FROM tblTipoMovimiento
+    WHERE nombreTipoMovimiento = 'Salida por facturación'
+);
+
+-- Crear los catálogos de prueba antes de resolver sus identificadores.
+INSERT INTO tblProveedor (nombreProveedor,nitProveedor,correoProveedor,telefonoProveedor,direccionProveedor)
+SELECT 'FAC-QA Proveedor','99100499-1','facturas@example.invalid','00000000','Ciudad'
+WHERE NOT EXISTS (SELECT 1 FROM tblProveedor WHERE nitProveedor='99100499-1');
+
+INSERT INTO tblMarca (nombreMarca,porcentajeComisionMarca)
+SELECT 'FAC-QA Marca',0.00
+WHERE NOT EXISTS (SELECT 1 FROM tblMarca WHERE nombreMarca='FAC-QA Marca');
+
+INSERT INTO tblCategoria (nombreCategoria,porcentajeComisionCategoria)
+SELECT 'FAC-QA Embutidos',0.00
+WHERE NOT EXISTS (SELECT 1 FROM tblCategoria WHERE nombreCategoria='FAC-QA Embutidos');
+
+INSERT INTO tblLinea (nombreLinea,porcentajeComisionLinea)
+SELECT 'FAC-QA Refrigerados',0.00
+WHERE NOT EXISTS (SELECT 1 FROM tblLinea WHERE nombreLinea='FAC-QA Refrigerados');
+
+SET @qa_proveedor = (SELECT idProveedor FROM tblProveedor WHERE nitProveedor='99100499-1');
+SET @qa_marca = (SELECT idMarca FROM tblMarca WHERE nombreMarca='FAC-QA Marca');
+SET @qa_categoria = (SELECT idCategoria FROM tblCategoria WHERE nombreCategoria='FAC-QA Embutidos');
+SET @qa_linea = (SELECT idLinea FROM tblLinea WHERE nombreLinea='FAC-QA Refrigerados');
+SET @qa_empleado = (SELECT MIN(idEmpleado) FROM tblEmpleado);
+SET @qa_usuario = (SELECT MIN(idUsuario) FROM tblUsuario);
+SELECT @qa_proveedor AS proveedor, @qa_marca AS marca, @qa_categoria AS categoria,
+       @qa_linea AS linea, @qa_empleado AS empleado, @qa_usuario AS usuario_origen;
+
+INSERT INTO tblMoneda (codigoMoneda,nombreMoneda,simboloMoneda,is_active)
+SELECT m.codigo,m.nombre,m.simbolo,1 FROM
+(SELECT 'GTQ' codigo,'Quetzal' nombre,'Q' simbolo UNION ALL SELECT 'USD','Dólar estadounidense','$') m
+WHERE NOT EXISTS (SELECT 1 FROM tblMoneda x WHERE x.codigoMoneda=m.codigo);
+
+INSERT INTO tblEmpresa (nitEmpresa,razonSocialEmpresa,nombreComercialEmpresa,direccionEmpresa,representanteLegalEmpresa,is_active)
+SELECT '25103','Embutidos de Calidad, S.A.','Embutidos de Calidad','3a. Avenida 9-00 zona 2 Interior Finca El Zapote','Representante ficticio de auditoría',1
+WHERE NOT EXISTS (SELECT 1 FROM tblEmpresa WHERE nitEmpresa='25103' OR razonSocialEmpresa='Embutidos de Calidad, S.A.');
+
+INSERT INTO tblImpuesto (nombreImpuesto,descripcionImpuesto,tipoImpuesto,operacionImpuesto,valorImpuesto,periodicidadImpuesto)
+SELECT 'IVA','IVA para pruebas de Facturas','CONSUMO','VENTA',0.1200,'MENSUAL'
+WHERE NOT EXISTS (SELECT 1 FROM tblImpuesto WHERE UPPER(nombreImpuesto)='IVA' AND operacionImpuesto IN ('VENTA','AMBAS'));
+SET @qa_iva = (SELECT MIN(valorImpuesto) FROM tblImpuesto WHERE UPPER(nombreImpuesto)='IVA' AND operacionImpuesto IN ('VENTA','AMBAS') HAVING COUNT(*)=1);
+
+INSERT INTO tblFormaPagoVenta (codigoFormaPagoVenta,nombreFormaPagoVenta,requiereReferenciaFormaPagoVenta)
+SELECT 'FAC-QA-EF','Efectivo (Facturas QA)',0
+WHERE NOT EXISTS (SELECT 1 FROM tblFormaPagoVenta WHERE codigoFormaPagoVenta='FAC-QA-EF' OR (nombreFormaPagoVenta LIKE '%Efectivo%' AND requiereReferenciaFormaPagoVenta=0));
+
+INSERT INTO tblSucursal (nombreSucursal,descripcionSucursal,ubicacionSucursal,paisSucursal)
+SELECT 'FAC-QA Guatemala','Sucursal de pruebas de facturación','Ciudad','Guatemala'
+WHERE NOT EXISTS (SELECT 1 FROM tblSucursal WHERE nombreSucursal='FAC-QA Guatemala');
+SET @qa_sucursal=(SELECT MIN(idSucursal) FROM tblSucursal WHERE nombreSucursal='FAC-QA Guatemala');
+
+INSERT INTO tblBodega (nombreBodega,Fk_Sucursal_Codigo,paisBodega)
+SELECT b.nombre,@qa_sucursal,'Guatemala' FROM (SELECT 'FAC-QA Zona 9' nombre UNION ALL SELECT 'FAC-QA Zona 11') b
+WHERE NOT EXISTS (SELECT 1 FROM tblBodega x WHERE x.nombreBodega=b.nombre AND x.Fk_Sucursal_Codigo=@qa_sucursal);
+
+INSERT INTO tblVendedor (codigoVendedor,idEmpleado,activoVendedor)
+SELECT 'FAC-QA-V1',@qa_empleado,1
+WHERE NOT EXISTS (SELECT 1 FROM tblVendedor WHERE activoVendedor=1 OR idEmpleado=@qa_empleado OR codigoVendedor='FAC-QA-V1');
+SET @qa_vendedor=(SELECT MIN(idVendedor) FROM tblVendedor WHERE activoVendedor=1);
+
+INSERT INTO tblTipoCliente (codigoTipoCliente,nombreTipoCliente,porcentajeDescuentoTipoCliente,activoTipoCliente)
+SELECT 'FAC-QA','Clientes de prueba de Facturas',0,1
+WHERE NOT EXISTS (SELECT 1 FROM tblTipoCliente WHERE codigoTipoCliente='FAC-QA');
+SET @qa_tipo=(SELECT MIN(idTipoCliente) FROM tblTipoCliente WHERE codigoTipoCliente='FAC-QA');
+
+INSERT INTO tblProducto (skuProducto,nombreProducto,idProveedorProductos,Fk_Marca_Codigo,Fk_Categoria_Codigo,Fk_Linea_Codigo,descripcionProducto,imagenProducto,paisProducto,precioCostoProducto,precioVentaProducto,porcentajeComisionProducto,stockMinimoProducto,stockMaximoProducto,pesoProducto)
+SELECT p.sku,p.nombre,@qa_proveedor,@qa_marca,@qa_categoria,@qa_linea,'Producto ficticio de auditoría',FROM_BASE64('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aX1cAAAAASUVORK5CYII='),'Guatemala',ROUND(p.precio*0.5,4),p.precio,0,1,1000,0.50
+FROM (SELECT 'FAC-QA-P01' sku,'Jamón de pavo 250 g' nombre,30 precio,12 mayorista,4 usd
+UNION ALL SELECT 'FAC-QA-P02' sku,'Jamón tradicional 500 g' nombre,32 precio,14 mayorista,4.25 usd
+UNION ALL SELECT 'FAC-QA-P03' sku,'Salchicha 1 lb' nombre,34 precio,16 mayorista,4.5 usd
+UNION ALL SELECT 'FAC-QA-P04' sku,'Chorizo tradicional 1 lb' nombre,36 precio,18 mayorista,4.75 usd
+UNION ALL SELECT 'FAC-QA-P05' sku,'Longaniza 1 lb' nombre,38 precio,20 mayorista,5 usd
+UNION ALL SELECT 'FAC-QA-P06' sku,'Tocino 250 g' nombre,40 precio,22 mayorista,5.25 usd
+UNION ALL SELECT 'FAC-QA-P07' sku,'Mortadela 500 g' nombre,42 precio,24 mayorista,5.5 usd
+UNION ALL SELECT 'FAC-QA-P08' sku,'Salami 250 g' nombre,44 precio,26 mayorista,5.75 usd) p
+WHERE NOT EXISTS (SELECT 1 FROM tblProducto x WHERE x.skuProducto=p.sku);
+
+INSERT INTO tblProductoVenta (idProductoVenta,tipoItemProductoVenta,unidadMedidaProductoVenta,tasaImpuestoProductoVenta,activoProductoVenta)
+SELECT p.idProducto,'B','Paquete',@qa_iva,1 FROM tblProducto p
+WHERE p.skuProducto LIKE 'FAC-QA-P0%' AND NOT EXISTS (SELECT 1 FROM tblProductoVenta v WHERE v.idProductoVenta=p.idProducto);
+
+INSERT INTO tblStock (Fk_Sucursal_Codigo,Fk_Bodega_Codigo,Fk_Producto_Codigo,stockFisicoStock,stockVirtualStock,stockActualStock,cargosMesStock,cargosAcumuladosStock,estadoVentaStock,estadoCompraStock)
+SELECT @qa_sucursal,b.idBodega,p.idProducto,15,15,15,15,15,1,1
+FROM tblBodega b CROSS JOIN tblProducto p
+WHERE b.Fk_Sucursal_Codigo=@qa_sucursal AND b.nombreBodega IN ('FAC-QA Zona 9','FAC-QA Zona 11') AND p.skuProducto LIKE 'FAC-QA-P0%'
+AND NOT EXISTS (SELECT 1 FROM tblStock s WHERE s.Fk_Sucursal_Codigo=@qa_sucursal AND s.Fk_Bodega_Codigo=b.idBodega AND s.Fk_Producto_Codigo=p.idProducto)
+ORDER BY p.idProducto,b.nombreBodega DESC;
+
+INSERT INTO tblListaPrecioEncabezado (idTipoCliente,codigoListaPrecioEncabezado,nombreListaPrecioEncabezado,idMoneda,vigenteDesdeListaPrecioEncabezado,activoListaPrecioEncabezado)
+SELECT @qa_tipo,l.codigo,l.nombre,m.idMoneda,CURRENT_DATE,1
+FROM (SELECT 'FAC-QA-MIN' codigo,'Auditoría minorista GTQ' nombre,'GTQ' moneda
+UNION ALL SELECT 'FAC-QA-MAY','Auditoría mayorista GTQ','GTQ'
+UNION ALL SELECT 'FAC-QA-USD','Auditoría USD','USD') l JOIN tblMoneda m ON m.codigoMoneda=l.moneda
+WHERE NOT EXISTS (SELECT 1 FROM tblListaPrecioEncabezado x WHERE x.codigoListaPrecioEncabezado=l.codigo);
+
+INSERT INTO tblListaPrecioDetalle (idListaPrecioEncabezado,idProducto,precioUnitarioListaPrecioDetalle,activoListaPrecioDetalle)
+SELECT l.idListaPrecioEncabezado,p.idProducto,CASE l.codigoListaPrecioEncabezado WHEN 'FAC-QA-MAY' THEN d.mayorista WHEN 'FAC-QA-USD' THEN d.usd ELSE d.precio END,1
+FROM (SELECT 'FAC-QA-P01' sku,'Jamón de pavo 250 g' nombre,30 precio,12 mayorista,4 usd
+UNION ALL SELECT 'FAC-QA-P02' sku,'Jamón tradicional 500 g' nombre,32 precio,14 mayorista,4.25 usd
+UNION ALL SELECT 'FAC-QA-P03' sku,'Salchicha 1 lb' nombre,34 precio,16 mayorista,4.5 usd
+UNION ALL SELECT 'FAC-QA-P04' sku,'Chorizo tradicional 1 lb' nombre,36 precio,18 mayorista,4.75 usd
+UNION ALL SELECT 'FAC-QA-P05' sku,'Longaniza 1 lb' nombre,38 precio,20 mayorista,5 usd
+UNION ALL SELECT 'FAC-QA-P06' sku,'Tocino 250 g' nombre,40 precio,22 mayorista,5.25 usd
+UNION ALL SELECT 'FAC-QA-P07' sku,'Mortadela 500 g' nombre,42 precio,24 mayorista,5.5 usd
+UNION ALL SELECT 'FAC-QA-P08' sku,'Salami 250 g' nombre,44 precio,26 mayorista,5.75 usd) d JOIN tblProducto p ON p.skuProducto=d.sku CROSS JOIN tblListaPrecioEncabezado l
+WHERE l.codigoListaPrecioEncabezado IN ('FAC-QA-MIN','FAC-QA-MAY','FAC-QA-USD')
+AND NOT EXISTS (SELECT 1 FROM tblListaPrecioDetalle x WHERE x.idListaPrecioEncabezado=l.idListaPrecioEncabezado AND x.idProducto=p.idProducto);
+
+INSERT INTO tblCliente (codigoCliente,tipoIdentificacionCliente,nitCliente,nombreCliente,direccionCliente,diasCreditoCliente,limiteCreditoCliente,idMonedaCredito,activoCliente)
+SELECT d.codigo,IF(d.nit IS NULL,'CF','NIT'),d.nit,d.nombre,'Ciudad',d.dias,d.limite,m.idMoneda,1
+FROM (SELECT 'FAC-QA-CF' codigo,'Consumidor Final' nombre,NULL nit,0 dias,0 limite,'GTQ' moneda,'FAC-QA-MIN' lista
+UNION ALL SELECT 'FAC-QA-C01' codigo,'Tienda El Roble' nombre,'99100401-1' nit,0 dias,0 limite,'GTQ' moneda,'FAC-QA-MIN' lista
+UNION ALL SELECT 'FAC-QA-C02' codigo,'Distribuidora La Cumbre' nombre,'99100402-1' nit,30 dias,10000 limite,'GTQ' moneda,'FAC-QA-MAY' lista
+UNION ALL SELECT 'FAC-QA-C03' codigo,'Restaurante El Pinar' nombre,'99100403-1' nit,60 dias,20000 limite,'GTQ' moneda,'FAC-QA-MIN' lista
+UNION ALL SELECT 'FAC-QA-C04' codigo,'Mercado Regional' nombre,'99100404-1' nit,15 dias,500 limite,'GTQ' moneda,'FAC-QA-MAY' lista
+UNION ALL SELECT 'FAC-QA-C05' codigo,'Exportadora Sierra' nombre,'99100405-1' nit,30 dias,5000 limite,'USD' moneda,'FAC-QA-USD' lista
+UNION ALL SELECT 'FAC-QA-C06' codigo,'Comercial del Valle' nombre,'99100406-1' nit,0 dias,0 limite,'USD' moneda,'FAC-QA-USD' lista
+UNION ALL SELECT 'FAC-QA-C07' codigo,'Tienda Las Flores' nombre,'99100407-1' nit,45 dias,8000 limite,'GTQ' moneda,'FAC-QA-MAY' lista) d JOIN tblMoneda m ON m.codigoMoneda=d.moneda
+WHERE NOT EXISTS (SELECT 1 FROM tblCliente c WHERE c.codigoCliente=d.codigo OR c.nitCliente=d.nit OR (d.nit IS NULL AND c.tipoIdentificacionCliente='CF' AND c.activoCliente=1));
+
+INSERT INTO tblClienteListaPrecio (idCliente,idListaPrecioEncabezado)
+SELECT c.idCliente,l.idListaPrecioEncabezado FROM (SELECT 'FAC-QA-CF' codigo,'Consumidor Final' nombre,NULL nit,0 dias,0 limite,'GTQ' moneda,'FAC-QA-MIN' lista
+UNION ALL SELECT 'FAC-QA-C01' codigo,'Tienda El Roble' nombre,'99100401-1' nit,0 dias,0 limite,'GTQ' moneda,'FAC-QA-MIN' lista
+UNION ALL SELECT 'FAC-QA-C02' codigo,'Distribuidora La Cumbre' nombre,'99100402-1' nit,30 dias,10000 limite,'GTQ' moneda,'FAC-QA-MAY' lista
+UNION ALL SELECT 'FAC-QA-C03' codigo,'Restaurante El Pinar' nombre,'99100403-1' nit,60 dias,20000 limite,'GTQ' moneda,'FAC-QA-MIN' lista
+UNION ALL SELECT 'FAC-QA-C04' codigo,'Mercado Regional' nombre,'99100404-1' nit,15 dias,500 limite,'GTQ' moneda,'FAC-QA-MAY' lista
+UNION ALL SELECT 'FAC-QA-C05' codigo,'Exportadora Sierra' nombre,'99100405-1' nit,30 dias,5000 limite,'USD' moneda,'FAC-QA-USD' lista
+UNION ALL SELECT 'FAC-QA-C06' codigo,'Comercial del Valle' nombre,'99100406-1' nit,0 dias,0 limite,'USD' moneda,'FAC-QA-USD' lista
+UNION ALL SELECT 'FAC-QA-C07' codigo,'Tienda Las Flores' nombre,'99100407-1' nit,45 dias,8000 limite,'GTQ' moneda,'FAC-QA-MAY' lista) d
+JOIN tblCliente c ON c.codigoCliente=d.codigo OR (d.nit IS NULL AND c.idCliente=(SELECT MIN(cf.idCliente) FROM tblCliente cf WHERE cf.tipoIdentificacionCliente='CF' AND cf.activoCliente=1))
+JOIN tblListaPrecioEncabezado l ON l.codigoListaPrecioEncabezado=d.lista
+WHERE NOT EXISTS (SELECT 1 FROM tblClienteListaPrecio x WHERE x.idCliente=c.idCliente);
+
+INSERT INTO tblCotizacionEncabezado (numeroCotizacionEncabezado,idCliente,idVendedor,idMoneda,fechaEmisionCotizacionEncabezado,vigenteHastaCotizacionEncabezado,estadoCotizacionEncabezado,idUsuarioRegistro,idListaPrecioEncabezado)
+SELECT d.referencia,c.idCliente,@qa_vendedor,l.idMoneda,CURRENT_DATE,CURRENT_DATE+INTERVAL 1 YEAR,IF(d.pedido=1,'ACEPTADA','EMITIDA'),@qa_usuario,l.idListaPrecioEncabezado
+FROM (SELECT 'FAC-QA-COT01' referencia,'FAC-QA-C01' cliente,0 pedido
+UNION ALL SELECT 'FAC-QA-COT02' referencia,'FAC-QA-C02' cliente,0 pedido
+UNION ALL SELECT 'FAC-QA-COT03' referencia,'FAC-QA-C05' cliente,0 pedido
+UNION ALL SELECT 'FAC-QA-COT04' referencia,'FAC-QA-C03' cliente,0 pedido
+UNION ALL SELECT 'FAC-QA-COT05' referencia,'FAC-QA-C07' cliente,1 pedido
+UNION ALL SELECT 'FAC-QA-COT06' referencia,'FAC-QA-C04' cliente,1 pedido
+UNION ALL SELECT 'FAC-QA-COT07' referencia,'FAC-QA-C06' cliente,1 pedido
+UNION ALL SELECT 'FAC-QA-COT08' referencia,'FAC-QA-C02' cliente,1 pedido) d JOIN tblCliente c ON c.codigoCliente=d.cliente
+JOIN tblClienteListaPrecio a ON a.idCliente=c.idCliente JOIN tblListaPrecioEncabezado l ON l.idListaPrecioEncabezado=a.idListaPrecioEncabezado
+WHERE NOT EXISTS (SELECT 1 FROM tblCotizacionEncabezado q WHERE q.numeroCotizacionEncabezado=d.referencia);
+
+INSERT INTO tblCotizacionDetalle (idCotizacionEncabezado,numeroLineaCotizacionDetalle,idProducto,descripcionItemCotizacionDetalle,cantidadCotizacionDetalle,precioUnitarioCotizacionDetalle,descuentoMontoCotizacionDetalle,tasaImpuestoCotizacionDetalle)
+SELECT q.idCotizacionEncabezado,d.linea,p.idProducto,p.nombreProducto,d.cantidad,l.precioUnitarioListaPrecioDetalle,d.descuento,@qa_iva
+FROM tblCotizacionEncabezado q CROSS JOIN (SELECT 1 linea,'FAC-QA-P03' sku,2 cantidad,0 descuento UNION ALL SELECT 2,'FAC-QA-P05',3,1 UNION ALL SELECT 3,'FAC-QA-P08',1,0) d
+JOIN tblProducto p ON p.skuProducto=d.sku
+JOIN tblListaPrecioDetalle l ON l.idProducto=p.idProducto AND l.idListaPrecioEncabezado=q.idListaPrecioEncabezado
+WHERE q.numeroCotizacionEncabezado BETWEEN 'FAC-QA-COT01' AND 'FAC-QA-COT08'
+AND NOT EXISTS (SELECT 1 FROM tblCotizacionDetalle x WHERE x.idCotizacionEncabezado=q.idCotizacionEncabezado AND x.numeroLineaCotizacionDetalle=d.linea);
+
+INSERT INTO tblPedidoEncabezado (referenciaPedidoEncabezado,idCotizacionEncabezado,idCliente,idVendedor,idMoneda,fechaPedidoEncabezado,estadoPedidoEncabezado)
+SELECT REPLACE(q.numeroCotizacionEncabezado,'COT','PED'),q.idCotizacionEncabezado,q.idCliente,q.idVendedor,q.idMoneda,CURRENT_DATE,'CONFIRMADO'
+FROM tblCotizacionEncabezado q WHERE q.numeroCotizacionEncabezado BETWEEN 'FAC-QA-COT05' AND 'FAC-QA-COT08'
+AND NOT EXISTS (SELECT 1 FROM tblPedidoEncabezado x WHERE x.idCotizacionEncabezado=q.idCotizacionEncabezado OR x.referenciaPedidoEncabezado=REPLACE(q.numeroCotizacionEncabezado,'COT','PED'));
+
+INSERT INTO tblPedidoDetalle (idPedidoEncabezado,OrdenPedido,idProducto,cantidadPedidoDetalle,precioUnitarioPedidoDetalle,descuentoMontoPedidoDetalle)
+SELECT p.idPedidoEncabezado,d.numeroLineaCotizacionDetalle,d.idProducto,d.cantidadCotizacionDetalle,d.precioUnitarioCotizacionDetalle,d.descuentoMontoCotizacionDetalle
+FROM tblPedidoEncabezado p JOIN tblCotizacionDetalle d ON d.idCotizacionEncabezado=p.idCotizacionEncabezado
+WHERE p.referenciaPedidoEncabezado BETWEEN 'FAC-QA-PED05' AND 'FAC-QA-PED08'
+AND NOT EXISTS (SELECT 1 FROM tblPedidoDetalle x WHERE x.idPedidoEncabezado=p.idPedidoEncabezado AND x.OrdenPedido=d.numeroLineaCotizacionDetalle);
+
+-- ----------------------------- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ ingresos de persios de Modulos !!!!!!!!!!!!!!!!!!!!!!!!!-------------
 -- permisos de las aplicaciones
 -- ---------- 10. MODULO 9000 PARA RECURSOS HUMANOS  ----------
 -- Primero creo el modulo para tenerlo en seguridad
@@ -10433,7 +10915,5 @@ WHERE a.idModulo = 10000
   );
 
 
-
-
-
-
+	
+    
