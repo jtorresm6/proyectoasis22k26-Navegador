@@ -1,4 +1,6 @@
 @echo off
+rem Uso: compilar_compras.bat [Debug|Release] [--no-menu]
+rem Compila componentes y modulos sin crear unidades virtuales.
 setlocal DisableDelayedExpansion
 rem La expansion retardada queda desactivada para conservar rutas con !.
 set "CC_BASE=%~dp0"
@@ -20,13 +22,13 @@ $ErrorActionPreference = 'Stop'
 $base = [IO.Path]::GetFullPath($env:CC_BASE)
 $steps = New-Object 'System.Collections.Generic.List[object]'
 $projects = @{}
+$planningErrors = New-Object 'System.Collections.Generic.List[string]'
 $referenceOverrides = New-Object 'System.Collections.Generic.List[object]'
 $referenceRemovals = New-Object 'System.Collections.Generic.List[object]'
 $securityExecutable = $null
 $comprasExecutable = $null
 $result = 1
 $current = $null
-$shortDrive = $null
 $runDirectory = $null
 $repositoryRoot = $null
 $timer = [Diagnostics.Stopwatch]::StartNew()
@@ -40,14 +42,6 @@ function Write-Status([string]$message, [string]$kind = 'Info') {
 
 function FullPath($folder, $relative) {
     [IO.Path]::GetFullPath([IO.Path]::Combine($folder, $relative))
-}
-
-# Convierte una ruta de la unidad temporal (SUBST) a la ruta real del repositorio.
-function To-RealPath([string]$path) {
-    if ($path -and $shortDrive -and $path.StartsWith($shortDrive, [StringComparison]::OrdinalIgnoreCase)) {
-        return $repositoryRoot.TrimEnd('\') + $path.Substring($shortDrive.Length)
-    }
-    $path
 }
 
 # No se siguen enlaces ni se buscan soluciones en salidas, paquetes o respaldos.
@@ -93,6 +87,7 @@ function Remove-ProjectFromPlan($project) {
     foreach ($step in $steps) {
         $step.Projects = @($step.Projects | Where-Object { !([object]::ReferenceEquals($_, $project)) })
     }
+    $planningErrors.Add($project.Path)
     $projects.Remove($project.Path)
 }
 
@@ -107,6 +102,7 @@ function Invoke-ProjectQueries {
       <_ComprasDato Include="P|TargetFrameworkVersion|$(TargetFrameworkVersion)" />
       <_ComprasDato Include="P|OutputType|$(OutputType)" />
       <_ComprasDato Include="P|Prefer32Bit|$(Prefer32Bit)" />
+      <_ComprasDato Include="P|NuGetPackageRoot|$(NuGetPackageRoot)" />
       <_ComprasDato Include="@(Reference->'R|%(Identity)|%(HintPath)')" />
       <_ComprasDato Include="@(ProjectReference->'J|%(Identity)|')" />
       <_ComprasDato Include="@(PackageReference->'N|%(Identity)|')" />
@@ -183,13 +179,14 @@ function Add-Project($path, $configuration, $platform, $step) {
         if (!($step.Projects -contains $projects[$path])) { $step.Projects += $projects[$path] }
         return $projects[$path]
     }
-    if (!(Test-Path -LiteralPath $path -PathType Leaf)) { Write-Status "Falta el proyecto (se omite): $path" Warning; return $null }
+    if (!(Test-Path -LiteralPath $path -PathType Leaf)) { Write-Status "Falta el proyecto (se omite): $path" Warning; $planningErrors.Add($path); return $null }
     $isSdk = $false
     try {
         [xml]$projectDefinition = [IO.File]::ReadAllText($path)
         $isSdk = $projectDefinition.DocumentElement.HasAttribute('Sdk')
     } catch {
         Write-Status "No se pudo leer el proyecto (se omite): $path" Warning
+        $planningErrors.Add($path)
         return $null
     }
     $project = [pscustomobject]@{ Path=$path; Configuration=$configuration; Platform=$platform; Step=$step;
@@ -201,14 +198,15 @@ function Add-Project($path, $configuration, $platform, $step) {
     $project
 }
 
-function Get-ProjectWave($project) {
+function Get-ProjectWave($project, [string[]]$trail = @()) {
     if ($project.Wave -ge 0) { return $project.Wave }
-    if ($project.Visiting) { Write-Status "Dependencia circular ignorada: $($project.Path)" Warning; return 0 }
+    if ($project.Visiting) {
+        throw ("Dependencia circular real. Separe la carga de modulos de sus referencias de compilacion:`n" + (($trail + $project.Path) -join "`n -> "))
+    }
     $project.Visiting = $true
     $wave = 0
     foreach ($dependency in $project.Dependencies) {
-        if ([object]::ReferenceEquals($dependency, $project)) { continue }
-        $wave = [Math]::Max($wave, (Get-ProjectWave $dependency) + 1)
+        $wave = [Math]::Max($wave, (Get-ProjectWave $dependency ($trail + $project.Path)) + 1)
     }
     $project.Visiting = $false
     $project.Wave = $wave
@@ -220,7 +218,10 @@ function SdkCommand($project, [string]$target, [string]$referenceTargets = '') {
         ('/p:Configuration=' + $project.Configuration), ('/p:Platform=' + $project.Platform))
     if ($target -eq 'Build') {
         $arguments += @('/p:BuildProjectReferences=false', ('/p:ComprasEstadoProyecto=' + $project.Marker),
-            ('/p:CustomAfterMicrosoftCommonTargets=' + $referenceTargets))
+            ('/p:CustomAfterMicrosoftCommonTargets=' + $referenceTargets),
+            '/p:CreateHardLinksForCopyLocalIfPossible=true',
+            '/p:CreateHardLinksForCopyFilesToOutputDirectoryIfPossible=true',
+            '/p:CreateHardLinksForCopyAdditionalFilesIfPossible=true')
     }
     ($arguments | ForEach-Object { '"' + $_ + '"' }) -join ' '
 }
@@ -233,43 +234,49 @@ function MsbuildEscape([string]$text) {
     $text
 }
 
-try {
-    # NuGet packages.config todavia puede fallar con MAX_PATH. SUBST solo crea
-    # un alias temporal: no mueve archivos ni cambia la configuracion del equipo.
-    # Incluir tambien ayuda y los demas recursos hermanos de codigo.
-    $repositoryRoot = FullPath $base '..\..\..'
-    $subst = Join-Path $env:SystemRoot 'System32\subst.exe'
-    # Windows PowerShell 5.1 convierte en error fatal cualquier salida por stderr
-    # de un ejecutable nativo cuando ErrorActionPreference es Stop; subst escribe
-    # en stderr si la letra no es utilizable, asi que se prueba con Continue.
-    $previousPreference = $ErrorActionPreference
-    $ErrorActionPreference = 'Continue'
-    try {
-        $usedLetters = @([IO.DriveInfo]::GetDrives() | ForEach-Object { $_.Name.Substring(0,1).ToUpperInvariant() })
-        foreach ($letter in 90..68) {
-            $drive = ([char]$letter).ToString() + ':'
-            if ($usedLetters -contains ([char]$letter).ToString()) { continue }
-            if (Test-Path -LiteralPath ($drive + '\')) { continue }
-            & $subst $drive $repositoryRoot 2>&1 | Out-Null
-            if ($LASTEXITCODE -eq 0 -and (Test-Path -LiteralPath ($drive + '\'))) { $shortDrive=$drive; break }
+# Registro de salidas reales: rutas relativas y configuracion evaluadas por MSBuild.
+# Seguridad usa este indice para cargar modulos sin depender de ellos al compilar.
+function Write-ModuleRegistries {
+    $runtime = @($projects.Values | Where-Object { $_.Output -and (Test-Path -LiteralPath $_.Output -PathType Leaf) })
+    $unique = @()
+    foreach ($group in $runtime | Group-Object { [IO.Path]::GetFileNameWithoutExtension($_.Output) }) {
+        $producers = @($group.Group | Sort-Object Output -Unique)
+        if ($producers.Count -gt 1) {
+            Write-Status "Ensamblado ambiguo, no se registra para carga dinamica: $($group.Name)" Warning
+            continue
         }
-    } finally { $ErrorActionPreference = $previousPreference }
-    if (!$shortDrive) {
-        Write-Status 'No se pudo crear una unidad temporal libre (D: a Z:); se usa la ruta real (NuGet podria fallar con rutas largas).' Warning
-    } else {
-        $base = FullPath ($shortDrive + '\') 'codigo\modulos\compras'
+        $unique += $producers[0]
     }
+    $directories = @($runtime | ForEach-Object { Split-Path $_.Output } | Sort-Object -Unique)
+    foreach ($directory in $directories) {
+        $origin = [Uri]($directory.TrimEnd('\') + '\')
+        $xml = '<?xml version="1.0" encoding="utf-8"?><modulos configuracion="' + (XmlEscape $configuration) + '">'
+        foreach ($project in $unique | Sort-Object Output) {
+            $relative = [Uri]::UnescapeDataString($origin.MakeRelativeUri([Uri]$project.Output).ToString()).Replace('/', '\')
+            $xml += '<ensamblado nombre="' + (XmlEscape ([IO.Path]::GetFileNameWithoutExtension($project.Output))) + '" ruta="' + (XmlEscape $relative) + '" />'
+        }
+        $xml += '</modulos>'
+        Write-IfChanged (Join-Path $directory 'Modulos.xml') $xml
+    }
+    Write-Status "Registro dinamico generado en $($directories.Count) carpetas de salida." Success
+}
+
+try {
+    # Compilar directamente en el repositorio, sin asignar letras de unidad.
+    $repositoryRoot = FullPath $base '..\..\..'
     $hash = [Security.Cryptography.SHA256]::Create()
     try { $cacheKey = ([BitConverter]::ToString($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($repositoryRoot.ToUpperInvariant())))).Replace('-', '').Substring(0, 16) }
     finally { $hash.Dispose() }
     $cacheDirectory = Join-Path ([IO.Path]::GetTempPath()) ("ComprasBuild_$cacheKey")
     $null = [IO.Directory]::CreateDirectory($cacheDirectory)
+    $packageCache = Join-Path $cacheDirectory 'packages'
+    $null = [IO.Directory]::CreateDirectory($packageCache)
     $runDirectory = Join-Path $cacheDirectory ([guid]::NewGuid().ToString('N'))
     $null = [IO.Directory]::CreateDirectory($runDirectory)
     Write-Status "Ruta de compilacion: $base (los archivos permanecen en su ubicacion original)."
     $configuration = $env:CC_CONFIG
     if (!$configuration) { $configuration='Debug' }
-    if ($env:CC_MORE) { Write-Status 'Se ignoran los argumentos adicionales; solo se usa el primero.' Warning }
+    if ($env:CC_MORE -and $env:CC_MORE -ine '--no-menu') { throw 'Uso: compilar_compras.bat [Debug|Release] [--no-menu]' }
     if ($configuration -ieq 'Release') { $configuration='Release' }
     else {
         if ($configuration -ine 'Debug') { Write-Status "Configuracion '$configuration' no reconocida; se usa Debug." Warning }
@@ -388,6 +395,7 @@ try {
             }
         } catch {
             Write-Status "Error validando $($step.Name) (se continua con las demas): $($_.Exception.Message)" Warning
+            $planningErrors.Add($step.Path)
         }
     }
     $current = $null
@@ -458,6 +466,13 @@ try {
             $assembly = ($reference.Identity -split ',')[0].Trim() + '.dll'
             if (!$reference.HintPath -and !$assemblies.ContainsKey($assembly)) { continue }
             $hint = if ($reference.HintPath) { FullPath (Split-Path $project.Path) $reference.HintPath } else { $assembly }
+            # NuGet moderno gestiona su propia cache (id/version). No confundirla
+            # con packages.config (id.version), incluidos los imports de MSTest.
+            $nugetRoot = $project.Data.Properties.NuGetPackageRoot
+            if ($nugetRoot -and $reference.HintPath) {
+                $nugetRoot = (FullPath (Split-Path $project.Path) $nugetRoot).TrimEnd('\') + '\'
+                if ($hint.StartsWith($nugetRoot, [StringComparison]::OrdinalIgnoreCase)) { continue }
+            }
             # Algunas vistas conservan rutas absolutas de otra computadora.
             # Usar la misma version declarada por Seguridad, restaurada abajo.
             if ($assembly -like 'Microsoft.ReportViewer.*.dll') {
@@ -465,9 +480,14 @@ try {
                 if (Test-Path -LiteralPath $reportPackages) {
                     [xml]$reportManifest = [IO.File]::ReadAllText($reportPackages)
                     $reportPackage = $reportManifest.packages.package | Where-Object id -eq 'Microsoft.ReportingServices.ReportViewerControl.Winforms' | Select-Object -First 1
-                    if ($reportPackage -and ($reference.Identity -notmatch 'Version=' -or $reference.Identity -match 'Version=15\.0\.0\.0')) {
-                        $reportPath = Join-Path (Split-Path (Split-Path $reportPackages)) ("packages\$($reportPackage.id).$($reportPackage.version)\lib\net40\$assembly")
-                        $referenceOverrides.Add([pscustomobject]@{ Project=$project.Path; Identity=$reference.Identity; NewIdentity=$null; Output=$reportPath })
+                    if ($reportPackage) {
+                        if ($assembly -in @('Microsoft.ReportViewer.WebForms.dll','Microsoft.ReportViewer.WebDesign.dll')) {
+                            $webManifest = $reportManifest.packages.package | Where-Object id -eq 'Microsoft.ReportingServices.ReportViewerControl.WebForms' | Select-Object -First 1
+                            if (!$webManifest) { continue }
+                            $reportPackage = $webManifest
+                        }
+                        $reportPath = Join-Path $packageCache ("$($reportPackage.id).$($reportPackage.version)\lib\net40\$assembly")
+                        $referenceOverrides.Add([pscustomobject]@{ Project=$project.Path; Identity=$reference.Identity; NewIdentity=($reference.Identity -split ',')[0].Trim(); Output=$reportPath })
                         continue
                     }
                 }
@@ -475,10 +495,15 @@ try {
             # RAR no siempre normaliza rutas con muchos '..' antes de aplicar
             # MAX_PATH. Entregar rutas absolutas cortas tambien a los paquetes.
             if ($reference.HintPath -and $hint -match '[\\/]packages[\\/]') {
-                $referenceOverrides.Add([pscustomobject]@{ Project=$project.Path; Identity=$reference.Identity; NewIdentity=$null; Output=$hint })
+                $packageRelative = [regex]::Split($hint, '(?i)[\\/]packages[\\/]', 2)[1]
+                $packageHint = Join-Path $packageCache $packageRelative
+                $referenceOverrides.Add([pscustomobject]@{ Project=$project.Path; Identity=$reference.Identity; NewIdentity=$null; Output=$packageHint })
                 continue
             }
-            if ($outputs.ContainsKey($hint)) { $project.Dependencies += $outputs[$hint] }
+            if ($outputs.ContainsKey($hint)) {
+                $project.Dependencies += $outputs[$hint]
+                $referenceOverrides.Add([pscustomobject]@{ Project=$project.Path; Identity=$reference.Identity; NewIdentity=$null; Output=$outputs[$hint].Output })
+            }
             elseif ($hint -notmatch '[\\/]packages[\\/]') {
                 $assembly = ($reference.Identity -split ',')[0].Trim() + '.dll'
                 $producers = @($assemblies[$assembly] | Where-Object { $_ })
@@ -532,27 +557,80 @@ try {
             $referenceBody += '<Reference Condition="' + (XmlEscape $condition) + '"><HintPath>' + (XmlEscape $override.Output) + '</HintPath></Reference>'
         }
     }
+    # El grafo ya compila las dependencias: usar su salida evaluada evita
+    # que ProjectReference vuelva a calcular otra plataforma (Debug vs x64).
+    $referenceBody += '</ItemGroup></Target><Target Name="ComprasConfigurarProjectReferences" BeforeTargets="AssignProjectConfiguration"><ItemGroup>'
+    foreach ($project in $projects.Values | Where-Object { !$_.IsSdk }) {
+        foreach ($reference in @($project.Data.Items.ProjectReference)) {
+            $path = FullPath (Split-Path $project.Path) $reference.Identity
+            if (!$projects.ContainsKey($path)) { continue }
+            $producer = $projects[$path]
+            if ($producer.IsSdk -or !$producer.Output) { continue }
+            $condition = "'`$(MSBuildProjectFullPath)' == '" + (MsbuildEscape $project.Path) + "'"
+            $referenceBody += '<ProjectReference Remove="' + (XmlEscape (MsbuildEscape $reference.Identity)) + '" Condition="' + (XmlEscape $condition) + '" />'
+            $referenceBody += '<Reference Include="' + (XmlEscape ([IO.Path]::GetFileNameWithoutExtension($producer.Output))) + '" Condition="' + (XmlEscape $condition) + '"><HintPath>' + (XmlEscape $producer.Output) + '</HintPath><Private>true</Private></Reference>'
+        }
+    }
     $referenceBody += '</ItemGroup></Target><Target Name="ComprasMarcarInicio" BeforeTargets="PrepareForBuild" Condition="&apos;$(ComprasEstadoProyecto)&apos; != &apos;&apos;"><WriteLinesToFile File="$(ComprasEstadoProyecto).started" Lines="$(MSBuildProjectFullPath)" Overwrite="true" /></Target><Target Name="ComprasMarcarExito" AfterTargets="Build" Condition="&apos;$(ComprasEstadoProyecto)&apos; != &apos;&apos;"><WriteLinesToFile File="$(ComprasEstadoProyecto).done" Lines="$(MSBuildProjectFullPath)" Overwrite="true" /></Target></Project>'
     Write-IfChanged $referenceTargets $referenceBody
     $securityProject = @($projects.Values | Where-Object { [IO.Path]::GetFileName($_.Path) -ieq 'Ejecucion_Seguridad.csproj' })
     if ($securityProject.Count -eq 1 -and $securityProject[0].Output) {
-        $securityExecutable = To-RealPath $securityProject[0].Output
+        $securityExecutable = $securityProject[0].Output
     }
     $comprasProject = @($projects.Values | Where-Object { [IO.Path]::GetFileName($_.Path) -ieq 'Ejecucion_Compras.csproj' })
     if ($comprasProject.Count -eq 1 -and $comprasProject[0].Output) {
-        $comprasExecutable = To-RealPath $comprasProject[0].Output
+        $comprasExecutable = $comprasProject[0].Output
     }
-    foreach ($project in $projects.Values) { $null = Get-ProjectWave $project }
+    foreach ($project in $projects.Values | Sort-Object Path) { $null = Get-ProjectWave $project }
     $current = $null
     $runner = Join-Path $runDirectory 'Build.proj'
     $body = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><ItemGroup>'
     # Un proyecto compartido puede registrarse primero desde una solucion de
     # ejecucion. Sus paquetes pertenecen al proyecto, no a esa solucion.
     foreach ($project in $projects.Values | Where-Object { !$_.IsSdk } | Sort-Object Path) {
-        if (!(Test-Path -LiteralPath (Join-Path (Split-Path $project.Path) 'packages.config'))) { continue }
-        $packageRoot = Join-Path (Split-Path (Split-Path $project.Path)) 'packages'
-        $properties = "Configuration=$($project.Configuration);Platform=$($project.Platform);RestorePackagesConfig=true;RestoreRepositoryPath=$(MsbuildEscape $packageRoot)"
+        if (!(Test-Path -LiteralPath (Join-Path (Split-Path $project.Path) 'packages.config')) -and !@($project.Data.Items.PackageReference).Count) { continue }
+        $properties = "Configuration=$($project.Configuration);Platform=$($project.Platform);RestorePackagesConfig=true;RestoreRepositoryPath=$(MsbuildEscape $packageCache)"
         $body += '<Restauracion Include="' + (XmlEscape (MsbuildEscape $project.Path)) + '"><AdditionalProperties>' + (XmlEscape $properties) + '</AdditionalProperties></Restauracion>'
+    }
+    # Algunas versiones de NuGet conservan solo el nupkg en la cache.
+    $extractScript = Join-Path $runDirectory 'ExtraerPaquetes.ps1'
+    $extractCode = @'
+param([string]$Root)
+$ErrorActionPreference = 'Stop'
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+foreach ($archive in Get-ChildItem -LiteralPath $Root -Filter '*.nupkg' -Recurse) {
+    $destination = $archive.DirectoryName.TrimEnd('\') + '\'
+    $zip = [IO.Compression.ZipFile]::OpenRead($archive.FullName)
+    try {
+        foreach ($entry in $zip.Entries) {
+            $path = [IO.Path]::GetFullPath((Join-Path $destination $entry.FullName))
+            if (!$path.StartsWith($destination, [StringComparison]::OrdinalIgnoreCase)) { throw "Ruta de paquete invalida: $path" }
+            if (!$entry.Name) { $null = [IO.Directory]::CreateDirectory($path); continue }
+            if ([IO.File]::Exists($path)) { continue }
+            $null = [IO.Directory]::CreateDirectory([IO.Path]::GetDirectoryName($path))
+            [IO.Compression.ZipFileExtensions]::ExtractToFile($entry, $path, $false)
+        }
+    } finally { $zip.Dispose() }
+}
+'@
+    Write-IfChanged $extractScript $extractCode
+    $extractCommand = '"' + (Join-Path $PSHOME 'powershell.exe') + '" -NoProfile -ExecutionPolicy Bypass -File "' + $extractScript + '" -Root "' + $packageCache + '"'
+    $packageCopies = ''
+    $copyDestinations = @{}
+    foreach ($project in $projects.Values | Where-Object { !$_.IsSdk }) {
+        $manifest = Join-Path (Split-Path $project.Path) 'packages.config'
+        if (!(Test-Path -LiteralPath $manifest)) { continue }
+        [xml]$manifestXml = [IO.File]::ReadAllText($manifest)
+        foreach ($package in $manifestXml.packages.package) {
+            $name = "$($package.id).$($package.version)"
+            $destination = Join-Path (Join-Path (Split-Path (Split-Path $project.Path)) 'packages') $name
+            if ($copyDestinations.ContainsKey($destination)) { continue }
+            $copyDestinations[$destination] = $true
+            $source = Join-Path $packageCache $name
+            # Robocopy admite rutas largas sin crear unidades ni cambiar Windows.
+            $command = 'robocopy "' + $source + '" "' + $destination + '" /E /NFL /NDL /NJH /NJS /NP /R:1 /W:1 & if errorlevel 8 (exit /b 1) else (exit /b 0)'
+            $packageCopies += '<Exec Command="' + (XmlEscape $command) + '" />'
+        }
     }
     $index = 0
     foreach ($project in $projects.Values | Sort-Object Path) {
@@ -564,10 +642,10 @@ try {
         $index++
     }
     # ContinueOnError + StopOnFirstFailure=false: un fallo no detiene los demas proyectos.
-    $body += '</ItemGroup><Target Name="Restaurar"><MSBuild Projects="@(Restauracion)" Targets="Restore" BuildInParallel="false" StopOnFirstFailure="false" ContinueOnError="true" /></Target>'
+    $body += '</ItemGroup><Target Name="Restaurar"><MSBuild Projects="@(Restauracion)" Targets="Restore" BuildInParallel="false" StopOnFirstFailure="false" ContinueOnError="false" /><Exec Command="' + (XmlEscape $extractCommand) + '" />' + $packageCopies + '</Target>'
     $sdkRestore = ''
     foreach ($project in $projects.Values | Where-Object IsSdk | Sort-Object Path) {
-        $sdkRestore += '<Exec WorkingDirectory="' + (XmlEscape (Split-Path $project.Path)) + '" Command="' + (XmlEscape (SdkCommand $project 'Restore')) + '" ContinueOnError="true" />'
+        $sdkRestore += '<Exec WorkingDirectory="' + (XmlEscape (Split-Path $project.Path)) + '" Command="' + (XmlEscape (SdkCommand $project 'Restore')) + '" IgnoreStandardErrorWarningFormat="true" ContinueOnError="true" />'
     }
     $body += '<Target Name="RestaurarSdk">' + $sdkRestore + '</Target>'
     $targets = @('Restaurar','RestaurarSdk')
@@ -576,7 +654,7 @@ try {
         $targets += "Nivel$wave"
         $body += '<Target Name="Nivel' + $wave + '"><Message Importance="high" Text="[COMPILANDO] Nivel ' + ($wave + 1) + '/' + $waves.Count + '" /><MSBuild Projects="@(Nivel' + $wave + ')" Targets="Build" BuildInParallel="true" StopOnFirstFailure="false" ContinueOnError="true" />'
         foreach ($project in $projects.Values | Where-Object { $_.IsSdk -and $_.Wave -eq $wave } | Sort-Object Path) {
-            $body += '<Exec WorkingDirectory="' + (XmlEscape (Split-Path $project.Path)) + '" Command="' + (XmlEscape (SdkCommand $project 'Build' $referenceTargets)) + '" ContinueOnError="true" />'
+            $body += '<Exec WorkingDirectory="' + (XmlEscape (Split-Path $project.Path)) + '" Command="' + (XmlEscape (SdkCommand $project 'Build' $referenceTargets)) + '" IgnoreStandardErrorWarningFormat="true" ContinueOnError="true" />'
         }
         $body += '</Target>'
     }
@@ -584,7 +662,9 @@ try {
     [IO.File]::WriteAllText($runner, $body, [Text.UTF8Encoding]::new($false))
     Write-Status "Compilando $($projects.Count) proyectos en $($waves.Count) niveles, con hasta $workers procesos en paralelo." Build
     # Sin /warnAsError: ningun aviso detiene la compilacion.
-    & $msbuild $runner /t:Build /nologo /verbosity:minimal "/m:$workers" /nr:false '/consoleloggerparameters:ForceConsoleColor;Summary' "/p:CustomAfterMicrosoftCommonTargets=$referenceTargets"
+    # Los enlaces duros evitan duplicar DLL grandes; MSBuild copia normalmente
+    # cuando el sistema de archivos no permite enlazarlas. No se crea una unidad.
+    & $msbuild $runner /t:Build /nologo /verbosity:minimal "/m:$workers" /nr:false '/consoleloggerparameters:ForceConsoleColor;Summary' "/p:CustomAfterMicrosoftCommonTargets=$referenceTargets" /p:CreateHardLinksForCopyLocalIfPossible=true /p:CreateHardLinksForCopyFilesToOutputDirectoryIfPossible=true /p:CreateHardLinksForCopyAdditionalFilesIfPossible=true
     $code = $LASTEXITCODE
     foreach ($step in $steps) {
         if (!$step.Projects.Count) { continue }
@@ -612,6 +692,8 @@ try {
         throw "La compilacion termino con codigo $code (se compilo todo lo que fue posible)."
     }
     if (@($steps | Where-Object { $_.State -ne 'Correcta' -and $_.Projects.Count }).Count) { throw 'La compilacion termino sin completar todos los proyectos (se compilo todo lo que fue posible).' }
+    if ($planningErrors.Count) { throw "No se completaron $($planningErrors.Count) proyectos o soluciones omitidos durante la validacion." }
+    Write-ModuleRegistries
     $result=0
 } catch {
     if ($current -and $current.State -ne 'Correcta') { $current.State='Fallida' }
@@ -633,15 +715,9 @@ try {
             [IO.Directory]::Delete($runDirectory)
         } catch { Write-Warning "No se pudo limpiar: $runDirectory" }
     }
-    if ($shortDrive) {
-        $previousPreference = $ErrorActionPreference
-        $ErrorActionPreference = 'Continue'
-        try {
-            & $subst $shortDrive /D 2>&1 | Out-Null
-            if ($LASTEXITCODE -ne 0) { Write-Warning "No se pudo quitar el alias temporal $shortDrive" }
-        } finally { $ErrorActionPreference = $previousPreference }
-    }
+
 }
+if ([Console]::IsInputRedirected -or $env:CC_MORE -ieq '--no-menu') { exit $result }
 while ($true) {
     Write-Status 'Seleccione la siguiente accion' Menu
     Write-Host '1. Volver a compilar' -ForegroundColor Yellow

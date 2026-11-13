@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using CapaControlador_OrdenesCompra;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,13 +22,13 @@ namespace PruebaUnitaria_OrdenesCompra
     public class TestConsultasOrdenesCompra
     {
         private ClsRepositorioOrdenesCompraPrueba _Repositorio;
-        private ClsOrdenesCompra _Controlador;
+        private ClsOrdenesCompraControlador _Controlador;
 
         [TestInitialize]
         public void Preparar()
         {
             _Repositorio = new ClsRepositorioOrdenesCompraPrueba();
-            _Controlador = new ClsOrdenesCompra(_Repositorio);
+            _Controlador = new ClsOrdenesCompraControlador(_Repositorio);
         }
 
         [TestCleanup]
@@ -141,6 +141,6 @@ namespace PruebaUnitaria_OrdenesCompra
         }
 
         [TestMethod]
-        public void ConstructorRechazaRepositorioNulo() => Assert.ThrowsException<ArgumentNullException>(() => new ClsOrdenesCompra(null));
+        public void ConstructorRechazaRepositorioNulo() => Assert.ThrowsException<ArgumentNullException>(() => new ClsOrdenesCompraControlador(null));
     }
 }

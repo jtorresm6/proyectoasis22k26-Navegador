@@ -45,16 +45,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contratos\IRepositorioOrdenesCompra.cs" />
-    <Compile Include="Repositorios\ClsRepositorioOrdenesCompra.cs" />
-    <Compile Include="Repositorios\ClsRepositorioBaseOrdenesCompra.cs" />
-    <Compile Include="Repositorios\ClsConsultasOrdenesCompra.cs" />
-    <Compile Include="Repositorios\ClsComandosOrdenesCompra.cs" />
-    <Compile Include="Repositorios\ClsErroresDatosOrdenesCompra.cs" />
+    <Compile Include="Contratos\IOrdenesCompraRepositorio.cs" />
+    <Compile Include="Repositorios\ClsOrdenesCompraRepositorio.cs" />
+    <Compile Include="Repositorios\ClsOrdenesCompraRepositorioBase.cs" />
+
+    <Compile Include="Repositorios\ClsOrdenesCompraComandos.cs" />
+    <Compile Include="Repositorios\ClsOrdenesCompraErroresDatos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entidades\ClsOrdenCompra.cs" />
+    <Compile Include="Entidades\ClsOrdenesCompraEntidad.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Repositorios\ClsEncabezadosOrdenesCompraConsultar.cs" />
+    <Compile Include="Repositorios\ClsDetallesOrdenesCompraConsultar.cs" />
+    <Compile Include="Repositorios\ClsOrdenesCompraConsultarCatalogos.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

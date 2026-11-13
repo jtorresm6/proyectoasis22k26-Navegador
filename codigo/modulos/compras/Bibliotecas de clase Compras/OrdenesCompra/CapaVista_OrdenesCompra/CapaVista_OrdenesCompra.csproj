@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C7EB30A5-37AA-468E-BF62-900F767F74B5}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AppDesignerFolder>.</AppDesignerFolder>
     <RootNamespace>CapaVista_OrdenesCompra</RootNamespace>
     <AssemblyName>CapaVista_OrdenesCompra</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -65,19 +65,26 @@
     <Compile Include="FrmEncabezados.Designer.cs">
       <DependentUpon>FrmEncabezados.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentacion\ClsTablasOrdenesCompra.cs" />
-    <Compile Include="Presentacion\ClsDisenoDetallesOrdenCompra.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
+
+    <Compile Include="ClsOrdenesCompraErrores.cs" />
+    <Compile Include="ClsOrdenesCompraComunEdicion.cs" />
+    <Compile Include="ClsProductosOrdenesCompraPaginacion.cs" />
+    <Compile Include="ClsOrdenesCompraComunPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ClsDetallesOrdenesCompraDiseno.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CapaControlador_OrdenesCompra">
-      <HintPath>..\CapaControlador_OrdenesCompra\bin\$(Configuration)\CapaControlador_OrdenesCompra.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\CapaControlador_OrdenesCompra\CapaControlador_OrdenesCompra.csproj">
+      <Project>{3AA9809F-2AAA-4908-8DD0-7E1E0DF8619E}</Project>
+      <Name>CapaControlador_OrdenesCompra</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CapaVista_Componentes">
@@ -85,21 +92,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClsProductosOrdenCompra.cs" />
+    <Compile Include="ClsProductosOrdenesCompraTabla.cs" />
     <EmbeddedResource Include="Reportes\RpReporteEncabezadosCompras.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RpReporteDetalleOrdenCompra.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Compile Include="ComprasUsrProductosOrdenCompra.cs">
+    <Compile Include="UsrProductosOrdenesCompra.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ComprasUsrProductosOrdenCompra.Designer.cs">
-      <DependentUpon>ComprasUsrProductosOrdenCompra.cs</DependentUpon>
+    <Compile Include="UsrProductosOrdenesCompra.Designer.cs">
+      <DependentUpon>UsrProductosOrdenesCompra.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ComprasUsrProductosOrdenCompra.resx">
-      <DependentUpon>ComprasUsrProductosOrdenCompra.cs</DependentUpon>
+    <EmbeddedResource Include="UsrProductosOrdenesCompra.resx">
+      <DependentUpon>UsrProductosOrdenesCompra.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="FrmOrdenesCompra.cs">
       <SubType>Form</SubType>
@@ -122,10 +129,33 @@
     <EmbeddedResource Include="FrmDetalleOrdenCompra.resx">
       <DependentUpon>FrmDetalleOrdenCompra.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Include="Resources.resx">
+      <LogicalName>CapaVista_OrdenesCompra.Properties.Resources.resources</LogicalName>
+      <CustomToolNamespace>CapaVista_OrdenesCompra.Properties</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ClsEncabezadosOrdenesCompraTabla.cs" />
+    <Compile Include="ClsDetallesOrdenesCompraTabla.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ClsOrdenesCompraCatalogos.cs" />
+    <Compile Include="ClsDetallesOrdenesCompraReporte.cs" />
+
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ClsProductosOrdenesCompraTabla.Columnas.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ClsProductosOrdenesCompraPestanas.cs" />
+    <Compile Include="ClsOrdenesCompraFlujo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

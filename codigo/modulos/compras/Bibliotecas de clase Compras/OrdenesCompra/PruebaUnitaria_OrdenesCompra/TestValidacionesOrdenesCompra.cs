@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Globalization;
 using CapaControlador_OrdenesCompra;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,13 +23,13 @@ namespace PruebaUnitaria_OrdenesCompra
     {
         private static readonly DateTime Emision = new DateTime(2026, 10, 1);
         private ClsRepositorioOrdenesCompraPrueba _Repositorio;
-        private ClsOrdenesCompra _Controlador;
+        private ClsOrdenesCompraControlador _Controlador;
 
         [TestInitialize]
         public void Preparar()
         {
             _Repositorio = new ClsRepositorioOrdenesCompraPrueba();
-            _Controlador = new ClsOrdenesCompra(_Repositorio);
+            _Controlador = new ClsOrdenesCompraControlador(_Repositorio);
         }
 
         [TestCleanup]

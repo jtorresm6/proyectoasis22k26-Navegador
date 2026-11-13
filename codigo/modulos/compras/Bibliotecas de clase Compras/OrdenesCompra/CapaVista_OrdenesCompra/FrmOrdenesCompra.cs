@@ -24,7 +24,7 @@ namespace CapaVista_OrdenesCompra
 {
     public partial class FrmOrdenesCompra : Form
     {
-        private readonly ClsOrdenesCompra _Controlador;
+        private readonly ClsOrdenesCompraControlador _Controlador;
         private readonly ErrorProvider _Errores;
         private readonly List<DataTable> _Catalogos = new List<DataTable>();
         private bool _CargandoCatalogos = true;
@@ -37,16 +37,24 @@ namespace CapaVista_OrdenesCompra
         private decimal? _SaldoProveedorBase;
         private decimal? _CostoProductoBase;
         private DataView _VistaBodegas;
+        private DataView _VistaProductosSku;
+        private DataView _VistaProductosNombre;
         private bool _ActualizandoProducto;
+        private bool _ActualizandoSucursal;
+        private bool _ActualizandoProveedor;
+        private bool _ProveedorPendiente;
+        private int? _ProveedorAceptado;
+        private string _TextoProveedorAceptado = string.Empty;
+        private bool _CapturaDisponible;
+        private readonly Presentacion.ClsOrdenesCompraComunEdicion _Edicion;
         private bool _ActualizandoDescuento;
-        private bool _DescuentoDesdePorcentaje = true;
         private decimal _DescuentoPorcentaje;
-        private decimal _DescuentoImporteBase;
+        private decimal _ImpuestoPorcentaje;
+        private bool _ImpuestoValido = true;
+        private bool _TotalesValidos = true;
+        private bool _ActualizandoImpuesto;
         private bool _DescuentoValido = true;
-        private float[] _AlturasProducto;
-        private int _AlturaDescripcion;
-        private int _AlturaDescuento;
-        private int _AlturaPorcentaje;
+        private readonly Presentacion.ClsOrdenesCompraErrores _FilasErrores;
         private DateTime _FechaEmision = DateTime.Today;
         public bool CatalogosCargados => _CatalogosCargados;
         public long? IdMonedaSeleccionada { get; private set; }
@@ -56,27 +64,24 @@ namespace CapaVista_OrdenesCompra
         public int? IdPlazoSeleccionado { get; private set; }
         public DateTime? FechaVencimiento { get; private set; }
 
-        public FrmOrdenesCompra() : this(new ClsOrdenesCompra()) { }
+        public FrmOrdenesCompra() : this(new ClsOrdenesCompraControlador()) { }
 
-        public FrmOrdenesCompra(ClsOrdenesCompra Controlador)
+        public FrmOrdenesCompra(ClsOrdenesCompraControlador Controlador)
         {
             _Controlador = Controlador ?? throw new ArgumentNullException(nameof(Controlador));
             InitializeComponent();
+            _Edicion = new Presentacion.ClsOrdenesCompraComunEdicion(ComprasPnlContenido);
             ComprasTxtDescripcionProducto.Entrada.ScrollBars = RichTextBoxScrollBars.Vertical;
             ComprasProcAlinearEtiquetas(ComprasPnlContenido);
-            _AlturasProducto = new float[ComprasTlpProducto.RowStyles.Count];
-            for (int Indice = 0; Indice < _AlturasProducto.Length; Indice++)
-                _AlturasProducto[Indice] = ComprasTlpProducto.RowStyles[Indice].Height;
-            _AlturaDescripcion = ComprasTxtDescripcionProducto.Height;
-            _AlturaDescuento = ComprasTxtDescuentoProducto.Height;
-            _AlturaPorcentaje = ComprasTxtDescuentoPorcentajeProducto.Height;
             _Componentes = new System.ComponentModel.Container();
             _Errores = new ErrorProvider(_Componentes) { ContainerControl = this, BlinkStyle = ErrorBlinkStyle.NeverBlink };
+            _FilasErrores = new Presentacion.ClsOrdenesCompraErrores(ComprasPnlContenido, ComprasProcReorganizarGrupos);
+            ComprasProcReorganizarGrupos();
             foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo, ComprasCboSucursal, ComprasCboBodega, ComprasCboSkuProducto, ComprasCboNombreProducto })
             {
                 Combo.TipoDatos = EnmTipoDatosCompras.Ninguno;
                 Combo.PermitirEscritura = true;
-                Combo.Enabled = false;
+                _Edicion.Establecer(Combo, false);
                 ComprasProcConfigurarValidacionCatalogo(Combo);
             }
             ComprasProcConfigurarProductos();
@@ -89,15 +94,26 @@ namespace CapaVista_OrdenesCompra
             ComprasTxtFechaEmision.Text = _FechaEmision.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
             ComprasLblEstadoProveedorValor.Texto = string.Empty;
             ComprasCboMoneda.SelectedIndexChanged += async (Remitente, Evento) => await ComprasProcActualizarCambioAsync();
-            ComprasCboNombreProveedor.SelectedIndexChanged += (Remitente, Evento) => ComprasProcActualizarProveedor();
+            ComprasCboMoneda.Entrada.FormattingEnabled = true;
+            ComprasCboPlazo.Entrada.FormattingEnabled = true;
+            ComprasCboNombreProveedor.Entrada.FormattingEnabled = true;
+            ComprasCboSkuProducto.Entrada.FormattingEnabled = true;
+            ComprasCboNombreProducto.Entrada.FormattingEnabled = true;
+            ComprasCboNombreProveedor.SelectedIndexChanged += (Remitente, Evento) => ComprasProcProgramarProveedor();
+            ComprasCboNombreProveedor.TextChanged += (Remitente, Evento) => ComprasProcProgramarProveedor();
             ComprasCboPlazo.SelectedIndexChanged += (Remitente, Evento) => ComprasProcActualizarVencimiento();
+            ComprasCboSucursal.Entrada.FormattingEnabled = true;
+            ComprasCboBodega.Entrada.FormattingEnabled = true;
             ComprasCboSucursal.SelectedIndexChanged += (Remitente, Evento) => ComprasProcActualizarSucursal();
+            ComprasCboSucursal.TextChanged += (Remitente, Evento) => ComprasProcActualizarSucursal();
             ComprasCboBodega.SelectedIndexChanged += (Remitente, Evento) => ComprasProcActualizarBodega();
             ComprasCboSkuProducto.SelectedIndexChanged += (Remitente, Evento) => ComprasProcActualizarProducto(ComprasCboSkuProducto);
             ComprasCboNombreProducto.SelectedIndexChanged += (Remitente, Evento) => ComprasProcActualizarProducto(ComprasCboNombreProducto);
+            ComprasCboSkuProducto.TextChanged += (Remitente, Evento) => ComprasProcActualizarProducto(ComprasCboSkuProducto);
+            ComprasCboNombreProducto.TextChanged += (Remitente, Evento) => ComprasProcActualizarProducto(ComprasCboNombreProducto);
             ComprasTxtCantidadProducto.TextChanged += (Remitente, Evento) => ComprasProcActualizarDescuentos();
-            ComprasTxtDescuentoProducto.TextChanged += (Remitente, Evento) => ComprasProcCambiarDescuento(false);
-            ComprasTxtDescuentoPorcentajeProducto.TextChanged += (Remitente, Evento) => ComprasProcCambiarDescuento(true);
+            ComprasTxtDescuentoPorcentajeProducto.TextChanged += (Remitente, Evento) => ComprasProcCambiarDescuento();
+            ComprasTxtImpuestoPorcentaje.TextChanged += (Remitente, Evento) => ComprasProcCambiarImpuesto();
             ComprasTxtFechaEmision.TextChanged += async (Remitente, Evento) =>
             {
                 if (_Liberado) return;
@@ -112,14 +128,23 @@ namespace CapaVista_OrdenesCompra
                     ComprasTxtTipoCambio.Text = string.Empty;
                     ComprasProcActualizarImportesConvertidos();
                     ComprasTxtFechaVencimiento.Text = string.Empty;
-                    _Errores.SetError(ComprasTxtFechaEmision, "Usa una fecha valida con formato dd/MM/yyyy.");
+                    ComprasProcEstablecerError(ComprasTxtFechaEmision, "Usa una fecha valida con formato dd/MM/yyyy.");
                     return;
                 }
-                _Errores.SetError(ComprasTxtFechaEmision, string.Empty);
+                ComprasProcEstablecerError(ComprasTxtFechaEmision, string.Empty);
                 ComprasProcActualizarVencimiento();
                 await ComprasProcActualizarCambioAsync();
             };
+            foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo })
+            {
+                Combo.TextChanged += (Remitente, Evento) => ComprasProcActualizarFlujo();
+                Combo.SelectedIndexChanged += (Remitente, Evento) => ComprasProcActualizarFlujo();
+            }
+            ComprasTxtFechaEmision.TextChanged += (Remitente, Evento) => ComprasProcActualizarFlujo();
+            ComprasTxtFechaVencimiento.TextChanged += (Remitente, Evento) => ComprasProcActualizarFlujo();
+            ComprasProcActualizarFlujo();
             ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
+            ComprasUsrProductos.Tabla.Tabla.ScrollBars = ScrollBars.None;
         }
 
         protected virtual DialogResult ComprasFuncConfirmarAccion(string Mensaje, string Titulo)
@@ -153,6 +178,25 @@ namespace CapaVista_OrdenesCompra
                 ComprasProcMostrarResultado("Selecciona proveedor, moneda, plazo y tipo de cambio válidos, y agrega al menos un producto.", true);
                 return;
             }
+            if (_VistaProductosSku != null)
+                foreach (DataRow Detalle in ComprasUsrProductos.Detalles.Rows)
+                {
+                    bool Pertenece = false;
+                    foreach (DataRowView Producto in _VistaProductosSku)
+                        if (Convert.ToInt32(Producto["idProducto"]) == Convert.ToInt32(Detalle["idProducto"]))
+                        { Pertenece = true; break; }
+                    if (!Pertenece)
+                    {
+                        ComprasProcMostrarResultado("La orden contiene productos de otro proveedor. Elimínalos o selecciona su proveedor antes de guardar.", true);
+                        return;
+                    }
+                }
+            ComprasProcActualizarImpuesto();
+            if (!_ImpuestoValido || !_TotalesValidos)
+            {
+                ComprasProcMostrarResultado("Revisa el porcentaje de impuesto y el total de la orden antes de guardar.", true);
+                return;
+            }
             if (ComprasFuncConfirmarAccion("¿Estás seguro de guardar la orden de compra?",
                 "Guardar orden de compra") != DialogResult.Yes) return;
             using (var Detalles = ComprasUsrProductos.Detalles.Copy())
@@ -165,13 +209,14 @@ namespace CapaVista_OrdenesCompra
                 decimal Cambio = TipoCambioSeleccionado.Value;
                 long? IdCambio = IdTipoCambioSeleccionado;
                 string Comentario = ComprasTxtComentario.Text;
+                decimal ImpuestoPorcentaje = _ImpuestoPorcentaje;
                 _Guardando = true;
-                ComprasPnlContenido.Enabled = false;
+                ComprasProcActualizarFlujo();
                 UseWaitCursor = true;
                 try
                 {
                     int Numero = await Task.Run(() => _Controlador.ComprasFuncCrearConDetalles(Proveedor, Plazo, Moneda,
-                        Emision, Vencimiento, Cambio, IdCambio, Comentario, Detalles));
+                        Emision, Vencimiento, Cambio, IdCambio, Comentario, Detalles, ImpuestoPorcentaje));
                     if (Numero <= 0) throw new InvalidOperationException("No se obtuvo el número de orden.");
                     NumeroOrdenGuardada = Numero;
                     OrdenGuardada = true;
@@ -183,7 +228,7 @@ namespace CapaVista_OrdenesCompra
                 finally
                 {
                     _Guardando = false;
-                    ComprasPnlContenido.Enabled = true;
+                    ComprasProcActualizarFlujo();
                     UseWaitCursor = false;
                 }
             }
@@ -290,11 +335,13 @@ namespace CapaVista_OrdenesCompra
                 ComprasProcVincular(ComprasCboBodega, _VistaBodegas, "idBodega", "nombreBodega");
                 ComprasCboSkuProducto.BindingContext = new BindingContext();
                 ComprasCboNombreProducto.BindingContext = new BindingContext();
-                ComprasProcVincular(ComprasCboSkuProducto, Datos[5], "idProducto", "skuProducto");
-                ComprasProcVincular(ComprasCboNombreProducto, Datos[5], "idProducto", "nombreProducto");
+                _VistaProductosSku = new DataView(Datos[5]) { RowFilter = "1 = 0" };
+                _VistaProductosNombre = new DataView(Datos[5]) { RowFilter = "1 = 0" };
+                ComprasProcVincular(ComprasCboSkuProducto, _VistaProductosSku, "idProducto", "skuProducto");
+                ComprasProcVincular(ComprasCboNombreProducto, _VistaProductosNombre, "idProducto", "nombreProducto");
                 _CargandoCatalogos = false;
-                foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo, ComprasCboSucursal, ComprasCboBodega, ComprasCboSkuProducto, ComprasCboNombreProducto })
-                    Combo.Enabled = true;
+                foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo, ComprasCboSucursal })
+                    _Edicion.Establecer(Combo, true);
                 for (int Indice = 0; Indice < Datos[0].Rows.Count; Indice++)
                     if (Convert.ToString(Datos[0].Rows[Indice]["codigoMoneda"]) == "GTQ")
                     {
@@ -306,6 +353,7 @@ namespace CapaVista_OrdenesCompra
                 ComprasProcActualizarSucursal();
                 ComprasProcActualizarProducto(ComprasCboNombreProducto);
                 _CatalogosCargados = true;
+                ComprasProcActualizarFlujo();
                 ComprasCboMoneda.Focus();
                 ComprasPnlDesplazamiento.AutoScrollPosition = Point.Empty;
             }
@@ -315,58 +363,24 @@ namespace CapaVista_OrdenesCompra
                 _CargandoCatalogos = false;
                 if (PropagarError) throw;
                 foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo, ComprasCboSucursal, ComprasCboBodega, ComprasCboSkuProducto, ComprasCboNombreProducto })
-                    _Errores.SetError(Combo, "No se pudieron cargar los catalogos. Cierra y vuelve a abrir la orden. " + Ex.Message);
+                    ComprasProcEstablecerError(Combo, "No se pudieron cargar los catalogos. Cierra y vuelve a abrir la orden. " + Ex.Message);
                 ComprasPnlDesplazamiento.AutoScrollPosition = Point.Empty;
             }
         }
 
         private static void ComprasProcVincular(ComprasUsrComboBox Combo, object Datos, string Valor, string Texto)
         {
-            Combo.BeginUpdate();
-            try
-            {
-                Combo.ValueMember = Valor;
-                Combo.DisplayMember = Texto;
-                Combo.DataSource = Datos;
-                Combo.SelectedIndex = -1;
-            }
-            finally { Combo.EndUpdate(); }
+            ClsOrdenesCompraCatalogos.ComprasProcVincular(Combo, Datos, Valor, Texto);
         }
 
         private void ComprasProcConfigurarValidacionCatalogo(ComprasUsrComboBox Combo)
         {
-            bool ErrorVisible = false;
             bool Pendiente = false;
-            float EspacioTomado = 0F;
             Action Validar = () =>
             {
                 if (_Liberado || _CargandoCatalogos || _ActualizandoProducto || Combo.IsDisposed) return;
                 bool Invalido = !string.IsNullOrWhiteSpace(Combo.Text) && Combo.FindStringExact(Combo.Text) < 0;
-                if (Invalido != ErrorVisible)
-                {
-                    var Tabla = Combo.Parent as TableLayoutPanel;
-                    if (Tabla != null)
-                    {
-                        int Fila = Tabla.GetRow(Combo);
-                        int Reserva = Tabla == ComprasTlpProducto ? (Combo == ComprasCboSkuProducto ? 3 : 4) : Tabla.RowStyles.Count - 1;
-                        float Cambio = Invalido ? 30F : -30F;
-                        if (Invalido) EspacioTomado = Math.Min(30F, Tabla.RowStyles[Reserva].Height);
-                        float ReservaCambio = Invalido ? EspacioTomado : -EspacioTomado;
-                        Tabla.RowStyles[Fila].Height += Cambio;
-                        Tabla.RowStyles[Reserva].Height -= ReservaCambio;
-                        if (Tabla == ComprasTlpProducto)
-                        {
-                            _AlturasProducto[Fila] += Cambio;
-                            _AlturasProducto[Reserva] -= ReservaCambio;
-                            _AlturaDescripcion -= (int)ReservaCambio;
-                            ComprasProcAjustarErrorDescuento();
-                        }
-                    }
-                    Combo.MostrarEtiquetaError = Invalido;
-                    ErrorVisible = Invalido;
-                }
-                if (Invalido) Combo.ComprasMetMostrarError("Selecciona una opción del catálogo.");
-                else Combo.ComprasMetLimpiarError();
+                ComprasProcEstablecerError(Combo, Invalido ? "Selecciona una opción del catálogo." : string.Empty);
             };
             EventHandler Programar = (Remitente, Evento) =>
             {
@@ -381,9 +395,7 @@ namespace CapaVista_OrdenesCompra
 
         private static DataRow ComprasFuncFila(ComprasUsrComboBox Combo)
         {
-            var Fila = Combo.SelectedItem as DataRowView;
-            return Combo.SelectedIndex < 0 || Fila == null || Fila.Row.RowState == DataRowState.Deleted
-                || !string.Equals(Combo.Text, Combo.GetItemText(Combo.SelectedItem), StringComparison.CurrentCultureIgnoreCase) ? null : Fila.Row;
+            return ClsOrdenesCompraCatalogos.ComprasFuncFila(Combo);
         }
 
         private async Task ComprasProcActualizarCambioAsync()
@@ -395,12 +407,12 @@ namespace CapaVista_OrdenesCompra
             TipoCambioSeleccionado = null;
             ComprasTxtTipoCambio.Text = string.Empty;
             ComprasProcActualizarImportesConvertidos();
-            _Errores.SetError(ComprasCboMoneda, string.Empty);
+            ComprasProcEstablecerError(ComprasCboMoneda, string.Empty);
             var Moneda = ComprasFuncFila(ComprasCboMoneda);
             try { ComprasProcActualizarCamposMoneda(Moneda); }
             catch (ArgumentException Ex)
             {
-                _Errores.SetError(ComprasCboMoneda, Ex.Message);
+                ComprasProcEstablecerError(ComprasCboMoneda, Ex.Message);
                 return;
             }
             if (Moneda == null || _FechaEmision == DateTime.MinValue) return;
@@ -421,7 +433,7 @@ namespace CapaVista_OrdenesCompra
                     if (_Liberado || IsDisposed || Disposing || Version != _VersionCambio) return;
                     if (Cotizacion.Rows.Count == 0)
                     {
-                        _Errores.SetError(ComprasCboMoneda, "No existe una cotizacion hacia GTQ para la fecha de emision o una fecha anterior.");
+                        ComprasProcEstablecerError(ComprasCboMoneda, "No existe una cotizacion hacia GTQ para la fecha de emision o una fecha anterior.");
                         return;
                     }
                     var Fila = Cotizacion.Rows[0];
@@ -436,7 +448,7 @@ namespace CapaVista_OrdenesCompra
             catch (Exception Ex)
             {
                 if (!_Liberado && !IsDisposed && !Disposing && Version == _VersionCambio)
-                    _Errores.SetError(ComprasCboMoneda, "No se pudo consultar el tipo de cambio. " + Ex.Message);
+                    ComprasProcEstablecerError(ComprasCboMoneda, "No se pudo consultar el tipo de cambio. " + Ex.Message);
             }
         }
 
@@ -466,27 +478,127 @@ namespace CapaVista_OrdenesCompra
                         Columna.DefaultCellStyle.Format = "'" + Simbolo.Replace("'", "''") + "' #,##0.0000";
         }
 
+        private void ComprasProcProgramarProveedor()
+        {
+            if (_ActualizandoProveedor || _ProveedorPendiente || _CargandoCatalogos || _Liberado) return;
+            if (ComprasUsrProductos.Detalles.Rows.Count == 0 || !ComprasCboNombreProveedor.IsHandleCreated)
+            {
+                ComprasProcActualizarProveedor();
+                return;
+            }
+            _ProveedorPendiente = true;
+            ComprasCboNombreProveedor.BeginInvoke(new Action(() =>
+            {
+                _ProveedorPendiente = false;
+                ComprasProcActualizarProveedor();
+                ComprasProcActualizarFlujo();
+            }));
+        }
+
         private void ComprasProcActualizarProveedor()
         {
-            if (_CargandoCatalogos || _Liberado) return;
-            IdProveedorSeleccionado = null;
-            _SaldoProveedorBase = null;
-            foreach (var Campo in new[] { ComprasTxtNitProveedor, ComprasTxtDireccionProveedor, ComprasTxtTelefonoProveedor,
-                ComprasTxtCorreoProveedor, ComprasTxtSaldoActualProveedor }) Campo.Text = string.Empty;
-            ComprasLblEstadoProveedorValor.Texto = string.Empty;
-            var Proveedor = ComprasFuncFila(ComprasCboNombreProveedor);
-            ComprasProcSeleccionarPlazoProveedor(Proveedor);
-            if (Proveedor == null) return;
-            IdProveedorSeleccionado = Convert.ToInt32(Proveedor["idProveedor"]);
-            ComprasTxtNitProveedor.Text = Convert.ToString(Proveedor["nitProveedor"]);
-            ComprasTxtDireccionProveedor.Text = Convert.ToString(Proveedor["direccionProveedor"]);
-            ComprasTxtTelefonoProveedor.Text = Convert.ToString(Proveedor["telefonoProveedor"]);
-            ComprasTxtCorreoProveedor.Text = Convert.ToString(Proveedor["correoProveedor"]);
-            _SaldoProveedorBase = Convert.ToDecimal(Proveedor["saldoActualProveedor"]);
-            ComprasProcActualizarImportesConvertidos();
-            bool Activo = Convert.ToBoolean(Proveedor["estadoProveedor"]);
-            ComprasLblEstadoProveedorValor.Texto = Activo ? "ACTIVO" : "INACTIVO";
-            ComprasLblEstadoProveedorValor.ColorTexto = Activo ? Color.DarkGreen : Color.Red;
+            if (_CargandoCatalogos || _Liberado || _ActualizandoProveedor) return;
+            _ActualizandoProveedor = true;
+            try
+            {
+                var Proveedor = ComprasFuncFila(ComprasCboNombreProveedor);
+                int? NuevoProveedor = Proveedor == null ? (int?)null : Convert.ToInt32(Proveedor["idProveedor"]);
+                if (_ProveedorAceptado != NuevoProveedor && ComprasUsrProductos.Detalles.Rows.Count > 0)
+                {
+                    if (ComprasFuncConfirmarAccion("Al cambiar de proveedor se eliminarán todos los productos agregados a la orden. ¿Deseas continuar?",
+                        "Cambiar proveedor") != DialogResult.Yes)
+                    {
+                        ComprasCboNombreProveedor.SelectedValue = _ProveedorAceptado;
+                        ComprasCboNombreProveedor.Text = _TextoProveedorAceptado;
+                        ComprasProcEstablecerError(ComprasCboNombreProveedor, string.Empty);
+                        return;
+                    }
+                    bool Anterior = _ActualizandoDetalle;
+                    _ActualizandoDetalle = true;
+                    try
+                    {
+                        ComprasUsrProductos.Detalles.Clear();
+                        ComprasUsrProductos.BodegaVisible = null;
+                        _ProductoEditado = null;
+                        ComprasUsrProductos.ComprasProcActualizarPestanasBodega();
+                    }
+                    finally { _ActualizandoDetalle = Anterior; }
+                }
+                _ProveedorAceptado = NuevoProveedor;
+                _TextoProveedorAceptado = Proveedor == null ? string.Empty : Convert.ToString(Proveedor["nombreProveedor"]);
+                IdProveedorSeleccionado = null;
+                _SaldoProveedorBase = null;
+                foreach (var Campo in new[] { ComprasTxtNitProveedor, ComprasTxtDireccionProveedor, ComprasTxtTelefonoProveedor,
+                    ComprasTxtCorreoProveedor, ComprasTxtSaldoActualProveedor }) Campo.Text = string.Empty;
+                ComprasLblEstadoProveedorValor.Texto = string.Empty;
+                ComprasProcFiltrarProductosProveedor(Proveedor);
+                ComprasProcSeleccionarPlazoProveedor(Proveedor);
+                if (Proveedor != null)
+                {
+                    IdProveedorSeleccionado = NuevoProveedor;
+                    ComprasTxtNitProveedor.Text = Convert.ToString(Proveedor["nitProveedor"]);
+                    ComprasTxtDireccionProveedor.Text = Convert.ToString(Proveedor["direccionProveedor"]);
+                    ComprasTxtTelefonoProveedor.Text = Convert.ToString(Proveedor["telefonoProveedor"]);
+                    ComprasTxtCorreoProveedor.Text = Convert.ToString(Proveedor["correoProveedor"]);
+                    _SaldoProveedorBase = Convert.ToDecimal(Proveedor["saldoActualProveedor"]);
+                    bool Activo = Convert.ToBoolean(Proveedor["estadoProveedor"]);
+                    ComprasLblEstadoProveedorValor.Texto = Activo ? "ACTIVO" : "INACTIVO";
+                    ComprasLblEstadoProveedorValor.ColorTexto = Activo ? Color.DarkGreen : Color.Red;
+                }
+                ComprasProcActualizarImportesConvertidos();
+            }
+            finally
+            {
+                _ActualizandoProveedor = false;
+                ComprasProcActualizarFlujo();
+            }
+        }
+
+        private void ComprasProcFiltrarProductosProveedor(DataRow Proveedor)
+        {
+            if (_VistaProductosSku == null || _VistaProductosNombre == null) return;
+            string Filtro = Proveedor == null ? "1 = 0" : "idProveedorProductos = "
+                + Convert.ToInt32(Proveedor["idProveedor"]).ToString(CultureInfo.InvariantCulture);
+            if (_VistaProductosSku.RowFilter == Filtro && _VistaProductosNombre.RowFilter == Filtro) return;
+            bool Anterior = _ActualizandoProducto;
+            _ActualizandoProducto = true;
+            try
+            {
+                _Edicion.Establecer(ComprasCboSkuProducto, false);
+                _Edicion.Establecer(ComprasCboNombreProducto, false);
+                _VistaProductosSku.RowFilter = _VistaProductosNombre.RowFilter = Filtro;
+                foreach (var Combo in new[] { ComprasCboSkuProducto, ComprasCboNombreProducto })
+                {
+                    Combo.SelectedIndex = -1;
+                    Combo.Text = string.Empty;
+                    ComprasProcEstablecerError(Combo, string.Empty);
+                    _Edicion.Establecer(Combo, Proveedor != null && _CapturaDisponible);
+                }
+                ComprasProcLimpiarDatosProducto();
+                _ProductoEditado = null;
+                ComprasProcEstadoBotonesProducto();
+            }
+            finally { _ActualizandoProducto = Anterior; }
+        }
+
+        private void ComprasProcLimpiarDatosProducto()
+        {
+            bool Anterior = _ActualizandoDescuento;
+            _ActualizandoDescuento = true;
+            try
+            {
+                _CostoProductoBase = null;
+                _DescuentoPorcentaje = 0M;
+                _DescuentoValido = true;
+                foreach (var Campo in new[] { ComprasTxtDescripcionProducto, ComprasTxtPesoProducto,
+                    ComprasTxtCantidadProducto, ComprasTxtCostoUnitarioProducto, ComprasTxtDescuentoProducto,
+                    ComprasTxtDescuentoPorcentajeProducto, ComprasTxtTotalProducto })
+                {
+                    Campo.Text = string.Empty;
+                    ComprasProcEstablecerError(Campo, string.Empty);
+                }
+            }
+            finally { _ActualizandoDescuento = Anterior; }
         }
 
         private void ComprasProcActualizarImportesConvertidos()
@@ -504,46 +616,80 @@ namespace CapaVista_OrdenesCompra
             ComprasProcActualizarProductosAgregados();
         }
 
-        private void ComprasProcCambiarDescuento(bool DesdePorcentaje)
+        private bool ComprasFuncLimitarDigitosPorcentaje(ComprasUsrTextBox Campo, decimal UltimoValido, ref bool Actualizando, int MaximoDigitos = 2)
+        {
+            string Texto = Campo.Text.Replace("%", string.Empty).Trim();
+            string Separador = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            string Enteros = Texto.Split(new[] { Separador }, StringSplitOptions.None)[0];
+            if (Enteros.Length <= MaximoDigitos) return false;
+            foreach (char Digito in Enteros) if (!char.IsDigit(Digito)) return false;
+            Actualizando = true;
+            try
+            {
+                string Numero = UltimoValido.ToString("0.##", CultureInfo.CurrentCulture);
+                Campo.Text = Numero + " %";
+                Campo.SelectionStart = Numero.Length;
+            }
+            finally { Actualizando = false; }
+            return true;
+        }
+
+        private void ComprasProcCambiarDescuento()
         {
             if (_ActualizandoDescuento || _CargandoCatalogos || _Liberado) return;
-            var Campo = DesdePorcentaje ? ComprasTxtDescuentoPorcentajeProducto : ComprasTxtDescuentoProducto;
+            var Campo = ComprasTxtDescuentoPorcentajeProducto;
+            if (ComprasFuncLimitarDigitosPorcentaje(Campo, _DescuentoPorcentaje, ref _ActualizandoDescuento))
+            {
+                ComprasProcCambiarDescuento();
+                return;
+            }
             string Texto = Campo.Text.Replace("%", string.Empty).Trim();
-            var Moneda = ComprasFuncFila(ComprasCboMoneda);
-            if (!DesdePorcentaje && Moneda != null)
-                Texto = Texto.Replace(Convert.ToString(Moneda["simboloMoneda"]), string.Empty).Trim();
-            _Errores.SetError(DesdePorcentaje ? ComprasTxtDescuentoProducto : ComprasTxtDescuentoPorcentajeProducto, string.Empty);
-            _DescuentoDesdePorcentaje = DesdePorcentaje;
-            _DescuentoValido = Texto.Length == 0 || decimal.TryParse(Texto, NumberStyles.Number, CultureInfo.CurrentCulture, out _);
-            decimal Valor = Texto.Length == 0 || !_DescuentoValido ? 0M : decimal.Parse(Texto, CultureInfo.CurrentCulture);
-            _DescuentoValido = _DescuentoValido && Valor >= 0 && (DesdePorcentaje ? Valor <= 100 : Valor <= 99999999.9999M);
+            if (_CostoProductoBase.HasValue)
+            {
+                int Posicion = Math.Min(Campo.SelectionStart, Texto.Length);
+                _ActualizandoDescuento = true;
+                try
+                {
+                    Campo.Text = Texto + " %";
+                    Campo.SelectionStart = Posicion;
+                }
+                finally { _ActualizandoDescuento = false; }
+            }
+            decimal Valor = 0M;
+            _DescuentoValido = Texto.Length == 0 || decimal.TryParse(Texto,
+                NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out Valor);
+            _DescuentoValido = _DescuentoValido && Valor >= 0M && Valor <= 99.99M && decimal.Round(Valor, 2) == Valor;
             if (!_DescuentoValido)
             {
-                _Errores.SetError(Campo, DesdePorcentaje ? "Ingresa un porcentaje entre 0 y 100." : "Ingresa un importe de descuento valido.");
+                ComprasProcEstablecerError(Campo, "Ingresa un porcentaje entre 0 y 99.99 con hasta 2 decimales.");
                 ComprasProcActualizarDescuentos(Campo);
                 return;
             }
-            if (DesdePorcentaje) _DescuentoPorcentaje = Valor;
-            else _DescuentoImporteBase = Valor * (TipoCambioSeleccionado ?? 1M);
+            _DescuentoPorcentaje = Valor;
             ComprasProcActualizarDescuentos(Campo);
         }
 
         private void ComprasProcActualizarDescuentos(ComprasUsrTextBox CampoEditado = null)
         {
             if (_ActualizandoDescuento || _CargandoCatalogos || _Liberado) return;
+            if (!_CostoProductoBase.HasValue)
+            {
+                ComprasProcLimpiarDatosProducto();
+                return;
+            }
             _ActualizandoDescuento = true;
             try
             {
                 ComprasTxtTotalProducto.Text = string.Empty;
                 ComprasTxtDescuentoProducto.ComprasMetLimpiarError();
                 ComprasTxtDescuentoPorcentajeProducto.ComprasMetLimpiarError();
-                _Errores.SetError(ComprasTxtCantidadProducto, string.Empty);
+                ComprasProcEstablecerError(ComprasTxtCantidadProducto, string.Empty);
                 bool CantidadValida = int.TryParse(ComprasTxtCantidadProducto.Text, NumberStyles.None, CultureInfo.CurrentCulture, out int Cantidad)
                     && Cantidad > 0 && Cantidad <= 99999999;
                 if (!CantidadValida && ComprasTxtCantidadProducto.Text.Length > 0)
-                    _Errores.SetError(ComprasTxtCantidadProducto, "La cantidad debe ser un entero mayor que cero.");
-                var Origen = _DescuentoDesdePorcentaje ? ComprasTxtDescuentoPorcentajeProducto : ComprasTxtDescuentoProducto;
-                var Destino = _DescuentoDesdePorcentaje ? ComprasTxtDescuentoProducto : ComprasTxtDescuentoPorcentajeProducto;
+                    ComprasProcEstablecerError(ComprasTxtCantidadProducto, "La cantidad debe ser un entero mayor que cero.");
+                var Origen = ComprasTxtDescuentoPorcentajeProducto;
+                var Destino = ComprasTxtDescuentoProducto;
                 if (!_DescuentoValido || !_CostoProductoBase.HasValue || !TipoCambioSeleccionado.HasValue)
                 {
                     Destino.Text = string.Empty;
@@ -551,27 +697,28 @@ namespace CapaVista_OrdenesCompra
                 }
                 decimal Costo = decimal.Round(_CostoProductoBase.Value / TipoCambioSeleccionado.Value, 2, MidpointRounding.AwayFromZero);
                 decimal Bruto = Costo;
-                decimal Importe = _DescuentoDesdePorcentaje
-                    ? decimal.Round(Bruto * _DescuentoPorcentaje / 100M, 2, MidpointRounding.AwayFromZero)
-                    : decimal.Round(_DescuentoImporteBase / TipoCambioSeleccionado.Value, 2, MidpointRounding.AwayFromZero);
+                ComprasProcEstablecerError(ComprasTxtTotalProducto, string.Empty);
+                if (Costo < 0M || Costo > 99999999.9999M || CantidadValida && Cantidad * Costo > 99999999.9999M)
+                {
+                    ComprasProcEstablecerError(ComprasTxtTotalProducto, "El importe del producto supera el máximo de 99,999,999.9999. Reduce la cantidad o el precio unitario.");
+                    return;
+                }
+                decimal Importe = ClsOrdenesCompraControlador.ComprasFuncCalcularDescuento(Bruto, _DescuentoPorcentaje);
                 if (Importe > Bruto)
                 {
-                    _Errores.SetError(Origen, "El descuento no puede superar el precio unitario.");
+                    ComprasProcEstablecerError(Origen, "El descuento no puede superar el precio unitario.");
                     Origen.ComprasMetMostrarError("El descuento no puede superar el precio unitario.");
                     Destino.Text = string.Empty;
                     return;
                 }
-                _Errores.SetError(ComprasTxtDescuentoProducto, string.Empty);
-                _Errores.SetError(ComprasTxtDescuentoPorcentajeProducto, string.Empty);
+                ComprasProcEstablecerError(ComprasTxtDescuentoProducto, string.Empty);
+                ComprasProcEstablecerError(ComprasTxtDescuentoPorcentajeProducto, string.Empty);
                 if (CantidadValida)
                     ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtTotalProducto,
-                        decimal.Round(Cantidad * (Costo - Importe), 2, MidpointRounding.AwayFromZero));
-                decimal Porcentaje = _DescuentoDesdePorcentaje ? _DescuentoPorcentaje
-                    : Bruto == 0M ? 0M : decimal.Round(Importe * 100M / Bruto, 2, MidpointRounding.AwayFromZero);
-                if (CampoEditado != ComprasTxtDescuentoProducto)
-                    ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtDescuentoProducto, Importe);
+                        ClsOrdenesCompraControlador.ComprasFuncCalcularTotalProducto(Cantidad, Costo, _DescuentoPorcentaje));
+                ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtDescuentoProducto, Importe);
                 if (CampoEditado != ComprasTxtDescuentoPorcentajeProducto)
-                    ComprasTxtDescuentoPorcentajeProducto.Text = Porcentaje.ToString("0.##", CultureInfo.CurrentCulture) + " %";
+                    ComprasTxtDescuentoPorcentajeProducto.Text = _DescuentoPorcentaje.ToString("0.##", CultureInfo.CurrentCulture) + " %";
             }
             finally
             {
@@ -582,34 +729,107 @@ namespace CapaVista_OrdenesCompra
 
         private void ComprasProcAjustarErrorDescuento()
         {
-            var Campo = _DescuentoDesdePorcentaje ? ComprasTxtDescuentoPorcentajeProducto : ComprasTxtDescuentoProducto;
-            string Mensaje = _Errores.GetError(Campo);
-            bool Mostrar = !string.IsNullOrWhiteSpace(Mensaje);
-            ComprasTlpProducto.SuspendLayout();
+            foreach (var Campo in new[] { ComprasTxtDescuentoProducto, ComprasTxtDescuentoPorcentajeProducto })
+            {
+                string Mensaje = _Errores.GetError(Campo);
+                if (string.IsNullOrWhiteSpace(Mensaje)) Campo.ComprasMetLimpiarError();
+                else Campo.ComprasMetMostrarError(Mensaje);
+                _FilasErrores.Establecer(Campo, !string.IsNullOrWhiteSpace(Mensaje));
+            }
+        }
+
+        private void ComprasProcEstablecerError(Control Campo, string Mensaje)
+        {
+            _Errores.SetError(Campo, Mensaje);
+            var Texto = Campo as ComprasUsrTextBox;
+            var Combo = Campo as ComprasUsrComboBox;
+            if (Texto != null)
+            {
+                if (string.IsNullOrWhiteSpace(Mensaje)) Texto.ComprasMetLimpiarError();
+                else Texto.ComprasMetMostrarError(Mensaje);
+            }
+            if (Combo != null)
+            {
+                if (string.IsNullOrWhiteSpace(Mensaje)) Combo.ComprasMetLimpiarError();
+                else Combo.ComprasMetMostrarError(Mensaje);
+            }
+            _FilasErrores.Establecer(Campo, !string.IsNullOrWhiteSpace(Mensaje));
+        }
+
+        private void ComprasProcReorganizarGrupos()
+        {
+            Point Posicion = ComprasPnlDesplazamiento.AutoScrollPosition;
+            ComprasPnlContenido.SuspendLayout();
             try
             {
-                ComprasTxtDescuentoProducto.MostrarEtiquetaError = Mostrar && Campo == ComprasTxtDescuentoProducto;
-                ComprasTxtDescuentoPorcentajeProducto.MostrarEtiquetaError = Mostrar && Campo == ComprasTxtDescuentoPorcentajeProducto;
-                for (int Indice = 0; Indice < _AlturasProducto.Length; Indice++)
-                    ComprasTlpProducto.RowStyles[Indice].Height = _AlturasProducto[Indice];
-                if (Mostrar)
-                {
-                    ComprasTlpProducto.RowStyles[3].Height = Math.Max(0F, _AlturasProducto[3] - 25F);
-                    ComprasTlpProducto.RowStyles[4].Height = Math.Max(0F, _AlturasProducto[4] - 25F);
-                    ComprasTlpProducto.RowStyles[Campo == ComprasTxtDescuentoProducto ? 7 : 8].Height += 50F;
-                    Campo.AlturaEtiquetaError = 44;
-                    Campo.ComprasMetMostrarError(Mensaje);
-                }
-                int EspacioDescuento = Mostrar ? (int)(Math.Min(25F, _AlturasProducto[3]) + Math.Min(25F, _AlturasProducto[4])) : 0;
-                ComprasTxtDescripcionProducto.Height = _AlturaDescripcion - EspacioDescuento;
-                ComprasTxtDescuentoProducto.Height = _AlturaDescuento + (Mostrar && Campo == ComprasTxtDescuentoProducto ? 50 : 0);
-                ComprasTxtDescuentoPorcentajeProducto.Height = _AlturaPorcentaje + (Mostrar && Campo == ComprasTxtDescuentoPorcentajeProducto ? 50 : 0);
+                ComprasGbxProveedor.Top = ComprasGbxPlazo.Top = Math.Max(315, ComprasGbxMoneda.Bottom + 22);
+                ComprasGbxBodega.Top = ComprasUsrProductos.Top = Math.Max(559,
+                    Math.Max(ComprasGbxProveedor.Bottom, ComprasGbxPlazo.Bottom) + 22);
+                ComprasGbxProducto.Top = ComprasGbxBodega.Bottom + 16;
+                ComprasUsrProductos.Height = Math.Max(772, ComprasGbxProducto.Bottom - ComprasUsrProductos.Top);
+                ComprasGbxFinalizacion.Top = Math.Max(1328,
+                    Math.Max(ComprasGbxProducto.Bottom, ComprasUsrProductos.Bottom) + 20);
+                ComprasPnlContenido.Height = ComprasGbxFinalizacion.Bottom + 40;
             }
-            finally { ComprasTlpProducto.ResumeLayout(true); }
+            finally
+            {
+                ComprasPnlContenido.ResumeLayout(true);
+                ComprasPnlDesplazamiento.AutoScrollPosition = new Point(-Posicion.X, -Posicion.Y);
+            }
         }
 
         private decimal _BrutoOrden;
         private decimal _DescuentoLineasOrden;
+
+        private void ComprasProcCambiarImpuesto()
+        {
+            if (_ActualizandoImpuesto || _CargandoCatalogos || _Liberado) return;
+            var Campo = ComprasTxtImpuestoPorcentaje;
+            if (ComprasFuncLimitarDigitosPorcentaje(Campo, _ImpuestoPorcentaje, ref _ActualizandoImpuesto, 3))
+            {
+                ComprasProcCambiarImpuesto();
+                return;
+            }
+            string Texto = Campo.Text.Replace("%", string.Empty).Trim();
+            int Posicion = Math.Min(Campo.SelectionStart, Texto.Length);
+            _ActualizandoImpuesto = true;
+            try
+            {
+                Campo.Text = Texto + " %";
+                Campo.SelectionStart = Posicion;
+            }
+            finally { _ActualizandoImpuesto = false; }
+            decimal Valor = 0M;
+            _ImpuestoValido = (Texto.Length == 0 || decimal.TryParse(Texto,
+                NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out Valor))
+                && Valor >= 0M && Valor <= 999.99M && decimal.Round(Valor, 2) == Valor;
+            if (_ImpuestoValido) _ImpuestoPorcentaje = Valor;
+            else ComprasProcEstablecerError(Campo, "Ingresa un impuesto entre 0 y 999.99 % con hasta 2 decimales.");
+            ComprasProcActualizarImpuesto();
+        }
+
+        private void ComprasProcActualizarImpuesto()
+        {
+            if (_Liberado) return;
+            _TotalesValidos = false;
+            ComprasTxtImpuestoTotal.Text = string.Empty;
+            ComprasTxtTotalOrden.Text = string.Empty;
+            try
+            {
+                if (!_ImpuestoValido) return;
+                decimal Neto = _BrutoOrden - _DescuentoLineasOrden;
+                decimal Impuesto = ClsOrdenesCompraControlador.ComprasFuncCalcularImpuesto(Neto, _ImpuestoPorcentaje);
+                ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtImpuestoTotal, Impuesto);
+                ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtTotalOrden, Neto + Impuesto);
+                ComprasProcEstablecerError(ComprasTxtImpuestoPorcentaje, string.Empty);
+                _TotalesValidos = true;
+            }
+            catch (ArgumentException Error)
+            {
+                ComprasProcEstablecerError(ComprasTxtImpuestoPorcentaje, Error.Message);
+            }
+            finally { ComprasProcActualizarFlujo(); }
+        }
 
         private void ComprasProcActualizarDescuentoTotal()
         {
@@ -618,19 +838,37 @@ namespace CapaVista_OrdenesCompra
                 : decimal.Round(_DescuentoLineasOrden * 100M / _BrutoOrden, 2, MidpointRounding.AwayFromZero);
             ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtSubtotalOrden, _BrutoOrden);
             ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtDescuentoTotal, _DescuentoLineasOrden);
-            ComprasTxtDescuentoPorcentajeTotal.Text = Porcentaje.ToString("0.##", CultureInfo.CurrentCulture) + " %";
+            ComprasTxtDescuentoPorcentajeTotal.Text = Porcentaje.ToString("0.######", CultureInfo.CurrentCulture) + " %";
             ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtSubtotalNeto, _BrutoOrden - _DescuentoLineasOrden);
-            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtImpuestoTotal, 0M);
-            ClsPresentacionCompras.ComprasProcMostrarMonto(ComprasTxtTotalOrden, _BrutoOrden - _DescuentoLineasOrden);
+            ComprasProcActualizarImpuesto();
         }
 
         private void ComprasProcActualizarSucursal()
         {
-            if (_CargandoCatalogos || _Liberado || _VistaBodegas == null) return;
+            if (_CargandoCatalogos || _Liberado || _VistaBodegas == null || _ActualizandoSucursal) return;
             var Sucursal = ComprasFuncFila(ComprasCboSucursal);
-            _VistaBodegas.RowFilter = Sucursal == null ? "1 = 0" : "Fk_Sucursal_Codigo = " + Convert.ToInt32(Sucursal["idSucursal"]).ToString(CultureInfo.InvariantCulture);
-            ComprasCboBodega.SelectedIndex = -1;
-            ComprasProcActualizarBodega();
+            string TextoSucursal = ComprasCboSucursal.Text;
+            string Filtro = Sucursal == null ? "1 = 0" : "Fk_Sucursal_Codigo = "
+                + Convert.ToInt32(Sucursal["idSucursal"]).ToString(CultureInfo.InvariantCulture);
+            if (Sucursal != null && _Edicion.PuedeEditar(ComprasCboBodega) && _VistaBodegas.RowFilter == Filtro) return;
+            _ActualizandoSucursal = true;
+            try
+            {
+                _Edicion.Establecer(ComprasCboBodega, false);
+                _VistaBodegas.RowFilter = Filtro;
+                ComprasCboBodega.SelectedIndex = -1;
+                ComprasCboBodega.Text = string.Empty;
+                ComprasProcEstablecerError(ComprasCboBodega, string.Empty);
+                ComprasProcActualizarBodega();
+                _Edicion.Establecer(ComprasCboBodega, Sucursal != null && _CapturaDisponible);
+                if (Sucursal == null)
+                {
+                    ComprasCboSucursal.SelectedIndex = -1;
+                    ComprasCboSucursal.Text = TextoSucursal;
+                    if (string.IsNullOrEmpty(TextoSucursal)) ComprasCboSucursal.SelectedIndex = -1;
+                }
+            }
+            finally { _ActualizandoSucursal = false; }
         }
 
         private void ComprasProcActualizarBodega()
@@ -651,9 +889,20 @@ namespace CapaVista_OrdenesCompra
                 ComprasTxtDescripcionProducto.Text = string.Empty;
                 ComprasTxtPesoProducto.Text = string.Empty;
                 var Otro = Selector == ComprasCboSkuProducto ? ComprasCboNombreProducto : ComprasCboSkuProducto;
-                if (Producto == null) Otro.SelectedIndex = -1;
+                if (Producto == null)
+                {
+                    Otro.SelectedIndex = -1;
+                    Otro.Text = string.Empty;
+                    ComprasProcLimpiarDatosProducto();
+                    if (!_ActualizandoDetalle) _ProductoEditado = null;
+                    ComprasProcEstadoBotonesProducto();
+                }
                 else
                 {
+                    var Anterior = ComprasFuncFila(Otro);
+                    if (!_ActualizandoDetalle && (Anterior == null
+                        || Convert.ToInt32(Anterior["idProducto"]) != Convert.ToInt32(Producto["idProducto"])))
+                        ComprasProcLimpiarDatosProducto();
                     Otro.SelectedValue = Convert.ToInt32(Producto["idProducto"]);
                     ComprasTxtDescripcionProducto.Text = Convert.ToString(Producto["descripcionProducto"]);
                     ComprasTxtPesoProducto.Text = Convert.ToDecimal(Producto["pesoProducto"]).ToString("N2");
@@ -680,7 +929,7 @@ namespace CapaVista_OrdenesCompra
             IdPlazoSeleccionado = null;
             FechaVencimiento = null;
             ComprasTxtFechaVencimiento.Text = string.Empty;
-            _Errores.SetError(ComprasCboPlazo, Proveedor == null ? string.Empty : "El proveedor no tiene un plazo disponible. Selecciona un plazo.");
+            ComprasProcEstablecerError(ComprasCboPlazo, Proveedor == null ? string.Empty : "El proveedor no tiene un plazo disponible. Selecciona un plazo.");
         }
 
         private void ComprasProcActualizarVencimiento()
@@ -689,7 +938,7 @@ namespace CapaVista_OrdenesCompra
             IdPlazoSeleccionado = null;
             FechaVencimiento = null;
             ComprasTxtFechaVencimiento.Text = string.Empty;
-            _Errores.SetError(ComprasCboPlazo, string.Empty);
+            ComprasProcEstablecerError(ComprasCboPlazo, string.Empty);
             var Plazo = ComprasFuncFila(ComprasCboPlazo);
             if (Plazo == null || _FechaEmision == DateTime.MinValue) return;
             try
@@ -700,19 +949,22 @@ namespace CapaVista_OrdenesCompra
             }
             catch (ArgumentOutOfRangeException)
             {
-                _Errores.SetError(ComprasCboPlazo, "El plazo no permite calcular una fecha de vencimiento valida.");
+                ComprasProcEstablecerError(ComprasCboPlazo, "El plazo no permite calcular una fecha de vencimiento valida.");
             }
         }
 
         private void ComprasProcLiberarCatalogos()
         {
             if (_Liberado) return;
+            _Edicion?.Dispose();
             _Liberado = true;
             _VersionCambio++;
             foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo, ComprasCboSucursal, ComprasCboBodega, ComprasCboSkuProducto, ComprasCboNombreProducto })
                 Combo.DataSource = null;
             ComprasUsrProductos.Tabla.DataSource = null;
             _VistaBodegas?.Dispose();
+            _VistaProductosSku?.Dispose();
+            _VistaProductosNombre?.Dispose();
             foreach (var Tabla in _Catalogos) Tabla.Dispose();
             _Catalogos.Clear();
         }
@@ -731,8 +983,8 @@ namespace CapaVista_OrdenesCompra
         private void ComprasProcEstadoBotonesProducto()
         {
             bool Seleccionado = _ProductoEditado != null && _ProductoEditado.RowState != DataRowState.Detached;
-            ComprasBtnModificarProducto.Enabled = Seleccionado;
-            ComprasBtnEliminarProducto.Enabled = Seleccionado;
+            ComprasBtnModificarProducto.Enabled = Seleccionado && _CapturaDisponible;
+            ComprasBtnEliminarProducto.Enabled = Seleccionado && _CapturaDisponible;
         }
 
         private void ComprasProcSeleccionarProductoAgregado()
@@ -748,12 +1000,17 @@ namespace CapaVista_OrdenesCompra
                 ComprasCboSucursal.SelectedValue = (int)Fila["idSucursal"];
                 ComprasCboBodega.SelectedValue = (int)Fila["idBodega"];
                 ComprasCboSkuProducto.SelectedValue = (int)Fila["idProducto"];
+                var Producto = ComprasFuncFila(ComprasCboSkuProducto);
+                if (Producto == null || Convert.ToInt32(Producto["idProducto"]) != (int)Fila["idProducto"])
+                {
+                    ComprasProcLimpiarDatosProducto();
+                    return;
+                }
                 _CostoProductoBase = (decimal)Fila["costoBase"];
                 ComprasTxtDescripcionProducto.Text = Convert.ToString(Fila["descripcion"]);
                 ComprasTxtPesoProducto.Text = ((decimal)Fila["peso"]).ToString("N2");
                 ComprasTxtCantidadProducto.Text = Convert.ToString(Fila["cantidad"], CultureInfo.CurrentCulture);
-                _DescuentoDesdePorcentaje = false;
-                _DescuentoImporteBase = (decimal)Fila["descuentoBase"];
+                _DescuentoPorcentaje = (decimal)Fila["porcentaje"];
                 _DescuentoValido = true;
                 ComprasProcActualizarImportesConvertidos();
             }
@@ -765,32 +1022,39 @@ namespace CapaVista_OrdenesCompra
             if (_CargandoCatalogos || _Liberado) return;
             var Producto = ComprasFuncFila(ComprasCboNombreProducto);
             var Bodega = ComprasFuncFila(ComprasCboBodega);
-            _Errores.SetError(ComprasCboNombreProducto, Producto == null ? "Selecciona un producto." : string.Empty);
-            _Errores.SetError(ComprasCboBodega, Bodega == null ? "Selecciona una bodega." : string.Empty);
+            ComprasProcEstablecerError(ComprasCboNombreProducto, Producto == null ? "Selecciona un producto." : string.Empty);
+            ComprasProcEstablecerError(ComprasCboBodega, Bodega == null ? "Selecciona una bodega." : string.Empty);
             ComprasProcActualizarDescuentos();
             if (Producto == null || Bodega == null || string.IsNullOrWhiteSpace(ComprasTxtTotalProducto.Text)) return;
             if (Modificar && (_ProductoEditado == null || _ProductoEditado.RowState == DataRowState.Detached))
             {
-                _Errores.SetError(ComprasUsrProductos.Tabla, "Selecciona el producto que deseas modificar.");
+                ComprasProcEstablecerError(ComprasUsrProductos.Tabla, "Selecciona el producto que deseas modificar.");
                 return;
             }
             int Cantidad = int.Parse(ComprasTxtCantidadProducto.Text, CultureInfo.CurrentCulture);
             decimal Costo = decimal.Round(_CostoProductoBase.Value / TipoCambioSeleccionado.Value, 2, MidpointRounding.AwayFromZero);
-            decimal Descuento = _DescuentoDesdePorcentaje
-                ? decimal.Round(Costo * _DescuentoPorcentaje / 100M, 2, MidpointRounding.AwayFromZero)
-                : decimal.Round(_DescuentoImporteBase / TipoCambioSeleccionado.Value, 2, MidpointRounding.AwayFromZero);
             _ActualizandoDetalle = true;
             try
             {
             ComprasUsrProductos.Guardar(Modificar ? _ProductoEditado : null, Producto, Bodega, Cantidad,
-                _CostoProductoBase.Value, Descuento, TipoCambioSeleccionado.Value, Costo);
+                _CostoProductoBase.Value, TipoCambioSeleccionado.Value, Costo, _DescuentoPorcentaje,
+                Convert.ToString(ComprasFuncFila(ComprasCboSucursal)?["nombreSucursal"]));
             _ProductoEditado = null;
-            _Errores.SetError(ComprasUsrProductos.Tabla, string.Empty);
+            ComprasProcEstablecerError(ComprasUsrProductos.Tabla, string.Empty);
             ComprasUsrProductos.BodegaVisible = Convert.ToInt32(Bodega["idBodega"]);
             ComprasProcActualizarProductosAgregados();
             ComprasUsrProductos.ComprasProcActualizarPestanasBodega();
             }
+            catch (ArgumentException Ex)
+            {
+                ComprasProcEstablecerError(ComprasTxtTotalProducto, Ex.Message);
+                ComprasTxtTotalProducto.ComprasMetMostrarError(Ex.Message);
+                ComprasProcMostrarResultado(Ex.Message, true);
+                return;
+            }
             finally { _ActualizandoDetalle = false; ComprasProcEstadoBotonesProducto(); }
+            ComprasProcEstablecerError(ComprasTxtTotalProducto, string.Empty);
+            ComprasTxtTotalProducto.ComprasMetLimpiarError();
             if (!Modificar) ComprasProcLimpiarCapturaProducto();
         }
 
@@ -807,9 +1071,7 @@ namespace CapaVista_OrdenesCompra
                 ComprasCboSkuProducto.ComprasMetLimpiarError();
                 ComprasCboNombreProducto.ComprasMetLimpiarError();
                 _CostoProductoBase = null;
-                _DescuentoDesdePorcentaje = true;
                 _DescuentoPorcentaje = 0M;
-                _DescuentoImporteBase = 0M;
                 _DescuentoValido = true;
                 foreach (var Campo in new[] { ComprasTxtDescripcionProducto, ComprasTxtPesoProducto,
                     ComprasTxtCantidadProducto, ComprasTxtCostoUnitarioProducto, ComprasTxtDescuentoProducto,
@@ -817,10 +1079,10 @@ namespace CapaVista_OrdenesCompra
                 {
                     Campo.Text = string.Empty;
                     Campo.ComprasMetLimpiarError();
-                    _Errores.SetError(Campo, string.Empty);
+                    ComprasProcEstablecerError(Campo, string.Empty);
                 }
-                _Errores.SetError(ComprasCboSkuProducto, string.Empty);
-                _Errores.SetError(ComprasCboNombreProducto, string.Empty);
+                ComprasProcEstablecerError(ComprasCboSkuProducto, string.Empty);
+                ComprasProcEstablecerError(ComprasCboNombreProducto, string.Empty);
             }
             finally
             {
@@ -845,9 +1107,45 @@ namespace CapaVista_OrdenesCompra
             finally { _ActualizandoDetalle = false; ComprasProcEstadoBotonesProducto(); }
         }
 
+        private void ComprasProcActualizarFlujo()
+        {
+            if (_Liberado || IsDisposed || Disposing) return;
+            ComprasGbxMoneda.Enabled = true;
+            ComprasGbxProveedor.Enabled = true;
+            ComprasGbxPlazo.Enabled = true;
+            var Moneda = ComprasFuncFila(ComprasCboMoneda);
+            var Proveedor = ComprasFuncFila(ComprasCboNombreProveedor);
+            var Plazo = ComprasFuncFila(ComprasCboPlazo);
+            bool EncabezadoValido = new ClsOrdenesCompraFlujo
+            {
+                CargandoCatalogos = _CargandoCatalogos, CatalogosCargados = _CatalogosCargados,
+                FechaEmisionTexto = ComprasTxtFechaEmision.Text, FechaEmision = _FechaEmision,
+                IdMonedaSeleccionada = IdMonedaSeleccionada, IdProveedorSeleccionado = IdProveedorSeleccionado,
+                IdPlazoSeleccionado = IdPlazoSeleccionado, TipoCambioSeleccionado = TipoCambioSeleccionado,
+                IdTipoCambioSeleccionado = IdTipoCambioSeleccionado, FechaVencimiento = FechaVencimiento
+            }.EncabezadoValido(Moneda, Proveedor, Plazo);
+            _CapturaDisponible = EncabezadoValido && !_Guardando && !OrdenGuardada;
+            _Edicion.Aplicar(ComprasGbxMoneda, !_Guardando);
+            _Edicion.Aplicar(ComprasGbxProveedor, !_Guardando);
+            _Edicion.Aplicar(ComprasGbxPlazo, !_Guardando);
+            foreach (var Combo in new[] { ComprasCboMoneda, ComprasCboNombreProveedor, ComprasCboPlazo })
+                _Edicion.Establecer(Combo, !_Guardando && _CatalogosCargados);
+            _Edicion.Aplicar(ComprasGbxBodega, _CapturaDisponible);
+            _Edicion.Establecer(ComprasCboBodega, _CapturaDisponible && ComprasFuncFila(ComprasCboSucursal) != null);
+            _Edicion.Aplicar(ComprasGbxProducto, _CapturaDisponible);
+            _Edicion.Establecer(ComprasCboSkuProducto, _CapturaDisponible && Proveedor != null);
+            _Edicion.Establecer(ComprasCboNombreProducto, _CapturaDisponible && Proveedor != null);
+            _Edicion.Establecer(ComprasUsrProductos, _CapturaDisponible);
+            bool PuedeGuardar = _CapturaDisponible && ComprasUsrProductos.Detalles.Rows.Count > 0;
+            _Edicion.Aplicar(ComprasGbxFinalizacion, PuedeGuardar);
+            ComprasBtnGuardar.Enabled = PuedeGuardar && _ImpuestoValido && _TotalesValidos;
+            ComprasBtnDescartar.Enabled = true;
+            ComprasProcEstadoBotonesProducto();
+        }
+
         private void ComprasProcActualizarProductosAgregados()
         {
-            ComprasBtnGuardar.Enabled = !_Guardando && ComprasUsrProductos.Detalles.Rows.Count > 0;
+            ComprasProcActualizarFlujo();
             if (_ActualizandoDetalle && _ProductoEditado != null) return;
             bool ActualizandoAntes = _ActualizandoDetalle;
             _ActualizandoDetalle = true;
@@ -877,3 +1175,4 @@ namespace CapaVista_OrdenesCompra
         }
     }
 }
+

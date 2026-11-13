@@ -55,6 +55,12 @@
     <Compile Include="TestEstadosOrdenesCompra.cs" />
     <Compile Include="TestFiltrosOrdenesCompra.cs" />
     <Compile Include="TestValidacionesOrdenesCompra.cs" />
+    <Compile Include="TestLimitesProductosOrdenCompra.cs" />
+    <Compile Include="TestDescuentosPorcentaje.cs" />
+    <Compile Include="TestImpuestosOrdenCompra.cs" />
+    <Compile Include="..\CapaVista_OrdenesCompra\ClsProductosOrdenesCompraTabla.cs">
+      <Link>Apoyo\ClsProductosOrdenesCompraTabla.cs</Link>
+    </Compile>
     <Compile Include="Apoyo\ClsRepositorioOrdenesCompraPrueba.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

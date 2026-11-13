@@ -173,5 +173,19 @@
       <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reportes\RpReporteProveedores.rdlc">
+      <LogicalName>CapaVista_Compras.Reportes.RpReporteProveedores.rdlc</LogicalName>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpReportePlazos.rdlc">
+      <LogicalName>CapaVista_Compras.Reportes.RpReportePlazos.rdlc</LogicalName>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RpReporteConceptosProveedor.rdlc">
+      <LogicalName>CapaVista_Compras.Reportes.RpReporteConceptosProveedor.rdlc</LogicalName>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

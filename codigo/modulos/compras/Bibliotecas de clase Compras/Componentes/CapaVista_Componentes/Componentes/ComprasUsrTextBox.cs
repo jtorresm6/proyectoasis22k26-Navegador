@@ -48,6 +48,18 @@ namespace CapaVista_Componentes.Componentes
         public ComprasRichTextBox()
         {
             ComprasFiltroRueda.Instalar();
+            EnableAutoDragDrop = false;
+            AllowDrop = false;
+        }
+
+        protected override bool ProcessCmdKey(ref Message Mensaje, Keys Teclas)
+        {
+            if (ShortcutsEnabled && (Teclas == (Keys.Control | Keys.V) || Teclas == (Keys.Shift | Keys.Insert)))
+            {
+                Paste();
+                return true;
+            }
+            return base.ProcessCmdKey(ref Mensaje, Teclas);
         }
 
         protected override void OnEnter(EventArgs Evento)
@@ -65,6 +77,24 @@ namespace CapaVista_Componentes.Componentes
 
         protected override void WndProc(ref Message Mensaje)
         {
+            if (Mensaje.Msg == 0x0302 || Mensaje.Msg == 0x0440)
+            {
+                Mensaje.Result = IntPtr.Zero;
+                if (ReadOnly) return;
+                try
+                {
+                    string Texto = Clipboard.GetText(TextDataFormat.UnicodeText);
+                    if (Texto.Length == 0) return;
+                    int Disponible = Math.Max(0, MaxLength - (TextLength - SelectionLength));
+                    if (Disponible == 0) return;
+                    if (Texto.Length > Disponible) Texto = Texto.Substring(0, Disponible);
+                    SelectedText = Texto;
+                }
+                catch (System.Runtime.InteropServices.ExternalException)
+                {
+                }
+                return;
+            }
             if ((Mensaje.Msg == 0x020A || Mensaje.Msg == 0x020E) && ComprasFiltroRueda.DebeBloquear(this))
             {
                 ComprasFiltroRueda.EnviarAlContenedor(this, ref Mensaje);
