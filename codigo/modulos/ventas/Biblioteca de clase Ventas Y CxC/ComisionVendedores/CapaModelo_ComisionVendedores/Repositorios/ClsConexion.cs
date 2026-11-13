@@ -5,22 +5,22 @@ namespace CapaModelo_ComisionVendedores.Repositorios
 {
     public abstract class ClsConexion
     {
-        protected readonly string _ConnectionString;
+        protected readonly string _CadenaConexion;
 
         protected ClsConexion()
         {
             string CadenaConfigurada = Environment.GetEnvironmentVariable("EMBUTIDOS_ODBC_CONNECTION_STRING");
-            _ConnectionString = string.IsNullOrWhiteSpace(CadenaConfigurada)
+            _CadenaConexion = string.IsNullOrWhiteSpace(CadenaConfigurada)
                 ? "Dsn=EmbutidosS.A"
                 : CadenaConfigurada;
         }
 
-        protected OdbcConnection ComisionVendedoresMetObtenerConexion()
+        protected OdbcConnection VentasMetObtenerConexion()
         {
-            return new OdbcConnection(_ConnectionString);
+            return new OdbcConnection(_CadenaConexion);
         }
 
-        protected void ComisionVendedoresMetAbrirConexion(OdbcConnection Conexion)
+        protected void VentasMetAbrirConexion(OdbcConnection Conexion)
         {
             try
             {
