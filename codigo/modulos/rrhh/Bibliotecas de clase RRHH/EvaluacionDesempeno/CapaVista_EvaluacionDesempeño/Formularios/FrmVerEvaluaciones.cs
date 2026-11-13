@@ -1,6 +1,7 @@
 ﻿using CapaControlador_EvaluacionDesempeño.Controladores;
 using CapaControlador_Seguridad.Objetos_de_valor;
 using CapaModelo_EvaluacionDesempeño.Entidades;
+using CapaVista_EvaluacionDesempeño.frmReportes;
 using CapaVista_EvaluacionDesempeño.Utilidades;
 using CapaVista_Seguridad.Ayudas;
 using System;
@@ -67,12 +68,12 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
             RrhhCboResumenCiclo.SelectedIndexChanged += (Remitente, Evento) => RrhhMetMostrarSeleccionada(RrhhCboResumenCiclo.SelectedIndex);
             RrhhDgvHistorial.CellClick += (Remitente, Evento) => { if (Evento.RowIndex >= 0) RrhhMetMostrarSeleccionada(Evento.RowIndex); };
             RrhhBtnRefrescar.Click += (Remitente, Evento) => RrhhMetCargarEvaluaciones();
-            RrhhBtnImprimir.Click += (Remitente, Evento) => ClsAccionesVista.RrhhMetImprimir(this);
+            RrhhBtnImprimir.Click += (Remitente, Evento) => new FrmReporteVerEvaluaciones(_MisEvaluaciones).Show();
             RrhhBtnInicio.Click += (Remitente, Evento) => RrhhMetMostrarSeleccionada(0);
             RrhhBtnAnterior.Click += (Remitente, Evento) => RrhhMetMostrarSeleccionada(RrhhCboResumenCiclo.SelectedIndex - 1);
             RrhhBtnSiguiente.Click += (Remitente, Evento) => RrhhMetMostrarSeleccionada(RrhhCboResumenCiclo.SelectedIndex + 1);
             RrhhBtnFin.Click += (Remitente, Evento) => RrhhMetMostrarSeleccionada(_MisEvaluaciones.Count - 1);
-            RrhhBtnAyuda.Click += (Remitente, Evento) => ClsAccionesVista.RrhhMetMostrarAyuda(this);
+            RrhhBtnAyuda.Click += (Remitente, Evento) => ClsAccionesVista.RrhhMetMostrarAyuda(this, "VerEvaluaciones__RecursosHumanos.html");
         }
 
         private void FrmVerEvaluaciones_Load(object sender, EventArgs e)
@@ -197,6 +198,11 @@ namespace CapaVista_EvaluacionDesempeño.Formularios
         private void RrhhBtnSalir_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void RrhhBtnImprimir_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
