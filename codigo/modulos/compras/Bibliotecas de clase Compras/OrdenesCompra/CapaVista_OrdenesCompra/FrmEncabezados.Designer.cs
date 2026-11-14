@@ -69,9 +69,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasTlpPie.SuspendLayout();
             this.ComprasGbxSalir.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // ComprasPnlDesplazamiento
-            //
+            // 
             this.ComprasPnlDesplazamiento.AutoScroll = true;
             this.ComprasPnlDesplazamiento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasPnlDesplazamiento.Controls.Add(this.ComprasPnlContenido);
@@ -82,9 +82,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasPnlDesplazamiento.Name = "ComprasPnlDesplazamiento";
             this.ComprasPnlDesplazamiento.Size = new System.Drawing.Size(1300, 700);
             this.ComprasPnlDesplazamiento.TabIndex = 0;
-            //
+            // 
             // ComprasPnlContenido
-            //
+            // 
             this.ComprasPnlContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasPnlContenido.Controls.Add(this.ComprasTlpPrincipal);
             this.ComprasPnlContenido.Dock = System.Windows.Forms.DockStyle.Top;
@@ -94,9 +94,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasPnlContenido.Name = "ComprasPnlContenido";
             this.ComprasPnlContenido.Size = new System.Drawing.Size(1279, 960);
             this.ComprasPnlContenido.TabIndex = 0;
-            //
+            // 
             // ComprasTlpPrincipal
-            //
+            // 
             this.ComprasTlpPrincipal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTlpPrincipal.ColumnCount = 1;
             this.ComprasTlpPrincipal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -118,9 +118,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasTlpPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.ComprasTlpPrincipal.Size = new System.Drawing.Size(1279, 960);
             this.ComprasTlpPrincipal.TabIndex = 0;
-            //
+            // 
             // ComprasUsrEncabezado
-            //
+            // 
             this.ComprasUsrEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasUsrEncabezado.Codigo = "6003";
             this.ComprasUsrEncabezado.Descripcion = "Consulta las ordenes de compra, filtra los resultados y abre una orden con doble " +
@@ -138,9 +138,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasUsrEncabezado.TabIndex = 0;
             this.ComprasUsrEncabezado.TabStop = false;
             this.ComprasUsrEncabezado.Titulo = "ORDENES DE COMPRA";
-            //
+            // 
             // ComprasTlpNuevaOrden
-            //
+            // 
             this.ComprasTlpNuevaOrden.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTlpNuevaOrden.ColumnCount = 4;
             this.ComprasTlpNuevaOrden.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -158,9 +158,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasTlpNuevaOrden.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpNuevaOrden.Size = new System.Drawing.Size(1279, 100);
             this.ComprasTlpNuevaOrden.TabIndex = 0;
-            //
+            // 
             // ComprasLblNuevaOrden
-            //
+            // 
             this.ComprasLblNuevaOrden.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.ComprasLblNuevaOrden.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasLblNuevaOrden.Font = new System.Drawing.Font("Tahoma", 12F);
@@ -176,9 +176,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasLblNuevaOrden.TamanoTipografia = 12F;
             this.ComprasLblNuevaOrden.Text = "Crear una nueva orden de compra →";
             this.ComprasLblNuevaOrden.Texto = "Crear una nueva orden de compra →";
-            //
+            // 
             // ComprasGbxNuevo
-            //
+            // 
             this.ComprasGbxNuevo.BackColor = System.Drawing.Color.Transparent;
             this.ComprasGbxNuevo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasGbxNuevo.Controls.Add(this.ComprasBtnNuevaOrden);
@@ -192,9 +192,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasGbxNuevo.TabIndex = 2;
             this.ComprasGbxNuevo.TabStop = false;
             this.ComprasBtnNuevaOrden.TipoBoton = CapaVista_Componentes.Componentes.ComprasTipoBoton.Libre;
-            //
+            // 
             // ComprasBtnNuevaOrden
-            //
+            // 
             this.ComprasBtnNuevaOrden.AccessibleName = "Crear nueva orden";
             this.ComprasBtnNuevaOrden.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ComprasBtnNuevaOrden.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(220)))), ((int)(((byte)(239)))));
@@ -216,9 +216,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasBtnNuevaOrden.Size = new System.Drawing.Size(80, 80);
             this.ComprasBtnNuevaOrden.TabIndex = 0;
             this.ComprasBtnNuevaOrden.UseVisualStyleBackColor = false;
-            //
+            // 
             // ComprasGbxFiltros
-            //
+            // 
             this.ComprasGbxFiltros.BackColor = System.Drawing.Color.Transparent;
             this.ComprasGbxFiltros.Controls.Add(this.ComprasTlpFiltros);
             this.ComprasGbxFiltros.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -233,9 +233,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasGbxFiltros.TabIndex = 1;
             this.ComprasGbxFiltros.TabStop = false;
             this.ComprasGbxFiltros.Text = "1. Buscar ordenes de compra";
-            //
+            // 
             // ComprasTlpFiltros
-            //
+            // 
             this.ComprasTlpFiltros.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTlpFiltros.ColumnCount = 3;
             this.ComprasTlpFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
@@ -253,9 +253,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasTlpFiltros.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpFiltros.Size = new System.Drawing.Size(1243, 135);
             this.ComprasTlpFiltros.TabIndex = 0;
-            //
+            // 
             // ComprasGbxRefrescar
-            //
+            // 
             this.ComprasGbxRefrescar.BackColor = System.Drawing.Color.Transparent;
             this.ComprasGbxRefrescar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasGbxRefrescar.Controls.Add(this.ComprasBtnActualizar);
@@ -269,9 +269,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasGbxRefrescar.TabIndex = 3;
             this.ComprasGbxRefrescar.TabStop = false;
             this.ComprasBtnActualizar.TipoBoton = CapaVista_Componentes.Componentes.ComprasTipoBoton.Libre;
-            //
+            // 
             // ComprasBtnActualizar
-            //
+            // 
             this.ComprasBtnActualizar.AccessibleName = "Actualizar listado";
             this.ComprasBtnActualizar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ComprasBtnActualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(220)))), ((int)(((byte)(239)))));
@@ -293,9 +293,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasBtnActualizar.Size = new System.Drawing.Size(80, 80);
             this.ComprasBtnActualizar.TabIndex = 0;
             this.ComprasBtnActualizar.UseVisualStyleBackColor = false;
-            //
+            // 
             // ComprasTlpBuscar
-            //
+            // 
             this.ComprasTlpBuscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTlpBuscar.ColumnCount = 2;
             this.ComprasTlpBuscar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
@@ -316,9 +316,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasTlpBuscar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpBuscar.Size = new System.Drawing.Size(514, 135);
             this.ComprasTlpBuscar.TabIndex = 0;
-            //
+            // 
             // ComprasLblEstado
-            //
+            // 
             this.ComprasLblEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.ComprasLblEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasLblEstado.Font = new System.Drawing.Font("Tahoma", 9F);
@@ -334,9 +334,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasLblEstado.TamanoTipografia = 9F;
             this.ComprasLblEstado.Text = "Estado";
             this.ComprasLblEstado.Texto = "Estado";
-            //
+            // 
             // ComprasCboEstado
-            //
+            // 
             this.ComprasCboEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.ComprasCboEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasCboEstado.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -348,10 +348,10 @@ namespace CapaVista_OrdenesCompra
             this.ComprasCboEstado.Name = "ComprasCboEstado";
             this.ComprasCboEstado.Size = new System.Drawing.Size(330, 36);
             this.ComprasCboEstado.TabIndex = 0;
-            //
+            // 
             // ComprasLblBuscar
-            //
-            this.ComprasLblBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.ComprasLblBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ComprasLblBuscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasLblBuscar.Font = new System.Drawing.Font("Tahoma", 9F);
@@ -367,9 +367,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasLblBuscar.TamanoTipografia = 9F;
             this.ComprasLblBuscar.Text = "No. de orden,\r\nproveedor o NIT";
             this.ComprasLblBuscar.Texto = "No. de orden,\r\nproveedor o NIT";
-            //
+            // 
             // ComprasTxtBuscar
-            //
+            // 
             this.ComprasTxtBuscar.AccessibleDescription = "Buscar por numero de orden, proveedor o NIT";
             this.ComprasTxtBuscar.AlturaEtiquetaError = 32;
             this.ComprasTxtBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -385,9 +385,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasTxtBuscar.SelectionStart = 0;
             this.ComprasTxtBuscar.Size = new System.Drawing.Size(330, 76);
             this.ComprasTxtBuscar.TabIndex = 1;
-            //
+            // 
             // ComprasTlpFechas
-            //
+            // 
             this.ComprasTlpFechas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTlpFechas.ColumnCount = 1;
             this.ComprasTlpFechas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -405,9 +405,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasTlpFechas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpFechas.Size = new System.Drawing.Size(628, 135);
             this.ComprasTlpFechas.TabIndex = 1;
-            //
+            // 
             // ComprasChkFechas
-            //
+            // 
             this.ComprasChkFechas.AutoSize = true;
             this.ComprasChkFechas.Font = new System.Drawing.Font("Tahoma", 9F);
             this.ComprasChkFechas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
@@ -417,9 +417,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasChkFechas.Size = new System.Drawing.Size(206, 22);
             this.ComprasChkFechas.TabIndex = 0;
             this.ComprasChkFechas.Text = "Filtrar por fecha de emision";
-            //
+            // 
             // ComprasUsrFechas
-            //
+            // 
             this.ComprasUsrFechas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasUsrFechas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasUsrFechas.Enabled = false;
@@ -433,9 +433,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasUsrFechas.Size = new System.Drawing.Size(616, 80);
             this.ComprasUsrFechas.TabIndex = 1;
             this.ComprasUsrFechas.TamanoFuente = 10F;
-            //
+            // 
             // ComprasGbxOrdenes
-            //
+            // 
             this.ComprasGbxOrdenes.BackColor = System.Drawing.Color.Transparent;
             this.ComprasGbxOrdenes.Controls.Add(this.ComprasTlpOrdenes);
             this.ComprasGbxOrdenes.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -450,9 +450,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasGbxOrdenes.TabIndex = 2;
             this.ComprasGbxOrdenes.TabStop = false;
             this.ComprasGbxOrdenes.Text = "2. Revisar y seleccionar una orden";
-            //
+            // 
             // ComprasTlpOrdenes
-            //
+            // 
             this.ComprasTlpOrdenes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTlpOrdenes.ColumnCount = 1;
             this.ComprasTlpOrdenes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -468,9 +468,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasTlpOrdenes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpOrdenes.Size = new System.Drawing.Size(1243, 405);
             this.ComprasTlpOrdenes.TabIndex = 0;
-            //
+            // 
             // ComprasLblResultado
-            //
+            // 
             this.ComprasLblResultado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.ComprasLblResultado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasLblResultado.Font = new System.Drawing.Font("Tahoma", 9F);
@@ -486,9 +486,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasLblResultado.TamanoTipografia = 9F;
             this.ComprasLblResultado.Text = "Selecciona una orden con doble clic para consultar sus datos.";
             this.ComprasLblResultado.Texto = "Selecciona una orden con doble clic para consultar sus datos.";
-            //
+            // 
             // ComprasDgvEncabezados
-            //
+            // 
             this.ComprasDgvEncabezados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasDgvEncabezados.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasDgvEncabezados.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
@@ -499,9 +499,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasDgvEncabezados.ResaltarFilasAlPasar = true;
             this.ComprasDgvEncabezados.Size = new System.Drawing.Size(1243, 377);
             this.ComprasDgvEncabezados.TabIndex = 2;
-            //
+            // 
             // ComprasTlpPie
-            //
+            // 
             this.ComprasTlpPie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ComprasTlpPie.ColumnCount = 2;
             this.ComprasTlpPie.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -516,9 +516,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasTlpPie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ComprasTlpPie.Size = new System.Drawing.Size(1279, 100);
             this.ComprasTlpPie.TabIndex = 3;
-            //
+            // 
             // ComprasGbxSalir
-            //
+            // 
             this.ComprasGbxSalir.BackColor = System.Drawing.Color.Transparent;
             this.ComprasGbxSalir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ComprasGbxSalir.Controls.Add(this.ComprasBtnCerrar);
@@ -532,9 +532,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasGbxSalir.TabIndex = 4;
             this.ComprasGbxSalir.TabStop = false;
             this.ComprasBtnCerrar.TipoBoton = CapaVista_Componentes.Componentes.ComprasTipoBoton.Libre;
-            //
+            // 
             // ComprasBtnCerrar
-            //
+            // 
             this.ComprasBtnCerrar.AccessibleName = "Cerrar listado";
             this.ComprasBtnCerrar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ComprasBtnCerrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(220)))), ((int)(((byte)(239)))));
@@ -556,9 +556,9 @@ namespace CapaVista_OrdenesCompra
             this.ComprasBtnCerrar.Size = new System.Drawing.Size(80, 80);
             this.ComprasBtnCerrar.TabIndex = 0;
             this.ComprasBtnCerrar.UseVisualStyleBackColor = false;
-            //
+            // 
             // FrmEncabezados
-            //
+            // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(1300, 700);
@@ -568,6 +568,7 @@ namespace CapaVista_OrdenesCompra
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmEncabezados";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "6003 - Consulta de ordenes de compra";
             this.ComprasPnlDesplazamiento.ResumeLayout(false);
             this.ComprasPnlContenido.ResumeLayout(false);

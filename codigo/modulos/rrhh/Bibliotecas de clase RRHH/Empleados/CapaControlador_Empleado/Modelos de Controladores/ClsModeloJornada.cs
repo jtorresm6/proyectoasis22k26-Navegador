@@ -6,7 +6,7 @@
  * Fecha : 21/10/2026
  * ==================================================================
  * Propósito :
- *  Modelo del controlador de tblJornada. Arma la lista que usa el reporte de la aplicación 9005.
+ *  Modelo del controlador de tblJornada. Arma la lista que usa el reporte de la aplicación 9003.
  * ===================================================================
 */
 

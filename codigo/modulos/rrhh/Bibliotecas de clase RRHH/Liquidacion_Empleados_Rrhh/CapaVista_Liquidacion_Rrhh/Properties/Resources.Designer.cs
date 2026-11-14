@@ -153,6 +153,16 @@ namespace CapaVista_Liquidacion_Rrhh.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap boton_refrescar_sin_bordes {
+            get {
+                object obj = ResourceManager.GetObject("boton_refrescar_sin_bordes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boton_reporte_sin_bordes {
             get {
                 object obj = ResourceManager.GetObject("boton_reporte_sin_bordes", resourceCulture);
@@ -166,6 +176,16 @@ namespace CapaVista_Liquidacion_Rrhh.Properties {
         internal static System.Drawing.Bitmap boton_siguiente_sin_bordes {
             get {
                 object obj = ResourceManager.GetObject("boton_siguiente_sin_bordes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap btn_ayuda {
+            get {
+                object obj = ResourceManager.GetObject("btn_ayuda", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

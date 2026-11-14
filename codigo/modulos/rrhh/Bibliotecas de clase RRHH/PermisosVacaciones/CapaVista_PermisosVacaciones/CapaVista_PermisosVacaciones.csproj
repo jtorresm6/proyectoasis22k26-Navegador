@@ -31,7 +31,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CapaControlador_Navegador, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Reference Include="CapaControlador_Seguridad, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="CapaControlador_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Seguridad">
+      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\Debug\CapaVista_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="CapaModelo_Navegador, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="CapaVista_Consultas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="CapaVista_Navegador">
@@ -65,6 +70,7 @@
     <Compile Include="Formularios\FrmVacaciones.Designer.cs">
       <DependentUpon>FrmVacaciones.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utilidades\ClsValidacionFechas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources1.Designer.cs">
       <AutoGen>True</AutoGen>

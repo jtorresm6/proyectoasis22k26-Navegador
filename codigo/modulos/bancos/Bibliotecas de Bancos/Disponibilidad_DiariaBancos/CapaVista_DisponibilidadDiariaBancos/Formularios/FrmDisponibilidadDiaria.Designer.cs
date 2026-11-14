@@ -1,4 +1,4 @@
-namespace CapaVista_DisponibilidadDiaria.Formularios
+﻿namespace CapaVista_DisponibilidadDiaria.Formularios
 {
     partial class FrmDisponibilidadDiaria
     {
@@ -37,7 +37,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDisponibilidadDiaria));
             this.BancosPnlAreaDesplazable = new System.Windows.Forms.Panel();
             this.BancosPnlFondo = new System.Windows.Forms.Panel();
-            this.BancosLblStatusDemo = new System.Windows.Forms.Label();
+            this.BancosLblEstadoConexion = new System.Windows.Forms.Label();
             this.BancosLblStatusLine = new System.Windows.Forms.Label();
             this.BancosPnlMascota = new System.Windows.Forms.Panel();
             this.BancosPicMascota = new System.Windows.Forms.PictureBox();
@@ -96,7 +96,6 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosLblTituloFiltros = new System.Windows.Forms.Label();
             this.BancosPnlSepHeader = new System.Windows.Forms.Panel();
             this.BancosPnlHeader = new System.Windows.Forms.Panel();
-            this.BancosLblDemoBadge = new System.Windows.Forms.Label();
             this.BancosLblSubtitulo = new System.Windows.Forms.Label();
             this.BancosLblTitulo = new System.Windows.Forms.Label();
             this.BancosPnlFooterBar = new System.Windows.Forms.Panel();
@@ -143,7 +142,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             // 
             this.BancosPnlFondo.BackgroundImage = global::CapaVista_DisponibilidadDiaria.Properties.Resources.FondoDiponibilidadDiaria;
             this.BancosPnlFondo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.BancosPnlFondo.Controls.Add(this.BancosLblStatusDemo);
+            this.BancosPnlFondo.Controls.Add(this.BancosLblEstadoConexion);
             this.BancosPnlFondo.Controls.Add(this.BancosLblStatusLine);
             this.BancosPnlFondo.Controls.Add(this.BancosPnlMascota);
             this.BancosPnlFondo.Controls.Add(this.BancosPnlResumenCuenta);
@@ -167,18 +166,18 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosPnlFondo.Size = new System.Drawing.Size(1028, 650);
             this.BancosPnlFondo.TabIndex = 0;
             // 
-            // BancosLblStatusDemo
+            // BancosLblEstadoConexion
             // 
-            this.BancosLblStatusDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BancosLblStatusDemo.BackColor = System.Drawing.Color.Transparent;
-            this.BancosLblStatusDemo.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.BancosLblStatusDemo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(90)))), ((int)(((byte)(0)))));
-            this.BancosLblStatusDemo.Location = new System.Drawing.Point(852, 626);
-            this.BancosLblStatusDemo.Name = "BancosLblStatusDemo";
-            this.BancosLblStatusDemo.Size = new System.Drawing.Size(160, 16);
-            this.BancosLblStatusDemo.TabIndex = 17;
-            this.BancosLblStatusDemo.Text = "Modo demostración";
-            this.BancosLblStatusDemo.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.BancosLblEstadoConexion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BancosLblEstadoConexion.BackColor = System.Drawing.Color.Transparent;
+            this.BancosLblEstadoConexion.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.BancosLblEstadoConexion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(90)))), ((int)(((byte)(0)))));
+            this.BancosLblEstadoConexion.Location = new System.Drawing.Point(852, 626);
+            this.BancosLblEstadoConexion.Name = "BancosLblEstadoConexion";
+            this.BancosLblEstadoConexion.Size = new System.Drawing.Size(160, 16);
+            this.BancosLblEstadoConexion.TabIndex = 17;
+            this.BancosLblEstadoConexion.Text = "Sin consulta";
+            this.BancosLblEstadoConexion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // BancosLblStatusLine
             // 
@@ -190,7 +189,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosLblStatusLine.Name = "BancosLblStatusLine";
             this.BancosLblStatusLine.Size = new System.Drawing.Size(163, 13);
             this.BancosLblStatusLine.TabIndex = 16;
-            this.BancosLblStatusLine.Text = "2 cuentas   •   Importes en GTQ";
+            this.BancosLblStatusLine.Text = "Consulta pendiente";
             // 
             // BancosPnlMascota
             // 
@@ -444,7 +443,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosLblValorDisponible.Name = "BancosLblValorDisponible";
             this.BancosLblValorDisponible.Size = new System.Drawing.Size(102, 21);
             this.BancosLblValorDisponible.TabIndex = 2;
-            this.BancosLblValorDisponible.Text = "Q443,000.00";
+            this.BancosLblValorDisponible.Text = "—";
             // 
             // BancosLblMonedaKpiDisp
             // 
@@ -501,7 +500,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosLblValorRestringido.Name = "BancosLblValorRestringido";
             this.BancosLblValorRestringido.Size = new System.Drawing.Size(84, 21);
             this.BancosLblValorRestringido.TabIndex = 2;
-            this.BancosLblValorRestringido.Text = "Q7,000.00";
+            this.BancosLblValorRestringido.Text = "—";
             // 
             // BancosLblMonedaKpiRest
             // 
@@ -558,7 +557,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosLblValorComprometido.Name = "BancosLblValorComprometido";
             this.BancosLblValorComprometido.Size = new System.Drawing.Size(93, 21);
             this.BancosLblValorComprometido.TabIndex = 2;
-            this.BancosLblValorComprometido.Text = "Q48,000.00";
+            this.BancosLblValorComprometido.Text = "—";
             // 
             // BancosLblMonedaKpiComp
             // 
@@ -615,7 +614,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosLblValorEgresos.Name = "BancosLblValorEgresos";
             this.BancosLblValorEgresos.Size = new System.Drawing.Size(93, 21);
             this.BancosLblValorEgresos.TabIndex = 2;
-            this.BancosLblValorEgresos.Text = "Q62,000.00";
+            this.BancosLblValorEgresos.Text = "—";
             // 
             // BancosLblMonedaKpiEgresos
             // 
@@ -672,7 +671,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosLblValorIngresos.Name = "BancosLblValorIngresos";
             this.BancosLblValorIngresos.Size = new System.Drawing.Size(102, 21);
             this.BancosLblValorIngresos.TabIndex = 2;
-            this.BancosLblValorIngresos.Text = "Q130,000.00";
+            this.BancosLblValorIngresos.Text = "—";
             // 
             // BancosLblMonedaKpiIngresos
             // 
@@ -729,7 +728,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosLblValorSaldoInicial.Name = "BancosLblValorSaldoInicial";
             this.BancosLblValorSaldoInicial.Size = new System.Drawing.Size(102, 21);
             this.BancosLblValorSaldoInicial.TabIndex = 2;
-            this.BancosLblValorSaldoInicial.Text = "Q430,000.00";
+            this.BancosLblValorSaldoInicial.Text = "—";
             // 
             // BancosLblMonedaKpiSaldo
             // 
@@ -752,7 +751,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosLblMonedaResumen.Name = "BancosLblMonedaResumen";
             this.BancosLblMonedaResumen.Size = new System.Drawing.Size(150, 16);
             this.BancosLblMonedaResumen.TabIndex = 4;
-            this.BancosLblMonedaResumen.Text = "Resumen en GTQ";
+            this.BancosLblMonedaResumen.Text = "Sin datos consultados";
             this.BancosLblMonedaResumen.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // BancosLblSeccionResumen
@@ -945,7 +944,6 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             // BancosPnlHeader
             // 
             this.BancosPnlHeader.BackColor = System.Drawing.Color.Transparent;
-            this.BancosPnlHeader.Controls.Add(this.BancosLblDemoBadge);
             this.BancosPnlHeader.Controls.Add(this.BancosLblSubtitulo);
             this.BancosPnlHeader.Controls.Add(this.BancosLblTitulo);
             this.BancosPnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -953,20 +951,6 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.BancosPnlHeader.Name = "BancosPnlHeader";
             this.BancosPnlHeader.Size = new System.Drawing.Size(1028, 76);
             this.BancosPnlHeader.TabIndex = 0;
-            // 
-            // BancosLblDemoBadge
-            // 
-            this.BancosLblDemoBadge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BancosLblDemoBadge.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(243)))), ((int)(((byte)(214)))));
-            this.BancosLblDemoBadge.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.BancosLblDemoBadge.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.BancosLblDemoBadge.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(90)))), ((int)(((byte)(0)))));
-            this.BancosLblDemoBadge.Location = new System.Drawing.Point(808, 22);
-            this.BancosLblDemoBadge.Name = "BancosLblDemoBadge";
-            this.BancosLblDemoBadge.Size = new System.Drawing.Size(204, 30);
-            this.BancosLblDemoBadge.TabIndex = 2;
-            this.BancosLblDemoBadge.Text = "  ℹ   Prototipo · Datos ficticios";
-            this.BancosLblDemoBadge.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // BancosLblSubtitulo
             // 
@@ -1067,7 +1051,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
             this.MaximizeBox = false;
             this.Name = "FrmDisponibilidadDiaria";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "8009-DisponibilidadDiaria";
+            this.Text = "8009 - DisponibilidadDiaria";
             this.BancosPnlAreaDesplazable.ResumeLayout(false);
             this.BancosPnlFondo.ResumeLayout(false);
             this.BancosPnlFondo.PerformLayout();
@@ -1114,7 +1098,6 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
         private System.Windows.Forms.Panel BancosPnlHeader;
         private System.Windows.Forms.Label BancosLblTitulo;
         private System.Windows.Forms.Label BancosLblSubtitulo;
-        private System.Windows.Forms.Label BancosLblDemoBadge;
         private System.Windows.Forms.Panel BancosPnlSepHeader;
         private System.Windows.Forms.Panel BancosPnlFiltros;
         private System.Windows.Forms.Label BancosLblTituloFiltros;
@@ -1172,7 +1155,7 @@ namespace CapaVista_DisponibilidadDiaria.Formularios
         private System.Windows.Forms.Panel BancosPnlMascota;
         private System.Windows.Forms.PictureBox BancosPicMascota;
         private System.Windows.Forms.Label BancosLblStatusLine;
-        private System.Windows.Forms.Label BancosLblStatusDemo;
+        private System.Windows.Forms.Label BancosLblEstadoConexion;
         private System.Windows.Forms.Panel BancosPnlFooterBar;
         private System.Windows.Forms.Button BancosBtnFooterAyuda;
         private System.Windows.Forms.Button BancosBtnFooterReporte;

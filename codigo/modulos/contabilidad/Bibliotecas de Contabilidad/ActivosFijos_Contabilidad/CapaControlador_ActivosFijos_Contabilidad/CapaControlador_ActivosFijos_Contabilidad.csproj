@@ -52,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClsControladorActivosFijosContabilidad.cs" />
+    <Compile Include="Integracion\ClsEnlaceLogisticaContabilidad.cs" />
+    <Compile Include="Integracion\ClsModeloActivoLogisticaContabilidad.cs" />
+    <Compile Include="Integracion\IReceptorActivoFijoContabilidad.cs" />
     <Compile Include="Modelos\ClsModeloActivoFijoContabilidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

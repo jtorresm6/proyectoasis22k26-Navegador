@@ -125,7 +125,6 @@
             this.BancosBtnCheques.Size = new System.Drawing.Size(264, 49);
             this.BancosBtnCheques.TabIndex = 2;
             this.BancosBtnCheques.UseVisualStyleBackColor = false;
-            this.BancosBtnCheques.Click += new System.EventHandler(this.BancosBtnCheques_Click);
             // 
             // flowLayoutPanel1
             // 

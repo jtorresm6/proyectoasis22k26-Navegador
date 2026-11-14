@@ -45,10 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modelos de controladores\ClsModeloCatalogos.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloNominaDetalle.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloNominaEncabezado.cs" />
     <Compile Include="Modelos de controladores\ClsModeloPercepcionDeduccion.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloPercepcionDeduccionEmpleado.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloPercepcionDeduccionRango.cs" />
+    <Compile Include="ObjetosdeValor\ClsConceptoCalculado.cs" />
     <Compile Include="ObjetosdeValor\ClsEstadoEntidad.cs" />
+    <Compile Include="ObjetosdeValor\ClsModeloComisiones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-</Project>
+</Project>

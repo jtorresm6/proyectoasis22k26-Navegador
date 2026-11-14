@@ -76,5 +76,11 @@ namespace CapaVista_Liquidacion_Rrhh.Formularios
             FrmParametrosLeyNavegador ParametroLey = new FrmParametrosLeyNavegador();
             ParametroLey.ShowDialog();
         }
+
+        private void RrhhBtnCatalogoBajaEmpleado_Click(object sender, EventArgs e)
+        {
+            FrmBajaEmpleado BajaEmpleado = new FrmBajaEmpleado();
+            BajaEmpleado.ShowDialog();
+        }
     }
 }

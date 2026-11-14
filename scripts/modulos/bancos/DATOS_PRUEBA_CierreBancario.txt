@@ -1,0 +1,83 @@
+START TRANSACTION;
+
+SET @CuentaPrueba = (
+    SELECT idCuentaBancaria
+    FROM tblCuentaBancaria
+    WHERE numeroCuentaBancaria = 'TST-CIERRE-0001'
+    LIMIT 1
+);
+
+INSERT INTO tblExtractoBancario
+    (referenciaExtractoBancario, fechaInicioExtractoBancario,
+     fechaFinExtractoBancario, saldoInicialExtractoBancario,
+     saldoFinalExtractoBancario, Fk_CuentaBancaria_Codigo)
+VALUES
+    ('TST-MENSUAL-2027-02', '2027-02-01', '2027-02-28',
+     10000.0000, 10000.0000, @CuentaPrueba);
+
+SET @ExtractoMensual = LAST_INSERT_ID();
+
+INSERT INTO tblConciliacion
+    (fechaCorteConciliacion, estadoConciliacion, metodoConciliacion,
+     saldoLibroConciliacion, saldoBancoConciliacion, diferenciaConciliacion,
+     identificadorResponsableConciliacion, fechaCierreConciliacion,
+     Fk_CuentaBancaria_Codigo, Fk_ExtractoBancario_Codigo)
+VALUES
+    ('2027-02-15', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoMensual),
+    ('2027-02-28', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoMensual);
+
+INSERT INTO tblExtractoBancario
+    (referenciaExtractoBancario, fechaInicioExtractoBancario,
+     fechaFinExtractoBancario, saldoInicialExtractoBancario,
+     saldoFinalExtractoBancario, Fk_CuentaBancaria_Codigo)
+VALUES
+    ('TST-TRIMESTRAL-2027-Q2', '2027-04-01', '2027-06-30',
+     10000.0000, 10000.0000, @CuentaPrueba);
+
+SET @ExtractoTrimestral = LAST_INSERT_ID();
+
+INSERT INTO tblConciliacion
+    (fechaCorteConciliacion, estadoConciliacion, metodoConciliacion,
+     saldoLibroConciliacion, saldoBancoConciliacion, diferenciaConciliacion,
+     identificadorResponsableConciliacion, fechaCierreConciliacion,
+     Fk_CuentaBancaria_Codigo, Fk_ExtractoBancario_Codigo)
+VALUES
+    ('2027-04-30', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoTrimestral),
+    ('2027-05-31', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoTrimestral),
+    ('2027-06-30', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoTrimestral);
+
+INSERT INTO tblExtractoBancario
+    (referenciaExtractoBancario, fechaInicioExtractoBancario,
+     fechaFinExtractoBancario, saldoInicialExtractoBancario,
+     saldoFinalExtractoBancario, Fk_CuentaBancaria_Codigo)
+VALUES
+    ('TST-SEMESTRAL-2027-H2', '2027-07-01', '2027-12-31',
+     10000.0000, 10000.0000, @CuentaPrueba);
+
+SET @ExtractoSemestral = LAST_INSERT_ID();
+
+INSERT INTO tblConciliacion
+    (fechaCorteConciliacion, estadoConciliacion, metodoConciliacion,
+     saldoLibroConciliacion, saldoBancoConciliacion, diferenciaConciliacion,
+     identificadorResponsableConciliacion, fechaCierreConciliacion,
+     Fk_CuentaBancaria_Codigo, Fk_ExtractoBancario_Codigo)
+VALUES
+    ('2027-07-31', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoSemestral),
+    ('2027-08-31', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoSemestral),
+    ('2027-09-30', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoSemestral),
+    ('2027-10-31', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoSemestral),
+    ('2027-11-30', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoSemestral),
+    ('2027-12-31', 'CONCILIADA', 'MANUAL', 10000.0000, 10000.0000, 0.0000,
+     'PRUEBAS-CIERRE', NULL, @CuentaPrueba, @ExtractoSemestral);
+
+COMMIT;
