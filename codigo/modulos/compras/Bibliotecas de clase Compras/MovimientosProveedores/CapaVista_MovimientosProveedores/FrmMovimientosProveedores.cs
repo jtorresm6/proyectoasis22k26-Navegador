@@ -264,7 +264,8 @@ namespace CapaVista_MovimientosProveedores
 
         private void ComprasMetAbrirHistorial(object Remitente, EventArgs Evento)
         {
-            using (var Historial = new FrmHistorialMovimientosProveedores())
+            int IdProveedor = ComprasFuncObtenerIdSeleccionado(ComprasCboProveedor);
+            using (var Historial = new FrmHistorialMovimientosProveedores(IdProveedor == 0 ? (int?)null : IdProveedor))
             {
                 Historial.ShowDialog(this);
             }

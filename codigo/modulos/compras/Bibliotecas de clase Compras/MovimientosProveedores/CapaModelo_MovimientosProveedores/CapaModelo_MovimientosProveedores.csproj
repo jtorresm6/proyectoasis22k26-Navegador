@@ -43,6 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Contratos\IRepositorioBalanceAntiguedadProveedor.cs" />
+    <Compile Include="Entidades\ClsBalanceAntiguedadProveedor.cs" />
+    <Compile Include="Repositorios\ClsRepositorioBalanceAntiguedadProveedor.cs" />
+
     <Compile Include="Repositorios\Repositorio.cs" />
     <Compile Include="Repositorios\RepositorioMaestro.cs" />
 
