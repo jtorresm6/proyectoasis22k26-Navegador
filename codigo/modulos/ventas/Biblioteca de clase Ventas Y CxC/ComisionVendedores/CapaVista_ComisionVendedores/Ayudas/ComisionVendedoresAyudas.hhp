@@ -12,5 +12,5 @@ Full-text search=Yes
 [FILES]
 FrmComisionVendedores_ComisionVendedores.htm
 FrmPagoFacturaTemporal_ComisionVendedores.htm
-..\Resources\Ayudas\logoEmpresa.png
-..\Resources\Ayudas\mascotaVentas.png
+imagenes\logoEmpresa.png
+imagenes\mascotaVentas.png

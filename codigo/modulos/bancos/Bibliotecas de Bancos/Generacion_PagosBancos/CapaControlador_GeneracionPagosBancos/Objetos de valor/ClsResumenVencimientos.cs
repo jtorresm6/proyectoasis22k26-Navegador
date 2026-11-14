@@ -29,7 +29,6 @@ namespace CapaControlador_GeneracionPagos
             get { return Avisos.Count > 0; }
         }
 
-        // Hay algo que ya venció o que vence hoy
         public bool HayUrgentes
         {
             get { return Vencidas + VencenHoy > 0; }

@@ -31,13 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaControlador_Seguridad">
-      <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\bin\Debug\CapaControlador_Seguridad.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaVista_Navegador, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaVista_Navegador.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -50,18 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formularios\FrmBancoNavegador.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formularios\FrmBancoNavegador.Designer.cs">
-      <DependentUpon>FrmBancoNavegador.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ayudas\" />
@@ -69,13 +50,6 @@
     <Folder Include="Reportes\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Formularios\FrmBancoNavegador.resx">
-      <DependentUpon>FrmBancoNavegador.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\FondoEnlaceotrosModulo.jpg" />
@@ -129,4 +103,115 @@
     <None Include="Resources\btn_ayudaB.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="Formularios\ClsEstiloEnlace.cs" />
+    <Compile Include="Formularios\ClsPaginadorEnlace.cs" />
+    <Compile Include="Formularios\FrmEnlaceOtrosModulos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmEnlaceOtrosModulos.Designer.cs">
+      <DependentUpon>FrmEnlaceOtrosModulos.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Formularios\FrmEnlaceOtrosModulos.resx">
+      <DependentUpon>FrmEnlaceOtrosModulos.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Formularios\FrmEnlaceLogistica.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmEnlaceLogistica.Designer.cs">
+      <DependentUpon>FrmEnlaceLogistica.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Formularios\FrmEnlaceLogistica.resx">
+      <DependentUpon>FrmEnlaceLogistica.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Formularios\FrmEnlaceCompras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmEnlaceCompras.Designer.cs">
+      <DependentUpon>FrmEnlaceCompras.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Formularios\FrmEnlaceCompras.resx">
+      <DependentUpon>FrmEnlaceCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Formularios\FrmOperacionCompletada.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmOperacionCompletada.Designer.cs">
+      <DependentUpon>FrmOperacionCompletada.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Formularios\FrmOperacionCompletada.resx">
+      <DependentUpon>FrmOperacionCompletada.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Formularios\FrmEnlaceVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmEnlaceVentas.Designer.cs">
+      <DependentUpon>FrmEnlaceVentas.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Formularios\FrmEnlaceVentas.resx">
+      <DependentUpon>FrmEnlaceVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Formularios\FrmEnlaceRecursosHumanos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmEnlaceRecursosHumanos.Designer.cs">
+      <DependentUpon>FrmEnlaceRecursosHumanos.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Formularios\FrmEnlaceRecursosHumanos.resx">
+      <DependentUpon>FrmEnlaceRecursosHumanos.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Formularios\UsrConsultaModulo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\UsrConsultaModulo.Designer.cs">
+      <DependentUpon>UsrConsultaModulo.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Formularios\UsrConsultaModulo.resx">
+      <DependentUpon>UsrConsultaModulo.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Formularios\FrmHistorialPartidas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmHistorialPartidas.Designer.cs">
+      <DependentUpon>FrmHistorialPartidas.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Formularios\FrmHistorialPartidas.resx">
+      <DependentUpon>FrmHistorialPartidas.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Formularios\FrmEnlaceContabilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmEnlaceContabilidad.Designer.cs">
+      <DependentUpon>FrmEnlaceContabilidad.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Formularios\FrmEnlaceContabilidad.resx">
+      <DependentUpon>FrmEnlaceContabilidad.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Formularios\FrmBancoNavegador.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx" />
+    <None Include="Resources\Acciones\Logistica.png" />
+    <None Include="Resources\Acciones\Compras.png" />
+    <None Include="Resources\Acciones\Bancos.ico" />
+    <None Include="Resources\Acciones\Ventas.png" />
+    <None Include="Resources\Acciones\RecursosHumanos.png" />
+    <None Include="Resources\Acciones\Contabilidad.png" />
+    <None Include="Resources\Acciones\Volver.png" />
+    <None Include="Resources\Acciones\Consultar.png" />
+    <None Include="Resources\Acciones\Limpiar.png" />
+    <None Include="Resources\Acciones\Exportar.png" />
+    <None Include="Resources\Acciones\Seleccionar.png" />
+    <None Include="Resources\Acciones\Catalogos.png" />
+    <None Include="Resources\Acciones\Historial.png" />
+    <ProjectReference Include="..\CapaModelo_EnlaceBancos\CapaModelo_EnlaceBancos.csproj">
+      <Name>CapaModelo_EnlaceBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CapaControlador_EnlaceBancos\CapaControlador_EnlaceBancos.csproj">
+      <Name>CapaControlador_EnlaceBancos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\componentes\seguridad\Seguridad\CapaControlador_Seguridad\CapaControlador_Seguridad.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
 </Project>

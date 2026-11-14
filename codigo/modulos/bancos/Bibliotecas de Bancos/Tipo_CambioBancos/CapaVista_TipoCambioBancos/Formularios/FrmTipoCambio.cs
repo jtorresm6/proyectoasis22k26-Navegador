@@ -32,6 +32,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaVista_TipoCambio.FrmReportes;
 using CapaControlador_TipoCambio;
 using CapaModelo_TipoCambio.Entidades;
 
@@ -945,7 +946,8 @@ namespace CapaVista_TipoCambio.Formularios
                 MessageBox.Show(this, "Consulta datos en la pestaña antes de generar el reporte.", "Reporte", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            BancosMetVistaPrevia(tabla.Copy(), titulo);
+            using (var reporte = new FrmReporteTipoCambio(tabla.Copy(), titulo))
+                reporte.ShowDialog(this);
         }
 
         private DataTable BancosMetTablaConversion()

@@ -1,9 +1,11 @@
 ﻿using CapaControlador_GeneracionPagos;
 using CapaControlador_Seguridad.Objetos_de_valor;
+using CapaVista_GeneracionPagos.frmReportes;
 using System;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -53,13 +55,11 @@ namespace CapaVista_GeneracionPagos.Formularios
 
         private readonly ClsControladorGeneracionPagos _Controlador = new ClsControladorGeneracionPagos();
 
-        // Obligación elegida para preparar la orden
         private string _TipoOrigen = "";
         private long _IdOrigen;
         private long _IdMoneda;
         private decimal _TipoCambio;
 
-        // Orden elegida en el listado
         private long _IdOrdenActual;
         private string _MonedaOrdenActual = MonedaBase;
 
@@ -102,6 +102,8 @@ namespace CapaVista_GeneracionPagos.Formularios
             BancosBtnEnviar.Click += BancosBtnEnviar_Click;
 
             BancosBtnRegMovimiento.Click += BancosBtnRegMovimiento_Click;
+            BancosBtnAyuda.Click += BancosBtnAyuda_Click;
+            BancosBtnReporte.Click += BancosBtnReporte_Click;
             BancosBtnSalir.Click += BancosBtnSalir_Click;
         }
 
@@ -145,7 +147,6 @@ namespace CapaVista_GeneracionPagos.Formularios
             BancosMetActualizarAviso();
         }
 
-        // El aviso toma todas las obligaciones pendientes, no solo las que deja ver el filtro de la lista
         private void BancosMetActualizarAviso()
         {
             try
@@ -243,7 +244,6 @@ namespace CapaVista_GeneracionPagos.Formularios
             BancosLblRegistros.ForeColor = Vencidas > 0 ? _AvisoVencidas : _ColorRegistros;
         }
 
-        // Pinta la celda de vencimiento según los días que faltan o que han pasado. Devuelve true si ya venció.
         private bool BancosMetMarcarVencimiento(DataGridViewRow Fila, int DiasVencida)
         {
             DataGridViewCell Celda = Fila.Cells["BancosDgvObligacionesColVencimiento"];
@@ -279,8 +279,6 @@ namespace CapaVista_GeneracionPagos.Formularios
             }
         }
 
-        // Las columnas se reparten el ancho de cada tabla pero nunca bajan de su ancho mínimo; si no caben
-        // aparece la barra horizontal. Filas de alto fijo y cada encabezado alineado igual que los datos de su columna.
         private void BancosMetAjustarTablas()
         {
             BancosDgvObligacionesColMoneda.Visible = false;
@@ -333,7 +331,6 @@ namespace CapaVista_GeneracionPagos.Formularios
             Tabla.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
             Tabla.DefaultCellStyle.Padding = Relleno;
             Tabla.AlternatingRowsDefaultCellStyle.WrapMode = DataGridViewTriState.False;
-            // Las filas alternas heredan la alineación de su columna; si no, Monto, Debe y Haber se desalinean
             Tabla.AlternatingRowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.NotSet;
             Tabla.AlternatingRowsDefaultCellStyle.Padding = Relleno;
             Tabla.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
@@ -944,6 +941,31 @@ namespace CapaVista_GeneracionPagos.Formularios
             BancosMetCargarListados();
             if (Exito)
                 BancosMetSeleccionarOrden(IdOrden);
+        }
+
+        private void BancosBtnReporte_Click(object sender, EventArgs e)
+        {
+            using (FrmReporteGeneracionPagos Reporte = new FrmReporteGeneracionPagos())
+            {
+                Reporte.ShowDialog(this);
+            }
+        }
+
+        private void BancosBtnAyuda_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo Directorio = new DirectoryInfo(Application.StartupPath);
+            while (Directorio != null)
+            {
+                string Ruta = Path.Combine(Directorio.FullName, "ayuda", "modulos", "bancos", "BancosAyudas", "BancosAyudas.chm");
+                if (File.Exists(Ruta))
+                {
+                    Help.ShowHelp(this, Ruta, HelpNavigator.Topic, "GeneracionPagos_Bancos.html");
+                    return;
+                }
+                Directorio = Directorio.Parent;
+            }
+            MessageBox.Show("No se encontró el archivo de ayuda del módulo de Bancos.", Titulo,
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BancosBtnSalir_Click(object sender, EventArgs e)

@@ -35,19 +35,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contratos\IControladorComision.cs" />
-    <Compile Include="Enumeraciones\EnumMetodoComision.cs" />
-    <Compile Include="Enumeraciones\EnumBaseComision.cs" />
-    <Compile Include="DTO\ClsComisionVendedorResultado.cs" />
-    <Compile Include="DTO\ClsMovimientoComisionVista.cs" />
-    <Compile Include="DTO\ClsProductoPorcentaje.cs" />
-    <Compile Include="DTO\ClsComisionFacturaDetalle.cs" />
-    <Compile Include="DTO\ClsFacturaComisionVista.cs" />
-    <Compile Include="DTO\ClsVendedorComisionVista.cs" />
-    <Compile Include="DTO\ClsFacturaPagoVista.cs" />
-    <Compile Include="DTO\ClsFormaPagoVentaVista.cs" />
-    <Compile Include="DTO\ClsComisionNominaVista.cs" />
+    <Compile Include="Controladores\IControladorComision.cs" />
+    <Compile Include="Validaciones\TiposComision.cs" />
+    <Compile Include="Controladores\DatosComision.cs" />
     <Compile Include="Controladores\ClsControladorComision.cs" />
+    <Compile Include="Controladores\ClsControladorComision.Acciones.cs" />
+    <Compile Include="Validaciones\ClsCalculoComision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

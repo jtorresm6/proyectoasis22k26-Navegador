@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link href="Css/style.css" rel="stylesheet" type="text/css">
+    <title>Ayudas - Disponibilidad Diaria</title>
+</head>
+<body>
+    <br>
+    <center>
+        <img class="imgLogo" src="Imagenes/LogoYMascota/logo.png">
+        <img class="imgButti" src="Imagenes/LogoYMascota/butti3.png">
+        <h1>Procesos</h1>
+        <h1>Ayudas - Disponibilidad Diaria</h1>
+    </center>
+    <br>
+    <div class="container">
+        <h2>Descripción</h2>
+        <p>El proceso <strong>Disponibilidad Diaria</strong> corresponde al proceso 8009. Permite conocer cuánto dinero puede utilizarse en una fecha de corte por banco, cuenta y moneda.</p>
+        <p>La disponibilidad se presenta en el detalle de la moneda original y el resumen consolidado en GTQ.</p>
+
+        <h2>Antes de consultar: datos necesarios</h2>
+        <p>Para llenar correctamente los indicadores, primero debe existir una cuenta bancaria activa con banco, moneda, tipo de cuenta y saldo inicial. El saldo inicial se registra en <strong>Mantenimiento de Cuenta Bancaria</strong>.</p>
+        <img class="imgVentanaMDI" src="Imagenes/Disponibilidad/CuentaBancaria_Moneda.png">
+        <br><br>
+        <p>La tabla de cuentas muestra el saldo inicial de cada cuenta y su moneda. Una cuenta en moneda extranjera necesita una tasa válida para consolidarse en GTQ.</p>
+        <img class="imgVentanaMDI" src="Imagenes/Disponibilidad/CuentaBancaria_General.png">
+        <br><br><br>
+
+        <h2>Consulta de saldos</h2>
+        <p>1. Seleccione la <strong>fecha de corte</strong>.</p>
+        <p>2. Seleccione un banco, una cuenta y una moneda, o deje “Todos” para consultar el consolidado.</p>
+        <p>3. Presione <strong>Consultar</strong>.</p>
+        <p>4. El sistema recalcula el día actual antes de mostrar el resultado. Los cortes anteriores se consultan como históricos.</p>
+        <img class="imgVentanaMDI" src="Imagenes/Disponibilidad/Consulta_General.png">
+        <br><br><br>
+
+        <h2>Cómo llenar cada KPI</h2>
+        <p>Los seis KPI forman el resumen de disponibilidad. La fórmula general es:</p>
+        <p><strong>Disponible = Saldo inicial + Ingresos − Egresos − Comprometido − Restringido</strong></p>
+
+        <h2>1. Saldo inicial</h2>
+        <p>Se toma del campo <strong>saldoInicialCuentaBancaria</strong> de la cuenta bancaria. Representa la apertura del día antes de aplicar movimientos.</p>
+        <p>Para llenarlo: abra Cuenta Bancaria, seleccione la cuenta, indique un saldo inicial válido y guarde. El valor debe estar en la moneda de la cuenta.</p>
+        <p>Si existen cortes, conciliaciones o extractos anteriores, el sistema usa el último saldo operativo disponible según la fecha.</p>
+
+        <h2>2. Ingresos</h2>
+        <p>Se llena con los movimientos de entrada o cobros acreditados en la fecha de corte. El movimiento debe estar registrado para la cuenta, moneda y fecha consultadas, y su tipo de transacción debe tener efecto positivo.</p>
+        <p>En la pantalla se identifica con color verde y la descripción “Cobros acreditados”.</p>
+        <img class="imgVentanaMDI" src="Imagenes/Disponibilidad/Ingresos.png">
+        <br><br><br>
+
+        <h2>3. Egresos</h2>
+        <p>Se llena con los movimientos de salida realizados en la fecha de corte. El movimiento debe tener efecto negativo y estar asociado a la cuenta consultada.</p>
+        <p>En la pantalla se identifica con color rojo y la descripción “Salidas realizadas”.</p>
+        <img class="imgVentanaMDI" src="Imagenes/Disponibilidad/Egresos.png">
+        <br><br><br>
+
+        <h2>4. Comprometido</h2>
+        <p>Se llena con pagos programados, reservas u órdenes que todavía no se han ejecutado. El importe reduce la disponibilidad, aunque aún no aparezca como egreso.</p>
+        <p>Al seleccionar una cuenta, el panel inferior muestra el desglose de compromisos por fecha, concepto, beneficiario, moneda y monto.</p>
+        <img class="imgVentanaMDI" src="Imagenes/Disponibilidad/Comprometido.png">
+        <br><br><br>
+
+        <h2>5. Restringido</h2>
+        <p>Se llena con fondos bloqueados por garantías, reservas u otro proceso operativo que impida su uso. Mientras no exista un proceso que los suministre, el valor aparece en cero.</p>
+        <p>Este importe también se resta de la disponibilidad.</p>
+
+        <h2>6. Disponible</h2>
+        <p>Es el saldo final operativo que puede utilizarse. Se calcula automáticamente con los cinco valores anteriores; no se escribe manualmente.</p>
+        <p>Si el resultado no coincide, revise primero la fecha de corte, la moneda, los movimientos, las reservas y el saldo inicial de la cuenta.</p>
+
+        <h2>Detalle por cuenta</h2>
+        <p>La tabla muestra fecha, banco, cuenta, tipo de cuenta, moneda, saldo inicial, ingresos, egresos, comprometido, restringido y disponible. Seleccione una fila para ver el resumen de la cuenta y los compromisos registrados.</p>
+        <p>El detalle mantiene la moneda original de la cuenta. El resumen general indica “Resumen en GTQ” cuando se consolidan varias monedas.</p>
+
+        <h2>Actualizar disponibilidad</h2>
+        <p>El botón <strong>Actualizar disponibilidad</strong> reconstruye el corte actual tomando la apertura, movimientos, conciliaciones, extractos, reservas y fondos restringidos disponibles. Úselo después de registrar cambios operativos.</p>
+
+        <h2>Exportar y reporte</h2>
+        <p><strong>Exportar</strong> guarda el detalle visible en CSV. <strong>Reporte</strong> abre el formulario de reporte del módulo con la fecha, filtros, tabla y vista previa de impresión.</p>
+        <p>El reporte se habilita cuando existen registros en el detalle.</p>
+
+        <h2>Ayuda y salir</h2>
+        <p><strong>Ayuda</strong> abre esta guía. <strong>Salir</strong> cierra la ventana de Disponibilidad Diaria.</p>
+    </div>
+</body>
+</html>
