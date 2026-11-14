@@ -6,7 +6,7 @@ namespace CapaModelo_ComisionVendedores.Repositorios
 {
     public abstract class ClsSentencias : ClsConexion
     {
-        protected int ComisionVendedoresMetEjecucionNonQuery(
+        protected int VentasMetEjecucionNonQuery(
             string ComandoTexto,
             List<OdbcParameter> Parametros,
             OdbcConnection Conexion,
@@ -20,14 +20,14 @@ namespace CapaModelo_ComisionVendedores.Repositorios
             }
         }
 
-        protected DataTable ComisionVendedoresMetEjecucionConsulta(
+        protected DataTable VentasMetEjecucionConsulta(
             string ComandoTexto,
             List<OdbcParameter> Parametros)
         {
             DataTable TablaDatos = new DataTable();
-            using (OdbcConnection ConexionActiva = ComisionVendedoresMetObtenerConexion())
+            using (OdbcConnection ConexionActiva = VentasMetObtenerConexion())
             {
-                ComisionVendedoresMetAbrirConexion(ConexionActiva);
+                VentasMetAbrirConexion(ConexionActiva);
                 using (OdbcCommand Comando = new OdbcCommand(ComandoTexto, ConexionActiva))
                 {
                     Comando.CommandType = CommandType.Text;
