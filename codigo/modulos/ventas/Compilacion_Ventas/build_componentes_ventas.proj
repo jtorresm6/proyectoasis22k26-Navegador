@@ -40,19 +40,6 @@
     <NavegadorControlador Include="..\..\..\componentes\navegador\Navegador\CapaControlador_Navegador\CapaControlador_Navegador.csproj" />
     <NavegadorAuxiliar Include="..\..\..\componentes\navegador\Navegador\Control_Usuarios\Control_Usuarios.csproj" />
     <NavegadorVista Include="..\..\..\componentes\navegador\Navegador\CapaVista_Navegador\CapaVista_Navegador.csproj" />
-    <LogisticaMdiVentas Include="..\..\Logistica\Logistica\CapaVista_Logistica\CapaVista_Logistica.csproj" />
-    <LogisticaTransporteInternoVentas Include="..\..\Logistica\TransporteInterno_Logistica\CapaVista_TransporteInterno_Logistica\CapaVista_TransporteInterno_Logistica.csproj" />
-    <LogisticaModeloVentas Include="..\..\Logistica\*\CapaModelo_*\*.csproj" />
-    <LogisticaControladorVentas Include="..\..\Logistica\*\CapaControlador_*\*.csproj" />
-    <LogisticaVistaVentas Include="..\..\Logistica\*\CapaVista_*\*.csproj" Exclude="@(LogisticaMdiVentas);@(LogisticaTransporteInternoVentas)" />
-    <ComponenteVentas Include="@(LogisticaModeloVentas);@(LogisticaControladorVentas);@(LogisticaVistaVentas);@(LogisticaTransporteInternoVentas);@(LogisticaMdiVentas)">
-      <Biblioteca>%(Filename).dll</Biblioteca>
-    </ComponenteVentas>
-    <SeguridadVista Include="..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj" />
-    <EjecutableComponente Include="..\..\..\componentes\consultas\Ejecucion_Consultas\Ejecucion_Consultas\Ejecucion_Consultas.csproj" />
-    <EjecutableComponente Include="..\..\..\componentes\navegador\Ejecucion_Navegador\Ejecucion_Navegador\Ejecucion_Navegador.csproj" />
-    <EjecutableComponente Include="..\..\..\componentes\seguridad\Ejecucion_Seguridad\Ejecucion_Seguridad\Ejecucion_Seguridad.csproj" />
-    <EjecutableComponente Include="..\..\..\componentes\reporteador\Ejecucion_Reporteador\Ejecucion_Reporteador\Ejecucion_Reporteador.csproj" />
   </ItemGroup>
   <ItemGroup>
     <ComponenteVentas Include="..\..\..\componentes\consultas\Consultas\CapaModelo_Consultas\CapaModelo_Consultas.csproj">
@@ -224,22 +211,6 @@
     <PaquetesComponenteVentas Include="..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj">
       <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\..\componentes\seguridad\Seguridad\</AdditionalProperties>
     </PaquetesComponenteVentas>
-    <ComponenteVentas Include="..\..\..\componentes\consultas\Ejecucion_Consultas\Ejecucion_Consultas\Ejecucion_Consultas.csproj">
-      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\..\componentes\consultas\Ejecucion_Consultas\</AdditionalProperties>
-      <Biblioteca>Ejecucion_Consultas.exe</Biblioteca>
-    </ComponenteVentas>
-    <ComponenteVentas Include="..\..\..\componentes\navegador\Ejecucion_Navegador\Ejecucion_Navegador\Ejecucion_Navegador.csproj">
-      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\..\componentes\navegador\Ejecucion_Navegador\</AdditionalProperties>
-      <Biblioteca>Ejecucion_Navegador.exe</Biblioteca>
-    </ComponenteVentas>
-    <ComponenteVentas Include="..\..\..\componentes\seguridad\Ejecucion_Seguridad\Ejecucion_Seguridad\Ejecucion_Seguridad.csproj">
-      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\..\componentes\seguridad\Ejecucion_Seguridad\</AdditionalProperties>
-      <Biblioteca>Ejecucion_Seguridad.exe</Biblioteca>
-    </ComponenteVentas>
-    <ComponenteVentas Include="..\..\..\componentes\reporteador\Ejecucion_Reporteador\Ejecucion_Reporteador\Ejecucion_Reporteador.csproj">
-      <AdditionalProperties>SolutionDir=$(MSBuildThisFileDirectory)..\..\..\componentes\reporteador\Ejecucion_Reporteador\</AdditionalProperties>
-      <Biblioteca>Ejecucion_Reporteador.exe</Biblioteca>
-    </ComponenteVentas>
   </ItemGroup>
   <Target Name="CompilarComponentesVentas">
     <Error Condition="!Exists('%(ComponenteVentas.Identity)')" Text="Falta el proyecto del componente: %(ComponenteVentas.Identity)" />
@@ -265,19 +236,8 @@
     <MSBuild Projects="@(NavegadorControlador)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
     <MSBuild Projects="@(NavegadorAuxiliar)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
     <MSBuild Projects="@(NavegadorVista)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
-    <CallTarget Targets="CompilarLogisticaVentas" />
     <CallTarget Targets="CompilarFormulariosVentas" />
-    <MSBuild Projects="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaVista_Ventas\CapaVista_Ventas.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" StopOnFirstFailure="true" />
-    <MSBuild Projects="@(SeguridadVista)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
-    <MSBuild Projects="@(EjecutableComponente)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
-  </Target>
-  <Target Name="CompilarLogisticaVentas">
-    <Message Text="[7/8] Logistica y sus formularios antes de Vista de Seguridad..." Importance="high" />
-    <MSBuild Projects="@(LogisticaModeloVentas)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
-    <MSBuild Projects="@(LogisticaControladorVentas)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
-    <MSBuild Projects="@(LogisticaVistaVentas)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
-    <!-- Transporte Interno usa Transporte Externo; el MDI usa todas las vistas. -->
-    <MSBuild Projects="@(LogisticaTransporteInternoVentas)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" StopOnFirstFailure="true" />
-    <MSBuild Projects="@(LogisticaMdiVentas)" Targets="Build" Properties="$(PropiedadesComponentesVentas)" StopOnFirstFailure="true" />
+    <MSBuild Projects="..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaVista_Ventas\CapaVista_Ventas.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" StopOnFirstFailure="true" />
+    <MSBuild Projects="..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj" Targets="Build" Properties="$(PropiedadesComponentesVentas);VentasDllCompartidas=$(VentasDllCompartidas)" StopOnFirstFailure="true" />
   </Target>
 </Project>
