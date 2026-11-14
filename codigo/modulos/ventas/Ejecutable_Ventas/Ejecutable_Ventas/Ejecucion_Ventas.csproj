@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <BuildProjectReferences>false</BuildProjectReferences>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -36,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaVista_Seguridad">
+      <HintPath>..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\$(Configuration)\CapaVista_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -78,11 +82,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj">
-      <Project>{F7AD1A78-73BD-4D8F-87D1-1C5B495D1160}</Project>
-      <Name>CapaVista_Seguridad</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaVista_Ventas\CapaVista_Ventas.csproj">
+    <ProjectReference Include="..\..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaVista_Ventas\CapaVista_Ventas.csproj">
       <Project>{9496BD61-6249-436E-B168-BB5C8C6ABFB0}</Project>
       <Name>CapaVista_Ventas</Name>
     </ProjectReference>
@@ -90,4 +90,22 @@
   <ItemGroup>
     <PackageReference Include="System.Data.Odbc" Version="8.0.1" />
   </ItemGroup>
+  <PropertyGroup>
+    <ProyectoCompilacionVentas>$(MSBuildThisFileDirectory)..\..\Compilacion_Ventas\build_ventas.proj</ProyectoCompilacionVentas>
+    <PropiedadesPreparacionVentas>Configuration=$(Configuration);BuildingInsideVisualStudio=false;BuildProjectReferences=false;VentasDependenciasPreparadas=true</PropiedadesPreparacionVentas>
+    <PropiedadesSolucionVentas>SolutionDir;SolutionPath;SolutionName;SolutionFileName;SolutionExt;CurrentSolutionConfigurationContents;BuildingSolutionFile</PropiedadesSolucionVentas>
+  </PropertyGroup>
+  <Target Name="PrepararDependenciasDelEjecutable" BeforeTargets="ResolveProjectReferences"
+          Condition="'$(DesignTimeBuild)' != 'true' and '$(TargetFrameworkVersion)' == 'v4.8' and '$(VentasDependenciasPreparadas)' != 'true' and '$(MSBuildProjectName)' == 'Ejecucion_Ventas'">
+    <Message Text="Preparando las dependencias de Ventas antes de compilar el ejecutable..." Importance="high" />
+    <MSBuild Projects="$(ProyectoCompilacionVentas)" Targets="PrepararDependenciasVentas"
+             Properties="$(PropiedadesPreparacionVentas)"
+             RemoveProperties="$(PropiedadesSolucionVentas)" />
+  </Target>
+  <Target Name="ReunirBibliotecasDelEjecutable" AfterTargets="Build"
+          Condition="'$(DesignTimeBuild)' != 'true' and '$(MSBuildProjectName)' == 'Ejecucion_Ventas' and '$(VentasDependenciasPreparadas)' != 'true'">
+    <MSBuild Projects="$(ProyectoCompilacionVentas)" Targets="ReunirBibliotecas"
+             Properties="$(PropiedadesPreparacionVentas)"
+             RemoveProperties="$(PropiedadesSolucionVentas)" />
+  </Target>
 </Project>

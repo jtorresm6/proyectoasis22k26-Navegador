@@ -7,7 +7,7 @@
   </PropertyGroup>
   <Target Name="ResolverReferenciasComponentesVentas" BeforeTargets="ResolveAssemblyReferences">
     <PropertyGroup>
-      <AssemblySearchPaths>$(BibliotecasComponentesVentas);$(AssemblySearchPaths)</AssemblySearchPaths>
+      <AssemblySearchPaths>$(BibliotecasComponentesVentas);$(AssemblySearchPaths);$(VentasDllCompartidas)</AssemblySearchPaths>
     </PropertyGroup>
     <ItemGroup>
       <Reference>
