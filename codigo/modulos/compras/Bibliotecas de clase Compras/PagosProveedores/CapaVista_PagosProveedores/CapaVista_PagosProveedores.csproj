@@ -36,19 +36,19 @@
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\LUNESFUNCINALCPCPCPCPCPCP\proyectoasis22k26-Consultas\codigo\modulos\compras\Bibliotecas de clase Compras\Componentes\CapaVista_Componentes\bin\Debug\Microsoft.ReportViewer.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\componentes\reporteador\BtnVerReporte_Reporteador\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\LUNESFUNCINALCPCPCPCPCPCP\proyectoasis22k26-Consultas\codigo\modulos\compras\Bibliotecas de clase Compras\Componentes\CapaVista_Componentes\bin\Debug\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+      <HintPath>..\..\..\..\..\componentes\reporteador\BtnVerReporte_Reporteador\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\LUNESFUNCINALCPCPCPCPCPCP\proyectoasis22k26-Consultas\codigo\modulos\compras\Bibliotecas de clase Compras\Componentes\CapaVista_Componentes\bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+      <HintPath>..\..\..\..\..\componentes\reporteador\BtnVerReporte_Reporteador\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\LUNESFUNCINALCPCPCPCPCPCP\proyectoasis22k26-Consultas\codigo\modulos\compras\Bibliotecas de clase Compras\Componentes\CapaVista_Componentes\bin\Debug\Microsoft.ReportViewer.WinForms.dll</HintPath>
+      <HintPath>..\..\..\..\..\componentes\reporteador\BtnVerReporte_Reporteador\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>

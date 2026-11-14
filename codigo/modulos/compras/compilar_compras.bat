@@ -71,7 +71,7 @@ function Unique-Path($name, [object[]]$paths, [bool]$optional = $false) {
 
 function Add-Step($path) {
     $step = [pscustomobject]@{ Path=$path; Name=[IO.Path]::GetFileName($path); Platform=$null;
-        Projects=@(); Ordered=@(); State='No ejecutada'; Code=$null; Packages=$false }
+        Projects=@(); Ordered=@(); Invalid=$false; State='No ejecutada'; Code=$null; Packages=$false }
     $steps.Add($step)
     $step
 }
@@ -85,6 +85,7 @@ function Write-IfChanged([string]$path, [string]$content) {
 # Quita un proyecto del plan de compilacion (por ejemplo, si no se pudo evaluar).
 function Remove-ProjectFromPlan($project) {
     foreach ($step in $steps) {
+        if ($step.Projects -contains $project) { $step.Invalid = $true }
         $step.Projects = @($step.Projects | Where-Object { !([object]::ReferenceEquals($_, $project)) })
     }
     $planningErrors.Add($project.Path)
@@ -179,7 +180,7 @@ function Add-Project($path, $configuration, $platform, $step) {
         if (!($step.Projects -contains $projects[$path])) { $step.Projects += $projects[$path] }
         return $projects[$path]
     }
-    if (!(Test-Path -LiteralPath $path -PathType Leaf)) { Write-Status "Falta el proyecto (se omite): $path" Warning; $planningErrors.Add($path); return $null }
+    if (!(Test-Path -LiteralPath $path -PathType Leaf)) { Write-Status "Falta el proyecto (se omite): $path" Warning; $planningErrors.Add($path); $step.Invalid = $true; return $null }
     $isSdk = $false
     try {
         [xml]$projectDefinition = [IO.File]::ReadAllText($path)
@@ -187,6 +188,7 @@ function Add-Project($path, $configuration, $platform, $step) {
     } catch {
         Write-Status "No se pudo leer el proyecto (se omite): $path" Warning
         $planningErrors.Add($path)
+        $step.Invalid = $true
         return $null
     }
     $project = [pscustomobject]@{ Path=$path; Configuration=$configuration; Platform=$platform; Step=$step;
@@ -396,6 +398,7 @@ try {
         } catch {
             Write-Status "Error validando $($step.Name) (se continua con las demas): $($_.Exception.Message)" Warning
             $planningErrors.Add($step.Path)
+            $step.Invalid = $true
         }
     }
     $current = $null
@@ -469,6 +472,12 @@ try {
             # NuGet moderno gestiona su propia cache (id/version). No confundirla
             # con packages.config (id.version), incluidos los imports de MSTest.
             $nugetRoot = $project.Data.Properties.NuGetPackageRoot
+            # Los proyectos clasicos con Reference pueden no definir NuGetPackageRoot.
+            # Su cache global usa id\version, no el formato id.version de packages.config.
+            if (!$nugetRoot) {
+                $nugetRoot = $env:NUGET_PACKAGES
+                if (!$nugetRoot) { $nugetRoot = Join-Path $env:USERPROFILE '.nuget\packages' }
+            }
             if ($nugetRoot -and $reference.HintPath) {
                 $nugetRoot = (FullPath (Split-Path $project.Path) $nugetRoot).TrimEnd('\') + '\'
                 if ($hint.StartsWith($nugetRoot, [StringComparison]::OrdinalIgnoreCase)) { continue }
@@ -581,7 +590,34 @@ try {
     if ($comprasProject.Count -eq 1 -and $comprasProject[0].Output) {
         $comprasExecutable = $comprasProject[0].Output
     }
-    foreach ($project in $projects.Values | Sort-Object Path) { $null = Get-ProjectWave $project }
+    # Orden topologico: los ciclos bloquean solo a sus consumidores.
+    # No retirar referencias ni usar DLL antiguas para ocultar un ciclo.
+    $pending = @($projects.Values | Sort-Object Path)
+    while ($pending.Count) {
+        $ready = @($pending | Where-Object {
+            !@($_.Dependencies | Where-Object { $_.Wave -lt 0 }).Count
+        })
+        if (!$ready.Count) { break }
+        foreach ($project in $ready) {
+            $wave = 0
+            foreach ($dependency in $project.Dependencies) {
+                $wave = [Math]::Max($wave, $dependency.Wave + 1)
+            }
+            $project.Wave = $wave
+        }
+        $pending = @($pending | Where-Object { $_.Wave -lt 0 })
+    }
+    foreach ($project in $pending) {
+        $unresolved = @($project.Dependencies | Where-Object { $_.Wave -lt 0 } | ForEach-Object Path)
+        Write-Status ("Bloqueado por ciclo o dependencia de un ciclo: {0}`n -> {1}" -f $project.Path, ($unresolved -join "`n -> ")) Warning
+        $planningErrors.Add($project.Path)
+    }
+    foreach ($step in $steps) {
+        if (@($step.Projects | Where-Object { $_.Wave -lt 0 }).Count) { $step.State = 'Bloqueada' }
+    }
+    if (!@($projects.Values | Where-Object { $_.Wave -ge 0 }).Count) {
+        throw 'Todos los proyectos estan bloqueados por dependencias circulares.'
+    }
     $current = $null
     $runner = Join-Path $runDirectory 'Build.proj'
     $body = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><ItemGroup>'
@@ -633,7 +669,7 @@ foreach ($archive in Get-ChildItem -LiteralPath $Root -Filter '*.nupkg' -Recurse
         }
     }
     $index = 0
-    foreach ($project in $projects.Values | Sort-Object Path) {
+    foreach ($project in $projects.Values | Where-Object { $_.Wave -ge 0 } | Sort-Object Path) {
         $project.Marker = Join-Path $runDirectory ("proyecto_$index")
         $properties = "Configuration=$($project.Configuration);Platform=$($project.Platform);BuildProjectReferences=false;ComprasEstadoProyecto=$(MsbuildEscape $project.Marker)"
         if ($project.Data.Properties.OutputType -in @('Exe','WinExe') -and $project.Data.Properties.PlatformTarget -eq 'AnyCPU') { $properties += ';Prefer32Bit=false' }
@@ -649,7 +685,7 @@ foreach ($archive in Get-ChildItem -LiteralPath $Root -Filter '*.nupkg' -Recurse
     }
     $body += '<Target Name="RestaurarSdk">' + $sdkRestore + '</Target>'
     $targets = @('Restaurar','RestaurarSdk')
-    $waves = @($projects.Values | Select-Object -ExpandProperty Wave | Sort-Object -Unique)
+    $waves = @($projects.Values | Where-Object { $_.Wave -ge 0 } | Select-Object -ExpandProperty Wave | Sort-Object -Unique)
     foreach ($wave in $waves) {
         $targets += "Nivel$wave"
         $body += '<Target Name="Nivel' + $wave + '"><Message Importance="high" Text="[COMPILANDO] Nivel ' + ($wave + 1) + '/' + $waves.Count + '" /><MSBuild Projects="@(Nivel' + $wave + ')" Targets="Build" BuildInParallel="true" StopOnFirstFailure="false" ContinueOnError="true" />'
@@ -664,10 +700,11 @@ foreach ($archive in Get-ChildItem -LiteralPath $Root -Filter '*.nupkg' -Recurse
     # Sin /warnAsError: ningun aviso detiene la compilacion.
     # Los enlaces duros evitan duplicar DLL grandes; MSBuild copia normalmente
     # cuando el sistema de archivos no permite enlazarlas. No se crea una unidad.
-    & $msbuild $runner /t:Build /nologo /verbosity:minimal "/m:$workers" /nr:false '/consoleloggerparameters:ForceConsoleColor;Summary' "/p:CustomAfterMicrosoftCommonTargets=$referenceTargets" /p:CreateHardLinksForCopyLocalIfPossible=true /p:CreateHardLinksForCopyFilesToOutputDirectoryIfPossible=true /p:CreateHardLinksForCopyAdditionalFilesIfPossible=true
+    & $msbuild $runner /t:Build /nologo /verbosity:minimal "/m:$workers" /nr:false '/consoleloggerparameters:ForceConsoleColor;Summary' "/p:CustomAfterMicrosoftCommonTargets=$referenceTargets" /fileLogger ("/fileLoggerParameters:LogFile=" + (Join-Path $runDirectory 'compilacion.log') + ";Verbosity=normal;Encoding=UTF-8") /p:CreateHardLinksForCopyLocalIfPossible=true /p:CreateHardLinksForCopyFilesToOutputDirectoryIfPossible=true /p:CreateHardLinksForCopyAdditionalFilesIfPossible=true
     $code = $LASTEXITCODE
     foreach ($step in $steps) {
-        if (!$step.Projects.Count) { continue }
+        if ($step.Invalid) { $step.State = 'Fallida'; $step.Code = 1; continue }
+        if (!$step.Projects.Count -or $step.State -eq 'Bloqueada') { continue }
         $complete = @($step.Projects | Where-Object { !(Test-Path -LiteralPath ($_.Marker + '.done')) })
         if (!$complete.Count) {
             $missingOutput = @($step.Projects | Where-Object { !$_.Output -or !(Test-Path -LiteralPath $_.Output -PathType Leaf) })
@@ -686,7 +723,7 @@ foreach ($archive in Get-ChildItem -LiteralPath $Root -Filter '*.nupkg' -Recurse
     }
     if ($code -ne 0) {
         if (!@($steps | Where-Object State -eq 'Fallida').Count) {
-            $first = $steps | Where-Object { $_.State -ne 'Correcta' -and $_.Projects.Count } | Select-Object -First 1
+            $first = $steps | Where-Object { $_.State -notin @('Correcta','Bloqueada') -and $_.Projects.Count } | Select-Object -First 1
             if ($first) { $first.State = 'Fallida'; $first.Code = $code }
         }
         throw "La compilacion termino con codigo $code (se compilo todo lo que fue posible)."
@@ -704,12 +741,16 @@ foreach ($archive in Get-ChildItem -LiteralPath $Root -Filter '*.nupkg' -Recurse
     Write-Status 'RESUMEN DE COMPILACION'
     Write-Status ('Correctas: {0}' -f @($steps | Where-Object State -eq 'Correcta').Count) Success
     Write-Status ('Fallidas: {0}' -f @($steps | Where-Object State -eq 'Fallida').Count) $(if ($result -eq 0) { 'Success' } else { 'Error' })
+    Write-Status ('Bloqueadas por dependencias: {0}' -f @($steps | Where-Object State -eq 'Bloqueada').Count) Warning
     Write-Status ('No ejecutadas: {0}' -f @($steps | Where-Object State -eq 'No ejecutada').Count) Warning
     foreach ($step in $steps) {
         $kind = switch ($step.State) { 'Correcta' { 'Success' } 'Fallida' { 'Error' } default { 'Warning' } }
         Write-Status ("{0}: {1}" -f $step.State, $step.Name) $kind
     }
-    if ($runDirectory -and [IO.Directory]::Exists($runDirectory)) {
+    if ($runDirectory -and [IO.Directory]::Exists($runDirectory) -and $result -ne 0) {
+        Write-Status "Diagnostico conservado en: $runDirectory" Warning
+    }
+    if ($runDirectory -and [IO.Directory]::Exists($runDirectory) -and $result -eq 0) {
         try {
             foreach ($file in [IO.Directory]::GetFiles($runDirectory)) { [IO.File]::Delete($file) }
             [IO.Directory]::Delete($runDirectory)
