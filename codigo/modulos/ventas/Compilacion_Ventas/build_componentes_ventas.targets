@@ -3,6 +3,7 @@
   <!-- Solo se importa desde el compilador de Ventas. Los proyectos originales
        conservan sus referencias; aqui se resuelven con el perfil seleccionado. -->
   <PropertyGroup>
+    <RutaVistaVentas>$(MSBuildThisFileDirectory)..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaVista_Ventas\bin\$(Configuration)\CapaVista_Ventas.dll</RutaVistaVentas>
     <BibliotecasComponentesVentas>$(MSBuildThisFileDirectory)obj\Componentes\$(Configuration)\</BibliotecasComponentesVentas>
   </PropertyGroup>
   <Target Name="ResolverReferenciasComponentesVentas" BeforeTargets="ResolveAssemblyReferences">
@@ -13,6 +14,7 @@
       <Reference>
         <RutaComponenteVentas>$(BibliotecasComponentesVentas)$([System.Text.RegularExpressions.Regex]::Replace('%(Reference.Identity)', ',.*', '')).dll</RutaComponenteVentas>
         <HintPath Condition="'%(Reference.HintPath)' != ''">$([System.String]::Copy('%(Reference.HintPath)').Replace('\bin\Debug\', '\bin\$(Configuration)\'))</HintPath>
+        <HintPath Condition="'%(Reference.Identity)' == 'CapaVista_Ventas'">$(RutaVistaVentas)</HintPath>
         <HintPath Condition="Exists('%(Reference.RutaComponenteVentas)')">%(Reference.RutaComponenteVentas)</HintPath>
       </Reference>
     </ItemGroup>
