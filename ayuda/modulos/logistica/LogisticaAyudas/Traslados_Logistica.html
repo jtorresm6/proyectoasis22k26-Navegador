@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ayuda - Traslados entre bodegas</title>
+    <style>
+      html {
+        background: #fdf6e7;
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #412c20;
+        margin: 0;
+        padding: 0 0 46px;
+        background: #fdf6e7;
+        line-height: 1.55;
+      }
+      .portada {
+        margin: 0 0 27px;
+        width: 100%;
+      }
+      .portada img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border: none;
+      }
+      .contenido {
+        max-width: 950px;
+        margin: 0 auto;
+        padding: 0 18px;
+      }
+      h1 {
+        color: #64250e;
+        font-size: 26px;
+        margin: 24px 0 20px;
+      }
+      h2 {
+        color: #71321b;
+        font-size: 20px;
+        margin: 0 0 9px;
+      }
+      p {
+        margin: 0 0 14px;
+      }
+      section {
+        margin: 30px 0 40px;
+      }
+      ol,
+      ul {
+        padding-left: 24px;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+      a {
+        color: #71321b;
+      }
+    </style>
+<link rel="stylesheet" href="LogisticaAyudas.css">
+  </head>
+  <body>
+    <div class="portada">
+      <img
+        src="Imagenes/Traslados_Logistica/portada.png"
+        alt="Portada del Manual de Ayudas de Embutidos de Calidad, S. A."
+      />
+    </div>
+    <main class="contenido">
+      <h1>Ayuda: Traslados entre bodegas</h1>
+      <p>
+        Este formulario permite registrar traslados de productos, consultar su
+        avance, actualizar solicitudes activas y revisar el detalle de cada
+        traslado.
+      </p>
+
+      <section>
+        <h2>1. Crear un nuevo traslado</h2>
+        <ol>
+          <li>
+            Presione <strong>Nuevo</strong>. Se habilitarán los campos para
+            ingresar una solicitud.
+          </li>
+          <li>
+            Escriba el código del traslado (hasta 30 caracteres), seleccione la
+            <strong>Bodega Origen</strong> y una <strong>Bodega Destino</strong>
+            diferente. Al cambiar el origen, el sistema actualiza los productos
+            disponibles y excluye esa bodega de los destinos.
+          </li>
+          <li>
+            Seleccione el <strong>Tipo de Transporte</strong> y luego una placa
+            disponible para ese tipo. Puede elegir un conductor de la lista de
+            conductores disponibles; la solicitud inicial también puede
+            guardarse sin conductor asignado.
+          </li>
+          <li>
+            Seleccione un producto de la bodega de origen, indique una cantidad
+            mayor que cero y presione <strong>Agregar</strong>. Repita para
+            incluir otros productos. Si agrega de nuevo un producto ya incluido,
+            su cantidad se acumula.
+          </li>
+          <li>
+            Para retirar un producto, selecciónelo en la tabla de detalle y
+            presione <strong>Eliminar</strong>. Si cambia la bodega de origen
+            después de agregar productos, confirme el aviso para quitar el
+            detalle anterior.
+          </li>
+          <li>
+            Ingrese las observaciones si son necesarias (máximo 500 caracteres)
+            y presione <strong>Guardar</strong>. La solicitud se crea con estado
+            <strong>SOLICITADO</strong> y debe incluir al menos un producto.
+          </li>
+        </ol>
+        <p>
+          Para pasar el traslado a <strong>EN_TRANSITO</strong> o
+          <strong>RECIBIDO</strong>, se debe asignar un tipo y un transporte
+          disponibles. La bodega de origen y la de destino no pueden ser iguales.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Modificar un traslado</h2>
+        <ol>
+          <li>
+            Seleccione el traslado en la tabla inferior y presione
+            <strong>Modificar</strong>. Los traslados <strong>RECIBIDO</strong>
+            o <strong>CANCELADO</strong> son históricos y no se pueden modificar.
+          </li>
+          <li>
+            Si el estado es <strong>SOLICITADO</strong>, puede actualizar las
+            bodegas, el transporte, el conductor, los productos y las
+            observaciones. Para cambiar el estado, las opciones disponibles son
+            <strong>EN_TRANSITO</strong> y <strong>CANCELADO</strong>.
+          </li>
+          <li>
+            Si el estado es <strong>EN_TRANSITO</strong>, puede actualizar las
+            observaciones y cambiar el estado a <strong>RECIBIDO</strong> o
+            <strong>CANCELADO</strong>. Los datos del transporte y los productos
+            quedan bloqueados.
+          </li>
+          <li>
+            Presione <strong>Guardar</strong> para aplicar los cambios o
+            <strong>Cancelar</strong> para descartar la edición.
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>3. Buscar traslados</h2>
+        <ol>
+          <li>
+            Ingrese, si lo desea, parte del <strong>Código de Traslado</strong>.
+          </li>
+          <li>
+            Para filtrar por fecha, marque la casilla del selector de fecha y
+            elija la fecha de solicitud.
+          </li>
+          <li>
+            Elija un <strong>Estado de Traslado</strong> o deje
+            <strong>Todos</strong> para no limitar por estado. Los filtros se
+            pueden combinar; un campo vacío no se aplica.
+          </li>
+          <li>
+            Presione <strong>Buscar</strong>. La tabla mostrará los registros que
+            coincidan con los criterios ingresados.
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>4. Consultar el detalle</h2>
+        <p>
+          Seleccione un traslado en la tabla y presione
+          <strong>Ver detalle</strong>. Se abrirá la ventana
+          <a href="DetalleTraslados_Logistica.html">Detalle de Traslado</a> con los
+          datos generales, productos y totales. Si no hay una fila seleccionada,
+          el formulario solicitará que seleccione un traslado.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Navegar por los registros</h2>
+        <p>
+          Use los botones de navegación para mostrar el primer registro
+          (<strong>Inicio</strong>), el anterior, el siguiente o el último
+          (<strong>Fin</strong>) de la lista cargada. La selección actual se
+          refleja en los campos del formulario.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Imprimir el reporte</h2>
+        <p>
+          Presione <strong>Imprimir</strong> para abrir el reporte de traslados
+          registrados. Desde la ventana del reporte puede revisar la
+          presentación y utilizar las opciones de impresión disponibles.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Cancelar o salir de la edición</h2>
+        <p>
+          Presione <strong>Cancelar</strong> mientras crea o modifica un traslado
+          para descartar los cambios no guardados y regresar a la consulta. Para
+          cerrar el formulario, use el control de cierre de la ventana.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

@@ -34,6 +34,10 @@
     <Reference Include="CapaControlador_CierreInventario_Logistica">
       <HintPath>..\CapaControlador_CierreInventario_Logistica\bin\Debug\CapaControlador_CierreInventario_Logistica.dll</HintPath>
     </Reference>
+    <Reference Include="CapaModelo_CierreInventario_Logistica, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CapaModelo_CierreInventario_Logistica\bin\Debug\CapaModelo_CierreInventario_Logistica.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

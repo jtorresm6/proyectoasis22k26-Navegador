@@ -37,10 +37,10 @@
             // LogisticaNavTipoTransporte
             // 
             this.LogisticaNavTipoTransporte.BackColor = System.Drawing.Color.Transparent;
-            this.LogisticaNavTipoTransporte.Location = new System.Drawing.Point(20, 94);
-            this.LogisticaNavTipoTransporte.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LogisticaNavTipoTransporte.Location = new System.Drawing.Point(27, 116);
+            this.LogisticaNavTipoTransporte.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LogisticaNavTipoTransporte.Name = "LogisticaNavTipoTransporte";
-            this.LogisticaNavTipoTransporte.Size = new System.Drawing.Size(1078, 90);
+            this.LogisticaNavTipoTransporte.Size = new System.Drawing.Size(1437, 111);
             this.LogisticaNavTipoTransporte.TabIndex = 0;
             // 
             // LogisticaLblTituloTipoTransporte
@@ -49,9 +49,10 @@
             this.LogisticaLblTituloTipoTransporte.BackColor = System.Drawing.Color.Transparent;
             this.LogisticaLblTituloTipoTransporte.Font = new System.Drawing.Font("Lucida Fax", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LogisticaLblTituloTipoTransporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(138)))), ((int)(((byte)(132)))));
-            this.LogisticaLblTituloTipoTransporte.Location = new System.Drawing.Point(37, 13);
+            this.LogisticaLblTituloTipoTransporte.Location = new System.Drawing.Point(49, 16);
+            this.LogisticaLblTituloTipoTransporte.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LogisticaLblTituloTipoTransporte.Name = "LogisticaLblTituloTipoTransporte";
-            this.LogisticaLblTituloTipoTransporte.Size = new System.Drawing.Size(310, 32);
+            this.LogisticaLblTituloTipoTransporte.Size = new System.Drawing.Size(376, 38);
             this.LogisticaLblTituloTipoTransporte.TabIndex = 2;
             this.LogisticaLblTituloTipoTransporte.Text = "Tipos de Transporte";
             // 
@@ -59,10 +60,9 @@
             // 
             this.ogisticaLblDescripcionTipoTransporte.BackColor = System.Drawing.Color.Transparent;
             this.ogisticaLblDescripcionTipoTransporte.Font = new System.Drawing.Font("Tahoma", 13.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ogisticaLblDescripcionTipoTransporte.Location = new System.Drawing.Point(40, 57);
-            this.ogisticaLblDescripcionTipoTransporte.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ogisticaLblDescripcionTipoTransporte.Location = new System.Drawing.Point(53, 70);
             this.ogisticaLblDescripcionTipoTransporte.Name = "ogisticaLblDescripcionTipoTransporte";
-            this.ogisticaLblDescripcionTipoTransporte.Size = new System.Drawing.Size(942, 57);
+            this.ogisticaLblDescripcionTipoTransporte.Size = new System.Drawing.Size(1256, 70);
             this.ogisticaLblDescripcionTipoTransporte.TabIndex = 7;
             this.ogisticaLblDescripcionTipoTransporte.Text = "Registra y administra los diferentes tipos de transporte utilizados en las operac" +
     "iones logísticas, facilitando la clasificación de los vehículos según sus caract" +
@@ -70,15 +70,16 @@
             // 
             // FrmMantenimientoTipoTransporte
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(246)))), ((int)(((byte)(242)))));
-            this.ClientSize = new System.Drawing.Size(1144, 741);
+            this.ClientSize = new System.Drawing.Size(1525, 912);
             this.Controls.Add(this.ogisticaLblDescripcionTipoTransporte);
             this.Controls.Add(this.LogisticaLblTituloTipoTransporte);
             this.Controls.Add(this.LogisticaNavTipoTransporte);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "FrmMantenimientoTipoTransporte";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

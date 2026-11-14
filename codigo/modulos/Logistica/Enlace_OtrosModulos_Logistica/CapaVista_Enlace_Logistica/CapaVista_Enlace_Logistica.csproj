@@ -31,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaContralador_Enlace_Logistica">
+      <HintPath>..\CapaContralador_Enlace_Logistica\bin\Debug\CapaContralador_Enlace_Logistica.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaModelo_Enlace_Logistica">
+      <HintPath>..\CapaModelo_Enlace_Logistica\bin\Debug\CapaModelo_Enlace_Logistica.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_Reporteador">
+      <HintPath>..\..\..\..\componentes\reporteador\Reporteador\CapaVista_Reporteador\bin\Debug\CapaVista_Reporteador.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -56,9 +65,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Reportes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Formularios\Frm_Solicitud_Pago.resx">
       <DependentUpon>Frm_Solicitud_Pago.cs</DependentUpon>
@@ -67,8 +74,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\SolicitudPagoTransporte.rdlc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\CapaModelo_Enlace_Logistica.Entidades.ClsSolicitudPagoVistaPrevia.datasource" />
     <None Include="Resources\7.png" />
   </ItemGroup>
   <ItemGroup>

@@ -42,7 +42,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\ClsConexion.cs" />
+    <Compile Include="Repositorios\ClsSentencias.cs" />
+    <Compile Include="Contratos\IRepositorioTraslado.cs" />
+    <Compile Include="Contratos\IRepositorioUnidadTrabajoTraslado.cs" />
+    <Compile Include="Repositorios\ClsRepositorioTraslado.cs" />
+    <Compile Include="Entidades\ClsProductoTrasladoDetalle.cs" />
+    <Compile Include="Entidades\ClsTrasladoSolicitud.cs" />
+    <Compile Include="Entidades\ClsTrasladoPersistido.cs" />
+    <Compile Include="Entidades\ClsStockProductoTraslado.cs" />
+    <Compile Include="Entidades\ClsReglasEstadoTraslado.cs" />
+    <Compile Include="Repositorios\ClsRepositorioInventarioTraslado.cs" />
+    <Compile Include="Repositorios\ClsRepositorioViajeTraslado.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Contratos\" />
+    <Folder Include="Entidades\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

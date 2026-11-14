@@ -42,7 +42,7 @@
       <HintPath>..\..\..\navegador\Navegador\CapaVista_Navegador\bin\Debug\CapaModelo_Navegador.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Bancos">
-      <HintPath>..\..\..\..\modulos\bancos\Bibliotecas de Bancos\Bancos\CapaVista_Bancos\bin\Debug\CapaVista_Bancos.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\proyectoasis22k26\codigo\modulos\bancos\Bibliotecas de Bancos\Bancos\CapaVista_Bancos\bin\Debug\CapaVista_Bancos.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Compras">
       <HintPath>..\..\..\..\modulos\compras\Compras\CapaVista_Compras\bin\Debug\CapaVista_Compras.dll</HintPath>

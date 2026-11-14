@@ -344,7 +344,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!_PkDetalleMovimiento.Value</Value>
+                              <Value>=Fields!PkDetalleMovimiento.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -374,7 +374,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!_FkMovimientoInventarioCodigo.Value</Value>
+                              <Value>=Fields!FkMovimientoInventarioCodigo.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -404,7 +404,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!_FkProductoCodigo.Value</Value>
+                              <Value>=Fields!FkProductoCodigo.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -434,7 +434,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!_PrecioCompraDetalleMovimiento.Value</Value>
+                              <Value>=Fields!PrecioCompraDetalleMovimiento.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -464,7 +464,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!_CantidadDetalleMovimiento.Value</Value>
+                              <Value>=Fields!CantidadDetalleMovimiento.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -494,7 +494,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!_LoteMovimientoInventario.Value</Value>
+                              <Value>=Fields!LoteMovimientoInventario.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -524,7 +524,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!_CreatedAt.Value</Value>
+                              <Value>=Fields!CreatedAt.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -554,7 +554,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!_UpdatedAt.Value</Value>
+                              <Value>=Fields!UpdatedAt.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -603,7 +603,7 @@
         </TablixRowHierarchy>
         <DataSetName>DsMantenimientoDetalleMovimiento</DataSetName>
         <Top>0.76059cm</Top>
-        <Left>0.04483cm</Left>
+        <Left>0.99733cm</Left>
         <Height>2.38533cm</Height>
         <Width>20cm</Width>
         <Style>
@@ -621,10 +621,10 @@
       <BackgroundColor>#fbf6f2</BackgroundColor>
     </Style>
   </Body>
-  <Width>7.90833in</Width>
+  <Width>8.675in</Width>
   <Page>
     <PageHeader>
-      <Height>2.46944cm</Height>
+      <Height>2.54cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -651,9 +651,10 @@ DETALLE DE MOVIMIENTO</Value>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.59973cm</Top>
+          <Top>0.67029cm</Top>
+          <Left>3.64067cm</Left>
           <Height>1.69333cm</Height>
-          <Width>20.04483cm</Width>
+          <Width>13.60805cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -668,7 +669,7 @@ DETALLE DE MOVIMIENTO</Value>
           <Source>Embedded</Source>
           <Value>ID7</Value>
           <Sizing>FitProportional</Sizing>
-          <Left>16.77599cm</Left>
+          <Left>17.28399cm</Left>
           <Height>2.46944cm</Height>
           <Width>2.41017cm</Width>
           <ZIndex>1</ZIndex>
@@ -712,35 +713,35 @@ DETALLE DE MOVIMIENTO</Value>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="_CantidadDetalleMovimiento">
+        <Field Name="CantidadDetalleMovimiento">
           <DataField>_CantidadDetalleMovimiento</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="_CreatedAt">
+        <Field Name="CreatedAt">
           <DataField>_CreatedAt</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="_FkMovimientoInventarioCodigo">
+        <Field Name="FkMovimientoInventarioCodigo">
           <DataField>_FkMovimientoInventarioCodigo</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="_FkProductoCodigo">
+        <Field Name="FkProductoCodigo">
           <DataField>_FkProductoCodigo</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="_LoteMovimientoInventario">
+        <Field Name="LoteMovimientoInventario">
           <DataField>_LoteMovimientoInventario</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="_PkDetalleMovimiento">
+        <Field Name="PkDetalleMovimiento">
           <DataField>_PkDetalleMovimiento</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="_PrecioCompraDetalleMovimiento">
+        <Field Name="PrecioCompraDetalleMovimiento">
           <DataField>_PrecioCompraDetalleMovimiento</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="_UpdatedAt">
+        <Field Name="UpdatedAt">
           <DataField>_UpdatedAt</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>

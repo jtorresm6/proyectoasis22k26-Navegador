@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_Enlace_Logistica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaContralador_Enlace_Logistica", "CapaContralador_Enlace_Logistica\CapaContralador_Enlace_Logistica.csproj", "{D838776C-6639-41EC-82F2-4FFBBC121E6B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebasUnitarias_Enlace_Logistica", "PruebasUnitarias_Enlace_Logistica\PruebasUnitarias_Enlace_Logistica.csproj", "{1859EE6D-BE5B-4DDB-AB58-810FBC8FD3A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D838776C-6639-41EC-82F2-4FFBBC121E6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D838776C-6639-41EC-82F2-4FFBBC121E6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D838776C-6639-41EC-82F2-4FFBBC121E6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1859EE6D-BE5B-4DDB-AB58-810FBC8FD3A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1859EE6D-BE5B-4DDB-AB58-810FBC8FD3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1859EE6D-BE5B-4DDB-AB58-810FBC8FD3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1859EE6D-BE5B-4DDB-AB58-810FBC8FD3A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -37,7 +37,8 @@
     <Reference Include="CapaVista_CierreInventario_Logistica">
       <HintPath>..\..\CierreInventario_Logistica\CapaVista_CierreInventario_Logistica\bin\Debug\CapaVista_CierreInventario_Logistica.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista_Enlace_Logistica">
+    <Reference Include="CapaVista_Enlace_Logistica, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Enlace_OtrosModulos_Logistica\CapaVista_Enlace_Logistica\bin\Debug\CapaVista_Enlace_Logistica.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_Inventario_Logistica">
@@ -45,6 +46,10 @@
     </Reference>
     <Reference Include="CapaVista_MuestreoAuditoria_Logistica">
       <HintPath>..\..\MuestreoAuditoria_Logistica\CapaVista_MuestreoAuditoria_Logistica\bin\Debug\CapaVista_MuestreoAuditoria_Logistica.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaVista_TransporteExterno_Logistica, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\TransporteExterno_Logistica\CapaVista_TransporteExterno_Logistica\bin\Debug\CapaVista_TransporteExterno_Logistica.dll</HintPath>
     </Reference>
     <Reference Include="CapaVista_TransporteInterno_Logistica, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -89,6 +94,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
@@ -175,9 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\btnEnlace.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\btnCerrarSesion.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\FondoNavegador.png" />
@@ -268,6 +271,138 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\btnhamburguesa_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnMantenimientos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Bodegas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Sucursales.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Categoria.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Linea.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Marca.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Detalle_de_Movimiento.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Tipo_de_Movimiento.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Camara_de_Refrigeracion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Conductor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Estado_de_Transporte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Tipo_de_Transporte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Transporte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnGestionInventario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Producto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Stock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Movimiento_de_Inventario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Saldos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Historico.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnCierreyAditoria.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Cierre_de_Inventario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Consulta_Cierres.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Muestreo_y_Auditoria.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Detalle_de_Muestreo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnGestionTraslados.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Traslado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Detalle_De_Traslado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Tipo_Traslado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Productos_a_Traslados.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnGestionViajesDespacho.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Encabezado_Viaje.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Detalle_Viaje.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Detalle_Viaje_Producto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnGestionTransporteExternoYMonitoreo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Transporte_externo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Registro_Transporte_Externo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Ruta_y_Seguimiento.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Telemetria_del_Transporte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Alerta_Cadena_Frio.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnAdministracionCostosIncidencia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Costo_y_Pago_del_servicio.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Indicencia_e_Historial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Btn_Enlaces_y_otros_modulos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CerrarSesionBoton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

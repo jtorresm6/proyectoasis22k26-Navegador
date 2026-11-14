@@ -1,0 +1,33 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=LogisticaAyudas.chm
+Contents file=LogisticaAyudas.hhc
+Default Window=LogisticaAyudas
+Default topic=MDI_Logistica.html
+Display compile progress=No
+Full-text search=Yes
+Language=0x100a Espanol (Guatemala)
+Title=Ayudas - Logistica
+
+[WINDOWS]
+LogisticaAyudas="Ayudas del modulo de Logistica","LogisticaAyudas.hhc",,"MDI_Logistica.html","MDI_Logistica.html",,,,,0x23520,,0x3006,,,,,,,,0
+
+[FILES]
+MDI_Logistica.html
+Bodegas_Logistica.html
+Sucursales_Logistica.html
+Categoria_Logistica.html
+Producto_Logistica.html
+Marca_Logistica.html
+TipoMovimiento_Logistica.html
+CamaraRefrigeracion_Logistica.htm
+Conductor_Logistica.htm
+TipoTransporte_Logistica.htm
+DetalleMovimiento_Logistica.html
+Traslados_Logistica.html
+DetalleTraslados_Logistica.html
+TransporteInterno_Logistica.htm
+GestionViaje_Logistica.html
+CierreInventario_Logistica.html
+
+[INFOTYPES]

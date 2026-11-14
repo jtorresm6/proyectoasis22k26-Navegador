@@ -21,7 +21,7 @@ namespace CapaModelo_Inventario_Logistica.Repositorios
 
         public ClsRepositorioTipoMovimiento()
         {
-            _SelectAll = "SELECT * FROM tblTipoMovimiento";
+            _SelectAll = "SELECT idTipoMovimiento, nombreTipoMovimiento, descripcionTipoMovimiento, signoTipoMovimiento, created_at, updated_at FROM tblTipoMovimiento";
         }
 
         public IEnumerable<ClsTipoMovimiento> LogisticaMetObtenerTodos()
@@ -31,12 +31,12 @@ namespace CapaModelo_Inventario_Logistica.Repositorios
             foreach (DataRow Fila in TablaDatos.Rows)
             {
                 var TipoMovimiento = new ClsTipoMovimiento();
-                TipoMovimiento.Pk_TipoMovimiento = Convert.ToInt32(Fila[0]);
-                TipoMovimiento.NombreTipoMovimiento = Fila[1].ToString();
-                TipoMovimiento.DescripcionTipoMovimiento = Fila[2].ToString();
-                TipoMovimiento.SignoTipoMovimiento = Fila[3].ToString();
-                TipoMovimiento.CreatedAt = Convert.ToDateTime(Fila[13]);
-                TipoMovimiento.UpdatedAt = Convert.ToDateTime(Fila[14]);
+                TipoMovimiento.Pk_TipoMovimiento = Convert.ToInt32(Fila["idTipoMovimiento"]);
+                TipoMovimiento.NombreTipoMovimiento = Fila["nombreTipoMovimiento"].ToString();
+                TipoMovimiento.DescripcionTipoMovimiento = Fila["descripcionTipoMovimiento"].ToString();
+                TipoMovimiento.SignoTipoMovimiento = Fila["signoTipoMovimiento"].ToString();
+                TipoMovimiento.CreatedAt = Convert.ToDateTime(Fila["created_at"]);
+                TipoMovimiento.UpdatedAt = Convert.ToDateTime(Fila["updated_at"]);
                 ListaTipoMovimento.Add(TipoMovimiento);
             }
             TablaDatos.Clear();
