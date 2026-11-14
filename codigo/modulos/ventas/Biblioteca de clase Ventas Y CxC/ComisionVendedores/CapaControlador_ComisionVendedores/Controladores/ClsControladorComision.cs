@@ -1,3 +1,6 @@
+// Autor: Roger Yankhel de Jesús Herrera Alcántara | Carné: 0901-23-2429
+// Agrupa los movimientos del período y coordina su liquidación.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +13,7 @@ using CapaModelo_ComisionVendedores.Repositorios;
 
 namespace CapaControlador_ComisionVendedores.Controladores
 {
-    public class ClsControladorComision : IControladorComision
+    public partial class ClsControladorComision : IControladorComision
     {
         private readonly IRepositorioComision _RepositorioComision;
 
@@ -24,7 +27,7 @@ namespace CapaControlador_ComisionVendedores.Controladores
             _RepositorioComision = RepositorioComision ?? throw new ArgumentNullException("RepositorioComision");
         }
 
-        public List<ClsComisionVendedorResultado> ComisionVendedoresMetCalcular(
+        public List<ClsComisionVendedorResultado> VentasMetCalcular(
             EnumMetodoComision Metodo,
             EnumBaseComision BaseCalculo,
             DateTime FechaInicio,
@@ -36,7 +39,7 @@ namespace CapaControlador_ComisionVendedores.Controladores
             if (BaseCalculo != EnumBaseComision.Cobrado)
                 throw new NotSupportedException("Las comisiones se devengan sobre cobros confirmados.");
 
-            List<ClsVentaVendedorBase> Ventas = _RepositorioComision.ComisionVendedoresMetObtenerVentasPorMetodo(
+            List<ClsVentaVendedorBase> Ventas = _RepositorioComision.VentasMetObtenerVentasPorMetodo(
                 "Vendedor",
                 FechaInicio.Date,
                 FechaFin.Date.AddDays(1));
@@ -80,7 +83,7 @@ namespace CapaControlador_ComisionVendedores.Controladores
             return Resultados;
         }
 
-        public int ComisionVendedoresMetGuardar(
+        public int VentasMetGuardar(
             List<ClsComisionVendedorResultado> Resultados,
             DateTime FechaInicio,
             DateTime FechaFin,
@@ -118,14 +121,14 @@ namespace CapaControlador_ComisionVendedores.Controladores
                             MontoComision = Movimiento.MontoComision
                         });
             if (Comisiones.Count == 0) throw new InvalidOperationException("Vuelva a calcular para cargar los abonos que se enviarán.");
-            return _RepositorioComision.ComisionVendedoresMetGuardarComisiones(Comisiones, FechaInicio.Date, FechaFin.Date, Metodo.ToString());
+            return _RepositorioComision.VentasMetGuardarComisiones(Comisiones, FechaInicio.Date, FechaFin.Date, Metodo.ToString());
         }
 
-        public List<ClsProductoPorcentaje> ComisionVendedoresMetConsultarPorcentajes(EnumMetodoComision Metodo)
+        public List<ClsProductoPorcentaje> VentasMetConsultarPorcentajes(EnumMetodoComision Metodo)
         {
-            ComisionVendedoresMetValidarMetodoMantenimiento(Metodo);
+            VentasMetValidarMetodoMantenimiento(Metodo);
             List<ClsProductoPorcentaje> Resultado = new List<ClsProductoPorcentaje>();
-            foreach (ClsProductoComision Producto in _RepositorioComision.ComisionVendedoresMetConsultarPorcentajes(Metodo.ToString()))
+            foreach (ClsProductoComision Producto in _RepositorioComision.VentasMetConsultarPorcentajes(Metodo.ToString()))
                 Resultado.Add(new ClsProductoPorcentaje
                 {
                     IdProducto = Producto.IdProducto, IdMarca = Producto.IdMarca, IdLinea = Producto.IdLinea,
@@ -138,15 +141,15 @@ namespace CapaControlador_ComisionVendedores.Controladores
             return Resultado;
         }
 
-        public int ComisionVendedoresMetActualizarPorcentaje(EnumMetodoComision Metodo, int IdClasificacion, decimal Porcentaje)
+        public int VentasMetActualizarPorcentaje(EnumMetodoComision Metodo, int IdClasificacion, decimal Porcentaje)
         {
-            ComisionVendedoresMetValidarMetodoMantenimiento(Metodo);
+            VentasMetValidarMetodoMantenimiento(Metodo);
             if (IdClasificacion <= 0) throw new ArgumentException("Seleccione el elemento específico que desea actualizar.");
             if (Porcentaje < 0 || Porcentaje > 99m) throw new ArgumentOutOfRangeException("Porcentaje", "El porcentaje debe estar entre 0.00 y 99.00% según el esquema de la base de datos.");
-            return _RepositorioComision.ComisionVendedoresMetActualizarPorcentaje(Metodo.ToString(), IdClasificacion, Porcentaje);
+            return _RepositorioComision.VentasMetActualizarPorcentaje(Metodo.ToString(), IdClasificacion, Porcentaje);
         }
 
-        private void ComisionVendedoresMetValidarMetodoMantenimiento(EnumMetodoComision Metodo)
+        private void VentasMetValidarMetodoMantenimiento(EnumMetodoComision Metodo)
         {
             switch (Metodo)
             {
@@ -160,204 +163,7 @@ namespace CapaControlador_ComisionVendedores.Controladores
             }
         }
 
-        public List<ClsFacturaComisionVista> ComisionVendedoresMetObtenerFacturas()
-        {
-            List<ClsFacturaComisionVista> Resultado = new List<ClsFacturaComisionVista>();
-            foreach (ClsFacturaComision Factura in _RepositorioComision.ComisionVendedoresMetObtenerFacturas())
-                Resultado.Add(new ClsFacturaComisionVista { IdFactura = Factura.IdFactura, IdVendedor = Factura.IdVendedor, Fecha = Factura.Fecha, Cliente = Factura.Cliente, Total = Factura.Total, TotalPagado = Factura.TotalPagado, UltimoAbono = Factura.UltimoAbono, SimboloMoneda = Factura.SimboloMoneda });
-            return Resultado;
-        }
-
-        public List<ClsVendedorComisionVista> ComisionVendedoresMetObtenerVendedores()
-        {
-            List<ClsVendedorComisionVista> Resultado = new List<ClsVendedorComisionVista>();
-            foreach (ClsVendedorComision Vendedor in _RepositorioComision.ComisionVendedoresMetObtenerVendedores())
-                Resultado.Add(new ClsVendedorComisionVista { IdVendedor = Vendedor.IdVendedor, NombreVendedor = Vendedor.NombreVendedor, Porcentaje = Vendedor.Porcentaje });
-            return Resultado;
-        }
-
-        public List<ClsComisionFacturaDetalle> ComisionVendedoresMetCalcularFactura(int IdFactura, int IdVendedor, EnumMetodoComision Metodo)
-        {
-            if (Metodo == EnumMetodoComision.Vendedor)
-                throw new ArgumentException("La comisión se calcula por Línea, Producto, Categoría o Marca.");
-            List<ClsDetalleProductoComision> Iniciales = _RepositorioComision.ComisionVendedoresMetObtenerDetallesFactura(IdFactura, Metodo.ToString());
-            List<ClsComisionFacturaDetalle> Selecciones = Iniciales.Select(Detalle => new ClsComisionFacturaDetalle
-            {
-                IdFacturaDetalle = Detalle.IdFacturaDetalle,
-                MetodoComision = Detalle.ComisionGuardada ? Detalle.MetodoGuardado : ComisionVendedoresMetObtenerMetodoMenor(Detalle),
-                PorcentajeProducto = Detalle.PorcentajeProducto,
-                PorcentajeMarca = Detalle.PorcentajeMarca,
-                PorcentajeLinea = Detalle.PorcentajeLinea,
-                PorcentajeCategoria = Detalle.PorcentajeCategoria
-            }).ToList();
-            List<ClsComisionFacturaDetalle> Resultado = ComisionVendedoresMetCalcularFactura(IdFactura, IdVendedor, Selecciones);
-            return Resultado;
-        }
-
-        private static string ComisionVendedoresMetObtenerMetodoMenor(ClsDetalleProductoComision Detalle)
-        {
-            return new[] {
-                new { Metodo = "Producto", Tasa = Detalle.PorcentajeProducto },
-                new { Metodo = "Marca", Tasa = Detalle.PorcentajeMarca },
-                new { Metodo = "Linea", Tasa = Detalle.PorcentajeLinea },
-                new { Metodo = "Categoria", Tasa = Detalle.PorcentajeCategoria }
-            }.OrderBy(Opcion => Opcion.Tasa).First().Metodo;
-        }
-
-        public List<ClsComisionFacturaDetalle> ComisionVendedoresMetCalcularFactura(int IdFactura, int IdVendedor, List<ClsComisionFacturaDetalle> Selecciones)
-        {
-            ClsFacturaComision Factura = _RepositorioComision.ComisionVendedoresMetObtenerFactura(IdFactura);
-            ClsVendedorComision Vendedor = _RepositorioComision.ComisionVendedoresMetObtenerVendedor(IdVendedor);
-            if (Factura == null) throw new ArgumentException("La factura seleccionada no existe.");
-            if (Vendedor == null) throw new ArgumentException("El vendedor seleccionado no existe.");
-            _RepositorioComision.ComisionVendedoresMetSincronizarAbonos(IdFactura);
-            if (Selecciones == null || Selecciones.Count == 0)
-                throw new InvalidOperationException("La factura no tiene productos para calcular comisión.");
-            decimal ProporcionPagada = Factura.Total <= 0 ? 0 : Math.Min(1m, Math.Max(0m, Factura.TotalPagado / Factura.Total));
-            decimal PagoPrevioAlUltimo = Math.Max(0m, Factura.TotalPagado - Factura.UltimoAbono);
-            decimal UltimoAbonoAplicable = Math.Min(Factura.UltimoAbono, Math.Max(0m, Factura.Total - PagoPrevioAlUltimo));
-            decimal ProporcionUltimoAbono = Factura.Total <= 0 ? 0 : UltimoAbonoAplicable / Factura.Total;
-            List<ClsComisionFacturaDetalle> Resultado = new List<ClsComisionFacturaDetalle>();
-            foreach (ClsComisionFacturaDetalle Seleccion in Selecciones)
-            {
-                EnumMetodoComision Metodo;
-                if (!Enum.TryParse(Seleccion.MetodoComision, true, out Metodo) || Metodo == EnumMetodoComision.Vendedor)
-                    throw new InvalidOperationException("Elija Línea, Marca, Categoría o Producto para cada producto.");
-                ClsDetalleProductoComision Detalle = _RepositorioComision.ComisionVendedoresMetObtenerDetallesFactura(IdFactura, Metodo.ToString())
-                    .FirstOrDefault(Item => Item.IdFacturaDetalle == Seleccion.IdFacturaDetalle);
-                if (Detalle == null) throw new InvalidOperationException("No se encontró un producto de la factura.");
-                if (Detalle.IdProductoLogistica <= 0 || Detalle.IdClasificacionLogistica <= 0)
-                    throw new InvalidOperationException("El producto " + Detalle.NombreProducto + " no tiene relación o tasa válida en Logística.");
-                if (Detalle.ComisionGuardada && !string.Equals(Detalle.MetodoGuardado, Metodo.ToString(), StringComparison.OrdinalIgnoreCase))
-                    throw new InvalidOperationException("Esta factura ya tiene una comisión guardada con otro método; el cálculo histórico no se puede cambiar.");
-                if (Detalle.ComisionGuardada && Detalle.IdVendedorGuardado > 0 && Detalle.IdVendedorGuardado != IdVendedor)
-                    throw new InvalidOperationException("Esta factura ya tiene una comisión guardada para otro vendedor.");
-                decimal BaseVenta = Detalle.BaseComisionable;
-                decimal Porcentaje = Detalle.Porcentaje;
-                decimal ComisionTotal = Math.Round(BaseVenta * Porcentaje / 100m, 4, MidpointRounding.AwayFromZero);
-                decimal Disponible = Detalle.ComisionGuardada
-                    ? Math.Min(ComisionTotal, Math.Round(ComisionTotal * ProporcionPagada, 2, MidpointRounding.AwayFromZero))
-                    : Math.Round(ComisionTotal * ProporcionPagada, 2, MidpointRounding.AwayFromZero);
-                decimal ComisionAbono = Math.Round(ComisionTotal * ProporcionUltimoAbono, 4, MidpointRounding.AwayFromZero);
-                Resultado.Add(new ClsComisionFacturaDetalle
-                {
-                    IdFacturaDetalle = Detalle.IdFacturaDetalle,
-                    MetodoComision = Detalle.ComisionGuardada ? Detalle.MetodoGuardado : Metodo.ToString(),
-                    ComisionGuardada = Detalle.ComisionGuardada,
-                    NombreProducto = Detalle.NombreProducto,
-                    ElementoComision = Detalle.ElementoComision,
-                    Cantidad = Detalle.Cantidad,
-                    BaseVenta = BaseVenta,
-                    Porcentaje = Porcentaje,
-                    PorcentajeProducto = Detalle.PorcentajeProducto,
-                    PorcentajeMarca = Detalle.PorcentajeMarca,
-                    PorcentajeLinea = Detalle.PorcentajeLinea,
-                    PorcentajeCategoria = Detalle.PorcentajeCategoria,
-                    ComisionTotal = ComisionTotal,
-                    VentaCobrado = Math.Round(BaseVenta * ProporcionPagada, 4, MidpointRounding.AwayFromZero),
-                    ComisionUltimoAbono = ComisionAbono,
-                    ComisionDisponible = Disponible,
-                    ComisionPendiente = Math.Max(0m, ComisionTotal - Disponible)
-                });
-            }
-            return Resultado;
-        }
-
-        public int ComisionVendedoresMetGuardarComisionFactura(int IdFactura, int IdVendedor, EnumMetodoComision Metodo)
-        {
-            if (IdFactura <= 0 || IdVendedor <= 0) throw new ArgumentOutOfRangeException("Factura y vendedor deben ser válidos.");
-            if (Metodo == EnumMetodoComision.Vendedor) throw new ArgumentException("Seleccione Línea, Producto, Categoría o Marca.");
-            return _RepositorioComision.ComisionVendedoresMetGuardarComisionFactura(IdFactura, IdVendedor, Metodo.ToString());
-        }
-
-        public int ComisionVendedoresMetAsignarVendedorFactura(int IdFactura, int IdVendedor)
-        {
-            if (IdFactura <= 0 || IdVendedor <= 0) throw new ArgumentOutOfRangeException("Factura y vendedor deben ser válidos.");
-            return _RepositorioComision.ComisionVendedoresMetAsignarVendedorFactura(IdFactura, IdVendedor);
-        }
-
-        public int ComisionVendedoresMetAsignarVendedorYGuardarComision(int IdFactura, int IdVendedor, EnumMetodoComision Metodo)
-        {
-            if (IdFactura <= 0 || IdVendedor <= 0) throw new ArgumentOutOfRangeException("Factura y vendedor deben ser válidos.");
-            if (Metodo == EnumMetodoComision.Vendedor) throw new ArgumentException("Seleccione Línea, Producto, Categoría o Marca.");
-            return _RepositorioComision.ComisionVendedoresMetAsignarVendedorYGuardarComision(IdFactura, IdVendedor, Metodo.ToString());
-        }
-
-        public int ComisionVendedoresMetAsignarVendedorYGuardarComision(int IdFactura, int IdVendedor, List<ClsComisionFacturaDetalle> Selecciones)
-        {
-            if (IdFactura <= 0 || IdVendedor <= 0) throw new ArgumentOutOfRangeException("Factura y vendedor deben ser válidos.");
-            if (Selecciones == null || Selecciones.Count == 0) throw new ArgumentException("Elija el método para cada producto antes de asignar.");
-            List<ClsDetalleProductoComision> Datos = Selecciones.Select(Seleccion => new ClsDetalleProductoComision
-            {
-                IdFacturaDetalle = Seleccion.IdFacturaDetalle,
-                MetodoSeleccionado = Seleccion.MetodoComision
-            }).ToList();
-            return _RepositorioComision.ComisionVendedoresMetAsignarVendedorYGuardarComision(IdFactura, IdVendedor, Datos);
-        }
-
-        public List<ClsFacturaPagoVista> ComisionVendedoresMetObtenerFacturasConSaldo()
-        {
-            return _RepositorioComision.ComisionVendedoresMetObtenerFacturasConSaldo()
-                .Select(Factura => new ClsFacturaPagoVista
-                {
-                    IdFactura = Factura.IdFactura,
-                    IdCliente = Factura.IdCliente,
-                    IdMoneda = Factura.IdMoneda,
-                    Fecha = Factura.Fecha,
-                    Estado = Factura.Estado,
-                    Etiqueta = Factura.Etiqueta,
-                    SimboloMoneda = Factura.SimboloMoneda,
-                    Total = Factura.Total,
-                    TotalPagado = Factura.TotalPagado,
-                    Saldo = Factura.Saldo,
-                    ComisionTotal = Factura.ComisionTotal,
-                    ComisionDevengada = Factura.ComisionDevengada,
-                    ComisionPagada = Factura.ComisionPagada,
-                    ComisionPendientePago = Factura.ComisionPendientePago
-                }).ToList();
-        }
-
-        public List<ClsFormaPagoVentaVista> ComisionVendedoresMetObtenerFormasPagoVenta()
-        {
-            return _RepositorioComision.ComisionVendedoresMetObtenerFormasPagoVenta()
-                .Select(Forma => new ClsFormaPagoVentaVista
-                {
-                    IdFormaPago = Forma.IdFormaPago,
-                    Nombre = Forma.Nombre,
-                    RequiereReferencia = Forma.RequiereReferencia
-                }).ToList();
-        }
-
-        public decimal ComisionVendedoresMetRegistrarAbonoFactura(int IdFactura, decimal Monto,
-            int IdFormaPago, DateTime Fecha, string Referencia, int IdUsuario)
-        {
-            if (IdFactura <= 0) throw new ArgumentOutOfRangeException("IdFactura", "Seleccione una factura válida.");
-            if (Monto <= 0m || Monto != Math.Round(Monto, 2, MidpointRounding.AwayFromZero))
-                throw new ArgumentOutOfRangeException("Monto", "El monto del abono debe ser positivo y tener hasta dos decimales.");
-            if (IdFormaPago <= 0) throw new ArgumentOutOfRangeException("IdFormaPago", "Seleccione un método de pago.");
-            if (IdUsuario <= 0) throw new ArgumentOutOfRangeException("IdUsuario", "No se encontró un usuario activo en la sesión.");
-            return _RepositorioComision.ComisionVendedoresMetRegistrarAbonoFactura(
-                IdFactura, Monto, IdFormaPago, Fecha.Date, Referencia, IdUsuario);
-        }
-
-        public List<ClsComisionNominaVista> ComisionVendedoresMetObtenerComisionesNomina()
-        {
-            return _RepositorioComision.ComisionVendedoresMetObtenerComisionesNomina()
-                .Select(Comision => new ClsComisionNominaVista
-                {
-                    IdAbono = Comision.IdAbono,
-                    IdFactura = Comision.IdFactura,
-                    FechaAbono = Comision.FechaAbono,
-                    Vendedor = Comision.Vendedor,
-                    SimboloMoneda = Comision.SimboloMoneda,
-                    TotalComision = Comision.TotalComision,
-                    MontoPagoCliente = Comision.MontoPagoCliente,
-                    ComisionDevengadaAbono = Comision.ComisionDevengadaAbono,
-                    EstadoPago = Comision.EstadoPago
-                }).ToList();
-        }
-
-        private string ComisionVendedoresMetObtenerElementoComision(ClsDetalleProductoComision Detalle, EnumMetodoComision Metodo, string NombreVendedor)
+        private string VentasMetObtenerElementoComision(ClsDetalleProductoComision Detalle, EnumMetodoComision Metodo, string NombreVendedor)
         {
             switch (Metodo)
             {

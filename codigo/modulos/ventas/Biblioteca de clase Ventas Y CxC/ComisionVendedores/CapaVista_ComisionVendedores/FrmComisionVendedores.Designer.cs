@@ -3,79 +3,79 @@ namespace ComisionVendedoresVista
     partial class FrmComisionVendedores
     {
         private System.ComponentModel.IContainer _Components = null;
-        private System.Windows.Forms.TabControl ComisionVendedoresTbcPestanas;
-        private System.Windows.Forms.TabPage ComisionVendedoresTabCalculo;
-        private System.Windows.Forms.TabPage ComisionVendedoresTabAsignarFactura;
-        private System.Windows.Forms.TabPage ComisionVendedoresTabMantenimiento;
-        private System.Windows.Forms.Label ComisionVendedoresLblFechaInicio;
-        private System.Windows.Forms.Label ComisionVendedoresLblFechaFin;
-        private System.Windows.Forms.Label ComisionVendedoresLblAlcance;
-        private System.Windows.Forms.Label ComisionVendedoresLblPorcentajeNuevo;
-        private System.Windows.Forms.DateTimePicker ComisionVendedoresDtpFechaInicio;
-        private System.Windows.Forms.DateTimePicker ComisionVendedoresDtpFechaFin;
-        private System.Windows.Forms.Button ComisionVendedoresBtnCalcular;
-        private System.Windows.Forms.Button ComisionVendedoresBtnAyuda;
-        private System.Windows.Forms.DataGridView ComisionVendedoresDgvResultados;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmVendedor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmElemento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmPorcentaje;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmBase;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmMonto;
-        private System.Windows.Forms.Button ComisionVendedoresBtnAnteriorResultados;
-        private System.Windows.Forms.Button ComisionVendedoresBtnSiguienteResultados;
-        private System.Windows.Forms.Label ComisionVendedoresLblPaginaResultados;
-        private System.Windows.Forms.Label ComisionVendedoresLblEstado;
-        private System.Windows.Forms.ComboBox ComisionVendedoresCboAlcance;
-        private System.Windows.Forms.TextBox ComisionVendedoresTxtPorcentaje;
-        private System.Windows.Forms.Button ComisionVendedoresBtnBuscar;
-        private System.Windows.Forms.Button ComisionVendedoresBtnActualizar;
-        private System.Windows.Forms.DataGridView ComisionVendedoresDgvPorcentajes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmMarca;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmLinea;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmCategoria;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmPorcentajeMarca;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmPorcentajeLinea;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmPorcentajeCategoria;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmPorcentajeProducto;
-        private System.Windows.Forms.Label ComisionVendedoresLblMantenimientoEstado;
-        private System.Windows.Forms.Panel ComisionVendedoresPnlEncabezado;
-        private System.Windows.Forms.Label ComisionVendedoresLblTitulo;
-        private System.Windows.Forms.Label ComisionVendedoresLblSubtitulo;
-        private System.Windows.Forms.Label ComisionVendedoresLblFactura;
-        private System.Windows.Forms.Label ComisionVendedoresLblVendedorFactura;
-        private System.Windows.Forms.Label ComisionVendedoresLblMetodoFactura;
-        private System.Windows.Forms.Label ComisionVendedoresLblEstadoFactura;
-        private System.Windows.Forms.ComboBox ComisionVendedoresCboFactura;
-        private System.Windows.Forms.ComboBox ComisionVendedoresCboVendedorFactura;
-        private System.Windows.Forms.ComboBox ComisionVendedoresCboMetodoFactura;
-        private System.Windows.Forms.Button ComisionVendedoresBtnCalcularFactura;
-        private System.Windows.Forms.Button ComisionVendedoresBtnAsignarVendedorFactura;
-        private System.Windows.Forms.Button ComisionVendedoresBtnRegistrarAbonoFactura;
-        private System.Windows.Forms.DataGridView ComisionVendedoresDgvDetalleFactura;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmDetalleProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmDetalleElemento;
-        private System.Windows.Forms.DataGridViewComboBoxColumn ComisionVendedoresClmMetodoProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmDetalleCantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmDetalleBase;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmDetallePorcentaje;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmDetalleComision;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmDetalleCobrado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmDetalleAbono;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmDetalleDisponible;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComisionVendedoresClmDetallePendiente;
-        private System.Windows.Forms.Button ComisionVendedoresBtnAnteriorFactura;
-        private System.Windows.Forms.Button ComisionVendedoresBtnSiguienteFactura;
-        private System.Windows.Forms.Label ComisionVendedoresLblPaginaFactura;
-        private System.Windows.Forms.Button ComisionVendedoresBtnAnteriorPorcentajes;
-        private System.Windows.Forms.Button ComisionVendedoresBtnSiguientePorcentajes;
-        private System.Windows.Forms.Label ComisionVendedoresLblPaginaPorcentajes;
-        private System.Windows.Forms.Label ComisionVendedoresLblObligatorioFechaInicio;
-        private System.Windows.Forms.Label ComisionVendedoresLblObligatorioFechaFin;
-        private System.Windows.Forms.Label ComisionVendedoresLblObligatorioFactura;
-        private System.Windows.Forms.Label ComisionVendedoresLblObligatorioVendedor;
-        private System.Windows.Forms.Label ComisionVendedoresLblObligatorioAlcance;
-        private System.Windows.Forms.Label ComisionVendedoresLblObligatorioPorcentaje;
+        private System.Windows.Forms.TabControl VentasTbcPestanas;
+        private System.Windows.Forms.TabPage VentasTbpCalculo;
+        private System.Windows.Forms.TabPage VentasTbpAsignarFactura;
+        private System.Windows.Forms.TabPage VentasTbpMantenimiento;
+        private System.Windows.Forms.Label VentasLblFechaInicio;
+        private System.Windows.Forms.Label VentasLblFechaFin;
+        private System.Windows.Forms.Label VentasLblAlcance;
+        private System.Windows.Forms.Label VentasLblPorcentajeNuevo;
+        private System.Windows.Forms.DateTimePicker VentasDtpFechaInicio;
+        private System.Windows.Forms.DateTimePicker VentasDtpFechaFin;
+        private System.Windows.Forms.Button VentasBtnCalcular;
+        private System.Windows.Forms.Button VentasBtnAyuda;
+        private System.Windows.Forms.DataGridView VentasDgvResultados;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmVendedor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmElemento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmPorcentaje;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmBase;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmMonto;
+        private System.Windows.Forms.Button VentasBtnAnteriorResultados;
+        private System.Windows.Forms.Button VentasBtnSiguienteResultados;
+        private System.Windows.Forms.Label VentasLblPaginaResultados;
+        private System.Windows.Forms.Label VentasLblEstado;
+        private System.Windows.Forms.ComboBox VentasCboAlcance;
+        private System.Windows.Forms.TextBox VentasTxtPorcentaje;
+        private System.Windows.Forms.Button VentasBtnBuscar;
+        private System.Windows.Forms.Button VentasBtnActualizar;
+        private System.Windows.Forms.DataGridView VentasDgvPorcentajes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmMarca;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmLinea;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmCategoria;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmPorcentajeMarca;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmPorcentajeLinea;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmPorcentajeCategoria;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmPorcentajeProducto;
+        private System.Windows.Forms.Label VentasLblMantenimientoEstado;
+        private System.Windows.Forms.Panel VentasPnlEncabezado;
+        private System.Windows.Forms.Label VentasLblTitulo;
+        private System.Windows.Forms.Label VentasLblSubtitulo;
+        private System.Windows.Forms.Label VentasLblFactura;
+        private System.Windows.Forms.Label VentasLblVendedorFactura;
+        private System.Windows.Forms.Label VentasLblMetodoFactura;
+        private System.Windows.Forms.Label VentasLblEstadoFactura;
+        private System.Windows.Forms.ComboBox VentasCboFactura;
+        private System.Windows.Forms.ComboBox VentasCboVendedorFactura;
+        private System.Windows.Forms.ComboBox VentasCboMetodoFactura;
+        private System.Windows.Forms.Button VentasBtnCalcularFactura;
+        private System.Windows.Forms.Button VentasBtnAsignarVendedorFactura;
+        private System.Windows.Forms.Button VentasBtnRegistrarAbonoFactura;
+        private System.Windows.Forms.DataGridView VentasDgvDetalleFactura;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmDetalleProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmDetalleElemento;
+        private System.Windows.Forms.DataGridViewComboBoxColumn VentasClmMetodoProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmDetalleCantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmDetalleBase;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmDetallePorcentaje;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmDetalleComision;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmDetalleCobrado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmDetalleAbono;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmDetalleDisponible;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VentasClmDetallePendiente;
+        private System.Windows.Forms.Button VentasBtnAnteriorFactura;
+        private System.Windows.Forms.Button VentasBtnSiguienteFactura;
+        private System.Windows.Forms.Label VentasLblPaginaFactura;
+        private System.Windows.Forms.Button VentasBtnAnteriorPorcentajes;
+        private System.Windows.Forms.Button VentasBtnSiguientePorcentajes;
+        private System.Windows.Forms.Label VentasLblPaginaPorcentajes;
+        private System.Windows.Forms.Label VentasLblObligatorioFechaInicio;
+        private System.Windows.Forms.Label VentasLblObligatorioFechaFin;
+        private System.Windows.Forms.Label VentasLblObligatorioFactura;
+        private System.Windows.Forms.Label VentasLblObligatorioVendedor;
+        private System.Windows.Forms.Label VentasLblObligatorioAlcance;
+        private System.Windows.Forms.Label VentasLblObligatorioPorcentaje;
 
         protected override void Dispose(bool Disposing)
         {
@@ -108,132 +108,132 @@ namespace ComisionVendedoresVista
             System.Windows.Forms.DataGridViewCellStyle EstiloCelda34 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle EstiloCelda35 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle EstiloCelda36 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.ComisionVendedoresTbcPestanas = new System.Windows.Forms.TabControl();
-            this.ComisionVendedoresTabCalculo = new System.Windows.Forms.TabPage();
-            this.ComisionVendedoresDgvResultados = new System.Windows.Forms.DataGridView();
-            this.ComisionVendedoresClmVendedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmElemento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmPorcentaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmBase = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmMonto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresBtnAnteriorResultados = new System.Windows.Forms.Button();
-            this.ComisionVendedoresBtnSiguienteResultados = new System.Windows.Forms.Button();
-            this.ComisionVendedoresLblPaginaResultados = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblFechaInicio = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblFechaFin = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblEstado = new System.Windows.Forms.Label();
-            this.ComisionVendedoresBtnAyuda = new System.Windows.Forms.Button();
-            this.ComisionVendedoresBtnCalcular = new System.Windows.Forms.Button();
-            this.ComisionVendedoresDtpFechaFin = new System.Windows.Forms.DateTimePicker();
-            this.ComisionVendedoresDtpFechaInicio = new System.Windows.Forms.DateTimePicker();
-            this.ComisionVendedoresTabAsignarFactura = new System.Windows.Forms.TabPage();
-            this.ComisionVendedoresDgvDetalleFactura = new System.Windows.Forms.DataGridView();
-            this.ComisionVendedoresClmDetalleProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmDetalleElemento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmMetodoProducto = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ComisionVendedoresClmDetalleCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmDetalleBase = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmDetallePorcentaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmDetalleComision = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmDetalleCobrado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmDetalleAbono = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmDetalleDisponible = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmDetallePendiente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresBtnAnteriorFactura = new System.Windows.Forms.Button();
-            this.ComisionVendedoresBtnSiguienteFactura = new System.Windows.Forms.Button();
-            this.ComisionVendedoresLblPaginaFactura = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblEstadoFactura = new System.Windows.Forms.Label();
-            this.ComisionVendedoresBtnCalcularFactura = new System.Windows.Forms.Button();
-            this.ComisionVendedoresBtnAsignarVendedorFactura = new System.Windows.Forms.Button();
-            this.ComisionVendedoresBtnRegistrarAbonoFactura = new System.Windows.Forms.Button();
-            this.ComisionVendedoresCboMetodoFactura = new System.Windows.Forms.ComboBox();
-            this.ComisionVendedoresCboVendedorFactura = new System.Windows.Forms.ComboBox();
-            this.ComisionVendedoresCboFactura = new System.Windows.Forms.ComboBox();
-            this.ComisionVendedoresLblMetodoFactura = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblVendedorFactura = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblFactura = new System.Windows.Forms.Label();
-            this.ComisionVendedoresTabMantenimiento = new System.Windows.Forms.TabPage();
-            this.ComisionVendedoresDgvPorcentajes = new System.Windows.Forms.DataGridView();
-            this.ComisionVendedoresClmProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmMarca = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmLinea = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmPorcentajeMarca = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmPorcentajeLinea = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmPorcentajeCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresClmPorcentajeProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComisionVendedoresBtnAnteriorPorcentajes = new System.Windows.Forms.Button();
-            this.ComisionVendedoresBtnSiguientePorcentajes = new System.Windows.Forms.Button();
-            this.ComisionVendedoresLblPaginaPorcentajes = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblObligatorioFechaInicio = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblObligatorioFechaFin = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblObligatorioFactura = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblObligatorioVendedor = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblObligatorioAlcance = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblObligatorioPorcentaje = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblAlcance = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblPorcentajeNuevo = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblMantenimientoEstado = new System.Windows.Forms.Label();
-            this.ComisionVendedoresBtnActualizar = new System.Windows.Forms.Button();
-            this.ComisionVendedoresBtnBuscar = new System.Windows.Forms.Button();
-            this.ComisionVendedoresTxtPorcentaje = new System.Windows.Forms.TextBox();
-            this.ComisionVendedoresCboAlcance = new System.Windows.Forms.ComboBox();
-            this.ComisionVendedoresPnlEncabezado = new System.Windows.Forms.Panel();
-            this.ComisionVendedoresLblTitulo = new System.Windows.Forms.Label();
-            this.ComisionVendedoresLblSubtitulo = new System.Windows.Forms.Label();
-            this.ComisionVendedoresTbcPestanas.SuspendLayout();
-            this.ComisionVendedoresTabCalculo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ComisionVendedoresDgvResultados)).BeginInit();
-            this.ComisionVendedoresTabAsignarFactura.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ComisionVendedoresDgvDetalleFactura)).BeginInit();
-            this.ComisionVendedoresTabMantenimiento.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ComisionVendedoresDgvPorcentajes)).BeginInit();
-            this.ComisionVendedoresPnlEncabezado.SuspendLayout();
+            this.VentasTbcPestanas = new System.Windows.Forms.TabControl();
+            this.VentasTbpCalculo = new System.Windows.Forms.TabPage();
+            this.VentasDgvResultados = new System.Windows.Forms.DataGridView();
+            this.VentasClmVendedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmElemento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmPorcentaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmBase = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmMonto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasBtnAnteriorResultados = new System.Windows.Forms.Button();
+            this.VentasBtnSiguienteResultados = new System.Windows.Forms.Button();
+            this.VentasLblPaginaResultados = new System.Windows.Forms.Label();
+            this.VentasLblFechaInicio = new System.Windows.Forms.Label();
+            this.VentasLblFechaFin = new System.Windows.Forms.Label();
+            this.VentasLblEstado = new System.Windows.Forms.Label();
+            this.VentasBtnAyuda = new System.Windows.Forms.Button();
+            this.VentasBtnCalcular = new System.Windows.Forms.Button();
+            this.VentasDtpFechaFin = new System.Windows.Forms.DateTimePicker();
+            this.VentasDtpFechaInicio = new System.Windows.Forms.DateTimePicker();
+            this.VentasTbpAsignarFactura = new System.Windows.Forms.TabPage();
+            this.VentasDgvDetalleFactura = new System.Windows.Forms.DataGridView();
+            this.VentasClmDetalleProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmDetalleElemento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmMetodoProducto = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.VentasClmDetalleCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmDetalleBase = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmDetallePorcentaje = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmDetalleComision = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmDetalleCobrado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmDetalleAbono = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmDetalleDisponible = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmDetallePendiente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasBtnAnteriorFactura = new System.Windows.Forms.Button();
+            this.VentasBtnSiguienteFactura = new System.Windows.Forms.Button();
+            this.VentasLblPaginaFactura = new System.Windows.Forms.Label();
+            this.VentasLblEstadoFactura = new System.Windows.Forms.Label();
+            this.VentasBtnCalcularFactura = new System.Windows.Forms.Button();
+            this.VentasBtnAsignarVendedorFactura = new System.Windows.Forms.Button();
+            this.VentasBtnRegistrarAbonoFactura = new System.Windows.Forms.Button();
+            this.VentasCboMetodoFactura = new System.Windows.Forms.ComboBox();
+            this.VentasCboVendedorFactura = new System.Windows.Forms.ComboBox();
+            this.VentasCboFactura = new System.Windows.Forms.ComboBox();
+            this.VentasLblMetodoFactura = new System.Windows.Forms.Label();
+            this.VentasLblVendedorFactura = new System.Windows.Forms.Label();
+            this.VentasLblFactura = new System.Windows.Forms.Label();
+            this.VentasTbpMantenimiento = new System.Windows.Forms.TabPage();
+            this.VentasDgvPorcentajes = new System.Windows.Forms.DataGridView();
+            this.VentasClmProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmMarca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmLinea = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmPorcentajeMarca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmPorcentajeLinea = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmPorcentajeCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasClmPorcentajeProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VentasBtnAnteriorPorcentajes = new System.Windows.Forms.Button();
+            this.VentasBtnSiguientePorcentajes = new System.Windows.Forms.Button();
+            this.VentasLblPaginaPorcentajes = new System.Windows.Forms.Label();
+            this.VentasLblObligatorioFechaInicio = new System.Windows.Forms.Label();
+            this.VentasLblObligatorioFechaFin = new System.Windows.Forms.Label();
+            this.VentasLblObligatorioFactura = new System.Windows.Forms.Label();
+            this.VentasLblObligatorioVendedor = new System.Windows.Forms.Label();
+            this.VentasLblObligatorioAlcance = new System.Windows.Forms.Label();
+            this.VentasLblObligatorioPorcentaje = new System.Windows.Forms.Label();
+            this.VentasLblAlcance = new System.Windows.Forms.Label();
+            this.VentasLblPorcentajeNuevo = new System.Windows.Forms.Label();
+            this.VentasLblMantenimientoEstado = new System.Windows.Forms.Label();
+            this.VentasBtnActualizar = new System.Windows.Forms.Button();
+            this.VentasBtnBuscar = new System.Windows.Forms.Button();
+            this.VentasTxtPorcentaje = new System.Windows.Forms.TextBox();
+            this.VentasCboAlcance = new System.Windows.Forms.ComboBox();
+            this.VentasPnlEncabezado = new System.Windows.Forms.Panel();
+            this.VentasLblTitulo = new System.Windows.Forms.Label();
+            this.VentasLblSubtitulo = new System.Windows.Forms.Label();
+            this.VentasTbcPestanas.SuspendLayout();
+            this.VentasTbpCalculo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VentasDgvResultados)).BeginInit();
+            this.VentasTbpAsignarFactura.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VentasDgvDetalleFactura)).BeginInit();
+            this.VentasTbpMantenimiento.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VentasDgvPorcentajes)).BeginInit();
+            this.VentasPnlEncabezado.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // ComisionVendedoresTbcPestanas
-            // 
-            this.ComisionVendedoresTbcPestanas.Controls.Add(this.ComisionVendedoresTabCalculo);
-            this.ComisionVendedoresTbcPestanas.Controls.Add(this.ComisionVendedoresTabAsignarFactura);
-            this.ComisionVendedoresTbcPestanas.Controls.Add(this.ComisionVendedoresTabMantenimiento);
-            this.ComisionVendedoresTbcPestanas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComisionVendedoresTbcPestanas.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.ComisionVendedoresTbcPestanas.Location = new System.Drawing.Point(0, 82);
-            this.ComisionVendedoresTbcPestanas.Name = "ComisionVendedoresTbcPestanas";
-            this.ComisionVendedoresTbcPestanas.SelectedIndex = 0;
-            this.ComisionVendedoresTbcPestanas.Size = new System.Drawing.Size(1280, 618);
-            this.ComisionVendedoresTbcPestanas.TabIndex = 0;
-            // 
-            // ComisionVendedoresTabCalculo
-            // 
-            this.ComisionVendedoresTabCalculo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresDgvResultados);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresBtnAnteriorResultados);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresBtnSiguienteResultados);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresLblPaginaResultados);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresLblFechaInicio);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresLblFechaFin);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresLblEstado);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresLblObligatorioFechaInicio);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresLblObligatorioFechaFin);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresBtnAyuda);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresBtnCalcular);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresDtpFechaFin);
-            this.ComisionVendedoresTabCalculo.Controls.Add(this.ComisionVendedoresDtpFechaInicio);
-            this.ComisionVendedoresTabCalculo.Location = new System.Drawing.Point(4, 32);
-            this.ComisionVendedoresTabCalculo.Name = "ComisionVendedoresTabCalculo";
-            this.ComisionVendedoresTabCalculo.Padding = new System.Windows.Forms.Padding(16);
-            this.ComisionVendedoresTabCalculo.Size = new System.Drawing.Size(1272, 582);
-            this.ComisionVendedoresTabCalculo.TabIndex = 0;
-            this.ComisionVendedoresTabCalculo.Text = "Calcular comisión";
-            // 
-            // ComisionVendedoresDgvResultados
-            // 
-            this.ComisionVendedoresDgvResultados.AllowUserToAddRows = false;
+            //
+            // VentasTbcPestanas
+            //
+            this.VentasTbcPestanas.Controls.Add(this.VentasTbpCalculo);
+            this.VentasTbcPestanas.Controls.Add(this.VentasTbpAsignarFactura);
+            this.VentasTbcPestanas.Controls.Add(this.VentasTbpMantenimiento);
+            this.VentasTbcPestanas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VentasTbcPestanas.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.VentasTbcPestanas.Location = new System.Drawing.Point(0, 82);
+            this.VentasTbcPestanas.Name = "VentasTbcPestanas";
+            this.VentasTbcPestanas.SelectedIndex = 0;
+            this.VentasTbcPestanas.Size = new System.Drawing.Size(1280, 618);
+            this.VentasTbcPestanas.TabIndex = 0;
+            //
+            // VentasTbpCalculo
+            //
+            this.VentasTbpCalculo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.VentasTbpCalculo.Controls.Add(this.VentasDgvResultados);
+            this.VentasTbpCalculo.Controls.Add(this.VentasBtnAnteriorResultados);
+            this.VentasTbpCalculo.Controls.Add(this.VentasBtnSiguienteResultados);
+            this.VentasTbpCalculo.Controls.Add(this.VentasLblPaginaResultados);
+            this.VentasTbpCalculo.Controls.Add(this.VentasLblFechaInicio);
+            this.VentasTbpCalculo.Controls.Add(this.VentasLblFechaFin);
+            this.VentasTbpCalculo.Controls.Add(this.VentasLblEstado);
+            this.VentasTbpCalculo.Controls.Add(this.VentasLblObligatorioFechaInicio);
+            this.VentasTbpCalculo.Controls.Add(this.VentasLblObligatorioFechaFin);
+            this.VentasTbpCalculo.Controls.Add(this.VentasBtnAyuda);
+            this.VentasTbpCalculo.Controls.Add(this.VentasBtnCalcular);
+            this.VentasTbpCalculo.Controls.Add(this.VentasDtpFechaFin);
+            this.VentasTbpCalculo.Controls.Add(this.VentasDtpFechaInicio);
+            this.VentasTbpCalculo.Location = new System.Drawing.Point(4, 32);
+            this.VentasTbpCalculo.Name = "VentasTbpCalculo";
+            this.VentasTbpCalculo.Padding = new System.Windows.Forms.Padding(16);
+            this.VentasTbpCalculo.Size = new System.Drawing.Size(1272, 582);
+            this.VentasTbpCalculo.TabIndex = 0;
+            this.VentasTbpCalculo.Text = "Calcular comisión";
+            //
+            // VentasDgvResultados
+            //
+            this.VentasDgvResultados.AllowUserToAddRows = false;
             EstiloCelda25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             EstiloCelda25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
-            this.ComisionVendedoresDgvResultados.AlternatingRowsDefaultCellStyle = EstiloCelda25;
-            this.ComisionVendedoresDgvResultados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.VentasDgvResultados.AlternatingRowsDefaultCellStyle = EstiloCelda25;
+            this.VentasDgvResultados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             EstiloCelda26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             EstiloCelda26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             EstiloCelda26.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -241,14 +241,14 @@ namespace ComisionVendedoresVista
             EstiloCelda26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             EstiloCelda26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             EstiloCelda26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ComisionVendedoresDgvResultados.ColumnHeadersDefaultCellStyle = EstiloCelda26;
-            this.ComisionVendedoresDgvResultados.ColumnHeadersHeight = 29;
-            this.ComisionVendedoresDgvResultados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ComisionVendedoresClmVendedor,
-            this.ComisionVendedoresClmElemento,
-            this.ComisionVendedoresClmPorcentaje,
-            this.ComisionVendedoresClmBase,
-            this.ComisionVendedoresClmMonto});
+            this.VentasDgvResultados.ColumnHeadersDefaultCellStyle = EstiloCelda26;
+            this.VentasDgvResultados.ColumnHeadersHeight = 29;
+            this.VentasDgvResultados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.VentasClmVendedor,
+            this.VentasClmElemento,
+            this.VentasClmPorcentaje,
+            this.VentasClmBase,
+            this.VentasClmMonto});
             EstiloCelda30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             EstiloCelda30.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
             EstiloCelda30.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -256,225 +256,225 @@ namespace ComisionVendedoresVista
             EstiloCelda30.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
             EstiloCelda30.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             EstiloCelda30.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ComisionVendedoresDgvResultados.DefaultCellStyle = EstiloCelda30;
-            this.ComisionVendedoresDgvResultados.EnableHeadersVisualStyles = false;
-            this.ComisionVendedoresDgvResultados.Location = new System.Drawing.Point(24, 104);
-            this.ComisionVendedoresDgvResultados.Name = "ComisionVendedoresDgvResultados";
-            this.ComisionVendedoresDgvResultados.ReadOnly = true;
-            this.ComisionVendedoresDgvResultados.RowHeadersVisible = false;
-            this.ComisionVendedoresDgvResultados.RowHeadersWidth = 51;
-            this.ComisionVendedoresDgvResultados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ComisionVendedoresDgvResultados.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.ComisionVendedoresDgvResultados.Size = new System.Drawing.Size(1210, 435);
-            this.ComisionVendedoresDgvResultados.TabIndex = 0;
-            this.ComisionVendedoresDgvResultados.MultiSelect = false;
-            this.ComisionVendedoresDgvResultados.AutoGenerateColumns = false;
-            // 
-            // ComisionVendedoresClmVendedor
-            // 
-            this.ComisionVendedoresClmVendedor.DataPropertyName = "NombreVendedor";
-            this.ComisionVendedoresClmVendedor.HeaderText = "Vendedor";
-            this.ComisionVendedoresClmVendedor.MinimumWidth = 6;
-            this.ComisionVendedoresClmVendedor.Name = "ComisionVendedoresClmVendedor";
-            this.ComisionVendedoresClmVendedor.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmElemento
-            // 
-            this.ComisionVendedoresClmElemento.DataPropertyName = "ElementoComision";
-            this.ComisionVendedoresClmElemento.HeaderText = "Factura / producto";
-            this.ComisionVendedoresClmElemento.MinimumWidth = 6;
-            this.ComisionVendedoresClmElemento.Name = "ComisionVendedoresClmElemento";
-            this.ComisionVendedoresClmElemento.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmPorcentaje
-            // 
-            this.ComisionVendedoresClmPorcentaje.DataPropertyName = "EtiquetaMetodoPorcentaje";
+            this.VentasDgvResultados.DefaultCellStyle = EstiloCelda30;
+            this.VentasDgvResultados.EnableHeadersVisualStyles = false;
+            this.VentasDgvResultados.Location = new System.Drawing.Point(24, 104);
+            this.VentasDgvResultados.Name = "VentasDgvResultados";
+            this.VentasDgvResultados.ReadOnly = true;
+            this.VentasDgvResultados.RowHeadersVisible = false;
+            this.VentasDgvResultados.RowHeadersWidth = 51;
+            this.VentasDgvResultados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.VentasDgvResultados.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.VentasDgvResultados.Size = new System.Drawing.Size(1210, 435);
+            this.VentasDgvResultados.TabIndex = 0;
+            this.VentasDgvResultados.MultiSelect = false;
+            this.VentasDgvResultados.AutoGenerateColumns = false;
+            //
+            // VentasClmVendedor
+            //
+            this.VentasClmVendedor.DataPropertyName = "NombreVendedor";
+            this.VentasClmVendedor.HeaderText = "Vendedor";
+            this.VentasClmVendedor.MinimumWidth = 6;
+            this.VentasClmVendedor.Name = "VentasClmVendedor";
+            this.VentasClmVendedor.ReadOnly = true;
+            //
+            // VentasClmElemento
+            //
+            this.VentasClmElemento.DataPropertyName = "ElementoComision";
+            this.VentasClmElemento.HeaderText = "Factura / producto";
+            this.VentasClmElemento.MinimumWidth = 6;
+            this.VentasClmElemento.Name = "VentasClmElemento";
+            this.VentasClmElemento.ReadOnly = true;
+            //
+            // VentasClmPorcentaje
+            //
+            this.VentasClmPorcentaje.DataPropertyName = "EtiquetaMetodoPorcentaje";
             EstiloCelda27.Format = "0.00\\ \\%";
             EstiloCelda27.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmPorcentaje.DefaultCellStyle = EstiloCelda27;
-            this.ComisionVendedoresClmPorcentaje.HeaderText = "Método / %";
-            this.ComisionVendedoresClmPorcentaje.MinimumWidth = 6;
-            this.ComisionVendedoresClmPorcentaje.Name = "ComisionVendedoresClmPorcentaje";
-            this.ComisionVendedoresClmPorcentaje.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmBase
-            // 
-            this.ComisionVendedoresClmBase.DataPropertyName = "BaseVentas";
+            this.VentasClmPorcentaje.DefaultCellStyle = EstiloCelda27;
+            this.VentasClmPorcentaje.HeaderText = "Método / %";
+            this.VentasClmPorcentaje.MinimumWidth = 6;
+            this.VentasClmPorcentaje.Name = "VentasClmPorcentaje";
+            this.VentasClmPorcentaje.ReadOnly = true;
+            //
+            // VentasClmBase
+            //
+            this.VentasClmBase.DataPropertyName = "BaseVentas";
             EstiloCelda28.Format = "#,##0.00";
             EstiloCelda28.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmBase.DefaultCellStyle = EstiloCelda28;
-            this.ComisionVendedoresClmBase.HeaderText = "Base cobrada";
-            this.ComisionVendedoresClmBase.MinimumWidth = 6;
-            this.ComisionVendedoresClmBase.Name = "ComisionVendedoresClmBase";
-            this.ComisionVendedoresClmBase.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmMonto
-            // 
-            this.ComisionVendedoresClmMonto.DataPropertyName = "MontoComision";
+            this.VentasClmBase.DefaultCellStyle = EstiloCelda28;
+            this.VentasClmBase.HeaderText = "Base cobrada";
+            this.VentasClmBase.MinimumWidth = 6;
+            this.VentasClmBase.Name = "VentasClmBase";
+            this.VentasClmBase.ReadOnly = true;
+            //
+            // VentasClmMonto
+            //
+            this.VentasClmMonto.DataPropertyName = "MontoComision";
             EstiloCelda29.Format = "#,##0.00";
             EstiloCelda29.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmMonto.DefaultCellStyle = EstiloCelda29;
-            this.ComisionVendedoresClmMonto.HeaderText = "Comisión";
-            this.ComisionVendedoresClmMonto.MinimumWidth = 6;
-            this.ComisionVendedoresClmMonto.Name = "ComisionVendedoresClmMonto";
-            this.ComisionVendedoresClmMonto.ReadOnly = true;
+            this.VentasClmMonto.DefaultCellStyle = EstiloCelda29;
+            this.VentasClmMonto.HeaderText = "Comisión";
+            this.VentasClmMonto.MinimumWidth = 6;
+            this.VentasClmMonto.Name = "VentasClmMonto";
+            this.VentasClmMonto.ReadOnly = true;
             //
             // Paginación de resultados
             //
-            this.ComisionVendedoresBtnAnteriorResultados.Enabled = false;
-            this.ComisionVendedoresBtnAnteriorResultados.BackColor = System.Drawing.Color.LightGray;
-            this.ComisionVendedoresBtnAnteriorResultados.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnAnteriorResultados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnAnteriorResultados.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            this.ComisionVendedoresBtnAnteriorResultados.Location = new System.Drawing.Point(24, 550);
-            this.ComisionVendedoresBtnAnteriorResultados.Name = "ComisionVendedoresBtnAnteriorResultados";
-            this.ComisionVendedoresBtnAnteriorResultados.Size = new System.Drawing.Size(100, 28);
-            this.ComisionVendedoresBtnAnteriorResultados.TabIndex = 10;
-            this.ComisionVendedoresBtnAnteriorResultados.Text = "Anterior";
-            this.ComisionVendedoresBtnAnteriorResultados.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnAnteriorResultados.Click += new System.EventHandler(this.ComisionVendedoresMetCambiarPaginaResultados);
-            this.ComisionVendedoresBtnSiguienteResultados.Enabled = false;
-            this.ComisionVendedoresBtnSiguienteResultados.BackColor = System.Drawing.Color.LightGray;
-            this.ComisionVendedoresBtnSiguienteResultados.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnSiguienteResultados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnSiguienteResultados.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            this.ComisionVendedoresBtnSiguienteResultados.Location = new System.Drawing.Point(1134, 550);
-            this.ComisionVendedoresBtnSiguienteResultados.Name = "ComisionVendedoresBtnSiguienteResultados";
-            this.ComisionVendedoresBtnSiguienteResultados.Size = new System.Drawing.Size(100, 28);
-            this.ComisionVendedoresBtnSiguienteResultados.TabIndex = 11;
-            this.ComisionVendedoresBtnSiguienteResultados.Text = "Siguiente";
-            this.ComisionVendedoresBtnSiguienteResultados.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnSiguienteResultados.Click += new System.EventHandler(this.ComisionVendedoresMetCambiarPaginaResultados);
-            this.ComisionVendedoresLblPaginaResultados.AutoSize = false;
-            this.ComisionVendedoresLblPaginaResultados.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.ComisionVendedoresLblPaginaResultados.Location = new System.Drawing.Point(486, 554);
-            this.ComisionVendedoresLblPaginaResultados.Name = "ComisionVendedoresLblPaginaResultados";
-            this.ComisionVendedoresLblPaginaResultados.Size = new System.Drawing.Size(300, 20);
-            this.ComisionVendedoresLblPaginaResultados.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ComisionVendedoresLblPaginaResultados.TabIndex = 12;
-            this.ComisionVendedoresLblPaginaResultados.Text = "Página 0 de 0 · 0 registros";
-            // 
-            // ComisionVendedoresLblFechaInicio
-            // 
-            this.ComisionVendedoresLblFechaInicio.AutoSize = true;
-            this.ComisionVendedoresLblFechaInicio.Location = new System.Drawing.Point(24, 8);
-            this.ComisionVendedoresLblFechaInicio.Name = "ComisionVendedoresLblFechaInicio";
-            this.ComisionVendedoresLblFechaInicio.Size = new System.Drawing.Size(102, 23);
-            this.ComisionVendedoresLblFechaInicio.TabIndex = 1;
-            this.ComisionVendedoresLblFechaInicio.Text = "Fecha inicial";
-            // 
-            // ComisionVendedoresLblFechaFin
-            // 
-            this.ComisionVendedoresLblFechaFin.AutoSize = true;
-            this.ComisionVendedoresLblFechaFin.Location = new System.Drawing.Point(200, 8);
-            this.ComisionVendedoresLblFechaFin.Name = "ComisionVendedoresLblFechaFin";
-            this.ComisionVendedoresLblFechaFin.Size = new System.Drawing.Size(91, 23);
-            this.ComisionVendedoresLblFechaFin.TabIndex = 2;
-            this.ComisionVendedoresLblFechaFin.Text = "Fecha final";
-            // 
-            // ComisionVendedoresLblEstado
-            // 
-            this.ComisionVendedoresLblEstado.AutoSize = true;
-            this.ComisionVendedoresLblEstado.Location = new System.Drawing.Point(24, 70);
-            this.ComisionVendedoresLblEstado.Name = "ComisionVendedoresLblEstado";
-            this.ComisionVendedoresLblEstado.Size = new System.Drawing.Size(1210, 28);
-            this.ComisionVendedoresLblEstado.TabIndex = 4;
-            this.ComisionVendedoresLblEstado.Text = "Periodo · Método · Base VENTAS";
-            // 
-            this.ComisionVendedoresBtnAyuda.BackColor = System.Drawing.Color.FromArgb(228, 212, 234);
-            this.ComisionVendedoresBtnAyuda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnAyuda.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
-            this.ComisionVendedoresBtnAyuda.Location = new System.Drawing.Point(718, 24);
-            this.ComisionVendedoresBtnAyuda.Name = "ComisionVendedoresBtnAyuda";
-            this.ComisionVendedoresBtnAyuda.Size = new System.Drawing.Size(90, 30);
-            this.ComisionVendedoresBtnAyuda.TabIndex = 5;
-            this.ComisionVendedoresBtnAyuda.Text = "Ayuda";
-            this.ComisionVendedoresBtnAyuda.UseVisualStyleBackColor = false;
-            // 
-            // ComisionVendedoresBtnCalcular
-            // 
-            this.ComisionVendedoresBtnCalcular.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.ComisionVendedoresBtnCalcular.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnCalcular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnCalcular.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.ComisionVendedoresBtnCalcular.Location = new System.Drawing.Point(572, 24);
-            this.ComisionVendedoresBtnCalcular.Name = "ComisionVendedoresBtnCalcular";
-            this.ComisionVendedoresBtnCalcular.Size = new System.Drawing.Size(130, 30);
-            this.ComisionVendedoresBtnCalcular.TabIndex = 4;
-            this.ComisionVendedoresBtnCalcular.Text = "Calcular";
-            this.ComisionVendedoresBtnCalcular.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnCalcular.Click += new System.EventHandler(this.ComisionVendedoresMetCalcularClick);
-            // 
-            // ComisionVendedoresDtpFechaFin
-            // 
-            this.ComisionVendedoresDtpFechaFin.CustomFormat = "dd/MM/yyyy";
-            this.ComisionVendedoresDtpFechaFin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.ComisionVendedoresDtpFechaFin.Location = new System.Drawing.Point(200, 26);
-            this.ComisionVendedoresDtpFechaFin.Name = "ComisionVendedoresDtpFechaFin";
-            this.ComisionVendedoresDtpFechaFin.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ComisionVendedoresDtpFechaFin.Size = new System.Drawing.Size(160, 30);
-            this.ComisionVendedoresDtpFechaFin.TabIndex = 8;
-            // 
-            // ComisionVendedoresDtpFechaInicio
-            // 
-            this.ComisionVendedoresDtpFechaInicio.CustomFormat = "dd/MM/yyyy";
-            this.ComisionVendedoresDtpFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.ComisionVendedoresDtpFechaInicio.Location = new System.Drawing.Point(24, 26);
-            this.ComisionVendedoresDtpFechaInicio.Name = "ComisionVendedoresDtpFechaInicio";
-            this.ComisionVendedoresDtpFechaInicio.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ComisionVendedoresDtpFechaInicio.Size = new System.Drawing.Size(160, 30);
-            this.ComisionVendedoresDtpFechaInicio.TabIndex = 9;
-            this.ComisionVendedoresLblObligatorioFechaInicio.AutoSize = true;
-            this.ComisionVendedoresLblObligatorioFechaInicio.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.ComisionVendedoresLblObligatorioFechaInicio.ForeColor = System.Drawing.Color.Firebrick;
-            this.ComisionVendedoresLblObligatorioFechaInicio.Location = new System.Drawing.Point(120, 8);
-            this.ComisionVendedoresLblObligatorioFechaInicio.Name = "ComisionVendedoresLblObligatorioFechaInicio";
-            this.ComisionVendedoresLblObligatorioFechaInicio.Size = new System.Drawing.Size(12, 18);
-            this.ComisionVendedoresLblObligatorioFechaInicio.TabIndex = 13;
-            this.ComisionVendedoresLblObligatorioFechaInicio.Text = "*";
-            this.ComisionVendedoresLblObligatorioFechaInicio.TabStop = false;
-            this.ComisionVendedoresLblObligatorioFechaFin.AutoSize = true;
-            this.ComisionVendedoresLblObligatorioFechaFin.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.ComisionVendedoresLblObligatorioFechaFin.ForeColor = System.Drawing.Color.Firebrick;
-            this.ComisionVendedoresLblObligatorioFechaFin.Location = new System.Drawing.Point(284, 8);
-            this.ComisionVendedoresLblObligatorioFechaFin.Name = "ComisionVendedoresLblObligatorioFechaFin";
-            this.ComisionVendedoresLblObligatorioFechaFin.Size = new System.Drawing.Size(12, 18);
-            this.ComisionVendedoresLblObligatorioFechaFin.TabIndex = 14;
-            this.ComisionVendedoresLblObligatorioFechaFin.Text = "*";
-            this.ComisionVendedoresLblObligatorioFechaFin.TabStop = false;
-            // 
-            // ComisionVendedoresTabAsignarFactura
-            // 
-            this.ComisionVendedoresTabAsignarFactura.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresDgvDetalleFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresBtnAnteriorFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresBtnSiguienteFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresLblPaginaFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresLblEstadoFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresBtnCalcularFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresBtnAsignarVendedorFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresBtnRegistrarAbonoFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresCboMetodoFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresCboVendedorFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresCboFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresLblMetodoFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresLblVendedorFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresLblFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresLblObligatorioFactura);
-            this.ComisionVendedoresTabAsignarFactura.Controls.Add(this.ComisionVendedoresLblObligatorioVendedor);
-            this.ComisionVendedoresTabAsignarFactura.Location = new System.Drawing.Point(4, 32);
-            this.ComisionVendedoresTabAsignarFactura.Name = "ComisionVendedoresTabAsignarFactura";
-            this.ComisionVendedoresTabAsignarFactura.Padding = new System.Windows.Forms.Padding(16);
-            this.ComisionVendedoresTabAsignarFactura.Size = new System.Drawing.Size(1272, 582);
-            this.ComisionVendedoresTabAsignarFactura.TabIndex = 1;
-            this.ComisionVendedoresTabAsignarFactura.Text = "Asignar vendedor a factura";
-            // 
-            // ComisionVendedoresDgvDetalleFactura
-            // 
-            this.ComisionVendedoresDgvDetalleFactura.AllowUserToAddRows = false;
+            this.VentasBtnAnteriorResultados.Enabled = false;
+            this.VentasBtnAnteriorResultados.BackColor = System.Drawing.Color.LightGray;
+            this.VentasBtnAnteriorResultados.FlatAppearance.BorderSize = 0;
+            this.VentasBtnAnteriorResultados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnAnteriorResultados.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            this.VentasBtnAnteriorResultados.Location = new System.Drawing.Point(24, 550);
+            this.VentasBtnAnteriorResultados.Name = "VentasBtnAnteriorResultados";
+            this.VentasBtnAnteriorResultados.Size = new System.Drawing.Size(100, 28);
+            this.VentasBtnAnteriorResultados.TabIndex = 10;
+            this.VentasBtnAnteriorResultados.Text = "Anterior";
+            this.VentasBtnAnteriorResultados.UseVisualStyleBackColor = false;
+            this.VentasBtnAnteriorResultados.Click += new System.EventHandler(this.VentasMetCambiarPaginaResultados);
+            this.VentasBtnSiguienteResultados.Enabled = false;
+            this.VentasBtnSiguienteResultados.BackColor = System.Drawing.Color.LightGray;
+            this.VentasBtnSiguienteResultados.FlatAppearance.BorderSize = 0;
+            this.VentasBtnSiguienteResultados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnSiguienteResultados.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            this.VentasBtnSiguienteResultados.Location = new System.Drawing.Point(1134, 550);
+            this.VentasBtnSiguienteResultados.Name = "VentasBtnSiguienteResultados";
+            this.VentasBtnSiguienteResultados.Size = new System.Drawing.Size(100, 28);
+            this.VentasBtnSiguienteResultados.TabIndex = 11;
+            this.VentasBtnSiguienteResultados.Text = "Siguiente";
+            this.VentasBtnSiguienteResultados.UseVisualStyleBackColor = false;
+            this.VentasBtnSiguienteResultados.Click += new System.EventHandler(this.VentasMetCambiarPaginaResultados);
+            this.VentasLblPaginaResultados.AutoSize = false;
+            this.VentasLblPaginaResultados.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.VentasLblPaginaResultados.Location = new System.Drawing.Point(486, 554);
+            this.VentasLblPaginaResultados.Name = "VentasLblPaginaResultados";
+            this.VentasLblPaginaResultados.Size = new System.Drawing.Size(300, 20);
+            this.VentasLblPaginaResultados.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VentasLblPaginaResultados.TabIndex = 12;
+            this.VentasLblPaginaResultados.Text = "Página 0 de 0 · 0 registros";
+            //
+            // VentasLblFechaInicio
+            //
+            this.VentasLblFechaInicio.AutoSize = true;
+            this.VentasLblFechaInicio.Location = new System.Drawing.Point(24, 8);
+            this.VentasLblFechaInicio.Name = "VentasLblFechaInicio";
+            this.VentasLblFechaInicio.Size = new System.Drawing.Size(102, 23);
+            this.VentasLblFechaInicio.TabIndex = 1;
+            this.VentasLblFechaInicio.Text = "Fecha inicial";
+            //
+            // VentasLblFechaFin
+            //
+            this.VentasLblFechaFin.AutoSize = true;
+            this.VentasLblFechaFin.Location = new System.Drawing.Point(200, 8);
+            this.VentasLblFechaFin.Name = "VentasLblFechaFin";
+            this.VentasLblFechaFin.Size = new System.Drawing.Size(91, 23);
+            this.VentasLblFechaFin.TabIndex = 2;
+            this.VentasLblFechaFin.Text = "Fecha final";
+            //
+            // VentasLblEstado
+            //
+            this.VentasLblEstado.AutoSize = true;
+            this.VentasLblEstado.Location = new System.Drawing.Point(24, 70);
+            this.VentasLblEstado.Name = "VentasLblEstado";
+            this.VentasLblEstado.Size = new System.Drawing.Size(1210, 28);
+            this.VentasLblEstado.TabIndex = 4;
+            this.VentasLblEstado.Text = "Periodo · Método · Base VENTAS";
+            //
+            this.VentasBtnAyuda.BackColor = System.Drawing.Color.FromArgb(228, 212, 234);
+            this.VentasBtnAyuda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnAyuda.ForeColor = System.Drawing.Color.FromArgb(59, 29, 74);
+            this.VentasBtnAyuda.Location = new System.Drawing.Point(718, 24);
+            this.VentasBtnAyuda.Name = "VentasBtnAyuda";
+            this.VentasBtnAyuda.Size = new System.Drawing.Size(90, 30);
+            this.VentasBtnAyuda.TabIndex = 5;
+            this.VentasBtnAyuda.Text = "Ayuda";
+            this.VentasBtnAyuda.UseVisualStyleBackColor = false;
+            //
+            // VentasBtnCalcular
+            //
+            this.VentasBtnCalcular.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
+            this.VentasBtnCalcular.FlatAppearance.BorderSize = 0;
+            this.VentasBtnCalcular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnCalcular.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            this.VentasBtnCalcular.Location = new System.Drawing.Point(572, 24);
+            this.VentasBtnCalcular.Name = "VentasBtnCalcular";
+            this.VentasBtnCalcular.Size = new System.Drawing.Size(130, 30);
+            this.VentasBtnCalcular.TabIndex = 4;
+            this.VentasBtnCalcular.Text = "Calcular";
+            this.VentasBtnCalcular.UseVisualStyleBackColor = false;
+            this.VentasBtnCalcular.Click += new System.EventHandler(this.VentasMetCalcularClick);
+            //
+            // VentasDtpFechaFin
+            //
+            this.VentasDtpFechaFin.CustomFormat = "dd/MM/yyyy";
+            this.VentasDtpFechaFin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.VentasDtpFechaFin.Location = new System.Drawing.Point(200, 26);
+            this.VentasDtpFechaFin.Name = "VentasDtpFechaFin";
+            this.VentasDtpFechaFin.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.VentasDtpFechaFin.Size = new System.Drawing.Size(160, 30);
+            this.VentasDtpFechaFin.TabIndex = 8;
+            //
+            // VentasDtpFechaInicio
+            //
+            this.VentasDtpFechaInicio.CustomFormat = "dd/MM/yyyy";
+            this.VentasDtpFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.VentasDtpFechaInicio.Location = new System.Drawing.Point(24, 26);
+            this.VentasDtpFechaInicio.Name = "VentasDtpFechaInicio";
+            this.VentasDtpFechaInicio.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.VentasDtpFechaInicio.Size = new System.Drawing.Size(160, 30);
+            this.VentasDtpFechaInicio.TabIndex = 9;
+            this.VentasLblObligatorioFechaInicio.AutoSize = true;
+            this.VentasLblObligatorioFechaInicio.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblObligatorioFechaInicio.ForeColor = System.Drawing.Color.Firebrick;
+            this.VentasLblObligatorioFechaInicio.Location = new System.Drawing.Point(120, 8);
+            this.VentasLblObligatorioFechaInicio.Name = "VentasLblObligatorioFechaInicio";
+            this.VentasLblObligatorioFechaInicio.Size = new System.Drawing.Size(12, 18);
+            this.VentasLblObligatorioFechaInicio.TabIndex = 13;
+            this.VentasLblObligatorioFechaInicio.Text = "*";
+            this.VentasLblObligatorioFechaInicio.TabStop = false;
+            this.VentasLblObligatorioFechaFin.AutoSize = true;
+            this.VentasLblObligatorioFechaFin.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblObligatorioFechaFin.ForeColor = System.Drawing.Color.Firebrick;
+            this.VentasLblObligatorioFechaFin.Location = new System.Drawing.Point(284, 8);
+            this.VentasLblObligatorioFechaFin.Name = "VentasLblObligatorioFechaFin";
+            this.VentasLblObligatorioFechaFin.Size = new System.Drawing.Size(12, 18);
+            this.VentasLblObligatorioFechaFin.TabIndex = 14;
+            this.VentasLblObligatorioFechaFin.Text = "*";
+            this.VentasLblObligatorioFechaFin.TabStop = false;
+            //
+            // VentasTbpAsignarFactura
+            //
+            this.VentasTbpAsignarFactura.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasDgvDetalleFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasBtnAnteriorFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasBtnSiguienteFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasLblPaginaFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasLblEstadoFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasBtnCalcularFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasBtnAsignarVendedorFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasBtnRegistrarAbonoFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasCboMetodoFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasCboVendedorFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasCboFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasLblMetodoFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasLblVendedorFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasLblFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasLblObligatorioFactura);
+            this.VentasTbpAsignarFactura.Controls.Add(this.VentasLblObligatorioVendedor);
+            this.VentasTbpAsignarFactura.Location = new System.Drawing.Point(4, 32);
+            this.VentasTbpAsignarFactura.Name = "VentasTbpAsignarFactura";
+            this.VentasTbpAsignarFactura.Padding = new System.Windows.Forms.Padding(16);
+            this.VentasTbpAsignarFactura.Size = new System.Drawing.Size(1272, 582);
+            this.VentasTbpAsignarFactura.TabIndex = 1;
+            this.VentasTbpAsignarFactura.Text = "Asignar vendedor a factura";
+            //
+            // VentasDgvDetalleFactura
+            //
+            this.VentasDgvDetalleFactura.AllowUserToAddRows = false;
             EstiloCelda16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.ComisionVendedoresDgvDetalleFactura.AlternatingRowsDefaultCellStyle = EstiloCelda16;
-            this.ComisionVendedoresDgvDetalleFactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.VentasDgvDetalleFactura.AlternatingRowsDefaultCellStyle = EstiloCelda16;
+            this.VentasDgvDetalleFactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             EstiloCelda17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             EstiloCelda17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             EstiloCelda17.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
@@ -482,21 +482,21 @@ namespace ComisionVendedoresVista
             EstiloCelda17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             EstiloCelda17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             EstiloCelda17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ComisionVendedoresDgvDetalleFactura.ColumnHeadersDefaultCellStyle = EstiloCelda17;
-            this.ComisionVendedoresDgvDetalleFactura.ColumnHeadersHeight = 29;
-            this.ComisionVendedoresDgvDetalleFactura.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ComisionVendedoresClmDetalleProducto,
-            this.ComisionVendedoresClmDetalleElemento,
-            this.ComisionVendedoresClmMetodoProducto,
-            this.ComisionVendedoresClmDetalleCantidad,
-            this.ComisionVendedoresClmDetalleBase,
-            this.ComisionVendedoresClmDetallePorcentaje,
-            this.ComisionVendedoresClmDetalleComision,
-            this.ComisionVendedoresClmDetalleCobrado,
-            this.ComisionVendedoresClmDetalleAbono,
-            this.ComisionVendedoresClmDetalleDisponible,
-            this.ComisionVendedoresClmDetallePendiente});
-            this.ComisionVendedoresDgvDetalleFactura.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.ComisionVendedoresMetFormatearMetodoProducto);
+            this.VentasDgvDetalleFactura.ColumnHeadersDefaultCellStyle = EstiloCelda17;
+            this.VentasDgvDetalleFactura.ColumnHeadersHeight = 29;
+            this.VentasDgvDetalleFactura.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.VentasClmDetalleProducto,
+            this.VentasClmDetalleElemento,
+            this.VentasClmMetodoProducto,
+            this.VentasClmDetalleCantidad,
+            this.VentasClmDetalleBase,
+            this.VentasClmDetallePorcentaje,
+            this.VentasClmDetalleComision,
+            this.VentasClmDetalleCobrado,
+            this.VentasClmDetalleAbono,
+            this.VentasClmDetalleDisponible,
+            this.VentasClmDetallePendiente});
+            this.VentasDgvDetalleFactura.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.VentasMetFormatearMetodoProducto);
             EstiloCelda24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             EstiloCelda24.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
             EstiloCelda24.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -504,600 +504,600 @@ namespace ComisionVendedoresVista
             EstiloCelda24.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
             EstiloCelda24.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             EstiloCelda24.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ComisionVendedoresDgvDetalleFactura.DefaultCellStyle = EstiloCelda24;
-            this.ComisionVendedoresDgvDetalleFactura.EnableHeadersVisualStyles = false;
-            this.ComisionVendedoresDgvDetalleFactura.Location = new System.Drawing.Point(24, 170);
-            this.ComisionVendedoresDgvDetalleFactura.Name = "ComisionVendedoresDgvDetalleFactura";
-            this.ComisionVendedoresDgvDetalleFactura.ReadOnly = false;
-            this.ComisionVendedoresDgvDetalleFactura.RowHeadersVisible = false;
-            this.ComisionVendedoresDgvDetalleFactura.RowHeadersWidth = 51;
-            this.ComisionVendedoresDgvDetalleFactura.RowTemplate.Height = 22;
-            this.ComisionVendedoresDgvDetalleFactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ComisionVendedoresDgvDetalleFactura.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.ComisionVendedoresDgvDetalleFactura.Size = new System.Drawing.Size(1210, 368);
-            this.ComisionVendedoresDgvDetalleFactura.TabIndex = 0;
-            this.ComisionVendedoresDgvDetalleFactura.AutoGenerateColumns = false;
-            // 
-            // ComisionVendedoresClmDetalleProducto
-            // 
-            this.ComisionVendedoresClmDetalleProducto.DataPropertyName = "NombreProducto";
-            this.ComisionVendedoresClmDetalleProducto.HeaderText = "Producto";
-            this.ComisionVendedoresClmDetalleProducto.MinimumWidth = 6;
-            this.ComisionVendedoresClmDetalleProducto.Name = "ComisionVendedoresClmDetalleProducto";
-            this.ComisionVendedoresClmDetalleProducto.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmDetalleElemento
-            // 
-            this.ComisionVendedoresClmDetalleElemento.DataPropertyName = "ElementoComision";
-            this.ComisionVendedoresClmDetalleElemento.HeaderText = "Criterio";
-            this.ComisionVendedoresClmDetalleElemento.MinimumWidth = 6;
-            this.ComisionVendedoresClmDetalleElemento.Name = "ComisionVendedoresClmDetalleElemento";
-            this.ComisionVendedoresClmDetalleElemento.ReadOnly = true;
-            this.ComisionVendedoresClmMetodoProducto.DataPropertyName = "MetodoComision";
-            this.ComisionVendedoresClmMetodoProducto.HeaderText = "Comisión por";
-            this.ComisionVendedoresClmMetodoProducto.MinimumWidth = 95;
-            this.ComisionVendedoresClmMetodoProducto.Name = "ComisionVendedoresClmMetodoProducto";
-            this.ComisionVendedoresClmMetodoProducto.Items.AddRange(new object[] { "Linea", "Marca", "Categoria", "Producto" });
-            this.ComisionVendedoresClmMetodoProducto.ReadOnly = false;
-            // 
-            // ComisionVendedoresClmDetalleCantidad
-            // 
-            this.ComisionVendedoresClmDetalleCantidad.DataPropertyName = "Cantidad";
+            this.VentasDgvDetalleFactura.DefaultCellStyle = EstiloCelda24;
+            this.VentasDgvDetalleFactura.EnableHeadersVisualStyles = false;
+            this.VentasDgvDetalleFactura.Location = new System.Drawing.Point(24, 170);
+            this.VentasDgvDetalleFactura.Name = "VentasDgvDetalleFactura";
+            this.VentasDgvDetalleFactura.ReadOnly = false;
+            this.VentasDgvDetalleFactura.RowHeadersVisible = false;
+            this.VentasDgvDetalleFactura.RowHeadersWidth = 51;
+            this.VentasDgvDetalleFactura.RowTemplate.Height = 22;
+            this.VentasDgvDetalleFactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.VentasDgvDetalleFactura.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.VentasDgvDetalleFactura.Size = new System.Drawing.Size(1210, 368);
+            this.VentasDgvDetalleFactura.TabIndex = 0;
+            this.VentasDgvDetalleFactura.AutoGenerateColumns = false;
+            //
+            // VentasClmDetalleProducto
+            //
+            this.VentasClmDetalleProducto.DataPropertyName = "NombreProducto";
+            this.VentasClmDetalleProducto.HeaderText = "Producto";
+            this.VentasClmDetalleProducto.MinimumWidth = 6;
+            this.VentasClmDetalleProducto.Name = "VentasClmDetalleProducto";
+            this.VentasClmDetalleProducto.ReadOnly = true;
+            //
+            // VentasClmDetalleElemento
+            //
+            this.VentasClmDetalleElemento.DataPropertyName = "ElementoComision";
+            this.VentasClmDetalleElemento.HeaderText = "Criterio";
+            this.VentasClmDetalleElemento.MinimumWidth = 6;
+            this.VentasClmDetalleElemento.Name = "VentasClmDetalleElemento";
+            this.VentasClmDetalleElemento.ReadOnly = true;
+            this.VentasClmMetodoProducto.DataPropertyName = "MetodoComision";
+            this.VentasClmMetodoProducto.HeaderText = "Comisión por";
+            this.VentasClmMetodoProducto.MinimumWidth = 95;
+            this.VentasClmMetodoProducto.Name = "VentasClmMetodoProducto";
+            this.VentasClmMetodoProducto.Items.AddRange(new object[] { "Linea", "Marca", "Categoria", "Producto" });
+            this.VentasClmMetodoProducto.ReadOnly = false;
+            //
+            // VentasClmDetalleCantidad
+            //
+            this.VentasClmDetalleCantidad.DataPropertyName = "Cantidad";
             EstiloCelda36.Format = "N2";
             EstiloCelda36.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmDetalleCantidad.DefaultCellStyle = EstiloCelda36;
-            this.ComisionVendedoresClmDetalleCantidad.HeaderText = "Cantidad";
-            this.ComisionVendedoresClmDetalleCantidad.MinimumWidth = 6;
-            this.ComisionVendedoresClmDetalleCantidad.Name = "ComisionVendedoresClmDetalleCantidad";
-            this.ComisionVendedoresClmDetalleCantidad.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmDetalleBase
-            // 
-            this.ComisionVendedoresClmDetalleBase.DataPropertyName = "BaseVenta";
+            this.VentasClmDetalleCantidad.DefaultCellStyle = EstiloCelda36;
+            this.VentasClmDetalleCantidad.HeaderText = "Cantidad";
+            this.VentasClmDetalleCantidad.MinimumWidth = 6;
+            this.VentasClmDetalleCantidad.Name = "VentasClmDetalleCantidad";
+            this.VentasClmDetalleCantidad.ReadOnly = true;
+            //
+            // VentasClmDetalleBase
+            //
+            this.VentasClmDetalleBase.DataPropertyName = "BaseVenta";
             EstiloCelda18.Format = "#,##0.00";
             EstiloCelda18.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmDetalleBase.DefaultCellStyle = EstiloCelda18;
-            this.ComisionVendedoresClmDetalleBase.HeaderText = "Venta";
-            this.ComisionVendedoresClmDetalleBase.MinimumWidth = 6;
-            this.ComisionVendedoresClmDetalleBase.Name = "ComisionVendedoresClmDetalleBase";
-            this.ComisionVendedoresClmDetalleBase.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmDetallePorcentaje
-            // 
-            this.ComisionVendedoresClmDetallePorcentaje.DataPropertyName = "Porcentaje";
+            this.VentasClmDetalleBase.DefaultCellStyle = EstiloCelda18;
+            this.VentasClmDetalleBase.HeaderText = "Venta";
+            this.VentasClmDetalleBase.MinimumWidth = 6;
+            this.VentasClmDetalleBase.Name = "VentasClmDetalleBase";
+            this.VentasClmDetalleBase.ReadOnly = true;
+            //
+            // VentasClmDetallePorcentaje
+            //
+            this.VentasClmDetallePorcentaje.DataPropertyName = "Porcentaje";
             EstiloCelda35.Format = "0.00\\%";
             EstiloCelda35.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmDetallePorcentaje.DefaultCellStyle = EstiloCelda35;
-            this.ComisionVendedoresClmDetallePorcentaje.HeaderText = "%";
-            this.ComisionVendedoresClmDetallePorcentaje.MinimumWidth = 6;
-            this.ComisionVendedoresClmDetallePorcentaje.Name = "ComisionVendedoresClmDetallePorcentaje";
-            this.ComisionVendedoresClmDetallePorcentaje.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmDetalleComision
-            // 
-            this.ComisionVendedoresClmDetalleComision.DataPropertyName = "ComisionTotal";
+            this.VentasClmDetallePorcentaje.DefaultCellStyle = EstiloCelda35;
+            this.VentasClmDetallePorcentaje.HeaderText = "%";
+            this.VentasClmDetallePorcentaje.MinimumWidth = 6;
+            this.VentasClmDetallePorcentaje.Name = "VentasClmDetallePorcentaje";
+            this.VentasClmDetallePorcentaje.ReadOnly = true;
+            //
+            // VentasClmDetalleComision
+            //
+            this.VentasClmDetalleComision.DataPropertyName = "ComisionTotal";
             EstiloCelda19.Format = "#,##0.00";
             EstiloCelda19.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmDetalleComision.DefaultCellStyle = EstiloCelda19;
-            this.ComisionVendedoresClmDetalleComision.HeaderText = "Comisión total";
-            this.ComisionVendedoresClmDetalleComision.MinimumWidth = 6;
-            this.ComisionVendedoresClmDetalleComision.Name = "ComisionVendedoresClmDetalleComision";
-            this.ComisionVendedoresClmDetalleComision.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmDetalleCobrado
-            // 
-            this.ComisionVendedoresClmDetalleCobrado.DataPropertyName = "VentaCobrado";
+            this.VentasClmDetalleComision.DefaultCellStyle = EstiloCelda19;
+            this.VentasClmDetalleComision.HeaderText = "Comisión total";
+            this.VentasClmDetalleComision.MinimumWidth = 6;
+            this.VentasClmDetalleComision.Name = "VentasClmDetalleComision";
+            this.VentasClmDetalleComision.ReadOnly = true;
+            //
+            // VentasClmDetalleCobrado
+            //
+            this.VentasClmDetalleCobrado.DataPropertyName = "VentaCobrado";
             EstiloCelda20.Format = "#,##0.00";
             EstiloCelda20.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmDetalleCobrado.DefaultCellStyle = EstiloCelda20;
-            this.ComisionVendedoresClmDetalleCobrado.HeaderText = "Venta cobrada";
-            this.ComisionVendedoresClmDetalleCobrado.MinimumWidth = 6;
-            this.ComisionVendedoresClmDetalleCobrado.Name = "ComisionVendedoresClmDetalleCobrado";
-            this.ComisionVendedoresClmDetalleCobrado.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmDetalleAbono
-            // 
-            this.ComisionVendedoresClmDetalleAbono.DataPropertyName = "ComisionUltimoAbono";
+            this.VentasClmDetalleCobrado.DefaultCellStyle = EstiloCelda20;
+            this.VentasClmDetalleCobrado.HeaderText = "Venta cobrada";
+            this.VentasClmDetalleCobrado.MinimumWidth = 6;
+            this.VentasClmDetalleCobrado.Name = "VentasClmDetalleCobrado";
+            this.VentasClmDetalleCobrado.ReadOnly = true;
+            //
+            // VentasClmDetalleAbono
+            //
+            this.VentasClmDetalleAbono.DataPropertyName = "ComisionUltimoAbono";
             EstiloCelda21.Format = "#,##0.00";
             EstiloCelda21.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmDetalleAbono.DefaultCellStyle = EstiloCelda21;
-            this.ComisionVendedoresClmDetalleAbono.HeaderText = "Comisión último abono";
-            this.ComisionVendedoresClmDetalleAbono.MinimumWidth = 6;
-            this.ComisionVendedoresClmDetalleAbono.Name = "ComisionVendedoresClmDetalleAbono";
-            this.ComisionVendedoresClmDetalleAbono.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmDetalleDisponible
-            // 
-            this.ComisionVendedoresClmDetalleDisponible.DataPropertyName = "ComisionDisponible";
+            this.VentasClmDetalleAbono.DefaultCellStyle = EstiloCelda21;
+            this.VentasClmDetalleAbono.HeaderText = "Comisión último abono";
+            this.VentasClmDetalleAbono.MinimumWidth = 6;
+            this.VentasClmDetalleAbono.Name = "VentasClmDetalleAbono";
+            this.VentasClmDetalleAbono.ReadOnly = true;
+            //
+            // VentasClmDetalleDisponible
+            //
+            this.VentasClmDetalleDisponible.DataPropertyName = "ComisionDisponible";
             EstiloCelda22.Format = "#,##0.00";
             EstiloCelda22.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmDetalleDisponible.DefaultCellStyle = EstiloCelda22;
-            this.ComisionVendedoresClmDetalleDisponible.HeaderText = "Disponible acumulado";
-            this.ComisionVendedoresClmDetalleDisponible.MinimumWidth = 6;
-            this.ComisionVendedoresClmDetalleDisponible.Name = "ComisionVendedoresClmDetalleDisponible";
-            this.ComisionVendedoresClmDetalleDisponible.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmDetallePendiente
-            // 
-            this.ComisionVendedoresClmDetallePendiente.DataPropertyName = "ComisionPendiente";
+            this.VentasClmDetalleDisponible.DefaultCellStyle = EstiloCelda22;
+            this.VentasClmDetalleDisponible.HeaderText = "Disponible acumulado";
+            this.VentasClmDetalleDisponible.MinimumWidth = 6;
+            this.VentasClmDetalleDisponible.Name = "VentasClmDetalleDisponible";
+            this.VentasClmDetalleDisponible.ReadOnly = true;
+            //
+            // VentasClmDetallePendiente
+            //
+            this.VentasClmDetallePendiente.DataPropertyName = "ComisionPendiente";
             EstiloCelda23.Format = "#,##0.00";
             EstiloCelda23.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmDetallePendiente.DefaultCellStyle = EstiloCelda23;
-            this.ComisionVendedoresClmDetallePendiente.HeaderText = "Pendiente";
-            this.ComisionVendedoresClmDetallePendiente.MinimumWidth = 6;
-            this.ComisionVendedoresClmDetallePendiente.Name = "ComisionVendedoresClmDetallePendiente";
-            this.ComisionVendedoresClmDetallePendiente.ReadOnly = true;
+            this.VentasClmDetallePendiente.DefaultCellStyle = EstiloCelda23;
+            this.VentasClmDetallePendiente.HeaderText = "Pendiente";
+            this.VentasClmDetallePendiente.MinimumWidth = 6;
+            this.VentasClmDetallePendiente.Name = "VentasClmDetallePendiente";
+            this.VentasClmDetallePendiente.ReadOnly = true;
             //
             // Paginación de detalle de factura
             //
-            this.ComisionVendedoresBtnAnteriorFactura.Enabled = false;
-            this.ComisionVendedoresBtnAnteriorFactura.BackColor = System.Drawing.Color.LightGray;
-            this.ComisionVendedoresBtnAnteriorFactura.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnAnteriorFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnAnteriorFactura.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            this.ComisionVendedoresBtnAnteriorFactura.Location = new System.Drawing.Point(24, 550);
-            this.ComisionVendedoresBtnAnteriorFactura.Name = "ComisionVendedoresBtnAnteriorFactura";
-            this.ComisionVendedoresBtnAnteriorFactura.Size = new System.Drawing.Size(100, 28);
-            this.ComisionVendedoresBtnAnteriorFactura.TabIndex = 10;
-            this.ComisionVendedoresBtnAnteriorFactura.Text = "Anterior";
-            this.ComisionVendedoresBtnAnteriorFactura.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnAnteriorFactura.Click += new System.EventHandler(this.ComisionVendedoresMetCambiarPaginaFactura);
-            this.ComisionVendedoresBtnSiguienteFactura.Enabled = false;
-            this.ComisionVendedoresBtnSiguienteFactura.BackColor = System.Drawing.Color.LightGray;
-            this.ComisionVendedoresBtnSiguienteFactura.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnSiguienteFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnSiguienteFactura.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            this.ComisionVendedoresBtnSiguienteFactura.Location = new System.Drawing.Point(1134, 550);
-            this.ComisionVendedoresBtnSiguienteFactura.Name = "ComisionVendedoresBtnSiguienteFactura";
-            this.ComisionVendedoresBtnSiguienteFactura.Size = new System.Drawing.Size(100, 28);
-            this.ComisionVendedoresBtnSiguienteFactura.TabIndex = 11;
-            this.ComisionVendedoresBtnSiguienteFactura.Text = "Siguiente";
-            this.ComisionVendedoresBtnSiguienteFactura.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnSiguienteFactura.Click += new System.EventHandler(this.ComisionVendedoresMetCambiarPaginaFactura);
-            this.ComisionVendedoresLblPaginaFactura.AutoSize = false;
-            this.ComisionVendedoresLblPaginaFactura.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.ComisionVendedoresLblPaginaFactura.Location = new System.Drawing.Point(486, 554);
-            this.ComisionVendedoresLblPaginaFactura.Name = "ComisionVendedoresLblPaginaFactura";
-            this.ComisionVendedoresLblPaginaFactura.Size = new System.Drawing.Size(300, 20);
-            this.ComisionVendedoresLblPaginaFactura.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ComisionVendedoresLblPaginaFactura.TabIndex = 12;
-            this.ComisionVendedoresLblPaginaFactura.Text = "Página 0 de 0 · 0 registros";
-            // 
-            // ComisionVendedoresLblEstadoFactura
-            // 
-            this.ComisionVendedoresLblEstadoFactura.AutoSize = false;
-            this.ComisionVendedoresLblEstadoFactura.Location = new System.Drawing.Point(24, 126);
-            this.ComisionVendedoresLblEstadoFactura.Name = "ComisionVendedoresLblEstadoFactura";
-            this.ComisionVendedoresLblEstadoFactura.Size = new System.Drawing.Size(1210, 40);
-            this.ComisionVendedoresLblEstadoFactura.TabIndex = 1;
-            this.ComisionVendedoresLblEstadoFactura.Text = "Elija el método para cada producto; use la paginación para revisar toda la factura.";
-            // 
-            // ComisionVendedoresBtnCalcularFactura
-            // 
-            this.ComisionVendedoresBtnCalcularFactura.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.ComisionVendedoresBtnCalcularFactura.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnCalcularFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnCalcularFactura.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.ComisionVendedoresBtnCalcularFactura.Location = new System.Drawing.Point(24, 85);
-            this.ComisionVendedoresBtnCalcularFactura.Name = "ComisionVendedoresBtnCalcularFactura";
-            this.ComisionVendedoresBtnCalcularFactura.Size = new System.Drawing.Size(180, 30);
-            this.ComisionVendedoresBtnCalcularFactura.TabIndex = 2;
-            this.ComisionVendedoresBtnCalcularFactura.Text = "Calcular comisión";
-            this.ComisionVendedoresBtnCalcularFactura.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnCalcularFactura.Click += new System.EventHandler(this.ComisionVendedoresMetCalcularFacturaClick);
-            // 
-            // ComisionVendedoresBtnAsignarVendedorFactura
-            // 
-            this.ComisionVendedoresBtnAsignarVendedorFactura.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(162)))), ((int)(((byte)(74)))));
-            this.ComisionVendedoresBtnAsignarVendedorFactura.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnAsignarVendedorFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnAsignarVendedorFactura.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.ComisionVendedoresBtnAsignarVendedorFactura.Location = new System.Drawing.Point(214, 85);
-            this.ComisionVendedoresBtnAsignarVendedorFactura.Name = "ComisionVendedoresBtnAsignarVendedorFactura";
-            this.ComisionVendedoresBtnAsignarVendedorFactura.Size = new System.Drawing.Size(180, 30);
-            this.ComisionVendedoresBtnAsignarVendedorFactura.TabIndex = 14;
-            this.ComisionVendedoresBtnAsignarVendedorFactura.Text = "Asignar vendedor";
-            this.ComisionVendedoresBtnAsignarVendedorFactura.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnAsignarVendedorFactura.Click += new System.EventHandler(this.ComisionVendedoresMetAsignarVendedorFacturaClick);
-            // 
-            // ComisionVendedoresBtnRegistrarAbonoFactura
-            // 
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(63)))), ((int)(((byte)(147)))));
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.Location = new System.Drawing.Point(404, 85);
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.Name = "ComisionVendedoresBtnRegistrarAbonoFactura";
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.Size = new System.Drawing.Size(190, 30);
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.TabIndex = 15;
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.Text = "Realizar pago";
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnRegistrarAbonoFactura.Click += new System.EventHandler(this.ComisionVendedoresMetRegistrarAbonoFacturaClick);
+            this.VentasBtnAnteriorFactura.Enabled = false;
+            this.VentasBtnAnteriorFactura.BackColor = System.Drawing.Color.LightGray;
+            this.VentasBtnAnteriorFactura.FlatAppearance.BorderSize = 0;
+            this.VentasBtnAnteriorFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnAnteriorFactura.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            this.VentasBtnAnteriorFactura.Location = new System.Drawing.Point(24, 550);
+            this.VentasBtnAnteriorFactura.Name = "VentasBtnAnteriorFactura";
+            this.VentasBtnAnteriorFactura.Size = new System.Drawing.Size(100, 28);
+            this.VentasBtnAnteriorFactura.TabIndex = 10;
+            this.VentasBtnAnteriorFactura.Text = "Anterior";
+            this.VentasBtnAnteriorFactura.UseVisualStyleBackColor = false;
+            this.VentasBtnAnteriorFactura.Click += new System.EventHandler(this.VentasMetCambiarPaginaFactura);
+            this.VentasBtnSiguienteFactura.Enabled = false;
+            this.VentasBtnSiguienteFactura.BackColor = System.Drawing.Color.LightGray;
+            this.VentasBtnSiguienteFactura.FlatAppearance.BorderSize = 0;
+            this.VentasBtnSiguienteFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnSiguienteFactura.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            this.VentasBtnSiguienteFactura.Location = new System.Drawing.Point(1134, 550);
+            this.VentasBtnSiguienteFactura.Name = "VentasBtnSiguienteFactura";
+            this.VentasBtnSiguienteFactura.Size = new System.Drawing.Size(100, 28);
+            this.VentasBtnSiguienteFactura.TabIndex = 11;
+            this.VentasBtnSiguienteFactura.Text = "Siguiente";
+            this.VentasBtnSiguienteFactura.UseVisualStyleBackColor = false;
+            this.VentasBtnSiguienteFactura.Click += new System.EventHandler(this.VentasMetCambiarPaginaFactura);
+            this.VentasLblPaginaFactura.AutoSize = false;
+            this.VentasLblPaginaFactura.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.VentasLblPaginaFactura.Location = new System.Drawing.Point(486, 554);
+            this.VentasLblPaginaFactura.Name = "VentasLblPaginaFactura";
+            this.VentasLblPaginaFactura.Size = new System.Drawing.Size(300, 20);
+            this.VentasLblPaginaFactura.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VentasLblPaginaFactura.TabIndex = 12;
+            this.VentasLblPaginaFactura.Text = "Página 0 de 0 · 0 registros";
             //
-            // 
-            // ComisionVendedoresCboMetodoFactura
-            // 
-            this.ComisionVendedoresCboMetodoFactura.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComisionVendedoresCboMetodoFactura.Items.AddRange(new object[] {
+            // VentasLblEstadoFactura
+            //
+            this.VentasLblEstadoFactura.AutoSize = false;
+            this.VentasLblEstadoFactura.Location = new System.Drawing.Point(24, 126);
+            this.VentasLblEstadoFactura.Name = "VentasLblEstadoFactura";
+            this.VentasLblEstadoFactura.Size = new System.Drawing.Size(1210, 40);
+            this.VentasLblEstadoFactura.TabIndex = 1;
+            this.VentasLblEstadoFactura.Text = "Elija el método para cada producto; use la paginación para revisar toda la factura.";
+            //
+            // VentasBtnCalcularFactura
+            //
+            this.VentasBtnCalcularFactura.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
+            this.VentasBtnCalcularFactura.FlatAppearance.BorderSize = 0;
+            this.VentasBtnCalcularFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnCalcularFactura.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            this.VentasBtnCalcularFactura.Location = new System.Drawing.Point(24, 85);
+            this.VentasBtnCalcularFactura.Name = "VentasBtnCalcularFactura";
+            this.VentasBtnCalcularFactura.Size = new System.Drawing.Size(180, 30);
+            this.VentasBtnCalcularFactura.TabIndex = 2;
+            this.VentasBtnCalcularFactura.Text = "Calcular comisión";
+            this.VentasBtnCalcularFactura.UseVisualStyleBackColor = false;
+            this.VentasBtnCalcularFactura.Click += new System.EventHandler(this.VentasMetCalcularFacturaClick);
+            //
+            // VentasBtnAsignarVendedorFactura
+            //
+            this.VentasBtnAsignarVendedorFactura.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(162)))), ((int)(((byte)(74)))));
+            this.VentasBtnAsignarVendedorFactura.FlatAppearance.BorderSize = 0;
+            this.VentasBtnAsignarVendedorFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnAsignarVendedorFactura.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
+            this.VentasBtnAsignarVendedorFactura.Location = new System.Drawing.Point(214, 85);
+            this.VentasBtnAsignarVendedorFactura.Name = "VentasBtnAsignarVendedorFactura";
+            this.VentasBtnAsignarVendedorFactura.Size = new System.Drawing.Size(180, 30);
+            this.VentasBtnAsignarVendedorFactura.TabIndex = 14;
+            this.VentasBtnAsignarVendedorFactura.Text = "Asignar vendedor";
+            this.VentasBtnAsignarVendedorFactura.UseVisualStyleBackColor = false;
+            this.VentasBtnAsignarVendedorFactura.Click += new System.EventHandler(this.VentasMetAsignarVendedorFacturaClick);
+            //
+            // VentasBtnRegistrarAbonoFactura
+            //
+            this.VentasBtnRegistrarAbonoFactura.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(63)))), ((int)(((byte)(147)))));
+            this.VentasBtnRegistrarAbonoFactura.FlatAppearance.BorderSize = 0;
+            this.VentasBtnRegistrarAbonoFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnRegistrarAbonoFactura.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            this.VentasBtnRegistrarAbonoFactura.Location = new System.Drawing.Point(404, 85);
+            this.VentasBtnRegistrarAbonoFactura.Name = "VentasBtnRegistrarAbonoFactura";
+            this.VentasBtnRegistrarAbonoFactura.Size = new System.Drawing.Size(190, 30);
+            this.VentasBtnRegistrarAbonoFactura.TabIndex = 15;
+            this.VentasBtnRegistrarAbonoFactura.Text = "Realizar pago";
+            this.VentasBtnRegistrarAbonoFactura.UseVisualStyleBackColor = false;
+            this.VentasBtnRegistrarAbonoFactura.Click += new System.EventHandler(this.VentasMetRegistrarAbonoFacturaClick);
+            //
+            //
+            // VentasCboMetodoFactura
+            //
+            this.VentasCboMetodoFactura.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VentasCboMetodoFactura.Items.AddRange(new object[] {
             "Marca",
             "Línea",
             "Producto",
             "Categoría"});
-            this.ComisionVendedoresCboMetodoFactura.Location = new System.Drawing.Point(650, 45);
-            this.ComisionVendedoresCboMetodoFactura.Name = "ComisionVendedoresCboMetodoFactura";
-            this.ComisionVendedoresCboMetodoFactura.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ComisionVendedoresCboMetodoFactura.SelectedIndex = 0;
-            this.ComisionVendedoresCboMetodoFactura.Size = new System.Drawing.Size(160, 31);
-            this.ComisionVendedoresCboMetodoFactura.TabIndex = 4;
-            // 
-            // ComisionVendedoresCboVendedorFactura
-            // 
-            this.ComisionVendedoresCboVendedorFactura.DisplayMember = "NombreVendedor";
-            this.ComisionVendedoresCboVendedorFactura.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComisionVendedoresCboVendedorFactura.Location = new System.Drawing.Point(430, 45);
-            this.ComisionVendedoresCboVendedorFactura.Name = "ComisionVendedoresCboVendedorFactura";
-            this.ComisionVendedoresCboVendedorFactura.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ComisionVendedoresCboVendedorFactura.Size = new System.Drawing.Size(200, 31);
-            this.ComisionVendedoresCboVendedorFactura.TabIndex = 5;
-            this.ComisionVendedoresCboVendedorFactura.ValueMember = "IdVendedor";
-            // 
-            // ComisionVendedoresCboFactura
-            // 
-            this.ComisionVendedoresCboFactura.DisplayMember = "Etiqueta";
-            this.ComisionVendedoresCboFactura.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComisionVendedoresCboFactura.Location = new System.Drawing.Point(24, 45);
-            this.ComisionVendedoresCboFactura.Name = "ComisionVendedoresCboFactura";
-            this.ComisionVendedoresCboFactura.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ComisionVendedoresCboFactura.Size = new System.Drawing.Size(390, 31);
-            this.ComisionVendedoresCboFactura.TabIndex = 6;
-            this.ComisionVendedoresCboFactura.ValueMember = "IdFactura";
-            // 
-            // ComisionVendedoresLblMetodoFactura
-            // 
-            this.ComisionVendedoresLblMetodoFactura.AutoSize = true;
-            this.ComisionVendedoresLblMetodoFactura.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.ComisionVendedoresLblMetodoFactura.Location = new System.Drawing.Point(646, 22);
-            this.ComisionVendedoresLblMetodoFactura.Name = "ComisionVendedoresLblMetodoFactura";
-            this.ComisionVendedoresLblMetodoFactura.Size = new System.Drawing.Size(102, 20);
-            this.ComisionVendedoresLblMetodoFactura.TabIndex = 7;
-            this.ComisionVendedoresLblMetodoFactura.Text = "Método predeterminado";
-            // 
-            // ComisionVendedoresLblVendedorFactura
-            // 
-            this.ComisionVendedoresLblVendedorFactura.AutoSize = true;
-            this.ComisionVendedoresLblVendedorFactura.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.ComisionVendedoresLblVendedorFactura.Location = new System.Drawing.Point(426, 16);
-            this.ComisionVendedoresLblVendedorFactura.Name = "ComisionVendedoresLblVendedorFactura";
-            this.ComisionVendedoresLblVendedorFactura.Size = new System.Drawing.Size(143, 20);
-            this.ComisionVendedoresLblVendedorFactura.TabIndex = 8;
-            this.ComisionVendedoresLblVendedorFactura.Text = "Vendedor asignado";
-            // 
-            // ComisionVendedoresLblFactura
-            // 
-            this.ComisionVendedoresLblFactura.AutoSize = true;
-            this.ComisionVendedoresLblFactura.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.ComisionVendedoresLblFactura.Location = new System.Drawing.Point(28, 22);
-            this.ComisionVendedoresLblFactura.Name = "ComisionVendedoresLblFactura";
-            this.ComisionVendedoresLblFactura.Size = new System.Drawing.Size(114, 20);
-            this.ComisionVendedoresLblFactura.TabIndex = 9;
-            this.ComisionVendedoresLblFactura.Text = "Venta / factura";
-            this.ComisionVendedoresLblObligatorioFactura.AutoSize = true;
-            this.ComisionVendedoresLblObligatorioFactura.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.ComisionVendedoresLblObligatorioFactura.ForeColor = System.Drawing.Color.Firebrick;
-            this.ComisionVendedoresLblObligatorioFactura.Location = new System.Drawing.Point(141, 22);
-            this.ComisionVendedoresLblObligatorioFactura.Name = "ComisionVendedoresLblObligatorioFactura";
-            this.ComisionVendedoresLblObligatorioFactura.Size = new System.Drawing.Size(12, 18);
-            this.ComisionVendedoresLblObligatorioFactura.TabIndex = 13;
-            this.ComisionVendedoresLblObligatorioFactura.Text = "*";
-            this.ComisionVendedoresLblObligatorioFactura.TabStop = false;
-            this.ComisionVendedoresLblObligatorioVendedor.AutoSize = true;
-            this.ComisionVendedoresLblObligatorioVendedor.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.ComisionVendedoresLblObligatorioVendedor.ForeColor = System.Drawing.Color.Firebrick;
-            this.ComisionVendedoresLblObligatorioVendedor.Location = new System.Drawing.Point(570, 16);
-            this.ComisionVendedoresLblObligatorioVendedor.Name = "ComisionVendedoresLblObligatorioVendedor";
-            this.ComisionVendedoresLblObligatorioVendedor.Size = new System.Drawing.Size(12, 18);
-            this.ComisionVendedoresLblObligatorioVendedor.TabIndex = 14;
-            this.ComisionVendedoresLblObligatorioVendedor.Text = "*";
-            this.ComisionVendedoresLblObligatorioVendedor.TabStop = false;
-            // 
-            // ComisionVendedoresTabMantenimiento
-            // 
-            this.ComisionVendedoresTabMantenimiento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresDgvPorcentajes);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresBtnAnteriorPorcentajes);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresBtnSiguientePorcentajes);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresLblPaginaPorcentajes);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresLblAlcance);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresLblPorcentajeNuevo);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresLblMantenimientoEstado);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresLblObligatorioAlcance);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresLblObligatorioPorcentaje);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresBtnActualizar);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresBtnBuscar);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresTxtPorcentaje);
-            this.ComisionVendedoresTabMantenimiento.Controls.Add(this.ComisionVendedoresCboAlcance);
-            this.ComisionVendedoresTabMantenimiento.Location = new System.Drawing.Point(4, 32);
-            this.ComisionVendedoresTabMantenimiento.Name = "ComisionVendedoresTabMantenimiento";
-            this.ComisionVendedoresTabMantenimiento.Padding = new System.Windows.Forms.Padding(16);
-            this.ComisionVendedoresTabMantenimiento.Size = new System.Drawing.Size(1272, 582);
-            this.ComisionVendedoresTabMantenimiento.TabIndex = 2;
-            this.ComisionVendedoresTabMantenimiento.Text = "Mantenimiento de porcentajes";
-            // 
-            // ComisionVendedoresDgvPorcentajes
-            // 
-            this.ComisionVendedoresDgvPorcentajes.AllowUserToAddRows = false;
-            this.ComisionVendedoresDgvPorcentajes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.VentasCboMetodoFactura.Location = new System.Drawing.Point(650, 45);
+            this.VentasCboMetodoFactura.Name = "VentasCboMetodoFactura";
+            this.VentasCboMetodoFactura.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.VentasCboMetodoFactura.SelectedIndex = 0;
+            this.VentasCboMetodoFactura.Size = new System.Drawing.Size(160, 31);
+            this.VentasCboMetodoFactura.TabIndex = 4;
+            //
+            // VentasCboVendedorFactura
+            //
+            this.VentasCboVendedorFactura.DisplayMember = "NombreVendedor";
+            this.VentasCboVendedorFactura.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VentasCboVendedorFactura.Location = new System.Drawing.Point(430, 45);
+            this.VentasCboVendedorFactura.Name = "VentasCboVendedorFactura";
+            this.VentasCboVendedorFactura.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.VentasCboVendedorFactura.Size = new System.Drawing.Size(200, 31);
+            this.VentasCboVendedorFactura.TabIndex = 5;
+            this.VentasCboVendedorFactura.ValueMember = "IdVendedor";
+            //
+            // VentasCboFactura
+            //
+            this.VentasCboFactura.DisplayMember = "Etiqueta";
+            this.VentasCboFactura.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VentasCboFactura.Location = new System.Drawing.Point(24, 45);
+            this.VentasCboFactura.Name = "VentasCboFactura";
+            this.VentasCboFactura.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.VentasCboFactura.Size = new System.Drawing.Size(390, 31);
+            this.VentasCboFactura.TabIndex = 6;
+            this.VentasCboFactura.ValueMember = "IdFactura";
+            //
+            // VentasLblMetodoFactura
+            //
+            this.VentasLblMetodoFactura.AutoSize = true;
+            this.VentasLblMetodoFactura.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblMetodoFactura.Location = new System.Drawing.Point(646, 22);
+            this.VentasLblMetodoFactura.Name = "VentasLblMetodoFactura";
+            this.VentasLblMetodoFactura.Size = new System.Drawing.Size(102, 20);
+            this.VentasLblMetodoFactura.TabIndex = 7;
+            this.VentasLblMetodoFactura.Text = "Método predeterminado";
+            //
+            // VentasLblVendedorFactura
+            //
+            this.VentasLblVendedorFactura.AutoSize = true;
+            this.VentasLblVendedorFactura.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblVendedorFactura.Location = new System.Drawing.Point(426, 16);
+            this.VentasLblVendedorFactura.Name = "VentasLblVendedorFactura";
+            this.VentasLblVendedorFactura.Size = new System.Drawing.Size(143, 20);
+            this.VentasLblVendedorFactura.TabIndex = 8;
+            this.VentasLblVendedorFactura.Text = "Vendedor asignado";
+            //
+            // VentasLblFactura
+            //
+            this.VentasLblFactura.AutoSize = true;
+            this.VentasLblFactura.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblFactura.Location = new System.Drawing.Point(28, 22);
+            this.VentasLblFactura.Name = "VentasLblFactura";
+            this.VentasLblFactura.Size = new System.Drawing.Size(114, 20);
+            this.VentasLblFactura.TabIndex = 9;
+            this.VentasLblFactura.Text = "Venta / factura";
+            this.VentasLblObligatorioFactura.AutoSize = true;
+            this.VentasLblObligatorioFactura.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblObligatorioFactura.ForeColor = System.Drawing.Color.Firebrick;
+            this.VentasLblObligatorioFactura.Location = new System.Drawing.Point(141, 22);
+            this.VentasLblObligatorioFactura.Name = "VentasLblObligatorioFactura";
+            this.VentasLblObligatorioFactura.Size = new System.Drawing.Size(12, 18);
+            this.VentasLblObligatorioFactura.TabIndex = 13;
+            this.VentasLblObligatorioFactura.Text = "*";
+            this.VentasLblObligatorioFactura.TabStop = false;
+            this.VentasLblObligatorioVendedor.AutoSize = true;
+            this.VentasLblObligatorioVendedor.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblObligatorioVendedor.ForeColor = System.Drawing.Color.Firebrick;
+            this.VentasLblObligatorioVendedor.Location = new System.Drawing.Point(570, 16);
+            this.VentasLblObligatorioVendedor.Name = "VentasLblObligatorioVendedor";
+            this.VentasLblObligatorioVendedor.Size = new System.Drawing.Size(12, 18);
+            this.VentasLblObligatorioVendedor.TabIndex = 14;
+            this.VentasLblObligatorioVendedor.Text = "*";
+            this.VentasLblObligatorioVendedor.TabStop = false;
+            //
+            // VentasTbpMantenimiento
+            //
+            this.VentasTbpMantenimiento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasDgvPorcentajes);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasBtnAnteriorPorcentajes);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasBtnSiguientePorcentajes);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasLblPaginaPorcentajes);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasLblAlcance);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasLblPorcentajeNuevo);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasLblMantenimientoEstado);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasLblObligatorioAlcance);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasLblObligatorioPorcentaje);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasBtnActualizar);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasBtnBuscar);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasTxtPorcentaje);
+            this.VentasTbpMantenimiento.Controls.Add(this.VentasCboAlcance);
+            this.VentasTbpMantenimiento.Location = new System.Drawing.Point(4, 32);
+            this.VentasTbpMantenimiento.Name = "VentasTbpMantenimiento";
+            this.VentasTbpMantenimiento.Padding = new System.Windows.Forms.Padding(16);
+            this.VentasTbpMantenimiento.Size = new System.Drawing.Size(1272, 582);
+            this.VentasTbpMantenimiento.TabIndex = 2;
+            this.VentasTbpMantenimiento.Text = "Mantenimiento de porcentajes";
+            //
+            // VentasDgvPorcentajes
+            //
+            this.VentasDgvPorcentajes.AllowUserToAddRows = false;
+            this.VentasDgvPorcentajes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             EstiloCelda33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
-            this.ComisionVendedoresDgvPorcentajes.AlternatingRowsDefaultCellStyle = EstiloCelda33;
+            this.VentasDgvPorcentajes.AlternatingRowsDefaultCellStyle = EstiloCelda33;
             EstiloCelda31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             EstiloCelda31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             EstiloCelda31.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             EstiloCelda31.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
             EstiloCelda31.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             EstiloCelda31.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.ComisionVendedoresDgvPorcentajes.ColumnHeadersDefaultCellStyle = EstiloCelda31;
-            this.ComisionVendedoresDgvPorcentajes.ColumnHeadersHeight = 29;
-            this.ComisionVendedoresDgvPorcentajes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ComisionVendedoresClmProducto,
-            this.ComisionVendedoresClmMarca,
-            this.ComisionVendedoresClmLinea,
-            this.ComisionVendedoresClmCategoria,
-            this.ComisionVendedoresClmPorcentajeMarca,
-            this.ComisionVendedoresClmPorcentajeLinea,
-            this.ComisionVendedoresClmPorcentajeCategoria,
-            this.ComisionVendedoresClmPorcentajeProducto});
-            this.ComisionVendedoresDgvPorcentajes.Location = new System.Drawing.Point(24, 104);
-            this.ComisionVendedoresDgvPorcentajes.Name = "ComisionVendedoresDgvPorcentajes";
+            this.VentasDgvPorcentajes.ColumnHeadersDefaultCellStyle = EstiloCelda31;
+            this.VentasDgvPorcentajes.ColumnHeadersHeight = 29;
+            this.VentasDgvPorcentajes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.VentasClmProducto,
+            this.VentasClmMarca,
+            this.VentasClmLinea,
+            this.VentasClmCategoria,
+            this.VentasClmPorcentajeMarca,
+            this.VentasClmPorcentajeLinea,
+            this.VentasClmPorcentajeCategoria,
+            this.VentasClmPorcentajeProducto});
+            this.VentasDgvPorcentajes.Location = new System.Drawing.Point(24, 104);
+            this.VentasDgvPorcentajes.Name = "VentasDgvPorcentajes";
             EstiloCelda32.BackColor = System.Drawing.Color.FromArgb(248, 245, 249);
             EstiloCelda32.Font = new System.Drawing.Font("Segoe UI", 9F);
             EstiloCelda32.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             EstiloCelda32.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
             EstiloCelda32.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.ComisionVendedoresDgvPorcentajes.DefaultCellStyle = EstiloCelda32;
-            this.ComisionVendedoresDgvPorcentajes.EnableHeadersVisualStyles = false;
-            this.ComisionVendedoresDgvPorcentajes.ReadOnly = true;
-            this.ComisionVendedoresDgvPorcentajes.RowHeadersVisible = false;
-            this.ComisionVendedoresDgvPorcentajes.RowHeadersWidth = 51;
-            this.ComisionVendedoresDgvPorcentajes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ComisionVendedoresDgvPorcentajes.MultiSelect = false;
-            this.ComisionVendedoresDgvPorcentajes.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.ComisionVendedoresDgvPorcentajes.Size = new System.Drawing.Size(1210, 435);
-            this.ComisionVendedoresDgvPorcentajes.TabIndex = 0;
-            this.ComisionVendedoresDgvPorcentajes.AutoGenerateColumns = false;
-            // 
-            // ComisionVendedoresClmProducto
-            // 
-            this.ComisionVendedoresClmProducto.DataPropertyName = "NombreProducto";
-            this.ComisionVendedoresClmProducto.HeaderText = "Producto";
-            this.ComisionVendedoresClmProducto.MinimumWidth = 6;
-            this.ComisionVendedoresClmProducto.Name = "ComisionVendedoresClmProducto";
-            this.ComisionVendedoresClmProducto.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmMarca
-            // 
-            this.ComisionVendedoresClmMarca.DataPropertyName = "Marca";
-            this.ComisionVendedoresClmMarca.HeaderText = "Marca";
-            this.ComisionVendedoresClmMarca.MinimumWidth = 6;
-            this.ComisionVendedoresClmMarca.Name = "ComisionVendedoresClmMarca";
-            this.ComisionVendedoresClmMarca.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmLinea
-            // 
-            this.ComisionVendedoresClmLinea.DataPropertyName = "Linea";
-            this.ComisionVendedoresClmLinea.HeaderText = "Línea";
-            this.ComisionVendedoresClmLinea.MinimumWidth = 6;
-            this.ComisionVendedoresClmLinea.Name = "ComisionVendedoresClmLinea";
-            this.ComisionVendedoresClmLinea.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmCategoria
-            // 
-            this.ComisionVendedoresClmCategoria.DataPropertyName = "Categoria";
-            this.ComisionVendedoresClmCategoria.HeaderText = "Categoría";
-            this.ComisionVendedoresClmCategoria.MinimumWidth = 6;
-            this.ComisionVendedoresClmCategoria.Name = "ComisionVendedoresClmCategoria";
-            this.ComisionVendedoresClmCategoria.ReadOnly = true;
-            // 
-            // ComisionVendedoresClmPorcentajeMarca
-            // 
+            this.VentasDgvPorcentajes.DefaultCellStyle = EstiloCelda32;
+            this.VentasDgvPorcentajes.EnableHeadersVisualStyles = false;
+            this.VentasDgvPorcentajes.ReadOnly = true;
+            this.VentasDgvPorcentajes.RowHeadersVisible = false;
+            this.VentasDgvPorcentajes.RowHeadersWidth = 51;
+            this.VentasDgvPorcentajes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.VentasDgvPorcentajes.MultiSelect = false;
+            this.VentasDgvPorcentajes.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.VentasDgvPorcentajes.Size = new System.Drawing.Size(1210, 435);
+            this.VentasDgvPorcentajes.TabIndex = 0;
+            this.VentasDgvPorcentajes.AutoGenerateColumns = false;
+            //
+            // VentasClmProducto
+            //
+            this.VentasClmProducto.DataPropertyName = "NombreProducto";
+            this.VentasClmProducto.HeaderText = "Producto";
+            this.VentasClmProducto.MinimumWidth = 6;
+            this.VentasClmProducto.Name = "VentasClmProducto";
+            this.VentasClmProducto.ReadOnly = true;
+            //
+            // VentasClmMarca
+            //
+            this.VentasClmMarca.DataPropertyName = "Marca";
+            this.VentasClmMarca.HeaderText = "Marca";
+            this.VentasClmMarca.MinimumWidth = 6;
+            this.VentasClmMarca.Name = "VentasClmMarca";
+            this.VentasClmMarca.ReadOnly = true;
+            //
+            // VentasClmLinea
+            //
+            this.VentasClmLinea.DataPropertyName = "Linea";
+            this.VentasClmLinea.HeaderText = "Línea";
+            this.VentasClmLinea.MinimumWidth = 6;
+            this.VentasClmLinea.Name = "VentasClmLinea";
+            this.VentasClmLinea.ReadOnly = true;
+            //
+            // VentasClmCategoria
+            //
+            this.VentasClmCategoria.DataPropertyName = "Categoria";
+            this.VentasClmCategoria.HeaderText = "Categoría";
+            this.VentasClmCategoria.MinimumWidth = 6;
+            this.VentasClmCategoria.Name = "VentasClmCategoria";
+            this.VentasClmCategoria.ReadOnly = true;
+            //
+            // VentasClmPorcentajeMarca
+            //
             EstiloCelda34.Format = "0.00\\ \\%";
             EstiloCelda34.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("es-GT");
-            this.ComisionVendedoresClmPorcentajeMarca.DataPropertyName = "PorcentajeMarca";
-            this.ComisionVendedoresClmPorcentajeMarca.DefaultCellStyle = EstiloCelda34;
-            this.ComisionVendedoresClmPorcentajeMarca.HeaderText = "% Marca";
-            this.ComisionVendedoresClmPorcentajeMarca.MinimumWidth = 6;
-            this.ComisionVendedoresClmPorcentajeMarca.Name = "ComisionVendedoresClmPorcentajeMarca";
-            this.ComisionVendedoresClmPorcentajeMarca.ReadOnly = true;
-            this.ComisionVendedoresClmPorcentajeLinea.DataPropertyName = "PorcentajeLinea";
-            this.ComisionVendedoresClmPorcentajeLinea.DefaultCellStyle = EstiloCelda34;
-            this.ComisionVendedoresClmPorcentajeLinea.HeaderText = "% Línea";
-            this.ComisionVendedoresClmPorcentajeLinea.MinimumWidth = 6;
-            this.ComisionVendedoresClmPorcentajeLinea.Name = "ComisionVendedoresClmPorcentajeLinea";
-            this.ComisionVendedoresClmPorcentajeLinea.ReadOnly = true;
-            this.ComisionVendedoresClmPorcentajeCategoria.DataPropertyName = "PorcentajeCategoria";
-            this.ComisionVendedoresClmPorcentajeCategoria.DefaultCellStyle = EstiloCelda34;
-            this.ComisionVendedoresClmPorcentajeCategoria.HeaderText = "% Categoría";
-            this.ComisionVendedoresClmPorcentajeCategoria.MinimumWidth = 6;
-            this.ComisionVendedoresClmPorcentajeCategoria.Name = "ComisionVendedoresClmPorcentajeCategoria";
-            this.ComisionVendedoresClmPorcentajeCategoria.ReadOnly = true;
-            this.ComisionVendedoresClmPorcentajeProducto.DataPropertyName = "PorcentajeProducto";
-            this.ComisionVendedoresClmPorcentajeProducto.DefaultCellStyle = EstiloCelda34;
-            this.ComisionVendedoresClmPorcentajeProducto.HeaderText = "% Producto";
-            this.ComisionVendedoresClmPorcentajeProducto.MinimumWidth = 6;
-            this.ComisionVendedoresClmPorcentajeProducto.Name = "ComisionVendedoresClmPorcentajeProducto";
-            this.ComisionVendedoresClmPorcentajeProducto.ReadOnly = true;
+            this.VentasClmPorcentajeMarca.DataPropertyName = "PorcentajeMarca";
+            this.VentasClmPorcentajeMarca.DefaultCellStyle = EstiloCelda34;
+            this.VentasClmPorcentajeMarca.HeaderText = "% Marca";
+            this.VentasClmPorcentajeMarca.MinimumWidth = 6;
+            this.VentasClmPorcentajeMarca.Name = "VentasClmPorcentajeMarca";
+            this.VentasClmPorcentajeMarca.ReadOnly = true;
+            this.VentasClmPorcentajeLinea.DataPropertyName = "PorcentajeLinea";
+            this.VentasClmPorcentajeLinea.DefaultCellStyle = EstiloCelda34;
+            this.VentasClmPorcentajeLinea.HeaderText = "% Línea";
+            this.VentasClmPorcentajeLinea.MinimumWidth = 6;
+            this.VentasClmPorcentajeLinea.Name = "VentasClmPorcentajeLinea";
+            this.VentasClmPorcentajeLinea.ReadOnly = true;
+            this.VentasClmPorcentajeCategoria.DataPropertyName = "PorcentajeCategoria";
+            this.VentasClmPorcentajeCategoria.DefaultCellStyle = EstiloCelda34;
+            this.VentasClmPorcentajeCategoria.HeaderText = "% Categoría";
+            this.VentasClmPorcentajeCategoria.MinimumWidth = 6;
+            this.VentasClmPorcentajeCategoria.Name = "VentasClmPorcentajeCategoria";
+            this.VentasClmPorcentajeCategoria.ReadOnly = true;
+            this.VentasClmPorcentajeProducto.DataPropertyName = "PorcentajeProducto";
+            this.VentasClmPorcentajeProducto.DefaultCellStyle = EstiloCelda34;
+            this.VentasClmPorcentajeProducto.HeaderText = "% Producto";
+            this.VentasClmPorcentajeProducto.MinimumWidth = 6;
+            this.VentasClmPorcentajeProducto.Name = "VentasClmPorcentajeProducto";
+            this.VentasClmPorcentajeProducto.ReadOnly = true;
             //
             // Paginación de mantenimiento
             //
-            this.ComisionVendedoresBtnAnteriorPorcentajes.Enabled = false;
-            this.ComisionVendedoresBtnAnteriorPorcentajes.BackColor = System.Drawing.Color.LightGray;
-            this.ComisionVendedoresBtnAnteriorPorcentajes.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnAnteriorPorcentajes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnAnteriorPorcentajes.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            this.ComisionVendedoresBtnAnteriorPorcentajes.Location = new System.Drawing.Point(24, 550);
-            this.ComisionVendedoresBtnAnteriorPorcentajes.Name = "ComisionVendedoresBtnAnteriorPorcentajes";
-            this.ComisionVendedoresBtnAnteriorPorcentajes.Size = new System.Drawing.Size(100, 28);
-            this.ComisionVendedoresBtnAnteriorPorcentajes.TabIndex = 8;
-            this.ComisionVendedoresBtnAnteriorPorcentajes.Text = "Anterior";
-            this.ComisionVendedoresBtnAnteriorPorcentajes.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnAnteriorPorcentajes.Click += new System.EventHandler(this.ComisionVendedoresMetCambiarPaginaPorcentajes);
-            this.ComisionVendedoresBtnSiguientePorcentajes.Enabled = false;
-            this.ComisionVendedoresBtnSiguientePorcentajes.BackColor = System.Drawing.Color.LightGray;
-            this.ComisionVendedoresBtnSiguientePorcentajes.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnSiguientePorcentajes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnSiguientePorcentajes.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            this.ComisionVendedoresBtnSiguientePorcentajes.Location = new System.Drawing.Point(1134, 550);
-            this.ComisionVendedoresBtnSiguientePorcentajes.Name = "ComisionVendedoresBtnSiguientePorcentajes";
-            this.ComisionVendedoresBtnSiguientePorcentajes.Size = new System.Drawing.Size(100, 28);
-            this.ComisionVendedoresBtnSiguientePorcentajes.TabIndex = 9;
-            this.ComisionVendedoresBtnSiguientePorcentajes.Text = "Siguiente";
-            this.ComisionVendedoresBtnSiguientePorcentajes.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnSiguientePorcentajes.Click += new System.EventHandler(this.ComisionVendedoresMetCambiarPaginaPorcentajes);
-            this.ComisionVendedoresLblPaginaPorcentajes.AutoSize = false;
-            this.ComisionVendedoresLblPaginaPorcentajes.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.ComisionVendedoresLblPaginaPorcentajes.Location = new System.Drawing.Point(486, 554);
-            this.ComisionVendedoresLblPaginaPorcentajes.Name = "ComisionVendedoresLblPaginaPorcentajes";
-            this.ComisionVendedoresLblPaginaPorcentajes.Size = new System.Drawing.Size(300, 20);
-            this.ComisionVendedoresLblPaginaPorcentajes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ComisionVendedoresLblPaginaPorcentajes.TabIndex = 10;
-            this.ComisionVendedoresLblPaginaPorcentajes.Text = "Página 0 de 0 · 0 registros";
-            // 
-            // ComisionVendedoresLblAlcance
-            // 
-            this.ComisionVendedoresLblAlcance.AutoSize = true;
-            this.ComisionVendedoresLblAlcance.Location = new System.Drawing.Point(24, 7);
-            this.ComisionVendedoresLblAlcance.Name = "ComisionVendedoresLblAlcance";
-            this.ComisionVendedoresLblAlcance.Size = new System.Drawing.Size(179, 23);
-            this.ComisionVendedoresLblAlcance.TabIndex = 1;
-            this.ComisionVendedoresLblAlcance.Text = "Aplicar porcentaje por";
-            // 
-            // ComisionVendedoresLblPorcentajeNuevo
-            // 
-            this.ComisionVendedoresLblPorcentajeNuevo.AutoSize = true;
-            this.ComisionVendedoresLblPorcentajeNuevo.Location = new System.Drawing.Point(220, 7);
-            this.ComisionVendedoresLblPorcentajeNuevo.Name = "ComisionVendedoresLblPorcentajeNuevo";
-            this.ComisionVendedoresLblPorcentajeNuevo.Size = new System.Drawing.Size(142, 23);
-            this.ComisionVendedoresLblPorcentajeNuevo.TabIndex = 2;
-            this.ComisionVendedoresLblPorcentajeNuevo.Text = "Porcentaje nuevo";
-            this.ComisionVendedoresLblObligatorioAlcance.AutoSize = true;
-            this.ComisionVendedoresLblObligatorioAlcance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.ComisionVendedoresLblObligatorioAlcance.ForeColor = System.Drawing.Color.Firebrick;
-            this.ComisionVendedoresLblObligatorioAlcance.Location = new System.Drawing.Point(201, 7);
-            this.ComisionVendedoresLblObligatorioAlcance.Name = "ComisionVendedoresLblObligatorioAlcance";
-            this.ComisionVendedoresLblObligatorioAlcance.Size = new System.Drawing.Size(12, 18);
-            this.ComisionVendedoresLblObligatorioAlcance.TabIndex = 11;
-            this.ComisionVendedoresLblObligatorioAlcance.Text = "*";
-            this.ComisionVendedoresLblObligatorioAlcance.TabStop = false;
-            this.ComisionVendedoresLblObligatorioPorcentaje.AutoSize = true;
-            this.ComisionVendedoresLblObligatorioPorcentaje.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
-            this.ComisionVendedoresLblObligatorioPorcentaje.ForeColor = System.Drawing.Color.Firebrick;
-            this.ComisionVendedoresLblObligatorioPorcentaje.Location = new System.Drawing.Point(363, 7);
-            this.ComisionVendedoresLblObligatorioPorcentaje.Name = "ComisionVendedoresLblObligatorioPorcentaje";
-            this.ComisionVendedoresLblObligatorioPorcentaje.Size = new System.Drawing.Size(12, 18);
-            this.ComisionVendedoresLblObligatorioPorcentaje.TabIndex = 12;
-            this.ComisionVendedoresLblObligatorioPorcentaje.Text = "*";
-            this.ComisionVendedoresLblObligatorioPorcentaje.TabStop = false;
-            // 
-            // ComisionVendedoresLblMantenimientoEstado
-            // 
-            this.ComisionVendedoresLblMantenimientoEstado.AutoSize = true;
-            this.ComisionVendedoresLblMantenimientoEstado.Location = new System.Drawing.Point(24, 70);
-            this.ComisionVendedoresLblMantenimientoEstado.Name = "ComisionVendedoresLblMantenimientoEstado";
-            this.ComisionVendedoresLblMantenimientoEstado.Size = new System.Drawing.Size(1210, 28);
-            this.ComisionVendedoresLblMantenimientoEstado.TabIndex = 3;
-            this.ComisionVendedoresLblMantenimientoEstado.Text = "La tabla muestra las 4 tasas por producto. Seleccione producto(s), elija alcance y nuevo %; Marca, Línea o Categoría actualiza la clasificación compartida.";
-            // 
-            // ComisionVendedoresBtnActualizar
-            // 
-            this.ComisionVendedoresBtnActualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(63)))), ((int)(((byte)(147)))));
-            this.ComisionVendedoresBtnActualizar.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnActualizar.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.ComisionVendedoresBtnActualizar.Location = new System.Drawing.Point(478, 23);
-            this.ComisionVendedoresBtnActualizar.Name = "ComisionVendedoresBtnActualizar";
-            this.ComisionVendedoresBtnActualizar.Size = new System.Drawing.Size(190, 30);
-            this.ComisionVendedoresBtnActualizar.TabIndex = 4;
-            this.ComisionVendedoresBtnActualizar.Text = "Actualizar porcentaje";
-            this.ComisionVendedoresBtnActualizar.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnActualizar.Click += new System.EventHandler(this.ComisionVendedoresMetActualizarClick);
-            // 
-            // ComisionVendedoresBtnBuscar
-            // 
-            this.ComisionVendedoresBtnBuscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.ComisionVendedoresBtnBuscar.FlatAppearance.BorderSize = 0;
-            this.ComisionVendedoresBtnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComisionVendedoresBtnBuscar.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.ComisionVendedoresBtnBuscar.Location = new System.Drawing.Point(348, 23);
-            this.ComisionVendedoresBtnBuscar.Name = "ComisionVendedoresBtnBuscar";
-            this.ComisionVendedoresBtnBuscar.Size = new System.Drawing.Size(110, 30);
-            this.ComisionVendedoresBtnBuscar.TabIndex = 5;
-            this.ComisionVendedoresBtnBuscar.Text = "Buscar";
-            this.ComisionVendedoresBtnBuscar.UseVisualStyleBackColor = false;
-            this.ComisionVendedoresBtnBuscar.Click += new System.EventHandler(this.ComisionVendedoresMetBuscarClick);
-            // 
-            // ComisionVendedoresTxtPorcentaje
-            // 
-            this.ComisionVendedoresTxtPorcentaje.Location = new System.Drawing.Point(220, 25);
-            this.ComisionVendedoresTxtPorcentaje.Name = "ComisionVendedoresTxtPorcentaje";
-            this.ComisionVendedoresTxtPorcentaje.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ComisionVendedoresTxtPorcentaje.Size = new System.Drawing.Size(110, 30);
-            this.ComisionVendedoresTxtPorcentaje.TabIndex = 6;
-            // 
-            // ComisionVendedoresCboAlcance
-            // 
-            this.ComisionVendedoresCboAlcance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComisionVendedoresCboAlcance.Items.AddRange(new object[] {
+            this.VentasBtnAnteriorPorcentajes.Enabled = false;
+            this.VentasBtnAnteriorPorcentajes.BackColor = System.Drawing.Color.LightGray;
+            this.VentasBtnAnteriorPorcentajes.FlatAppearance.BorderSize = 0;
+            this.VentasBtnAnteriorPorcentajes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnAnteriorPorcentajes.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            this.VentasBtnAnteriorPorcentajes.Location = new System.Drawing.Point(24, 550);
+            this.VentasBtnAnteriorPorcentajes.Name = "VentasBtnAnteriorPorcentajes";
+            this.VentasBtnAnteriorPorcentajes.Size = new System.Drawing.Size(100, 28);
+            this.VentasBtnAnteriorPorcentajes.TabIndex = 8;
+            this.VentasBtnAnteriorPorcentajes.Text = "Anterior";
+            this.VentasBtnAnteriorPorcentajes.UseVisualStyleBackColor = false;
+            this.VentasBtnAnteriorPorcentajes.Click += new System.EventHandler(this.VentasMetCambiarPaginaPorcentajes);
+            this.VentasBtnSiguientePorcentajes.Enabled = false;
+            this.VentasBtnSiguientePorcentajes.BackColor = System.Drawing.Color.LightGray;
+            this.VentasBtnSiguientePorcentajes.FlatAppearance.BorderSize = 0;
+            this.VentasBtnSiguientePorcentajes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnSiguientePorcentajes.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            this.VentasBtnSiguientePorcentajes.Location = new System.Drawing.Point(1134, 550);
+            this.VentasBtnSiguientePorcentajes.Name = "VentasBtnSiguientePorcentajes";
+            this.VentasBtnSiguientePorcentajes.Size = new System.Drawing.Size(100, 28);
+            this.VentasBtnSiguientePorcentajes.TabIndex = 9;
+            this.VentasBtnSiguientePorcentajes.Text = "Siguiente";
+            this.VentasBtnSiguientePorcentajes.UseVisualStyleBackColor = false;
+            this.VentasBtnSiguientePorcentajes.Click += new System.EventHandler(this.VentasMetCambiarPaginaPorcentajes);
+            this.VentasLblPaginaPorcentajes.AutoSize = false;
+            this.VentasLblPaginaPorcentajes.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.VentasLblPaginaPorcentajes.Location = new System.Drawing.Point(486, 554);
+            this.VentasLblPaginaPorcentajes.Name = "VentasLblPaginaPorcentajes";
+            this.VentasLblPaginaPorcentajes.Size = new System.Drawing.Size(300, 20);
+            this.VentasLblPaginaPorcentajes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VentasLblPaginaPorcentajes.TabIndex = 10;
+            this.VentasLblPaginaPorcentajes.Text = "Página 0 de 0 · 0 registros";
+            //
+            // VentasLblAlcance
+            //
+            this.VentasLblAlcance.AutoSize = true;
+            this.VentasLblAlcance.Location = new System.Drawing.Point(24, 7);
+            this.VentasLblAlcance.Name = "VentasLblAlcance";
+            this.VentasLblAlcance.Size = new System.Drawing.Size(179, 23);
+            this.VentasLblAlcance.TabIndex = 1;
+            this.VentasLblAlcance.Text = "Aplicar porcentaje por";
+            //
+            // VentasLblPorcentajeNuevo
+            //
+            this.VentasLblPorcentajeNuevo.AutoSize = true;
+            this.VentasLblPorcentajeNuevo.Location = new System.Drawing.Point(220, 7);
+            this.VentasLblPorcentajeNuevo.Name = "VentasLblPorcentajeNuevo";
+            this.VentasLblPorcentajeNuevo.Size = new System.Drawing.Size(142, 23);
+            this.VentasLblPorcentajeNuevo.TabIndex = 2;
+            this.VentasLblPorcentajeNuevo.Text = "Porcentaje nuevo";
+            this.VentasLblObligatorioAlcance.AutoSize = true;
+            this.VentasLblObligatorioAlcance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblObligatorioAlcance.ForeColor = System.Drawing.Color.Firebrick;
+            this.VentasLblObligatorioAlcance.Location = new System.Drawing.Point(201, 7);
+            this.VentasLblObligatorioAlcance.Name = "VentasLblObligatorioAlcance";
+            this.VentasLblObligatorioAlcance.Size = new System.Drawing.Size(12, 18);
+            this.VentasLblObligatorioAlcance.TabIndex = 11;
+            this.VentasLblObligatorioAlcance.Text = "*";
+            this.VentasLblObligatorioAlcance.TabStop = false;
+            this.VentasLblObligatorioPorcentaje.AutoSize = true;
+            this.VentasLblObligatorioPorcentaje.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.VentasLblObligatorioPorcentaje.ForeColor = System.Drawing.Color.Firebrick;
+            this.VentasLblObligatorioPorcentaje.Location = new System.Drawing.Point(363, 7);
+            this.VentasLblObligatorioPorcentaje.Name = "VentasLblObligatorioPorcentaje";
+            this.VentasLblObligatorioPorcentaje.Size = new System.Drawing.Size(12, 18);
+            this.VentasLblObligatorioPorcentaje.TabIndex = 12;
+            this.VentasLblObligatorioPorcentaje.Text = "*";
+            this.VentasLblObligatorioPorcentaje.TabStop = false;
+            //
+            // VentasLblMantenimientoEstado
+            //
+            this.VentasLblMantenimientoEstado.AutoSize = true;
+            this.VentasLblMantenimientoEstado.Location = new System.Drawing.Point(24, 70);
+            this.VentasLblMantenimientoEstado.Name = "VentasLblMantenimientoEstado";
+            this.VentasLblMantenimientoEstado.Size = new System.Drawing.Size(1210, 28);
+            this.VentasLblMantenimientoEstado.TabIndex = 3;
+            this.VentasLblMantenimientoEstado.Text = "La tabla muestra las 4 tasas por producto. Seleccione producto(s), elija alcance y nuevo %; Marca, Línea o Categoría actualiza la clasificación compartida.";
+            //
+            // VentasBtnActualizar
+            //
+            this.VentasBtnActualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(63)))), ((int)(((byte)(147)))));
+            this.VentasBtnActualizar.FlatAppearance.BorderSize = 0;
+            this.VentasBtnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnActualizar.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            this.VentasBtnActualizar.Location = new System.Drawing.Point(478, 23);
+            this.VentasBtnActualizar.Name = "VentasBtnActualizar";
+            this.VentasBtnActualizar.Size = new System.Drawing.Size(190, 30);
+            this.VentasBtnActualizar.TabIndex = 4;
+            this.VentasBtnActualizar.Text = "Actualizar porcentaje";
+            this.VentasBtnActualizar.UseVisualStyleBackColor = false;
+            this.VentasBtnActualizar.Click += new System.EventHandler(this.VentasMetActualizarClick);
+            //
+            // VentasBtnBuscar
+            //
+            this.VentasBtnBuscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
+            this.VentasBtnBuscar.FlatAppearance.BorderSize = 0;
+            this.VentasBtnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.VentasBtnBuscar.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            this.VentasBtnBuscar.Location = new System.Drawing.Point(348, 23);
+            this.VentasBtnBuscar.Name = "VentasBtnBuscar";
+            this.VentasBtnBuscar.Size = new System.Drawing.Size(110, 30);
+            this.VentasBtnBuscar.TabIndex = 5;
+            this.VentasBtnBuscar.Text = "Buscar";
+            this.VentasBtnBuscar.UseVisualStyleBackColor = false;
+            this.VentasBtnBuscar.Click += new System.EventHandler(this.VentasMetBuscarClick);
+            //
+            // VentasTxtPorcentaje
+            //
+            this.VentasTxtPorcentaje.Location = new System.Drawing.Point(220, 25);
+            this.VentasTxtPorcentaje.Name = "VentasTxtPorcentaje";
+            this.VentasTxtPorcentaje.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.VentasTxtPorcentaje.Size = new System.Drawing.Size(110, 30);
+            this.VentasTxtPorcentaje.TabIndex = 6;
+            //
+            // VentasCboAlcance
+            //
+            this.VentasCboAlcance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VentasCboAlcance.Items.AddRange(new object[] {
             "Marca",
             "Línea",
             "Producto",
             "Categoría"});
-            this.ComisionVendedoresCboAlcance.Location = new System.Drawing.Point(24, 25);
-            this.ComisionVendedoresCboAlcance.Name = "ComisionVendedoresCboAlcance";
-            this.ComisionVendedoresCboAlcance.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ComisionVendedoresCboAlcance.SelectedIndex = 0;
-            this.ComisionVendedoresCboAlcance.Size = new System.Drawing.Size(160, 31);
-            this.ComisionVendedoresCboAlcance.TabIndex = 7;
-            // 
-            // ComisionVendedoresPnlEncabezado
-            // 
-            this.ComisionVendedoresPnlEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
-            this.ComisionVendedoresPnlEncabezado.Controls.Add(this.ComisionVendedoresLblTitulo);
-            this.ComisionVendedoresPnlEncabezado.Controls.Add(this.ComisionVendedoresLblSubtitulo);
-            this.ComisionVendedoresPnlEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ComisionVendedoresPnlEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.ComisionVendedoresPnlEncabezado.Name = "ComisionVendedoresPnlEncabezado";
-            this.ComisionVendedoresPnlEncabezado.Size = new System.Drawing.Size(1280, 82);
-            this.ComisionVendedoresPnlEncabezado.TabIndex = 1;
-            // 
-            // ComisionVendedoresLblTitulo
-            // 
-            this.ComisionVendedoresLblTitulo.AutoSize = true;
-            this.ComisionVendedoresLblTitulo.Font = new System.Drawing.Font("Lucida Sans Unicode", 18F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic);
-            this.ComisionVendedoresLblTitulo.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
-            this.ComisionVendedoresLblTitulo.Location = new System.Drawing.Point(28, 13);
-            this.ComisionVendedoresLblTitulo.Name = "ComisionVendedoresLblTitulo";
-            this.ComisionVendedoresLblTitulo.Size = new System.Drawing.Size(412, 46);
-            this.ComisionVendedoresLblTitulo.TabIndex = 0;
-            this.ComisionVendedoresLblTitulo.Text = "Comisión de vendedores";
-            // 
-            // ComisionVendedoresLblSubtitulo
-            // 
-            this.ComisionVendedoresLblSubtitulo.AutoSize = true;
-            this.ComisionVendedoresLblSubtitulo.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.ComisionVendedoresLblSubtitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
-            this.ComisionVendedoresLblSubtitulo.Location = new System.Drawing.Point(32, 55);
-            this.ComisionVendedoresLblSubtitulo.Name = "ComisionVendedoresLblSubtitulo";
-            this.ComisionVendedoresLblSubtitulo.Size = new System.Drawing.Size(431, 23);
-            this.ComisionVendedoresLblSubtitulo.TabIndex = 1;
-            this.ComisionVendedoresLblSubtitulo.Text = "Cálculo de comisiones y mantenimiento de porcentajes";
-            // 
+            this.VentasCboAlcance.Location = new System.Drawing.Point(24, 25);
+            this.VentasCboAlcance.Name = "VentasCboAlcance";
+            this.VentasCboAlcance.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.VentasCboAlcance.SelectedIndex = 0;
+            this.VentasCboAlcance.Size = new System.Drawing.Size(160, 31);
+            this.VentasCboAlcance.TabIndex = 7;
+            //
+            // VentasPnlEncabezado
+            //
+            this.VentasPnlEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
+            this.VentasPnlEncabezado.Controls.Add(this.VentasLblTitulo);
+            this.VentasPnlEncabezado.Controls.Add(this.VentasLblSubtitulo);
+            this.VentasPnlEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
+            this.VentasPnlEncabezado.Location = new System.Drawing.Point(0, 0);
+            this.VentasPnlEncabezado.Name = "VentasPnlEncabezado";
+            this.VentasPnlEncabezado.Size = new System.Drawing.Size(1280, 82);
+            this.VentasPnlEncabezado.TabIndex = 1;
+            //
+            // VentasLblTitulo
+            //
+            this.VentasLblTitulo.AutoSize = true;
+            this.VentasLblTitulo.Font = new System.Drawing.Font("Lucida Sans Unicode", 18F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic);
+            this.VentasLblTitulo.ForeColor = System.Drawing.Color.FromArgb(248, 245, 249);
+            this.VentasLblTitulo.Location = new System.Drawing.Point(28, 13);
+            this.VentasLblTitulo.Name = "VentasLblTitulo";
+            this.VentasLblTitulo.Size = new System.Drawing.Size(412, 46);
+            this.VentasLblTitulo.TabIndex = 0;
+            this.VentasLblTitulo.Text = "Comisión de vendedores";
+            //
+            // VentasLblSubtitulo
+            //
+            this.VentasLblSubtitulo.AutoSize = true;
+            this.VentasLblSubtitulo.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.VentasLblSubtitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(234)))));
+            this.VentasLblSubtitulo.Location = new System.Drawing.Point(32, 55);
+            this.VentasLblSubtitulo.Name = "VentasLblSubtitulo";
+            this.VentasLblSubtitulo.Size = new System.Drawing.Size(431, 23);
+            this.VentasLblSubtitulo.TabIndex = 1;
+            this.VentasLblSubtitulo.Text = "Cálculo de comisiones y mantenimiento de porcentajes";
+            //
             // FrmComisionVendedores
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(1280, 700);
-            this.Controls.Add(this.ComisionVendedoresTbcPestanas);
-            this.Controls.Add(this.ComisionVendedoresPnlEncabezado);
+            this.Controls.Add(this.VentasTbcPestanas);
+            this.Controls.Add(this.VentasPnlEncabezado);
             this.Font = new System.Drawing.Font("Tahoma", 9F);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(29)))), ((int)(((byte)(74)))));
             this.Icon = ((System.Drawing.Icon)(RecursosFormulario.GetObject("$this.Icon")));
@@ -1106,18 +1106,18 @@ namespace ComisionVendedoresVista
             this.Name = "FrmComisionVendedores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "7008 – ComisionVendedores";
-            this.ComisionVendedoresTbcPestanas.ResumeLayout(false);
-            this.ComisionVendedoresTabCalculo.ResumeLayout(false);
-            this.ComisionVendedoresTabCalculo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ComisionVendedoresDgvResultados)).EndInit();
-            this.ComisionVendedoresTabAsignarFactura.ResumeLayout(false);
-            this.ComisionVendedoresTabAsignarFactura.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ComisionVendedoresDgvDetalleFactura)).EndInit();
-            this.ComisionVendedoresTabMantenimiento.ResumeLayout(false);
-            this.ComisionVendedoresTabMantenimiento.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ComisionVendedoresDgvPorcentajes)).EndInit();
-            this.ComisionVendedoresPnlEncabezado.ResumeLayout(false);
-            this.ComisionVendedoresPnlEncabezado.PerformLayout();
+            this.VentasTbcPestanas.ResumeLayout(false);
+            this.VentasTbpCalculo.ResumeLayout(false);
+            this.VentasTbpCalculo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VentasDgvResultados)).EndInit();
+            this.VentasTbpAsignarFactura.ResumeLayout(false);
+            this.VentasTbpAsignarFactura.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VentasDgvDetalleFactura)).EndInit();
+            this.VentasTbpMantenimiento.ResumeLayout(false);
+            this.VentasTbpMantenimiento.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VentasDgvPorcentajes)).EndInit();
+            this.VentasPnlEncabezado.ResumeLayout(false);
+            this.VentasPnlEncabezado.PerformLayout();
             this.ResumeLayout(false);
 
         }
