@@ -1,4 +1,6 @@
-using CapaControlador_Seguridad.Objetos_de_valor;
+﻿using CapaControlador_Seguridad.Objetos_de_valor;
+using CapaVista_Bancos.Formularios;
+using CapaVista_Rrhh.Formularios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaVista_Ventas;
+using CapaVista_Logistica.Formularios;
+using CapaVista_Consultas;
+using CapaVista_Contabilidad;
+using CapaVista_Compras;
 
 /*
  * ============================================================
@@ -54,56 +61,6 @@ namespace CapaVista_Seguridad
             _TimerCarga.Start();
         }
 
-        // Los modulos dependen de Seguridad; se cargan al abrirlos para evitar
-        // que Seguridad tenga que referenciarlos tambien durante la compilacion.
-        private static readonly Dictionary<string, string> _RutasModulos =
-            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        private static bool _ResolucionRegistrada;
-
-        private static Form SeguridadMetAbrirModulo(string ensamblado, string formulario, string actualizar)
-        {
-            if (!_ResolucionRegistrada)
-            {
-                string registro = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Modulos.xml");
-                if (System.IO.File.Exists(registro))
-                {
-                    var xml = new System.Xml.XmlDocument { XmlResolver = null };
-                    xml.Load(registro);
-                    foreach (System.Xml.XmlElement elemento in xml.SelectNodes("/modulos/ensamblado"))
-                        _RutasModulos[elemento.GetAttribute("nombre")] = System.IO.Path.GetFullPath(
-                            System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, elemento.GetAttribute("ruta")));
-                }
-                AppDomain.CurrentDomain.AssemblyResolve += SeguridadMetResolverModulo;
-                _ResolucionRegistrada = true;
-            }
-            var assembly = System.Reflection.Assembly.Load(ensamblado);
-            var tipo = assembly.GetType(formulario, true);
-            object[] argumentos = actualizar == null
-                ? new object[] { ClsSesionSeguridad.NombreEmpleado, ClsSesionSeguridad.SeguridadMetRolesComoTexto(), ClsSesionSeguridad.IdUsuario }
-                : new object[0];
-            var ventana = (Form)Activator.CreateInstance(tipo, argumentos);
-            try
-            {
-                if (actualizar != null)
-                {
-                    var metodo = tipo.GetMethod(actualizar, new[] { typeof(string), typeof(string) });
-                    if (metodo == null) throw new MissingMethodException(tipo.FullName, actualizar);
-                    metodo.Invoke(ventana, new object[] { ClsSesionSeguridad.NombreEmpleado, ClsSesionSeguridad.SeguridadMetRolesComoTexto() });
-                }
-                return ventana;
-            }
-            catch { ventana.Dispose(); throw; }
-        }
-
-        private static System.Reflection.Assembly SeguridadMetResolverModulo(object sender, ResolveEventArgs args)
-        {
-            string nombre = new System.Reflection.AssemblyName(args.Name).Name;
-            string ruta;
-            if (!_RutasModulos.TryGetValue(nombre, out ruta))
-                ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, nombre + ".dll");
-            return System.IO.File.Exists(ruta) ? System.Reflection.Assembly.LoadFrom(ruta) : null;
-        }
-
         private void _TimerCarga_Tick(object sender, EventArgs e)
         {
             _Progreso += 1;
@@ -117,25 +74,62 @@ namespace CapaVista_Seguridad
                 this.Hide();
 
                 Form principal = null;
-                try
+                switch (_Destino)
                 {
-                    switch (_Destino)
-                    {
-                        case "Logistica": principal = SeguridadMetAbrirModulo("CapaVista_Logistica", "CapaVista_Logistica.Formularios.FrmMDILogistica", "LogisticaMetActualizarInfoUsuario"); break;
-                        case "Compras": principal = SeguridadMetAbrirModulo("CapaVista_Compras", "CapaVista_Compras.FrmMDICompras", "ComprasMetActualizarInfoUsuario"); break;
-                        case "Ventas": principal = SeguridadMetAbrirModulo("CapaVista_Ventas", "CapaVista_Ventas.FrmMdiVentas", null); break;
-                        case "Bancos": principal = SeguridadMetAbrirModulo("CapaVista_Bancos", "CapaVista_Bancos.Formularios.FrmMDIBancos", "BancosMetActualizarInfoUsuario"); break;
-                        case "Contabilidad": principal = SeguridadMetAbrirModulo("CapaVista_Contabilidad", "CapaVista_Contabilidad.FrmMDIContabilidad", "ContabilidadMetActualizarInfoUsuario"); break;
-                        case "RRHH": principal = SeguridadMetAbrirModulo("CapaVista_Rrhh", "CapaVista_Rrhh.Formularios.FrmMDIRrhh", "RrhhMetActualizarInfoUsuario"); break;
-                        default: principal = new FrmMDISeguridad(); break;
-                    }
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("No se pudo abrir el modulo " + _Destino + ": " + error.GetBaseException().Message,
-                        "Seguridad", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                    return;
+                    case "Seguridad":
+                        principal = new FrmMDISeguridad();
+                        break;
+                    
+                  case "Logistica":
+                    var MDILogistica = new CapaVista_Logistica.Formularios.FrmMDILogistica();
+                      MDILogistica.LogisticaMetActualizarInfoUsuario(
+                      ClsSesionSeguridad.NombreEmpleado,
+                      ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                       principal = MDILogistica;
+                       break;
+
+                    case "Compras":
+                        var MDICompras = new FrmMDICompras();
+                        MDICompras.ComprasMetActualizarInfoUsuario(
+                        ClsSesionSeguridad.NombreEmpleado,
+                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                        principal = MDICompras;
+                        break;
+
+                  case "Ventas":
+                     var mdiVentas = new CapaVista_Ventas.FrmMdiVentas(
+                          ClsSesionSeguridad.NombreEmpleado,
+                            ClsSesionSeguridad.SeguridadMetRolesComoTexto(), ClsSesionSeguridad.IdUsuario);
+                           principal = mdiVentas;
+                        break;
+
+                    case "Bancos":
+                        var MdiBancos = new FrmMDIBancos();
+                        MdiBancos.BancosMetActualizarInfoUsuario(
+                        ClsSesionSeguridad.NombreEmpleado,
+                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                        principal = MdiBancos;
+                        break;
+
+                    case "Contabilidad":
+                        var MDIContabilidad = new FrmMDIContabilidad();
+                        MDIContabilidad.ContabilidadMetActualizarInfoUsuario(
+                        ClsSesionSeguridad.NombreEmpleado,
+                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                        principal = MDIContabilidad;
+                        break;
+
+                    case "RRHH":
+                        var MdiRrhh = new FrmMDIRrhh();
+                        MdiRrhh.RrhhMetActualizarInfoUsuario(
+                        ClsSesionSeguridad.NombreEmpleado,
+                        ClsSesionSeguridad.SeguridadMetRolesComoTexto());
+                        principal = MdiRrhh;
+                        break;
+
+                    default:
+                        principal = new FrmMDISeguridad();
+                        break;
                 }
 
                 principal.ShowDialog();
