@@ -83,7 +83,7 @@
     <ProyectoNuGetVentas Include="..\Biblioteca de clase Ventas Y CxC\**\Capa*\*.csproj;..\Ejecutable_Ventas\Ejecutable_Ventas\Ejecucion_Ventas.csproj" />
   </ItemGroup>
   <Target Name="RestaurarDependenciasVentas">
-    <MSBuild Projects="@(ProyectoNuGetVentas)" Targets="Restore" Properties="Configuration=$(Configuration);Platform=AnyCPU" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(ProyectoNuGetVentas)" Targets="Restore" Properties="Configuration=$(Configuration);Platform=AnyCPU;RestorePackagesConfig=false" BuildInParallel="true" StopOnFirstFailure="true" />
   </Target>
   <Target Name="PrepararDependenciasVentas" DependsOnTargets="ValidarConfiguracion;RestaurarDependenciasVentas;CompilarComponentesVentas;ValidarSeguridadVentas" />
   <Target Name="ValidarSeguridadVentas">
