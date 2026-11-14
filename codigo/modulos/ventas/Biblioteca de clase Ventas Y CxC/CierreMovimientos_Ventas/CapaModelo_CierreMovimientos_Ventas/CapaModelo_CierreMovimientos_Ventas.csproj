@@ -28,6 +28,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <DirectorioVentasCompartido>$(MSBuildProjectDirectory)\..\..\VentasYCxC</DirectorioVentasCompartido>
+    <DirectorioVentasCompartido Condition="Exists('$(MSBuildProjectDirectory)\..\..\VentasYCxC_Ventas\CapaModelo_Ventas\CapaModelo_Ventas.csproj')">$(MSBuildProjectDirectory)\..\..\VentasYCxC_Ventas</DirectorioVentasCompartido>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,7 +45,7 @@
     <Compile Include="Repositorios\ClsContabilidadCierre.cs" />
     <Compile Include="Repositorios\ClsConsultasCierre.cs" />
     <Compile Include="Repositorios\ClsCierreRepositorio.cs" />
-    <Compile Include="..\..\VentasYCxC_Ventas\CapaModelo_Ventas\Datos\ClsDatosVentas.cs">
+    <Compile Include="$(DirectorioVentasCompartido)\CapaModelo_Ventas\Datos\ClsDatosVentas.cs">
       <Link>Conexion\ClsDatosVentas.cs</Link>
     </Compile>
   </ItemGroup>
@@ -49,7 +53,7 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\VentasYCxC_Ventas\CapaModelo_Ventas\CapaModelo_Ventas.csproj">
+    <ProjectReference Include="$(DirectorioVentasCompartido)\CapaModelo_Ventas\CapaModelo_Ventas.csproj">
       <Project>{1CCD5DF0-9BE4-4A86-8A60-20600E4FF3DC}</Project>
       <Name>CapaModelo_Ventas</Name>
       <Private>True</Private>

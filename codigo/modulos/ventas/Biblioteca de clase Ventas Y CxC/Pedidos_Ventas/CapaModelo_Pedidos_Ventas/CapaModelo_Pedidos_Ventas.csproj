@@ -25,6 +25,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <DirectorioVentasCompartido>$(MSBuildProjectDirectory)\..\..\VentasYCxC</DirectorioVentasCompartido>
+    <DirectorioVentasCompartido Condition="Exists('$(MSBuildProjectDirectory)\..\..\VentasYCxC_Ventas\CapaModelo_Ventas\CapaModelo_Ventas.csproj')">$(MSBuildProjectDirectory)\..\..\VentasYCxC_Ventas</DirectorioVentasCompartido>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -37,7 +41,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\VentasYCxC_Ventas\CapaModelo_Ventas\CapaModelo_Ventas.csproj">
+    <ProjectReference Include="$(DirectorioVentasCompartido)\CapaModelo_Ventas\CapaModelo_Ventas.csproj">
       <Project>{1CCD5DF0-9BE4-4A86-8A60-20600E4FF3DC}</Project>
       <Name>CapaModelo_Ventas</Name>
       <Private>True</Private>

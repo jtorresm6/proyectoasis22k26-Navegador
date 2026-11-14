@@ -29,6 +29,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <DirectorioVentasCompartido>$(MSBuildProjectDirectory)\..\..\VentasYCxC</DirectorioVentasCompartido>
+    <DirectorioVentasCompartido Condition="Exists('$(MSBuildProjectDirectory)\..\..\VentasYCxC_Ventas\CapaModelo_Ventas\CapaModelo_Ventas.csproj')">$(MSBuildProjectDirectory)\..\..\VentasYCxC_Ventas</DirectorioVentasCompartido>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,7 +55,7 @@
     <Compile Include="Validaciones\ClsReglasCierre.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\VentasYCxC_Ventas\CapaControlador_Ventas\Validaciones\ClsValidacionesVentas.cs">
+    <Compile Include="$(DirectorioVentasCompartido)\CapaControlador_Ventas\Validaciones\ClsValidacionesVentas.cs">
       <Link>Validaciones\ClsValidacionesVentas.cs</Link>
     </Compile>
   </ItemGroup>
