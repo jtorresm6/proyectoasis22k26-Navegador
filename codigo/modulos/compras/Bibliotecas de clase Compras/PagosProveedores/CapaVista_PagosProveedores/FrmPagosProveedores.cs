@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using CapaControlador_PagosProveedores;
+using Microsoft.Reporting.WinForms;
 
 using CapaVista_Componentes.Componentes;
 
@@ -94,7 +95,7 @@ namespace CapaVista_PagosProveedores
             }
         }
 
-        // ==================== LISTA DE PAGOS ====================
+        // LISTA DE PAGOS 
         private void ComprasMetCargarGrid()
         {
             try
@@ -206,7 +207,7 @@ namespace CapaVista_PagosProveedores
             ComprasMetEliminarPago(IdPago, NoPago);
         }
 
-        // ==================== FORMULARIO DE REGISTRO ====================
+        //  FORMULARIO DE REGISTRO 
         private void ComprasMetLimpiarFormulario()
         {
             _IdPagoEditando = 0;
@@ -463,7 +464,7 @@ namespace CapaVista_PagosProveedores
             return false;
         }
 
-        // ==================== DETALLE (DOCUMENTOS A PAGAR) ====================
+        //  DETALLE (DOCUMENTOS A PAGAR) 
         private void ComprasMetAgregarDocumentoClick(object Sender, EventArgs Evento)
         {
             string Clave = Convert.ToString(ComprasFuncValorCombo(ComprasCboFactura));
@@ -556,7 +557,7 @@ namespace CapaVista_PagosProveedores
             ComprasLblTotalAplicado.Text = TextoTotal;
         }
 
-        // ==================== GUARDAR / ELIMINAR ====================
+        //  GUARDAR / ELIMINAR
         private void ComprasMetGuardarClick(object Sender, EventArgs Evento)
         {
             DateTime Fecha;
@@ -634,7 +635,88 @@ namespace CapaVista_PagosProveedores
             }
         }
 
-        // ==================== EVENTOS DE CONTROLES ====================
+        // ==================== REPORTE ====================
+
+        // Arma el DataSet y los parámetros del reporte con el pago seleccionado en la lista.
+        // Si lanza una excepción, ComprasUsrEncabezado la muestra en un MessageBox y no abre el visor.
+        private void ComprasMetPrepararReporte(object Sender, ComprasReporteEventArgs Evento)
+        {
+            // TEMPORAL: muestra el error real de cualquier paso (incluido SetParameters, que ya lee el RDLC)
+            try
+            {
+                ComprasMetPrepararReporteInterno(Evento);
+            }
+            catch (Exception Ex)
+            {
+                string Detalle = "";
+                for (Exception E = Ex; E != null; E = E.InnerException)
+                    Detalle += E.GetType().Name + ": " + E.Message + Environment.NewLine + Environment.NewLine;
+                Detalle += "CARPETA DEL PROGRAMA (copiar aqui la DLL):" + Environment.NewLine + AppDomain.CurrentDomain.BaseDirectory;
+                MessageBox.Show(Detalle, "Error real del RDLC");
+                throw;
+            }
+        }
+
+        private void ComprasMetPrepararReporteInterno(ComprasReporteEventArgs Evento)
+        {
+            // Igual que el detalle de orden: se imprime el registro que se está viendo.
+            // Si hay un pago en edición se usa ese; si no, el seleccionado en la lista.
+            int IdPago = _IdPagoEditando;
+            if (IdPago == 0)
+            {
+                DataGridViewRow Fila = ComprasDgvPagos.CurrentRow;
+                if (Fila == null || Fila.IsNewRow || !ComprasDgvPagos.Columns.Contains("idPago"))
+                    throw new InvalidOperationException("Seleccione un pago de la lista para imprimirlo.");
+                IdPago = Convert.ToInt32(Fila.Cells["idPago"].Value);
+            }
+
+            ClsModeloPagoProveedor Pago = _Modelo.ComprasMetObtenerPorId(IdPago);
+            if (Pago == null)
+                throw new InvalidOperationException("El pago seleccionado ya no existe.");
+
+            // Dataset con los mismos nombres de columna que usa el RDLC
+            DataTable Tabla = new DataTable("DetallePagoProveedor");
+            Tabla.Columns.Add("serieDocumentoCuentaPorPagar", typeof(string));
+            Tabla.Columns.Add("numeroDocumentoCuentaPorPagar", typeof(string));
+            Tabla.Columns.Add("nombreConceptoProveedor", typeof(string));
+            Tabla.Columns.Add("montoAplicadoDetallePago", typeof(decimal));
+            foreach (ClsModeloDetallePagoProveedor Detalle in Pago.Detalles)
+                Tabla.Rows.Add(Detalle.SerieDocumento, Detalle.NumeroDocumento, Detalle.NombreConcepto, Detalle.MontoAplicado);
+
+            Evento.Reporte.DataSources.Clear();
+            Evento.Reporte.DataSources.Add(new ReportDataSource("DetallePagoProveedor", Tabla));
+            Evento.Reporte.DisplayName = "Pago a proveedor " + Pago.NoPagoProveedor;
+            CultureInfo Formato = CultureInfo.GetCultureInfo("es-GT");
+
+            string Moneda = ComprasFuncCodigoMoneda(Pago.IdMoneda);
+
+            string Informacion =
+                "Fecha: " + Pago.FechaPagoProveedor.ToString(_FormatoFecha) + "\n" +
+                "Método: " + Pago.NombreMetodoPago + "\n" +
+                "Referencia: " + (string.IsNullOrWhiteSpace(Pago.ReferenciaPagoProveedor) ? "-" : Pago.ReferenciaPagoProveedor) + "\n" +
+                "Estado: " + Pago.EstadoPagoProveedor;
+
+            // El RDLC parte este texto por saltos de línea: 0 documentos, 1 moneda, 2 tipo de cambio, 3 total
+            string Totales =
+                "Documentos aplicados: " + Pago.Detalles.Count + "\n" +
+                "Moneda: " + Moneda + "\n" +
+                "Tipo de cambio: " + Pago.TipoCambioPagoProveedor.ToString("N6", Formato) + "\n" +
+                "TOTAL (" + Moneda + "): " + Pago.MontoPagoProveedor.ToString("N2", Formato);
+
+            Evento.Reporte.SetParameters(new[]
+            {
+                new ReportParameter("Pago", "Pago No. " + Pago.NoPagoProveedor),
+                new ReportParameter("Proveedor", "PROVEEDOR: " + Pago.NombreProveedor),
+                new ReportParameter("Informacion", Informacion),
+                new ReportParameter("Totales", Totales),
+                new ReportParameter("Comentario", "Sin observaciones")
+            });
+
+            // TEMPORAL: fuerza el procesamiento completo. Borrar esta línea cuando el reporte funcione.
+            Evento.Reporte.Render("PDF");
+        }
+
+        // EVENTOS DE CONTROLES 
         private void ComprasMetFiltroCambio(object Sender, EventArgs Evento)
         {
             if (_Cargando)
@@ -772,10 +854,13 @@ namespace CapaVista_PagosProveedores
         {
             ComprasCboProveedor.SelectedIndexChanged += ComprasMetFiltroCambio;
             ComprasCboEstado.SelectedIndexChanged += ComprasMetFiltroCambio;
-            comprasUsrRangoFechas1.Leave += ComprasMetFiltroCambio;
+            // El control avisa con RangoCambiado cada vez que cambia Desde o Hasta
+            comprasUsrRangoFechas1.RangoCambiado += ComprasMetFiltroCambio;
             ComprasCboProveedorPago.SelectedIndexChanged += ComprasMetProveedorPagoCambio;
             ComprasCboFactura.SelectedIndexChanged += ComprasMetFacturaCambio;
             ComprasCboMoneda.SelectedIndexChanged += ComprasMetMonedaCambio;
+            // El encabezado avisa antes de mostrar el reporte para que el formulario cargue datos y parámetros
+            ComprasUsrEncabezadoFormulario.PrepararReporte += ComprasMetPrepararReporte;
         }
 
         private void ComprasMetLlenarCombo(ComprasUsrComboBox Combo, object Origen, string MiembroTexto, string MiembroValor)
@@ -823,14 +908,19 @@ namespace CapaVista_PagosProveedores
             Caja.Text = Texto;
         }
 
-        // Handlers vacíos: el Designer los tiene enlazados, por eso se conservan.
-        // Si los quitás, borrá también las líneas "+= new System.EventHandler(...)" en el Designer.
+
+        // Manejadores vacíos: el Designer los referencia, no se pueden borrar sin editar FrmPagosProveedores.Designer.cs
         private void ComprasCboEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
         private void ComprasBtnAgregarDocumento_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComprasUsrEncabezadoFormulario_Load(object sender, EventArgs e)
         {
 
         }

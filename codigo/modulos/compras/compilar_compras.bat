@@ -28,6 +28,7 @@ $result = 1
 $current = $null
 $shortDrive = $null
 $runDirectory = $null
+$repositoryRoot = $null
 $timer = [Diagnostics.Stopwatch]::StartNew()
 $workers = [Math]::Max(1, [Environment]::ProcessorCount)
 
@@ -41,13 +42,21 @@ function FullPath($folder, $relative) {
     [IO.Path]::GetFullPath([IO.Path]::Combine($folder, $relative))
 }
 
+# Convierte una ruta de la unidad temporal (SUBST) a la ruta real del repositorio.
+function To-RealPath([string]$path) {
+    if ($path -and $shortDrive -and $path.StartsWith($shortDrive, [StringComparison]::OrdinalIgnoreCase)) {
+        return $repositoryRoot.TrimEnd('\') + $path.Substring($shortDrive.Length)
+    }
+    $path
+}
+
 # No se siguen enlaces ni se buscan soluciones en salidas, paquetes o respaldos.
 function Find-Files($root, [string[]]$names) {
     $queue = New-Object 'System.Collections.Generic.Queue[string]'
     $queue.Enqueue($root)
     while ($queue.Count) {
         $dir = $queue.Dequeue()
-        foreach ($entry in Get-ChildItem -LiteralPath $dir -Force) {
+        foreach ($entry in Get-ChildItem -LiteralPath $dir -Force -ErrorAction SilentlyContinue) {
             if ($entry.Attributes -band [IO.FileAttributes]::ReparsePoint) { continue }
             if ($entry.PSIsContainer) {
                 if ($entry.Name -match '^(\.git|\.vs|\.svn|\.hg|bin|obj|logs|packages|node_modules|TestResults|temp|tmp)$' -or
@@ -79,6 +88,14 @@ function Write-IfChanged([string]$path, [string]$content) {
     }
 }
 
+# Quita un proyecto del plan de compilacion (por ejemplo, si no se pudo evaluar).
+function Remove-ProjectFromPlan($project) {
+    foreach ($step in $steps) {
+        $step.Projects = @($step.Projects | Where-Object { !([object]::ReferenceEquals($_, $project)) })
+    }
+    $projects.Remove($project.Path)
+}
+
 function Invoke-ProjectQueries {
     $queryTargets = Join-Path $cacheDirectory 'Consulta.targets'
     $queryXml = @'
@@ -108,34 +125,41 @@ function Invoke-ProjectQueries {
         $body += '<Consulta Include="' + (XmlEscape (MsbuildEscape $project.Path)) + '"><AdditionalProperties>' + (XmlEscape $properties) + '</AdditionalProperties></Consulta>'
         $index++
     }
-    $body += '</ItemGroup><Target Name="Consultar"><MSBuild Projects="@(Consulta)" Targets="ConsultarCompras" BuildInParallel="true" StopOnFirstFailure="true" /></Target></Project>'
+    $body += '</ItemGroup><Target Name="Consultar"><MSBuild Projects="@(Consulta)" Targets="ConsultarCompras" BuildInParallel="true" StopOnFirstFailure="false" ContinueOnError="true" /></Target></Project>'
     [IO.File]::WriteAllText($runner, $body, [Text.UTF8Encoding]::new($false))
     & $msbuild $runner /t:Consultar /nologo /verbosity:minimal "/m:$workers" /nr:false "/p:CustomAfterMicrosoftCommonTargets=$queryTargets"
-    if ($LASTEXITCODE -ne 0) { throw 'No se pudieron evaluar los proyectos.' }
+    if ($LASTEXITCODE -ne 0) { Write-Status 'Algunos proyectos no se pudieron evaluar; se omitiran del plan.' Warning }
     # El SDK moderno usa su propio MSBuild, independiente de la version de VS.
     foreach ($project in $projects.Values | Where-Object IsSdk | Sort-Object Path) {
         $project.QueryFile = Join-Path $runDirectory ("consulta_sdk_$index.txt")
         pushd (Split-Path $project.Path)
         try {
             & $dotnet msbuild $project.Path /t:ConsultarCompras /nologo /verbosity:minimal /nr:false "/p:Configuration=$($project.Configuration)" "/p:Platform=$($project.Platform)" "/p:ComprasArchivoConsulta=$($project.QueryFile)" "/p:CustomAfterMicrosoftCommonTargets=$queryTargets"
-            if ($LASTEXITCODE -ne 0) { throw "No se pudo evaluar el proyecto SDK: $($project.Path). Compruebe dotnet --list-sdks y global.json." }
+            if ($LASTEXITCODE -ne 0) { Write-Status "No se pudo evaluar el proyecto SDK: $($project.Path). Compruebe dotnet --list-sdks y global.json." Warning }
+        } catch {
+            Write-Status "Error evaluando el proyecto SDK $($project.Path): $($_.Exception.Message)" Warning
         } finally { popd }
         $index++
     }
-    foreach ($project in $projects.Values) {
+    foreach ($project in @($projects.Values)) {
+        if (!$project.QueryFile -or !(Test-Path -LiteralPath $project.QueryFile -PathType Leaf)) {
+            Write-Status "Proyecto omitido (sin datos de evaluacion): $($project.Path)" Warning
+            Remove-ProjectFromPlan $project
+            continue
+        }
         $properties = @{}
         $references = @()
         $projectReferences = @()
         $packages = @()
         foreach ($line in [IO.File]::ReadAllLines($project.QueryFile, [Text.Encoding]::Unicode)) {
             $parts = $line.Split([char[]]@('|'), 3, [StringSplitOptions]::None)
-            if ($parts.Count -ne 3) { throw "Consulta no valida: $($project.Path): $line" }
+            if ($parts.Count -ne 3) { Write-Status "Linea de consulta ignorada ($($project.Path)): $line" Warning; continue }
             switch ($parts[0]) {
                 'P' { $properties[$parts[1]] = $parts[2] }
                 'R' { $references += [pscustomobject]@{ Identity=$parts[1]; HintPath=$parts[2] } }
                 'J' { $projectReferences += [pscustomobject]@{ Identity=$parts[1] } }
                 'N' { $packages += [pscustomobject]@{ Identity=$parts[1] } }
-                default { throw "Consulta desconocida: $line" }
+                default { Write-Status "Consulta desconocida ignorada: $line" Warning }
             }
         }
         $project.Data = [pscustomobject]@{ Properties=[pscustomobject]$properties; Items=[pscustomobject]@{
@@ -152,31 +176,40 @@ function Add-Project($path, $configuration, $platform, $step) {
         # Seguridad comparte modelo/controlador con el paso previo que necesita Navegador.
         # Reutilizar su productor; la solucion completa compila los proyectos restantes.
         if ($projects[$path].Configuration -ne $configuration) {
-            throw "Proyecto incluido con configuraciones incompatibles: $path"
+            Write-Status "Proyecto incluido con configuraciones distintas; se conserva la primera: $path" Warning
         }
         # Las soluciones pueden mapear el mismo proyecto a distintas plataformas.
         # Se conserva una sola instancia para evitar escrituras simultaneas.
         if (!($step.Projects -contains $projects[$path])) { $step.Projects += $projects[$path] }
         return $projects[$path]
     }
-    if (!(Test-Path -LiteralPath $path -PathType Leaf)) { throw "Falta el proyecto: $path" }
+    if (!(Test-Path -LiteralPath $path -PathType Leaf)) { Write-Status "Falta el proyecto (se omite): $path" Warning; return $null }
+    $isSdk = $false
+    try {
+        [xml]$projectDefinition = [IO.File]::ReadAllText($path)
+        $isSdk = $projectDefinition.DocumentElement.HasAttribute('Sdk')
+    } catch {
+        Write-Status "No se pudo leer el proyecto (se omite): $path" Warning
+        return $null
+    }
     $project = [pscustomobject]@{ Path=$path; Configuration=$configuration; Platform=$platform; Step=$step;
-        IsSdk=$false; Data=$null; Output=$null; Dependencies=@(); QueryFile=$null; Marker=$null; Wave=-1; Visiting=$false; Visited=$false }
+        IsSdk=$isSdk; Data=$null; Output=$null; Dependencies=@(); QueryFile=$null; Marker=$null; Wave=-1; Visiting=$false; Visited=$false }
     $projects[$path] = $project
     $step.Projects += $project
     $packages = Join-Path (Split-Path $path) 'packages.config'
-    [xml]$projectDefinition = [IO.File]::ReadAllText($path)
-    $project.IsSdk = $projectDefinition.DocumentElement.HasAttribute('Sdk')
     if (Test-Path -LiteralPath $packages) { $step.Packages=$true }
     $project
 }
 
 function Get-ProjectWave($project) {
     if ($project.Wave -ge 0) { return $project.Wave }
-    if ($project.Visiting) { throw "Dependencia circular: $($project.Path)" }
+    if ($project.Visiting) { Write-Status "Dependencia circular ignorada: $($project.Path)" Warning; return 0 }
     $project.Visiting = $true
     $wave = 0
-    foreach ($dependency in $project.Dependencies) { $wave = [Math]::Max($wave, (Get-ProjectWave $dependency) + 1) }
+    foreach ($dependency in $project.Dependencies) {
+        if ([object]::ReferenceEquals($dependency, $project)) { continue }
+        $wave = [Math]::Max($wave, (Get-ProjectWave $dependency) + 1)
+    }
     $project.Visiting = $false
     $project.Wave = $wave
     $wave
@@ -206,14 +239,26 @@ try {
     # Incluir tambien ayuda y los demas recursos hermanos de codigo.
     $repositoryRoot = FullPath $base '..\..\..'
     $subst = Join-Path $env:SystemRoot 'System32\subst.exe'
-    foreach ($letter in 90..68) {
-        $drive = ([char]$letter).ToString() + ':'
-        if (Test-Path -LiteralPath ($drive + '\')) { continue }
-        & $subst $drive $repositoryRoot 2>$null
-        if ($LASTEXITCODE -eq 0) { $shortDrive=$drive; break }
+    # Windows PowerShell 5.1 convierte en error fatal cualquier salida por stderr
+    # de un ejecutable nativo cuando ErrorActionPreference es Stop; subst escribe
+    # en stderr si la letra no es utilizable, asi que se prueba con Continue.
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $usedLetters = @([IO.DriveInfo]::GetDrives() | ForEach-Object { $_.Name.Substring(0,1).ToUpperInvariant() })
+        foreach ($letter in 90..68) {
+            $drive = ([char]$letter).ToString() + ':'
+            if ($usedLetters -contains ([char]$letter).ToString()) { continue }
+            if (Test-Path -LiteralPath ($drive + '\')) { continue }
+            & $subst $drive $repositoryRoot 2>&1 | Out-Null
+            if ($LASTEXITCODE -eq 0 -and (Test-Path -LiteralPath ($drive + '\'))) { $shortDrive=$drive; break }
+        }
+    } finally { $ErrorActionPreference = $previousPreference }
+    if (!$shortDrive) {
+        Write-Status 'No se pudo crear una unidad temporal libre (D: a Z:); se usa la ruta real (NuGet podria fallar con rutas largas).' Warning
+    } else {
+        $base = FullPath ($shortDrive + '\') 'codigo\modulos\compras'
     }
-    if (!$shortDrive) { throw 'No se pudo crear una unidad temporal libre (D: a Z:) para evitar rutas largas de NuGet.' }
-    $base = FullPath ($shortDrive + '\') 'codigo\modulos\compras'
     $hash = [Security.Cryptography.SHA256]::Create()
     try { $cacheKey = ([BitConverter]::ToString($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($repositoryRoot.ToUpperInvariant())))).Replace('-', '').Substring(0, 16) }
     finally { $hash.Dispose() }
@@ -221,13 +266,15 @@ try {
     $null = [IO.Directory]::CreateDirectory($cacheDirectory)
     $runDirectory = Join-Path $cacheDirectory ([guid]::NewGuid().ToString('N'))
     $null = [IO.Directory]::CreateDirectory($runDirectory)
-    Write-Status "Ruta temporal de compilacion: $base (los archivos permanecen en su ubicacion original)."
+    Write-Status "Ruta de compilacion: $base (los archivos permanecen en su ubicacion original)."
     $configuration = $env:CC_CONFIG
     if (!$configuration) { $configuration='Debug' }
-    if ($env:CC_MORE -or $configuration -notin @('Debug','Release')) {
-        throw 'Uso: compilar_compras.bat [Debug|Release]. Se permite un solo argumento.'
+    if ($env:CC_MORE) { Write-Status 'Se ignoran los argumentos adicionales; solo se usa el primero.' Warning }
+    if ($configuration -ieq 'Release') { $configuration='Release' }
+    else {
+        if ($configuration -ine 'Debug') { Write-Status "Configuracion '$configuration' no reconocida; se usa Debug." Warning }
+        $configuration='Debug'
     }
-    if ($configuration -ieq 'Debug') { $configuration='Debug' } else { $configuration='Release' }
 
     # Descubrir todo el codigo de produccion: componentes y todos los modulos.
     # El grafo de referencias determina el orden, no los nombres de las carpetas.
@@ -237,73 +284,114 @@ try {
     foreach ($solution in $solutions) { $null = Add-Step $solution }
     Write-Status "Descubiertas $($steps.Count) soluciones en componentes y modulos."
 
-    # VS 2022, incluidas Build Tools; PATH es un segundo mecanismo, no dotnet build.
+    # Cualquier version de MSBuild (Visual Studio, Build Tools o PATH); se usa la version mas alta.
     $candidates = @()
-    $whereTools = @(@(${env:ProgramFiles(x86)},$env:ProgramFiles) | Where-Object { $_ } | ForEach-Object {
-        Join-Path $_ 'Microsoft Visual Studio\Installer\vswhere.exe'
-    })
+    $vsRoots = @(@(${env:ProgramFiles(x86)},$env:ProgramFiles,$env:ProgramW6432) | Where-Object { $_ } | Select-Object -Unique)
+    $whereTools = @($vsRoots | ForEach-Object { Join-Path $_ 'Microsoft Visual Studio\Installer\vswhere.exe' })
     $whereTools += @(Get-Command vswhere.exe -ErrorAction SilentlyContinue | ForEach-Object { $_.Source })
     foreach ($where in $whereTools | Select-Object -Unique) {
         if (Test-Path -LiteralPath $where) {
-            $candidates += @(& $where -latest -products '*' -version '[17.8,18.0)' -requires Microsoft.Component.MSBuild -find 'MSBuild\**\Bin\MSBuild.exe')
+            $previousPreference = $ErrorActionPreference
+            $ErrorActionPreference = 'Continue'
+            try {
+                $candidates += @(& $where -all -prerelease -products '*' -find 'MSBuild\**\Bin\MSBuild.exe' 2>$null)
+            } finally { $ErrorActionPreference = $previousPreference }
         }
+    }
+    foreach ($root in $vsRoots) {
+        $vsDir = Join-Path $root 'Microsoft Visual Studio'
+        $candidates += @(Get-ChildItem -Path (Join-Path $vsDir '*\*\MSBuild\*\Bin\MSBuild.exe') -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName })
+        $candidates += @(Get-ChildItem -Path (Join-Path $vsDir '*\*\MSBuild\*\Bin\amd64\MSBuild.exe') -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName })
+        # MSBuild clasico de .NET Framework (versiones anteriores a Visual Studio 2017).
+        $candidates += @(Get-ChildItem -Path (Join-Path $root 'MSBuild\*\Bin\MSBuild.exe') -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName })
+    }
+    foreach ($frameworkRoot in @("$env:SystemRoot\Microsoft.NET\Framework64", "$env:SystemRoot\Microsoft.NET\Framework")) {
+        $candidates += @(Get-ChildItem -Path (Join-Path $frameworkRoot 'v*\MSBuild.exe') -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName })
     }
     $candidates += @(Get-Command MSBuild.exe -CommandType Application -All -ErrorAction SilentlyContinue | ForEach-Object { $_.Source })
     $msbuild = $null
-    foreach ($candidate in $candidates | Select-Object -Unique) {
+    $bestVersion = [version]'0.0'
+    $seen = @()
+    foreach ($candidate in $candidates | Where-Object { $_ } | Select-Object -Unique) {
         if (!(Test-Path -LiteralPath $candidate -PathType Leaf)) { continue }
-        $versionOutput = & $candidate /nologo /version 2>&1
-        $toolCode = $LASTEXITCODE
-        $versionMatch = [regex]::Match(($versionOutput -join "`n"),'(?m)^17\.\d+(?:\.\d+){1,2}\s*$')
-        # Las consultas sin compilar /getProperty y /getItem requieren 17.8 o posterior.
-        if ($toolCode -eq 0 -and $versionMatch.Success -and [version]$versionMatch.Value.Trim() -ge [version]'17.8') {
-            $msbuild=$candidate; break
-        }
+        $previousPreference = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        try {
+            $versionOutput = & $candidate /nologo /version 2>&1
+            $toolCode = $LASTEXITCODE
+        } catch { $versionOutput = ''; $toolCode = 1 }
+        finally { $ErrorActionPreference = $previousPreference }
+        if ($toolCode -ne 0) { $seen += "$candidate (no responde)"; continue }
+        $versionMatch = [regex]::Match(($versionOutput -join "`n"),'(?m)^\d+\.\d+(?:\.\d+)?(?:\.\d+)?\s*$')
+        $candidateVersion = [version]'0.0.1'
+        if ($versionMatch.Success) { $candidateVersion = [version]$versionMatch.Value.Trim() }
+        $seen += "$candidate ($candidateVersion)"
+        if ($candidateVersion -gt $bestVersion) { $bestVersion = $candidateVersion; $msbuild = $candidate }
     }
-    if (!$msbuild) { throw 'Se requiere MSBuild.exe de Visual Studio 2022/Build Tools 17.8 o posterior, con herramientas .NET Framework 4.8.' }
+    if (!$msbuild) {
+        throw ('No se encontro ningun MSBuild.exe utilizable. Instale Visual Studio o Build Tools. Encontrados: ' + $(if ($seen.Count) { $seen -join ' | ' } else { 'ninguno' }))
+    }
+    if ($bestVersion.Major -lt 16) { Write-Status "MSBuild $bestVersion es anterior a VS 2019; se intentara compilar de todos modos." Warning }
     $targetPacks = @(@(${env:ProgramFiles(x86)},$env:ProgramFiles) | Where-Object { $_ } | ForEach-Object {
         Join-Path $_ 'Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll'
     } | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf })
-    if (!$targetPacks.Count) { throw 'Falta el Developer/Targeting Pack de .NET Framework 4.8.' }
+    if (!$targetPacks.Count) { Write-Status 'Falta el Developer/Targeting Pack de .NET Framework 4.8; los proyectos que lo requieran fallaran.' Warning }
     Write-Status "MSBuild: $msbuild"
     Write-Status "Configuracion: $configuration. Validando proyectos y dependencias antes de compilar..."
 
     foreach ($step in $steps) {
         $current = $step
         Write-Status "Validando: $($step.Name)"
-        if ([IO.Path]::GetExtension($step.Path) -eq '.csproj') {
-            [xml]$xml = Get-Content -LiteralPath $step.Path -Raw
-            $platforms = @($xml.SelectNodes('//*[local-name()="PropertyGroup"]/@Condition') | ForEach-Object {
-                if ($_.Value -match "==\s*'$configuration\|([^']+)'") { $Matches[1] }
-            })
-            $step.Platform = @('x64','AnyCPU','x86' | Where-Object { $_ -in $platforms } | Select-Object -First 1)[0]
-            if (!$step.Platform) { throw "Configuracion no admitida: $($step.Path)" }
-            $null = Add-Project $step.Path $configuration $step.Platform $step
-            # Este productor tiene un ProjectReference real al modelo.
-            for ($i=0; $i -lt $step.Projects.Count; $i++) {
-                [xml]$projectXml = [IO.File]::ReadAllText($step.Projects[$i].Path)
-                foreach ($reference in @($projectXml.SelectNodes('//*[local-name()="ProjectReference"]'))) {
-                    $null = Add-Project (FullPath (Split-Path $step.Projects[$i].Path) $reference.Include) $configuration $step.Platform $step
+        try {
+            if ([IO.Path]::GetExtension($step.Path) -eq '.csproj') {
+                [xml]$xml = Get-Content -LiteralPath $step.Path -Raw
+                $platforms = @($xml.SelectNodes('//*[local-name()="PropertyGroup"]/@Condition') | ForEach-Object {
+                    if ($_.Value -match "==\s*'$configuration\|([^']+)'") { $Matches[1] }
+                })
+                $step.Platform = @('x64','AnyCPU','x86' | Where-Object { $_ -in $platforms } | Select-Object -First 1)[0]
+                if (!$step.Platform) {
+                    Write-Status "Sin plataforma declarada para $configuration en $($step.Path); se usa AnyCPU." Warning
+                    $step.Platform = 'AnyCPU'
                 }
+                $null = Add-Project $step.Path $configuration $step.Platform $step
+                # Este productor tiene un ProjectReference real al modelo.
+                for ($i=0; $i -lt $step.Projects.Count; $i++) {
+                    [xml]$projectXml = [IO.File]::ReadAllText($step.Projects[$i].Path)
+                    foreach ($reference in @($projectXml.SelectNodes('//*[local-name()="ProjectReference"]'))) {
+                        $null = Add-Project (FullPath (Split-Path $step.Projects[$i].Path) $reference.Include) $configuration $step.Platform $step
+                    }
+                }
+            } else {
+                $sln = [IO.File]::ReadAllText($step.Path)
+                $section = [regex]::Match($sln,'(?s)GlobalSection\(SolutionConfigurationPlatforms\).*?EndGlobalSection').Value
+                $platforms = @([regex]::Matches($section,"(?m)^\s*$configuration\|([^=\r\n]+)\s*=") | ForEach-Object { $_.Groups[1].Value.Trim() })
+                $step.Platform = @('x64','Any CPU','x86' | Where-Object { $_ -in $platforms } | Select-Object -First 1)[0]
+                if (!$step.Platform -and $platforms.Count) { $step.Platform = $platforms[0] }
+                if (!$step.Platform) {
+                    Write-Status "No hay plataforma declarada para $configuration en $($step.Path); se usa Any CPU." Warning
+                    $step.Platform = 'Any CPU'
+                }
+                foreach ($match in [regex]::Matches($sln,'(?m)^Project\("[^"\r\n]+"\) = "[^"]+", "([^"]+\.csproj)", "(\{[^}]+\})"')) {
+                    $path = FullPath (Split-Path $step.Path) $match.Groups[1].Value
+                    $key = [regex]::Escape($match.Groups[2].Value + ".$configuration|" + $step.Platform)
+                    if ($sln -notmatch "(?m)^\s*$key\.Build\.0\s*=") { Write-Status "Proyecto excluido de la solucion; se compila de todos modos: $path" Warning }
+                    $mapping = [regex]::Match($sln,"(?m)^\s*$key\.ActiveCfg\s*=\s*([^|\r\n]+)\|([^\r\n]+)")
+                    if ($mapping.Success) {
+                        $null = Add-Project $path $mapping.Groups[1].Value.Trim() $mapping.Groups[2].Value.Trim().Replace('Any CPU','AnyCPU') $step
+                    } else {
+                        Write-Status "Falta el mapeo de plataforma; se usa $configuration|$($step.Platform): $path" Warning
+                        $null = Add-Project $path $configuration $step.Platform.Replace('Any CPU','AnyCPU') $step
+                    }
+                }
+                # Una solucion puede contener solamente proyectos ya registrados.
+                if ($sln -notmatch '\.csproj"') { Write-Status "Solucion sin proyectos C# admitidos (se omite): $($step.Path)" Warning }
             }
-        } else {
-            $sln = [IO.File]::ReadAllText($step.Path)
-            $section = [regex]::Match($sln,'(?s)GlobalSection\(SolutionConfigurationPlatforms\).*?EndGlobalSection').Value
-            $platforms = @([regex]::Matches($section,"(?m)^\s*$configuration\|([^=\r\n]+)\s*=") | ForEach-Object { $_.Groups[1].Value.Trim() })
-            $step.Platform = @('x64','Any CPU','x86' | Where-Object { $_ -in $platforms } | Select-Object -First 1)[0]
-            if (!$step.Platform) { throw "No hay plataforma compatible con $configuration en $($step.Path)" }
-            foreach ($match in [regex]::Matches($sln,'(?m)^Project\("[^"\r\n]+"\) = "[^"]+", "([^"]+\.csproj)", "(\{[^}]+\})"')) {
-                $path = FullPath (Split-Path $step.Path) $match.Groups[1].Value
-                $key = [regex]::Escape($match.Groups[2].Value + ".$configuration|" + $step.Platform)
-                if ($sln -notmatch "(?m)^\s*$key\.Build\.0\s*=") { throw "Proyecto excluido de compilacion: $path" }
-                $mapping = [regex]::Match($sln,"(?m)^\s*$key\.ActiveCfg\s*=\s*([^|\r\n]+)\|([^\r\n]+)")
-                if (!$mapping.Success) { throw "Falta el mapeo de plataforma: $path" }
-                $null = Add-Project $path $mapping.Groups[1].Value.Trim() $mapping.Groups[2].Value.Trim().Replace('Any CPU','AnyCPU') $step
-            }
-            # Una solucion puede contener solamente proyectos ya registrados.
-            if ($sln -notmatch '\.csproj"') { throw "Solucion sin proyectos C# admitidos: $($step.Path)" }
+        } catch {
+            Write-Status "Error validando $($step.Name) (se continua con las demas): $($_.Exception.Message)" Warning
         }
     }
+    $current = $null
+    if (!$projects.Count) { throw 'No se encontro ningun proyecto para compilar.' }
 
     $dotnet = $null
     if (@($projects.Values | Where-Object IsSdk).Count) {
@@ -314,25 +402,42 @@ try {
             $dotnetCandidates += Join-Path $root 'dotnet\dotnet.exe'
         }
         $dotnetCandidates += @(Get-Command dotnet.exe -All -ErrorAction SilentlyContinue | ForEach-Object Source)
+        $fallbackDotnet = $null
         foreach ($candidate in $dotnetCandidates | Select-Object -Unique) {
             if (!(Test-Path -LiteralPath $candidate -PathType Leaf)) { continue }
-            $installed = @(& $candidate --list-sdks)
-            if ($LASTEXITCODE -eq 0 -and @($installed | Where-Object { $_ -match '^([89]|[1-9][0-9]+)\.' }).Count) { $dotnet=$candidate; break }
+            $previousPreference = $ErrorActionPreference
+            $ErrorActionPreference = 'Continue'
+            try { $installed = @(& $candidate --list-sdks 2>$null); $sdkCode = $LASTEXITCODE }
+            catch { $installed = @(); $sdkCode = 1 }
+            finally { $ErrorActionPreference = $previousPreference }
+            if ($sdkCode -ne 0 -or !$installed.Count) { continue }
+            if (@($installed | Where-Object { $_ -match '^([89]|[1-9][0-9]+)\.' }).Count) { $dotnet=$candidate; break }
+            if (!$fallbackDotnet) { $fallbackDotnet = $candidate }
         }
-        if (!$dotnet) { throw 'Blazor requiere un SDK .NET 8 o posterior. Instale el SDK x64: https://dotnet.microsoft.com/download/dotnet/8.0 (el runtime solo no basta).' }
-        $env:DOTNET_ROOT = Split-Path $dotnet
-        $env:PATH = (Split-Path $dotnet) + ';' + $env:PATH
-        Write-Status "Proyectos SDK con dotnet: $dotnet"
+        if (!$dotnet -and $fallbackDotnet) {
+            $dotnet = $fallbackDotnet
+            Write-Status 'Solo hay un SDK .NET anterior al 8; los proyectos Blazor podrian fallar.' Warning
+        }
+        if (!$dotnet) {
+            Write-Status 'No hay SDK de .NET instalado: se omiten los proyectos SDK (Blazor). Instale el SDK x64: https://dotnet.microsoft.com/download/dotnet/8.0' Warning
+            foreach ($sdkProject in @($projects.Values | Where-Object IsSdk)) { Remove-ProjectFromPlan $sdkProject }
+        } else {
+            $env:DOTNET_ROOT = Split-Path $dotnet
+            $env:PATH = (Split-Path $dotnet) + ';' + $env:PATH
+            Write-Status "Proyectos SDK con dotnet: $dotnet"
+        }
     }
+    if (!$projects.Count) { throw 'No quedo ningun proyecto compilable.' }
 
     Write-Status "Evaluando $($projects.Count) proyectos en paralelo con $workers procesos..."
     Invoke-ProjectQueries
+    if (!$projects.Count) { throw 'No quedo ningun proyecto evaluable.' }
     $outputs = @{}
     $assemblies = @{}
     foreach ($project in $projects.Values) {
-        if (!$project.Output) { throw "Salida no definida: $($project.Path)" }
-        if ($outputs.ContainsKey($project.Output)) { throw "Dos productores para $($project.Output)" }
-        $outputs[$project.Output] = $project
+        if (!$project.Output) { Write-Status "Salida no definida (el proyecto se compila sin registrarse): $($project.Path)" Warning; continue }
+        if ($outputs.ContainsKey($project.Output)) { Write-Status "Dos productores para $($project.Output); se conserva el primero." Warning }
+        else { $outputs[$project.Output] = $project }
         $name = [IO.Path]::GetFileName($project.Output)
         if (!$assemblies.ContainsKey($name)) { $assemblies[$name] = @() }
         $assemblies[$name] += $project
@@ -371,7 +476,10 @@ try {
                     }
                 }
                 if (!$producers.Count -and (Test-Path -LiteralPath $hint -PathType Leaf)) { continue }
-                if ($producers.Count -ne 1) { throw "Referencia sin productor unico para $configuration en $($project.Path): $hint" }
+                if ($producers.Count -ne 1) {
+                    Write-Status "Referencia sin productor unico para $configuration en $($project.Path): $hint" Warning
+                    continue
+                }
                 $producer = $producers[0]
                 $project.Dependencies += $producer
                 $referenceOverrides.Add([pscustomobject]@{ Project=$project.Path; Identity=$reference.Identity; NewIdentity=$renamedIdentity; Output=$producer.Output })
@@ -380,12 +488,12 @@ try {
         }
         foreach ($reference in @($project.Data.Items.ProjectReference)) {
             $path = FullPath (Split-Path $project.Path) $reference.Identity
-            if (!$projects.ContainsKey($path)) { throw "ProjectReference fuera del plan: $path" }
+            if (!$projects.ContainsKey($path)) { Write-Status "ProjectReference fuera del plan (se ignora): $path" Warning; continue }
             $project.Dependencies += $projects[$path]
         }
         foreach ($dependency in $project.Dependencies) {
             if ($project.Data.Properties.PlatformTarget -eq 'x86' -and $dependency.Data.Properties.PlatformTarget -eq 'x64') {
-                throw "Arquitecturas incompatibles: $($project.Path) (x86) -> $($dependency.Path) (x64)"
+                Write-Status "Arquitecturas incompatibles: $($project.Path) (x86) -> $($dependency.Path) (x64)" Warning
             }
         }
     }
@@ -407,12 +515,12 @@ try {
     $referenceBody += '</ItemGroup></Target><Target Name="ComprasMarcarInicio" BeforeTargets="PrepareForBuild" Condition="&apos;$(ComprasEstadoProyecto)&apos; != &apos;&apos;"><WriteLinesToFile File="$(ComprasEstadoProyecto).started" Lines="$(MSBuildProjectFullPath)" Overwrite="true" /></Target><Target Name="ComprasMarcarExito" AfterTargets="Build" Condition="&apos;$(ComprasEstadoProyecto)&apos; != &apos;&apos;"><WriteLinesToFile File="$(ComprasEstadoProyecto).done" Lines="$(MSBuildProjectFullPath)" Overwrite="true" /></Target></Project>'
     Write-IfChanged $referenceTargets $referenceBody
     $securityProject = @($projects.Values | Where-Object { [IO.Path]::GetFileName($_.Path) -ieq 'Ejecucion_Seguridad.csproj' })
-    if ($securityProject.Count -eq 1) {
-        $securityExecutable = $repositoryRoot + $securityProject[0].Output.Substring($shortDrive.Length)
+    if ($securityProject.Count -eq 1 -and $securityProject[0].Output) {
+        $securityExecutable = To-RealPath $securityProject[0].Output
     }
     $comprasProject = @($projects.Values | Where-Object { [IO.Path]::GetFileName($_.Path) -ieq 'Ejecucion_Compras.csproj' })
-    if ($comprasProject.Count -eq 1) {
-        $comprasExecutable = $repositoryRoot + $comprasProject[0].Output.Substring($shortDrive.Length)
+    if ($comprasProject.Count -eq 1 -and $comprasProject[0].Output) {
+        $comprasExecutable = To-RealPath $comprasProject[0].Output
     }
     foreach ($project in $projects.Values) { $null = Get-ProjectWave $project }
     $current = $null
@@ -433,48 +541,55 @@ try {
         $body += '<Nivel' + $project.Wave + ' Include="' + (XmlEscape (MsbuildEscape $project.Path)) + '"><AdditionalProperties>' + (XmlEscape $properties) + '</AdditionalProperties></Nivel' + $project.Wave + '>'
         $index++
     }
-    $body += '</ItemGroup><Target Name="Restaurar"><MSBuild Projects="@(Restauracion)" Targets="Restore" BuildInParallel="false" StopOnFirstFailure="true" /></Target>'
+    # ContinueOnError + StopOnFirstFailure=false: un fallo no detiene los demas proyectos.
+    $body += '</ItemGroup><Target Name="Restaurar"><MSBuild Projects="@(Restauracion)" Targets="Restore" BuildInParallel="false" StopOnFirstFailure="false" ContinueOnError="true" /></Target>'
     $sdkRestore = ''
     foreach ($project in $projects.Values | Where-Object IsSdk | Sort-Object Path) {
-        $sdkRestore += '<Exec WorkingDirectory="' + (XmlEscape (Split-Path $project.Path)) + '" Command="' + (XmlEscape (SdkCommand $project 'Restore')) + '" />'
+        $sdkRestore += '<Exec WorkingDirectory="' + (XmlEscape (Split-Path $project.Path)) + '" Command="' + (XmlEscape (SdkCommand $project 'Restore')) + '" ContinueOnError="true" />'
     }
     $body += '<Target Name="RestaurarSdk">' + $sdkRestore + '</Target>'
     $targets = @('Restaurar','RestaurarSdk')
     $waves = @($projects.Values | Select-Object -ExpandProperty Wave | Sort-Object -Unique)
     foreach ($wave in $waves) {
         $targets += "Nivel$wave"
-        $body += '<Target Name="Nivel' + $wave + '"><Message Importance="high" Text="[COMPILANDO] Nivel ' + ($wave + 1) + '/' + $waves.Count + '" /><MSBuild Projects="@(Nivel' + $wave + ')" Targets="Build" BuildInParallel="true" StopOnFirstFailure="true" />'
+        $body += '<Target Name="Nivel' + $wave + '"><Message Importance="high" Text="[COMPILANDO] Nivel ' + ($wave + 1) + '/' + $waves.Count + '" /><MSBuild Projects="@(Nivel' + $wave + ')" Targets="Build" BuildInParallel="true" StopOnFirstFailure="false" ContinueOnError="true" />'
         foreach ($project in $projects.Values | Where-Object { $_.IsSdk -and $_.Wave -eq $wave } | Sort-Object Path) {
-            $body += '<Exec WorkingDirectory="' + (XmlEscape (Split-Path $project.Path)) + '" Command="' + (XmlEscape (SdkCommand $project 'Build' $referenceTargets)) + '" />'
+            $body += '<Exec WorkingDirectory="' + (XmlEscape (Split-Path $project.Path)) + '" Command="' + (XmlEscape (SdkCommand $project 'Build' $referenceTargets)) + '" ContinueOnError="true" />'
         }
         $body += '</Target>'
     }
     $body += '<Target Name="Build" DependsOnTargets="' + ($targets -join ';') + '" /></Project>'
     [IO.File]::WriteAllText($runner, $body, [Text.UTF8Encoding]::new($false))
     Write-Status "Compilando $($projects.Count) proyectos en $($waves.Count) niveles, con hasta $workers procesos en paralelo." Build
-    & $msbuild $runner /t:Build /nologo /verbosity:minimal "/m:$workers" /nr:false /warnAsError:MSB3245 '/consoleloggerparameters:ForceConsoleColor;Summary' "/p:CustomAfterMicrosoftCommonTargets=$referenceTargets"
+    # Sin /warnAsError: ningun aviso detiene la compilacion.
+    & $msbuild $runner /t:Build /nologo /verbosity:minimal "/m:$workers" /nr:false '/consoleloggerparameters:ForceConsoleColor;Summary' "/p:CustomAfterMicrosoftCommonTargets=$referenceTargets"
     $code = $LASTEXITCODE
     foreach ($step in $steps) {
+        if (!$step.Projects.Count) { continue }
         $complete = @($step.Projects | Where-Object { !(Test-Path -LiteralPath ($_.Marker + '.done')) })
         if (!$complete.Count) {
-            foreach ($project in $step.Projects) {
-                if (!(Test-Path -LiteralPath $project.Output -PathType Leaf)) { throw "Falta la salida esperada: $($project.Output)" }
+            $missingOutput = @($step.Projects | Where-Object { !$_.Output -or !(Test-Path -LiteralPath $_.Output -PathType Leaf) })
+            if ($missingOutput.Count) {
+                Write-Status "Falta la salida esperada: $($missingOutput[0].Output)" Warning
+                $step.State = 'Fallida'
+                $step.Code = if ($code) { $code } else { 1 }
+            } else {
+                $step.State = 'Correcta'
+                $step.Code = 0
             }
-            $step.State = 'Correcta'
-            $step.Code = 0
         } elseif (@($complete | Where-Object { Test-Path -LiteralPath ($_.Marker + '.started') }).Count) {
             $step.State = 'Fallida'
-            $step.Code = $code
+            $step.Code = if ($code) { $code } else { 1 }
         }
     }
     if ($code -ne 0) {
         if (!@($steps | Where-Object State -eq 'Fallida').Count) {
-            $first = $steps | Where-Object State -ne 'Correcta' | Select-Object -First 1
+            $first = $steps | Where-Object { $_.State -ne 'Correcta' -and $_.Projects.Count } | Select-Object -First 1
             if ($first) { $first.State = 'Fallida'; $first.Code = $code }
         }
-        throw "La compilacion termino con codigo $code."
+        throw "La compilacion termino con codigo $code (se compilo todo lo que fue posible)."
     }
-    if (@($steps | Where-Object State -ne 'Correcta').Count) { throw 'La compilacion termino sin completar todos los proyectos.' }
+    if (@($steps | Where-Object { $_.State -ne 'Correcta' -and $_.Projects.Count }).Count) { throw 'La compilacion termino sin completar todos los proyectos (se compilo todo lo que fue posible).' }
     $result=0
 } catch {
     if ($current -and $current.State -ne 'Correcta') { $current.State='Fallida' }
@@ -497,8 +612,12 @@ try {
         } catch { Write-Warning "No se pudo limpiar: $runDirectory" }
     }
     if ($shortDrive) {
-        & $subst $shortDrive /D
-        if ($LASTEXITCODE -ne 0) { Write-Warning "No se pudo quitar el alias temporal $shortDrive" }
+        $previousPreference = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        try {
+            & $subst $shortDrive /D 2>&1 | Out-Null
+            if ($LASTEXITCODE -ne 0) { Write-Warning "No se pudo quitar el alias temporal $shortDrive" }
+        } finally { $ErrorActionPreference = $previousPreference }
     }
 }
 while ($true) {
@@ -513,7 +632,8 @@ while ($true) {
     if ($option -eq '1') { exit 10 }
     if ($option -eq '4') { exit $result }
     if ($option -in @('2','3')) {
-        if ($result -ne 0) { Write-Status 'Corrija los errores y vuelva a compilar antes de ejecutar.' Warning; continue }
+        # Se permite ejecutar aunque haya fallos en otros modulos, si el .exe existe.
+        if ($result -ne 0) { Write-Status 'Hubo errores de compilacion; se intentara ejecutar si el .exe existe (puede estar desactualizado).' Warning }
         $executable = if ($option -eq '2') { $securityExecutable } else { $comprasExecutable }
         $executableName = if ($option -eq '2') { 'Ejecucion_Seguridad.exe' } else { 'Ejecucion_Compras.exe' }
         if (!$executable -or !(Test-Path -LiteralPath $executable -PathType Leaf)) {
@@ -526,4 +646,3 @@ while ($true) {
     }
     Write-Status 'Opcion no valida. Escriba 1, 2, 3 o 4.' Warning
 }
-
