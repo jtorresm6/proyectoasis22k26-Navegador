@@ -21,8 +21,8 @@ namespace CapaControlador_MovimientosProveedores
         }
 
         /// <summary>
-        /// Reconstruye saldos al corte, separados por proveedor y moneda.
-        /// null en IdProveedor consulta todos los proveedores.
+        /// Clasifica saldos actuales a la fecha indicada, separados por proveedor y moneda.
+        /// No reconstruye saldos historicos. null en IdProveedor consulta todos los proveedores.
         /// </summary>
         public List<ClsBalanceAntiguedadProveedor> ComprasMetConsultarBalanceAntiguedad(
             DateTime FechaCorte, int? IdProveedor = null)

@@ -119,13 +119,7 @@ namespace CapaModelo_CierreMovimientos.Servicios
                 var Llave = Tuple.Create(Documento.IdProveedor, Rango.IdRango);
                 if (!Acumulado.TryGetValue(Llave, out ClsAntiguedadCierre Fila))
                 {
-                    Fila = new ClsAntiguedadCierre
-                    {
-                        IdProveedor = Documento.IdProveedor,
-                        NombreProveedor = Documento.NombreProveedor,
-                        IdRango = Rango.IdRango,
-                        NombreRango = Rango.Nombre
-                    };
+                    Fila = new ClsAntiguedadCierre { IdProveedor = Documento.IdProveedor, IdRango = Rango.IdRango };
                     Acumulado.Add(Llave, Fila);
                 }
                 Fila.Monto += Documento.SaldoLocal;

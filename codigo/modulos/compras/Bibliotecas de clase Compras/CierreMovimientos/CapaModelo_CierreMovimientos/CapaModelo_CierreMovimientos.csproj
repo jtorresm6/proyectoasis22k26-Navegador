@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CapaModelo_CierreMovimientos</RootNamespace>
-    <AssemblyName>CapaModelo_CierreMovimientosCompras</AssemblyName>
+    <AssemblyName>CapaModelo_CierreMovimientos</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\ClsRepositorioMaestroCierreMovimientos.cs" />
+    <Compile Include="Repositorios\ClsExcepcionDatosCompras.cs" />
     <Compile Include="Entidades\ClsEntidadesCierre.cs" />
     <Compile Include="Repositorios\ClsComandosCierreMovimientos.cs" />
     <Compile Include="Repositorios\ClsConsultasCierreMovimientos.cs" />
@@ -50,9 +52,6 @@
     <Compile Include="Servicios\ClsValidadorPeriodoCompras.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo_Componentes">
-      <HintPath>..\..\Componentes\CapaModelo_Componentes\bin\$(Configuration)\CapaModelo_Componentes.dll</HintPath>
-    </Reference>
     <Reference Include="CapaModelo_Seguridad">
       <HintPath>..\..\..\..\..\componentes\seguridad\Seguridad\CapaModelo_Seguridad\bin\$(Configuration)\CapaModelo_Seguridad.dll</HintPath>
       <Private>True</Private>

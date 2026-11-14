@@ -40,28 +40,38 @@ CROSS JOIN tblrol r
 WHERE u.nombreUsuario = 'imelendez'
   AND r.nombreRol = 'Administrador'
   AND NOT EXISTS (
-      SELECT 1
-      FROM tblusuariorol ur
-      WHERE ur.idUsuario = u.idUsuario
+      SELECT 1 FROM tblusuariorol ur WHERE ur.idUsuario = u.idUsuario
   );
 
-INSERT INTO tblrolmoduloaplicacion (
-    idRol,
-    idModulo,
-    idAplicacion,
-    derInsertarRolModuloAplicacion,
-    derEditarRolModuloAplicacion,
-    derEliminarRolModuloAplicacion,
-    derImprimirRolModuloAplicacion
-)
+DELETE p
+FROM tblrolmoduloaplicacion p
+JOIN tblusuariorol ur ON ur.idRol = p.idRol
+JOIN tblusuario u ON u.idUsuario = ur.idUsuario
+JOIN tblmodulo m ON m.idModulo = p.idModulo
+WHERE u.nombreUsuario = 'imelendez'
+  AND m.nombreModulo = 'Compras y Cuentas por Pagar'
+  AND p.idAplicacion IN (6002, 6006, 6012);
+
+DELETE p
+FROM tblusuariomoduloaplicacion p
+JOIN tblusuario u ON u.idUsuario = p.idUsuario
+JOIN tblmodulo m ON m.idModulo = p.idModulo
+WHERE u.nombreUsuario = 'imelendez'
+  AND m.nombreModulo = 'Compras y Cuentas por Pagar'
+  AND p.idAplicacion IN (6002, 6006, 6012);
+
+INSERT INTO tblrolmoduloaplicacion
+    (idRol, idModulo, idAplicacion,
+     derInsertarRolModuloAplicacion, derEditarRolModuloAplicacion, derEliminarRolModuloAplicacion, derImprimirRolModuloAplicacion)
 SELECT ur.idRol, a.idModulo, a.idAplicacion, 1, 1, 1, 1
 FROM tblusuario u
 JOIN tblusuariorol ur ON ur.idUsuario = u.idUsuario
 JOIN tblmodulo m ON m.nombreModulo = 'Compras y Cuentas por Pagar'
-JOIN tblaplicacion a ON (
-    (a.idModulo = m.idModulo AND a.idAplicacion BETWEEN 6000 AND 6014)
+JOIN tblaplicacion a ON
+    (a.idModulo = m.idModulo
+     AND a.idAplicacion BETWEEN 6000 AND 6014
+     AND a.idAplicacion NOT IN (6002, 6006, 6012))
     OR (a.idModulo = 4 AND a.idAplicacion = 12)
-)
 WHERE u.nombreUsuario = 'imelendez'
   AND a.is_active = 1
 ON DUPLICATE KEY UPDATE
@@ -70,22 +80,17 @@ ON DUPLICATE KEY UPDATE
     derEliminarRolModuloAplicacion = 1,
     derImprimirRolModuloAplicacion = 1;
 
-INSERT INTO tblusuariomoduloaplicacion (
-    idUsuario,
-    idModulo,
-    idAplicacion,
-    derInsertarUsuarioModuloAplicacion,
-    derEditarUsuarioModuloAplicacion,
-    derEliminarUsuarioModuloAplicacion,
-    derImprimirUsuarioModuloAplicacion
-)
+INSERT INTO tblusuariomoduloaplicacion
+    (idUsuario, idModulo, idAplicacion,
+     derInsertarUsuarioModuloAplicacion, derEditarUsuarioModuloAplicacion, derEliminarUsuarioModuloAplicacion, derImprimirUsuarioModuloAplicacion)
 SELECT u.idUsuario, a.idModulo, a.idAplicacion, 1, 1, 1, 1
 FROM tblusuario u
 JOIN tblmodulo m ON m.nombreModulo = 'Compras y Cuentas por Pagar'
-JOIN tblaplicacion a ON (
-    (a.idModulo = m.idModulo AND a.idAplicacion BETWEEN 6000 AND 6014)
+JOIN tblaplicacion a ON
+    (a.idModulo = m.idModulo
+     AND a.idAplicacion BETWEEN 6000 AND 6014
+     AND a.idAplicacion NOT IN (6002, 6006, 6012))
     OR (a.idModulo = 4 AND a.idAplicacion = 12)
-)
 WHERE u.nombreUsuario = 'imelendez'
   AND a.is_active = 1
 ON DUPLICATE KEY UPDATE
@@ -95,3 +100,23 @@ ON DUPLICATE KEY UPDATE
     derImprimirUsuarioModuloAplicacion = 1;
 
 COMMIT;
+
+SET SESSION SQL_SAFE_UPDATES = @compras_sql_safe_updates;
+
+SELECT a.idAplicacion, a.nombreAplicacion,
+       p.idAplicacion IS NOT NULL AS acceso_directo,
+       p.derInsertarUsuarioModuloAplicacion AS insertar,
+       p.derEditarUsuarioModuloAplicacion AS editar,
+       p.derEliminarUsuarioModuloAplicacion AS eliminar,
+       p.derImprimirUsuarioModuloAplicacion AS imprimir
+FROM tblusuario u
+JOIN tblmodulo m ON m.nombreModulo = 'Compras y Cuentas por Pagar'
+JOIN tblaplicacion a ON
+    (a.idModulo = m.idModulo AND a.idAplicacion BETWEEN 6000 AND 6014)
+    OR (a.idModulo = 4 AND a.idAplicacion = 12)
+LEFT JOIN tblusuariomoduloaplicacion p
+    ON p.idUsuario = u.idUsuario
+   AND p.idModulo = a.idModulo
+   AND p.idAplicacion = a.idAplicacion
+WHERE u.nombreUsuario = 'imelendez'
+ORDER BY a.idModulo, a.idAplicacion;

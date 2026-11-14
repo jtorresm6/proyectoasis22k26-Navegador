@@ -25,7 +25,7 @@ namespace CapaModelo_Herramientas.Repositorios
     {
         private const string _SelectMonedas =
             "SELECT idMoneda, codigoMoneda, nombreMoneda, simboloMoneda " +
-            "FROM tblMoneda WHERE is_active = 1 ORDER BY codigoMoneda";
+            "FROM tblMoneda WHERE activoMoneda = 1 ORDER BY codigoMoneda";
 
         // Último tipo de cambio registrado por cada par de monedas hasta la fecha indicada.
         // Si en un mismo día hay varias versiones, se toma la versión más reciente.
@@ -36,7 +36,7 @@ namespace CapaModelo_Herramientas.Repositorios
             "FROM tblTipoCambio tc " +
             "INNER JOIN tblMoneda o ON o.idMoneda = tc.Fk_Moneda_Origen_Codigo " +
             "INNER JOIN tblMoneda d ON d.idMoneda = tc.Fk_Moneda_Destino_Codigo " +
-            "WHERE o.is_active = 1 AND d.is_active = 1 " +
+            "WHERE o.activoMoneda = 1 AND d.activoMoneda = 1 " +
             "  AND tc.idTipoCambio = (SELECT t2.idTipoCambio FROM tblTipoCambio t2 " +
             "                          WHERE t2.Fk_Moneda_Origen_Codigo = tc.Fk_Moneda_Origen_Codigo " +
             "                            AND t2.Fk_Moneda_Destino_Codigo = tc.Fk_Moneda_Destino_Codigo " +

@@ -47,57 +47,15 @@
                 <tbody>
                     <tr><th scope="row">Refrescar</th><td>Limpia los datos ingresados, deja los selectores sin selección, restablece las fechas al día de hoy y el importe a 0.</td></tr>
                     <tr><th scope="row">Guardar</th><td>Valida los datos y registra el documento en cuentas por pagar.</td></tr>
-                    <tr><th scope="row">Historial</th><td>Está habilitado y abre los filtros del <a href="#antiguedad">balance de antigüedad de saldos</a>. Permite consultar un proveedor o todos a una fecha de corte.</td></tr>
+                    <tr><th scope="row">Historial</th><td>Abre la ventana de historial. La consulta de movimientos está pendiente de implementación en esta versión.</td></tr>
                 </tbody>
             </table>
-        </section>
-        <section id="antiguedad">
-            <h2>Balance de antigüedad de saldos</h2>
-            <p>Permite conocer cuánto se debe a cada proveedor a una fecha de corte y cuántos días lleva vencida esa deuda. Se abre desde el botón <strong>Historial</strong> de Movimientos de proveedores.</p>
-            <h3>¿Cómo consultar el balance?</h3>
-            <ol>
-                <li>Presiona <strong>Historial</strong>. Si seleccionaste un proveedor en el formulario principal, aparecerá seleccionado en esta ventana; de lo contrario, se marcará <strong>Todos los proveedores</strong>.</li>
-                <li>Selecciona la <strong>Fecha de corte</strong>. Por defecto se usa hoy y no se admiten fechas futuras. Esta fecha es independiente de la fecha de emisión del formulario principal.</li>
-                <li>Deja marcada la opción <strong>Todos los proveedores</strong> para consultar el conjunto completo. Para consultar uno, desmárcala y elige el proveedor en la lista.</li>
-                <li>Si la lista no carga, comprueba la conexión y pulsa <strong>Recargar proveedores</strong>.</li>
-                <li>Pulsa <strong>Reportes</strong> en el encabezado del historial. Se abrirá el visor con el balance y los filtros elegidos.</li>
-                <li>Revisa los importes y totales por moneda. Desde el visor puedes imprimir o exportar el reporte. Para cambiar los filtros, cierra el visor y vuelve a pulsar <strong>Reportes</strong>.</li>
-            </ol>
-            <h3>¿Cómo se obtiene el saldo al corte?</h3>
-            <p><strong>Saldo al corte = saldo actual + pagos aplicados después del corte.</strong> Solo se incluyen documentos emitidos hasta esa fecha. Una factura que hoy está pagada puede aparecer si todavía tenía saldo en la fecha consultada. Los pagos del mismo día del corte ya se consideran descontados.</p>
-            <div class="nota">
-                <h3>Ejemplo</h3>
-                <p>Una factura de Q 1,000 se pagó completamente el 05/11/2026. Al consultar el corte del 31/10/2026, su saldo es Q 1,000: se suma el pago posterior al saldo actual de Q 0. El rango depende de la fecha de vencimiento de esa factura.</p>
-            </div>
-            <h3>Interpretación de las columnas</h3>
-            <p>Los días vencidos se cuentan desde la fecha de vencimiento del documento hasta la fecha de corte.</p>
-            <table>
-                <thead><tr><th scope="col">Columna</th><th scope="col">Qué incluye</th></tr></thead>
-                <tbody>
-                    <tr><th scope="row">Proveedor / moneda</th><td>Proveedor al que corresponde el saldo y moneda original de sus documentos.</td></tr>
-                    <tr><th scope="row">Vigente</th><td>Documentos cuyo vencimiento es el día del corte o una fecha posterior.</td></tr>
-                    <tr><th scope="row">1 a 30 días</th><td>Saldos vencidos entre 1 y 30 días, inclusive.</td></tr>
-                    <tr><th scope="row">31 a 60 días</th><td>Saldos vencidos entre 31 y 60 días, inclusive.</td></tr>
-                    <tr><th scope="row">61 a 90 días</th><td>Saldos vencidos entre 61 y 90 días, inclusive.</td></tr>
-                    <tr><th scope="row">Más de 90 días</th><td>Saldos con 91 días de vencimiento o más.</td></tr>
-                    <tr><th scope="row">Total</th><td>Suma de los cinco rangos para ese proveedor y moneda. Al final de cada moneda aparece su subtotal.</td></tr>
-                </tbody>
-            </table>
-            <div class="nota">
-                <h3>Consideraciones del cálculo</h3>
-                <p>Los documentos de abono disminuyen los importes. Los saldos en GTQ y USD se presentan y totalizan por separado; no se suman monedas distintas. Si un pago está en otra moneda, se convierte a la moneda del documento con los tipos de cambio registrados.</p>
-                <p>El módulo de Pagos descuenta del saldo los pagos <strong>Pagados</strong> y <strong>Programados</strong>; por ello se recuperan ambos cuando su fecha es posterior al corte. Los pagos actualmente anulados o rechazados no se recuperan.</p>
-                <p>Las cuentas actualmente <strong>Anuladas</strong> se excluyen. El sistema no conserva el historial de anulaciones, por lo que este balance no reconstruye el estado anterior de documentos o pagos que después fueron anulados.</p>
-            </div>
         </section>
         <section id="avisos">
             <h2>Avisos y soluciones</h2>
             <table>
                 <thead><tr><th scope="col">Situación</th><th scope="col">Qué revisar</th></tr></thead>
                 <tbody>
-                    <tr><th scope="row">No hay saldos en el balance</th><td>Revisa la fecha de corte y el proveedor. Prueba con <strong>Todos los proveedores</strong>. El reporte indica cuando no existen saldos para esos filtros.</td></tr>
-                    <tr><th scope="row">El historial pide seleccionar un proveedor</th><td>Selecciona uno en la lista o marca <strong>Todos los proveedores</strong> antes de pulsar Reportes.</td></tr>
-                    <tr><th scope="row">No se pudo generar el balance</th><td>Revisa el mensaje del visor y la conexión a la base de datos. Si el mensaje indica que no se encontró el reporte incrustado, solicita actualizar la DLL de Movimientos de proveedores.</td></tr>
                     <tr><th scope="row">Faltan opciones en los selectores</th><td>Verifica que estén disponibles los catálogos de proveedores, conceptos y monedas. Si hubo un problema de conexión, usa <strong>Reintentar carga</strong> en el mensaje del formulario.</td></tr>
                     <tr><th scope="row">Falta el tipo de cambio</th><td>Comprueba la moneda y la fecha de emisión. Si falta una cotización activa hacia GTQ para esa fecha, solicita su registro y usa <strong>Reintentar carga</strong> antes de guardar.</td></tr>
                     <tr><th scope="row">El documento ya existe</th><td>Verifica el concepto, la serie y el número contra el comprobante. Si los datos son correctos, el documento ya está registrado.</td></tr>

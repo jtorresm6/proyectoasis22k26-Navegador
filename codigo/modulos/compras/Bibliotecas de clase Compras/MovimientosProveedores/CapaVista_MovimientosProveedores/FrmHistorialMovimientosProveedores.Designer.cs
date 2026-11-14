@@ -70,10 +70,8 @@
             // 
             this.ComprasUsrEncabezadoFormulario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(42)))), ((int)(((byte)(90)))));
             this.ComprasUsrEncabezadoFormulario.Codigo = "6001";
-            this.ComprasUsrEncabezadoFormulario.MostrarReportes = true;
-            this.ComprasUsrEncabezadoFormulario.PaginaInicialAyuda = "MovimientosProveedores.html";
-            this.ComprasUsrEncabezadoFormulario.RutaReporte = "RpReporteBalanceAntiguedadSaldos.rdlc";
-            this.ComprasUsrEncabezadoFormulario.Descripcion = "Consulta la antigüedad de saldos por proveedor a una fecha de corte.";
+            this.ComprasUsrEncabezadoFormulario.Descripcion = "Consulta los movimientos de cada proveedor y filtra sus documentos por fecha y es" +
+    "tado.";
             this.ComprasUsrEncabezadoFormulario.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ComprasUsrEncabezadoFormulario.Location = new System.Drawing.Point(10, 10);
             this.ComprasUsrEncabezadoFormulario.Margin = new System.Windows.Forms.Padding(10);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace CapaModelo_MovimientosProveedores.Entidades
 {
@@ -9,7 +9,6 @@ namespace CapaModelo_MovimientosProveedores.Entidades
         public int IdProveedor { get; set; }
         public string NombreProveedor { get; set; }
         public int IdMoneda { get; set; }
-        public string Moneda { get; set; }
         public decimal Vigente { get; set; }
         public decimal De1A30 { get; set; }
         public decimal De31A60 { get; set; }
