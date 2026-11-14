@@ -1,5 +1,5 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 <PropertyGroup><Configuration Condition="'$(Configuration)'==''">Debug</Configuration></PropertyGroup>
-<ItemGroup><Prueba Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones\TestCotizaciones\TestCotizaciones.csproj;..\Biblioteca de clase Ventas Y CxC\MovimientosClientes\TestMovimientosClientes\TestMovimientosClientes.csproj;..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\TestCierreMovimientos\TestCierreMovimientos.csproj;..\Biblioteca de clase Ventas Y CxC\Pedidos\TestPedidos\TestPedidos.csproj" /></ItemGroup>
+<ItemGroup><Prueba Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones_Ventas\TestCotizaciones\TestCotizaciones.csproj;..\Biblioteca de clase Ventas Y CxC\MovimientosClientes_Ventas\TestMovimientosClientes\TestMovimientosClientes.csproj;..\Biblioteca de clase Ventas Y CxC\CierreMovimientos_Ventas\TestCierreMovimientos\TestCierreMovimientos.csproj;..\Biblioteca de clase Ventas Y CxC\Pedidos_Ventas\TestPedidos\TestPedidos.csproj" /></ItemGroup>
 <Target Name="Build"><MSBuild Projects="@(Prueba)" Targets="Build" Properties="Configuration=$(Configuration)" /></Target>
 </Project>

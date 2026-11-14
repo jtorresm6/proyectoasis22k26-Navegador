@@ -57,11 +57,9 @@
             this.RrhhLblSalarioDia = new System.Windows.Forms.Label();
             this.RrhhLblBaseIndenmizacion = new System.Windows.Forms.Label();
             this.RrhhLblSalarioMensual = new System.Windows.Forms.Label();
-            this.RrhhCboMotivoBaja = new System.Windows.Forms.ComboBox();
             this.RrhhDtpFechaBajaEmpleado = new System.Windows.Forms.DateTimePicker();
             this.RrhhTxtIdEmpleado = new System.Windows.Forms.TextBox();
             this.RrhhCboEmpleado = new System.Windows.Forms.ComboBox();
-            this.RrhhLblMotivoBaja = new System.Windows.Forms.Label();
             this.RrhhLblFechaBaja = new System.Windows.Forms.Label();
             this.RrhhLblFechaIngreso = new System.Windows.Forms.Label();
             this.RrhhLblIdEmpleado = new System.Windows.Forms.Label();
@@ -70,12 +68,12 @@
             this.RrhhPbDonButti = new System.Windows.Forms.PictureBox();
             this.RrhhPbLiquidacion = new System.Windows.Forms.PictureBox();
             this.RrhhLblLiquidacionEmpleado = new System.Windows.Forms.Label();
-            this.RrhhBtnConsultarLiqui = new System.Windows.Forms.Button();
+            this.RrhhBtnAyudaLiqui = new System.Windows.Forms.Button();
             this.RrhhBtnFinLiqui = new System.Windows.Forms.Button();
             this.RrhhBtnSiguienteLiqui = new System.Windows.Forms.Button();
             this.RrhhBtnAnteriorLiqui = new System.Windows.Forms.Button();
             this.RrhhBtnInicioLiqui = new System.Windows.Forms.Button();
-            this.RrhhBtnReporteLiqui = new System.Windows.Forms.Button();
+            this.RrhhBtnRefrescarLiqui = new System.Windows.Forms.Button();
             this.RrhhBtnImprimirLiqui = new System.Windows.Forms.Button();
             this.RrhhBtnEliminarLiqui = new System.Windows.Forms.Button();
             this.RrhhBtnModificarLiqui = new System.Windows.Forms.Button();
@@ -103,18 +101,18 @@
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhDtvConceptos);
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhPnlContenidoLiqui);
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhPnlTiulo);
-            this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnConsultarLiqui);
+            this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnAyudaLiqui);
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnFinLiqui);
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnSiguienteLiqui);
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnAnteriorLiqui);
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnInicioLiqui);
-            this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnReporteLiqui);
+            this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnRefrescarLiqui);
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnImprimirLiqui);
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnEliminarLiqui);
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhBtnModificarLiqui);
             this.RrhhPnlPrincipal.Controls.Add(this.RrhhiBtnGuardarLiqui);
             this.RrhhPnlPrincipal.Location = new System.Drawing.Point(0, 0);
-            this.RrhhPnlPrincipal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhPnlPrincipal.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhPnlPrincipal.Name = "RrhhPnlPrincipal";
             this.RrhhPnlPrincipal.Size = new System.Drawing.Size(1158, 812);
             this.RrhhPnlPrincipal.TabIndex = 0;
@@ -127,7 +125,7 @@
             this.RrhhPnlContenedorCatalogos.Controls.Add(this.RrhhPnlParametroLey);
             this.RrhhPnlContenedorCatalogos.Controls.Add(this.RrhhPnlMotivoBaja);
             this.RrhhPnlContenedorCatalogos.Location = new System.Drawing.Point(864, 195);
-            this.RrhhPnlContenedorCatalogos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhPnlContenedorCatalogos.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhPnlContenedorCatalogos.Name = "RrhhPnlContenedorCatalogos";
             this.RrhhPnlContenedorCatalogos.Size = new System.Drawing.Size(246, 260);
             this.RrhhPnlContenedorCatalogos.TabIndex = 24;
@@ -153,7 +151,7 @@
             this.RrhhPnlBajEmpleado.Controls.Add(this.RrhhBtnCatalogoBajaEmpleado);
             this.RrhhPnlBajEmpleado.Controls.Add(this.RrhhLblCatalogoBajaEmpleado);
             this.RrhhPnlBajEmpleado.Location = new System.Drawing.Point(30, 188);
-            this.RrhhPnlBajEmpleado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhPnlBajEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhPnlBajEmpleado.Name = "RrhhPnlBajEmpleado";
             this.RrhhPnlBajEmpleado.Size = new System.Drawing.Size(197, 58);
             this.RrhhPnlBajEmpleado.TabIndex = 23;
@@ -164,12 +162,13 @@
             this.RrhhBtnCatalogoBajaEmpleado.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhBtnCatalogoBajaEmpleado.ForeColor = System.Drawing.Color.Transparent;
             this.RrhhBtnCatalogoBajaEmpleado.Location = new System.Drawing.Point(66, 32);
-            this.RrhhBtnCatalogoBajaEmpleado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhBtnCatalogoBajaEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhBtnCatalogoBajaEmpleado.Name = "RrhhBtnCatalogoBajaEmpleado";
             this.RrhhBtnCatalogoBajaEmpleado.Size = new System.Drawing.Size(56, 24);
             this.RrhhBtnCatalogoBajaEmpleado.TabIndex = 4;
             this.RrhhBtnCatalogoBajaEmpleado.Text = "Abrir";
             this.RrhhBtnCatalogoBajaEmpleado.UseVisualStyleBackColor = false;
+            this.RrhhBtnCatalogoBajaEmpleado.Click += new System.EventHandler(this.RrhhBtnCatalogoBajaEmpleado_Click);
             // 
             // RrhhLblCatalogoBajaEmpleado
             // 
@@ -192,7 +191,7 @@
             this.RrhhPnlParametroLey.Controls.Add(this.RrhhBtnCatalogoParametroLey);
             this.RrhhPnlParametroLey.Controls.Add(this.RrhhLblCatalogoParametroLey);
             this.RrhhPnlParametroLey.Location = new System.Drawing.Point(30, 110);
-            this.RrhhPnlParametroLey.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhPnlParametroLey.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhPnlParametroLey.Name = "RrhhPnlParametroLey";
             this.RrhhPnlParametroLey.Size = new System.Drawing.Size(199, 58);
             this.RrhhPnlParametroLey.TabIndex = 22;
@@ -203,7 +202,7 @@
             this.RrhhBtnCatalogoParametroLey.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhBtnCatalogoParametroLey.ForeColor = System.Drawing.Color.Transparent;
             this.RrhhBtnCatalogoParametroLey.Location = new System.Drawing.Point(60, 32);
-            this.RrhhBtnCatalogoParametroLey.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhBtnCatalogoParametroLey.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhBtnCatalogoParametroLey.Name = "RrhhBtnCatalogoParametroLey";
             this.RrhhBtnCatalogoParametroLey.Size = new System.Drawing.Size(56, 24);
             this.RrhhBtnCatalogoParametroLey.TabIndex = 4;
@@ -232,7 +231,7 @@
             this.RrhhPnlMotivoBaja.Controls.Add(this.RrhhBtnCatalogoMotivoBaja);
             this.RrhhPnlMotivoBaja.Controls.Add(this.RrhhLblCatalogoMotivoBaja);
             this.RrhhPnlMotivoBaja.Location = new System.Drawing.Point(30, 39);
-            this.RrhhPnlMotivoBaja.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhPnlMotivoBaja.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhPnlMotivoBaja.Name = "RrhhPnlMotivoBaja";
             this.RrhhPnlMotivoBaja.Size = new System.Drawing.Size(180, 58);
             this.RrhhPnlMotivoBaja.TabIndex = 21;
@@ -243,7 +242,7 @@
             this.RrhhBtnCatalogoMotivoBaja.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhBtnCatalogoMotivoBaja.ForeColor = System.Drawing.Color.Transparent;
             this.RrhhBtnCatalogoMotivoBaja.Location = new System.Drawing.Point(66, 32);
-            this.RrhhBtnCatalogoMotivoBaja.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhBtnCatalogoMotivoBaja.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhBtnCatalogoMotivoBaja.Name = "RrhhBtnCatalogoMotivoBaja";
             this.RrhhBtnCatalogoMotivoBaja.Size = new System.Drawing.Size(56, 24);
             this.RrhhBtnCatalogoMotivoBaja.TabIndex = 4;
@@ -294,7 +293,7 @@
             // 
             this.RrhhDtvLiquidacionDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.RrhhDtvLiquidacionDetalle.Location = new System.Drawing.Point(570, 520);
-            this.RrhhDtvLiquidacionDetalle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhDtvLiquidacionDetalle.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhDtvLiquidacionDetalle.Name = "RrhhDtvLiquidacionDetalle";
             this.RrhhDtvLiquidacionDetalle.RowHeadersWidth = 51;
             this.RrhhDtvLiquidacionDetalle.RowTemplate.Height = 24;
@@ -305,7 +304,7 @@
             // 
             this.RrhhDtvConceptos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.RrhhDtvConceptos.Location = new System.Drawing.Point(24, 520);
-            this.RrhhDtvConceptos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhDtvConceptos.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhDtvConceptos.Name = "RrhhDtvConceptos";
             this.RrhhDtvConceptos.RowHeadersWidth = 51;
             this.RrhhDtvConceptos.RowTemplate.Height = 24;
@@ -326,17 +325,15 @@
             this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhLblSalarioDia);
             this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhLblBaseIndenmizacion);
             this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhLblSalarioMensual);
-            this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhCboMotivoBaja);
             this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhDtpFechaBajaEmpleado);
             this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhTxtIdEmpleado);
             this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhCboEmpleado);
-            this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhLblMotivoBaja);
             this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhLblFechaBaja);
             this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhLblFechaIngreso);
             this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhLblIdEmpleado);
             this.RrhhPnlContenidoLiqui.Controls.Add(this.RrhhLblEmpleadoLiqui);
             this.RrhhPnlContenidoLiqui.Location = new System.Drawing.Point(6, 195);
-            this.RrhhPnlContenidoLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhPnlContenidoLiqui.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhPnlContenidoLiqui.Name = "RrhhPnlContenidoLiqui";
             this.RrhhPnlContenidoLiqui.Size = new System.Drawing.Size(792, 228);
             this.RrhhPnlContenidoLiqui.TabIndex = 11;
@@ -346,8 +343,8 @@
             this.RrhhDtpFechaIngresoEmp.CustomFormat = " dd/MM/yyyy";
             this.RrhhDtpFechaIngresoEmp.Enabled = false;
             this.RrhhDtpFechaIngresoEmp.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.RrhhDtpFechaIngresoEmp.Location = new System.Drawing.Point(156, 104);
-            this.RrhhDtpFechaIngresoEmp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhDtpFechaIngresoEmp.Location = new System.Drawing.Point(240, 104);
+            this.RrhhDtpFechaIngresoEmp.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhDtpFechaIngresoEmp.Name = "RrhhDtpFechaIngresoEmp";
             this.RrhhDtpFechaIngresoEmp.Size = new System.Drawing.Size(151, 20);
             this.RrhhDtpFechaIngresoEmp.TabIndex = 20;
@@ -356,7 +353,7 @@
             // 
             this.RrhhCboEstadoLiqui.FormattingEnabled = true;
             this.RrhhCboEstadoLiqui.Location = new System.Drawing.Point(570, 188);
-            this.RrhhCboEstadoLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhCboEstadoLiqui.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhCboEstadoLiqui.Name = "RrhhCboEstadoLiqui";
             this.RrhhCboEstadoLiqui.Size = new System.Drawing.Size(103, 21);
             this.RrhhCboEstadoLiqui.TabIndex = 19;
@@ -365,7 +362,7 @@
             // 
             this.RrhhTxtDiasLaborados.Enabled = false;
             this.RrhhTxtDiasLaborados.Location = new System.Drawing.Point(570, 150);
-            this.RrhhTxtDiasLaborados.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhTxtDiasLaborados.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhTxtDiasLaborados.Name = "RrhhTxtDiasLaborados";
             this.RrhhTxtDiasLaborados.Size = new System.Drawing.Size(205, 20);
             this.RrhhTxtDiasLaborados.TabIndex = 18;
@@ -374,7 +371,7 @@
             // 
             this.RrhhTxtSalarioDia.Enabled = false;
             this.RrhhTxtSalarioDia.Location = new System.Drawing.Point(570, 105);
-            this.RrhhTxtSalarioDia.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhTxtSalarioDia.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhTxtSalarioDia.Name = "RrhhTxtSalarioDia";
             this.RrhhTxtSalarioDia.Size = new System.Drawing.Size(205, 20);
             this.RrhhTxtSalarioDia.TabIndex = 17;
@@ -383,7 +380,7 @@
             // 
             this.RrhhTxtBaseIndenmizacion.Enabled = false;
             this.RrhhTxtBaseIndenmizacion.Location = new System.Drawing.Point(570, 65);
-            this.RrhhTxtBaseIndenmizacion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhTxtBaseIndenmizacion.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhTxtBaseIndenmizacion.Name = "RrhhTxtBaseIndenmizacion";
             this.RrhhTxtBaseIndenmizacion.Size = new System.Drawing.Size(205, 20);
             this.RrhhTxtBaseIndenmizacion.TabIndex = 16;
@@ -392,7 +389,7 @@
             // 
             this.RrhhTxtSalarioMensual.Enabled = false;
             this.RrhhTxtSalarioMensual.Location = new System.Drawing.Point(570, 26);
-            this.RrhhTxtSalarioMensual.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhTxtSalarioMensual.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhTxtSalarioMensual.Name = "RrhhTxtSalarioMensual";
             this.RrhhTxtSalarioMensual.Size = new System.Drawing.Size(205, 20);
             this.RrhhTxtSalarioMensual.TabIndex = 15;
@@ -457,21 +454,12 @@
             this.RrhhLblSalarioMensual.TabIndex = 10;
             this.RrhhLblSalarioMensual.Text = "Salario mensual";
             // 
-            // RrhhCboMotivoBaja
-            // 
-            this.RrhhCboMotivoBaja.FormattingEnabled = true;
-            this.RrhhCboMotivoBaja.Location = new System.Drawing.Point(156, 182);
-            this.RrhhCboMotivoBaja.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.RrhhCboMotivoBaja.Name = "RrhhCboMotivoBaja";
-            this.RrhhCboMotivoBaja.Size = new System.Drawing.Size(163, 21);
-            this.RrhhCboMotivoBaja.TabIndex = 9;
-            // 
             // RrhhDtpFechaBajaEmpleado
             // 
             this.RrhhDtpFechaBajaEmpleado.CustomFormat = " dd/MM/yyyy";
             this.RrhhDtpFechaBajaEmpleado.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.RrhhDtpFechaBajaEmpleado.Location = new System.Drawing.Point(156, 143);
-            this.RrhhDtpFechaBajaEmpleado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhDtpFechaBajaEmpleado.Location = new System.Drawing.Point(242, 169);
+            this.RrhhDtpFechaBajaEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhDtpFechaBajaEmpleado.Name = "RrhhDtpFechaBajaEmpleado";
             this.RrhhDtpFechaBajaEmpleado.Size = new System.Drawing.Size(151, 20);
             this.RrhhDtpFechaBajaEmpleado.TabIndex = 8;
@@ -480,7 +468,7 @@
             // 
             this.RrhhTxtIdEmpleado.Enabled = false;
             this.RrhhTxtIdEmpleado.Location = new System.Drawing.Point(156, 65);
-            this.RrhhTxtIdEmpleado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhTxtIdEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhTxtIdEmpleado.Name = "RrhhTxtIdEmpleado";
             this.RrhhTxtIdEmpleado.Size = new System.Drawing.Size(97, 20);
             this.RrhhTxtIdEmpleado.TabIndex = 6;
@@ -489,34 +477,22 @@
             // 
             this.RrhhCboEmpleado.FormattingEnabled = true;
             this.RrhhCboEmpleado.Location = new System.Drawing.Point(156, 26);
-            this.RrhhCboEmpleado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhCboEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhCboEmpleado.Name = "RrhhCboEmpleado";
             this.RrhhCboEmpleado.Size = new System.Drawing.Size(241, 21);
             this.RrhhCboEmpleado.TabIndex = 5;
-            // 
-            // RrhhLblMotivoBaja
-            // 
-            this.RrhhLblMotivoBaja.AutoSize = true;
-            this.RrhhLblMotivoBaja.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RrhhLblMotivoBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblMotivoBaja.Location = new System.Drawing.Point(30, 182);
-            this.RrhhLblMotivoBaja.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.RrhhLblMotivoBaja.Name = "RrhhLblMotivoBaja";
-            this.RrhhLblMotivoBaja.Size = new System.Drawing.Size(103, 19);
-            this.RrhhLblMotivoBaja.TabIndex = 4;
-            this.RrhhLblMotivoBaja.Text = "Motivo de baja";
             // 
             // RrhhLblFechaBaja
             // 
             this.RrhhLblFechaBaja.AutoSize = true;
             this.RrhhLblFechaBaja.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RrhhLblFechaBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(76)))), ((int)(((byte)(85)))));
-            this.RrhhLblFechaBaja.Location = new System.Drawing.Point(30, 143);
+            this.RrhhLblFechaBaja.Location = new System.Drawing.Point(32, 168);
             this.RrhhLblFechaBaja.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.RrhhLblFechaBaja.Name = "RrhhLblFechaBaja";
-            this.RrhhLblFechaBaja.Size = new System.Drawing.Size(94, 19);
+            this.RrhhLblFechaBaja.Size = new System.Drawing.Size(168, 19);
             this.RrhhLblFechaBaja.TabIndex = 3;
-            this.RrhhLblFechaBaja.Text = "Fecha de baja";
+            this.RrhhLblFechaBaja.Text = "Fecha de baja liquidacion";
             // 
             // RrhhLblFechaIngreso
             // 
@@ -526,9 +502,9 @@
             this.RrhhLblFechaIngreso.Location = new System.Drawing.Point(30, 104);
             this.RrhhLblFechaIngreso.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.RrhhLblFechaIngreso.Name = "RrhhLblFechaIngreso";
-            this.RrhhLblFechaIngreso.Size = new System.Drawing.Size(114, 19);
+            this.RrhhLblFechaIngreso.Size = new System.Drawing.Size(188, 19);
             this.RrhhLblFechaIngreso.TabIndex = 2;
-            this.RrhhLblFechaIngreso.Text = "Fecha de ingreso";
+            this.RrhhLblFechaIngreso.Text = "Fecha de ingreso liquidacion";
             // 
             // RrhhLblIdEmpleado
             // 
@@ -562,7 +538,7 @@
             this.RrhhPnlTiulo.Controls.Add(this.RrhhPbLiquidacion);
             this.RrhhPnlTiulo.Controls.Add(this.RrhhLblLiquidacionEmpleado);
             this.RrhhPnlTiulo.Location = new System.Drawing.Point(0, 6);
-            this.RrhhPnlTiulo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhPnlTiulo.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhPnlTiulo.Name = "RrhhPnlTiulo";
             this.RrhhPnlTiulo.Size = new System.Drawing.Size(1128, 98);
             this.RrhhPnlTiulo.TabIndex = 10;
@@ -572,7 +548,7 @@
             this.RrhhPbDonButti.BackColor = System.Drawing.Color.Transparent;
             this.RrhhPbDonButti.Image = global::CapaVista_Liquidacion_Rrhh.Properties.Resources._7;
             this.RrhhPbDonButti.Location = new System.Drawing.Point(1038, 0);
-            this.RrhhPbDonButti.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhPbDonButti.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhPbDonButti.Name = "RrhhPbDonButti";
             this.RrhhPbDonButti.Size = new System.Drawing.Size(72, 98);
             this.RrhhPbDonButti.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -583,7 +559,7 @@
             // 
             this.RrhhPbLiquidacion.Image = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.btn_liquidacion;
             this.RrhhPbLiquidacion.Location = new System.Drawing.Point(18, 13);
-            this.RrhhPbLiquidacion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhPbLiquidacion.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhPbLiquidacion.Name = "RrhhPbLiquidacion";
             this.RrhhPbLiquidacion.Size = new System.Drawing.Size(66, 72);
             this.RrhhPbLiquidacion.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -603,23 +579,23 @@
             this.RrhhLblLiquidacionEmpleado.TabIndex = 0;
             this.RrhhLblLiquidacionEmpleado.Text = "LIQUIDACION EMPLEADO";
             // 
-            // RrhhBtnConsultarLiqui
+            // RrhhBtnAyudaLiqui
             // 
-            this.RrhhBtnConsultarLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_consultar_sin_bordes;
-            this.RrhhBtnConsultarLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhBtnConsultarLiqui.Location = new System.Drawing.Point(840, 110);
-            this.RrhhBtnConsultarLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.RrhhBtnConsultarLiqui.Name = "RrhhBtnConsultarLiqui";
-            this.RrhhBtnConsultarLiqui.Size = new System.Drawing.Size(70, 70);
-            this.RrhhBtnConsultarLiqui.TabIndex = 9;
-            this.RrhhBtnConsultarLiqui.UseVisualStyleBackColor = true;
+            this.RrhhBtnAyudaLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.btn_ayuda;
+            this.RrhhBtnAyudaLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.RrhhBtnAyudaLiqui.Location = new System.Drawing.Point(840, 110);
+            this.RrhhBtnAyudaLiqui.Margin = new System.Windows.Forms.Padding(2);
+            this.RrhhBtnAyudaLiqui.Name = "RrhhBtnAyudaLiqui";
+            this.RrhhBtnAyudaLiqui.Size = new System.Drawing.Size(70, 70);
+            this.RrhhBtnAyudaLiqui.TabIndex = 9;
+            this.RrhhBtnAyudaLiqui.UseVisualStyleBackColor = true;
             // 
             // RrhhBtnFinLiqui
             // 
             this.RrhhBtnFinLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_fin_sin_bordes_final;
             this.RrhhBtnFinLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RrhhBtnFinLiqui.Location = new System.Drawing.Point(750, 110);
-            this.RrhhBtnFinLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhBtnFinLiqui.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhBtnFinLiqui.Name = "RrhhBtnFinLiqui";
             this.RrhhBtnFinLiqui.Size = new System.Drawing.Size(70, 70);
             this.RrhhBtnFinLiqui.TabIndex = 8;
@@ -630,7 +606,7 @@
             this.RrhhBtnSiguienteLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_siguiente_sin_bordes;
             this.RrhhBtnSiguienteLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RrhhBtnSiguienteLiqui.Location = new System.Drawing.Point(660, 110);
-            this.RrhhBtnSiguienteLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhBtnSiguienteLiqui.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhBtnSiguienteLiqui.Name = "RrhhBtnSiguienteLiqui";
             this.RrhhBtnSiguienteLiqui.Size = new System.Drawing.Size(70, 70);
             this.RrhhBtnSiguienteLiqui.TabIndex = 7;
@@ -641,7 +617,7 @@
             this.RrhhBtnAnteriorLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_anterior_sin_bordes;
             this.RrhhBtnAnteriorLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RrhhBtnAnteriorLiqui.Location = new System.Drawing.Point(570, 110);
-            this.RrhhBtnAnteriorLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhBtnAnteriorLiqui.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhBtnAnteriorLiqui.Name = "RrhhBtnAnteriorLiqui";
             this.RrhhBtnAnteriorLiqui.Size = new System.Drawing.Size(70, 70);
             this.RrhhBtnAnteriorLiqui.TabIndex = 6;
@@ -652,29 +628,29 @@
             this.RrhhBtnInicioLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_inicio_sin_bordes;
             this.RrhhBtnInicioLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RrhhBtnInicioLiqui.Location = new System.Drawing.Point(486, 110);
-            this.RrhhBtnInicioLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhBtnInicioLiqui.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhBtnInicioLiqui.Name = "RrhhBtnInicioLiqui";
             this.RrhhBtnInicioLiqui.Size = new System.Drawing.Size(70, 70);
             this.RrhhBtnInicioLiqui.TabIndex = 5;
             this.RrhhBtnInicioLiqui.UseVisualStyleBackColor = true;
             // 
-            // RrhhBtnReporteLiqui
+            // RrhhBtnRefrescarLiqui
             // 
-            this.RrhhBtnReporteLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_reporte_sin_bordes;
-            this.RrhhBtnReporteLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RrhhBtnReporteLiqui.Location = new System.Drawing.Point(396, 110);
-            this.RrhhBtnReporteLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.RrhhBtnReporteLiqui.Name = "RrhhBtnReporteLiqui";
-            this.RrhhBtnReporteLiqui.Size = new System.Drawing.Size(70, 70);
-            this.RrhhBtnReporteLiqui.TabIndex = 4;
-            this.RrhhBtnReporteLiqui.UseVisualStyleBackColor = true;
+            this.RrhhBtnRefrescarLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_refrescar_sin_bordes;
+            this.RrhhBtnRefrescarLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.RrhhBtnRefrescarLiqui.Location = new System.Drawing.Point(396, 110);
+            this.RrhhBtnRefrescarLiqui.Margin = new System.Windows.Forms.Padding(2);
+            this.RrhhBtnRefrescarLiqui.Name = "RrhhBtnRefrescarLiqui";
+            this.RrhhBtnRefrescarLiqui.Size = new System.Drawing.Size(70, 70);
+            this.RrhhBtnRefrescarLiqui.TabIndex = 4;
+            this.RrhhBtnRefrescarLiqui.UseVisualStyleBackColor = true;
             // 
             // RrhhBtnImprimirLiqui
             // 
             this.RrhhBtnImprimirLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_imprimir_sin_bordes;
             this.RrhhBtnImprimirLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RrhhBtnImprimirLiqui.Location = new System.Drawing.Point(306, 110);
-            this.RrhhBtnImprimirLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhBtnImprimirLiqui.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhBtnImprimirLiqui.Name = "RrhhBtnImprimirLiqui";
             this.RrhhBtnImprimirLiqui.Size = new System.Drawing.Size(70, 70);
             this.RrhhBtnImprimirLiqui.TabIndex = 3;
@@ -685,7 +661,7 @@
             this.RrhhBtnEliminarLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_eliminar_sin_bordes;
             this.RrhhBtnEliminarLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RrhhBtnEliminarLiqui.Location = new System.Drawing.Point(216, 110);
-            this.RrhhBtnEliminarLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhBtnEliminarLiqui.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhBtnEliminarLiqui.Name = "RrhhBtnEliminarLiqui";
             this.RrhhBtnEliminarLiqui.Size = new System.Drawing.Size(70, 70);
             this.RrhhBtnEliminarLiqui.TabIndex = 2;
@@ -696,7 +672,7 @@
             this.RrhhBtnModificarLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_modificar_sin_bordes;
             this.RrhhBtnModificarLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RrhhBtnModificarLiqui.Location = new System.Drawing.Point(126, 110);
-            this.RrhhBtnModificarLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhBtnModificarLiqui.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhBtnModificarLiqui.Name = "RrhhBtnModificarLiqui";
             this.RrhhBtnModificarLiqui.Size = new System.Drawing.Size(70, 70);
             this.RrhhBtnModificarLiqui.TabIndex = 1;
@@ -707,7 +683,7 @@
             this.RrhhiBtnGuardarLiqui.BackgroundImage = global::CapaVista_Liquidacion_Rrhh.Properties.Resources.boton_guardar_sin_bordes;
             this.RrhhiBtnGuardarLiqui.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RrhhiBtnGuardarLiqui.Location = new System.Drawing.Point(42, 110);
-            this.RrhhiBtnGuardarLiqui.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RrhhiBtnGuardarLiqui.Margin = new System.Windows.Forms.Padding(2);
             this.RrhhiBtnGuardarLiqui.Name = "RrhhiBtnGuardarLiqui";
             this.RrhhiBtnGuardarLiqui.Size = new System.Drawing.Size(70, 70);
             this.RrhhiBtnGuardarLiqui.TabIndex = 0;
@@ -721,7 +697,7 @@
             this.Controls.Add(this.RrhhPnlPrincipal);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "FrmLiquidacionEmpleados";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -752,12 +728,12 @@
 
         private System.Windows.Forms.Panel RrhhPnlPrincipal;
         private System.Windows.Forms.Button RrhhiBtnGuardarLiqui;
-        private System.Windows.Forms.Button RrhhBtnConsultarLiqui;
+        private System.Windows.Forms.Button RrhhBtnAyudaLiqui;
         private System.Windows.Forms.Button RrhhBtnFinLiqui;
         private System.Windows.Forms.Button RrhhBtnSiguienteLiqui;
         private System.Windows.Forms.Button RrhhBtnAnteriorLiqui;
         private System.Windows.Forms.Button RrhhBtnInicioLiqui;
-        private System.Windows.Forms.Button RrhhBtnReporteLiqui;
+        private System.Windows.Forms.Button RrhhBtnRefrescarLiqui;
         private System.Windows.Forms.Button RrhhBtnImprimirLiqui;
         private System.Windows.Forms.Button RrhhBtnEliminarLiqui;
         private System.Windows.Forms.Button RrhhBtnModificarLiqui;
@@ -769,10 +745,8 @@
         private System.Windows.Forms.Label RrhhLblIdEmpleado;
         private System.Windows.Forms.TextBox RrhhTxtIdEmpleado;
         private System.Windows.Forms.ComboBox RrhhCboEmpleado;
-        private System.Windows.Forms.Label RrhhLblMotivoBaja;
         private System.Windows.Forms.Label RrhhLblFechaBaja;
         private System.Windows.Forms.Label RrhhLblSalarioMensual;
-        private System.Windows.Forms.ComboBox RrhhCboMotivoBaja;
         private System.Windows.Forms.DateTimePicker RrhhDtpFechaBajaEmpleado;
         private System.Windows.Forms.ComboBox RrhhCboEstadoLiqui;
         private System.Windows.Forms.TextBox RrhhTxtDiasLaborados;

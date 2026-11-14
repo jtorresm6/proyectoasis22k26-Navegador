@@ -1,98 +1,105 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0" DefaultTargets="Compilar">
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <VentasDllCompartidas Condition="'$(VentasDllCompartidas)' == ''">$(MSBuildThisFileDirectory)..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\$(Configuration)</VentasDllCompartidas>
     <SalidaVentas>$(MSBuildThisFileDirectory)..\Ejecutable_Ventas\Ejecutable_Ventas\bin\$(Configuration)\</SalidaVentas>
     <BCryptSeguridad>$(MSBuildThisFileDirectory)..\..\..\componentes\seguridad\Seguridad\packages\BCrypt.Net-Next.4.2.0\lib\net48\BCrypt-Net-Next.dll</BCryptSeguridad>
     <OpcionesReferenciasVentas>PlatformTarget=AnyCPU;BuildProjectReferences=false;VentasDependenciasPreparadas=true;CustomBeforeMicrosoftCommonTargets=$(MSBuildThisFileDirectory)build_componentes_ventas.targets</OpcionesReferenciasVentas>
   </PropertyGroup>
   <ItemGroup>
-    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas\Facturas.sln" />
-    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\ListadoPrecios.sln" />
-    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones\Cotizaciones.sln" />
-    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes\MovimientosClientes.sln" />
-    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CierreMovimientos.sln" />
-    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes\Reportes.sln" />
-    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos\Mantenimientos.sln" />
-    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores\ComisionVendedores.sln" />
-    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos\Pedidos.sln" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas\CapaControlador_Facturas\bin\$(Configuration)\CapaControlador_Facturas.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas\CapaModelo_Facturas\bin\$(Configuration)\CapaModelo_Facturas.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas\CapaVista_Facturas\bin\$(Configuration)\CapaVista_Facturas.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\CapaControlador_ListadoPrecios\bin\$(Configuration)\CapaControlador_ListadoPrecios.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\CapaModelo_ListadoPrecios\bin\$(Configuration)\CapaModelo_ListadoPrecios.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\CapaVista_ListadoPrecios\bin\$(Configuration)\CapaVista_ListadoPrecios.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones\CapaControlador_Cotizaciones\bin\$(Configuration)\CapaControlador_Cotizaciones.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones\CapaModelo_Cotizaciones\bin\$(Configuration)\CapaModelo_Cotizaciones.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones\CapaVista_Cotizaciones\bin\$(Configuration)\CapaVista_Cotizaciones.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes\CapaControlador_MovimientosClientes\bin\$(Configuration)\CapaControlador_MovimientosClientes.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes\CapaModelo_MovimientosClientes\bin\$(Configuration)\CapaModelo_MovimientosClientes.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes\CapaVista_MovimientosClientes\bin\$(Configuration)\CapaVista_MovimientosClientes.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaControlador_CierreMovimientos\bin\$(Configuration)\CapaControlador_CierreMovimientos.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaModelo_CierreMovimientos\bin\$(Configuration)\CapaModelo_CierreMovimientos.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin\$(Configuration)\CapaVista_CierreMovimientos.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes\CapaControlador_Reportes\bin\$(Configuration)\CapaControlador_Reportes.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes\CapaModelo_Reportes\bin\$(Configuration)\CapaModelo_Reportes.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes\CapaVista_Reportes\bin\$(Configuration)\CapaVista_Reportes.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos\CapaControlador_Mantenimientos\bin\$(Configuration)\CapaControlador_Mantenimientos.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos\CapaModelo_Mantenimientos\bin\$(Configuration)\CapaModelo_Mantenimientos.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos\CapaVista_Mantenimientos\bin\$(Configuration)\CapaVista_Mantenimientos.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores\CapaControlador_ComisionVendedores\bin\$(Configuration)\CapaControlador_ComisionVendedores.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores\CapaModelo_ComisionVendedores\bin\$(Configuration)\CapaModelo_ComisionVendedores.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores\CapaVista_ComisionVendedores\bin\$(Configuration)\CapaVista_ComisionVendedores.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos\CapaControlador_Pedidos\bin\$(Configuration)\CapaControlador_Pedidos.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos\CapaModelo_Pedidos\bin\$(Configuration)\CapaModelo_Pedidos.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos\CapaVista_Pedidos\bin\$(Configuration)\CapaVista_Pedidos.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaControlador_Ventas\bin\$(Configuration)\CapaControlador_Ventas.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaModelo_Ventas\bin\$(Configuration)\CapaModelo_Ventas.dll" />
-    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaVista_Ventas\bin\$(Configuration)\CapaVista_Ventas.dll" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas\CapaControlador_Facturas\bin\$(Configuration)\CapaControlador_Facturas.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas\CapaModelo_Facturas\bin\$(Configuration)\CapaModelo_Facturas.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas\CapaVista_Facturas\bin\$(Configuration)\CapaVista_Facturas.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\CapaControlador_ListadoPrecios\bin\$(Configuration)\CapaControlador_ListadoPrecios.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\CapaModelo_ListadoPrecios\bin\$(Configuration)\CapaModelo_ListadoPrecios.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\CapaVista_ListadoPrecios\bin\$(Configuration)\CapaVista_ListadoPrecios.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones\CapaControlador_Cotizaciones\bin\$(Configuration)\CapaControlador_Cotizaciones.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones\CapaModelo_Cotizaciones\bin\$(Configuration)\CapaModelo_Cotizaciones.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones\CapaVista_Cotizaciones\bin\$(Configuration)\CapaVista_Cotizaciones.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes\CapaControlador_MovimientosClientes\bin\$(Configuration)\CapaControlador_MovimientosClientes.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes\CapaModelo_MovimientosClientes\bin\$(Configuration)\CapaModelo_MovimientosClientes.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes\CapaVista_MovimientosClientes\bin\$(Configuration)\CapaVista_MovimientosClientes.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaControlador_CierreMovimientos\bin\$(Configuration)\CapaControlador_CierreMovimientos.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaModelo_CierreMovimientos\bin\$(Configuration)\CapaModelo_CierreMovimientos.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_CierreMovimientos\bin\$(Configuration)\CapaVista_CierreMovimientos.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes\CapaControlador_Reportes\bin\$(Configuration)\CapaControlador_Reportes.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes\CapaModelo_Reportes\bin\$(Configuration)\CapaModelo_Reportes.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes\CapaVista_Reportes\bin\$(Configuration)\CapaVista_Reportes.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos\CapaControlador_Mantenimientos\bin\$(Configuration)\CapaControlador_Mantenimientos.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos\CapaModelo_Mantenimientos\bin\$(Configuration)\CapaModelo_Mantenimientos.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos\CapaVista_Mantenimientos\bin\$(Configuration)\CapaVista_Mantenimientos.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores\CapaControlador_ComisionVendedores\bin\$(Configuration)\CapaControlador_ComisionVendedores.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores\CapaModelo_ComisionVendedores\bin\$(Configuration)\CapaModelo_ComisionVendedores.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores\CapaVista_ComisionVendedores\bin\$(Configuration)\CapaVista_ComisionVendedores.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos\CapaControlador_Pedidos\bin\$(Configuration)\CapaControlador_Pedidos.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos\CapaModelo_Pedidos\bin\$(Configuration)\CapaModelo_Pedidos.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos\CapaVista_Pedidos\bin\$(Configuration)\CapaVista_Pedidos.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaControlador_Ventas\bin\$(Configuration)\CapaControlador_Ventas.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaModelo_Ventas\bin\$(Configuration)\CapaModelo_Ventas.pdb" />
-    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaVista_Ventas\bin\$(Configuration)\CapaVista_Ventas.pdb" />
+    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas_Ventas\Facturas.sln" />
+    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios_Ventas\ListadoPrecios.sln" />
+    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones_Ventas\Cotizaciones.sln" />
+    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes_Ventas\MovimientosClientes.sln" />
+    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos_Ventas\CierreMovimientos.sln" />
+    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\Reportes.sln" />
+    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos_Ventas\Mantenimientos.sln" />
+    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores_Ventas\ComisionVendedores.sln" />
+    <SolucionVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos_Ventas\Pedidos.sln" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas_Ventas\CapaControlador_Facturas_Ventas\bin\$(Configuration)\CapaControlador_Facturas_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas_Ventas\CapaModelo_Facturas_Ventas\bin\$(Configuration)\CapaModelo_Facturas_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas_Ventas\CapaVista_Facturas_Ventas\bin\$(Configuration)\CapaVista_Facturas_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios_Ventas\CapaControlador_ListadoPrecios_Ventas\bin\$(Configuration)\CapaControlador_ListadoPrecios_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios_Ventas\CapaModelo_ListadoPrecios_Ventas\bin\$(Configuration)\CapaModelo_ListadoPrecios_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios_Ventas\CapaVista_ListadoPrecios_Ventas\bin\$(Configuration)\CapaVista_ListadoPrecios_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones_Ventas\CapaControlador_Cotizaciones_Ventas\bin\$(Configuration)\CapaControlador_Cotizaciones_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones_Ventas\CapaModelo_Cotizaciones_Ventas\bin\$(Configuration)\CapaModelo_Cotizaciones_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones_Ventas\CapaVista_Cotizaciones_Ventas\bin\$(Configuration)\CapaVista_Cotizaciones_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes_Ventas\CapaControlador_MovimientosClientes_Ventas\bin\$(Configuration)\CapaControlador_MovimientosClientes_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes_Ventas\CapaModelo_MovimientosClientes_Ventas\bin\$(Configuration)\CapaModelo_MovimientosClientes_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes_Ventas\CapaVista_MovimientosClientes_Ventas\bin\$(Configuration)\CapaVista_MovimientosClientes_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos_Ventas\CapaControlador_CierreMovimientos_Ventas\bin\$(Configuration)\CapaControlador_CierreMovimientos_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos_Ventas\CapaModelo_CierreMovimientos_Ventas\bin\$(Configuration)\CapaModelo_CierreMovimientos_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos_Ventas\CapaVista_CierreMovimientos_Ventas\bin\$(Configuration)\CapaVista_CierreMovimientos_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\CapaControlador_Reportes_Ventas\bin\$(Configuration)\CapaControlador_Reportes_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\CapaModelo_Reportes_Ventas\bin\$(Configuration)\CapaModelo_Reportes_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\CapaVista_Reportes_Ventas\bin\$(Configuration)\CapaVista_Reportes_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos_Ventas\CapaControlador_Mantenimientos_Ventas\bin\$(Configuration)\CapaControlador_Mantenimientos_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos_Ventas\CapaModelo_Mantenimientos_Ventas\bin\$(Configuration)\CapaModelo_Mantenimientos_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos_Ventas\CapaVista_Mantenimientos_Ventas\bin\$(Configuration)\CapaVista_Mantenimientos_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores_Ventas\CapaControlador_ComisionVendedores_Ventas\bin\$(Configuration)\CapaControlador_ComisionVendedores_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores_Ventas\CapaModelo_ComisionVendedores_Ventas\bin\$(Configuration)\CapaModelo_ComisionVendedores_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores_Ventas\CapaVista_ComisionVendedores_Ventas\bin\$(Configuration)\CapaVista_ComisionVendedores_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos_Ventas\CapaControlador_Pedidos_Ventas\bin\$(Configuration)\CapaControlador_Pedidos_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos_Ventas\CapaModelo_Pedidos_Ventas\bin\$(Configuration)\CapaModelo_Pedidos_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos_Ventas\CapaVista_Pedidos_Ventas\bin\$(Configuration)\CapaVista_Pedidos_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaControlador_Ventas\bin\$(Configuration)\CapaControlador_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaModelo_Ventas\bin\$(Configuration)\CapaModelo_Ventas.dll" />
+    <BibliotecaVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaVista_Ventas\bin\$(Configuration)\CapaVista_Ventas.dll" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas_Ventas\CapaControlador_Facturas_Ventas\bin\$(Configuration)\CapaControlador_Facturas_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas_Ventas\CapaModelo_Facturas_Ventas\bin\$(Configuration)\CapaModelo_Facturas_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas_Ventas\CapaVista_Facturas_Ventas\bin\$(Configuration)\CapaVista_Facturas_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios_Ventas\CapaControlador_ListadoPrecios_Ventas\bin\$(Configuration)\CapaControlador_ListadoPrecios_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios_Ventas\CapaModelo_ListadoPrecios_Ventas\bin\$(Configuration)\CapaModelo_ListadoPrecios_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios_Ventas\CapaVista_ListadoPrecios_Ventas\bin\$(Configuration)\CapaVista_ListadoPrecios_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones_Ventas\CapaControlador_Cotizaciones_Ventas\bin\$(Configuration)\CapaControlador_Cotizaciones_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones_Ventas\CapaModelo_Cotizaciones_Ventas\bin\$(Configuration)\CapaModelo_Cotizaciones_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones_Ventas\CapaVista_Cotizaciones_Ventas\bin\$(Configuration)\CapaVista_Cotizaciones_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes_Ventas\CapaControlador_MovimientosClientes_Ventas\bin\$(Configuration)\CapaControlador_MovimientosClientes_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes_Ventas\CapaModelo_MovimientosClientes_Ventas\bin\$(Configuration)\CapaModelo_MovimientosClientes_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes_Ventas\CapaVista_MovimientosClientes_Ventas\bin\$(Configuration)\CapaVista_MovimientosClientes_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos_Ventas\CapaControlador_CierreMovimientos_Ventas\bin\$(Configuration)\CapaControlador_CierreMovimientos_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos_Ventas\CapaModelo_CierreMovimientos_Ventas\bin\$(Configuration)\CapaModelo_CierreMovimientos_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos_Ventas\CapaVista_CierreMovimientos_Ventas\bin\$(Configuration)\CapaVista_CierreMovimientos_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\CapaControlador_Reportes_Ventas\bin\$(Configuration)\CapaControlador_Reportes_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\CapaModelo_Reportes_Ventas\bin\$(Configuration)\CapaModelo_Reportes_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\CapaVista_Reportes_Ventas\bin\$(Configuration)\CapaVista_Reportes_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos_Ventas\CapaControlador_Mantenimientos_Ventas\bin\$(Configuration)\CapaControlador_Mantenimientos_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos_Ventas\CapaModelo_Mantenimientos_Ventas\bin\$(Configuration)\CapaModelo_Mantenimientos_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos_Ventas\CapaVista_Mantenimientos_Ventas\bin\$(Configuration)\CapaVista_Mantenimientos_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores_Ventas\CapaControlador_ComisionVendedores_Ventas\bin\$(Configuration)\CapaControlador_ComisionVendedores_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores_Ventas\CapaModelo_ComisionVendedores_Ventas\bin\$(Configuration)\CapaModelo_ComisionVendedores_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores_Ventas\CapaVista_ComisionVendedores_Ventas\bin\$(Configuration)\CapaVista_ComisionVendedores_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos_Ventas\CapaControlador_Pedidos_Ventas\bin\$(Configuration)\CapaControlador_Pedidos_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos_Ventas\CapaModelo_Pedidos_Ventas\bin\$(Configuration)\CapaModelo_Pedidos_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos_Ventas\CapaVista_Pedidos_Ventas\bin\$(Configuration)\CapaVista_Pedidos_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaControlador_Ventas\bin\$(Configuration)\CapaControlador_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaModelo_Ventas\bin\$(Configuration)\CapaModelo_Ventas.pdb" />
+    <SimboloVentas Include="..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaVista_Ventas\bin\$(Configuration)\CapaVista_Ventas.pdb" />
   </ItemGroup>
   <Import Project="build_componentes_ventas.proj" />
+  <ItemGroup>
+    <ProyectoNuGetVentas Include="..\Biblioteca de clase Ventas Y CxC\**\Capa*\*.csproj;..\Ejecutable_Ventas\Ejecutable_Ventas\Ejecucion_Ventas.csproj" />
+  </ItemGroup>
   <Target Name="RestaurarDependenciasVentas">
-    <MSBuild Projects="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaModelo_Ventas\CapaModelo_Ventas.csproj;..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\CapaModelo_ListadoPrecios\CapaModelo_ListadoPrecios.csproj;..\Ejecutable_Ventas\Ejecutable_Ventas\Ejecucion_Ventas.csproj" Targets="Restore" Properties="Configuration=$(Configuration);Platform=AnyCPU" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(ProyectoNuGetVentas)" Targets="Restore" Properties="Configuration=$(Configuration);Platform=AnyCPU;RestorePackagesConfig=false" BuildInParallel="true" StopOnFirstFailure="true" />
   </Target>
-  <Target Name="PrepararDependenciasVentas" DependsOnTargets="ValidarConfiguracion;RestaurarDependenciasVentas;CompilarComponentesVentas" />
+  <Target Name="PrepararDependenciasVentas" DependsOnTargets="ValidarConfiguracion;RestaurarDependenciasVentas;CompilarComponentesVentas;ValidarSeguridadVentas" />
+  <Target Name="ValidarSeguridadVentas">
+    <Error Condition="!Exists('$(MSBuildThisFileDirectory)..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\$(Configuration)\CapaVista_Seguridad.dll')" Text="Falta CapaVista_Seguridad.dll del perfil $(Configuration). Compile el login compartido de Seguridad con sus dependencias para iniciar Ventas." />
+  </Target>
   <Target Name="Compilar" DependsOnTargets="PrepararDependenciasVentas">
-    <Message Text="[8/8] Compilando soluciones MVC de Ventas en paralelo ($(Configuration))..." Importance="high" />
+    <Message Text="[8/8] Compilando el ejecutable de Ventas ($(Configuration))..." Importance="high" />
     <MSBuild Projects="..\Ejecutable_Ventas\Ejecutable_Ventas\Ejecucion_Ventas.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
     <CallTarget Targets="ReunirBibliotecas" />
   </Target>
   <Target Name="CompilarFormulariosVentas">
     <Message Text="Compilando formularios MVC de Ventas antes de enlazar el MDI..." Importance="high" />
-    <MSBuild Projects="..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaModelo_Ventas\CapaModelo_Ventas.csproj;..\Biblioteca de clase Ventas Y CxC\VentasYCxC\CapaControlador_Ventas\CapaControlador_Ventas.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="false" StopOnFirstFailure="true" />
-    <MSBuild Projects="@(SolucionVentas->'%(RelativeDir)CapaModelo_%(Filename)\CapaModelo_%(Filename).csproj')" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
-    <MSBuild Projects="@(SolucionVentas->'%(RelativeDir)CapaControlador_%(Filename)\CapaControlador_%(Filename).csproj')" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
-    <MSBuild Projects="@(SolucionVentas->'%(RelativeDir)CapaVista_%(Filename)\CapaVista_%(Filename).csproj')" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaModelo_Ventas\CapaModelo_Ventas.csproj;..\Biblioteca de clase Ventas Y CxC\VentasYCxC_Ventas\CapaControlador_Ventas\CapaControlador_Ventas.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="false" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(SolucionVentas->'%(RelativeDir)CapaModelo_%(Filename)_Ventas\CapaModelo_%(Filename)_Ventas.csproj')" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(SolucionVentas->'%(RelativeDir)CapaControlador_%(Filename)_Ventas\CapaControlador_%(Filename)_Ventas.csproj')" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
+    <MSBuild Projects="@(SolucionVentas->'%(RelativeDir)CapaVista_%(Filename)_Ventas\CapaVista_%(Filename)_Ventas.csproj')" Targets="Build" Properties="Configuration=$(Configuration);Platform=AnyCPU;$(OpcionesReferenciasVentas)" BuildInParallel="true" StopOnFirstFailure="true" />
   </Target>
   <Target Name="ValidarConfiguracion">
     <Error Condition="'$(Configuration)' != 'Debug' and '$(Configuration)' != 'Release'" Text="Configuración no válida. Use Debug o Release." />
@@ -104,39 +111,39 @@
     <Copy SourceFiles="@(BibliotecaVentas)" DestinationFolder="$(SalidaVentas)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(SimboloVentas)" DestinationFolder="$(SalidaVentas)" SkipUnchangedFiles="true" Condition="Exists('%(SimboloVentas.Identity)')" />
     <ItemGroup>
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas\CapaVista_*\bin\$(Configuration)\System*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\CapaVista_*\bin\$(Configuration)\System*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones\CapaVista_*\bin\$(Configuration)\System*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes\CapaVista_*\bin\$(Configuration)\System*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_*\bin\$(Configuration)\System*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes\CapaVista_*\bin\$(Configuration)\System*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos\CapaVista_*\bin\$(Configuration)\System*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores\CapaVista_*\bin\$(Configuration)\System*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos\CapaVista_*\bin\$(Configuration)\System*.dll" />
-      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas_Ventas\CapaVista_*\bin\$(Configuration)\System*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Facturas_Ventas\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios_Ventas\CapaVista_*\bin\$(Configuration)\System*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\ListadoPrecios_Ventas\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones_Ventas\CapaVista_*\bin\$(Configuration)\System*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Cotizaciones_Ventas\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes_Ventas\CapaVista_*\bin\$(Configuration)\System*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\MovimientosClientes_Ventas\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos_Ventas\CapaVista_*\bin\$(Configuration)\System*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\CierreMovimientos_Ventas\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\CapaVista_*\bin\$(Configuration)\System*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos_Ventas\CapaVista_*\bin\$(Configuration)\System*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Mantenimientos_Ventas\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores_Ventas\CapaVista_*\bin\$(Configuration)\System*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\ComisionVendedores_Ventas\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos_Ventas\CapaVista_*\bin\$(Configuration)\System*.dll" />
+      <DependenciaVentas Include="..\Biblioteca de clase Ventas Y CxC\Pedidos_Ventas\CapaVista_*\bin\$(Configuration)\Microsoft*.dll" />
     </ItemGroup>
     <RemoveDuplicates Inputs="@(DependenciaVentas)">
       <Output TaskParameter="Filtered" ItemName="DependenciaUnicaVentas" />
     </RemoveDuplicates>
     <Copy SourceFiles="@(DependenciaUnicaVentas)" DestinationFolder="$(SalidaVentas)" SkipUnchangedFiles="true" />
     <ItemGroup>
-      <Nativox64 Include="..\Biblioteca de clase Ventas Y CxC\Reportes\CapaVista_Reportes\bin\$(Configuration)\x64\*.dll" />
+      <Nativox64 Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\CapaVista_Reportes_Ventas\bin\$(Configuration)\x64\*.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(Nativox64)" DestinationFolder="$(SalidaVentas)x64\" SkipUnchangedFiles="true" />
     <ItemGroup>
-      <Nativox86 Include="..\Biblioteca de clase Ventas Y CxC\Reportes\CapaVista_Reportes\bin\$(Configuration)\x86\*.dll" />
+      <Nativox86 Include="..\Biblioteca de clase Ventas Y CxC\Reportes_Ventas\CapaVista_Reportes_Ventas\bin\$(Configuration)\x86\*.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(Nativox86)" DestinationFolder="$(SalidaVentas)x86\" SkipUnchangedFiles="true" />
     <ItemGroup>
-      <BibliotecaComponenteVentas Include="@(ComponenteVentas->'%(RootDir)%(Directory)bin\$(Configuration)\%(Biblioteca)')" Condition="'%(ComponenteVentas.Extension)' == '.csproj' and $([System.String]::Copy('%(ComponenteVentas.Filename)').StartsWith('Ejecucion_')) != 'true'" />
+      <BibliotecaComponenteVentas Include="@(ComponenteVentas->'%(RootDir)%(Directory)bin\$(Configuration)\%(Biblioteca)')" Condition="'%(ComponenteVentas.Extension)' == '.csproj'" />
       <DependenciaComponenteVentas Include="..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\$(Configuration)\*.dll;..\..\..\componentes\reporteador\Reporteador\CapaVista_Reporteador\bin\$(Configuration)\*.dll;..\..\..\componentes\reporteador\BtnVerReporte_Reporteador\CapaVista_BtnVerReporte_Reporteador\bin\$(Configuration)\*.dll" />
       <NativoComponenteX64 Include="..\..\..\componentes\reporteador\Reporteador\CapaVista_Reporteador\bin\$(Configuration)\x64\*.dll;..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\$(Configuration)\x64\*.dll" />
       <NativoComponenteX86 Include="..\..\..\componentes\reporteador\Reporteador\CapaVista_Reporteador\bin\$(Configuration)\x86\*.dll;..\..\..\componentes\seguridad\Seguridad\CapaVista_Seguridad\bin\$(Configuration)\x86\*.dll" />
@@ -148,10 +155,10 @@
     <Copy SourceFiles="@(NativoComponenteX64)" DestinationFolder="$(SalidaVentas)x64\" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(NativoComponenteX86)" DestinationFolder="$(SalidaVentas)x86\" SkipUnchangedFiles="true" />
     <Delete Files="$(SalidaVentas)CapaRecursos_Ventas.dll;$(SalidaVentas)CapaRecursos_Ventas.pdb" />
-    <ItemGroup>
-      <DllVentasParaSeguridad Include="$(SalidaVentas)**\*.dll" />
+    <ItemGroup Condition="'$(VentasDllCompartidas)' != ''">
+      <DependenciaCompartida Include="$(VentasDllCompartidas)\*.dll" />
     </ItemGroup>
-    <Copy SourceFiles="@(DllVentasParaSeguridad)" DestinationFiles="@(DllVentasParaSeguridad->'$(MSBuildThisFileDirectory)..\..\..\componentes\seguridad\Ejecucion_Seguridad\Ejecucion_Seguridad\bin\$(Configuration)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="%(DependenciaCompartida.Identity)" DestinationFolder="$(SalidaVentas)" Condition="!Exists('$(SalidaVentas)%(DependenciaCompartida.Filename)%(DependenciaCompartida.Extension)')" SkipUnchangedFiles="true" />
     <Message Text="Ventas listo. DLL de los módulos reunidas en $(SalidaVentas)" Importance="high" />
   </Target>
 </Project>

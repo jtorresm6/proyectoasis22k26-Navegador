@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
- * ==================================================================
+ * =============================================================================
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
  * Fecha : 28/10/2026
- * ==================================================================
+ * =============================================================================
  * Propósito :
  *  La entidad ClsAutorizacionDetalle representa el monto asignado a una cuenta
- *  bancaria para el pago de una orden autorizada (tabla tblAutPagoOrden).
- * ===================================================================
+ *  bancaria para el pago de una orden autorizada.
+ * =============================================================================
 */
 
 namespace CapaModelo_AutorizacionOrdenes.Entidades

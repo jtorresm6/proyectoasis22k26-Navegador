@@ -87,6 +87,9 @@ namespace CapaVista_CierreBancario.Formularios
             this.BancosChkSaldosVerificados = new System.Windows.Forms.CheckBox();
             this.BancosTxtResultadoValidacionesCierre = new System.Windows.Forms.Label();
             this.BancosTxtAdvertencia = new System.Windows.Forms.Label();
+            this.BancosLblTotalCierre = new System.Windows.Forms.Label();
+            this.BancosTxtTotalCierre = new System.Windows.Forms.TextBox();
+            this.BancosTxtDetalleMonedas = new System.Windows.Forms.TextBox();
             this.BancosPnlBotones = new System.Windows.Forms.Panel();
             this.BancosPnlPeriodoCierre = new System.Windows.Forms.Panel();
             this.BancosLblPeriodoCierre = new System.Windows.Forms.Label();
@@ -257,6 +260,9 @@ namespace CapaVista_CierreBancario.Formularios
             this.BancosPnlValidacionesCierre.Controls.Add(this.BancosChkSaldosVerificados);
             this.BancosPnlValidacionesCierre.Controls.Add(this.BancosTxtResultadoValidacionesCierre);
             this.BancosPnlValidacionesCierre.Controls.Add(this.BancosTxtAdvertencia);
+            this.BancosPnlValidacionesCierre.Controls.Add(this.BancosLblTotalCierre);
+            this.BancosPnlValidacionesCierre.Controls.Add(this.BancosTxtTotalCierre);
+            this.BancosPnlValidacionesCierre.Controls.Add(this.BancosTxtDetalleMonedas);
             this.BancosPnlValidacionesCierre.Controls.Add(this.BancosPnlBotones);
             this.BancosPnlValidacionesCierre.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BancosPnlValidacionesCierre.Location = new System.Drawing.Point(12, 337);
@@ -327,6 +333,41 @@ namespace CapaVista_CierreBancario.Formularios
             this.BancosTxtAdvertencia.Size = new System.Drawing.Size(420, 44);
             this.BancosTxtAdvertencia.TabIndex = 5;
             this.BancosTxtAdvertencia.Text = "Al confirmar, las conciliaciones del período pasarán a estado CERRADA.";
+            // 
+            // BancosLblTotalCierre
+            // 
+            this.BancosLblTotalCierre.AutoSize = true;
+            this.BancosLblTotalCierre.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.BancosLblTotalCierre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(78)))), ((int)(((byte)(53)))));
+            this.BancosLblTotalCierre.Location = new System.Drawing.Point(330, 8);
+            this.BancosLblTotalCierre.Name = "BancosLblTotalCierre";
+            this.BancosLblTotalCierre.Size = new System.Drawing.Size(256, 17);
+            this.BancosLblTotalCierre.TabIndex = 6;
+            this.BancosLblTotalCierre.Text = "Total con que cierra el período";
+            // 
+            // BancosTxtTotalCierre
+            // 
+            this.BancosTxtTotalCierre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(248)))), ((int)(((byte)(243)))));
+            this.BancosTxtTotalCierre.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
+            this.BancosTxtTotalCierre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(74)))), ((int)(((byte)(48)))));
+            this.BancosTxtTotalCierre.Location = new System.Drawing.Point(334, 34);
+            this.BancosTxtTotalCierre.Name = "BancosTxtTotalCierre";
+            this.BancosTxtTotalCierre.ReadOnly = true;
+            this.BancosTxtTotalCierre.Size = new System.Drawing.Size(410, 34);
+            this.BancosTxtTotalCierre.TabIndex = 7;
+            this.BancosTxtTotalCierre.TabStop = false;
+            this.BancosTxtTotalCierre.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // BancosTxtDetalleMonedas
+            // 
+            this.BancosTxtDetalleMonedas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(248)))), ((int)(((byte)(243)))));
+            this.BancosTxtDetalleMonedas.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.BancosTxtDetalleMonedas.Location = new System.Drawing.Point(334, 74);
+            this.BancosTxtDetalleMonedas.Name = "BancosTxtDetalleMonedas";
+            this.BancosTxtDetalleMonedas.ReadOnly = true;
+            this.BancosTxtDetalleMonedas.Size = new System.Drawing.Size(410, 23);
+            this.BancosTxtDetalleMonedas.TabIndex = 8;
+            this.BancosTxtDetalleMonedas.TabStop = false;
             // 
             // BancosPnlBotones
             // 
@@ -813,5 +854,8 @@ namespace CapaVista_CierreBancario.Formularios
         private System.Windows.Forms.Button BancosBtnInicio;
         private System.Windows.Forms.Button BancosBtnFin;
         private System.Windows.Forms.Button BancosBtnReporte;
+        private System.Windows.Forms.Label BancosLblTotalCierre;
+        private System.Windows.Forms.TextBox BancosTxtTotalCierre;
+        private System.Windows.Forms.TextBox BancosTxtDetalleMonedas;
     }
 }

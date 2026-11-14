@@ -8,17 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
- * ==================================================================
+ * ============================================================================
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
  * Fecha : 28/10/2026
- * ==================================================================
+ * ============================================================================
  * Propósito :
  *  La clase Repositorio de Cuenta Disponible se encarga de consultar mediante
  *  ODBC las cuentas bancarias activas con disponibilidad del día, heredando de
  *  ClsSentencias e implementando la interfaz IRepositorioCuentaDisponible.
- * ===================================================================
+ * ============================================================================
 */
 
 namespace CapaModelo_AutorizacionOrdenes.Repositorios
@@ -30,14 +30,33 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
 
         public ClsRepositorioCuentaDisponible()
         {
-            _SelectAll = "SELECT c.Pk_CuentaBancaria, b.nombreBanco, c.numeroCuentaBancaria, " +
-                         "c.Fk_Moneda_Codigo, m.codigoMoneda, d.saldoDisponibleDisponibilidadDiaria, " +
+            // Se calculan una sola vez, por cuenta, las reservas de autorizaciones (convertidas
+            // a la moneda de la cuenta) y las órdenes de pago pendientes de movimiento.
+            _SelectAll = "SELECT c.idCuentaBancaria, b.nombreBanco, c.numeroCuentaBancaria, " +
+                         "c.Fk_Moneda_Codigo, m.codigoMoneda, " +
+                         "(d.saldoInicialDisponibilidadDiaria + d.ingresosDisponibilidadDiaria - " +
+                         " d.egresosDisponibilidadDiaria - d.restringidoDisponibilidadDiaria - " +
+                         " COALESCE(r.reservado, 0) - COALESCE(o.ordenes, 0)) AS saldoDisponible, " +
                          "d.Fk_TipoCambio_Codigo, d.tipoCambioAplicadoDisponibilidadDiaria, " +
-                         "d.comprometidoDisponibilidadDiaria " +
+                         "COALESCE(r.reservado, 0) + COALESCE(o.ordenes, 0) AS comprometidoActual " +
                          "FROM tblCuentaBancaria c " +
-                         "INNER JOIN tblBanco b ON b.Pk_Banco = c.Fk_Banco_Codigo " +
-                         "INNER JOIN tblMoneda m ON m.Pk_Moneda = c.Fk_Moneda_Codigo " +
-                         "INNER JOIN tblDisponibilidadDiaria d ON d.Fk_CuentaBancaria_Codigo = c.Pk_CuentaBancaria " +
+                         "INNER JOIN tblBanco b ON b.idBanco = c.Fk_Banco_Codigo " +
+                         "INNER JOIN tblMoneda m ON m.idMoneda = c.Fk_Moneda_Codigo " +
+                         "INNER JOIN tblDisponibilidadDiaria d ON d.Fk_CuentaBancaria_Codigo = c.idCuentaBancaria " +
+                         "LEFT JOIN (SELECT af.Fk_CuentaBancaria_Codigo AS cuenta, " +
+                         "SUM(ap.montoAsignadoAutPagoOrden / af.tipoCambioAutDisponibilidadFondos) AS reservado " +
+                         "FROM tblAutPagoOrden ap " +
+                         "JOIN tblAutDisponibilidadFondos af ON af.idAutDisponibilidadFondos = ap.Fk_AutDisponibilidadFondos_Codigo " +
+                         "WHERE UPPER(ap.estadoAutPagoOrden) IN ('RESERVADA','RESERVADO') " +
+                         "AND NOT EXISTS (SELECT 1 FROM tblMovimientoBancario mb WHERE mb.Fk_OrdenPago_Codigo = ap.Fk_OrdenPago_Codigo) " +
+                         " GROUP BY af.Fk_CuentaBancaria_Codigo) r ON r.cuenta = c.idCuentaBancaria " +
+                         "LEFT JOIN (SELECT op.Fk_CuentaBancaria_Codigo AS cuenta, SUM(op.importeOrdenPago) AS ordenes " +
+                         "FROM tblOrdenPago op " +
+                         "WHERE UPPER(op.estadoOrdenPago) IN ('AUTORIZADA','EMITIDA') " +
+                         "AND NOT EXISTS (SELECT 1 FROM tblMovimientoBancario mb2 WHERE mb2.Fk_OrdenPago_Codigo = op.idOrdenPago) " +
+                         "AND NOT EXISTS (SELECT 1 FROM tblAutPagoOrden ap2 WHERE ap2.Fk_OrdenPago_Codigo = op.idOrdenPago " +
+                         "AND UPPER(ap2.estadoAutPagoOrden) IN ('RESERVADA','RESERVADO')) " +
+                         "GROUP BY op.Fk_CuentaBancaria_Codigo) o ON o.cuenta = c.idCuentaBancaria " +
                          "WHERE c.is_active = 1 AND d.fechaDisponibilidadDiaria = CURDATE() " +
                          "ORDER BY b.nombreBanco, c.numeroCuentaBancaria";
         }

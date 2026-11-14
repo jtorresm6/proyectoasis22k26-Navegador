@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="MSTest" Version="3.6.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CapaModelo_DisponibilidadDiariaBancos\CapaModelo_DisponibilidadDiariaBancos.csproj" />
+    <ProjectReference Include="..\CapaControlador_DisponibilidadDiariaBancos\CapaControlador_DisponibilidadDiariaBancos.csproj" />
+    <ProjectReference Include="..\..\CapaTipoDeCambio\CapaModelo_TipoCambioBancos\CapaModelo_TipoCambioBancos.csproj" />
+  </ItemGroup>
+</Project>

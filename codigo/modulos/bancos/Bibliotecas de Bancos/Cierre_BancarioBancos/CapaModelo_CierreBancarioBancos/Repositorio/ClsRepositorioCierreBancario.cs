@@ -62,6 +62,45 @@ namespace CapaModelo_CierreBancario.Repositorio
             "GROUP BY fechaCierreConciliacion " +
             "ORDER BY fechaCierreConciliacion DESC";
 
+        private const string MonedaBase = "GTQ";
+
+        private const string SqlColumnasSaldoCierre =
+            "cb.idCuentaBancaria AS IdCuenta, " +
+            "cb.nombreCuentaBancaria AS Cuenta, " +
+            "m.codigoMoneda AS CodigoMoneda, " +
+            "m.simboloMoneda AS SimboloMoneda, " +
+            "c.saldoBancoConciliacion AS Saldo, " +
+            "CASE WHEN m.codigoMoneda = '" + MonedaBase + "' THEN 1 ELSE (" +
+            "SELECT t.valorTipoCambio FROM tblTipoCambio t " +
+            "INNER JOIN tblMoneda md ON md.idMoneda = t.Fk_Moneda_Destino_Codigo " +
+            "WHERE t.Fk_Moneda_Origen_Codigo = m.idMoneda AND md.codigoMoneda = '" + MonedaBase + "' " +
+            "AND t.fechaTipoCambio <= c.fechaCorteConciliacion " +
+            "ORDER BY t.fechaTipoCambio DESC, t.versionTipoCambio DESC LIMIT 1) END AS TipoCambio ";
+
+        private const string SqlUnionSaldoCierre =
+            "FROM tblConciliacion c " +
+            "INNER JOIN tblCuentaBancaria cb ON c.Fk_CuentaBancaria_Codigo = cb.idCuentaBancaria " +
+            "INNER JOIN tblMoneda m ON cb.Fk_Moneda_Codigo = m.idMoneda ";
+
+        private const string SqlSaldosCierrePeriodo =
+            "SELECT " + SqlColumnasSaldoCierre + SqlUnionSaldoCierre +
+            "WHERE c.fechaCorteConciliacion >= ? AND c.fechaCorteConciliacion < ? " +
+            "AND NOT EXISTS (SELECT 1 FROM tblConciliacion c2 " +
+            "WHERE c2.Fk_CuentaBancaria_Codigo = c.Fk_CuentaBancaria_Codigo " +
+            "AND c2.fechaCorteConciliacion >= ? AND c2.fechaCorteConciliacion < ? " +
+            "AND (c2.fechaCorteConciliacion > c.fechaCorteConciliacion " +
+            "OR (c2.fechaCorteConciliacion = c.fechaCorteConciliacion AND c2.idConciliacion > c.idConciliacion)))";
+
+        private const string SqlSaldosCierresHistoricos =
+            "SELECT c.fechaCierreConciliacion AS FechaCierre, " + SqlColumnasSaldoCierre + SqlUnionSaldoCierre +
+            "WHERE c.estadoConciliacion = 'CERRADA' AND c.fechaCierreConciliacion IS NOT NULL " +
+            "AND NOT EXISTS (SELECT 1 FROM tblConciliacion c2 " +
+            "WHERE c2.Fk_CuentaBancaria_Codigo = c.Fk_CuentaBancaria_Codigo " +
+            "AND c2.estadoConciliacion = 'CERRADA' " +
+            "AND c2.fechaCierreConciliacion = c.fechaCierreConciliacion " +
+            "AND (c2.fechaCorteConciliacion > c.fechaCorteConciliacion " +
+            "OR (c2.fechaCorteConciliacion = c.fechaCorteConciliacion AND c2.idConciliacion > c.idConciliacion)))";
+
         public DataTable BancosMetConsultarResumenCuentas(DateTime FechaInicial, DateTime FechaFinal)
         {
             using (OdbcConnection Conexion = BancosMetObtenerConexion())
@@ -193,6 +232,36 @@ namespace CapaModelo_CierreBancario.Repositorio
         {
             using (OdbcConnection Conexion = BancosMetObtenerConexion())
             using (OdbcCommand Comando = new OdbcCommand(SqlConsultarHistorico, Conexion))
+            {
+                Conexion.Open();
+                DataTable Resultado = new DataTable();
+                using (OdbcDataReader Lector = Comando.ExecuteReader())
+                    Resultado.Load(Lector);
+                return Resultado;
+            }
+        }
+
+        public DataTable BancosMetConsultarSaldosCierrePeriodo(DateTime FechaInicial, DateTime FechaFinal)
+        {
+            using (OdbcConnection Conexion = BancosMetObtenerConexion())
+            using (OdbcCommand Comando = new OdbcCommand(SqlSaldosCierrePeriodo, Conexion))
+            {
+                Comando.Parameters.Add("FechaInicial", OdbcType.Date).Value = FechaInicial.Date;
+                Comando.Parameters.Add("FechaFinal", OdbcType.Date).Value = FechaFinal.Date.AddDays(1);
+                Comando.Parameters.Add("FechaInicialUltima", OdbcType.Date).Value = FechaInicial.Date;
+                Comando.Parameters.Add("FechaFinalUltima", OdbcType.Date).Value = FechaFinal.Date.AddDays(1);
+                Conexion.Open();
+                DataTable Resultado = new DataTable();
+                using (OdbcDataReader Lector = Comando.ExecuteReader())
+                    Resultado.Load(Lector);
+                return Resultado;
+            }
+        }
+
+        public DataTable BancosMetConsultarSaldosCierresHistoricos()
+        {
+            using (OdbcConnection Conexion = BancosMetObtenerConexion())
+            using (OdbcCommand Comando = new OdbcCommand(SqlSaldosCierresHistoricos, Conexion))
             {
                 Conexion.Open();
                 DataTable Resultado = new DataTable();

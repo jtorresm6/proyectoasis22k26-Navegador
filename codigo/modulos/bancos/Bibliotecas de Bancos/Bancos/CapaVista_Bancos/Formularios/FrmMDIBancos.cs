@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -92,8 +93,8 @@ namespace CapaVista_Bancos.Formularios
 
         private void BancosBtnEnlace_Click(object sender, EventArgs e)
         {
-            FrmBancoNavegador Banco = new FrmBancoNavegador();
-            Banco.ShowDialog();
+            FrmEnlaceOtrosModulos Enlace = new FrmEnlaceOtrosModulos();
+            Enlace.ShowDialog();
         }
 
         private void BancosBtnDisp_Click(object sender, EventArgs e)
@@ -158,7 +159,19 @@ namespace CapaVista_Bancos.Formularios
 
         private void BancosBtnAyuda_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this, "C:/BancosAyudas/CapaBancos.chm", "MDI_Bancos.html");
+            DirectoryInfo Directorio = new DirectoryInfo(Application.StartupPath);
+            while (Directorio != null)
+            {
+                string Ruta = Path.Combine(Directorio.FullName, "ayuda", "modulos", "bancos", "BancosAyudas", "BancosAyudas.chm");
+                if (File.Exists(Ruta))
+                {
+                    Help.ShowHelp(this, Ruta, HelpNavigator.Topic, "MDI_Bancos.html");
+                    return;
+                }
+                Directorio = Directorio.Parent;
+            }
+            MessageBox.Show("No se encontró el archivo de ayuda del módulo de Bancos.", "Ayuda de Bancos",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BancosBtnCerrarP_Click(object sender, EventArgs e)

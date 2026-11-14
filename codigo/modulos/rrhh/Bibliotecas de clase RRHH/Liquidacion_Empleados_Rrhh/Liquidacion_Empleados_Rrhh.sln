@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_Liquidacion_Rrhh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista_Liquidacion_Rrhh", "CapaVista_Liquidacion_Rrhh\CapaVista_Liquidacion_Rrhh.csproj", "{1B306502-59B7-4D5F-94A2-23C5B4A18808}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSTestBajaEmpleado", "TestBajaEmpleado\MSTestBajaEmpleado.csproj", "{67692F11-87CE-43F4-88A7-6CE61A7782BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1B306502-59B7-4D5F-94A2-23C5B4A18808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B306502-59B7-4D5F-94A2-23C5B4A18808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B306502-59B7-4D5F-94A2-23C5B4A18808}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67692F11-87CE-43F4-88A7-6CE61A7782BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67692F11-87CE-43F4-88A7-6CE61A7782BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67692F11-87CE-43F4-88A7-6CE61A7782BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67692F11-87CE-43F4-88A7-6CE61A7782BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

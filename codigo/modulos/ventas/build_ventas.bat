@@ -7,6 +7,8 @@ setlocal EnableExtensions DisableDelayedExpansion
 set "VENTAS_ROOT=%~dp0"
 set "VENTAS_BUILD=%VENTAS_ROOT%Compilacion_Ventas\"
 set "VENTAS_BIBLIOTECAS=%VENTAS_ROOT%Biblioteca de clase Ventas Y CxC\"
+if not defined VENTAS_MSBUILD_NODOS set "VENTAS_MSBUILD_NODOS=%NUMBER_OF_PROCESSORS%"
+if not defined VENTAS_MSBUILD_NODOS set "VENTAS_MSBUILD_NODOS=1"
 set "VENTAS_CONFIG=%~1"
 set "VENTAS_SINPAUSA=0"
 if /i "%~2"=="/sinpausa" set "VENTAS_SINPAUSA=1"
@@ -54,7 +56,7 @@ set "VENTAS_EJECUTABLE=%VENTAS_SALIDA%\Ejecucion_Ventas.exe"
 call :ENCABEZADO
 echo   %VENTAS_DORADO%PERFIL%VENTAS_RESET%  %VENTAS_CONFIG%       %VENTAS_DORADO%MODO%VENTAS_RESET%  Paralelo + incremental
 echo.
-echo   %VENTAS_GRIS%Consultas / Navegador / Logistica / Seguridad / Reporteador + sus 8 botones
+echo   %VENTAS_GRIS%Consultas / Navegador / Seguridad / Reporteador + sus 8 botones
 echo.
 echo   Facturas                 Listado de precios        Cotizaciones
 echo   Movimientos y pagos      Cierre de movimientos     Reportes
@@ -66,7 +68,7 @@ if errorlevel 1 goto SIN_MSBUILD
 if not exist "%VENTAS_BUILD%build_ventas.proj" goto SIN_PROYECTO
 if not exist "%VENTAS_BUILD%build_componentes_ventas.proj" goto SIN_PROYECTO
 if not exist "%VENTAS_BUILD%build_componentes_ventas.targets" goto SIN_PROYECTO
-if not exist "%VENTAS_BIBLIOTECAS%VentasYCxC\CapaModelo_Ventas\CapaModelo_Ventas.csproj" goto SIN_BIBLIOTECAS
+if not exist "%VENTAS_BIBLIOTECAS%VentasYCxC_Ventas\CapaModelo_Ventas\CapaModelo_Ventas.csproj" goto SIN_BIBLIOTECAS
 echo         MSBuild disponible.
 echo   %VENTAS_MORADO%[2/2]%VENTAS_RESET% Compilando soluciones y reuniendo las DLL...
 echo         %VENTAS_GRIS%Solo se recompilan los proyectos que cambiaron.%VENTAS_RESET%
@@ -75,7 +77,7 @@ echo.
 set "VENTAS_INICIO=%TIME: =0%"
 pushd "%VENTAS_BUILD%"
 if errorlevel 1 goto SIN_DIRECTORIO
-"%VENTAS_MSBUILD%" "%VENTAS_BUILD%build_ventas.proj" /m /t:Compilar /p:Configuration=%VENTAS_CONFIG% /nologo /v:minimal /clp:Summary
+"%VENTAS_MSBUILD%" "%VENTAS_BUILD%build_ventas.proj" /m:%VENTAS_MSBUILD_NODOS% /t:Compilar /p:Configuration=%VENTAS_CONFIG% /nologo /v:minimal /clp:Summary
 set "VENTAS_RESULT=%ERRORLEVEL%"
 popd
 call :CALCULAR_DURACION

@@ -83,6 +83,16 @@ namespace CapaVista_AsigCapacitacion.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap boton_Ayudas_sin_bordes {
+            get {
+                object obj = ResourceManager.GetObject("boton_Ayudas_sin_bordes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boton_consultar_sin_bordes {
             get {
                 object obj = ResourceManager.GetObject("boton_consultar_sin_bordes", resourceCulture);
@@ -136,6 +146,16 @@ namespace CapaVista_AsigCapacitacion.Properties {
         internal static System.Drawing.Bitmap boton_inicio_sin_bordes {
             get {
                 object obj = ResourceManager.GetObject("boton_inicio_sin_bordes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap boton_Limpiar_sin_bordes {
+            get {
+                object obj = ResourceManager.GetObject("boton_Limpiar_sin_bordes", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

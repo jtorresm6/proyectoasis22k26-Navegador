@@ -22,7 +22,10 @@ namespace CapaVista_Contabilidad
 
         private static readonly System.Collections.Generic.Dictionary<string, int> _Codigos = new System.Collections.Generic.Dictionary<string, int>
         {
-            { "FrmActivosFijos", 10003 }
+            // Inicio de cambio: Dylan Hernández - 0901-23-519 - 11/11/2026
+            { "FrmActivosFijos", 10003 },
+            { "FrmReporteActivosFijos", 10003 }
+            // Fin de cambio: Dylan Hernández - 0901-23-519 - 11/11/2026
         };
 
         internal static void ContabilidadMetPrepararVentana(Form Formulario, string Titulo, Size AreaCliente)

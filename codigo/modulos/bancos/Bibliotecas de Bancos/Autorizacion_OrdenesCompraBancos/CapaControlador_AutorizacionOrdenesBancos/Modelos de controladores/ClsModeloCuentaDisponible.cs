@@ -7,18 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
- * ==================================================================
+ * ============================================================================
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
  * Fecha : 28/10/2026
- * ==================================================================
+ * ============================================================================
  * Propósito :
  *  La clase Modelo de Cuenta Disponible pertenece a la capa controlador. Se
  *  encarga de obtener, desde el repositorio, las cuentas bancarias activas con
  *  su saldo disponible del día y de entregarlas a la vista para la asignación
  *  de pago de una orden de compra.
- * ===================================================================
+ * =============================================================================
 */
 
 namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores

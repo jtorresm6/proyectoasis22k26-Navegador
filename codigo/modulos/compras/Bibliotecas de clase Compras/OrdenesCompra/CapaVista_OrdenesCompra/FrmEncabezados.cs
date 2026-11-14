@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CapaControlador_OrdenesCompra;
-using CapaControlador_OrdenesCompra.Entidades;
 using CapaVista_Componentes.Componentes;
 using Microsoft.Reporting.WinForms;
 
@@ -25,7 +24,8 @@ namespace CapaVista_OrdenesCompra
 {
     public partial class FrmEncabezados : Form
     {
-        private readonly ClsOrdenesCompra _Controlador;
+        private readonly ClsOrdenesCompraControlador _Controlador;
+        private readonly ClsOrdenesCompraComunEdicion _Edicion;
         private DataTable _Datos;
         private bool _Cargando;
         private bool _CargaInicial = true;
@@ -43,16 +43,17 @@ namespace CapaVista_OrdenesCompra
             return Orden;
         }
 
-        public FrmEncabezados() : this(new ClsOrdenesCompra()) { }
+        public FrmEncabezados() : this(new ClsOrdenesCompraControlador()) { }
 
-        public FrmEncabezados(ClsOrdenesCompra Controlador)
+        public FrmEncabezados(ClsOrdenesCompraControlador Controlador)
         {
             _Controlador = Controlador ?? throw new ArgumentNullException(nameof(Controlador));
             InitializeComponent();
+            _Edicion = new ClsOrdenesCompraComunEdicion(this);
             ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
             ComprasCboEstado.Items.AddRange(new object[] { "Todos", "Pendiente", "Autorizada", "Rechazada", "Anulada", "Recibida" });
             ComprasProcRestablecerFiltros();
-            ClsTablasOrdenesCompra.ComprasProcConfigurarEncabezados(ComprasDgvEncabezados);
+            ClsEncabezadosOrdenesCompraTabla.ComprasProcConfigurarEncabezados(ComprasDgvEncabezados);
             ComprasUsrEncabezado.PrepararReporte += (Remitente, Evento) =>
             {
                 if (_Cargando || _AbriendoCompra)
@@ -72,7 +73,7 @@ namespace CapaVista_OrdenesCompra
             ComprasUsrFechas.RangoCambiado += (Remitente, Evento) => ComprasProcAplicarFiltros();
             ComprasChkFechas.CheckedChanged += (Remitente, Evento) =>
             {
-                ComprasUsrFechas.Enabled = ComprasChkFechas.Checked;
+                _Edicion.Establecer(ComprasUsrFechas, ComprasChkFechas.Checked && !_Cargando && !_AbriendoCompra);
                 ComprasProcAplicarFiltros();
             };
             ComprasBtnActualizar.Click += async (Remitente, Evento) => await ComprasProcRefrescarAsync();
@@ -92,8 +93,9 @@ namespace CapaVista_OrdenesCompra
             bool Disponible = !_Cargando && !_AbriendoCompra;
             ComprasBtnActualizar.Enabled = Disponible;
             ComprasBtnNuevaOrden.Enabled = Disponible;
-            ComprasGbxFiltros.Enabled = Disponible;
-            ComprasDgvEncabezados.Enabled = Disponible;
+            _Edicion.Aplicar(ComprasGbxFiltros, Disponible);
+            _Edicion.Establecer(ComprasUsrFechas, Disponible && ComprasChkFechas.Checked);
+            _Edicion.Establecer(ComprasDgvEncabezados, Disponible);
             ComprasBtnCerrar.Enabled = true;
             UseWaitCursor = !Disponible;
         }
@@ -190,7 +192,7 @@ namespace CapaVista_OrdenesCompra
             else
                 ComprasTxtBuscar.ComprasMetLimpiarError();
             ComprasLblResultado.ColorTexto = ClsTemaCompras.PrincipalNavegador;
-            ComprasLblResultado.Texto = Resultado.Rows.Count + " órdenes de compra. Doble clic para abrir.";
+            ComprasLblResultado.Texto = Resultado.Rows.Count + " órdenes de compra. Haz doble clic en una fila para ver el detalle.";
         }
 
         private async Task ComprasProcRefrescarAsync()
@@ -211,7 +213,7 @@ namespace CapaVista_OrdenesCompra
                 ComprasChkFechas.Checked = false;
                 DateTime Hoy = DateTime.Today;
                 ComprasUsrFechas.ComprasProcEstablecerRango(new DateTime(Hoy.Year, Hoy.Month, 1), Hoy);
-                ComprasUsrFechas.Enabled = false;
+                _Edicion.Establecer(ComprasUsrFechas, false);
             }
             finally { _RestableciendoFiltros = false; }
         }
@@ -233,7 +235,7 @@ namespace CapaVista_OrdenesCompra
             }
         }
 
-        private async Task ComprasProcMostrarOrdenAsync(ClsOrdenCompra Compra)
+        private async Task ComprasProcMostrarOrdenAsync(ClsOrdenesCompraDatos Compra)
         {
             Form Orden = null;
             try
@@ -282,14 +284,14 @@ namespace CapaVista_OrdenesCompra
             try
             {
                 int Id = Convert.ToInt32(Fila["idOrdenCompra"]);
-                ClsOrdenCompra Compra = await Task.Run(() => _Controlador.ComprasFuncObtener(Id));
+                ClsOrdenesCompraDatos Compra = await Task.Run(() => _Controlador.ComprasFuncObtener(Id));
                 if (IsDisposed || Disposing) return;
                 if (Compra == null) { ComprasLblResultado.Texto = "La compra ya no esta disponible. Actualiza la lista."; return; }
                 await ComprasProcMostrarOrdenAsync(Compra);
             }
             catch (Exception Ex)
             {
-                if (!IsDisposed && !Disposing) ComprasProcMostrarError("No se pudo abrir la compra seleccionada.", Ex);
+                if (!IsDisposed && !Disposing) ComprasProcMostrarError("No se pudo abrir el detalle de la orden seleccionada.", Ex);
             }
             finally
             {

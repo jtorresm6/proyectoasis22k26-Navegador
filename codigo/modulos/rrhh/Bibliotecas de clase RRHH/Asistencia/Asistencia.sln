@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador_Asistencia"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModelo_Asistencia", "CapaModelo_Asistencia\CapaModelo_Asistencia.csproj", "{84F86291-4AC3-4383-833E-EFA583258C44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSTestAsistencia", "MSTestAsistencia\MSTestAsistencia.csproj", "{6B1E2F4A-3C8D-4E9B-A7F2-5D0C1E8B9A34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSTestHorasExtra", "MSTestHorasExtra\MSTestHorasExtra.csproj", "{A3D7C9E1-5B2F-4C68-9E0D-7F1B2C3D4E56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{84F86291-4AC3-4383-833E-EFA583258C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84F86291-4AC3-4383-833E-EFA583258C44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84F86291-4AC3-4383-833E-EFA583258C44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B1E2F4A-3C8D-4E9B-A7F2-5D0C1E8B9A34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B1E2F4A-3C8D-4E9B-A7F2-5D0C1E8B9A34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B1E2F4A-3C8D-4E9B-A7F2-5D0C1E8B9A34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B1E2F4A-3C8D-4E9B-A7F2-5D0C1E8B9A34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3D7C9E1-5B2F-4C68-9E0D-7F1B2C3D4E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D7C9E1-5B2F-4C68-9E0D-7F1B2C3D4E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D7C9E1-5B2F-4C68-9E0D-7F1B2C3D4E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D7C9E1-5B2F-4C68-9E0D-7F1B2C3D4E56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

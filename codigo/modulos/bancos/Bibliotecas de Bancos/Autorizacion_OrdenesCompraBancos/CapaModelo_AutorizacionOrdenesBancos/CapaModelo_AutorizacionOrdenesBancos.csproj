@@ -57,6 +57,7 @@
     <Compile Include="Repositorios\ClsRepositorioAutorizacionOrdenCompra.cs" />
     <Compile Include="Repositorios\ClsRepositorioCuentaDisponible.cs" />
     <Compile Include="Repositorios\ClsRepositorioOrdenCompra.cs" />
+    <Compile Include="Repositorios\ClsRepositorioTipoCambioAutorizacion.cs" />
     <Compile Include="Repositorios\ClsRepositorioTipoCuentaBancaria.cs" />
     <Compile Include="Repositorios\ClsSentencias.cs" />
   </ItemGroup>

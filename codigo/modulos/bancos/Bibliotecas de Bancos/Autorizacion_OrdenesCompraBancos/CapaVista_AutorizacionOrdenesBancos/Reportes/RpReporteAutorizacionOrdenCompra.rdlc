@@ -6,25 +6,103 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>4.11094cm</Width>
+              <Width>3cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.99994cm</Width>
+              <Width>3cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.8146cm</Width>
+              <Width>3.26826cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.23794cm</Width>
+              <Width>3.61462cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.49194cm</Width>
+              <Width>2.7577cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>3.55057cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>3.75827cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
               <Height>0.6cm</Height>
               <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox11">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Usuario</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontWeight>SemiBold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox11</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>#1c4a30</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>#d4e7d3</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox13">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Empresa</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontWeight>SemiBold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox13</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>#1c4a30</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>#d4e7d3</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox1">
@@ -224,6 +302,76 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="IdUsuarioAutoriza">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!NombreUsuarioAutoriza.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>IdUsuarioAutoriza</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>#1c4a30</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>#d4e7d3</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="IdEmpresaAutorizacionOrden">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!NombreEmpresaAutorizacionOrden.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>IdEmpresaAutorizacionOrden</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>#1c4a30</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>#d4e7d3</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="IdAutorizacionOrden">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -408,6 +556,8 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -421,10 +571,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsAutorizacionOrdenCompra</DataSetName>
-        <Top>0.36267cm</Top>
-        <Left>0.99481cm</Left>
+        <Top>0.74367cm</Top>
+        <Left>0.29631cm</Left>
         <Height>1.2cm</Height>
-        <Width>21.65536cm</Width>
+        <Width>22.94942cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -449,7 +599,7 @@
           <Source>Embedded</Source>
           <Value>Encabezado_AutorizacionOrden</Value>
           <Sizing>FitProportional</Sizing>
-          <Left>4.34437cm</Left>
+          <Left>4.78887cm</Left>
           <Height>4.78789cm</Height>
           <Width>14.08902cm</Width>
           <Style>
@@ -475,8 +625,8 @@
           <Source>Embedded</Source>
           <Value>Piedereporte</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.14111cm</Top>
-          <Left>4.34437cm</Left>
+          <Top>0.17639cm</Top>
+          <Left>4.78887cm</Left>
           <Height>4.78789cm</Height>
           <Width>14.08902cm</Width>
           <Style>
@@ -553,6 +703,14 @@
         </Field>
         <Field Name="Ip">
           <DataField>Ip</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NombreEmpresaAutorizacionOrden">
+          <DataField>NombreEmpresaAutorizacionOrden</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NombreUsuarioAutoriza">
+          <DataField>NombreUsuarioAutoriza</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="MotivoRechazoAutorizacionOrden">

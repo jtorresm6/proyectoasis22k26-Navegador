@@ -71,7 +71,6 @@ namespace CapaVista_GeneracionPagos.Controles
                 Lienzo.DrawLine(Lapiz, Area.Right - 1, Area.Top, Area.Right - 1, Area.Bottom);
             }
 
-            // La pestaña activa se funde con la página que tiene debajo
             if (Activa)
             {
                 using (var Pincel = new SolidBrush(Color.White))

@@ -38,6 +38,8 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
         private string _MotivoRechazoAutorizacionOrden;
         private DateTime _CreatedAt;
         private DateTime _UpdatedAt;
+        private string _NombreUsuarioAutoriza;
+        private string _NombreEmpresaAutorizacionOrden;
         private string _Ip;
 
         private List<ClsEvidenciaFondos> _Evidencias;
@@ -68,6 +70,10 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
 
         public DateTime UpdatedAt { get => _UpdatedAt; private set => _UpdatedAt = value; }
 
+        public string NombreUsuarioAutoriza { get => _NombreUsuarioAutoriza; set => _NombreUsuarioAutoriza = value; }
+
+        public string NombreEmpresaAutorizacionOrden { get => _NombreEmpresaAutorizacionOrden; set => _NombreEmpresaAutorizacionOrden = value; }
+
         public List<ClsEvidenciaFondos> Evidencias { get => _Evidencias; set => _Evidencias = value; }
 
         public List<ClsAutorizacionDetalle> Detalles { get => _Detalles; set => _Detalles = value; }
@@ -96,13 +102,20 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
                     _ComentarioAutorizacionOrden = Item.ComentarioAutorizacionOrden,
                     _MotivoRechazoAutorizacionOrden = Item.MotivoRechazoAutorizacionOrden,
                     _CreatedAt = Item.CreatedAt,
-                    _UpdatedAt = Item.UpdatedAt
+                    _UpdatedAt = Item.UpdatedAt,
+                    _NombreUsuarioAutoriza = Item.NombreUsuarioAutoriza,
+                    _NombreEmpresaAutorizacionOrden = Item.NombreEmpresaAutorizacionOrden
                 });
             }
             return _ListaAutorizacionOrdenCompra;
         }
 
         public void BancosMetAgregarCuenta(ClsModeloCuentaDisponible Cuenta, long IdMonedaOrden, decimal Monto)
+        {
+            BancosMetAgregarCuenta(Cuenta, IdMonedaOrden, Monto, Cuenta.TipoCambio, Cuenta.IdTipoCambio);
+        }
+
+        public void BancosMetAgregarCuenta(ClsModeloCuentaDisponible Cuenta, long IdMonedaOrden, decimal Monto, decimal TipoCambio, long? IdTipoCambio)
         {
             bool MismaMoneda = Cuenta.IdMoneda == IdMonedaOrden;
 
@@ -113,8 +126,8 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
                 SaldoDisponibleDisponibilidadFondos = Cuenta.SaldoDisponible,
                 IdMonedaOrigen = Cuenta.IdMoneda,
                 IdMonedaDestino = IdMonedaOrden,
-                TipoCambioDisponibilidadFondos = MismaMoneda ? 1m : Cuenta.TipoCambio,
-                IdTipoCambio = MismaMoneda ? (long?)null : Cuenta.IdTipoCambio,
+                TipoCambioDisponibilidadFondos = MismaMoneda ? 1m : TipoCambio,
+                IdTipoCambio = MismaMoneda ? (long?)null : IdTipoCambio,
                 FuenteDisponibilidadFondos = "tblDisponibilidadDiaria"
             });
 
@@ -123,6 +136,11 @@ namespace CapaControlador_AutorizacionOrdenes.Modelos_de_controladores
                 IdCuenta = Cuenta.IdCuenta,
                 MontoAsignadoPagoOrden = Monto
             });
+        }
+
+        public int BancosMetObtenerIdEmpresa()
+        {
+            return _RepositorioAutorizacionOrdenCompra.BancosMetObtenerIdEmpresa();
         }
 
         public string BancosMetGrabarCambios()
