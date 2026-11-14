@@ -1,3 +1,11 @@
+// =====================================================================
+// Autor:       Andre De Jesus Gonzalez Camey
+// Carné:       9959-23-3117
+// Módulo:      Tesorería y Bancos – Enlace con otros módulos
+// Descripción: Controlador que conecta la vista con el repositorio del enlace: consulta
+//              pólizas, genera y envía partidas a Contabilidad y devuelve el historial.
+// Fecha:       12/11/2026
+// =====================================================================
 using System;
 using System.Data;
 using System.Collections.Generic;
@@ -29,6 +37,19 @@ namespace CapaControlador_EnlaceB
         }
         public DataTable BancarioMetCatalogo(string Nombre) { return _Repositorio.BancarioMetConsultarCatalogo(Nombre); }
         public DataTable BancarioMetHistorico() { return _Repositorio.BancarioMetConsultarHistorico(); }
+        public string BancarioMetReporteHistorico(out DataTable Historico)
+        {
+            try
+            {
+                Historico = _Repositorio.BancarioMetConsultarHistorico();
+                return string.Empty;
+            }
+            catch (Exception Ex)
+            {
+                Historico = new DataTable();
+                return Ex.Message;
+            }
+        }
         public ClsPartidaEnlace BancarioMetGenerar(ClsContextoPartida Contexto)
         {
             ClsReglasEnlace.BancarioMetValidarContexto(Contexto);

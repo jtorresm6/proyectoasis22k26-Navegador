@@ -82,7 +82,7 @@
             this.Size = new System.Drawing.Size(1050, 530);
             this.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular);
             this.ForeColor = System.Drawing.Color.FromArgb(28, 74, 48);
-            this.Text = "8008 – Historial de partidas";
+            this.Text = "8008 – HistorialPartidas";
             this.ClientSize = new System.Drawing.Size(1050, 530);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.BackgroundImage = global::CapaVista_EnlaceB.Properties.Resources.FondoEnlaceotrosModulo;

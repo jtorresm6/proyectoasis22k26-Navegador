@@ -7,12 +7,12 @@ using System.Data.Odbc;
 using System.Linq;
 
 /*
- * ==================================================================
+ * ==============================================================================
  * Área : Bancos
  * Autor : Andy Alfonso Garcia Lopez
  * Carné : 9959-23-1494
  * Fecha : 28/10/2026
- * ==================================================================
+ * ===============================================================================
  * Propósito :
  *  La clase Repositorio de Autorización de Orden de Compra se encarga de
  *  registrar, mediante ODBC y una transacción, la decisión de Tesorería sobre
@@ -21,7 +21,7 @@ using System.Linq;
  *  monto comprometido; al rechazar actualiza el estado de la orden. También
  *  consulta las autorizaciones registradas y la empresa activa de tblEmpresa.
  *  Hereda de ClsSentencias e implementa IRepositorioAutorizacionOrdenCompra.
- * ===================================================================
+ * ================================================================================
 */
 
 namespace CapaModelo_AutorizacionOrdenes.Repositorios
@@ -67,7 +67,7 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
         private const string SelectSaldoActual =
             "SELECT (d.saldoInicialDisponibilidadDiaria + d.ingresosDisponibilidadDiaria - " +
             "d.egresosDisponibilidadDiaria - d.restringidoDisponibilidadDiaria - " +
-            "COALESCE((SELECT SUM(ap.montoAsignadoAutPagoOrden) FROM tblAutPagoOrden ap " +
+            "COALESCE((SELECT SUM(ap.montoAsignadoAutPagoOrden / af.tipoCambioAutDisponibilidadFondos) FROM tblAutPagoOrden ap " +
             "JOIN tblAutDisponibilidadFondos af ON af.idAutDisponibilidadFondos = ap.Fk_AutDisponibilidadFondos_Codigo " +
             "WHERE af.Fk_CuentaBancaria_Codigo = d.Fk_CuentaBancaria_Codigo " +
             "AND UPPER(ap.estadoAutPagoOrden) IN ('RESERVADA','RESERVADO') " +
@@ -112,9 +112,9 @@ namespace CapaModelo_AutorizacionOrdenes.Repositorios
                                     throw new InvalidOperationException("La asignación de la cuenta no es válida.");
 
                                 decimal saldoActual = SaldoActual(conexion, transaccion, evidencia.IdCuenta);
-                                if (detalle.MontoAsignadoPagoOrden > saldoActual)
+                                if (detalle.MontoAsignadoPagoOrden > saldoActual * evidencia.TipoCambioDisponibilidadFondos)
                                     throw new InvalidOperationException("La cuenta " + evidencia.IdCuenta +
-                                        " ya no tiene saldo suficiente. Disponible: " + saldoActual.ToString("N2") + ".");
+                                    " ya no tiene saldo suficiente. Disponible: " + saldoActual.ToString("N2") + ".");
 
                                 Ejecutar(conexion, transaccion, InsertEvidencia,
                                     idAutorizacion, evidencia.IdCuenta, DateTime.Today, saldoActual,

@@ -24,5 +24,7 @@ namespace CapaModelo_CierreBancario.Repositorio
         bool BancosMetValidarSaldosVerificados(DateTime FechaInicial, DateTime FechaFinal);
         string BancosMetCerrarPeriodo(DateTime FechaInicial, DateTime FechaFinal);
         DataTable BancosMetConsultarHistorico();
+        DataTable BancosMetConsultarSaldosCierrePeriodo(DateTime FechaInicial, DateTime FechaFinal);
+        DataTable BancosMetConsultarSaldosCierresHistoricos();
     }
 }

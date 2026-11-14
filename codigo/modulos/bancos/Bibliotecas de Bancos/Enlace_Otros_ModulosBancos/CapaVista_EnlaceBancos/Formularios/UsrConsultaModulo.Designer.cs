@@ -112,7 +112,7 @@
             this._BancarioBtnExportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this._BancarioBtnExportar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(210, 169, 59);
             this._BancarioBtnExportar.FlatAppearance.BorderSize = 2;
-            this._BancarioBtnExportar.Text = "Exportar CSV";
+            this._BancarioBtnExportar.Text = "Exportar";
             this._BancarioBtnExportar.Image = ((System.Drawing.Image)(resources.GetObject("IconoExportar")));
             this._BancarioBtnExportar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this._BancarioBtnExportar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);

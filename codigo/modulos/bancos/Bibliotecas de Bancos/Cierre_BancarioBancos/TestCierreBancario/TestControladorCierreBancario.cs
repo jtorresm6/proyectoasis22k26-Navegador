@@ -380,12 +380,187 @@ namespace TestCierreBancario
             Assert.AreEqual("Error inesperado al consultar el historial.", Error);
             Assert.IsNull(Resultado);
         }
+
+        [TestMethod]
+        public void Test_TotalPeriodoRechazaFechaInvalida()
+        {
+            ClsControladorCierreBancario Controlador = new ClsControladorCierreBancario(new RepositorioFalso());
+
+            string Error = Controlador.BancosMetConsultarTotalPeriodo("31/02/2026", "28/02/2026", out ClsTotalCierre Total);
+
+            Assert.AreEqual("Fecha inicial no es válida.", Error);
+            Assert.IsNull(Total);
+        }
+
+        [TestMethod]
+        public void Test_TotalPeriodoRechazaRangoInvertido()
+        {
+            ClsControladorCierreBancario Controlador = new ClsControladorCierreBancario(new RepositorioFalso());
+
+            string Error = Controlador.BancosMetConsultarTotalPeriodo("02/02/2026", "01/02/2026", out ClsTotalCierre Total);
+
+            Assert.AreEqual("La fecha inicial no puede ser mayor que la fecha final.", Error);
+            Assert.IsNull(Total);
+        }
+
+        [TestMethod]
+        public void Test_TotalPeriodoSumaElSaldoDeCadaCuenta()
+        {
+            RepositorioFalso Repositorio = new RepositorioFalso();
+            Repositorio.ResultadoSaldosPeriodo = CrearSaldosPeriodo();
+            Repositorio.ResultadoSaldosPeriodo.Rows.Add(1L, "Cuenta Operativa", "GTQ", "Q", 1000.50m, 1m);
+            Repositorio.ResultadoSaldosPeriodo.Rows.Add(2L, "Cuenta Nomina", "GTQ", "Q", 249.50m, 1m);
+            ClsControladorCierreBancario Controlador = new ClsControladorCierreBancario(Repositorio);
+
+            string Error = Controlador.BancosMetConsultarTotalPeriodo("01/02/2026", "28/02/2026", out ClsTotalCierre Total);
+
+            Assert.AreEqual(string.Empty, Error);
+            Assert.AreEqual(1250.00m, Total.TotalQuetzales);
+            Assert.AreEqual(2, Total.Cuentas);
+            Assert.AreEqual("Q 1,250.00", Total.TotalTexto);
+            Assert.AreEqual("Q 1,250.00 (GTQ)", Total.DetalleMonedas);
+            Assert.AreEqual(new DateTime(2026, 2, 1), Repositorio.FechaInicial);
+            Assert.AreEqual(new DateTime(2026, 2, 28), Repositorio.FechaFinal);
+        }
+
+        [TestMethod]
+        public void Test_TotalPeriodoConvierteMonedaExtranjeraAQuetzales()
+        {
+            RepositorioFalso Repositorio = new RepositorioFalso();
+            Repositorio.ResultadoSaldosPeriodo = CrearSaldosPeriodo();
+            Repositorio.ResultadoSaldosPeriodo.Rows.Add(1L, "Cuenta Operativa", "GTQ", "Q", 1000.00m, 1m);
+            Repositorio.ResultadoSaldosPeriodo.Rows.Add(2L, "Cuenta Dolares", "USD", "$", 100.00m, 7.75m);
+            ClsControladorCierreBancario Controlador = new ClsControladorCierreBancario(Repositorio);
+
+            string Error = Controlador.BancosMetConsultarTotalPeriodo("01/02/2026", "28/02/2026", out ClsTotalCierre Total);
+
+            Assert.AreEqual(string.Empty, Error);
+            Assert.AreEqual(1775.00m, Total.TotalQuetzales);
+            Assert.IsTrue(Total.TipoCambioCompleto);
+            Assert.AreEqual("Q 1,000.00 (GTQ)  |  $ 100.00 (USD)", Total.DetalleMonedas);
+        }
+
+        [TestMethod]
+        public void Test_TotalPeriodoMarcaParcialSiFaltaTipoCambio()
+        {
+            RepositorioFalso Repositorio = new RepositorioFalso();
+            Repositorio.ResultadoSaldosPeriodo = CrearSaldosPeriodo();
+            Repositorio.ResultadoSaldosPeriodo.Rows.Add(1L, "Cuenta Operativa", "GTQ", "Q", 500.00m, 1m);
+            Repositorio.ResultadoSaldosPeriodo.Rows.Add(2L, "Cuenta Euros", "EUR", "E", 200.00m, DBNull.Value);
+            ClsControladorCierreBancario Controlador = new ClsControladorCierreBancario(Repositorio);
+
+            string Error = Controlador.BancosMetConsultarTotalPeriodo("01/02/2026", "28/02/2026", out ClsTotalCierre Total);
+
+            Assert.AreEqual(string.Empty, Error);
+            Assert.AreEqual(500.00m, Total.TotalQuetzales);
+            Assert.IsFalse(Total.TipoCambioCompleto);
+            Assert.AreEqual("EUR", Total.MonedasSinTipoCambio);
+            Assert.AreEqual("Q 500.00 (parcial)", Total.TotalTexto);
+        }
+
+        [TestMethod]
+        public void Test_TotalPeriodoSinCuentasEsCero()
+        {
+            RepositorioFalso Repositorio = new RepositorioFalso();
+            ClsControladorCierreBancario Controlador = new ClsControladorCierreBancario(Repositorio);
+
+            string Error = Controlador.BancosMetConsultarTotalPeriodo("01/02/2026", "28/02/2026", out ClsTotalCierre Total);
+
+            Assert.AreEqual(string.Empty, Error);
+            Assert.AreEqual(0m, Total.TotalQuetzales);
+            Assert.AreEqual(0, Total.Cuentas);
+            Assert.AreEqual("Q 0.00", Total.TotalTexto);
+        }
+
+        [TestMethod]
+        public void Test_TotalPeriodoDevuelveErrorSiRepositorioFalla()
+        {
+            RepositorioFalso Repositorio = new RepositorioFalso
+            {
+                ErrorSaldos = new InvalidOperationException()
+            };
+            ClsControladorCierreBancario Controlador = new ClsControladorCierreBancario(Repositorio);
+
+            string Error = Controlador.BancosMetConsultarTotalPeriodo("01/02/2026", "28/02/2026", out ClsTotalCierre Total);
+
+            Assert.AreEqual("Error inesperado al calcular el total del cierre.", Error);
+            Assert.IsNull(Total);
+        }
+
+        [TestMethod]
+        public void Test_HistoricoAgregaTotalDeCadaCierre()
+        {
+            DateTime CierreFebrero = new DateTime(2026, 3, 1, 8, 30, 0);
+            DateTime CierreMarzo = new DateTime(2026, 4, 1, 9, 15, 0);
+            RepositorioFalso Repositorio = new RepositorioFalso();
+            Repositorio.ResultadoHistorico = new DataTable();
+            Repositorio.ResultadoHistorico.Columns.Add("FechaCierre", typeof(DateTime));
+            Repositorio.ResultadoHistorico.Rows.Add(CierreMarzo);
+            Repositorio.ResultadoHistorico.Rows.Add(CierreFebrero);
+            Repositorio.ResultadoSaldosHistoricos = CrearSaldosHistoricos();
+            Repositorio.ResultadoSaldosHistoricos.Rows.Add(CierreFebrero, 1L, "Cuenta Operativa", "GTQ", "Q", 1000.00m, 1m);
+            Repositorio.ResultadoSaldosHistoricos.Rows.Add(CierreFebrero, 2L, "Cuenta Nomina", "GTQ", "Q", 250.00m, 1m);
+            Repositorio.ResultadoSaldosHistoricos.Rows.Add(CierreMarzo, 1L, "Cuenta Operativa", "GTQ", "Q", 3000.25m, 1m);
+            ClsControladorCierreBancario Controlador = new ClsControladorCierreBancario(Repositorio);
+
+            string Error = Controlador.BancosMetConsultarHistorico(out DataTable Resultado);
+
+            Assert.AreEqual(string.Empty, Error);
+            Assert.AreEqual(3000.25m, Resultado.Rows[0]["TotalCierre"]);
+            Assert.AreEqual(1, Resultado.Rows[0]["Cuentas"]);
+            Assert.AreEqual(1250.00m, Resultado.Rows[1]["TotalCierre"]);
+            Assert.AreEqual(2, Resultado.Rows[1]["Cuentas"]);
+            Assert.AreEqual("Q 1,250.00 (GTQ)", Resultado.Rows[1]["DetalleMonedas"]);
+        }
+
+        [TestMethod]
+        public void Test_HistoricoSinSaldosDejaTotalEnCero()
+        {
+            RepositorioFalso Repositorio = new RepositorioFalso();
+            Repositorio.ResultadoHistorico = new DataTable();
+            Repositorio.ResultadoHistorico.Columns.Add("FechaCierre", typeof(DateTime));
+            Repositorio.ResultadoHistorico.Rows.Add(new DateTime(2026, 3, 1, 8, 30, 0));
+            ClsControladorCierreBancario Controlador = new ClsControladorCierreBancario(Repositorio);
+
+            string Error = Controlador.BancosMetConsultarHistorico(out DataTable Resultado);
+
+            Assert.AreEqual(string.Empty, Error);
+            Assert.AreEqual(0m, Resultado.Rows[0]["TotalCierre"]);
+            Assert.AreEqual(0, Resultado.Rows[0]["Cuentas"]);
+        }
+
+        private static DataTable CrearSaldosPeriodo()
+        {
+            DataTable Tabla = new DataTable();
+            Tabla.Columns.Add("IdCuenta", typeof(long));
+            Tabla.Columns.Add("Cuenta", typeof(string));
+            Tabla.Columns.Add("CodigoMoneda", typeof(string));
+            Tabla.Columns.Add("SimboloMoneda", typeof(string));
+            Tabla.Columns.Add("Saldo", typeof(decimal));
+            Tabla.Columns.Add("TipoCambio", typeof(decimal));
+            return Tabla;
+        }
+
+        private static DataTable CrearSaldosHistoricos()
+        {
+            DataTable Tabla = new DataTable();
+            Tabla.Columns.Add("FechaCierre", typeof(DateTime));
+            Tabla.Columns.Add("IdCuenta", typeof(long));
+            Tabla.Columns.Add("Cuenta", typeof(string));
+            Tabla.Columns.Add("CodigoMoneda", typeof(string));
+            Tabla.Columns.Add("SimboloMoneda", typeof(string));
+            Tabla.Columns.Add("Saldo", typeof(decimal));
+            Tabla.Columns.Add("TipoCambio", typeof(decimal));
+            return Tabla;
+        }
     }
 
     internal sealed class RepositorioFalso : IClsRepositorioCierreBancario
     {
         public DataTable ResultadoResumen { get; set; } = new DataTable();
         public DataTable ResultadoHistorico { get; set; } = new DataTable();
+        public DataTable ResultadoSaldosPeriodo { get; set; } = new DataTable();
+        public DataTable ResultadoSaldosHistoricos { get; set; } = new DataTable();
         public bool PeriodoSinCierre { get; set; } = true;
         public bool ConciliacionesCompletas { get; set; } = true;
         public bool SaldosVerificados { get; set; } = true;
@@ -394,6 +569,7 @@ namespace TestCierreBancario
         public Exception ErrorValidacion { get; set; }
         public Exception ErrorCierre { get; set; }
         public Exception ErrorHistorico { get; set; }
+        public Exception ErrorSaldos { get; set; }
         public DateTime FechaInicial { get; private set; }
         public DateTime FechaFinal { get; private set; }
         public int LlamadasValidacion { get; private set; }
@@ -442,6 +618,19 @@ namespace TestCierreBancario
         {
             if (ErrorHistorico != null) throw ErrorHistorico;
             return ResultadoHistorico;
+        }
+
+        public DataTable BancosMetConsultarSaldosCierrePeriodo(DateTime FechaInicial, DateTime FechaFinal)
+        {
+            GuardarFechas(FechaInicial, FechaFinal);
+            if (ErrorSaldos != null) throw ErrorSaldos;
+            return ResultadoSaldosPeriodo;
+        }
+
+        public DataTable BancosMetConsultarSaldosCierresHistoricos()
+        {
+            if (ErrorSaldos != null) throw ErrorSaldos;
+            return ResultadoSaldosHistoricos;
         }
 
         private void GuardarFechas(DateTime Inicio, DateTime Fin)

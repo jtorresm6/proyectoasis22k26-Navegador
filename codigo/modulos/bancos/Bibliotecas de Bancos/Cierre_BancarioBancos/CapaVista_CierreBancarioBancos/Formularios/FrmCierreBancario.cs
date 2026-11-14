@@ -144,6 +144,7 @@ namespace CapaVista_CierreBancario.Formularios
             BancosChkSaldosVerificados.Checked = false;
             BancosTxtEstadoPeriodo.Text = "Sin consultar";
             BancosTxtAlcance.Text = string.Empty;
+            BancosMetMostrarTotal(null);
             BancosTxtResultadoValidacionesCierre.Text = "Pendiente de consulta y validación";
             BancosMetHabilitarCierre(false);
         }
@@ -203,6 +204,37 @@ namespace CapaVista_CierreBancario.Formularios
             BancosMetFormatearGrilla(BancosDgvResumenCuentas);
             BancosTxtEstadoPeriodo.Text = BancosMetDescribirEstado(Datos);
             BancosTxtAlcance.Text = string.Format("{0:dd/MM/yyyy} al {1:dd/MM/yyyy}", FechaInicial, FechaFinal);
+
+            string ErrorTotal = _Controlador.BancosMetConsultarTotalPeriodo(
+                FechaInicial.ToString("dd/MM/yyyy", CulturaFechas),
+                FechaFinal.ToString("dd/MM/yyyy", CulturaFechas),
+                out ClsTotalCierre Total);
+            if (!string.IsNullOrEmpty(ErrorTotal))
+            {
+                BancosTxtTotalCierre.Text = "No disponible";
+                BancosTxtDetalleMonedas.Text = ErrorTotal;
+                return;
+            }
+            BancosMetMostrarTotal(Total);
+        }
+
+        private void BancosMetMostrarTotal(ClsTotalCierre Total)
+        {
+            if (Total == null)
+            {
+                BancosTxtTotalCierre.Text = string.Empty;
+                BancosTxtDetalleMonedas.Text = string.Empty;
+                return;
+            }
+            BancosTxtTotalCierre.Text = Total.TotalTexto;
+            BancosTxtDetalleMonedas.Text = string.Format("{0} cuenta(s): {1}", Total.Cuentas, Total.DetalleMonedas);
+        }
+
+        private string BancosFuncTextoTotal(string FechaInicial, string FechaFinal)
+        {
+            string Error = _Controlador.BancosMetConsultarTotalPeriodo(FechaInicial, FechaFinal, out ClsTotalCierre Total);
+            if (!string.IsNullOrEmpty(Error) || Total == null) return string.Empty;
+            return string.Format("Total con que cierra el período: {0}\n{1}", Total.TotalTexto, Total.DetalleMonedas);
         }
 
         private string BancosMetDescribirEstado(DataTable Datos)
@@ -233,15 +265,21 @@ namespace CapaVista_CierreBancario.Formularios
             BancosMetConfigurarColumna(Grilla, "NumeroCuenta", "Número de cuenta", 120);
             BancosMetConfigurarColumna(Grilla, "Moneda", "Moneda", 70);
             BancosMetConfigurarColumna(Grilla, "Estado", "Estado", 90);
+            BancosMetConfigurarColumna(Grilla, "Conciliaciones", "Conciliaciones cerradas", 90);
+            BancosMetConfigurarColumna(Grilla, "Cuentas", "Cuentas", 60);
+            BancosMetConfigurarColumna(Grilla, "TotalCierre", "Total cerrado (Q)", 110);
+            BancosMetConfigurarColumna(Grilla, "DetalleMonedas", "Detalle por moneda", 200);
             BancosMetConfigurarColumna(Grilla, "SaldoLibro", "Saldo en libros", 105);
             BancosMetConfigurarColumna(Grilla, "SaldoBanco", "Saldo bancario", 105);
             BancosMetConfigurarColumna(Grilla, "Diferencia", "Diferencia", 95);
-            foreach (string Columna in new[] { "SaldoLibro", "SaldoBanco", "Diferencia" })
+            foreach (string Columna in new[] { "SaldoLibro", "SaldoBanco", "Diferencia", "TotalCierre" })
             {
                 if (!Grilla.Columns.Contains(Columna)) continue;
-                Grilla.Columns[Columna].DefaultCellStyle.Format = "N4";
+                Grilla.Columns[Columna].DefaultCellStyle.Format = Columna == "Diferencia" ? "N4" : "N2";
+                Grilla.Columns[Columna].DefaultCellStyle.FormatProvider = CulturaFechas;
                 Grilla.Columns[Columna].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             }
+            if (Grilla.Columns.Contains("TotalCierre")) Grilla.Columns["TotalCierre"].DefaultCellStyle.Format = "'Q' #,##0.00";
             if (Grilla.Columns.Contains("FechaCorte")) Grilla.Columns["FechaCorte"].DefaultCellStyle.Format = "dd/MM/yyyy";
             if (Grilla.Columns.Contains("FechaInicial")) Grilla.Columns["FechaInicial"].DefaultCellStyle.Format = "dd/MM/yyyy";
             if (Grilla.Columns.Contains("FechaFinal")) Grilla.Columns["FechaFinal"].DefaultCellStyle.Format = "dd/MM/yyyy";
@@ -298,9 +336,14 @@ namespace CapaVista_CierreBancario.Formularios
         {
             if (!BancosBtnCerrarPeriodo.Enabled || _DatosPeriodo == null) return;
             if (!BancosMetObtenerFechas(out DateTime FechaInicial, out DateTime FechaFinal)) return;
+            string TextoTotal = BancosFuncTextoTotal(
+                FechaInicial.ToString("dd/MM/yyyy", CulturaFechas),
+                FechaFinal.ToString("dd/MM/yyyy", CulturaFechas));
             string Mensaje = string.Format(
-                "¿Confirma el cierre de las conciliaciones entre {0:dd/MM/yyyy} y {1:dd/MM/yyyy}?\n\n" +
-                "Las conciliaciones pasarán a estado CERRADA y no podrán volver a cerrarse.", FechaInicial, FechaFinal);
+                "¿Confirma el cierre de las conciliaciones entre {0:dd/MM/yyyy} y {1:dd/MM/yyyy}?\n\n",
+                FechaInicial, FechaFinal);
+            if (TextoTotal.Length > 0) Mensaje += TextoTotal + "\n\n";
+            Mensaje += "Las conciliaciones pasarán a estado CERRADA y no podrán volver a cerrarse.";
             if (MessageBox.Show(Mensaje, "Confirmar cierre", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                 return;
 
@@ -315,8 +358,14 @@ namespace CapaVista_CierreBancario.Formularios
                 return;
             }
 
-            MessageBox.Show("El período se cerró correctamente.", "Cierre completado",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string TextoTotalCerrado = BancosFuncTextoTotal(
+                FechaInicial.ToString("dd/MM/yyyy", CulturaFechas),
+                FechaFinal.ToString("dd/MM/yyyy", CulturaFechas));
+            MessageBox.Show(
+                TextoTotalCerrado.Length > 0
+                    ? "El período se cerró correctamente.\n\n" + TextoTotalCerrado
+                    : "El período se cerró correctamente.",
+                "Cierre completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             BancosMetLimpiarValidaciones();
             BancosBtnVerHistorico_Click(sender, e);
         }
@@ -438,12 +487,13 @@ namespace CapaVista_CierreBancario.Formularios
                 {
                     using (StreamWriter Escritor = new StreamWriter(Dialogo.FileName, false, new UTF8Encoding(true)))
                     {
-                        for (int Col = 0; Col < Grilla.Columns.Count; Col++)
+                        bool PrimeraColumna = true;
+                        foreach (DataGridViewColumn Columna in Grilla.Columns)
                         {
-                            DataGridViewColumn Columna = Grilla.Columns[Col];
                             if (!Columna.Visible) continue;
-                            if (Escritor.BaseStream.Position > 0) Escritor.Write(';');
+                            if (!PrimeraColumna) Escritor.Write(';');
                             Escritor.Write(BancosMetCsv(Columna.HeaderText));
+                            PrimeraColumna = false;
                         }
                         Escritor.WriteLine();
                         foreach (DataGridViewRow Fila in Grilla.Rows)

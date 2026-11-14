@@ -1,4 +1,12 @@
-﻿using System;
+﻿// =====================================================================
+// Autor:       Andre De Jesus Gonzalez Camey
+// Carné:       9959-23-3117
+// Módulo:      Tesorería y Bancos – Enlace con otros módulos
+// Descripción: Control de usuario reutilizable que consulta, ordena, pagina y exporta
+//              los registros de un módulo.
+// Fecha:       12/11/2026
+// =====================================================================
+using System;
 using System.Windows.Forms;
 using CapaControlador_EnlaceB;
 using System.Data;
@@ -92,7 +100,7 @@ namespace CapaVista_EnlaceB.Formularios
             var Datos = _Paginador.Datos;
             if (Datos == null || Datos.Rows.Count == 0)
             {
-                MessageBox.Show(this, "Consulte registros antes de exportar.");
+                MessageBox.Show(this, "Consulte registros antes de exportar.", "Enlace con otros módulos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

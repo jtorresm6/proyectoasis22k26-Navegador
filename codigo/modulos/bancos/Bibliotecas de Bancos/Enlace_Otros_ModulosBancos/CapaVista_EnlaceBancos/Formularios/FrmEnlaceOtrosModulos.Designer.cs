@@ -125,7 +125,7 @@
             this._BancarioBtnRecursosHumanos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this._BancarioBtnRecursosHumanos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(210, 169, 59);
             this._BancarioBtnRecursosHumanos.FlatAppearance.BorderSize = 2;
-            this._BancarioBtnRecursosHumanos.Text = "Recursos Humanos";
+            this._BancarioBtnRecursosHumanos.Text = "Recursos humanos";
             this._BancarioBtnRecursosHumanos.Image = ((System.Drawing.Image)(resources.GetObject("IconoRecursosHumanos")));
             this._BancarioBtnRecursosHumanos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this._BancarioBtnRecursosHumanos.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);

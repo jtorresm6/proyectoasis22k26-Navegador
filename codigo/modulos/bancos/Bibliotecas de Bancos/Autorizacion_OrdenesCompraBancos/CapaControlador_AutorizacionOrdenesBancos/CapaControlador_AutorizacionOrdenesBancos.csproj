@@ -34,6 +34,12 @@
     <Reference Include="CapaModelo_AutorizacionOrdenesBancos">
       <HintPath>..\CapaModelo_AutorizacionOrdenesBancos\bin\Debug\CapaModelo_AutorizacionOrdenesBancos.dll</HintPath>
     </Reference>
+    <Reference Include="CapaControlador_TipoCambioBancos">
+      <HintPath>..\..\Tipo_CambioBancos\CapaControlador_TipoCambioBancos\bin\Debug\CapaControlador_TipoCambioBancos.dll</HintPath>
+    </Reference>
+    <Reference Include="CapaModelo_TipoCambioBancos">
+      <HintPath>..\..\Tipo_CambioBancos\CapaModelo_TipoCambioBancos\bin\Debug\CapaModelo_TipoCambioBancos.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -48,6 +54,8 @@
     <Compile Include="Modelos de controladores\ClsModeloAutorizacionOrdenCompra.cs" />
     <Compile Include="Modelos de controladores\ClsModeloCuentaDisponible.cs" />
     <Compile Include="Modelos de controladores\ClsModeloOrdenCompra.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloTasaCambio.cs" />
+    <Compile Include="Modelos de controladores\ClsModeloTipoCambioOrden.cs" />
     <Compile Include="Modelos de controladores\ClsModeloTipoCuentaBancaria.cs" />
     <Compile Include="Objetos de valor\EstadoEntidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
