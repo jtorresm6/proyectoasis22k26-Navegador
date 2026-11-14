@@ -35,22 +35,12 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contratos\IRepositorioComision.cs" />
-    <Compile Include="Entidades\ClsVentaVendedorBase.cs" />
-    <Compile Include="Entidades\ClsProductoComision.cs" />
-    <Compile Include="Entidades\ClsFacturaComision.cs" />
-    <Compile Include="Entidades\ClsVendedorComision.cs" />
-    <Compile Include="Entidades\ClsDetalleProductoComision.cs" />
-    <Compile Include="Entidades\ClsFacturaPago.cs" />
-    <Compile Include="Entidades\ClsFormaPagoVenta.cs" />
-    <Compile Include="Entidades\ClsComisionNomina.cs" />
-    <Compile Include="Repositorios\ClsConexion.cs" />
-    <Compile Include="Repositorios\ClsSentencias.cs" />
+    <Compile Include="Repositorios\IRepositorioComision.cs" />
+    <Compile Include="Repositorios\DatosComision.cs" />
+    <Compile Include="Conexion\ClsConexion.cs" />
     <Compile Include="Repositorios\ClsRepositorioComision.cs" />
+    <Compile Include="Repositorios\ClsRepositorioComision.Consultas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\scripts\ComisionVendedores.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,33 +7,33 @@ namespace CapaControlador_ComisionVendedores.Contratos
 {
     public interface IControladorComision
     {
-        List<ClsComisionVendedorResultado> ComisionVendedoresMetCalcular(
+        List<ClsComisionVendedorResultado> VentasMetCalcular(
             EnumMetodoComision Metodo,
             EnumBaseComision BaseCalculo,
             DateTime FechaInicio,
             DateTime FechaFin);
 
-        int ComisionVendedoresMetGuardar(
+        int VentasMetGuardar(
             List<ClsComisionVendedorResultado> Resultados,
             DateTime FechaInicio,
             DateTime FechaFin,
             EnumMetodoComision Metodo,
             EnumBaseComision BaseCalculo);
 
-        List<ClsProductoPorcentaje> ComisionVendedoresMetConsultarPorcentajes(EnumMetodoComision Metodo);
-        int ComisionVendedoresMetActualizarPorcentaje(EnumMetodoComision Metodo, int IdClasificacion, decimal Porcentaje);
-        List<ClsFacturaComisionVista> ComisionVendedoresMetObtenerFacturas();
-        List<ClsVendedorComisionVista> ComisionVendedoresMetObtenerVendedores();
-        int ComisionVendedoresMetAsignarVendedorFactura(int IdFactura, int IdVendedor);
-        int ComisionVendedoresMetAsignarVendedorYGuardarComision(int IdFactura, int IdVendedor, EnumMetodoComision Metodo);
-        List<ClsComisionFacturaDetalle> ComisionVendedoresMetCalcularFactura(int IdFactura, int IdVendedor, EnumMetodoComision Metodo);
-        int ComisionVendedoresMetGuardarComisionFactura(int IdFactura, int IdVendedor, EnumMetodoComision Metodo);
-        List<ClsComisionFacturaDetalle> ComisionVendedoresMetCalcularFactura(int IdFactura, int IdVendedor, List<ClsComisionFacturaDetalle> Selecciones);
-        int ComisionVendedoresMetAsignarVendedorYGuardarComision(int IdFactura, int IdVendedor, List<ClsComisionFacturaDetalle> Selecciones);
-        List<ClsFacturaPagoVista> ComisionVendedoresMetObtenerFacturasConSaldo();
-        List<ClsFormaPagoVentaVista> ComisionVendedoresMetObtenerFormasPagoVenta();
-        decimal ComisionVendedoresMetRegistrarAbonoFactura(int IdFactura, decimal Monto,
+        List<ClsProductoPorcentaje> VentasMetConsultarPorcentajes(EnumMetodoComision Metodo);
+        int VentasMetActualizarPorcentaje(EnumMetodoComision Metodo, int IdClasificacion, decimal Porcentaje);
+        List<ClsFacturaComisionVista> VentasMetObtenerFacturas();
+        List<ClsVendedorComisionVista> VentasMetObtenerVendedores();
+        int VentasMetAsignarVendedorFactura(int IdFactura, int IdVendedor);
+        int VentasMetAsignarVendedorYGuardarComision(int IdFactura, int IdVendedor, EnumMetodoComision Metodo);
+        List<ClsComisionFacturaDetalle> VentasMetCalcularFactura(int IdFactura, int IdVendedor, EnumMetodoComision Metodo);
+        int VentasMetGuardarComisionFactura(int IdFactura, int IdVendedor, EnumMetodoComision Metodo);
+        List<ClsComisionFacturaDetalle> VentasMetCalcularFactura(int IdFactura, int IdVendedor, List<ClsComisionFacturaDetalle> Selecciones);
+        int VentasMetAsignarVendedorYGuardarComision(int IdFactura, int IdVendedor, List<ClsComisionFacturaDetalle> Selecciones);
+        List<ClsFacturaPagoVista> VentasMetObtenerFacturasConSaldo();
+        List<ClsFormaPagoVentaVista> VentasMetObtenerFormasPagoVenta();
+        decimal VentasMetRegistrarAbonoFactura(int IdFactura, decimal Monto,
             int IdFormaPago, DateTime Fecha, string Referencia, int IdUsuario);
-        List<ClsComisionNominaVista> ComisionVendedoresMetObtenerComisionesNomina();
+        List<ClsComisionNominaVista> VentasMetObtenerComisionesNomina();
     }
 }

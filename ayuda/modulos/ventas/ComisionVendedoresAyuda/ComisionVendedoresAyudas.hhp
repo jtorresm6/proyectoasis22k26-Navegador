@@ -1,6 +1,6 @@
 [OPTIONS]
 Compatibility=1.1 or later
-Compiled file=comisionvendedores.chm
+Compiled file=ComisionVendedoresAyudas.chm
 Contents file=ComisionVendedoresAyudas.hhc
 Index file=ComisionVendedoresAyudas.hhk
 Default topic=html\ComisionVendedores_General.html
