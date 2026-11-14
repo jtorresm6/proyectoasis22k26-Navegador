@@ -29,6 +29,9 @@ namespace CapaControlador_Compras
         public const int EncabezadosComprasPorPagar = 6012;
         public const int MantenimientoPlazo = 6013;
         public const int MantenimientoConceptoProveedor = 6014;
+        // Inicio de código de "José Pablo Cano Cóbar" - carné: "0901-23-1727" - Fecha: "11/11/26"
+        public const int HerramientasMoneda = 6015;
+        // Fin del código de "José Pablo Cano Cóbar" - Carné: "0901-23-1727" - Fecha: "11/11/26"
 
         public static int ComprasFuncObtenerIdModulo()
         {

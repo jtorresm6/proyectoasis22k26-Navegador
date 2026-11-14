@@ -4,7 +4,6 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CapaControlador_OrdenesCompra;
-using CapaControlador_OrdenesCompra.Entidades;
 using Microsoft.Reporting.WinForms;
 using System.Data;
 using System.Globalization;
@@ -25,21 +24,23 @@ namespace CapaVista_OrdenesCompra
 {
     public partial class FrmDetalleOrdenCompra : System.Windows.Forms.Form
     {
-        private readonly ClsDisenoDetallesOrdenCompra _DisenoDetalles;
-        private readonly ClsOrdenesCompra _Controlador;
-        private ClsOrdenCompra _Compra;
+        private readonly ClsDetallesOrdenesCompraDiseno _DisenoDetalles;
+        private readonly ClsOrdenesCompraComunEdicion _Edicion;
+        private readonly ClsOrdenesCompraControlador _Controlador;
+        private ClsOrdenesCompraDatos _Compra;
         private bool _Anulando;
         private bool _DetallesCargados;
         private string _MonedaReporte;
         public bool OrdenGuardada { get; private set; }
 
-        public FrmDetalleOrdenCompra() : this(null, new ClsOrdenesCompra()) { }
+        public FrmDetalleOrdenCompra() : this(null, new ClsOrdenesCompraControlador()) { }
 
-        public FrmDetalleOrdenCompra(ClsOrdenCompra Compra, ClsOrdenesCompra Controlador)
+        public FrmDetalleOrdenCompra(ClsOrdenesCompraDatos Compra, ClsOrdenesCompraControlador Controlador)
         {
             _Controlador = Controlador ?? throw new ArgumentNullException(nameof(Controlador));
             _Compra = Compra;
             InitializeComponent();
+            _Edicion = new ClsOrdenesCompraComunEdicion(this);
             ClsPresentacionCompras.ComprasMetFijarTamanoFormulario(this);
             ComprasProcSoloLectura(this);
             ComprasDgvProductos.Tabla.ReadOnly = true;
@@ -47,10 +48,10 @@ namespace CapaVista_OrdenesCompra
             ComprasDgvProductos.Tabla.AllowUserToDeleteRows = false;
             ComprasCboNombreProveedor.SelectedIndexChanged += ComprasProcActualizarProveedor;
             ComprasDtpFechaEmision.ValueChanged += ComprasProcActualizarVencimiento;
-            ClsTablasOrdenesCompra.ComprasProcConfigurarDetalles(ComprasDgvProductos);
-            _DisenoDetalles = new ClsDisenoDetallesOrdenCompra(this, ComprasDgvProductos,
+            ClsDetallesOrdenesCompraTabla.ComprasProcConfigurarDetalles(ComprasDgvProductos);
+            _DisenoDetalles = new ClsDetallesOrdenesCompraDiseno(this, ComprasDgvProductos,
                 ComprasPnlContenido, ComprasTlpPrincipal, ComprasTlpDetalles, ComprasGbxDetalles);
-            ComprasTlpMantenimientoProductos.Enabled = false;
+            _Edicion.Aplicar(ComprasTlpMantenimientoProductos, false);
             ComprasBtnGuardar.Enabled = false;
             ComprasBtnGuardar.AccessibleDescription = "Se requieren productos para guardar la orden.";
             ComprasBtnDescartar.AccessibleName = "Anular orden";
@@ -62,20 +63,17 @@ namespace CapaVista_OrdenesCompra
             ComprasProcMostrarEncabezado();
         }
 
-        private static void ComprasProcSoloLectura(Control Contenedor)
+        private void ComprasProcSoloLectura(Control Contenedor)
         {
             foreach (Control Campo in Contenedor.Controls)
             {
-                var Texto = Campo as ComprasUsrTextBox;
-                if (Texto != null)
+                if (Campo is ComprasUsrTextBox || Campo is ComprasUsrComboBox || Campo is DateTimePicker)
                 {
-                    Texto.Enabled = true;
-                    Texto.ReadOnly = true;
-                    Texto.MostrarEtiquetaError = false;
-                    Texto.TabStop = false;
+                    _Edicion.Establecer(Campo, false);
+                    var Texto = Campo as ComprasUsrTextBox;
+                    if (Texto != null) Texto.MostrarEtiquetaError = false;
                 }
-                if (Campo is ComprasUsrComboBox || Campo is DateTimePicker) Campo.Enabled = false;
-                ComprasProcSoloLectura(Campo);
+                else ComprasProcSoloLectura(Campo);
             }
         }
 
@@ -85,16 +83,16 @@ namespace CapaVista_OrdenesCompra
             ComprasLblCodigoOrden.MostrarAsterisco = false;
             ComprasLblFechaDeEmision.MostrarAsterisco = false;
             ComprasLblFechaDeVencimiento.MostrarAsterisco = false;
-            ComprasTxtCodigoOrden.Enabled = false;
+            ComprasTxtCodigoOrden.Enabled = true;
             ComprasTxtCodigoOrden.MaxLength = 30;
-            ComprasDtpFechaEmision.Enabled = false;
-            ComprasDtpFechaVencimiento.Enabled = false;
-            ComprasCboNombreProveedor.Enabled = false;
-            ComprasTxtComentario.Enabled = false;
+            ComprasDtpFechaEmision.Enabled = true;
+            ComprasDtpFechaVencimiento.Enabled = true;
+            ComprasCboNombreProveedor.Enabled = true;
+            ComprasTxtComentario.Enabled = true;
             ComprasTxtComentario.Text = Nueva ? string.Empty : _Compra.Comentario;
             ComprasTxtEstadoProveedor.Text = string.Empty;
-            ComprasTxtEstadoProveedor.Enabled = false;
-            ComprasTxtDireccionProveedor.Enabled = false;
+            ComprasTxtEstadoProveedor.Enabled = true;
+            ComprasTxtDireccionProveedor.Enabled = true;
             ComprasTxtCodigoOrden.Text = Nueva ? string.Empty : _Compra.CodigoOrdenCompra;
             ComprasDtpFechaEmision.Value = Nueva ? DateTime.Today : _Compra.FechaEmision;
             ComprasDtpFechaVencimiento.Value = Nueva ? ComprasDtpFechaEmision.Value.Date : _Compra.FechaVencimiento;
@@ -109,8 +107,8 @@ namespace CapaVista_OrdenesCompra
             ComprasTxtTotalDeLaOrden.Text = (Nueva ? 0M : _Compra.MontoTotal).ToString("N4");
             foreach (var Campo in new[] { ComprasTxtMoneda, ComprasTxtTipoCambio, ComprasTxtDiasPlazo,
                 ComprasTxtSubtotal, ComprasTxtDescuentoTotal, ComprasTxtPlazoValor })
-                Campo.Enabled = false;
-            ComprasTxtTotalDeLaOrden.Enabled = false;
+                Campo.Enabled = true;
+            ComprasTxtTotalDeLaOrden.Enabled = true;
             if (!Nueva)
             {
                 ComprasCboNombreProveedor.TipoDatos = EnmTipoDatosCompras.Ninguno;
@@ -194,28 +192,12 @@ namespace CapaVista_OrdenesCompra
                 throw new InvalidOperationException("Espera a que termine la carga de la orden antes de abrir el reporte.");
             if (string.IsNullOrWhiteSpace(_MonedaReporte))
                 throw new InvalidOperationException("No se pudo identificar la moneda de la orden. Actualiza la consulta antes de generar el reporte.");
-            Reporte.DataSources.Clear();
-            Reporte.DataSources.Add(new ReportDataSource("DetalleOrdenCompra", Detalles));
-            Reporte.DisplayName = "Orden de compra " + _Compra.CodigoOrdenCompra;
-            var Formato = CultureInfo.GetCultureInfo("es-GT");
-            Reporte.SetParameters(new[]
-            {
-                new ReportParameter("Orden", "Orden No. " + _Compra.CodigoOrdenCompra + " | Estado: " + _Compra.Estado),
-                new ReportParameter("Proveedor", "PROVEEDOR: " + _Compra.NombreProveedor + "\nNIT: " + _Compra.NitProveedor
-                    + "\nDirección: " + _Compra.DireccionProveedor + "\nTel.: " + _Compra.TelefonoProveedor + " | Correo: " + _Compra.CorreoProveedor),
-                new ReportParameter("Condiciones", "Emisión: " + _Compra.FechaEmision.ToString("dd/MM/yyyy")
-                    + " | Vencimiento: " + _Compra.FechaVencimiento.ToString("dd/MM/yyyy")
-                    + "\nPlazo: " + _Compra.NombrePlazo + " (" + _Compra.DiasPlazo + " días) | Moneda: " + _MonedaReporte),
-                new ReportParameter("Totales", "Subtotal: " + _Compra.Subtotal.ToString("N4", Formato)
-                    + "\nDescuento: " + _Compra.Descuento.ToString("N4", Formato)
-                    + "\nImpuesto: " + _Compra.Impuesto.ToString("N4", Formato)
-                    + "\nTOTAL (" + _MonedaReporte + "): " + _Compra.MontoTotal.ToString("N4", Formato)),
-                new ReportParameter("Comentario", string.IsNullOrWhiteSpace(_Compra.Comentario) ? "Sin observaciones." : _Compra.Comentario)
-            });
+            ClsDetallesOrdenesCompraReporte.Preparar(Reporte, _Compra, Detalles, _MonedaReporte);
         }
 
         private void ComprasProcLiberarDetalles()
         {
+            _Edicion?.Dispose();
             _DisenoDetalles?.Dispose();
             var Detalles = ComprasDgvProductos.DataSource as System.Data.DataTable;
             ComprasDgvProductos.DataSource = null;

@@ -294,7 +294,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Producto</Value>
+                              <Value>Producto y ubicación</Value>
                               <Style>
                                 <FontFamily>Segoe UI</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -561,6 +561,14 @@
                                 <FontFamily>Segoe UI</FontFamily>
                                 <FontSize>9pt</FontSize>
                                 <Color>#1E2A5A</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=vbCrLf &amp; "Sucursal: " &amp; Fields!nombreSucursal.Value &amp; vbCrLf &amp; "Bodega: " &amp; Fields!nombreBodega.Value</Value>
+                              <Style>
+                                <FontFamily>Segoe UI</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <Color>#4B5563</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1293,6 +1301,14 @@
         <Field Name="subtotalDetalleOrdenCompra">
           <DataField>subtotalDetalleOrdenCompra</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="nombreSucursal">
+          <DataField>nombreSucursal</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="nombreBodega">
+          <DataField>nombreBodega</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using CapaModelo_OrdenesCompra.Contratos;
 using CapaModelo_OrdenesCompra.Entidades;
@@ -17,13 +17,15 @@ using CapaModelo_OrdenesCompra.Entidades;
 
 namespace PruebaUnitaria_OrdenesCompra.Apoyo
 {
-    internal sealed class ClsRepositorioOrdenesCompraPrueba : IRepositorioOrdenesCompra, IDisposable
+    internal sealed class ClsRepositorioOrdenesCompraPrueba : IOrdenesCompraRepositorio, IDisposable
     {
         internal DataTable Datos { get; }
         internal string EstadoSolicitado { get; private set; }
         internal int Creaciones { get; private set; }
         internal DataTable DetallesCreados { get; private set; }
         internal bool FallarCreacion { get; set; }
+        internal decimal SubtotalCreado { get; private set; }
+        internal decimal DescuentoCreado { get; private set; }
         internal decimal ImpuestoCreado { get; private set; }
         internal string CodigoCreado { get; private set; }
         internal string ComentarioCreado { get; private set; }
@@ -49,10 +51,10 @@ namespace PruebaUnitaria_OrdenesCompra.Apoyo
             return Resultado;
         }
 
-        public ClsOrdenCompra ComprasFuncObtener(int Id)
+        public ClsOrdenesCompraEntidad ComprasFuncObtener(int Id)
         {
             DataRow Fila = Datos.Rows.Find(Id);
-            return Fila == null ? null : new ClsOrdenCompra(Fila);
+            return Fila == null ? null : new ClsOrdenesCompraEntidad(Fila);
         }
 
         public DataTable ComprasFuncListarDetalles(int Id)
@@ -82,8 +84,9 @@ namespace PruebaUnitaria_OrdenesCompra.Apoyo
             Datos.Columns.Add("nombreBodega", typeof(string));
             Datos.Columns.Add("Fk_Sucursal_Codigo", typeof(int));
             Datos.Columns.Add("paisBodega", typeof(string));
-            Datos.Rows.Add(11, "Bodega Central", 1, "Guatemala");
-            Datos.Rows.Add(12, "Bodega Norte", 2, "Mexico");
+            Datos.Columns.Add("nombreSucursal", typeof(string));
+            Datos.Rows.Add(11, "Bodega Central", 1, "Guatemala", "Central");
+            Datos.Rows.Add(12, "Bodega Norte", 2, "Mexico", "Norte");
             return Datos;
         }
 
@@ -96,8 +99,9 @@ namespace PruebaUnitaria_OrdenesCompra.Apoyo
             Datos.Columns.Add("descripcionProducto", typeof(string));
             Datos.Columns.Add("pesoProducto", typeof(decimal));
             Datos.Columns.Add("precioCostoProducto", typeof(decimal));
-            Datos.Rows.Add(1, "SKU-001", "Producto Uno", "Descripcion Uno", 1.5M, 77M);
-            Datos.Rows.Add(2, "SKU-002", "Producto Dos", "Descripcion Dos", 2M, 154M);
+            Datos.Columns.Add("idProveedorProductos", typeof(int));
+            Datos.Rows.Add(1, "SKU-001", "Producto Uno", "Descripcion Uno", 1.5M, 77M, 3);
+            Datos.Rows.Add(2, "SKU-002", "Producto Dos", "Descripcion Dos", 2M, 154M, 4);
             return Datos;
         }
 
@@ -170,6 +174,8 @@ namespace PruebaUnitaria_OrdenesCompra.Apoyo
             if (FallarCreacion) throw new InvalidOperationException("Error de guardado de prueba.");
             Creaciones++;
             DetallesCreados = Detalles?.Copy();
+            SubtotalCreado = Subtotal;
+            DescuentoCreado = Descuento;
             ImpuestoCreado = Impuesto;
             CodigoCreado = string.Empty;
             ComentarioCreado = Comentario;

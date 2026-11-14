@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using CapaControlador_OrdenesCompra;
@@ -23,13 +23,13 @@ namespace PruebaUnitaria_OrdenesCompra
     public class TestFiltrosOrdenesCompra
     {
         private ClsRepositorioOrdenesCompraPrueba _Repositorio;
-        private ClsOrdenesCompra _Controlador;
+        private ClsOrdenesCompraControlador _Controlador;
 
         [TestInitialize]
         public void Preparar()
         {
             _Repositorio = new ClsRepositorioOrdenesCompraPrueba();
-            _Controlador = new ClsOrdenesCompra(_Repositorio);
+            _Controlador = new ClsOrdenesCompraControlador(_Repositorio);
         }
 
         [TestCleanup]

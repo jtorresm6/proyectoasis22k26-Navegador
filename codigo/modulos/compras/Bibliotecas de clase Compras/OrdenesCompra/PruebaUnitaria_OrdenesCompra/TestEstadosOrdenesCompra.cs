@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using CapaControlador_OrdenesCompra;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PruebaUnitaria_OrdenesCompra.Apoyo;
@@ -21,13 +21,13 @@ namespace PruebaUnitaria_OrdenesCompra
     public class TestEstadosOrdenesCompra
     {
         private ClsRepositorioOrdenesCompraPrueba _Repositorio;
-        private ClsOrdenesCompra _Controlador;
+        private ClsOrdenesCompraControlador _Controlador;
 
         [TestInitialize]
         public void Preparar()
         {
             _Repositorio = new ClsRepositorioOrdenesCompraPrueba();
-            _Controlador = new ClsOrdenesCompra(_Repositorio);
+            _Controlador = new ClsOrdenesCompraControlador(_Repositorio);
         }
 
         [TestCleanup]

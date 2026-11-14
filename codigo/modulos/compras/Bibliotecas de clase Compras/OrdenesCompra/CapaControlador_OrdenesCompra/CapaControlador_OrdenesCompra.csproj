@@ -45,17 +45,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClsOrdenesCompra.cs" />
-    <Compile Include="Entidades\ClsOrdenCompra.cs" />
-    <Compile Include="Servicios\ClsEstadosOrdenesCompra.cs" />
-    <Compile Include="Servicios\ClsFiltroOrdenesCompra.cs" />
-    <Compile Include="Servicios\ClsValidacionOrdenesCompra.cs" />
+    <Compile Include="ClsOrdenesCompraControlador.cs" />
+    <Compile Include="ClsOrdenesCompraDatos.cs" />
+    <Compile Include="Servicios\ClsOrdenesCompraEstados.cs" />
+    <Compile Include="Servicios\ClsEncabezadosOrdenesCompraFiltrar.cs" />
+    <Compile Include="Servicios\ClsOrdenesCompraValidar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo_OrdenesCompra">
-      <HintPath>..\CapaModelo_OrdenesCompra\bin\$(Configuration)\CapaModelo_OrdenesCompra.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\CapaModelo_OrdenesCompra\CapaModelo_OrdenesCompra.csproj">
+      <Project>{34CAB7C7-934E-4F2A-866C-61906FC678B1}</Project>
+      <Name>CapaModelo_OrdenesCompra</Name>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Servicios\ClsOrdenesCompraCalcular.cs" />
+    <Compile Include="Servicios\ClsDetallesOrdenesCompraValidar.cs" />
+    <Compile Include="ClsEncabezadosOrdenesCompraControlador.cs" />
+    <Compile Include="ClsDetallesOrdenesCompraControlador.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
