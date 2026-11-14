@@ -454,9 +454,117 @@ try {
         $assemblies[$name] += $project
     }
     $referenceTargets = Join-Path $cacheDirectory ('References_' + $configuration + '.targets')
+
+    # Preparar Seguridad sin referencias estaticas a los modulos que la consumen.
+    # Solo se sustituyen elementos Compile en targets temporales, nunca los fuentes.
+    $securityViewPath = FullPath $codeRoot 'componentes\seguridad\Seguridad\CapaVista_Seguridad\CapaVista_Seguridad.csproj'
+    $temporarySplash = $null
+    $moduleViews = @('CapaVista_Bancos','CapaVista_Compras','CapaVista_Contabilidad','CapaVista_Logistica','CapaVista_Rrhh','CapaVista_Ventas')
+    if ($projects.ContainsKey($securityViewPath)) {
+        $splashPath = Join-Path (Split-Path $securityViewPath) 'FrmSplash.cs'
+        $splashSource = [IO.File]::ReadAllText($splashPath)
+        if ($splashSource -match 'new\s+FrmMDIRrhh\s*\(') {
+            $switchPattern = '(?s)                switch \(_Destino\).*?(?=                principal.ShowDialog\(\);)'
+            if (![regex]::IsMatch($splashSource, $switchPattern)) { throw 'No se reconoce el inicio de Seguridad para resolver sus dependencias.' }
+            $moduleSwitch = @'
+                try
+                {
+                    switch (_Destino)
+                    {
+                        case "Logistica": principal = SeguridadMetCrearModulo("CapaVista_Logistica", "CapaVista_Logistica.Formularios.FrmMDILogistica", "LogisticaMetActualizarInfoUsuario"); break;
+                        case "Compras": principal = SeguridadMetCrearModulo("CapaVista_Compras", "CapaVista_Compras.FrmMDICompras", "ComprasMetActualizarInfoUsuario"); break;
+                        case "Ventas": principal = SeguridadMetCrearModulo("CapaVista_Ventas", "CapaVista_Ventas.FrmMdiVentas", null); break;
+                        case "Bancos": principal = SeguridadMetCrearModulo("CapaVista_Bancos", "CapaVista_Bancos.Formularios.FrmMDIBancos", "BancosMetActualizarInfoUsuario"); break;
+                        case "Contabilidad": principal = SeguridadMetCrearModulo("CapaVista_Contabilidad", "CapaVista_Contabilidad.FrmMDIContabilidad", "ContabilidadMetActualizarInfoUsuario"); break;
+                        case "RRHH": principal = SeguridadMetCrearModulo("CapaVista_Rrhh", "CapaVista_Rrhh.Formularios.FrmMDIRrhh", "RrhhMetActualizarInfoUsuario"); break;
+                        default: principal = new FrmMDISeguridad(); break;
+                    }
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("No se pudo abrir el modulo " + _Destino + ": " + error.GetBaseException().Message,
+                        "Seguridad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
+'@
+            $moduleLoader = @'
+        private static readonly Dictionary<string, string> _ComprasRutasModulos =
+            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private static bool _ComprasResolverRegistrado;
+
+        private static Form SeguridadMetCrearModulo(string nombre, string formulario, string actualizar)
+        {
+            if (!_ComprasResolverRegistrado)
+            {
+                string registro = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Modulos.xml");
+                if (System.IO.File.Exists(registro))
+                {
+                    var xml = new System.Xml.XmlDocument { XmlResolver = null };
+                    xml.Load(registro);
+                    foreach (System.Xml.XmlElement elemento in xml.SelectNodes("/modulos/ensamblado"))
+                        _ComprasRutasModulos[elemento.GetAttribute("nombre")] = System.IO.Path.GetFullPath(
+                            System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, elemento.GetAttribute("ruta")));
+                }
+                AppDomain.CurrentDomain.AssemblyResolve += SeguridadMetResolverModuloCompras;
+                _ComprasResolverRegistrado = true;
+            }
+            string rutaModulo;
+            var assembly = _ComprasRutasModulos.TryGetValue(nombre, out rutaModulo)
+                ? System.Reflection.Assembly.LoadFrom(rutaModulo)
+                : System.Reflection.Assembly.Load(nombre);
+            var tipo = assembly.GetType(formulario, true);
+            object[] argumentos = actualizar == null
+                ? new object[] { ClsSesionSeguridad.NombreEmpleado, ClsSesionSeguridad.SeguridadMetRolesComoTexto(), ClsSesionSeguridad.IdUsuario }
+                : new object[0];
+            var ventana = (Form)Activator.CreateInstance(tipo, argumentos);
+            try
+            {
+                if (actualizar != null)
+                {
+                    var metodo = tipo.GetMethod(actualizar, new[] { typeof(string), typeof(string) });
+                    if (metodo == null) throw new MissingMethodException(tipo.FullName, actualizar);
+                    metodo.Invoke(ventana, new object[] { ClsSesionSeguridad.NombreEmpleado, ClsSesionSeguridad.SeguridadMetRolesComoTexto() });
+                }
+                return ventana;
+            }
+            catch { ventana.Dispose(); throw; }
+        }
+
+        private static System.Reflection.Assembly SeguridadMetResolverModuloCompras(object sender, ResolveEventArgs args)
+        {
+            string nombre = new System.Reflection.AssemblyName(args.Name).Name;
+            string ruta = null;
+            if (args.RequestingAssembly != null && !String.IsNullOrEmpty(args.RequestingAssembly.Location))
+            {
+                string local = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(args.RequestingAssembly.Location), nombre + ".dll");
+                if (System.IO.File.Exists(local)) ruta = local;
+            }
+            if (ruta == null && !_ComprasRutasModulos.TryGetValue(nombre, out ruta))
+                ruta = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, nombre + ".dll");
+            return System.IO.File.Exists(ruta) ? System.Reflection.Assembly.LoadFrom(ruta) : null;
+        }
+
+'@
+            $splashSource = [regex]::Replace($splashSource, '(?m)^using CapaVista_(Bancos|Compras|Contabilidad|Logistica|Rrhh|Ventas)[^;]*;\r?\n', '')
+            $splashSource = [regex]::Replace($splashSource, $switchPattern, ($moduleSwitch + "`r`n"))
+            $tickDeclaration = '        private void _TimerCarga_Tick'
+            if (!$splashSource.Contains($tickDeclaration)) { throw 'No se encontro el evento de inicio de Seguridad.' }
+            $splashSource = $splashSource.Replace($tickDeclaration, ($moduleLoader + "`r`n" + $tickDeclaration))
+            $temporarySplash = Join-Path $runDirectory 'FrmSplash.cs'
+            Write-IfChanged $temporarySplash $splashSource
+            Write-Status 'Seguridad se compila con carga dinamica de modulos desde Modulos.xml; fuentes originales intactos.' Info
+        }
+    }
     foreach ($project in $projects.Values) {
         $current=$project.Step
         foreach ($reference in @($project.Data.Items.Reference)) {
+            if ($temporarySplash -and $project.Path -ieq $securityViewPath -and
+                ($reference.Identity -split ',')[0].Trim() -in $moduleViews) {
+                $referenceRemovals.Add([pscustomobject]@{ Project=$project.Path; Identity=$reference.Identity })
+                continue
+            }
             # El ejecutor del Navegador solo compila FrmPrincipal y usa el
             # Navegador actual. Estas dos DLL de Consultas ya no existen y
             # ninguno de los archivos Compile del ejecutor las utiliza.
@@ -529,6 +637,15 @@ try {
                         }
                     }
                 }
+                # Compatibilidad con los nombres anteriores del cierre de Compras.
+                if (!$producers.Count -and $assembly -match '^Capa(Vista|Controlador|Modelo)_CierreMovimientosCompras\.dll$') {
+                    $currentName = $assembly.Replace('CierreMovimientosCompras', 'CierreMovimientos')
+                    $closingRoot = FullPath $base 'Bibliotecas de clase Compras\CierreMovimientos'
+                    $producers = @($assemblies[$currentName] | Where-Object { $_ -and (Split-Path (Split-Path $_.Path)) -ieq $closingRoot })
+                    if ($producers.Count -eq 1) {
+                        $renamedIdentity = [IO.Path]::GetFileNameWithoutExtension($producers[0].Output)
+                    }
+                }
                 if (!$producers.Count -and (Test-Path -LiteralPath $hint -PathType Leaf)) { continue }
                 if ($producers.Count -ne 1) {
                     Write-Status "Referencia sin productor unico para $configuration en $($project.Path): $hint" Warning
@@ -552,6 +669,48 @@ try {
         }
     }
     $referenceBody = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><Target Name="CorregirReferenciasCompras" BeforeTargets="ResolveAssemblyReferences"><ItemGroup>'
+    if ($temporarySplash) {
+        $condition = "'`$(MSBuildProjectFullPath)' == '" + (MsbuildEscape $securityViewPath) + "'"
+        $referenceBody += '<Compile Remove="FrmSplash.cs" Condition="' + (XmlEscape $condition) + '" />'
+        $referenceBody += '<Compile Include="' + (XmlEscape (MsbuildEscape $temporarySplash)) + '" Condition="' + (XmlEscape $condition) + '" />'
+    }
+    # Compilar una copia temporal del MDI si falta el formulario de devoluciones.
+    $mdiProjectPath = FullPath $base 'Bibliotecas de clase Compras\Compras\CapaVista_Compras\CapaVista_Compras.csproj'
+    $devolucionesProject = FullPath $base 'Bibliotecas de clase Compras\AprobacionFinanciera\CapaVista_AprobacionFinanciera\CapaVista_AprobacionFinanciera.csproj'
+    $mdiPath = Join-Path (Split-Path $mdiProjectPath) 'FrmMDICompras.cs'
+    if ($projects.ContainsKey($mdiProjectPath) -and (Test-Path -LiteralPath $mdiPath) -and (Test-Path -LiteralPath $devolucionesProject)) {
+        [xml]$devolucionesXml = [IO.File]::ReadAllText($devolucionesProject)
+        $hasDevoluciones = $false
+        foreach ($item in $devolucionesXml.SelectNodes('//*[local-name()="Compile"]')) {
+            $sourcePath = FullPath (Split-Path $devolucionesProject) $item.Include
+            if ((Test-Path -LiteralPath $sourcePath -PathType Leaf) -and
+                [IO.File]::ReadAllText($sourcePath) -match '\bclass\s+FrmSelecDevoluciones\b') { $hasDevoluciones = $true; break }
+        }
+        $mdiSource = [IO.File]::ReadAllText($mdiPath)
+        $oldCall = 'ComprasMetAbrirSubproceso<CapaVista_AprobacionFinanciera.FrmSelecDevoluciones>(ComprasTlpDevolucionesCompras);'
+        if (!$hasDevoluciones -and $mdiSource.Contains($oldCall)) {
+            $optionalCall = @'
+if (!ComprasTlpDevolucionesCompras.Enabled) return;
+            var TipoDevoluciones = typeof(CapaVista_AprobacionFinanciera.FrmAprobacionFinanciera).Assembly
+                .GetType("CapaVista_AprobacionFinanciera.FrmSelecDevoluciones", false);
+            if (TipoDevoluciones == null || !typeof(Form).IsAssignableFrom(TipoDevoluciones)
+                || TipoDevoluciones.IsAbstract || TipoDevoluciones.GetConstructor(Type.EmptyTypes) == null)
+            {
+                MessageBox.Show(this, "El formulario de devoluciones no esta incluido en esta version del modulo.",
+                    "Devoluciones de compras", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            ComprasMetAbrirSubproceso(ComprasTlpDevolucionesCompras,
+                () => (Form)Activator.CreateInstance(TipoDevoluciones));
+'@
+            $temporaryMdi = Join-Path $runDirectory 'FrmMDICompras.cs'
+            Write-IfChanged $temporaryMdi ($mdiSource.Replace($oldCall, $optionalCall))
+            $condition = "'`$(MSBuildProjectFullPath)' == '" + (MsbuildEscape $mdiProjectPath) + "'"
+            $referenceBody += '<Compile Remove="FrmMDICompras.cs" Condition="' + (XmlEscape $condition) + '" />'
+            $referenceBody += '<Compile Include="' + (XmlEscape (MsbuildEscape $temporaryMdi)) + '" Condition="' + (XmlEscape $condition) + '" />'
+            Write-Status 'Devoluciones no incluido: se compila un MDI temporal que informa su indisponibilidad. Las fuentes originales se conservan.' Warning
+        }
+    }
     foreach ($removal in $referenceRemovals | Sort-Object Project,Identity) {
         $condition = "'`$(MSBuildProjectFullPath)' == '" + (MsbuildEscape $removal.Project) + "'"
         $referenceBody += '<Reference Remove="' + (XmlEscape $removal.Identity) + '" Condition="' + (XmlEscape $condition) + '" />'
